@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANGOLIVE - Guia Completo de Angola</title>
+    <style>
+        /* Leaflet CSS inline */
+        .leaflet-container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .leaflet-container a {
+            color: #0078a8;
+        }
+        .leaflet-container a.leaflet-active {
+            outline: 2px solid orange;
+        }
+        .leaflet-tile, .leaflet-marker-shadow {
+            border: 0;
+            border-radius: 0;
+        }
+        .leaflet-marker-icon {
+            background-size: contain;
+        }
+        .leaflet-control {
+            box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+            border-radius: 5px;
+        }
+        .leaflet-pane, .leaflet-pane > svg, .leaflet-pane > canvas, .leaflet-pane > div {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #CE1126;
+            --secondary: #FFD100;
+            --dark: #000000;
+            --light: #F8F9FA;
+            --text: #1a1a1a;
+            --border: #E8E8E8;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: var(--light);
+            color: var(--text);
+        }
+
+        .app-wrapper {
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Header com User */
+        .header {
+            background: white;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .user-btn, .logout-btn {
+            padding: 8px 16px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .user-btn:hover {
+            background: #8B0000;
+        }
+
+        .logout-btn {
+            background: #999;
+        }
+
+        .logout-btn:hover {
+            background: #777;
+        }
+
+        /* Top Navigation Bar */
+        .top-nav {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 12px 16px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            overflow-x: auto;
+        }
+
+        .city-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: fit-content;
+        }
+
+        .city-selector label {
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--text);
+        }
+
+        .city-select {
+            padding: 6px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            background: white;
+            color: var(--text);
+        }
+
+        .city-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .categories-nav {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .category-btn {
+            position: relative;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 6px;
+        }
+
+        .category-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .category-btn.active {
+            filter: drop-shadow(0 0 4px var(--primary));
+        }
+
+        .tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 1000;
+        }
+
+        .category-btn:hover .tooltip {
+            opacity: 1;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            flex: 1;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Map Section */
+        .map-container {
+            height: 30%;
+            position: relative;
+            background: white;
+            border-top: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .map-container:hover {
+            background: #f5f5f5;
+        }
+
+        .map-container.expanded {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            border: none;
+        }
+
+        .map-expand-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(206, 17, 38, 0.9);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .map-controls {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 400;
+        }
+
+        .control-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 3px;
+            font-weight: 600;
+            font-size: 11px;
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover {
+            background: #8B0000;
+        }
+
+        .expand-close-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 700;
+            z-index: 1000;
+            display: none;
+        }
+
+        .expand-close-btn.show {
+            display: block;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+        }
+
+        .sidebar-tab {
+            flex: 1;
+            padding: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            color: #999;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .sidebar-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .venue-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .venue-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 2px 8px rgba(206, 17, 38, 0.1);
+        }
+
+        .venue-name {
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .venue-info {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .venue-rating {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 11px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            height: 250px;
+            background: linear-gradient(135deg, var(--primary) 0%, #8B0000 100%);
+            position: relative;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .modal-name {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .modal-rating {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--dark);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .modal-section {
+            margin-bottom: 20px;
+        }
+
+        .modal-section-title {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .modal-section-content {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Reviews Section */
+        .reviews-container {
+            background: #F9F9F9;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .review-form {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .rating-input {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .star-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .star-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .star-btn.selected {
+            filter: drop-shadow(0 0 4px var(--primary));
+        }
+
+        .review-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .review-submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
+        }
+
+        .review-submit-btn:hover {
+            background: #8B0000;
+        }
+
+        .review-submit-btn:disabled {
+            background: #CCC;
+            cursor: not-allowed;
+        }
+
+        .reviews-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .review-item {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .review-name {
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--dark);
+        }
+
+        .review-date {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .review-rating {
+            color: var(--secondary);
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .review-text {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .avg-rating-display {
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .avg-rating-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .avg-rating-stars {
+            font-size: 14px;
+            color: var(--secondary);
+            margin-top: 4px;
+        }
+
+        .avg-rating-count {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .no-reviews {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            padding: 10px;
+        }
+
+        /* Menu Section */
+        .menu-container {
+            background: #F9F9F9;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .menu-category {
+            margin-bottom: 15px;
+        }
+
+        .menu-category-title {
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .menu-items {
+            display: grid;
+            gap: 8px;
+        }
+
+        .menu-item {
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            border-left: 3px solid var(--secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .menu-item-info {
+            flex: 1;
+        }
+
+        .menu-item-name {
+            font-weight: 600;
+            font-size: 12px;
+            color: var(--dark);
+            margin-bottom: 2px;
+        }
+
+        .menu-item-desc {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .menu-item-price {
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--primary);
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+
+        .no-menu {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            padding: 15px;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, #8B0000 100%);
+            color: white;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: #F0F0F0;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        /* Profile Modal */
+        .profile-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1001;
+            padding: 20px;
+        }
+
+        .profile-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-content {
+            background: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+        }
+
+        .profile-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 12px;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(206, 17, 38, 0.1);
+        }
+
+        .user-info {
+            background: #F0F0F0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .user-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            background: #F9F9F9;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .profile-content {
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                flex: 1;
+                height: auto;
+            }
+
+            .map-container {
+                height: 35%;
+                min-height: 200px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .header-right {
+                width: 100%;
+            }
+
+            .user-btn, .logout-btn {
+                flex: 1;
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            .map-expand-hint {
+                font-size: 11px;
+                padding: 8px 12px;
+            }
+
+            .expand-close-btn {
+                padding: 8px 16px;
+                font-size: 12px;
+                top: 70px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <h1>🇦🇴 ANGOLIVE</h1>
+            </div>
+            <div class="header-right">
+                <button class="user-btn" onclick="openProfile()">👤 Meu Perfil</button>
+                <button class="logout-btn" onclick="logout()" style="display:none;" id="logoutBtn">Sair</button>
+            </div>
+        </div>
+
+        <!-- Top Navigation -->
+        <div class="top-nav">
+            <div class="city-selector">
+                <label>🌍 Cidade:</label>
+                <select class="city-select" id="citySelect" onchange="filterByCity()">
+                    <option value="">Todas as Cidades</option>
+                    <option value="Luanda">Luanda</option>
+                    <option value="Benguela">Benguela</option>
+                    <option value="Lubango">Lubango</option>
+                    <option value="Cabinda">Cabinda</option>
+                    <option value="Namibe">Namibe</option>
+                    <option value="Huambo">Huambo</option>
+                </select>
+            </div>
+
+            <div class="categories-nav">
+                <button class="category-btn active" onclick="filterByCategory('all', this)" title="Todos">
+                    ⭐
+                    <div class="tooltip">Todos</div>
+                </button>
+                <button class="category-btn" onclick="filterByCategory('restaurant', this)" title="Restaurantes">
+                    🍽️
+                    <div class="tooltip">Restaurantes</div>
+                </button>
+                <button class="category-btn" onclick="filterByCategory('nightclub', this)" title="Vida Noturna">
+                    🎉
+                    <div class="tooltip">Festas & Nightclubs</div>
+                </button>
+                <button class="category-btn" onclick="filterByCategory('beach', this)" title="Beach Clubs">
+                    🏖️
+                    <div class="tooltip">Beach Clubs</div>
+                </button>
+                <button class="category-btn" onclick="filterByCategory('accommodation', this)" title="Alojamento">
+                    🏨
+                    <div class="tooltip">Alojamento</div>
+                </button>
+                <button class="category-btn" onclick="filterByCategory('tourism', this)" title="Turismo">
+                    🏛️
+                    <div class="tooltip">Turismo</div>
+                </button>
+                <button class="category-btn" onclick="filterByCategory('exchange', this)" title="Câmbio">
+                    💱
+                    <div class="tooltip">Câmbio</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar (Top) -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <button class="sidebar-tab active" onclick="switchSidebarTab('list')">📍 Locais</button>
+                    <button class="sidebar-tab" onclick="switchSidebarTab('favorites')">❤️ Favoritos</button>
+                </div>
+                <div class="sidebar-content">
+                    <input type="text" class="search-box" id="searchInput" placeholder="Procurar local..." onkeyup="filterLocations()">
+                    <div id="venuesListContainer"></div>
+                    <div id="favoritesListContainer" style="display:none;"></div>
+                </div>
+            </div>
+
+            <!-- Map (Bottom) -->
+            <div class="map-container" id="map-container">
+                <div class="map-expand-hint">👆 Clique para ampliar o mapa</div>
+                <div id="map"></div>
+                <div class="map-controls">
+                    <button class="control-btn" onclick="filterByType('restaurant')">🍽️</button>
+                    <button class="control-btn" onclick="filterByType('nightclub')">🎉</button>
+                    <button class="control-btn" onclick="filterByType('beach')">🏖️</button>
+                    <button class="control-btn" onclick="filterByType('accommodation')">🏨</button>
+                    <button class="control-btn" onclick="filterByType('tourism')">🏛️</button>
+                    <button class="control-btn" onclick="filterByType('all')">⭐</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expand Close Button -->
+        <button class="expand-close-btn">✕ Fechar Mapa</button>
+    </div>
+
+    <!-- Venue Detail Modal -->
+    <div class="modal" id="venueModal">
+        <div class="modal-content">
+            <div class="modal-header" id="modalImageContainer">
+                <button class="close-btn" onclick="closeVenueModal()">✕</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="profile-modal" id="profileModal">
+        <div class="profile-content">
+            <button class="modal-close" onclick="closeProfile()">✕</button>
+            <div class="profile-title">Meu Perfil</div>
+
+            <div id="loginForm">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" id="userName" placeholder="Seu nome">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="userEmail" placeholder="seu@email.com">
+                </div>
+                <div class="form-group">
+                    <label>País/Região</label>
+                    <input type="text" id="userLocation" placeholder="Localização">
+                </div>
+                <button class="btn btn-primary" onclick="saveProfile()" style="width: 100%;">Criar Perfil</button>
+            </div>
+
+            <div id="userProfile" style="display:none;">
+                <div class="user-info" id="userInfoDisplay"></div>
+                <div class="user-stats">
+                    <div class="stat-box">
+                        <div class="stat-number" id="favCount">0</div>
+                        <div class="stat-label">Favoritos</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="visitCount">0</div>
+                        <div class="stat-label">Visitados</div>
+                    </div>
+                </div>
+                <button class="btn btn-secondary" onclick="editProfile()" style="width: 100%; margin-bottom: 10px;">Editar Perfil</button>
+                <button class="btn btn-primary" onclick="logout()" style="width: 100%;">Sair</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script>
+        const menuData = {
+            1: { // Café Del Mar
+                appetizers: [
+                    {name: "Camarones Grelhados", desc: "Camarões frescos grelhados", price: "15.000 Kz"},
+                    {name: "Ostras Frescas", desc: "6 ostras do dia", price: "12.000 Kz"},
+                    {name: "Peixe Fumado", desc: "Peixe defumado caseiro", price: "10.000 Kz"}
+                ],
+                main: [
+                    {name: "Branzino Grelhado", desc: "Peixe inteiro com legumes", price: "28.000 Kz"},
+                    {name: "Lagosta Thermidor", desc: "Especialidade da casa", price: "35.000 Kz"},
+                    {name: "Filé com Molho Béarnaise", desc: "Corte premium de carne", price: "32.000 Kz"},
+                    {name: "Arroz de Frutos do Mar", desc: "Marisco variado", price: "26.000 Kz"}
+                ],
+                drinks: [
+                    {name: "Vinho Tinto (Copo)", desc: "Vinho português", price: "5.000 Kz"},
+                    {name: "Cerveja Sagres", desc: "Cerveja gelada", price: "2.500 Kz"},
+                    {name: "Coquetel da Casa", desc: "Bebida especial", price: "7.000 Kz"}
+                ]
+            },
+            2: { // Caminito Night Club
+                drinks: [
+                    {name: "Cerveja Sagres", desc: "Cerveja gelada", price: "3.000 Kz"},
+                    {name: "Vinho Branco", desc: "Copo", price: "5.000 Kz"},
+                    {name: "Coquetel Tropical", desc: "Mix de frutas", price: "8.000 Kz"},
+                    {name: "Whisky Importado", desc: "Dose", price: "6.000 Kz"},
+                    {name: "Champagne", desc: "Garrafa", price: "40.000 Kz"}
+                ],
+                appetizers: [
+                    {name: "Tábua de Queijos", desc: "Queijos portugueses", price: "12.000 Kz"},
+                    {name: "Batatas Fritas Gourmet", desc: "Com temperos especiais", price: "4.000 Kz"},
+                    {name: "Camarones", desc: "Pequena porção", price: "8.000 Kz"}
+                ]
+            },
+            3: { // O Madeirense
+                main: [
+                    {name: "Espetada de Vitela", desc: "Especialidade da casa", price: "22.000 Kz"},
+                    {name: "Bife Maturado", desc: "180g grelhado", price: "20.000 Kz"},
+                    {name: "Espetada Mista", desc: "Carne e peixe", price: "24.000 Kz"},
+                    {name: "Costela Grelhada", desc: "Meia porção", price: "18.000 Kz"}
+                ],
+                sides: [
+                    {name: "Batata à Beiroa", desc: "Batata doce assada", price: "3.000 Kz"},
+                    {name: "Milho Grelhado", desc: "Milho fresco", price: "2.500 Kz"},
+                    {name: "Salada Mista", desc: "Fruta e legumes", price: "4.000 Kz"}
+                ],
+                drinks: [
+                    {name: "Cerveja Preta", desc: "Cerveja escura", price: "3.000 Kz"},
+                    {name: "Vinho Tinto Reserva", desc: "Copo", price: "6.000 Kz"}
+                ]
+            },
+            5: { // Lookal Beach Club
+                drinks: [
+                    {name: "Mojito", desc: "Bebida refrescante", price: "8.000 Kz"},
+                    {name: "Pina Colada", desc: "Bebida tropical", price: "9.000 Kz"},
+                    {name: "Cerveja Gelada", desc: "Sagres ou Super Bock", price: "3.000 Kz"},
+                    {name: "Água de Coco", desc: "Água natural", price: "2.000 Kz"}
+                ],
+                food: [
+                    {name: "Peixe Grelhado", desc: "Peixe do dia", price: "18.000 Kz"},
+                    {name: "Camarones na Manteiga", desc: "Camarão fresco", price: "16.000 Kz"},
+                    {name: "Arroz de Marisco", desc: "Misto variado", price: "20.000 Kz"},
+                    {name: "Pasta Frutos do Mar", desc: "Talharim premium", price: "15.000 Kz"}
+                ]
+            },
+            10: { // Batuk Restaurante
+                appetizers: [
+                    {name: "Camarones Crispy", desc: "Camarão empanado", price: "14.000 Kz"},
+                    {name: "Polvo à Lagareiro", desc: "Polvo grelhado", price: "13.000 Kz"}
+                ],
+                main: [
+                    {name: "Peixe Grelhado", desc: "Peixe inteiro do dia", price: "24.000 Kz"},
+                    {name: "Lagosta Grelhada", desc: "1kg com manteiga", price: "40.000 Kz"},
+                    {name: "Arroz de Marisco", desc: "Receita tradicional", price: "22.000 Kz"},
+                    {name: "Filé de Peixe Branco", desc: "Com molho cremoso", price: "20.000 Kz"}
+                ],
+                drinks: [
+                    {name: "Vinho Branco Fresco", desc: "Português", price: "5.000 Kz"},
+                    {name: "Cerveja", desc: "Gelada", price: "3.000 Kz"}
+                ]
+            }
+        };
+
+        const venues = [
+            // LUANDA
+            {id: 1, type: "restaurant", name: "Café Del Mar", location: "Luanda - Mussulo", rating: 4.9, lat: -8.8383, lng: 13.2344, description: "Um dos melhores spots de Luanda com ambiente espetacular, comida internacional e frutos do mar frescos.", image: "https://images.unsplash.com/photo-1631504185857-ba1d95e2b86e?w=800&h=400&fit=crop", priceKwanza: "50.000 - 80.000 Kz", phone: "(+244) 923 456 789"},
+            {id: 2, type: "nightclub", name: "Caminito Night Club", location: "Luanda - Centro", rating: 4.8, lat: -8.8387, lng: 13.2344, description: "O coração da vida noturna de Luanda. Pista de dança animada, DJ ao vivo e coquetéis premium.", image: "https://images.unsplash.com/photo-1484633168676-eecda7ee3740?w=800&h=400&fit=crop", priceKwanza: "5.000 - 15.000 Kz", phone: "(+244) 920 111 222"},
+            {id: 3, type: "restaurant", name: "O Madeirense", location: "Luanda - Marte", rating: 4.8, lat: -8.8420, lng: 13.2380, description: "Provavelmente a melhor carne em Luanda! Espetadas de vitela e bifes suculentos são especialidade.", image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&h=400&fit=crop", priceKwanza: "55.000 - 85.000 Kz", phone: "(+244) 923 234 567"},
+            {id: 4, type: "nightclub", name: "Lookal Ocean Club", location: "Luanda - Baía", rating: 4.7, lat: -8.8350, lng: 13.2300, description: "Venue de luxo na baía com DJ internacionais, coquetéis artesanais e vista panorâmica do mar.", image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&h=400&fit=crop", priceKwanza: "8.000 - 20.000 Kz", phone: "(+244) 920 555 666"},
+            {id: 5, type: "beach", name: "Lookal Beach Club", location: "Luanda - Ilha de Cabo", rating: 4.8, lat: -8.8365, lng: 13.2315, description: "Beach club de luxo com piscina, restaurante, bar e vista espetacular. Perfeito para dia inteiro.", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=400&fit=crop", priceKwanza: "Entrada: 10.000 Kz", phone: "(+244) 923 111 000"},
+            {id: 6, type: "accommodation", name: "EPIC SANA Luanda Hotel", location: "Luanda - Baia de Luanda", rating: 4.7, lat: -8.8340, lng: 13.2350, description: "Hotel 5 estrelas de luxo com vista para o mar, piscina, restaurante e spa.", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=400&fit=crop", priceKwanza: "130.000 - 250.000 Kz/noite", phone: "(+244) 222 641 000"},
+            {id: 7, type: "tourism", name: "Miradouro da Lua", location: "Luanda - Benlonga", rating: 4.9, lat: -8.8600, lng: 13.1500, description: "Paisagem natural única com cores intensas. Um dos locais mais bonitos de Angola.", image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: "Sem telefone"},
+            {id: 8, type: "exchange", name: "NovaCâmbios - Centro", location: "Luanda - Baixa", rating: 4.6, lat: -8.8395, lng: 13.2355, description: "Casa de câmbio oficial com melhor taxa de câmbio.", image: "https://images.unsplash.com/photo-1563207153-f403bf289096?w=800&h=400&fit=crop", priceKwanza: "Taxa competitiva", phone: "(+244) 222 448 426"},
+
+            // BENGUELA
+            {id: 9, type: "beach", name: "Baía Azul Beach Club", location: "Benguela - Centro", rating: 4.7, lat: -12.5731, lng: 13.4038, description: "A mais bonita baía de Angola com 3km de areia branca e água azul turquesa.", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=400&fit=crop", priceKwanza: "Entrada: 5.000 Kz", phone: "(+244) 927 123 000"},
+            {id: 10, type: "restaurant", name: "Batuk Restaurante", location: "Benguela - Lobito", rating: 4.8, lat: -12.3810, lng: 13.5440, description: "Melhor restaurante de Lobito com especialidade em frutos do mar e culinária europeia.", image: "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&h=400&fit=crop", priceKwanza: "45.000 - 75.000 Kz", phone: "(+244) 927 234 567"},
+
+            // LUBANGO
+            {id: 11, type: "tourism", name: "Miradouro da Serra da Leba", location: "Lubango - Serra da Leba", rating: 4.9, lat: -14.9500, lng: 13.7800, description: "Uma das 7 Maravilhas de Angola! Falésias vertiginosas com vista panorâmica.", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: "Sem telefone"},
+            {id: 12, type: "accommodation", name: "Messe Hotel Huila", location: "Lubango - Centro", rating: 5.0, lat: -14.9237, lng: 13.7833, description: "Melhor hotel de Lubango com 5 estrelas. Melhor custo-benefício.", image: "https://images.unsplash.com/photo-1445991842772-f928fcc18412?w=800&h=400&fit=crop", priceKwanza: "75.000 - 180.000 Kz/noite", phone: "(+244) 938 234 567"},
+
+            // CABINDA
+            {id: 13, type: "tourism", name: "Floresta do Mayombe", location: "Cabinda - Mayombe", rating: 4.9, lat: -5.3666, lng: 13.4233, description: "Uma das 7 Maravilhas de Angola! Exuberante selva tropical.", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop", priceKwanza: "Entrada: 10.000 Kz", phone: "Sem telefone"},
+
+            // NAMIBE
+            {id: 14, type: "tourism", name: "Deserto do Namibe", location: "Namibe - Deserto", rating: 4.8, lat: -15.1961, lng: 12.1522, description: "Deserto único com paisagens áridas e vista espetacular.", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: "Sem telefone"},
+
+            // HUAMBO
+            {id: 15, type: "tourism", name: "Morro do Môco", location: "Huambo - Môco", rating: 4.9, lat: -12.7667, lng: 15.7833, description: "Uma das 7 Maravilhas de Angola! Montanha sagrada com vista panorâmica.", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: "Sem telefone"},
+        ];
+
+        let map;
+        let markers = [];
+        let currentUser = JSON.parse(localStorage.getItem('angoliveUser')) || null;
+        let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        let visited = JSON.parse(localStorage.getItem('visited')) || [];
+
+        // Initialize Map
+        function initMap() {
+            map = L.map('map').setView([-11.2, 13.5], 6);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            displayVenues();
+            updateUI();
+        }
+
+        let currentCityFilter = '';
+        let currentCategoryFilter = 'all';
+
+        function displayVenues(type = 'all', city = '') {
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+
+            let filtered = venues;
+
+            if (type !== 'all') {
+                filtered = filtered.filter(v => v.type === type);
+            }
+
+            if (city) {
+                filtered = filtered.filter(v => v.location.includes(city));
+            }
+
+            filtered.forEach(venue => {
+                const icon = getIcon(venue.type);
+                const marker = L.marker([venue.lat, venue.lng], {
+                    icon: L.divIcon({
+                        html: `<div style="font-size: 24px;">${icon}</div>`,
+                        iconSize: [30, 30],
+                        className: 'custom-marker'
+                    })
+                }).addTo(map);
+
+                marker.on('click', () => openVenueModal(venue.id));
+                markers.push(marker);
+            });
+        }
+
+        function getIcon(type) {
+            const icons = {
+                restaurant: '🍽️',
+                nightclub: '🎉',
+                beach: '🏖️',
+                accommodation: '🏨',
+                tourism: '🏛️',
+                exchange: '💱'
+            };
+            return icons[type] || '📍';
+        }
+
+        function filterByType(type) {
+            displayVenues(type, currentCityFilter);
+            renderVenuesList(filterVenuesList(type, currentCityFilter));
+        }
+
+        function filterByCity() {
+            const city = document.getElementById('citySelect').value;
+            currentCityFilter = city;
+            displayVenues(currentCategoryFilter, city);
+            renderVenuesList(filterVenuesList(currentCategoryFilter, city));
+        }
+
+        function filterByCategory(category, btn) {
+            currentCategoryFilter = category;
+
+            // Update active button
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            displayVenues(category, currentCityFilter);
+            renderVenuesList(filterVenuesList(category, currentCityFilter));
+        }
+
+        function filterVenuesList(type, city) {
+            let filtered = venues;
+
+            if (type !== 'all') {
+                filtered = filtered.filter(v => v.type === type);
+            }
+
+            if (city) {
+                filtered = filtered.filter(v => v.location.includes(city));
+            }
+
+            return filtered;
+        }
+
+        function renderVenuesList(venueList) {
+            const container = document.getElementById('venuesListContainer');
+            container.innerHTML = venueList.map(v => `
+                <div class="venue-item" onclick="openVenueModal(${v.id})">
+                    <div class="venue-name">${v.name}</div>
+                    <div class="venue-info">${v.location}</div>
+                    <div class="venue-info">${v.priceKwanza}</div>
+                    <span class="venue-rating">⭐ ${v.rating}</span>
+                </div>
+            `).join('');
+        }
+
+        function filterLocations() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = venues.filter(v =>
+                v.name.toLowerCase().includes(search) ||
+                v.location.toLowerCase().includes(search)
+            );
+            renderVenuesList(filtered);
+        }
+
+        function switchSidebarTab(tab) {
+            document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (tab === 'list') {
+                document.getElementById('venuesListContainer').style.display = 'block';
+                document.getElementById('favoritesListContainer').style.display = 'none';
+                renderVenuesList(venues);
+            } else {
+                document.getElementById('venuesListContainer').style.display = 'none';
+                document.getElementById('favoritesListContainer').style.display = 'block';
+                const favVenues = venues.filter(v => favorites.includes(v.id));
+                const container = document.getElementById('favoritesListContainer');
+                container.innerHTML = favVenues.length > 0 ?
+                    favVenues.map(v => `
+                        <div class="venue-item" onclick="openVenueModal(${v.id})">
+                            <div class="venue-name">${v.name}</div>
+                            <div class="venue-info">${v.location}</div>
+                            <span class="venue-rating">⭐ ${v.rating}</span>
+                        </div>
+                    `).join('') :
+                    '<p style="text-align:center; color:#999; font-size:12px;">Nenhum favorito ainda</p>';
+            }
+        }
+
+        function openVenueModal(id) {
+            const venue = venues.find(v => v.id === id);
+            if (!venue) return;
+
+            const isFavorite = favorites.includes(id);
+            const reviews = getVenueReviews(id);
+            const avgRating = reviews.length > 0 ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1) : 'N/A';
+
+            const typeLabel = {
+                restaurant: '🍽️ Restaurante',
+                nightclub: '🎉 Vida Noturna',
+                beach: '🏖️ Beach Club',
+                accommodation: '🏨 Alojamento',
+                tourism: '🏛️ Turismo',
+                exchange: '💱 Câmbio'
+            };
+
+            document.getElementById('modalImageContainer').innerHTML = `
+                <img src="${venue.image || 'https://via.placeholder.com/800x400?text=' + encodeURIComponent(venue.name)}" alt="${venue.name}" style="width:100%; height:100%; object-fit:cover;">
+                <button class="close-btn" onclick="closeVenueModal()">✕</button>
+            `;
+
+            let reviewsHTML = `
+                <div class="modal-section">
+                    <div class="modal-section-title">⭐ Avaliações & Comentários</div>
+                    <div class="reviews-container">
+                        <div class="avg-rating-display">
+                            <div class="avg-rating-number">${avgRating}</div>
+                            <div class="avg-rating-stars">${'⭐'.repeat(Math.round(avgRating))}</div>
+                            <div class="avg-rating-count">${reviews.length} avaliações</div>
+                        </div>
+
+                        <div class="review-form">
+                            <div style="font-weight: 600; font-size: 12px; margin-bottom: 10px;">Sua Avaliação</div>
+                            <div class="rating-input" id="ratingInput${id}">
+                                <button class="star-btn" onclick="setRating(${id}, 1)">☆</button>
+                                <button class="star-btn" onclick="setRating(${id}, 2)">☆</button>
+                                <button class="star-btn" onclick="setRating(${id}, 3)">☆</button>
+                                <button class="star-btn" onclick="setRating(${id}, 4)">☆</button>
+                                <button class="star-btn" onclick="setRating(${id}, 5)">☆</button>
+                            </div>
+                            <textarea class="review-textarea" id="reviewText${id}" placeholder="Compartilhe sua experiência..."></textarea>
+                            <button class="review-submit-btn" onclick="submitReview(${id})">Enviar Comentário</button>
+                        </div>
+
+                        <div class="reviews-list">
+                            ${reviews.length > 0 ? reviews.map(r => `
+                                <div class="review-item">
+                                    <div class="review-header">
+                                        <div class="review-name">${r.name || 'Anónimo'}</div>
+                                        <div class="review-date">${r.date}</div>
+                                    </div>
+                                    <div class="review-rating">${'⭐'.repeat(r.rating)}</div>
+                                    <div class="review-text">${r.comment}</div>
+                                </div>
+                            `).join('') : '<div class="no-reviews">Sem avaliações ainda. Seja o primeiro!</div>'}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('modalBody').innerHTML = `
+                <div class="modal-name">${venue.name}</div>
+                <div style="margin-bottom: 15px;">
+                    <span class="modal-rating">⭐ ${venue.rating}</span>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-section-title">${typeLabel[venue.type]}</div>
+                    <div class="modal-section-content">${venue.location}</div>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-section-title">💰 Preço</div>
+                    <div class="modal-section-content">${venue.priceKwanza}</div>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-section-title">📍 Localização</div>
+                    <div class="modal-section-content">${venue.location}</div>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-section-title">📱 Contacto</div>
+                    <div class="modal-section-content">${venue.phone}</div>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-section-title">ℹ️ Sobre</div>
+                    <div class="modal-section-content">${venue.description}</div>
+                </div>
+
+                ${getMenuHTML(id, venue.type)}
+
+                ${reviewsHTML}
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" onclick="toggleFavorite(${id})">${isFavorite ? '❤️ Salvo' : '🤍 Salvar'}</button>
+                    <button class="btn btn-secondary" onclick="openMap(${venue.lat}, ${venue.lng})">📍 Mapa</button>
+                </div>
+            `;
+
+            document.getElementById('venueModal').classList.add('active');
+        }
+
+        // Review management functions
+        let currentRating = 0;
+
+        function setRating(venueId, rating) {
+            currentRating = rating;
+            const buttons = document.querySelectorAll(`#ratingInput${venueId} .star-btn`);
+            buttons.forEach((btn, index) => {
+                if (index < rating) {
+                    btn.textContent = '★';
+                    btn.classList.add('selected');
+                } else {
+                    btn.textContent = '☆';
+                    btn.classList.remove('selected');
+                }
+            });
+        }
+
+        function submitReview(venueId) {
+            const comment = document.getElementById(`reviewText${venueId}`).value;
+
+            if (currentRating === 0) {
+                alert('Por favor, selecione uma classificação');
+                return;
+            }
+
+            if (!comment.trim()) {
+                alert('Por favor, escreva um comentário');
+                return;
+            }
+
+            if (!currentUser) {
+                alert('Por favor, crie um perfil primeiro');
+                return;
+            }
+
+            const review = {
+                venueId: venueId,
+                name: currentUser.name,
+                rating: currentRating,
+                comment: comment,
+                date: new Date().toLocaleDateString('pt-PT')
+            };
+
+            let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+            reviews.push(review);
+            localStorage.setItem('reviews', JSON.stringify(reviews));
+
+            currentRating = 0;
+            document.getElementById(`reviewText${venueId}`).value = '';
+
+            alert('Obrigado pelo seu comentário!');
+            openVenueModal(venueId);
+        }
+
+        function getVenueReviews(venueId) {
+            let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+            return reviews.filter(r => r.venueId === venueId).reverse();
+        }
+
+        function getMenuHTML(venueId, venueType) {
+            if (!menuData[venueId]) {
+                return '';
+            }
+
+            if (['restaurant', 'beach', 'nightclub'].includes(venueType)) {
+                let menuHTML = `
+                    <div class="modal-section">
+                        <div class="modal-section-title">🍽️ Menu & Preços</div>
+                        <div class="menu-container">
+                `;
+
+                const menu = menuData[venueId];
+
+                if (menu.appetizers) {
+                    menuHTML += `
+                        <div class="menu-category">
+                            <div class="menu-category-title">Entradas</div>
+                            <div class="menu-items">
+                                ${menu.appetizers.map(item => `
+                                    <div class="menu-item">
+                                        <div class="menu-item-info">
+                                            <div class="menu-item-name">${item.name}</div>
+                                            <div class="menu-item-desc">${item.desc}</div>
+                                        </div>
+                                        <div class="menu-item-price">${item.price}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (menu.main) {
+                    menuHTML += `
+                        <div class="menu-category">
+                            <div class="menu-category-title">Pratos Principais</div>
+                            <div class="menu-items">
+                                ${menu.main.map(item => `
+                                    <div class="menu-item">
+                                        <div class="menu-item-info">
+                                            <div class="menu-item-name">${item.name}</div>
+                                            <div class="menu-item-desc">${item.desc}</div>
+                                        </div>
+                                        <div class="menu-item-price">${item.price}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (menu.food) {
+                    menuHTML += `
+                        <div class="menu-category">
+                            <div class="menu-category-title">Comida</div>
+                            <div class="menu-items">
+                                ${menu.food.map(item => `
+                                    <div class="menu-item">
+                                        <div class="menu-item-info">
+                                            <div class="menu-item-name">${item.name}</div>
+                                            <div class="menu-item-desc">${item.desc}</div>
+                                        </div>
+                                        <div class="menu-item-price">${item.price}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (menu.sides) {
+                    menuHTML += `
+                        <div class="menu-category">
+                            <div class="menu-category-title">Acompanhamentos</div>
+                            <div class="menu-items">
+                                ${menu.sides.map(item => `
+                                    <div class="menu-item">
+                                        <div class="menu-item-info">
+                                            <div class="menu-item-name">${item.name}</div>
+                                            <div class="menu-item-desc">${item.desc}</div>
+                                        </div>
+                                        <div class="menu-item-price">${item.price}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                if (menu.drinks) {
+                    menuHTML += `
+                        <div class="menu-category">
+                            <div class="menu-category-title">Bebidas</div>
+                            <div class="menu-items">
+                                ${menu.drinks.map(item => `
+                                    <div class="menu-item">
+                                        <div class="menu-item-info">
+                                            <div class="menu-item-name">${item.name}</div>
+                                            <div class="menu-item-desc">${item.desc}</div>
+                                        </div>
+                                        <div class="menu-item-price">${item.price}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                menuHTML += `</div></div>`;
+                return menuHTML;
+            }
+            return '';
+        }
+
+        function closeVenueModal() {
+            document.getElementById('venueModal').classList.remove('active');
+        }
+
+        function toggleFavorite(id) {
+            const index = favorites.indexOf(id);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(id);
+            }
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            openVenueModal(id);
+            updateUI();
+        }
+
+        function openMap(lat, lng) {
+            map.setView([lat, lng], 14);
+            closeVenueModal();
+        }
+
+        function openProfile() {
+            document.getElementById('profileModal').classList.add('active');
+            if (currentUser) {
+                showUserProfile();
+            } else {
+                document.getElementById('loginForm').style.display = 'block';
+                document.getElementById('userProfile').style.display = 'none';
+            }
+        }
+
+        function closeProfile() {
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        function saveProfile() {
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const location = document.getElementById('userLocation').value;
+
+            if (name && email) {
+                currentUser = {name, email, location, joinDate: new Date().toLocaleDateString('pt-PT')};
+                localStorage.setItem('angoliveUser', JSON.stringify(currentUser));
+                updateUI();
+                showUserProfile();
+            } else {
+                alert('Por favor, preencha todos os campos obrigatórios');
+            }
+        }
+
+        function editProfile() {
+            document.getElementById('userName').value = currentUser.name;
+            document.getElementById('userEmail').value = currentUser.email;
+            document.getElementById('userLocation').value = currentUser.location;
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('userProfile').style.display = 'none';
+        }
+
+        function showUserProfile() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('userProfile').style.display = 'block';
+            document.getElementById('userInfoDisplay').innerHTML = `
+                <strong>${currentUser.name}</strong><br>
+                ${currentUser.email}<br>
+                <small>${currentUser.location} • Membro desde ${currentUser.joinDate}</small>
+            `;
+            document.getElementById('favCount').textContent = favorites.length;
+            document.getElementById('visitCount').textContent = visited.length;
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('angoliveUser');
+            document.getElementById('profileModal').classList.remove('active');
+            updateUI();
+        }
+
+        function updateUI() {
+            if (currentUser) {
+                document.querySelector('.user-btn').textContent = `👤 ${currentUser.name.split(' ')[0]}`;
+                document.getElementById('logoutBtn').style.display = 'inline-block';
+            } else {
+                document.querySelector('.user-btn').textContent = '👤 Meu Perfil';
+                document.getElementById('logoutBtn').style.display = 'none';
+            }
+        }
+
+        // Map expansion
+        function expandMap() {
+            const mapContainer = document.getElementById('map-container');
+            const closeBtn = document.querySelector('.expand-close-btn');
+            mapContainer.classList.add('expanded');
+            closeBtn.classList.add('show');
+            map.invalidateSize();
+        }
+
+        function collapseMap() {
+            const mapContainer = document.getElementById('map-container');
+            const closeBtn = document.querySelector('.expand-close-btn');
+            mapContainer.classList.remove('expanded');
+            closeBtn.classList.remove('show');
+            map.invalidateSize();
+        }
+
+        // Initialize on load
+        window.onload = () => {
+            initMap();
+            renderVenuesList(venues);
+
+            // Add click listener to map container
+            const mapContainer = document.getElementById('map-container');
+            mapContainer.addEventListener('click', expandMap);
+
+            // Add close button listener
+            document.querySelector('.expand-close-btn').addEventListener('click', collapseMap);
+        };
+    </script>
+</body>
+</html>
