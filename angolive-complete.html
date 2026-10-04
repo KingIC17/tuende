@@ -69,26 +69,38 @@
         /* Header com User */
         .header {
             background: white;
-            padding: 12px 16px;
+            padding: 20px 16px;
             border-bottom: 1px solid var(--border);
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            position: relative;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            flex: 1;
         }
 
         .header-left h1 {
-            font-size: 24px;
+            font-size: 32px;
             background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 700;
+            margin-top: 10px;
         }
 
         .header-right {
             display: flex;
             gap: 10px;
             align-items: center;
+            position: absolute;
+            right: 16px;
         }
 
         .user-btn, .logout-btn {
@@ -864,6 +876,7 @@
             }
 
             .header-right {
+                position: static;
                 width: 100%;
             }
 
@@ -891,10 +904,16 @@
         <!-- Header -->
         <div class="header">
             <div class="header-left">
-                <h1>🇦🇴 ANGOLIVE</h1>
+                <svg viewBox="0 0 200 200" width="80" height="80">
+                    <!-- Ondas -->
+                    <path d="M 30 90 Q 40 80 50 90 T 70 90 T 90 90 T 110 90 T 130 90 T 150 90 T 170 90" stroke="#CE1126" stroke-width="2" fill="none"/>
+                    <path d="M 30 110 Q 40 100 50 110 T 70 110 T 90 110 T 110 110 T 130 110 T 150 110 T 170 110" stroke="#FFD100" stroke-width="2" fill="none"/>
+                    <circle cx="100" cy="60" r="5" fill="#000000"/>
+                </svg>
+                <h1>ANGOLIVE</h1>
             </div>
             <div class="header-right">
-                <button class="user-btn" onclick="openProfile()">👤 Meu Perfil</button>
+                <button class="user-btn" onclick="openProfile()">MEU PERFIL</button>
                 <button class="logout-btn" onclick="logout()" style="display:none;" id="logoutBtn">Sair</button>
             </div>
         </div>
@@ -902,7 +921,7 @@
         <!-- Top Navigation -->
         <div class="top-nav">
             <div class="city-selector">
-                <label>🌍 Cidade:</label>
+                <label>CIDADE:</label>
                 <select class="city-select" id="citySelect" onchange="filterByCity()">
                     <option value="">Todas as Cidades</option>
                     <option value="Luanda">Luanda</option>
@@ -916,31 +935,31 @@
 
             <div class="categories-nav">
                 <button class="category-btn active" onclick="filterByCategory('all', this)" title="Todos">
-                    ⭐
+                    TODOS
                     <div class="tooltip">Todos</div>
                 </button>
                 <button class="category-btn" onclick="filterByCategory('restaurant', this)" title="Restaurantes">
-                    🍽️
+                    REST
                     <div class="tooltip">Restaurantes</div>
                 </button>
                 <button class="category-btn" onclick="filterByCategory('nightclub', this)" title="Vida Noturna">
-                    🎉
+                    FESTA
                     <div class="tooltip">Festas & Nightclubs</div>
                 </button>
                 <button class="category-btn" onclick="filterByCategory('beach', this)" title="Beach Clubs">
-                    🏖️
+                    PRAIA
                     <div class="tooltip">Beach Clubs</div>
                 </button>
                 <button class="category-btn" onclick="filterByCategory('accommodation', this)" title="Alojamento">
-                    🏨
+                    HOTEL
                     <div class="tooltip">Alojamento</div>
                 </button>
                 <button class="category-btn" onclick="filterByCategory('tourism', this)" title="Turismo">
-                    🏛️
+                    TOUR
                     <div class="tooltip">Turismo</div>
                 </button>
                 <button class="category-btn" onclick="filterByCategory('exchange', this)" title="Câmbio">
-                    💱
+                    CÂMBIO
                     <div class="tooltip">Câmbio</div>
                 </button>
             </div>
@@ -951,8 +970,8 @@
             <!-- Sidebar (Top) -->
             <div class="sidebar">
                 <div class="sidebar-header">
-                    <button class="sidebar-tab active" onclick="switchSidebarTab('list')">📍 Locais</button>
-                    <button class="sidebar-tab" onclick="switchSidebarTab('favorites')">❤️ Favoritos</button>
+                    <button class="sidebar-tab active" onclick="switchSidebarTab('list')">LOCAIS</button>
+                    <button class="sidebar-tab" onclick="switchSidebarTab('favorites')">FAVORITOS</button>
                 </div>
                 <div class="sidebar-content">
                     <input type="text" class="search-box" id="searchInput" placeholder="Procurar local..." onkeyup="filterLocations()">
@@ -961,30 +980,17 @@
                 </div>
             </div>
 
-            <!-- Map (Bottom) -->
-            <div class="map-container" id="map-container">
-                <div class="map-expand-hint">👆 Clique para ampliar o mapa</div>
-                <div id="map"></div>
-                <div class="map-controls">
-                    <button class="control-btn" onclick="filterByType('restaurant')">🍽️</button>
-                    <button class="control-btn" onclick="filterByType('nightclub')">🎉</button>
-                    <button class="control-btn" onclick="filterByType('beach')">🏖️</button>
-                    <button class="control-btn" onclick="filterByType('accommodation')">🏨</button>
-                    <button class="control-btn" onclick="filterByType('tourism')">🏛️</button>
-                    <button class="control-btn" onclick="filterByType('all')">⭐</button>
-                </div>
-            </div>
+
         </div>
 
-        <!-- Expand Close Button -->
-        <button class="expand-close-btn">✕ Fechar Mapa</button>
+
     </div>
 
     <!-- Venue Detail Modal -->
     <div class="modal" id="venueModal">
         <div class="modal-content">
             <div class="modal-header" id="modalImageContainer">
-                <button class="close-btn" onclick="closeVenueModal()">✕</button>
+                <button class="close-btn" onclick="closeVenueModal()">×</button>
             </div>
             <div class="modal-body" id="modalBody"></div>
         </div>
@@ -993,7 +999,7 @@
     <!-- Profile Modal -->
     <div class="profile-modal" id="profileModal">
         <div class="profile-content">
-            <button class="modal-close" onclick="closeProfile()">✕</button>
+            <button class="modal-close" onclick="closeProfile()">×</button>
             <div class="profile-title">Meu Perfil</div>
 
             <div id="loginForm">
@@ -1030,7 +1036,6 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
     <script>
         const menuData = {
             1: { // Café Del Mar
@@ -1143,77 +1148,20 @@
             {id: 15, type: "tourism", name: "Morro do Môco", location: "Huambo - Môco", rating: 4.9, lat: -12.7667, lng: 15.7833, description: "Uma das 7 Maravilhas de Angola! Montanha sagrada com vista panorâmica.", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: "Sem telefone", youtube: "https://youtube.com/results?search_query=Morro+Môco+Angola", instagram: "https://instagram.com/morromoco", tiktok: "https://tiktok.com/@morromoco"},
         ];
 
-        let map;
-        let markers = [];
         let currentUser = JSON.parse(localStorage.getItem('angoliveUser')) || null;
         let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
         let visited = JSON.parse(localStorage.getItem('visited')) || [];
 
-        // Initialize Map
-        function initMap() {
-            map = L.map('map').setView([-11.2, 13.5], 6);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 19
-            }).addTo(map);
-
-            displayVenues();
-            updateUI();
-        }
-
         let currentCityFilter = '';
         let currentCategoryFilter = 'all';
 
-        function displayVenues(type = 'all', city = '') {
-            markers.forEach(m => map.removeLayer(m));
-            markers = [];
-
-            let filtered = venues;
-
-            if (type !== 'all') {
-                filtered = filtered.filter(v => v.type === type);
-            }
-
-            if (city) {
-                filtered = filtered.filter(v => v.location.includes(city));
-            }
-
-            filtered.forEach(venue => {
-                const icon = getIcon(venue.type);
-                const marker = L.marker([venue.lat, venue.lng], {
-                    icon: L.divIcon({
-                        html: `<div style="font-size: 24px;">${icon}</div>`,
-                        iconSize: [30, 30],
-                        className: 'custom-marker'
-                    })
-                }).addTo(map);
-
-                marker.on('click', () => openVenueModal(venue.id));
-                markers.push(marker);
-            });
-        }
-
-        function getIcon(type) {
-            const icons = {
-                restaurant: '🍽️',
-                nightclub: '🎉',
-                beach: '🏖️',
-                accommodation: '🏨',
-                tourism: '🏛️',
-                exchange: '💱'
-            };
-            return icons[type] || '📍';
-        }
-
         function filterByType(type) {
-            displayVenues(type, currentCityFilter);
             renderVenuesList(filterVenuesList(type, currentCityFilter));
         }
 
         function filterByCity() {
             const city = document.getElementById('citySelect').value;
             currentCityFilter = city;
-            displayVenues(currentCategoryFilter, city);
             renderVenuesList(filterVenuesList(currentCategoryFilter, city));
         }
 
@@ -1224,7 +1172,6 @@
             document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
 
-            displayVenues(category, currentCityFilter);
             renderVenuesList(filterVenuesList(category, currentCityFilter));
         }
 
@@ -1249,7 +1196,7 @@
                     <div class="venue-name">${v.name}</div>
                     <div class="venue-info">${v.location}</div>
                     <div class="venue-info">${v.priceKwanza}</div>
-                    <span class="venue-rating">⭐ ${v.rating}</span>
+                    <span class="venue-rating">★ ${v.rating}</span>
                 </div>
             `).join('');
         }
@@ -1281,7 +1228,7 @@
                         <div class="venue-item" onclick="openVenueModal(${v.id})">
                             <div class="venue-name">${v.name}</div>
                             <div class="venue-info">${v.location}</div>
-                            <span class="venue-rating">⭐ ${v.rating}</span>
+                            <span class="venue-rating">★ ${v.rating}</span>
                         </div>
                     `).join('') :
                     '<p style="text-align:center; color:#999; font-size:12px;">Nenhum favorito ainda</p>';
@@ -1297,17 +1244,17 @@
             const avgRating = reviews.length > 0 ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1) : 'N/A';
 
             const typeLabel = {
-                restaurant: '🍽️ Restaurante',
-                nightclub: '🎉 Vida Noturna',
-                beach: '🏖️ Beach Club',
-                accommodation: '🏨 Alojamento',
-                tourism: '🏛️ Turismo',
-                exchange: '💱 Câmbio'
+                restaurant: 'Restaurante',
+                nightclub: 'Vida Noturna',
+                beach: 'Beach Club',
+                accommodation: 'Alojamento',
+                tourism: 'Turismo',
+                exchange: 'Câmbio'
             };
 
             document.getElementById('modalImageContainer').innerHTML = `
                 <img src="${venue.image || 'https://via.placeholder.com/800x400?text=' + encodeURIComponent(venue.name)}" alt="${venue.name}" style="width:100%; height:100%; object-fit:cover;">
-                <button class="close-btn" onclick="closeVenueModal()">✕</button>
+                <button class="close-btn" onclick="closeVenueModal()">×</button>
             `;
 
             let reviewsHTML = `
@@ -1316,7 +1263,7 @@
                     <div class="reviews-container">
                         <div class="avg-rating-display">
                             <div class="avg-rating-number">${avgRating}</div>
-                            <div class="avg-rating-stars">${'⭐'.repeat(Math.round(avgRating))}</div>
+                            <div class="avg-rating-stars">${'★'.repeat(Math.round(avgRating))}</div>
                             <div class="avg-rating-count">${reviews.length} avaliações</div>
                         </div>
 
@@ -1340,7 +1287,7 @@
                                         <div class="review-name">${r.name || 'Anónimo'}</div>
                                         <div class="review-date">${r.date}</div>
                                     </div>
-                                    <div class="review-rating">${'⭐'.repeat(r.rating)}</div>
+                                    <div class="review-rating">${'★'.repeat(r.rating)}</div>
                                     <div class="review-text">${r.comment}</div>
                                 </div>
                             `).join('') : '<div class="no-reviews">Sem avaliações ainda. Seja o primeiro!</div>'}
@@ -1352,7 +1299,7 @@
             document.getElementById('modalBody').innerHTML = `
                 <div class="modal-name">${venue.name}</div>
                 <div style="margin-bottom: 15px;">
-                    <span class="modal-rating">⭐ ${venue.rating}</span>
+                    <span class="modal-rating">★ ${venue.rating}</span>
                 </div>
 
                 <div class="modal-section">
@@ -1361,12 +1308,12 @@
                 </div>
 
                 <div class="modal-section">
-                    <div class="modal-section-title">💰 Preço</div>
+                    <div class="modal-section-title">PREÇO</div>
                     <div class="modal-section-content">${venue.priceKwanza}</div>
                 </div>
 
                 <div class="modal-section">
-                    <div class="modal-section-title">📍 Localização</div>
+                    <div class="modal-section-title">LOCALIZAÇÃO</div>
                     <div class="modal-section-content">${venue.location}</div>
                 </div>
 
@@ -1403,7 +1350,7 @@
 
                 <div class="btn-group">
                     <button class="btn btn-primary" onclick="toggleFavorite(${id})" style="background: #CE1126;">${isFavorite ? 'SALVO' : 'SALVAR'}</button>
-                    <button class="btn btn-secondary" onclick="openMap(${venue.lat}, ${venue.lng})" style="background: #CE1126;">MAPA</button>
+                    <button class="btn btn-secondary" onclick="openMap(${venue.lat}, ${venue.lng})" style="background: #CE1126; color: white;">VER NO MAPA</button>
                 </div>
             `;
 
@@ -1477,7 +1424,7 @@
             if (['restaurant', 'beach', 'nightclub'].includes(venueType)) {
                 let menuHTML = `
                     <div class="modal-section">
-                        <div class="modal-section-title">🍽️ Menu & Preços</div>
+                        <div class="modal-section-title">MENU & PREÇOS</div>
                         <div class="menu-container">
                 `;
 
@@ -1601,8 +1548,7 @@
         }
 
         function openMap(lat, lng) {
-            map.setView([lat, lng], 14);
-            closeVenueModal();
+            window.open(`https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=15/${lat}/${lng}`, '_blank', 'noopener');
         }
 
         function openProfile() {
@@ -1663,42 +1609,17 @@
 
         function updateUI() {
             if (currentUser) {
-                document.querySelector('.user-btn').textContent = `👤 ${currentUser.name.split(' ')[0]}`;
+                document.querySelector('.user-btn').textContent = currentUser.name.split(' ')[0];
                 document.getElementById('logoutBtn').style.display = 'inline-block';
             } else {
-                document.querySelector('.user-btn').textContent = '👤 Meu Perfil';
+                document.querySelector('.user-btn').textContent = 'MEU PERFIL';
                 document.getElementById('logoutBtn').style.display = 'none';
             }
         }
 
-        // Map expansion
-        function expandMap() {
-            const mapContainer = document.getElementById('map-container');
-            const closeBtn = document.querySelector('.expand-close-btn');
-            mapContainer.classList.add('expanded');
-            closeBtn.classList.add('show');
-            map.invalidateSize();
-        }
-
-        function collapseMap() {
-            const mapContainer = document.getElementById('map-container');
-            const closeBtn = document.querySelector('.expand-close-btn');
-            mapContainer.classList.remove('expanded');
-            closeBtn.classList.remove('show');
-            map.invalidateSize();
-        }
-
-        // Initialize on load
         window.onload = () => {
-            initMap();
+            updateUI();
             renderVenuesList(venues);
-
-            // Add click listener to map container
-            const mapContainer = document.getElementById('map-container');
-            mapContainer.addEventListener('click', expandMap);
-
-            // Add close button listener
-            document.querySelector('.expand-close-btn').addEventListener('click', collapseMap);
         };
     </script>
 </body>
