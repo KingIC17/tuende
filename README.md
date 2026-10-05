@@ -37,6 +37,11 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 ## Como funciona a app web
 
 - Os dados dos locais e menus estão no próprio ficheiro: `const venues` (32 locais) e `const menuData`.
+- Página inicial (por esta ordem): título e pesquisa "O que procura? / Onde?", filtros rápidos, Perto de si, Recomendados (com o motivo), Explorar por categoria, Coleções e Verificados recentemente. Pesquisa, filtros, categorias e coleções abrem a vista de resultados.
+- Campos de cada local: `type` (restaurant, beach, culture, nature, nightclub, accommodation, exchange), `highlight` (destaque útil PT/EN, também usado como motivo das recomendações), `family` (sugestão editorial para famílias), `address`, `hours` (horário por dia da semana, 0 = domingo, hora de Angola), `verified` (data e fontes da verificação; `stale` quando as fontes têm alguns anos).
+- O estado "Aberto/Fechado" só aparece com horário confirmado. O filtro "Aberto agora" aparece automaticamente quando pelo menos 8 locais tiverem `hours` (`MIN_PLACES_WITH_HOURS`). Hoje só a Fortaleza de São Miguel tem horário com fonte.
+- Recomendados, coleções e cidades: `RECOMMENDED`, `COLLECTIONS`, `CITIES`.
+- O detalhe mostra primeiro a informação prática (horário, morada, mapa, preço, contacto, o que falta confirmar e quando foi verificado) e só depois a descrição.
 - `exact: true` indica coordenadas confirmadas na Wikipedia/Wikidata. Nos restantes, "Como chegar" e "Ver no mapa" pesquisam o nome do local no Google Maps, e as coordenadas só servem para calcular distâncias aproximadas.
 - `photos`: fotos reais do Wikimedia Commons, com autor e licença (mostrados na app, como as licenças CC BY/CC BY-SA exigem). Locais sem `photos` usam `image`, uma foto ilustrativa do Unsplash, com a etiqueta "Foto ilustrativa".
 - Português por defeito, com botão para Inglês. Os textos estão em `I18N`; as traduções das descrições estão em `DESC_EN` e `MENU_DESC_EN`.
