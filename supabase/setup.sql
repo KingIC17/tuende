@@ -1,11 +1,13 @@
--- ANGOLIVE: fotos e vídeos dos visitantes.
+-- ANGOLIVE: comentários, avaliações, fotos e vídeos dos visitantes.
 -- Correr uma vez no Supabase: SQL Editor > New query > colar tudo > Run.
 --
 -- Como funciona:
---   * Qualquer pessoa pode enviar uma foto ou um link de vídeo; fica com o estado 'pending'.
---   * Só aparecem na app as linhas com estado 'approved'.
---   * Para aprovar: Table Editor > submissions > mudar status para 'approved' (ou 'rejected').
---   * Cada "Denunciar" soma 1 a report_count; com 3 denúncias o envio fica 'hidden' automaticamente.
+--   * Qualquer pessoa pode enviar um comentário com estrelas, uma foto ou um link de vídeo;
+--     tudo fica com o estado 'pending'.
+--   * Só aparecem na app as linhas com estado 'approved'. As estrelas de cada local são a média
+--     dos comentários aprovados (vista review_stats).
+--   * Para aprovar: Table Editor > reviews (ou submissions) > mudar status para 'approved' (ou 'rejected').
+--   * Cada "Denunciar" soma 1 a report_count; com 3 denúncias fica 'hidden' automaticamente.
 
 create table public.submissions (
     id uuid primary key default gen_random_uuid(),
@@ -33,11 +35,49 @@ create policy "Visitantes podem enviar, sempre como pendente"
     to anon, authenticated
     with check (status = 'pending' and report_count = 0);
 
+create table public.reviews (
+    id uuid primary key default gen_random_uuid(),
+    venue_id integer not null,
+    author text not null check (char_length(author) between 1 and 60),
+    rating integer not null check (rating between 1 and 5),
+    comment text not null check (char_length(comment) between 1 and 600),
+    status text not null default 'pending' check (status in ('pending', 'approved', 'rejected', 'hidden')),
+    report_count integer not null default 0,
+    created_at timestamptz not null default now()
+);
+
+create index reviews_venue_status_idx on public.reviews (venue_id, status, created_at desc);
+
+alter table public.reviews enable row level security;
+
+create policy "Visitantes veem apenas comentários aprovados"
+    on public.reviews for select
+    to anon, authenticated
+    using (status = 'approved');
+
+create policy "Visitantes podem comentar, sempre como pendente"
+    on public.reviews for insert
+    to anon, authenticated
+    with check (status = 'pending' and report_count = 0);
+
+-- Média e número de comentários aprovados por local (respeita as regras acima).
+create view public.review_stats with (security_invoker = true) as
+    select venue_id,
+           round(avg(rating)::numeric, 1) as avg_rating,
+           count(*)::integer as review_count
+      from public.reviews
+     where status = 'approved'
+     group by venue_id;
+
+grant select on public.review_stats to anon, authenticated;
+
 create table public.reports (
     id bigint generated always as identity primary key,
-    submission_id uuid not null references public.submissions (id) on delete cascade,
+    submission_id uuid references public.submissions (id) on delete cascade,
+    review_id uuid references public.reviews (id) on delete cascade,
     reason text check (char_length(reason) <= 200),
-    created_at timestamptz not null default now()
+    created_at timestamptz not null default now(),
+    check ((submission_id is null) <> (review_id is null))
 );
 
 alter table public.reports enable row level security;
@@ -53,10 +93,17 @@ create function public.handle_report() returns trigger
     set search_path = public
 as $$
 begin
-    update public.submissions
-       set report_count = report_count + 1,
-           status = case when report_count + 1 >= 3 then 'hidden' else status end
-     where id = new.submission_id;
+    if new.submission_id is not null then
+        update public.submissions
+           set report_count = report_count + 1,
+               status = case when report_count + 1 >= 3 then 'hidden' else status end
+         where id = new.submission_id;
+    else
+        update public.reviews
+           set report_count = report_count + 1,
+               status = case when report_count + 1 >= 3 then 'hidden' else status end
+         where id = new.review_id;
+    end if;
     return new;
 end;
 $$;
