@@ -51,7 +51,7 @@ self.addEventListener('fetch', (event) => {
 
     if (url.origin === self.location.origin) {
         event.respondWith(networkFirst(request));
-    } else if (url.hostname === 'images.unsplash.com') {
+    } else if (url.hostname === 'images.unsplash.com' || url.hostname.endsWith('wikimedia.org')) {
         event.respondWith(imageCacheFirst(request));
     }
 });

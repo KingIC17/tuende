@@ -516,6 +516,56 @@
         .stat-label { font-size: 14px; color: var(--muted); }
         .stack { display: grid; gap: 8px; }
 
+        .photo-badge {
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            background: rgba(0, 0, 0, 0.65);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        .photo-meta { padding: 10px 20px 0; }
+        .photo-credit { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+        .photo-credit a { color: inherit; }
+        .photo-strip { display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 2px; }
+
+        .photo-thumb {
+            flex: 0 0 76px;
+            height: 56px;
+            padding: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 3px solid transparent;
+            background: var(--surface-2);
+        }
+
+        .photo-thumb.active { border-color: var(--primary); }
+        .photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .visitor-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 10px; }
+        .visitor-gallery > .hint { grid-column: 1 / -1; }
+        .visitor-item { margin: 0; background: var(--surface-2); border-radius: 12px; overflow: hidden; font-size: 14px; }
+        .visitor-item img { width: 100%; height: 130px; object-fit: cover; display: block; }
+        .visitor-item .video-link { display: flex; align-items: center; justify-content: center; gap: 8px; height: 130px; color: var(--primary); font-weight: 700; text-decoration: none; text-align: center; padding: 8px; }
+        .visitor-item .video-link .icon { fill: currentColor; }
+        .visitor-caption { padding: 8px 10px 0; color: var(--muted); overflow-wrap: anywhere; }
+        .report-btn { background: none; border: none; color: var(--primary); font-size: 14px; font-weight: 600; min-height: 40px; padding: 0 10px; }
+
+        .visitor-form-wrap { margin-top: 12px; }
+        .visitor-form-wrap > summary { list-style: none; cursor: pointer; }
+        .visitor-form-wrap > summary::-webkit-details-marker { display: none; }
+        .visitor-form-wrap[open] > summary { margin-bottom: 10px; }
+
+        .media-kind { display: flex; gap: 18px; margin-bottom: 8px; font-size: 16px; }
+        .media-kind label { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+        .media-kind input { width: 20px; height: 20px; accent-color: var(--primary); }
+        .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: var(--muted); margin: 4px 0 6px; }
+        .consent input { width: 22px; height: 22px; margin-top: 2px; flex: none; accent-color: var(--primary); }
+
         @media (max-width: 640px) {
             .filters { position: static; }
             .filters-grid { grid-template-columns: 1fr; }
@@ -562,6 +612,8 @@
                     <option value="Cabinda">Cabinda</option>
                     <option value="Namibe">Namibe</option>
                     <option value="Huambo">Huambo</option>
+                    <option value="Icolo e Bengo">Icolo e Bengo</option>
+                    <option value="Malanje">Malanje</option>
                 </select>
                 <select class="field" id="sortSelect" data-i18n-aria="sortLabel">
                     <option value="rating" data-i18n="sortRating"></option>
@@ -649,20 +701,6 @@
                     {name: "Coquetel da Casa", desc: "Bebida especial", price: "7.000 Kz"}
                 ]
             },
-            2: { // Caminito Night Club
-                drinks: [
-                    {name: "Cerveja Sagres", desc: "Cerveja gelada", price: "3.000 Kz"},
-                    {name: "Vinho Branco", desc: "Copo", price: "5.000 Kz"},
-                    {name: "Coquetel Tropical", desc: "Mix de frutas", price: "8.000 Kz"},
-                    {name: "Whisky Importado", desc: "Dose", price: "6.000 Kz"},
-                    {name: "Champagne", desc: "Garrafa", price: "40.000 Kz"}
-                ],
-                appetizers: [
-                    {name: "Tábua de Queijos", desc: "Queijos portugueses", price: "12.000 Kz"},
-                    {name: "Batatas Fritas Gourmet", desc: "Com temperos especiais", price: "4.000 Kz"},
-                    {name: "Camarones", desc: "Pequena porção", price: "8.000 Kz"}
-                ]
-            },
             3: { // O Madeirense
                 main: [
                     {name: "Espetada de Vitela", desc: "Especialidade da casa", price: "22.000 Kz"},
@@ -713,50 +751,73 @@
         };
 
         const venues = [
-            // LUANDA
-            {id: 1, type: "restaurant", name: "Café Del Mar", location: "Luanda - Mussulo", rating: 4.9, lat: -8.8383, lng: 13.2344, description: "Um dos melhores spots de Luanda com ambiente espetacular, comida internacional e frutos do mar frescos.", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop", priceKwanza: "50.000 - 80.000 Kz", phone: ""},
-            {id: 2, type: "nightclub", name: "Caminito Night Club", location: "Luanda - Centro", rating: 4.8, lat: -8.8387, lng: 13.2344, description: "O coração da vida noturna de Luanda. Pista de dança animada, DJ ao vivo e coquetéis premium.", image: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=800&h=400&fit=crop", priceKwanza: "5.000 - 15.000 Kz", phone: ""},
-            {id: 3, type: "restaurant", name: "O Madeirense", location: "Luanda - Marte", rating: 4.8, lat: -8.8420, lng: 13.2380, description: "Provavelmente a melhor carne em Luanda! Espetadas de vitela e bifes suculentos são especialidade.", image: "https://images.unsplash.com/photo-1558030006-450675393462?w=800&h=400&fit=crop", priceKwanza: "55.000 - 85.000 Kz", phone: ""},
-            {id: 4, type: "nightclub", name: "Lookal Ocean Club", location: "Luanda - Baía", rating: 4.7, lat: -8.8350, lng: 13.2300, description: "Venue de luxo na baía com DJ internacionais, coquetéis artesanais e vista panorâmica do mar.", image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&h=400&fit=crop", priceKwanza: "8.000 - 20.000 Kz", phone: ""},
-            {id: 5, type: "beach", name: "Lookal Beach Club", location: "Luanda - Ilha de Cabo", rating: 4.8, lat: -8.8365, lng: 13.2315, description: "Beach club de luxo com piscina, restaurante, bar e vista espetacular. Perfeito para dia inteiro.", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=400&fit=crop", priceKwanza: "Entrada: 10.000 Kz", phone: ""},
-            {id: 6, type: "accommodation", name: "EPIC SANA Luanda Hotel", location: "Luanda - Baia de Luanda", rating: 4.7, lat: -8.8340, lng: 13.2350, description: "Hotel 5 estrelas de luxo com vista para o mar, piscina, restaurante e spa.", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=400&fit=crop", priceKwanza: "130.000 - 250.000 Kz/noite", phone: ""},
-            {id: 7, type: "tourism", name: "Miradouro da Lua", location: "Luanda - Benlonga", rating: 4.9, lat: -8.8600, lng: 13.1500, description: "Paisagem natural única com cores intensas. Um dos locais mais bonitos de Angola.", image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: ""},
-            {id: 8, type: "exchange", name: "NovaCâmbios - Centro", location: "Luanda - Baixa", rating: 4.6, lat: -8.8395, lng: 13.2355, description: "Casa de câmbio oficial com melhor taxa de câmbio.", image: "https://images.unsplash.com/photo-1563207153-f403bf289096?w=800&h=400&fit=crop", priceKwanza: "Taxa competitiva", phone: ""},
-
-            // BENGUELA
-            {id: 9, type: "beach", name: "Baía Azul Beach Club", location: "Benguela - Centro", rating: 4.7, lat: -12.5731, lng: 13.4038, description: "A mais bonita baía de Angola com 3km de areia branca e água azul turquesa.", image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&h=400&fit=crop", priceKwanza: "Entrada: 5.000 Kz", phone: ""},
-            {id: 10, type: "restaurant", name: "Batuk Restaurante", location: "Benguela - Lobito", rating: 4.8, lat: -12.3810, lng: 13.5440, description: "Melhor restaurante de Lobito com especialidade em frutos do mar e culinária europeia.", image: "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&h=400&fit=crop", priceKwanza: "45.000 - 75.000 Kz", phone: ""},
-
-            // LUBANGO
-            {id: 11, type: "tourism", name: "Miradouro da Serra da Leba", location: "Lubango - Serra da Leba", rating: 4.9, lat: -14.9500, lng: 13.7800, description: "Uma das 7 Maravilhas de Angola! Falésias vertiginosas com vista panorâmica.", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: ""},
-            {id: 12, type: "accommodation", name: "Messe Hotel Huila", location: "Lubango - Centro", rating: 5.0, lat: -14.9237, lng: 13.7833, description: "Melhor hotel de Lubango com 5 estrelas. Melhor custo-benefício.", image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=400&fit=crop", priceKwanza: "75.000 - 180.000 Kz/noite", phone: ""},
-
-            // CABINDA
-            {id: 13, type: "tourism", name: "Floresta do Mayombe", location: "Cabinda - Mayombe", rating: 4.9, lat: -5.3666, lng: 13.4233, description: "Uma das 7 Maravilhas de Angola! Exuberante selva tropical.", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop", priceKwanza: "Entrada: 10.000 Kz", phone: ""},
-
-            // NAMIBE
-            {id: 14, type: "tourism", name: "Deserto do Namibe", location: "Namibe - Deserto", rating: 4.8, lat: -15.1961, lng: 12.1522, description: "Deserto único com paisagens áridas e vista espetacular.", image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: ""},
-
-            // HUAMBO
-            {id: 15, type: "tourism", name: "Morro do Môco", location: "Huambo - Môco", rating: 4.9, lat: -12.7667, lng: 15.7833, description: "Uma das 7 Maravilhas de Angola! Montanha sagrada com vista panorâmica.", image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: ""},
+            {"id": 1, "type": "restaurant", "name": "Café del Mar", "location": "Luanda - Ilha de Luanda", "rating": 4.9, "lat": -8.792, "lng": 13.236, "exact": false, "description": "Restaurante de praia na Ilha de Luanda, aberto desde 2000 e renovado em 2016. Cozinha variada, de tapas a marisco, com vista para o pôr do sol.", "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop", "priceKwanza": "50.000 - 80.000 Kz", "phone": ""},
+            {"id": 3, "type": "restaurant", "name": "O Madeirense", "location": "Luanda - Liga Africana", "rating": 4.8, "lat": -8.824, "lng": 13.24, "exact": false, "description": "Cozinha portuguesa e madeirense no bairro da Liga Africana. Conhecido pelas espetadas de carne grelhadas na brasa.", "image": "https://images.unsplash.com/photo-1558030006-450675393462?w=800&h=400&fit=crop", "priceKwanza": "55.000 - 85.000 Kz", "phone": ""},
+            {"id": 4, "type": "restaurant", "name": "Lookal Mar", "location": "Luanda - Ilha de Luanda", "rating": 4.7, "lat": -8.788, "lng": 13.239, "exact": false, "description": "Restaurante de marisco e cervejaria na Ilha do Cabo, com peixe e marisco frescos e cerveja Cuca à pressão.", "image": "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 5, "type": "beach", "name": "Lookal Beach Club", "location": "Luanda - Ilha de Luanda", "rating": 4.8, "lat": -8.7875, "lng": 13.2395, "exact": false, "description": "Beach club na Ilha do Cabo com piscina, espreguiçadeiras, restaurante e música eletrónica e urbana à noite.", "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=400&fit=crop", "priceKwanza": "Entrada: 10.000 Kz", "phone": ""},
+            {"id": 6, "type": "accommodation", "name": "EPIC SANA Luanda Hotel", "location": "Luanda - Rua da Missão", "rating": 4.7, "lat": -8.815, "lng": 13.233, "exact": false, "description": "Hotel de 5 estrelas no centro de Luanda, na Rua da Missão, a cerca de 6 km do aeroporto. Piscina, restaurantes e spa.", "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=400&fit=crop", "priceKwanza": "130.000 - 250.000 Kz/noite", "phone": ""},
+            {"id": 7, "type": "tourism", "name": "Miradouro da Lua", "location": "Luanda - Belas", "rating": 4.9, "lat": -9.2211, "lng": 13.0897, "exact": true, "description": "Falésias esculpidas pela erosão, 40 km a sul de Luanda, com cores intensas ao pôr do sol. Um dos postais de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Miradouro_da_Lua_%28Angola%29.jpg/1280px-Miradouro_da_Lua_%28Angola%29.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Miradouro_da_Lua_%28Angola%29.jpg/330px-Miradouro_da_Lua_%28Angola%29.jpg", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Miradouro_da_Lua_(Angola).jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Miradouro_da_Lua.jpg/1280px-Miradouro_da_Lua.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Miradouro_da_Lua.jpg/330px-Miradouro_da_Lua.jpg", "author": "jlrsousa", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Miradouro_da_Lua.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Miradouro_da_Lua_3.jpg/1280px-Miradouro_da_Lua_3.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Miradouro_da_Lua_3.jpg/330px-Miradouro_da_Lua_3.jpg", "author": "Mayada Marrom", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Miradouro_da_Lua_3.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 8, "type": "exchange", "name": "NovaCâmbios", "location": "Luanda - Av. Comandante Valódia", "rating": 4.6, "lat": -8.826, "lng": 13.242, "exact": false, "description": "Casa de câmbio na Avenida Comandante Valódia, em Luanda.", "image": "https://images.unsplash.com/photo-1563207153-f403bf289096?w=800&h=400&fit=crop", "priceKwanza": "Taxa competitiva", "phone": ""},
+            {"id": 9, "type": "beach", "name": "Baía Azul", "location": "Benguela - Baía Azul", "rating": 4.7, "lat": -12.66, "lng": 13.29, "exact": false, "description": "Baía de areia clara e água azul-turquesa a sul de Benguela, muito procurada para banhos e passeios.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg/1280px-Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg/330px-Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg", "author": "Michael Gaylard from Horsham, UK", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Ba%C3%ADa_Azul_DSC_0188_(52611874218).jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Dois_Morros.jpg/1280px-Dois_Morros.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Dois_Morros.jpg/330px-Dois_Morros.jpg", "author": "Jrrudge", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Dois_Morros.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 10, "type": "restaurant", "name": "Batuk Restaurante", "location": "Benguela - Restinga do Lobito", "rating": 4.8, "lat": -12.33, "lng": 13.56, "exact": false, "description": "Restaurante na Restinga do Lobito, aberto em 2018, com sala, esplanada e zona de praia. Cozinha portuguesa e angolana com vista para o mar.", "image": "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&h=400&fit=crop", "priceKwanza": "45.000 - 75.000 Kz", "phone": ""},
+            {"id": 11, "type": "tourism", "name": "Serra da Leba", "location": "Lubango - Serra da Leba", "rating": 4.9, "lat": -15.0711, "lng": 13.2486, "exact": true, "description": "A famosa estrada em curvas que desce a serra entre o planalto da Huíla e o Namibe. Uma das paisagens mais fotografadas de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Serra_da_Leba-Road.jpg/1280px-Serra_da_Leba-Road.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Serra_da_Leba-Road.jpg/330px-Serra_da_Leba-Road.jpg", "author": "Valmir144", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Serra_da_Leba-Road.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Lubango-Namibe_landscape.jpg/1280px-Lubango-Namibe_landscape.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Lubango-Namibe_landscape.jpg/330px-Lubango-Namibe_landscape.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Lubango-Namibe_landscape.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 12, "type": "accommodation", "name": "Hotel Serra da Chela", "location": "Lubango - Nossa Senhora do Monte", "rating": null, "lat": -14.911, "lng": 13.506, "exact": false, "description": "Hotel no Parque da Senhora do Monte, no Lubango, com 160 quartos, piscinas, bares e o restaurante Omunda.", "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 13, "type": "tourism", "name": "Floresta do Maiombe", "location": "Cabinda - Buco-Zau", "rating": 4.9, "lat": -4.75, "lng": 12.55, "exact": false, "description": "Floresta tropical densa no norte de Cabinda, uma das maiores reservas de biodiversidade de Angola.", "image": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 14, "type": "tourism", "name": "Deserto do Namibe", "location": "Namibe - Moçâmedes", "rating": 4.8, "lat": -15.1961, "lng": 12.1522, "exact": false, "description": "O deserto costeiro que se estende pelo sul de Angola, com paisagens áridas, oásis e plantas únicas.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Mini_oasis_in_the_namibe_desert%2C_Angola.JPG/1280px-Mini_oasis_in_the_namibe_desert%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Mini_oasis_in_the_namibe_desert%2C_Angola.JPG/330px-Mini_oasis_in_the_namibe_desert%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Mini_oasis_in_the_namibe_desert,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Angola%2C_Namibe_desert%2C_Haworthia.JPG/1280px-Angola%2C_Namibe_desert%2C_Haworthia.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Angola%2C_Namibe_desert%2C_Haworthia.JPG/330px-Angola%2C_Namibe_desert%2C_Haworthia.JPG", "author": "Dguendel", "license": "CC BY 4.0", "page": "https://commons.wikimedia.org/wiki/File:Angola,_Namibe_desert,_Haworthia.JPG"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 15, "type": "tourism", "name": "Morro do Môco", "location": "Huambo - Môco", "rating": 4.9, "lat": -12.4667, "lng": 15.1667, "exact": true, "description": "O ponto mais alto de Angola, com 2620 metros, no planalto central, a cerca de 70 km do Huambo.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Moco.JPG/1280px-Moco.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Moco.JPG/330px-Moco.JPG", "author": "Benjamin Stauch (Wikischaaf (talk))", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Moco.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 16, "type": "tourism", "name": "Fortaleza de São Miguel", "location": "Luanda - Ingombota", "rating": null, "lat": -8.8083, "lng": 13.2234, "exact": true, "description": "Fortaleza portuguesa construída em 1576 sobre a baía de Luanda. Tem vista panorâmica sobre a cidade e a Ilha.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Luanda-SMiguelFort2.jpg/1280px-Luanda-SMiguelFort2.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Luanda-SMiguelFort2.jpg/330px-Luanda-SMiguelFort2.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda-SMiguelFort2.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Luanda-SMiguelFort1.jpg/1280px-Luanda-SMiguelFort1.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Luanda-SMiguelFort1.jpg/330px-Luanda-SMiguelFort1.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda-SMiguelFort1.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Luanda4.jpg/1280px-Luanda4.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Luanda4.jpg/330px-Luanda4.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda4.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 17, "type": "tourism", "name": "Memorial Dr. António Agostinho Neto", "location": "Luanda - Praia do Bispo", "rating": null, "lat": -8.8236, "lng": 13.2189, "exact": true, "description": "Monumento em homenagem ao primeiro Presidente de Angola, conhecido como \"Foguetão\" pela sua forma.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Agostinhonetomausoleu.jpg/1280px-Agostinhonetomausoleu.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Agostinhonetomausoleu.jpg/330px-Agostinhonetomausoleu.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Agostinhonetomausoleu.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Mausoleu_Agostinho_Neto_Luanda.JPG/1280px-Mausoleu_Agostinho_Neto_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Mausoleu_Agostinho_Neto_Luanda.JPG/330px-Mausoleu_Agostinho_Neto_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Mausoleu_Agostinho_Neto_Luanda.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 18, "type": "tourism", "name": "Museu Nacional de Antropologia", "location": "Luanda - Coqueiros", "rating": null, "lat": -8.8135, "lng": 13.2278, "exact": true, "description": "Museu no bairro dos Coqueiros dedicado às culturas e tradições dos povos de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Museu_antropologia_Luanda.JPG/1280px-Museu_antropologia_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Museu_antropologia_Luanda.JPG/330px-Museu_antropologia_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_antropologia_Luanda.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 19, "type": "tourism", "name": "Museu Nacional da Escravatura", "location": "Luanda - Morro da Cruz", "rating": null, "lat": -8.958, "lng": 13.105, "exact": true, "description": "Museu no Morro da Cruz, junto ao mar, sobre a história do tráfico de escravos a partir de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg/1280px-Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg/330px-Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg", "author": "João Sousa", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_da_Escravatura_(Luanda,_Angola).jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Museu_da_Escravatura_Luanda.JPG/1280px-Museu_da_Escravatura_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Museu_da_Escravatura_Luanda.JPG/330px-Museu_da_Escravatura_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_da_Escravatura_Luanda.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 20, "type": "tourism", "name": "Palácio de Ferro", "location": "Luanda - Baixa", "rating": null, "lat": -8.8122, "lng": 13.2357, "exact": true, "description": "Edifício histórico de ferro na Baixa de Luanda, durante muito tempo atribuído a Gustave Eiffel.", "photos": [{"url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pal%C3%A1cio_de_Ferro.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pal%C3%A1cio_de_Ferro.jpg", "author": "Zorglub", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Pal%C3%A1cio_de_Ferro.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 21, "type": "tourism", "name": "Sé Catedral de Luanda", "location": "Luanda - Baixa", "rating": null, "lat": -8.8136, "lng": 13.2297, "exact": true, "description": "Também chamada Igreja de Nossa Senhora dos Remédios, é a catedral da Arquidiocese de Luanda.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG/1280px-Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG/330px-Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG"}, {"url": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Luanda_church.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Luanda_church.jpg", "author": "Valentina Buj from Geneva, Switzerland", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda_church.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 22, "type": "beach", "name": "Ilha de Luanda", "location": "Luanda - Ilha do Cabo", "rating": null, "lat": -8.7785, "lng": 13.2437, "exact": true, "description": "Faixa de areia de 7 km em frente à cidade, com praias, restaurantes e a vida noturna mais animada de Luanda.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Ilha_de_Luanda_02.JPG/1280px-Ilha_de_Luanda_02.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Ilha_de_Luanda_02.JPG/330px-Ilha_de_Luanda_02.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Ilha_de_Luanda_02.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Ilha_de_Luanda_01.JPG/1280px-Ilha_de_Luanda_01.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Ilha_de_Luanda_01.JPG/330px-Ilha_de_Luanda_01.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Ilha_de_Luanda_01.JPG"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 23, "type": "beach", "name": "Ilha do Mussulo", "location": "Luanda - Mussulo", "rating": null, "lat": -8.9636, "lng": 13.0517, "exact": true, "description": "Península a sul de Luanda com praias calmas e casas de férias. O acesso faz-se normalmente de barco.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Mussulo_Island.jpg/1280px-Mussulo_Island.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Mussulo_Island.jpg/330px-Mussulo_Island.jpg", "author": "Juvenalia Brito", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Mussulo_Island.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 24, "type": "tourism", "name": "Parque Nacional da Quiçama", "location": "Icolo e Bengo - Quiçama", "rating": null, "lat": -9.75, "lng": 13.5833, "exact": true, "description": "Parque nacional junto ao rio Kwanza, a sul de Luanda, com savana, mangais e safaris de vida selvagem.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Kwanza_River_and_bordering_savannah.jpg/1280px-Kwanza_River_and_bordering_savannah.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Kwanza_River_and_bordering_savannah.jpg/330px-Kwanza_River_and_bordering_savannah.jpg", "author": "Nielsen SV, Conradie W, Ceríaco LMP, Bauer AM, Heinicke MP, ", "license": "CC BY 4.0", "page": "https://commons.wikimedia.org/wiki/File:Kwanza_River_and_bordering_savannah.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 25, "type": "beach", "name": "Cabo Ledo", "location": "Icolo e Bengo - Cabo Ledo", "rating": null, "lat": -9.65, "lng": 13.2333, "exact": true, "description": "Praia extensa entre falésias, a cerca de 120 km de Luanda, conhecida pelo surf.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Cabo_Ledo_Angola_Beach.jpg/1280px-Cabo_Ledo_Angola_Beach.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Cabo_Ledo_Angola_Beach.jpg/330px-Cabo_Ledo_Angola_Beach.jpg", "author": "jlrsousa", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Cabo_Ledo_Angola_Beach.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG/1280px-Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG/330px-Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Cabo_Ledo,_Bengo_province,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Cabo_Ledo_Angola_Beach_banner.jpg/1280px-Cabo_Ledo_Angola_Beach_banner.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Cabo_Ledo_Angola_Beach_banner.jpg/330px-Cabo_Ledo_Angola_Beach_banner.jpg", "author": "jlrsousa", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Cabo_Ledo_Angola_Beach_banner.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 26, "type": "tourism", "name": "Quedas de Kalandula", "location": "Malanje - Kalandula", "rating": null, "lat": -9.0758, "lng": 16.0033, "exact": true, "description": "Quedas de água do rio Lucala com 105 metros de altura e 400 metros de largura, entre as maiores de África.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Kalandula_Falls_C.jpg/1280px-Kalandula_Falls_C.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Kalandula_Falls_C.jpg/330px-Kalandula_Falls_C.jpg", "author": "Zorglub", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Kalandula_Falls_C.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG/1280px-Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG/330px-Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Kalandula_waterfalls_of_the_Lucala-River_in_Malange,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Kalandula_Falls_Pan.jpg/1280px-Kalandula_Falls_Pan.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Kalandula_Falls_Pan.jpg/330px-Kalandula_Falls_Pan.jpg", "author": "Zorglub", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Kalandula_Falls_Pan.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 27, "type": "tourism", "name": "Pedras Negras de Pungo Andongo", "location": "Malanje - Pungo Andongo", "rating": null, "lat": -9.6625, "lng": 15.5839, "exact": true, "description": "Enormes formações rochosas com milhões de anos que se erguem acima da savana, ligadas à história da Rainha Njinga.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Black_Stones_Pungo_Adongo.JPG/1280px-Black_Stones_Pungo_Adongo.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Black_Stones_Pungo_Adongo.JPG/330px-Black_Stones_Pungo_Adongo.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Black_Stones_Pungo_Adongo.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Pungo_Andongo%2C_Malange%2C_Angola.JPG/1280px-Pungo_Andongo%2C_Malange%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Pungo_Andongo%2C_Malange%2C_Angola.JPG/330px-Pungo_Andongo%2C_Malange%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Pungo_Andongo,_Malange,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG/1280px-Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG/330px-Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Pungo_Andongo,_Malange,_Angola,_2008.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 28, "type": "tourism", "name": "Fenda da Tundavala", "location": "Lubango - Tundavala", "rating": null, "lat": -14.8177, "lng": 13.3814, "exact": true, "description": "Precipício de cerca de 1200 metros na Serra da Leba, a 18 km do Lubango, com vista sobre a planície do Namibe.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Tundavala_Gap.jpg/1280px-Tundavala_Gap.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Tundavala_Gap.jpg/330px-Tundavala_Gap.jpg", "author": "tim kubacki", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Tundavala_Gap.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Tundavala_panorama.jpg/1280px-Tundavala_panorama.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Tundavala_panorama.jpg/330px-Tundavala_panorama.jpg", "author": "SangeevP", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Tundavala_panorama.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Tundavala_Gap_sunset.jpg/1280px-Tundavala_Gap_sunset.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Tundavala_Gap_sunset.jpg/330px-Tundavala_Gap_sunset.jpg", "author": "tim kubacki", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Tundavala_Gap_sunset.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 29, "type": "tourism", "name": "Parque Nacional do Iona", "location": "Namibe - Iona", "rating": null, "lat": -16.67, "lng": 12.33, "exact": true, "description": "O maior e mais antigo parque nacional de Angola, no canto sudoeste do país, com deserto, dunas e welwitschias.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Parque_Nacional_do_lona.jpg/1280px-Parque_Nacional_do_lona.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Parque_Nacional_do_lona.jpg/330px-Parque_Nacional_do_lona.jpg", "author": "Edward Middleton", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Parque_Nacional_do_lona.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Imbondeiro_Tree.jpg/1280px-Imbondeiro_Tree.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Imbondeiro_Tree.jpg/330px-Imbondeiro_Tree.jpg", "author": "Alfred Weidinger from Vienna, Austria", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Imbondeiro_Tree.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Dust_road_horsemen.jpg/1280px-Dust_road_horsemen.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Dust_road_horsemen.jpg/330px-Dust_road_horsemen.jpg", "author": "Edward Middleton", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Dust_road_horsemen.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 30, "type": "beach", "name": "Praia Morena", "location": "Benguela - Praia Morena", "rating": null, "lat": -12.5853, "lng": 13.3903, "exact": true, "description": "Uma das praias mais conhecidas de Angola, em plena cidade de Benguela.", "photos": [{"url": "https://upload.wikimedia.org/wikipedia/commons/1/14/Praia_Morena_Benguela.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/1/14/Praia_Morena_Benguela.jpg", "author": "David Stanley from Nanaimo, Canada", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Praia_Morena_Benguela.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 31, "type": "nightclub", "name": "Miami Beach", "location": "Luanda - Ilha de Luanda", "rating": null, "lat": -8.79, "lng": 13.237, "exact": false, "description": "Espaço à beira-mar na Ilha de Luanda com música ao vivo e noites latinas para dançar junto ao mar.", "image": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 32, "type": "nightclub", "name": "Chill Out", "location": "Luanda - Ilha do Cabo", "rating": null, "lat": -8.786, "lng": 13.24, "exact": false, "description": "Discoteca na Ilha do Cabo com pista de dança ampla e vista sobre a água.", "image": "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 33, "type": "restaurant", "name": "Coconuts", "location": "Luanda - Ilha de Luanda", "rating": null, "lat": -8.7925, "lng": 13.2355, "exact": false, "description": "Restaurante histórico da Ilha de Luanda, considerado uma instituição da gastronomia da cidade.", "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""}
         ];
 
         const DESC_EN = {
-            1: "One of Luanda's best spots, with a spectacular atmosphere, international food and fresh seafood.",
-            2: "The heart of Luanda's nightlife. A lively dance floor, live DJ and premium cocktails.",
-            3: "Probably the best meat in Luanda! Veal skewers and juicy steaks are the speciality.",
-            4: "Luxury venue on the bay with international DJs, craft cocktails and panoramic sea views.",
-            5: "Luxury beach club with a pool, restaurant, bar and a spectacular view. Perfect for a full day out.",
-            6: "Luxury 5-star hotel with sea views, a pool, restaurant and spa.",
-            7: "A unique natural landscape with intense colours. One of the most beautiful places in Angola.",
-            8: "Official currency exchange office with the best exchange rate.",
-            9: "Angola's most beautiful bay, with 3 km of white sand and turquoise water.",
-            10: "Lobito's best restaurant, specialising in seafood and European cuisine.",
-            11: "One of the 7 Wonders of Angola! Dizzying cliffs with panoramic views.",
-            12: "Lubango's best 5-star hotel. Great value for money.",
-            13: "One of the 7 Wonders of Angola! Lush tropical rainforest.",
-            14: "A unique desert with arid landscapes and spectacular views.",
-            15: "One of the 7 Wonders of Angola! A sacred mountain with panoramic views."
+            1: "Beachfront restaurant on Ilha de Luanda, open since 2000 and renovated in 2016. A varied menu, from tapas to seafood, with sunset views.",
+            3: "Portuguese and Madeiran cuisine in the Liga Africana neighbourhood. Known for its charcoal-grilled meat skewers.",
+            4: "Seafood restaurant and brewery on Ilha do Cabo, with fresh fish and shellfish and Cuca beer on tap.",
+            5: "Beach club on Ilha do Cabo with a pool, sun loungers, a restaurant and electronic and urban music at night.",
+            6: "5-star hotel in central Luanda, on Rua da Missão, about 6 km from the airport. Pool, restaurants and spa.",
+            7: "Cliffs carved by erosion, 40 km south of Luanda, with intense colours at sunset. One of Angola's best-known views.",
+            8: "Currency exchange office on Avenida Comandante Valódia, Luanda.",
+            9: "A bay of pale sand and turquoise water south of Benguela, popular for swimming and day trips.",
+            10: "Restaurant on the Restinga do Lobito, opened in 2018, with a dining room, terrace and beach area. Portuguese and Angolan cooking with sea views.",
+            11: "The famous winding road that descends the escarpment between the Huíla plateau and Namibe. One of Angola's most photographed landscapes.",
+            12: "Hotel in Senhora do Monte Park, Lubango, with 160 rooms, pools, bars and the Omunda restaurant.",
+            13: "Dense tropical rainforest in northern Cabinda, one of Angola's richest areas for biodiversity.",
+            14: "The coastal desert stretching across southern Angola, with arid landscapes, oases and unique plants.",
+            15: "Angola's highest point at 2,620 metres, on the central plateau about 70 km from Huambo.",
+            16: "Portuguese fortress built in 1576 above Luanda bay, with panoramic views over the city and the Ilha.",
+            17: "Monument honouring Angola's first President, nicknamed \"the Rocket\" for its shape.",
+            18: "Museum in the Coqueiros neighbourhood dedicated to the cultures and traditions of Angola's peoples.",
+            19: "Museum on Morro da Cruz, by the sea, about the history of the slave trade from Angola.",
+            20: "Historic iron building in downtown Luanda, long attributed to Gustave Eiffel.",
+            21: "Also known as the Church of Our Lady of Remedies, it is the cathedral of the Archdiocese of Luanda.",
+            22: "A 7 km strip of sand facing the city, with beaches, restaurants and Luanda's liveliest nightlife.",
+            23: "Peninsula south of Luanda with calm beaches and holiday homes, usually reached by boat.",
+            24: "National park by the Kwanza River, south of Luanda, with savannah, mangroves and wildlife safaris.",
+            25: "Long beach between cliffs about 120 km from Luanda, known for surfing.",
+            26: "Waterfalls on the Lucala River, 105 metres high and 400 metres wide, among the largest in Africa.",
+            27: "Huge rock formations, millions of years old, rising above the savannah and linked to the history of Queen Njinga.",
+            28: "A drop of about 1,200 metres on the Serra da Leba escarpment, 18 km from Lubango, overlooking the Namibe plains.",
+            29: "Angola's largest and oldest national park, in the country's south-west corner, with desert, dunes and welwitschias.",
+            30: "One of Angola's best-known beaches, right in the city of Benguela.",
+            31: "Seafront venue on Ilha de Luanda with live music and Latin nights for dancing by the sea.",
+            32: "Nightclub on Ilha do Cabo with a large dance floor and views over the water.",
+            33: "Long-standing restaurant on Ilha de Luanda, considered an institution of the city's food scene."
         };
 
         const MENU_DESC_EN = {
@@ -879,6 +940,33 @@
                 memberSince: 'Membro desde {d}',
                 noRegion: 'Sem localização',
                 errEmail: 'O email não parece correto.',
+                photoBy: 'Foto',
+                photoN: 'Foto {n}',
+                illustrative: 'Foto ilustrativa',
+                visitorMedia: 'Fotos e vídeos dos visitantes',
+                visitorSoon: 'Brevemente vai poder partilhar aqui as suas fotos e vídeos deste local.',
+                visitorEmpty: 'Ainda não há fotos de visitantes. Seja o primeiro a partilhar!',
+                visitorError: 'Não foi possível carregar as fotos dos visitantes.',
+                loading: 'A carregar...',
+                addMedia: 'Partilhar foto ou vídeo',
+                kindPhoto: 'Foto',
+                kindVideo: 'Vídeo (link)',
+                videoLink: 'Link do vídeo no YouTube, TikTok ou Instagram',
+                captionPlaceholder: 'Legenda (opcional)',
+                consent: 'Confirmo que a foto ou vídeo é meu ou que tenho autorização para o partilhar.',
+                sendMedia: 'Enviar',
+                sending: 'A enviar...',
+                moderationNote: 'Os envios são revistos antes de aparecerem.',
+                mediaThanks: 'Obrigado! A sua partilha vai aparecer depois de aprovada.',
+                errFile: 'Escolha uma foto.',
+                errFileType: 'Esse ficheiro não é uma imagem.',
+                errVideo: 'Cole um link do YouTube, TikTok ou Instagram.',
+                errConsent: 'Confirme que pode partilhar este conteúdo.',
+                errSend: 'Não foi possível enviar. Verifique a internet e tente de novo.',
+                report: 'Denunciar',
+                reported: 'Denunciado. Obrigado.',
+                reportConfirm: 'Denunciar este conteúdo como impróprio?',
+                watchVideo: 'Ver vídeo no {site}',
                 shareText: '{name} ({location}) no ANGOLIVE'
             },
             en: {
@@ -957,6 +1045,33 @@
                 memberSince: 'Member since {d}',
                 noRegion: 'No location',
                 errEmail: 'That email does not look right.',
+                photoBy: 'Photo',
+                photoN: 'Photo {n}',
+                illustrative: 'Illustrative photo',
+                visitorMedia: 'Visitor photos and videos',
+                visitorSoon: 'Soon you will be able to share your photos and videos of this place here.',
+                visitorEmpty: 'No visitor photos yet. Be the first to share!',
+                visitorError: 'Could not load visitor photos.',
+                loading: 'Loading...',
+                addMedia: 'Share a photo or video',
+                kindPhoto: 'Photo',
+                kindVideo: 'Video (link)',
+                videoLink: 'Video link from YouTube, TikTok or Instagram',
+                captionPlaceholder: 'Caption (optional)',
+                consent: 'I confirm the photo or video is mine or that I have permission to share it.',
+                sendMedia: 'Send',
+                sending: 'Sending...',
+                moderationNote: 'Submissions are reviewed before they appear.',
+                mediaThanks: 'Thank you! Your post will appear once it is approved.',
+                errFile: 'Please choose a photo.',
+                errFileType: 'That file is not an image.',
+                errVideo: 'Paste a YouTube, TikTok or Instagram link.',
+                errConsent: 'Please confirm you can share this content.',
+                errSend: 'Could not send. Check your internet connection and try again.',
+                report: 'Report',
+                reported: 'Reported. Thank you.',
+                reportConfirm: 'Report this content as inappropriate?',
+                watchVideo: 'Watch video on {site}',
                 shareText: '{name} ({location}) on ANGOLIVE'
             }
         };
@@ -964,7 +1079,7 @@
         const CATEGORY = {
             restaurant: { icon: 'restaurant', pt: ['Restaurantes', 'Restaurante'], en: ['Restaurants', 'Restaurant'], keywords: 'restaurante comida jantar almoço restaurant food dinner lunch' },
             nightclub: { icon: 'nightclub', pt: ['Festas e Nightclubs', 'Vida noturna'], en: ['Parties and Nightclubs', 'Nightlife'], keywords: 'festa discoteca nightclub noite dança party club night dance' },
-            beach: { icon: 'beach', pt: ['Beach Clubs', 'Beach club'], en: ['Beach Clubs', 'Beach club'], keywords: 'praia beach club mar piscina sea pool' },
+            beach: { icon: 'beach', pt: ['Praias e Beach Clubs', 'Praia'], en: ['Beaches and Beach Clubs', 'Beach'], keywords: 'praia beach club mar piscina sea pool' },
             accommodation: { icon: 'accommodation', pt: ['Alojamento', 'Alojamento'], en: ['Accommodation', 'Accommodation'], keywords: 'hotel alojamento dormir quarto sleep room stay' },
             tourism: { icon: 'tourism', pt: ['Turismo', 'Turismo'], en: ['Sightseeing', 'Sightseeing'], keywords: 'turismo passeio paisagem natureza tourism sightseeing landscape nature' },
             exchange: { icon: 'exchange', pt: ['Câmbio', 'Câmbio'], en: ['Currency exchange', 'Currency exchange'], keywords: 'câmbio cambio dinheiro dólar euro exchange money dollar' }
@@ -998,6 +1113,8 @@
             user: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
             globe: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
             search: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+            play: '<polygon points="5 3 19 12 5 21 5 3"/>',
+            plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
             download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>'
         };
 
@@ -1019,6 +1136,10 @@
         };
 
         const PUBLIC_URL = 'https://kingic17.github.io/ANGOLIVE/angolive-complete.html';
+        // Visitor photos/videos (Supabase). Fill in after creating the project; see supabase/setup.sql.
+        // The publishable/anon key is meant to be public: access is limited by the row-level security rules.
+        const SUPABASE_URL = '';
+        const SUPABASE_KEY = '';
         // The iOS app loads this page from its bundle (file://).
         const inNativeApp = location.protocol === 'file:';
 
@@ -1056,7 +1177,8 @@
                 .replace('Entrada:', 'Entry:')
                 .replace('/noite', '/night')
                 .replace('Gratuito', 'Free')
-                .replace('Taxa competitiva', 'Competitive rate');
+                .replace('Taxa competitiva', 'Competitive rate')
+                .replace('Por confirmar', 'To be confirmed');
         }
 
         function priceValue(v) {
@@ -1104,9 +1226,54 @@
             return t('distance', { d });
         }
 
-        function thumbHTML(v, cls) {
-            const lazy = cls === 'thumb' ? ' loading="lazy"' : '';
-            return `<div class="${cls}"><span>${escapeHTML(initials(v.name))}</span><img src="${escapeHTML(v.image)}" alt="${escapeHTML(v.name)}" crossorigin="anonymous"${lazy} onerror="this.remove()"></div>`;
+        function thumbSrc(v) {
+            return v.photos ? v.photos[0].thumb : v.image.replace('w=800&h=400', 'w=330&h=330');
+        }
+
+        function thumbHTML(v) {
+            return `<div class="thumb"><span>${escapeHTML(initials(v.name))}</span><img src="${escapeHTML(thumbSrc(v))}" alt="${escapeHTML(v.name)}" crossorigin="anonymous" loading="lazy" onerror="this.remove()"></div>`;
+        }
+
+        function creditHTML(photo) {
+            return `${t('photoBy')}: <a href="${escapeHTML(photo.page)}" target="_blank" rel="noopener">${escapeHTML(photo.author)}</a> · ${escapeHTML(photo.license)} · Wikimedia Commons`;
+        }
+
+        function heroHTML(v) {
+            const photos = v.photos || [];
+            const src = photos.length ? photos[0].url : v.image;
+            const hero = `
+                <div class="modal-hero">
+                    <span>${escapeHTML(initials(v.name))}</span>
+                    <img id="heroImg" src="${escapeHTML(src)}" alt="${escapeHTML(v.name)}" crossorigin="anonymous" onerror="this.remove()">
+                    ${photos.length ? '' : `<span class="photo-badge">${t('illustrative')}</span>`}
+                </div>`;
+            if (!photos.length) return hero;
+            return `${hero}
+                <div class="photo-meta">
+                    <p class="photo-credit" id="heroCredit">${creditHTML(photos[0])}</p>
+                    ${photos.length > 1 ? `<div class="photo-strip">${photos.map((p, i) => `
+                        <button type="button" class="photo-thumb${i === 0 ? ' active' : ''}" data-photo="${i}" aria-label="${t('photoN', { n: i + 1 })}">
+                            <img src="${escapeHTML(p.thumb)}" alt="" crossorigin="anonymous" loading="lazy">
+                        </button>`).join('')}</div>` : ''}
+                </div>`;
+        }
+
+        function showPhoto(index) {
+            const v = venues.find((x) => x.id === state.openId);
+            const photo = v?.photos?.[index];
+            if (!photo) return;
+            const img = $('heroImg');
+            if (img) img.src = photo.url;
+            $('heroCredit').innerHTML = creditHTML(photo);
+            document.querySelectorAll('.photo-thumb').forEach((b) => b.classList.toggle('active', Number(b.dataset.photo) === index));
+        }
+
+        // Without verified coordinates, let Google Maps find the place by name.
+        function mapsURL(v, mode) {
+            const target = v.exact ? `${v.lat},${v.lng}` : encodeURIComponent(`${v.name}, ${v.location}, Angola`);
+            return mode === 'directions'
+                ? `https://www.google.com/maps/dir/?api=1&destination=${target}`
+                : `https://www.google.com/maps/search/?api=1&query=${target}`;
         }
 
         function getReviews(venueId) {
@@ -1118,9 +1285,9 @@
         function filteredVenues() {
             const q = state.search.trim().toLowerCase();
             const sorters = {
-                rating: (a, b) => b.rating - a.rating || a.name.localeCompare(b.name, 'pt'),
+                rating: (a, b) => (b.rating || 0) - (a.rating || 0) || a.name.localeCompare(b.name, 'pt'),
                 distance: (a, b) => distanceKm(a) - distanceKm(b),
-                price: (a, b) => priceValue(a) - priceValue(b) || b.rating - a.rating,
+                price: (a, b) => priceValue(a) - priceValue(b) || (b.rating || 0) - (a.rating || 0),
                 name: (a, b) => a.name.localeCompare(b.name, 'pt')
             };
             const sortKey = state.sort === 'distance' && !state.userPos ? 'rating' : state.sort;
@@ -1153,13 +1320,13 @@
                 const dist = distanceText(v);
                 return `
                     <button class="venue-card" type="button" data-id="${v.id}">
-                        ${thumbHTML(v, 'thumb')}
+                        ${thumbHTML(v)}
                         <span class="card-body">
                             <span class="card-type">${icon(CATEGORY[v.type].icon)}${catLabel(v.type, false)}</span>
                             <span class="card-name">${escapeHTML(v.name)}</span>
                             <span class="card-meta">${escapeHTML(v.location)}</span>
                             <span class="card-foot">
-                                <span class="rating">★ ${v.rating.toFixed(1)}</span>
+                                ${v.rating ? `<span class="rating">★ ${v.rating.toFixed(1)}</span>` : ''}
                                 ${level ? `<span class="level">${level}</span>` : ''}
                                 ${dist ? `<span class="distance">${dist}</span>` : ''}
                             </span>
@@ -1299,20 +1466,20 @@
 
             panel.innerHTML = `
                 <button class="close-btn" type="button" data-close="venueModal" aria-label="${t('close')}">×</button>
-                ${thumbHTML(v, 'modal-hero')}
+                ${heroHTML(v)}
                 <div class="modal-body">
                     <div>
                         <div class="card-type">${icon(CATEGORY[v.type].icon)}${catLabel(v.type, false)}</div>
                         <h2 class="modal-name" id="venueTitle">${escapeHTML(v.name)}</h2>
                         <div class="modal-sub">
-                            <span class="rating">★ ${v.rating.toFixed(1)}</span>
+                            ${v.rating ? `<span class="rating">★ ${v.rating.toFixed(1)}</span>` : ''}
                             <span>${escapeHTML(priceText(v))}</span>
                             ${dist ? `<span class="distance">${dist}</span>` : ''}
                         </div>
                     </div>
 
                     <div class="actions">
-                        <a class="action-btn solid wide" href="https://www.google.com/maps/dir/?api=1&destination=${v.lat},${v.lng}" target="_blank" rel="noopener">${icon('directions')}${t('directions')}</a>
+                        <a class="action-btn solid wide" href="${mapsURL(v, 'directions')}" target="_blank" rel="noopener">${icon('directions')}${t('directions')}</a>
                         ${digits ? `
                             <a class="action-btn" href="tel:+${digits}">${icon('phone')}${t('call')}</a>
                             <a class="action-btn" href="https://wa.me/${digits}" target="_blank" rel="noopener">${icon('chat')}${t('whatsapp')}</a>
@@ -1329,8 +1496,8 @@
                     <section>
                         <h3 class="section-title">${t('location')}</h3>
                         <p class="section-content">${escapeHTML(v.location)}</p>
-                        <p class="coords">Lat ${v.lat.toFixed(4)} · Long ${v.lng.toFixed(4)}</p>
-                        <a class="text-link" href="https://www.google.com/maps/search/?api=1&query=${v.lat},${v.lng}" target="_blank" rel="noopener">${icon('pin')}${t('viewMap')}</a>
+                        ${v.exact ? `<p class="coords">Lat ${v.lat.toFixed(4)} · Long ${v.lng.toFixed(4)}</p>` : ''}
+                        <a class="text-link" href="${mapsURL(v, 'search')}" target="_blank" rel="noopener">${icon('pin')}${t('viewMap')}</a>
                     </section>
 
                     ${digits ? `
@@ -1345,6 +1512,7 @@
                         <p class="hint">${t('mediaHint')}</p>
                     </section>
 
+                    ${visitorHTML(v)}
                     ${menuHTML(v)}
                     ${reviewsHTML(v)}
                 </div>
@@ -1354,6 +1522,7 @@
             openModal('venueModal');
             if (keepScroll) panel.scrollTop = scroll;
             history.replaceState(null, '', `#local-${id}`);
+            loadSubmissions(id);
         }
 
         function updateStars() {
@@ -1407,6 +1576,164 @@
                 navigator.share({ title: v.name, text, url }).catch(() => {});
             } else {
                 window.open(`https://wa.me/?text=${encodeURIComponent(`${text}: ${url}`)}`, '_blank', 'noopener');
+            }
+        }
+
+        /* ---------- Visitor photos and videos (Supabase) ---------- */
+
+        const VIDEO_URL = /^https:\/\/(www\.|m\.|vm\.)?(youtube\.com|youtu\.be|tiktok\.com|instagram\.com)\//i;
+        const supabaseReady = () => Boolean(SUPABASE_URL && SUPABASE_KEY);
+        const photoBase = () => `${SUPABASE_URL}/storage/v1/object/public/submissions/`;
+
+        function sbHeaders(extra = {}) {
+            const headers = { apikey: SUPABASE_KEY, ...extra };
+            if (SUPABASE_KEY.startsWith('eyJ')) headers.Authorization = `Bearer ${SUPABASE_KEY}`;
+            return headers;
+        }
+
+        async function sbRequest(path, options = {}) {
+            const res = await fetch(`${SUPABASE_URL}${path}`, options);
+            if (!res.ok) throw new Error(`Supabase ${res.status}`);
+            return res;
+        }
+
+        async function compressPhoto(file) {
+            const bitmap = await createImageBitmap(file);
+            const scale = Math.min(1, 1600 / Math.max(bitmap.width, bitmap.height));
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(bitmap.width * scale);
+            canvas.height = Math.round(bitmap.height * scale);
+            canvas.getContext('2d').drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+            bitmap.close?.();
+            return new Promise((resolve, reject) => canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('encode'))), 'image/jpeg', 0.82));
+        }
+
+        function visitorHTML(v) {
+            if (!supabaseReady()) {
+                return `<section><h3 class="section-title">${t('visitorMedia')}</h3><p class="section-content">${t('visitorSoon')}</p></section>`;
+            }
+            const savedName = currentUser?.name || store.get('angoliveReviewerName', '');
+            return `
+                <section>
+                    <h3 class="section-title">${t('visitorMedia')}</h3>
+                    <div class="visitor-gallery" id="visitorGallery"><p class="hint">${t('loading')}</p></div>
+                    <details class="visitor-form-wrap">
+                        <summary class="action-btn">${icon('plus')}${t('addMedia')}</summary>
+                        <form class="review-form" id="mediaForm" novalidate>
+                            <div class="media-kind" role="radiogroup">
+                                <label><input type="radio" name="mediaKind" value="photo" checked>${t('kindPhoto')}</label>
+                                <label><input type="radio" name="mediaKind" value="video">${t('kindVideo')}</label>
+                            </div>
+                            <div id="photoField"><input class="field" type="file" id="mediaFile" accept="image/*" aria-label="${t('kindPhoto')}"></div>
+                            <div id="videoField" hidden><input class="field" type="url" id="mediaUrl" inputmode="url" placeholder="https://www.youtube.com/..." aria-label="${t('videoLink')}"></div>
+                            <input class="field" id="mediaName" type="text" maxlength="60" autocomplete="name" placeholder="${t('yourName')}" aria-label="${t('yourName')}" value="${escapeHTML(savedName)}">
+                            <input class="field" id="mediaCaption" type="text" maxlength="200" placeholder="${t('captionPlaceholder')}" aria-label="${t('captionPlaceholder')}">
+                            <label class="consent"><input type="checkbox" id="mediaConsent"><span>${t('consent')}</span></label>
+                            <div class="form-msg" id="mediaMsg" role="status" aria-live="polite"></div>
+                            <button class="submit-btn" type="submit" id="mediaSubmit">${t('sendMedia')}</button>
+                            <p class="hint">${t('moderationNote')}</p>
+                        </form>
+                    </details>
+                </section>
+            `;
+        }
+
+        function submissionHTML(s, v) {
+            const caption = `<div class="visitor-caption">${escapeHTML(s.author)}${s.caption ? ` · ${escapeHTML(s.caption)}` : ''}</div>`;
+            const report = `<button type="button" class="report-btn" data-report="${escapeHTML(s.id)}">${t('report')}</button>`;
+            if (s.kind === 'photo' && s.url.startsWith(photoBase())) {
+                return `<figure class="visitor-item"><a href="${escapeHTML(s.url)}" target="_blank" rel="noopener"><img src="${escapeHTML(s.url)}" alt="${escapeHTML(s.caption || v.name)}" loading="lazy"></a>${caption}${report}</figure>`;
+            }
+            if (s.kind === 'video' && VIDEO_URL.test(s.url)) {
+                const site = new URL(s.url).hostname.includes('tiktok') ? 'TikTok' : new URL(s.url).hostname.includes('instagram') ? 'Instagram' : 'YouTube';
+                return `<div class="visitor-item"><a class="video-link" href="${escapeHTML(s.url)}" target="_blank" rel="noopener">${icon('play')}${t('watchVideo', { site })}</a>${caption}${report}</div>`;
+            }
+            return '';
+        }
+
+        async function loadSubmissions(venueId) {
+            if (!supabaseReady()) return;
+            try {
+                const res = await sbRequest(`/rest/v1/submissions?select=id,kind,url,author,caption&venue_id=eq.${venueId}&status=eq.approved&order=created_at.desc&limit=30`, { headers: sbHeaders() });
+                const items = await res.json();
+                const gallery = $('visitorGallery');
+                if (state.openId !== venueId || !gallery) return;
+                const v = venues.find((x) => x.id === venueId);
+                const html = items.map((s) => submissionHTML(s, v)).join('');
+                gallery.innerHTML = html || `<p class="hint">${t('visitorEmpty')}</p>`;
+            } catch {
+                const gallery = $('visitorGallery');
+                if (gallery && state.openId === venueId) gallery.innerHTML = `<p class="hint">${t('visitorError')}</p>`;
+            }
+        }
+
+        async function submitMedia(event) {
+            event.preventDefault();
+            const venueId = state.openId;
+            const kind = document.querySelector('input[name="mediaKind"]:checked').value;
+            const name = $('mediaName').value.trim();
+            const caption = $('mediaCaption').value.trim();
+            const msg = $('mediaMsg');
+            const button = $('mediaSubmit');
+            msg.classList.remove('ok');
+
+            const file = $('mediaFile').files[0];
+            const videoUrl = $('mediaUrl').value.trim();
+            if (kind === 'photo' && !file) { msg.textContent = t('errFile'); return; }
+            if (kind === 'photo' && !file.type.startsWith('image/')) { msg.textContent = t('errFileType'); return; }
+            if (kind === 'video' && !VIDEO_URL.test(videoUrl)) { msg.textContent = t('errVideo'); $('mediaUrl').focus(); return; }
+            if (!name) { msg.textContent = t('errName'); $('mediaName').focus(); return; }
+            if (!$('mediaConsent').checked) { msg.textContent = t('errConsent'); return; }
+
+            button.disabled = true;
+            button.textContent = t('sending');
+            msg.textContent = '';
+            try {
+                let url = videoUrl;
+                if (kind === 'photo') {
+                    const blob = await compressPhoto(file);
+                    const path = `${venueId}/${Date.now()}-${Math.random().toString(36).slice(2, 10)}.jpg`;
+                    await sbRequest(`/storage/v1/object/submissions/${path}`, {
+                        method: 'POST',
+                        headers: sbHeaders({ 'Content-Type': 'image/jpeg', 'x-upsert': 'false' }),
+                        body: blob
+                    });
+                    url = photoBase() + path;
+                }
+                await sbRequest('/rest/v1/submissions', {
+                    method: 'POST',
+                    headers: sbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
+                    body: JSON.stringify({ venue_id: venueId, kind, url, author: name, caption: caption || null })
+                });
+                store.set('angoliveReviewerName', name);
+                if (state.openId !== venueId) return;
+                $('mediaForm').reset();
+                $('mediaName').value = name;
+                $('photoField').hidden = false;
+                $('videoField').hidden = true;
+                msg.textContent = t('mediaThanks');
+                msg.classList.add('ok');
+            } catch {
+                msg.textContent = t('errSend');
+            } finally {
+                button.disabled = false;
+                button.textContent = t('sendMedia');
+            }
+        }
+
+        async function reportSubmission(button) {
+            if (!confirm(t('reportConfirm'))) return;
+            button.disabled = true;
+            try {
+                await sbRequest('/rest/v1/reports', {
+                    method: 'POST',
+                    headers: sbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
+                    body: JSON.stringify({ submission_id: button.dataset.report })
+                });
+                button.textContent = t('reported');
+            } catch {
+                button.disabled = false;
+                button.textContent = t('errSend');
             }
         }
 
@@ -1588,12 +1915,25 @@
         $('venuePanel').addEventListener('click', (e) => {
             const star = e.target.closest('.star-btn');
             if (star) { state.rating = Number(star.dataset.star); updateStars(); return; }
+            const thumb = e.target.closest('.photo-thumb');
+            if (thumb) { showPhoto(Number(thumb.dataset.photo)); return; }
+            const report = e.target.closest('[data-report]');
+            if (report) { reportSubmission(report); return; }
             if (e.target.closest('#favBtn')) toggleFavorite();
             else if (e.target.closest('#shareBtn')) shareVenue();
         });
 
+        $('venuePanel').addEventListener('change', (e) => {
+            if (e.target.name !== 'mediaKind') return;
+            const isPhoto = e.target.value === 'photo';
+            $('photoField').hidden = !isPhoto;
+            $('videoField').hidden = isPhoto;
+            $('mediaMsg').textContent = '';
+        });
+
         $('venuePanel').addEventListener('submit', (e) => {
             if (e.target.id === 'reviewForm') submitReview(e);
+            else if (e.target.id === 'mediaForm') submitMedia(e);
         });
 
         $('installBanner').addEventListener('click', async (e) => {
@@ -1666,7 +2006,7 @@
         if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
             navigator.serviceWorker.register('sw.js')
                 .then(() => navigator.serviceWorker.ready)
-                .then((reg) => reg.active?.postMessage({ type: 'warm-images', urls: venues.map((v) => v.image) }))
+                .then((reg) => reg.active?.postMessage({ type: 'warm-images', urls: venues.map(thumbSrc) }))
                 .catch(() => {});
         }
     </script>

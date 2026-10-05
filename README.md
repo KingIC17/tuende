@@ -9,10 +9,11 @@ Guia de Angola: restaurantes, festas e nightclubs, beach clubs, alojamento, turi
 
 | Parte | Estado |
 |---|---|
-| Site (web app) | Online no GitHub Pages |
+| Site (web app) | Online no GitHub Pages, 32 locais |
 | App instalável (PWA) | `manifest.json` e `sw.js` publicados; modo offline ainda não testado num browser real |
 | App iPhone (`ios/`) | Projeto Xcode criado; o código Swift passa o `swiftc -typecheck`, mas o build completo e o simulador ainda não foram testados |
 | App Android | Por fazer (depende do domínio próprio) |
+| Fotos e vídeos dos visitantes | Código pronto e testado com um servidor simulado; falta criar o projeto Supabase (ver abaixo) |
 | Política de privacidade | Escrita, por publicar (falta confirmar o email de contacto) |
 
 ## Estrutura
@@ -23,6 +24,8 @@ index.html               Redireciona para angolive-complete.html (mantém #local
 manifest.json            Manifesto PWA (start_url ./angolive-complete.html)
 sw.js                    Service worker: network-first para o site, cache-first para fotos Unsplash
 icon-192.png, icon-512.png, apple-touch-icon.png
+privacy.html             Política de privacidade PT/EN (por publicar: falta o email)
+supabase/setup.sql       Base de dados das fotos e vídeos dos visitantes
 ios/                     Projeto Xcode (SwiftUI + WKWebView)
   ANGOLIVE.xcodeproj
   ANGOLIVE/AngoliveApp.swift
@@ -32,7 +35,9 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 
 ## Como funciona a app web
 
-- Os dados dos locais e menus estão no próprio ficheiro: `const venues` e `const menuData`.
+- Os dados dos locais e menus estão no próprio ficheiro: `const venues` (32 locais) e `const menuData`.
+- `exact: true` indica coordenadas confirmadas na Wikipedia/Wikidata. Nos restantes, "Como chegar" e "Ver no mapa" pesquisam o nome do local no Google Maps, e as coordenadas só servem para calcular distâncias aproximadas.
+- `photos`: fotos reais do Wikimedia Commons, com autor e licença (mostrados na app, como as licenças CC BY/CC BY-SA exigem). Locais sem `photos` usam `image`, uma foto ilustrativa do Unsplash, com a etiqueta "Foto ilustrativa".
 - Português por defeito, com botão para Inglês. Os textos estão em `I18N`; as traduções das descrições estão em `DESC_EN` e `MENU_DESC_EN`.
 - Perfil, favoritos, comentários, idioma e tema ficam no `localStorage` do dispositivo. Não há servidor.
 - "Perto de mim" usa `navigator.geolocation` apenas no dispositivo.
@@ -55,6 +60,15 @@ e abrir http://localhost:8000/
 - Bundle ID: `com.angolive.app` (alterar se necessário). iOS 16+.
 - Sempre que se alterar `angolive-complete.html`, é preciso copiá-lo também para `ios/ANGOLIVE/`.
 
+## Fotos e vídeos dos visitantes (Supabase)
+
+1. Criar uma conta gratuita em https://supabase.com e um projeto novo.
+2. Em **SQL Editor**, colar e correr `supabase/setup.sql`.
+3. Em **Project Settings > API**, copiar o Project URL e a chave pública (publishable/anon) para `SUPABASE_URL` e `SUPABASE_KEY` em `angolive-complete.html` (e na cópia em `ios/ANGOLIVE/`). Esta chave é pública por natureza; a segurança vem das regras RLS do `setup.sql`. Nunca usar a chave `service_role` na app.
+4. Moderação: em **Table Editor > submissions**, mudar `status` para `approved` para publicar um envio, ou `rejected` para o recusar. Com 3 denúncias um envio fica `hidden` automaticamente.
+
+As fotos são comprimidas na app (máx. 1600 px, JPEG) antes de enviar. Os vídeos entram como link do YouTube, TikTok ou Instagram.
+
 ## O que falta fazer
 
 1. **Contas** (dono): Apple Developer Program e Google Play Console.
@@ -62,7 +76,10 @@ e abrir http://localhost:8000/
 3. **Android**: gerar o pacote AAB como Trusted Web Activity (PWABuilder ou Bubblewrap) e publicar `/.well-known/assetlinks.json` no domínio (com `.nojekyll` na raiz do repositório). As contas pessoais novas da Google Play exigem um teste fechado com 12 testadores durante 14 dias.
 4. **iPhone**: build, testes, capturas de ecrã e submissão. Atenção à regra 4.2 da Apple ("minimum functionality"): apps que só mostram um site podem ser recusadas.
 5. **Política de privacidade**: publicar `privacy.html` assim que o email de contacto estiver confirmado, e ligá-la a partir da app e das fichas das lojas.
-6. **Dados por confirmar**:
+6. **Dados por confirmar** (verificação feita em outubro de 2026 com Wikipedia e o guia Ver Angola):
+   - Confirmados como existentes: Café del Mar (Ilha de Luanda), O Madeirense (Liga Africana), Lookal Mar e Lookal Beach Club (Ilha do Cabo), EPIC SANA Luanda, NovaCâmbios, Batuk (Restinga do Lobito), Hotel Serra da Chela. Miami Beach, Chill Out e Coconuts vêm de artigos de 2015 a 2021: confirmar se continuam abertos.
+   - Removidos por não haver fontes: "Caminito Night Club" e "Messe Hotel Huila" (substituído pelo Hotel Serra da Chela). "Lookal Ocean Club" passou a "Lookal Mar".
+   - As classificações em estrelas dos 14 locais originais não têm fonte; os locais novos não têm estrelas. Quando os comentários forem partilhados, devem passar a ser calculadas a partir das avaliações reais.
    - Os telefones foram removidos até serem confirmados (campo `phone` vazio); os botões Ligar e WhatsApp só aparecem quando há número.
    - Os preços dos menus e algumas descrições ainda não foram confirmados com os locais.
    - As fotos são ilustrativas (Unsplash), não são dos próprios locais.
