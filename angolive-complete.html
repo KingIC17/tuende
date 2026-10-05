@@ -311,6 +311,24 @@
         }
 
         .level { font-weight: 800; letter-spacing: 0.02em; }
+        .rating-count { font-weight: 600; }
+
+        .rating-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 0;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .external-reviews { margin-bottom: 14px; }
         .distance { color: var(--muted); font-weight: 600; }
 
         .saved-tag {
@@ -751,38 +769,38 @@
         };
 
         const venues = [
-            {"id": 1, "type": "restaurant", "name": "Café del Mar", "location": "Luanda - Ilha de Luanda", "rating": 4.9, "lat": -8.792, "lng": 13.236, "exact": false, "description": "Restaurante de praia na Ilha de Luanda, aberto desde 2000 e renovado em 2016. Cozinha variada, de tapas a marisco, com vista para o pôr do sol.", "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop", "priceKwanza": "50.000 - 80.000 Kz", "phone": ""},
-            {"id": 3, "type": "restaurant", "name": "O Madeirense", "location": "Luanda - Liga Africana", "rating": 4.8, "lat": -8.824, "lng": 13.24, "exact": false, "description": "Cozinha portuguesa e madeirense no bairro da Liga Africana. Conhecido pelas espetadas de carne grelhadas na brasa.", "image": "https://images.unsplash.com/photo-1558030006-450675393462?w=800&h=400&fit=crop", "priceKwanza": "55.000 - 85.000 Kz", "phone": ""},
-            {"id": 4, "type": "restaurant", "name": "Lookal Mar", "location": "Luanda - Ilha de Luanda", "rating": 4.7, "lat": -8.788, "lng": 13.239, "exact": false, "description": "Restaurante de marisco e cervejaria na Ilha do Cabo, com peixe e marisco frescos e cerveja Cuca à pressão.", "image": "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 5, "type": "beach", "name": "Lookal Beach Club", "location": "Luanda - Ilha de Luanda", "rating": 4.8, "lat": -8.7875, "lng": 13.2395, "exact": false, "description": "Beach club na Ilha do Cabo com piscina, espreguiçadeiras, restaurante e música eletrónica e urbana à noite.", "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=400&fit=crop", "priceKwanza": "Entrada: 10.000 Kz", "phone": ""},
-            {"id": 6, "type": "accommodation", "name": "EPIC SANA Luanda Hotel", "location": "Luanda - Rua da Missão", "rating": 4.7, "lat": -8.815, "lng": 13.233, "exact": false, "description": "Hotel de 5 estrelas no centro de Luanda, na Rua da Missão, a cerca de 6 km do aeroporto. Piscina, restaurantes e spa.", "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=400&fit=crop", "priceKwanza": "130.000 - 250.000 Kz/noite", "phone": ""},
-            {"id": 7, "type": "tourism", "name": "Miradouro da Lua", "location": "Luanda - Belas", "rating": 4.9, "lat": -9.2211, "lng": 13.0897, "exact": true, "description": "Falésias esculpidas pela erosão, 40 km a sul de Luanda, com cores intensas ao pôr do sol. Um dos postais de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Miradouro_da_Lua_%28Angola%29.jpg/1280px-Miradouro_da_Lua_%28Angola%29.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Miradouro_da_Lua_%28Angola%29.jpg/330px-Miradouro_da_Lua_%28Angola%29.jpg", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Miradouro_da_Lua_(Angola).jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Miradouro_da_Lua.jpg/1280px-Miradouro_da_Lua.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Miradouro_da_Lua.jpg/330px-Miradouro_da_Lua.jpg", "author": "jlrsousa", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Miradouro_da_Lua.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Miradouro_da_Lua_3.jpg/1280px-Miradouro_da_Lua_3.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Miradouro_da_Lua_3.jpg/330px-Miradouro_da_Lua_3.jpg", "author": "Mayada Marrom", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Miradouro_da_Lua_3.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
-            {"id": 8, "type": "exchange", "name": "NovaCâmbios", "location": "Luanda - Av. Comandante Valódia", "rating": 4.6, "lat": -8.826, "lng": 13.242, "exact": false, "description": "Casa de câmbio na Avenida Comandante Valódia, em Luanda.", "image": "https://images.unsplash.com/photo-1563207153-f403bf289096?w=800&h=400&fit=crop", "priceKwanza": "Taxa competitiva", "phone": ""},
-            {"id": 9, "type": "beach", "name": "Baía Azul", "location": "Benguela - Baía Azul", "rating": 4.7, "lat": -12.66, "lng": 13.29, "exact": false, "description": "Baía de areia clara e água azul-turquesa a sul de Benguela, muito procurada para banhos e passeios.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg/1280px-Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg/330px-Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg", "author": "Michael Gaylard from Horsham, UK", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Ba%C3%ADa_Azul_DSC_0188_(52611874218).jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Dois_Morros.jpg/1280px-Dois_Morros.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Dois_Morros.jpg/330px-Dois_Morros.jpg", "author": "Jrrudge", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Dois_Morros.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
-            {"id": 10, "type": "restaurant", "name": "Batuk Restaurante", "location": "Benguela - Restinga do Lobito", "rating": 4.8, "lat": -12.33, "lng": 13.56, "exact": false, "description": "Restaurante na Restinga do Lobito, aberto em 2018, com sala, esplanada e zona de praia. Cozinha portuguesa e angolana com vista para o mar.", "image": "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&h=400&fit=crop", "priceKwanza": "45.000 - 75.000 Kz", "phone": ""},
-            {"id": 11, "type": "tourism", "name": "Serra da Leba", "location": "Lubango - Serra da Leba", "rating": 4.9, "lat": -15.0711, "lng": 13.2486, "exact": true, "description": "A famosa estrada em curvas que desce a serra entre o planalto da Huíla e o Namibe. Uma das paisagens mais fotografadas de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Serra_da_Leba-Road.jpg/1280px-Serra_da_Leba-Road.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Serra_da_Leba-Road.jpg/330px-Serra_da_Leba-Road.jpg", "author": "Valmir144", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Serra_da_Leba-Road.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Lubango-Namibe_landscape.jpg/1280px-Lubango-Namibe_landscape.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Lubango-Namibe_landscape.jpg/330px-Lubango-Namibe_landscape.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Lubango-Namibe_landscape.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
-            {"id": 12, "type": "accommodation", "name": "Hotel Serra da Chela", "location": "Lubango - Nossa Senhora do Monte", "rating": null, "lat": -14.911, "lng": 13.506, "exact": false, "description": "Hotel no Parque da Senhora do Monte, no Lubango, com 160 quartos, piscinas, bares e o restaurante Omunda.", "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 13, "type": "tourism", "name": "Floresta do Maiombe", "location": "Cabinda - Buco-Zau", "rating": 4.9, "lat": -4.75, "lng": 12.55, "exact": false, "description": "Floresta tropical densa no norte de Cabinda, uma das maiores reservas de biodiversidade de Angola.", "image": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 14, "type": "tourism", "name": "Deserto do Namibe", "location": "Namibe - Moçâmedes", "rating": 4.8, "lat": -15.1961, "lng": 12.1522, "exact": false, "description": "O deserto costeiro que se estende pelo sul de Angola, com paisagens áridas, oásis e plantas únicas.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Mini_oasis_in_the_namibe_desert%2C_Angola.JPG/1280px-Mini_oasis_in_the_namibe_desert%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Mini_oasis_in_the_namibe_desert%2C_Angola.JPG/330px-Mini_oasis_in_the_namibe_desert%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Mini_oasis_in_the_namibe_desert,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Angola%2C_Namibe_desert%2C_Haworthia.JPG/1280px-Angola%2C_Namibe_desert%2C_Haworthia.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Angola%2C_Namibe_desert%2C_Haworthia.JPG/330px-Angola%2C_Namibe_desert%2C_Haworthia.JPG", "author": "Dguendel", "license": "CC BY 4.0", "page": "https://commons.wikimedia.org/wiki/File:Angola,_Namibe_desert,_Haworthia.JPG"}], "priceKwanza": "Gratuito", "phone": ""},
-            {"id": 15, "type": "tourism", "name": "Morro do Môco", "location": "Huambo - Môco", "rating": 4.9, "lat": -12.4667, "lng": 15.1667, "exact": true, "description": "O ponto mais alto de Angola, com 2620 metros, no planalto central, a cerca de 70 km do Huambo.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Moco.JPG/1280px-Moco.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Moco.JPG/330px-Moco.JPG", "author": "Benjamin Stauch (Wikischaaf (talk))", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Moco.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 16, "type": "tourism", "name": "Fortaleza de São Miguel", "location": "Luanda - Ingombota", "rating": null, "lat": -8.8083, "lng": 13.2234, "exact": true, "description": "Fortaleza portuguesa construída em 1576 sobre a baía de Luanda. Tem vista panorâmica sobre a cidade e a Ilha.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Luanda-SMiguelFort2.jpg/1280px-Luanda-SMiguelFort2.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Luanda-SMiguelFort2.jpg/330px-Luanda-SMiguelFort2.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda-SMiguelFort2.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Luanda-SMiguelFort1.jpg/1280px-Luanda-SMiguelFort1.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Luanda-SMiguelFort1.jpg/330px-Luanda-SMiguelFort1.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda-SMiguelFort1.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Luanda4.jpg/1280px-Luanda4.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Luanda4.jpg/330px-Luanda4.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda4.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 17, "type": "tourism", "name": "Memorial Dr. António Agostinho Neto", "location": "Luanda - Praia do Bispo", "rating": null, "lat": -8.8236, "lng": 13.2189, "exact": true, "description": "Monumento em homenagem ao primeiro Presidente de Angola, conhecido como \"Foguetão\" pela sua forma.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Agostinhonetomausoleu.jpg/1280px-Agostinhonetomausoleu.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Agostinhonetomausoleu.jpg/330px-Agostinhonetomausoleu.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Agostinhonetomausoleu.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Mausoleu_Agostinho_Neto_Luanda.JPG/1280px-Mausoleu_Agostinho_Neto_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Mausoleu_Agostinho_Neto_Luanda.JPG/330px-Mausoleu_Agostinho_Neto_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Mausoleu_Agostinho_Neto_Luanda.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 18, "type": "tourism", "name": "Museu Nacional de Antropologia", "location": "Luanda - Coqueiros", "rating": null, "lat": -8.8135, "lng": 13.2278, "exact": true, "description": "Museu no bairro dos Coqueiros dedicado às culturas e tradições dos povos de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Museu_antropologia_Luanda.JPG/1280px-Museu_antropologia_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Museu_antropologia_Luanda.JPG/330px-Museu_antropologia_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_antropologia_Luanda.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 19, "type": "tourism", "name": "Museu Nacional da Escravatura", "location": "Luanda - Morro da Cruz", "rating": null, "lat": -8.958, "lng": 13.105, "exact": true, "description": "Museu no Morro da Cruz, junto ao mar, sobre a história do tráfico de escravos a partir de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg/1280px-Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg/330px-Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg", "author": "João Sousa", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_da_Escravatura_(Luanda,_Angola).jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Museu_da_Escravatura_Luanda.JPG/1280px-Museu_da_Escravatura_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Museu_da_Escravatura_Luanda.JPG/330px-Museu_da_Escravatura_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_da_Escravatura_Luanda.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 20, "type": "tourism", "name": "Palácio de Ferro", "location": "Luanda - Baixa", "rating": null, "lat": -8.8122, "lng": 13.2357, "exact": true, "description": "Edifício histórico de ferro na Baixa de Luanda, durante muito tempo atribuído a Gustave Eiffel.", "photos": [{"url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pal%C3%A1cio_de_Ferro.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pal%C3%A1cio_de_Ferro.jpg", "author": "Zorglub", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Pal%C3%A1cio_de_Ferro.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 21, "type": "tourism", "name": "Sé Catedral de Luanda", "location": "Luanda - Baixa", "rating": null, "lat": -8.8136, "lng": 13.2297, "exact": true, "description": "Também chamada Igreja de Nossa Senhora dos Remédios, é a catedral da Arquidiocese de Luanda.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG/1280px-Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG/330px-Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG"}, {"url": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Luanda_church.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Luanda_church.jpg", "author": "Valentina Buj from Geneva, Switzerland", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda_church.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
-            {"id": 22, "type": "beach", "name": "Ilha de Luanda", "location": "Luanda - Ilha do Cabo", "rating": null, "lat": -8.7785, "lng": 13.2437, "exact": true, "description": "Faixa de areia de 7 km em frente à cidade, com praias, restaurantes e a vida noturna mais animada de Luanda.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Ilha_de_Luanda_02.JPG/1280px-Ilha_de_Luanda_02.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Ilha_de_Luanda_02.JPG/330px-Ilha_de_Luanda_02.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Ilha_de_Luanda_02.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Ilha_de_Luanda_01.JPG/1280px-Ilha_de_Luanda_01.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Ilha_de_Luanda_01.JPG/330px-Ilha_de_Luanda_01.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Ilha_de_Luanda_01.JPG"}], "priceKwanza": "Gratuito", "phone": ""},
-            {"id": 23, "type": "beach", "name": "Ilha do Mussulo", "location": "Luanda - Mussulo", "rating": null, "lat": -8.9636, "lng": 13.0517, "exact": true, "description": "Península a sul de Luanda com praias calmas e casas de férias. O acesso faz-se normalmente de barco.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Mussulo_Island.jpg/1280px-Mussulo_Island.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Mussulo_Island.jpg/330px-Mussulo_Island.jpg", "author": "Juvenalia Brito", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Mussulo_Island.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 24, "type": "tourism", "name": "Parque Nacional da Quiçama", "location": "Icolo e Bengo - Quiçama", "rating": null, "lat": -9.75, "lng": 13.5833, "exact": true, "description": "Parque nacional junto ao rio Kwanza, a sul de Luanda, com savana, mangais e safaris de vida selvagem.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Kwanza_River_and_bordering_savannah.jpg/1280px-Kwanza_River_and_bordering_savannah.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Kwanza_River_and_bordering_savannah.jpg/330px-Kwanza_River_and_bordering_savannah.jpg", "author": "Nielsen SV, Conradie W, Ceríaco LMP, Bauer AM, Heinicke MP, ", "license": "CC BY 4.0", "page": "https://commons.wikimedia.org/wiki/File:Kwanza_River_and_bordering_savannah.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 25, "type": "beach", "name": "Cabo Ledo", "location": "Icolo e Bengo - Cabo Ledo", "rating": null, "lat": -9.65, "lng": 13.2333, "exact": true, "description": "Praia extensa entre falésias, a cerca de 120 km de Luanda, conhecida pelo surf.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Cabo_Ledo_Angola_Beach.jpg/1280px-Cabo_Ledo_Angola_Beach.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Cabo_Ledo_Angola_Beach.jpg/330px-Cabo_Ledo_Angola_Beach.jpg", "author": "jlrsousa", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Cabo_Ledo_Angola_Beach.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG/1280px-Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG/330px-Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Cabo_Ledo,_Bengo_province,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Cabo_Ledo_Angola_Beach_banner.jpg/1280px-Cabo_Ledo_Angola_Beach_banner.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Cabo_Ledo_Angola_Beach_banner.jpg/330px-Cabo_Ledo_Angola_Beach_banner.jpg", "author": "jlrsousa", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Cabo_Ledo_Angola_Beach_banner.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
-            {"id": 26, "type": "tourism", "name": "Quedas de Kalandula", "location": "Malanje - Kalandula", "rating": null, "lat": -9.0758, "lng": 16.0033, "exact": true, "description": "Quedas de água do rio Lucala com 105 metros de altura e 400 metros de largura, entre as maiores de África.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Kalandula_Falls_C.jpg/1280px-Kalandula_Falls_C.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Kalandula_Falls_C.jpg/330px-Kalandula_Falls_C.jpg", "author": "Zorglub", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Kalandula_Falls_C.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG/1280px-Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG/330px-Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Kalandula_waterfalls_of_the_Lucala-River_in_Malange,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Kalandula_Falls_Pan.jpg/1280px-Kalandula_Falls_Pan.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Kalandula_Falls_Pan.jpg/330px-Kalandula_Falls_Pan.jpg", "author": "Zorglub", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Kalandula_Falls_Pan.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 27, "type": "tourism", "name": "Pedras Negras de Pungo Andongo", "location": "Malanje - Pungo Andongo", "rating": null, "lat": -9.6625, "lng": 15.5839, "exact": true, "description": "Enormes formações rochosas com milhões de anos que se erguem acima da savana, ligadas à história da Rainha Njinga.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Black_Stones_Pungo_Adongo.JPG/1280px-Black_Stones_Pungo_Adongo.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Black_Stones_Pungo_Adongo.JPG/330px-Black_Stones_Pungo_Adongo.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Black_Stones_Pungo_Adongo.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Pungo_Andongo%2C_Malange%2C_Angola.JPG/1280px-Pungo_Andongo%2C_Malange%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Pungo_Andongo%2C_Malange%2C_Angola.JPG/330px-Pungo_Andongo%2C_Malange%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Pungo_Andongo,_Malange,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG/1280px-Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG/330px-Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Pungo_Andongo,_Malange,_Angola,_2008.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 28, "type": "tourism", "name": "Fenda da Tundavala", "location": "Lubango - Tundavala", "rating": null, "lat": -14.8177, "lng": 13.3814, "exact": true, "description": "Precipício de cerca de 1200 metros na Serra da Leba, a 18 km do Lubango, com vista sobre a planície do Namibe.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Tundavala_Gap.jpg/1280px-Tundavala_Gap.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Tundavala_Gap.jpg/330px-Tundavala_Gap.jpg", "author": "tim kubacki", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Tundavala_Gap.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Tundavala_panorama.jpg/1280px-Tundavala_panorama.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Tundavala_panorama.jpg/330px-Tundavala_panorama.jpg", "author": "SangeevP", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Tundavala_panorama.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Tundavala_Gap_sunset.jpg/1280px-Tundavala_Gap_sunset.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Tundavala_Gap_sunset.jpg/330px-Tundavala_Gap_sunset.jpg", "author": "tim kubacki", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Tundavala_Gap_sunset.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 29, "type": "tourism", "name": "Parque Nacional do Iona", "location": "Namibe - Iona", "rating": null, "lat": -16.67, "lng": 12.33, "exact": true, "description": "O maior e mais antigo parque nacional de Angola, no canto sudoeste do país, com deserto, dunas e welwitschias.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Parque_Nacional_do_lona.jpg/1280px-Parque_Nacional_do_lona.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Parque_Nacional_do_lona.jpg/330px-Parque_Nacional_do_lona.jpg", "author": "Edward Middleton", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Parque_Nacional_do_lona.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Imbondeiro_Tree.jpg/1280px-Imbondeiro_Tree.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Imbondeiro_Tree.jpg/330px-Imbondeiro_Tree.jpg", "author": "Alfred Weidinger from Vienna, Austria", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Imbondeiro_Tree.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Dust_road_horsemen.jpg/1280px-Dust_road_horsemen.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Dust_road_horsemen.jpg/330px-Dust_road_horsemen.jpg", "author": "Edward Middleton", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Dust_road_horsemen.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 30, "type": "beach", "name": "Praia Morena", "location": "Benguela - Praia Morena", "rating": null, "lat": -12.5853, "lng": 13.3903, "exact": true, "description": "Uma das praias mais conhecidas de Angola, em plena cidade de Benguela.", "photos": [{"url": "https://upload.wikimedia.org/wikipedia/commons/1/14/Praia_Morena_Benguela.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/1/14/Praia_Morena_Benguela.jpg", "author": "David Stanley from Nanaimo, Canada", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Praia_Morena_Benguela.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
-            {"id": 31, "type": "nightclub", "name": "Miami Beach", "location": "Luanda - Ilha de Luanda", "rating": null, "lat": -8.79, "lng": 13.237, "exact": false, "description": "Espaço à beira-mar na Ilha de Luanda com música ao vivo e noites latinas para dançar junto ao mar.", "image": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 32, "type": "nightclub", "name": "Chill Out", "location": "Luanda - Ilha do Cabo", "rating": null, "lat": -8.786, "lng": 13.24, "exact": false, "description": "Discoteca na Ilha do Cabo com pista de dança ampla e vista sobre a água.", "image": "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
-            {"id": 33, "type": "restaurant", "name": "Coconuts", "location": "Luanda - Ilha de Luanda", "rating": null, "lat": -8.7925, "lng": 13.2355, "exact": false, "description": "Restaurante histórico da Ilha de Luanda, considerado uma instituição da gastronomia da cidade.", "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""}
+            {"id": 1, "type": "restaurant", "name": "Café del Mar", "location": "Luanda - Ilha de Luanda", "lat": -8.792, "lng": 13.236, "exact": false, "description": "Restaurante de praia na Ilha de Luanda, aberto desde 2000 e renovado em 2016. Cozinha variada, de tapas a marisco, com vista para o pôr do sol.", "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop", "priceKwanza": "50.000 - 80.000 Kz", "phone": ""},
+            {"id": 3, "type": "restaurant", "name": "O Madeirense", "location": "Luanda - Liga Africana", "lat": -8.824, "lng": 13.24, "exact": false, "description": "Cozinha portuguesa e madeirense no bairro da Liga Africana. Conhecido pelas espetadas de carne grelhadas na brasa.", "image": "https://images.unsplash.com/photo-1558030006-450675393462?w=800&h=400&fit=crop", "priceKwanza": "55.000 - 85.000 Kz", "phone": ""},
+            {"id": 4, "type": "restaurant", "name": "Lookal Mar", "location": "Luanda - Ilha de Luanda", "lat": -8.788, "lng": 13.239, "exact": false, "description": "Restaurante de marisco e cervejaria na Ilha do Cabo, com peixe e marisco frescos e cerveja Cuca à pressão.", "image": "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 5, "type": "beach", "name": "Lookal Beach Club", "location": "Luanda - Ilha de Luanda", "lat": -8.7875, "lng": 13.2395, "exact": false, "description": "Beach club na Ilha do Cabo com piscina, espreguiçadeiras, restaurante e música eletrónica e urbana à noite.", "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=400&fit=crop", "priceKwanza": "Entrada: 10.000 Kz", "phone": ""},
+            {"id": 6, "type": "accommodation", "name": "EPIC SANA Luanda Hotel", "location": "Luanda - Rua da Missão", "lat": -8.815, "lng": 13.233, "exact": false, "description": "Hotel de 5 estrelas no centro de Luanda, na Rua da Missão, a cerca de 6 km do aeroporto. Piscina, restaurantes e spa.", "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=400&fit=crop", "priceKwanza": "130.000 - 250.000 Kz/noite", "phone": ""},
+            {"id": 7, "type": "tourism", "name": "Miradouro da Lua", "location": "Luanda - Belas", "lat": -9.2211, "lng": 13.0897, "exact": true, "description": "Falésias esculpidas pela erosão, 40 km a sul de Luanda, com cores intensas ao pôr do sol. Um dos postais de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Miradouro_da_Lua_%28Angola%29.jpg/1280px-Miradouro_da_Lua_%28Angola%29.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Miradouro_da_Lua_%28Angola%29.jpg/330px-Miradouro_da_Lua_%28Angola%29.jpg", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Miradouro_da_Lua_(Angola).jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Miradouro_da_Lua.jpg/1280px-Miradouro_da_Lua.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Miradouro_da_Lua.jpg/330px-Miradouro_da_Lua.jpg", "author": "jlrsousa", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Miradouro_da_Lua.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Miradouro_da_Lua_3.jpg/1280px-Miradouro_da_Lua_3.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Miradouro_da_Lua_3.jpg/330px-Miradouro_da_Lua_3.jpg", "author": "Mayada Marrom", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Miradouro_da_Lua_3.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 8, "type": "exchange", "name": "NovaCâmbios", "location": "Luanda - Av. Comandante Valódia", "lat": -8.826, "lng": 13.242, "exact": false, "description": "Casa de câmbio na Avenida Comandante Valódia, em Luanda.", "image": "https://images.unsplash.com/photo-1563207153-f403bf289096?w=800&h=400&fit=crop", "priceKwanza": "Taxa competitiva", "phone": ""},
+            {"id": 9, "type": "beach", "name": "Baía Azul", "location": "Benguela - Baía Azul", "lat": -12.66, "lng": 13.29, "exact": false, "description": "Baía de areia clara e água azul-turquesa a sul de Benguela, muito procurada para banhos e passeios.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg/1280px-Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg/330px-Ba%C3%ADa_Azul_DSC_0188_%2852611874218%29.jpg", "author": "Michael Gaylard from Horsham, UK", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Ba%C3%ADa_Azul_DSC_0188_(52611874218).jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Dois_Morros.jpg/1280px-Dois_Morros.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Dois_Morros.jpg/330px-Dois_Morros.jpg", "author": "Jrrudge", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Dois_Morros.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 10, "type": "restaurant", "name": "Batuk Restaurante", "location": "Benguela - Restinga do Lobito", "lat": -12.33, "lng": 13.56, "exact": false, "description": "Restaurante na Restinga do Lobito, aberto em 2018, com sala, esplanada e zona de praia. Cozinha portuguesa e angolana com vista para o mar.", "image": "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&h=400&fit=crop", "priceKwanza": "45.000 - 75.000 Kz", "phone": ""},
+            {"id": 11, "type": "tourism", "name": "Serra da Leba", "location": "Lubango - Serra da Leba", "lat": -15.0711, "lng": 13.2486, "exact": true, "description": "A famosa estrada em curvas que desce a serra entre o planalto da Huíla e o Namibe. Uma das paisagens mais fotografadas de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Serra_da_Leba-Road.jpg/1280px-Serra_da_Leba-Road.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Serra_da_Leba-Road.jpg/330px-Serra_da_Leba-Road.jpg", "author": "Valmir144", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Serra_da_Leba-Road.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Lubango-Namibe_landscape.jpg/1280px-Lubango-Namibe_landscape.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Lubango-Namibe_landscape.jpg/330px-Lubango-Namibe_landscape.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Lubango-Namibe_landscape.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 12, "type": "accommodation", "name": "Hotel Serra da Chela", "location": "Lubango - Nossa Senhora do Monte", "lat": -14.911, "lng": 13.506, "exact": false, "description": "Hotel no Parque da Senhora do Monte, no Lubango, com 160 quartos, piscinas, bares e o restaurante Omunda.", "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 13, "type": "tourism", "name": "Floresta do Maiombe", "location": "Cabinda - Buco-Zau", "lat": -4.75, "lng": 12.55, "exact": false, "description": "Floresta tropical densa no norte de Cabinda, uma das maiores reservas de biodiversidade de Angola.", "image": "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 14, "type": "tourism", "name": "Deserto do Namibe", "location": "Namibe - Moçâmedes", "lat": -15.1961, "lng": 12.1522, "exact": false, "description": "O deserto costeiro que se estende pelo sul de Angola, com paisagens áridas, oásis e plantas únicas.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Mini_oasis_in_the_namibe_desert%2C_Angola.JPG/1280px-Mini_oasis_in_the_namibe_desert%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Mini_oasis_in_the_namibe_desert%2C_Angola.JPG/330px-Mini_oasis_in_the_namibe_desert%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Mini_oasis_in_the_namibe_desert,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Angola%2C_Namibe_desert%2C_Haworthia.JPG/1280px-Angola%2C_Namibe_desert%2C_Haworthia.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Angola%2C_Namibe_desert%2C_Haworthia.JPG/330px-Angola%2C_Namibe_desert%2C_Haworthia.JPG", "author": "Dguendel", "license": "CC BY 4.0", "page": "https://commons.wikimedia.org/wiki/File:Angola,_Namibe_desert,_Haworthia.JPG"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 15, "type": "tourism", "name": "Morro do Môco", "location": "Huambo - Môco", "lat": -12.4667, "lng": 15.1667, "exact": true, "description": "O ponto mais alto de Angola, com 2620 metros, no planalto central, a cerca de 70 km do Huambo.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Moco.JPG/1280px-Moco.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Moco.JPG/330px-Moco.JPG", "author": "Benjamin Stauch (Wikischaaf (talk))", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Moco.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 16, "type": "tourism", "name": "Fortaleza de São Miguel", "location": "Luanda - Ingombota", "lat": -8.8083, "lng": 13.2234, "exact": true, "description": "Fortaleza portuguesa construída em 1576 sobre a baía de Luanda. Tem vista panorâmica sobre a cidade e a Ilha.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Luanda-SMiguelFort2.jpg/1280px-Luanda-SMiguelFort2.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Luanda-SMiguelFort2.jpg/330px-Luanda-SMiguelFort2.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda-SMiguelFort2.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Luanda-SMiguelFort1.jpg/1280px-Luanda-SMiguelFort1.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Luanda-SMiguelFort1.jpg/330px-Luanda-SMiguelFort1.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda-SMiguelFort1.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Luanda4.jpg/1280px-Luanda4.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Luanda4.jpg/330px-Luanda4.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda4.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 17, "type": "tourism", "name": "Memorial Dr. António Agostinho Neto", "location": "Luanda - Praia do Bispo", "lat": -8.8236, "lng": 13.2189, "exact": true, "description": "Monumento em homenagem ao primeiro Presidente de Angola, conhecido como \"Foguetão\" pela sua forma.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Agostinhonetomausoleu.jpg/1280px-Agostinhonetomausoleu.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Agostinhonetomausoleu.jpg/330px-Agostinhonetomausoleu.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Agostinhonetomausoleu.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Mausoleu_Agostinho_Neto_Luanda.JPG/1280px-Mausoleu_Agostinho_Neto_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Mausoleu_Agostinho_Neto_Luanda.JPG/330px-Mausoleu_Agostinho_Neto_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Mausoleu_Agostinho_Neto_Luanda.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 18, "type": "tourism", "name": "Museu Nacional de Antropologia", "location": "Luanda - Coqueiros", "lat": -8.8135, "lng": 13.2278, "exact": true, "description": "Museu no bairro dos Coqueiros dedicado às culturas e tradições dos povos de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Museu_antropologia_Luanda.JPG/1280px-Museu_antropologia_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Museu_antropologia_Luanda.JPG/330px-Museu_antropologia_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_antropologia_Luanda.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 19, "type": "tourism", "name": "Museu Nacional da Escravatura", "location": "Luanda - Morro da Cruz", "lat": -8.958, "lng": 13.105, "exact": true, "description": "Museu no Morro da Cruz, junto ao mar, sobre a história do tráfico de escravos a partir de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg/1280px-Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg/330px-Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg", "author": "João Sousa", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_da_Escravatura_(Luanda,_Angola).jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Museu_da_Escravatura_Luanda.JPG/1280px-Museu_da_Escravatura_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Museu_da_Escravatura_Luanda.JPG/330px-Museu_da_Escravatura_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_da_Escravatura_Luanda.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 20, "type": "tourism", "name": "Palácio de Ferro", "location": "Luanda - Baixa", "lat": -8.8122, "lng": 13.2357, "exact": true, "description": "Edifício histórico de ferro na Baixa de Luanda, durante muito tempo atribuído a Gustave Eiffel.", "photos": [{"url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pal%C3%A1cio_de_Ferro.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pal%C3%A1cio_de_Ferro.jpg", "author": "Zorglub", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Pal%C3%A1cio_de_Ferro.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 21, "type": "tourism", "name": "Sé Catedral de Luanda", "location": "Luanda - Baixa", "lat": -8.8136, "lng": 13.2297, "exact": true, "description": "Também chamada Igreja de Nossa Senhora dos Remédios, é a catedral da Arquidiocese de Luanda.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG/1280px-Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG/330px-Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG"}, {"url": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Luanda_church.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Luanda_church.jpg", "author": "Valentina Buj from Geneva, Switzerland", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda_church.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 22, "type": "beach", "name": "Ilha de Luanda", "location": "Luanda - Ilha do Cabo", "lat": -8.7785, "lng": 13.2437, "exact": true, "description": "Faixa de areia de 7 km em frente à cidade, com praias, restaurantes e a vida noturna mais animada de Luanda.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Ilha_de_Luanda_02.JPG/1280px-Ilha_de_Luanda_02.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Ilha_de_Luanda_02.JPG/330px-Ilha_de_Luanda_02.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Ilha_de_Luanda_02.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Ilha_de_Luanda_01.JPG/1280px-Ilha_de_Luanda_01.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Ilha_de_Luanda_01.JPG/330px-Ilha_de_Luanda_01.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Ilha_de_Luanda_01.JPG"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 23, "type": "beach", "name": "Ilha do Mussulo", "location": "Luanda - Mussulo", "lat": -8.9636, "lng": 13.0517, "exact": true, "description": "Península a sul de Luanda com praias calmas e casas de férias. O acesso faz-se normalmente de barco.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Mussulo_Island.jpg/1280px-Mussulo_Island.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Mussulo_Island.jpg/330px-Mussulo_Island.jpg", "author": "Juvenalia Brito", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Mussulo_Island.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 24, "type": "tourism", "name": "Parque Nacional da Quiçama", "location": "Icolo e Bengo - Quiçama", "lat": -9.75, "lng": 13.5833, "exact": true, "description": "Parque nacional junto ao rio Kwanza, a sul de Luanda, com savana, mangais e safaris de vida selvagem.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Kwanza_River_and_bordering_savannah.jpg/1280px-Kwanza_River_and_bordering_savannah.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Kwanza_River_and_bordering_savannah.jpg/330px-Kwanza_River_and_bordering_savannah.jpg", "author": "Nielsen SV, Conradie W, Ceríaco LMP, Bauer AM, Heinicke MP, ", "license": "CC BY 4.0", "page": "https://commons.wikimedia.org/wiki/File:Kwanza_River_and_bordering_savannah.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 25, "type": "beach", "name": "Cabo Ledo", "location": "Icolo e Bengo - Cabo Ledo", "lat": -9.65, "lng": 13.2333, "exact": true, "description": "Praia extensa entre falésias, a cerca de 120 km de Luanda, conhecida pelo surf.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Cabo_Ledo_Angola_Beach.jpg/1280px-Cabo_Ledo_Angola_Beach.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Cabo_Ledo_Angola_Beach.jpg/330px-Cabo_Ledo_Angola_Beach.jpg", "author": "jlrsousa", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Cabo_Ledo_Angola_Beach.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG/1280px-Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG/330px-Cabo_Ledo%2C_Bengo_province%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Cabo_Ledo,_Bengo_province,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Cabo_Ledo_Angola_Beach_banner.jpg/1280px-Cabo_Ledo_Angola_Beach_banner.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Cabo_Ledo_Angola_Beach_banner.jpg/330px-Cabo_Ledo_Angola_Beach_banner.jpg", "author": "jlrsousa", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Cabo_Ledo_Angola_Beach_banner.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 26, "type": "tourism", "name": "Quedas de Kalandula", "location": "Malanje - Kalandula", "lat": -9.0758, "lng": 16.0033, "exact": true, "description": "Quedas de água do rio Lucala com 105 metros de altura e 400 metros de largura, entre as maiores de África.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Kalandula_Falls_C.jpg/1280px-Kalandula_Falls_C.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Kalandula_Falls_C.jpg/330px-Kalandula_Falls_C.jpg", "author": "Zorglub", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Kalandula_Falls_C.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG/1280px-Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG/330px-Kalandula_waterfalls_of_the_Lucala-River_in_Malange%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Kalandula_waterfalls_of_the_Lucala-River_in_Malange,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Kalandula_Falls_Pan.jpg/1280px-Kalandula_Falls_Pan.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Kalandula_Falls_Pan.jpg/330px-Kalandula_Falls_Pan.jpg", "author": "Zorglub", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Kalandula_Falls_Pan.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 27, "type": "tourism", "name": "Pedras Negras de Pungo Andongo", "location": "Malanje - Pungo Andongo", "lat": -9.6625, "lng": 15.5839, "exact": true, "description": "Enormes formações rochosas com milhões de anos que se erguem acima da savana, ligadas à história da Rainha Njinga.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Black_Stones_Pungo_Adongo.JPG/1280px-Black_Stones_Pungo_Adongo.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Black_Stones_Pungo_Adongo.JPG/330px-Black_Stones_Pungo_Adongo.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Black_Stones_Pungo_Adongo.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Pungo_Andongo%2C_Malange%2C_Angola.JPG/1280px-Pungo_Andongo%2C_Malange%2C_Angola.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/61/Pungo_Andongo%2C_Malange%2C_Angola.JPG/330px-Pungo_Andongo%2C_Malange%2C_Angola.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Pungo_Andongo,_Malange,_Angola.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG/1280px-Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG/330px-Pungo_Andongo%2C_Malange%2C_Angola%2C_2008.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Pungo_Andongo,_Malange,_Angola,_2008.JPG"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 28, "type": "tourism", "name": "Fenda da Tundavala", "location": "Lubango - Tundavala", "lat": -14.8177, "lng": 13.3814, "exact": true, "description": "Precipício de cerca de 1200 metros na Serra da Leba, a 18 km do Lubango, com vista sobre a planície do Namibe.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Tundavala_Gap.jpg/1280px-Tundavala_Gap.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Tundavala_Gap.jpg/330px-Tundavala_Gap.jpg", "author": "tim kubacki", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Tundavala_Gap.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Tundavala_panorama.jpg/1280px-Tundavala_panorama.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Tundavala_panorama.jpg/330px-Tundavala_panorama.jpg", "author": "SangeevP", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Tundavala_panorama.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Tundavala_Gap_sunset.jpg/1280px-Tundavala_Gap_sunset.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Tundavala_Gap_sunset.jpg/330px-Tundavala_Gap_sunset.jpg", "author": "tim kubacki", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Tundavala_Gap_sunset.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 29, "type": "tourism", "name": "Parque Nacional do Iona", "location": "Namibe - Iona", "lat": -16.67, "lng": 12.33, "exact": true, "description": "O maior e mais antigo parque nacional de Angola, no canto sudoeste do país, com deserto, dunas e welwitschias.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Parque_Nacional_do_lona.jpg/1280px-Parque_Nacional_do_lona.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fa/Parque_Nacional_do_lona.jpg/330px-Parque_Nacional_do_lona.jpg", "author": "Edward Middleton", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Parque_Nacional_do_lona.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Imbondeiro_Tree.jpg/1280px-Imbondeiro_Tree.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Imbondeiro_Tree.jpg/330px-Imbondeiro_Tree.jpg", "author": "Alfred Weidinger from Vienna, Austria", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Imbondeiro_Tree.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Dust_road_horsemen.jpg/1280px-Dust_road_horsemen.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Dust_road_horsemen.jpg/330px-Dust_road_horsemen.jpg", "author": "Edward Middleton", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Dust_road_horsemen.jpg"}], "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 30, "type": "beach", "name": "Praia Morena", "location": "Benguela - Praia Morena", "lat": -12.5853, "lng": 13.3903, "exact": true, "description": "Uma das praias mais conhecidas de Angola, em plena cidade de Benguela.", "photos": [{"url": "https://upload.wikimedia.org/wikipedia/commons/1/14/Praia_Morena_Benguela.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/1/14/Praia_Morena_Benguela.jpg", "author": "David Stanley from Nanaimo, Canada", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Praia_Morena_Benguela.jpg"}], "priceKwanza": "Gratuito", "phone": ""},
+            {"id": 31, "type": "nightclub", "name": "Miami Beach", "location": "Luanda - Ilha de Luanda", "lat": -8.79, "lng": 13.237, "exact": false, "description": "Espaço à beira-mar na Ilha de Luanda com música ao vivo e noites latinas para dançar junto ao mar.", "image": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 32, "type": "nightclub", "name": "Chill Out", "location": "Luanda - Ilha do Cabo", "lat": -8.786, "lng": 13.24, "exact": false, "description": "Discoteca na Ilha do Cabo com pista de dança ampla e vista sobre a água.", "image": "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""},
+            {"id": 33, "type": "restaurant", "name": "Coconuts", "location": "Luanda - Ilha de Luanda", "lat": -8.7925, "lng": 13.2355, "exact": false, "description": "Restaurante histórico da Ilha de Luanda, considerado uma instituição da gastronomia da cidade.", "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=400&fit=crop", "priceKwanza": "Por confirmar", "phone": ""}
         ];
 
         const DESC_EN = {
@@ -913,6 +931,11 @@
                 reviews: 'Avaliações e comentários',
                 reviewsWord: 'Avaliações',
                 reviewOne: '1 avaliação',
+                noReviewsShort: 'Sem avaliações · Seja o primeiro',
+                seeReviews: 'Ver avaliações e comentários',
+                externalReviews: 'Veja também o que outras pessoas dizem noutros sites:',
+                reviewPending: 'Obrigado! O seu comentário vai aparecer depois de aprovado.',
+                reviewsError: 'Não foi possível carregar os comentários.',
                 reviewMany: '{n} avaliações',
                 yourReview: 'A sua avaliação',
                 yourName: 'O seu nome',
@@ -1018,6 +1041,11 @@
                 reviews: 'Reviews and comments',
                 reviewsWord: 'Reviews',
                 reviewOne: '1 review',
+                noReviewsShort: 'No reviews yet · Be the first',
+                seeReviews: 'See reviews and comments',
+                externalReviews: 'See what other people say on other sites too:',
+                reviewPending: 'Thank you! Your comment will appear once it is approved.',
+                reviewsError: 'Could not load the comments.',
                 reviewMany: '{n} reviews',
                 yourReview: 'Your review',
                 yourName: 'Your name',
@@ -1147,6 +1175,7 @@
         let currentUser = store.get('angoliveUser', null);
         let favorites = store.get('favorites', []);
         let installPrompt = null;
+        let ratingStats = {};
         let lastFocus = null;
 
         const state = { tab: 'list', city: '', category: 'all', sort: 'rating', search: '', rating: 0, openId: null, userPos: null };
@@ -1285,9 +1314,9 @@
         function filteredVenues() {
             const q = state.search.trim().toLowerCase();
             const sorters = {
-                rating: (a, b) => (b.rating || 0) - (a.rating || 0) || a.name.localeCompare(b.name, 'pt'),
+                rating: (a, b) => (statsOf(b)?.avg || 0) - (statsOf(a)?.avg || 0) || (statsOf(b)?.count || 0) - (statsOf(a)?.count || 0) || a.name.localeCompare(b.name, 'pt'),
                 distance: (a, b) => distanceKm(a) - distanceKm(b),
-                price: (a, b) => priceValue(a) - priceValue(b) || (b.rating || 0) - (a.rating || 0),
+                price: (a, b) => priceValue(a) - priceValue(b) || (statsOf(b)?.avg || 0) - (statsOf(a)?.avg || 0),
                 name: (a, b) => a.name.localeCompare(b.name, 'pt')
             };
             const sortKey = state.sort === 'distance' && !state.userPos ? 'rating' : state.sort;
@@ -1318,6 +1347,7 @@
             $('venueList').innerHTML = list.map((v) => {
                 const level = priceLevel(v);
                 const dist = distanceText(v);
+                const stats = statsOf(v);
                 return `
                     <button class="venue-card" type="button" data-id="${v.id}">
                         ${thumbHTML(v)}
@@ -1326,7 +1356,7 @@
                             <span class="card-name">${escapeHTML(v.name)}</span>
                             <span class="card-meta">${escapeHTML(v.location)}</span>
                             <span class="card-foot">
-                                ${v.rating ? `<span class="rating">★ ${v.rating.toFixed(1)}</span>` : ''}
+                                ${stats ? `<span class="rating">★ ${stats.avg.toFixed(1)} <span class="rating-count">(${stats.count})</span></span>` : ''}
                                 ${level ? `<span class="level">${level}</span>` : ''}
                                 ${dist ? `<span class="distance">${dist}</span>` : ''}
                             </span>
@@ -1409,18 +1439,96 @@
             return `<section><h3 class="section-title">${t('menu')}</h3><div class="panel">${groups}</div></section>`;
         }
 
+        function localStats() {
+            const totals = {};
+            for (const r of store.get('reviews', [])) {
+                const s = totals[r.venueId] || (totals[r.venueId] = { sum: 0, count: 0 });
+                s.sum += r.rating;
+                s.count += 1;
+            }
+            return Object.fromEntries(Object.entries(totals).map(([id, s]) => [id, { avg: s.sum / s.count, count: s.count }]));
+        }
+
+        async function loadRatingStats() {
+            if (!supabaseReady()) {
+                ratingStats = localStats();
+                return;
+            }
+            try {
+                const res = await sbRequest('/rest/v1/review_stats?select=venue_id,avg_rating,review_count', { headers: sbHeaders() });
+                ratingStats = Object.fromEntries((await res.json()).map((r) => [r.venue_id, { avg: Number(r.avg_rating), count: r.review_count }]));
+                renderList();
+                refreshOpenRating();
+            } catch {
+                ratingStats = {};
+            }
+        }
+
+        const statsOf = (v) => ratingStats[v.id];
+        const reviewCountText = (n) => (n === 1 ? t('reviewOne') : t('reviewMany', { n }));
+
+        function ratingLinkHTML(stats) {
+            return stats ? `<span class="rating">★ ${stats.avg.toFixed(1)}</span>${reviewCountText(stats.count)}` : t('noReviewsShort');
+        }
+
+        function avgHTML(stats) {
+            return `
+                <div class="avg-number">${stats ? stats.avg.toFixed(1) : '—'}</div>
+                ${stats ? `<div class="stars" aria-hidden="true">${stars(stats.avg)}</div>` : ''}
+                <div class="avg-count">${reviewCountText(stats?.count || 0)}</div>`;
+        }
+
+        // Stats arrive after the first render; update an already open place in place.
+        function refreshOpenRating() {
+            const v = venues.find((x) => x.id === state.openId);
+            if (!v) return;
+            const link = document.querySelector('#venuePanel .rating-link');
+            const avg = document.querySelector('#reviewsSection .avg');
+            if (link) link.innerHTML = ratingLinkHTML(statsOf(v));
+            if (avg) avg.innerHTML = avgHTML(statsOf(v));
+        }
+
+        function googleReviewsURL(v) {
+            return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${v.name}, ${v.location}, Angola`)}`;
+        }
+
+        function tripadvisorURL(v) {
+            return `https://www.tripadvisor.com/Search?q=${encodeURIComponent(`${v.name} ${cityOf(v)} Angola`)}`;
+        }
+
+        function reviewItemHTML(r, shared) {
+            const date = shared ? new Date(r.created_at).toLocaleDateString(locale()) : r.date;
+            const author = shared ? r.author : r.name || t('anonymous');
+            return `
+                <div class="review">
+                    <div class="review-head">
+                        <span class="review-name">${escapeHTML(author)}</span>
+                        <span class="review-date">${escapeHTML(date)}</span>
+                    </div>
+                    <div class="stars" aria-label="${t('stars', { n: r.rating })}">${stars(r.rating)}</div>
+                    <div class="review-text">${escapeHTML(r.comment)}</div>
+                    ${shared ? `<button type="button" class="report-btn" data-report-review="${escapeHTML(r.id)}">${t('report')}</button>` : ''}
+                </div>
+            `;
+        }
+
         function reviewsHTML(v) {
-            const reviews = getReviews(v.id);
-            const avg = reviews.length ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length : 0;
+            const stats = statsOf(v);
+            const shared = supabaseReady();
+            const local = shared ? [] : getReviews(v.id);
+            const noReviews = `<p class="hint" style="text-align:center;">${t('noReviews')}</p>`;
             const savedName = currentUser?.name || store.get('angoliveReviewerName', '');
             return `
-                <section>
+                <section id="reviewsSection">
                     <h3 class="section-title">${t('reviews')}</h3>
                     <div class="panel">
-                        <div class="avg">
-                            <div class="avg-number">${reviews.length ? avg.toFixed(1) : '—'}</div>
-                            ${reviews.length ? `<div class="stars" aria-hidden="true">${stars(avg)}</div>` : ''}
-                            <div class="avg-count">${reviews.length === 1 ? t('reviewOne') : t('reviewMany', { n: reviews.length })}</div>
+                        <div class="avg">${avgHTML(stats)}</div>
+                        <div class="external-reviews">
+                            <p class="hint">${t('externalReviews')}</p>
+                            <div class="social">
+                                <a href="${googleReviewsURL(v)}" target="_blank" rel="noopener">Google Maps</a>
+                                <a href="${tripadvisorURL(v)}" target="_blank" rel="noopener">TripAdvisor</a>
+                            </div>
                         </div>
                         <form class="review-form" id="reviewForm" novalidate>
                             <div class="review-form-title">${t('yourReview')}</div>
@@ -1430,21 +1538,31 @@
                             <input class="field" id="reviewName" type="text" maxlength="60" autocomplete="name" placeholder="${t('yourName')}" aria-label="${t('yourName')}" value="${escapeHTML(savedName)}">
                             <textarea class="field" id="reviewText" maxlength="600" placeholder="${t('commentPlaceholder')}" aria-label="${t('commentPlaceholder')}"></textarea>
                             <div class="form-msg" id="reviewMsg" role="status" aria-live="polite"></div>
-                            <button class="submit-btn" type="submit">${t('send')}</button>
+                            <button class="submit-btn" type="submit" id="reviewSubmit">${t('send')}</button>
+                            ${shared ? `<p class="hint">${t('moderationNote')}</p>` : ''}
                         </form>
-                        ${reviews.length ? reviews.map((r) => `
-                            <div class="review">
-                                <div class="review-head">
-                                    <span class="review-name">${escapeHTML(r.name || t('anonymous'))}</span>
-                                    <span class="review-date">${escapeHTML(r.date)}</span>
-                                </div>
-                                <div class="stars" aria-label="${t('stars', { n: r.rating })}">${stars(r.rating)}</div>
-                                <div class="review-text">${escapeHTML(r.comment)}</div>
-                            </div>
-                        `).join('') : `<p class="hint" style="text-align:center;">${t('noReviews')}</p>`}
+                        ${shared
+                            ? `<div id="reviewList"><p class="hint">${t('loading')}</p></div>`
+                            : local.length ? local.map((r) => reviewItemHTML(r, false)).join('') : noReviews}
                     </div>
                 </section>
             `;
+        }
+
+        async function loadReviews(venueId) {
+            if (!supabaseReady()) return;
+            try {
+                const res = await sbRequest(`/rest/v1/reviews?select=id,author,rating,comment,created_at&venue_id=eq.${venueId}&status=eq.approved&order=created_at.desc&limit=50`, { headers: sbHeaders() });
+                const items = await res.json();
+                const list = $('reviewList');
+                if (state.openId !== venueId || !list) return;
+                list.innerHTML = items.length
+                    ? items.map((r) => reviewItemHTML(r, true)).join('')
+                    : `<p class="hint" style="text-align:center;">${t('noReviews')}</p>`;
+            } catch {
+                const list = $('reviewList');
+                if (list && state.openId === venueId) list.innerHTML = `<p class="hint">${t('reviewsError')}</p>`;
+            }
         }
 
         function favButtonHTML(id) {
@@ -1463,6 +1581,7 @@
             const digits = phoneDigits(v);
             const isFav = favorites.includes(v.id);
             const dist = distanceText(v);
+            const stats = statsOf(v);
 
             panel.innerHTML = `
                 <button class="close-btn" type="button" data-close="venueModal" aria-label="${t('close')}">×</button>
@@ -1472,7 +1591,7 @@
                         <div class="card-type">${icon(CATEGORY[v.type].icon)}${catLabel(v.type, false)}</div>
                         <h2 class="modal-name" id="venueTitle">${escapeHTML(v.name)}</h2>
                         <div class="modal-sub">
-                            ${v.rating ? `<span class="rating">★ ${v.rating.toFixed(1)}</span>` : ''}
+                            <button type="button" class="rating-link" data-action="reviews" aria-label="${t('seeReviews')}">${ratingLinkHTML(stats)}</button>
                             <span>${escapeHTML(priceText(v))}</span>
                             ${dist ? `<span class="distance">${dist}</span>` : ''}
                         </div>
@@ -1523,6 +1642,7 @@
             if (keepScroll) panel.scrollTop = scroll;
             history.replaceState(null, '', `#local-${id}`);
             loadSubmissions(id);
+            loadReviews(id);
         }
 
         function updateStars() {
@@ -1534,7 +1654,7 @@
             });
         }
 
-        function submitReview(event) {
+        async function submitReview(event) {
             event.preventDefault();
             const name = $('reviewName').value.trim();
             const comment = $('reviewText').value.trim();
@@ -1543,12 +1663,37 @@
             if (!state.rating) { msg.textContent = t('errStars'); return; }
             if (!name) { msg.textContent = t('errName'); $('reviewName').focus(); return; }
             if (!comment) { msg.textContent = t('errComment'); $('reviewText').focus(); return; }
+            store.set('angoliveReviewerName', name);
+
+            if (supabaseReady()) {
+                const button = $('reviewSubmit');
+                button.disabled = true;
+                button.textContent = t('sending');
+                try {
+                    await sbRequest('/rest/v1/reviews', {
+                        method: 'POST',
+                        headers: sbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
+                        body: JSON.stringify({ venue_id: state.openId, author: name, rating: state.rating, comment })
+                    });
+                    $('reviewText').value = '';
+                    state.rating = 0;
+                    updateStars();
+                    msg.textContent = t('reviewPending');
+                    msg.classList.add('ok');
+                } catch {
+                    msg.textContent = t('errSend');
+                } finally {
+                    button.disabled = false;
+                    button.textContent = t('send');
+                }
+                return;
+            }
 
             const reviews = store.get('reviews', []);
             reviews.push({ venueId: state.openId, name, rating: state.rating, comment, date: new Date().toLocaleDateString(locale()) });
             store.set('reviews', reviews);
-            store.set('angoliveReviewerName', name);
-
+            ratingStats = localStats();
+            renderList();
             openVenue(state.openId, true);
             const done = $('reviewMsg');
             done.textContent = t('thanks');
@@ -1728,7 +1873,7 @@
                 await sbRequest('/rest/v1/reports', {
                     method: 'POST',
                     headers: sbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
-                    body: JSON.stringify({ submission_id: button.dataset.report })
+                    body: JSON.stringify(button.dataset.report ? { submission_id: button.dataset.report } : { review_id: button.dataset.reportReview })
                 });
                 button.textContent = t('reported');
             } catch {
@@ -1917,8 +2062,9 @@
             if (star) { state.rating = Number(star.dataset.star); updateStars(); return; }
             const thumb = e.target.closest('.photo-thumb');
             if (thumb) { showPhoto(Number(thumb.dataset.photo)); return; }
-            const report = e.target.closest('[data-report]');
+            const report = e.target.closest('[data-report], [data-report-review]');
             if (report) { reportSubmission(report); return; }
+            if (e.target.closest('[data-action="reviews"]')) { $('reviewsSection').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
             if (e.target.closest('#favBtn')) toggleFavorite();
             else if (e.target.closest('#shareBtn')) shareVenue();
         });
@@ -1997,8 +2143,10 @@
         document.querySelectorAll('[data-icon]').forEach((el) => { el.innerHTML = icon(el.dataset.icon); });
         const storedTheme = store.get('angoliveTheme', null);
         if (storedTheme) document.documentElement.dataset.theme = storedTheme;
+        ratingStats = supabaseReady() ? {} : localStats();
         applyLanguage();
         updateOnline();
+        loadRatingStats();
 
         const deepLink = location.hash.match(/^#local-(\d+)$/);
         if (deepLink) openVenue(Number(deepLink[1]));

@@ -1,4 +1,4 @@
-const SHELL_CACHE = 'angolive-shell-v1';
+const SHELL_CACHE = 'angolive-shell-v2';
 const IMAGE_CACHE = 'angolive-images-v1';
 const SHELL = [
     './angolive-complete.html',
@@ -26,7 +26,7 @@ self.addEventListener('activate', (event) => {
 async function networkFirst(request) {
     const cache = await caches.open(SHELL_CACHE);
     try {
-        const response = await fetch(request);
+        const response = await fetch(request.url, { cache: 'no-cache', credentials: 'same-origin' });
         if (response.ok) cache.put(request, response.clone());
         return response;
     } catch {
