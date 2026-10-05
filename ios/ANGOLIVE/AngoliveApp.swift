@@ -47,7 +47,9 @@ struct WebAppView: UIViewRepresentable {
                 decisionHandler(.cancel)
                 return
             }
-            if url.isFileURL || url.scheme == "about" {
+            // Embedded content (e.g. the map iframe) loads inside the page; only top-level links leave the app.
+            let isSubframe = navigationAction.targetFrame.map { !$0.isMainFrame } ?? false
+            if url.isFileURL || url.scheme == "about" || isSubframe {
                 decisionHandler(.allow)
             } else {
                 UIApplication.shared.open(url)
