@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANGOLIVE - Guia Completo de Angola</title>
+    <meta name="description" content="Descubra os melhores restaurantes, nightclubs, beach clubs, hotéis e pontos turísticos de Angola, com preços em Kwanza.">
+    <meta property="og:title" content="ANGOLIVE - Guia Completo de Angola">
+    <meta property="og:description" content="Restaurantes, festas, praias, alojamento e turismo em Angola.">
+    <meta name="theme-color" content="#CE1126">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="ANGOLIVE">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <style>
+        :root {
+            --primary: #CE1126;
+            --primary-strong: #A50E1F;
+            --primary-soft: rgba(206, 17, 38, 0.08);
+            --accent: #FFD100;
+            --accent-ink: #1a1a1a;
+            --bg: #F6F6F7;
+            --surface: #FFFFFF;
+            --surface-2: #F1F1F3;
+            --text: #161618;
+            --muted: #55555D;
+            --border: #DADADF;
+            --overlay: rgba(0, 0, 0, 0.6);
+            --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.06);
+            color-scheme: light;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --primary: #EF4458;
+                --primary-strong: #F2606F;
+                --primary-soft: rgba(239, 68, 88, 0.14);
+                --bg: #0E0E10;
+                --surface: #18181B;
+                --surface-2: #222226;
+                --text: #F2F2F4;
+                --muted: #B4B4BC;
+                --border: #34343A;
+                --overlay: rgba(0, 0, 0, 0.75);
+                --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+                color-scheme: dark;
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --primary: #EF4458;
+            --primary-strong: #F2606F;
+            --primary-soft: rgba(239, 68, 88, 0.14);
+            --bg: #0E0E10;
+            --surface: #18181B;
+            --surface-2: #222226;
+            --text: #F2F2F4;
+            --muted: #B4B4BC;
+            --border: #34343A;
+            --overlay: rgba(0, 0, 0, 0.75);
+            --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+            color-scheme: dark;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            font-size: 16px;
+            line-height: 1.45;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body.no-scroll { overflow: hidden; }
+
+        button, input, select, textarea { font: inherit; color: inherit; }
+        button { cursor: pointer; }
+        a { color: inherit; }
+
+        :focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            flex: none;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        [data-icon] { display: inline-flex; }
+
+        /* Header */
+        .topbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 0 18px; }
+
+        .topbar-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
+
+        .top-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            min-height: 44px;
+            padding: 0 14px;
+            border-radius: 999px;
+            border: 1.5px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-size: 14px;
+            font-weight: 700;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .top-btn:hover { background: var(--primary-soft); }
+        .top-btn.solid { background: var(--primary); color: #fff; }
+        .top-btn.solid:hover { background: var(--primary-strong); }
+
+        .brand { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 8px; text-align: center; }
+        .brand-logo { width: 120px; height: 56px; display: block; }
+        .brand-logo .wave-red { stroke: var(--primary); }
+        .brand-logo .wave-yellow { stroke: var(--accent); }
+        .brand-logo .dot { fill: var(--text); }
+
+        .brand h1 {
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--text) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-tagline { font-size: 15px; color: var(--muted); }
+
+        /* Filters */
+        .filters { position: sticky; top: 0; z-index: 10; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 0; }
+
+        .filters-grid { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 8px; }
+
+        .search-wrap { position: relative; display: block; }
+        .search-wrap [data-icon] { position: absolute; left: 14px; top: 0; bottom: 0; align-items: center; color: var(--muted); pointer-events: none; }
+        .search-wrap .field { display: block; }
+
+        .field {
+            width: 100%;
+            min-height: 48px;
+            padding: 10px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            background: var(--surface-2);
+            font-size: 16px;
+        }
+
+        .search-wrap .field { padding-left: 44px; }
+        .field:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+
+        .near-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 48px;
+            padding: 0 16px;
+            border-radius: 12px;
+            border: 1.5px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-size: 15px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .near-btn:hover { background: var(--primary-soft); }
+        .near-btn.active { background: var(--primary); color: #fff; }
+
+        .chips { display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+        .chips::-webkit-scrollbar { display: none; }
+
+        .chip {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 44px;
+            padding: 0 16px;
+            border-radius: 999px;
+            border: 1.5px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-size: 15px;
+            font-weight: 700;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .chip .icon { width: 18px; height: 18px; }
+        .chip:hover { background: var(--primary-soft); }
+        .chip.active { background: var(--primary); color: #fff; }
+
+        /* Banners */
+        .banner {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            border: 1.5px solid var(--primary);
+            background: var(--primary-soft);
+            font-size: 15px;
+        }
+
+        .banner p { flex: 1 1 240px; }
+        .banner-actions { display: flex; gap: 8px; }
+        .banner[hidden] { display: none; }
+
+        .notice { font-size: 15px; color: var(--primary); font-weight: 600; margin-top: 10px; min-height: 0; }
+        .notice:empty { display: none; }
+
+        /* Tabs */
+        .tabs { display: flex; gap: 4px; margin: 16px 0 8px; border-bottom: 1px solid var(--border); }
+
+        .tab {
+            flex: 1;
+            min-height: 48px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -1px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        .tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+        .tab-count {
+            display: inline-block;
+            min-width: 24px;
+            margin-left: 6px;
+            padding: 1px 7px;
+            border-radius: 999px;
+            background: var(--surface-2);
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .tab.active .tab-count { background: var(--primary-soft); color: var(--primary); }
+
+        .results-meta { font-size: 14px; color: var(--muted); margin: 8px 0 12px; }
+
+        /* Venue list */
+        .venue-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; padding-bottom: 48px; }
+
+        .venue-card {
+            position: relative;
+            display: flex;
+            gap: 14px;
+            width: 100%;
+            text-align: left;
+            background: var(--surface);
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: var(--shadow);
+            transition: border-color 0.15s, transform 0.15s;
+        }
+
+        .venue-card:hover { border-color: var(--primary); transform: translateY(-1px); }
+
+        .thumb, .modal-hero {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .thumb { flex: 0 0 100px; height: 100px; border-radius: 12px; font-size: 24px; }
+
+        .thumb img, .modal-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+        .card-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
+
+        .card-type { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--primary); }
+        .card-type .icon { width: 16px; height: 16px; }
+
+        .card-name { font-size: 18px; font-weight: 700; line-height: 1.25; padding-right: 70px; }
+        .card-meta { font-size: 14px; color: var(--muted); }
+
+        .card-foot { display: flex; align-items: center; gap: 10px; margin-top: auto; flex-wrap: wrap; font-size: 14px; }
+
+        .rating {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--accent-ink);
+            padding: 2px 9px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .level { font-weight: 800; letter-spacing: 0.02em; }
+        .distance { color: var(--muted); font-weight: 600; }
+
+        .saved-tag {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .saved-tag .icon { width: 14px; height: 14px; fill: currentColor; }
+
+        .empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--muted);
+            font-size: 16px;
+            padding: 48px 16px;
+            border: 1.5px dashed var(--border);
+            border-radius: 16px;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            padding: 16px;
+            background: var(--overlay);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.open { display: flex; }
+
+        .modal-panel {
+            position: relative;
+            width: 100%;
+            max-width: 580px;
+            max-height: 92vh;
+            overflow-y: auto;
+            background: var(--surface);
+            border-radius: 18px;
+        }
+
+        .profile-panel { max-width: 440px; padding: 28px 22px 22px; }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 2;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: var(--surface);
+            color: var(--text);
+            font-size: 26px;
+            line-height: 1;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-hero { height: 240px; font-size: 52px; }
+
+        .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 22px; }
+
+        .modal-name { font-size: 26px; font-weight: 800; line-height: 1.2; margin-top: 4px; }
+        .modal-sub { display: flex; gap: 12px; align-items: center; margin-top: 8px; flex-wrap: wrap; font-size: 15px; font-weight: 600; }
+
+        .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 50px;
+            padding: 0 12px;
+            border-radius: 12px;
+            border: 1.5px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .action-btn:hover { background: var(--primary-soft); }
+        .action-btn.solid { background: var(--primary); color: #fff; }
+        .action-btn.solid:hover { background: var(--primary-strong); }
+        .action-btn.wide { grid-column: 1 / -1; min-height: 56px; font-size: 17px; }
+        .action-btn.saved .icon { fill: currentColor; }
+
+        .section-title { font-size: 17px; font-weight: 800; color: var(--primary); }
+        .section-content { font-size: 16px; color: var(--muted); margin-top: 6px; }
+        .text-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; color: var(--primary); font-weight: 700; min-height: 44px; }
+
+        .coords { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; color: var(--muted); }
+
+        .social { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+
+        .social a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            padding: 0 16px;
+            border-radius: 10px;
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .social a:hover { background: var(--primary-soft); }
+
+        .hint { font-size: 14px; color: var(--muted); margin-top: 8px; }
+
+        .panel { background: var(--surface-2); border-radius: 14px; padding: 14px; margin-top: 10px; }
+
+        .menu-group + .menu-group { margin-top: 16px; }
+        .menu-group-title { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            background: var(--surface);
+            border-left: 4px solid var(--accent);
+            border-radius: 10px;
+            padding: 10px 12px;
+        }
+
+        .menu-item + .menu-item { margin-top: 6px; }
+        .menu-item-name { font-size: 15px; font-weight: 700; }
+        .menu-item-desc { font-size: 14px; color: var(--muted); }
+        .menu-item-price { font-size: 15px; font-weight: 800; color: var(--primary); white-space: nowrap; }
+
+        .avg { text-align: center; padding: 6px 0 14px; }
+        .avg-number { font-size: 34px; font-weight: 800; color: var(--primary); }
+        .stars { color: #E0A800; font-size: 18px; letter-spacing: 2px; }
+        .avg-count { font-size: 14px; color: var(--muted); }
+
+        .review-form { background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px; }
+        .review-form-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+        .review-form .field { margin-bottom: 10px; }
+
+        .star-input { display: flex; gap: 2px; margin-bottom: 8px; }
+
+        .star-btn {
+            width: 48px;
+            height: 48px;
+            background: none;
+            border: none;
+            font-size: 34px;
+            line-height: 1;
+            color: var(--muted);
+        }
+
+        .star-btn.on { color: #E0A800; }
+
+        textarea.field { min-height: 96px; resize: vertical; }
+
+        .form-msg { font-size: 15px; font-weight: 600; color: var(--primary); min-height: 22px; margin: 4px 0 8px; }
+        .form-msg.ok { color: #127A3E; }
+
+        .submit-btn {
+            width: 100%;
+            min-height: 50px;
+            border: none;
+            border-radius: 12px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .submit-btn:hover { background: var(--primary-strong); }
+        .submit-btn.secondary { background: var(--surface-2); color: var(--text); border: 1.5px solid var(--border); }
+
+        .review { background: var(--surface); border-left: 4px solid var(--primary); border-radius: 10px; padding: 12px; margin-top: 10px; }
+        .review-head { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
+        .review-name { font-weight: 700; }
+        .review-date { color: var(--muted); }
+        .review-text { font-size: 15px; color: var(--muted); margin-top: 4px; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+        .profile-title { font-size: 24px; font-weight: 800; color: var(--primary); margin-bottom: 6px; }
+        .profile-note { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+        .user-info { background: var(--surface-2); border-radius: 12px; padding: 14px; font-size: 16px; margin-bottom: 12px; overflow-wrap: anywhere; }
+        .user-info small { font-size: 14px; color: var(--muted); }
+        .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+        .stat { background: var(--surface-2); border-radius: 12px; padding: 12px; text-align: center; }
+        .stat-number { font-size: 26px; font-weight: 800; color: var(--primary); }
+        .stat-label { font-size: 14px; color: var(--muted); }
+        .stack { display: grid; gap: 8px; }
+
+        @media (max-width: 640px) {
+            .filters { position: static; }
+            .filters-grid { grid-template-columns: 1fr; }
+            .venue-list { grid-template-columns: 1fr; }
+            .modal { padding: 0; align-items: flex-end; }
+            .modal-panel { max-height: 94vh; border-radius: 18px 18px 0 0; }
+            .modal-hero { height: 200px; }
+            .brand h1 { font-size: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <div class="container">
+            <div class="topbar-actions">
+                <button class="top-btn" id="langBtn" type="button"><span data-icon="globe"></span><span id="langLabel">EN</span></button>
+                <button class="top-btn" id="themeBtn" type="button"><span id="themeIcon"></span><span id="themeLabel"></span></button>
+                <button class="top-btn solid" id="profileBtn" type="button"><span data-icon="user"></span><span id="profileLabel"></span></button>
+            </div>
+            <div class="brand">
+                <svg class="brand-logo" viewBox="20 45 160 75" aria-hidden="true">
+                    <path class="wave-red" d="M 30 90 Q 40 80 50 90 T 70 90 T 90 90 T 110 90 T 130 90 T 150 90 T 170 90" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                    <path class="wave-yellow" d="M 30 110 Q 40 100 50 110 T 70 110 T 90 110 T 110 110 T 130 110 T 150 110 T 170 110" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                    <circle class="dot" cx="100" cy="60" r="6"/>
+                </svg>
+                <h1>ANGOLIVE</h1>
+                <p class="brand-tagline" data-i18n="tagline"></p>
+            </div>
+        </div>
+    </header>
+
+    <div class="filters">
+        <div class="container">
+            <div class="filters-grid">
+                <label class="search-wrap">
+                    <span data-icon="search"></span>
+                    <input class="field" id="searchInput" type="search" data-i18n-placeholder="searchPlaceholder" data-i18n-aria="searchPlaceholder">
+                </label>
+                <select class="field" id="citySelect" data-i18n-aria="cityLabel">
+                    <option value="" data-i18n="allCities"></option>
+                    <option value="Luanda">Luanda</option>
+                    <option value="Benguela">Benguela</option>
+                    <option value="Lubango">Lubango</option>
+                    <option value="Cabinda">Cabinda</option>
+                    <option value="Namibe">Namibe</option>
+                    <option value="Huambo">Huambo</option>
+                </select>
+                <select class="field" id="sortSelect" data-i18n-aria="sortLabel">
+                    <option value="rating" data-i18n="sortRating"></option>
+                    <option value="distance" data-i18n="sortDistance"></option>
+                    <option value="price" data-i18n="sortPrice"></option>
+                    <option value="name" data-i18n="sortName"></option>
+                </select>
+                <button class="near-btn" id="nearBtn" type="button"><span data-icon="locate"></span><span data-i18n="nearMe"></span></button>
+            </div>
+            <div class="chips" id="chips"></div>
+            <div class="notice" id="notice" role="status" aria-live="polite"></div>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="banner" id="offlineBanner" hidden><p data-i18n="offline"></p></div>
+        <div class="banner" id="installBanner" hidden></div>
+
+        <div class="tabs">
+            <button class="tab active" type="button" data-tab="list"><span data-i18n="tabPlaces"></span><span class="tab-count" id="countList">0</span></button>
+            <button class="tab" type="button" data-tab="favorites"><span data-i18n="tabFavorites"></span><span class="tab-count" id="countFav">0</span></button>
+        </div>
+        <div class="results-meta" id="resultsMeta" aria-live="polite"></div>
+        <div class="venue-list" id="venueList"></div>
+    </main>
+
+    <div class="modal" id="venueModal" role="dialog" aria-modal="true">
+        <div class="modal-panel" id="venuePanel"></div>
+    </div>
+
+    <div class="modal" id="profileModal" role="dialog" aria-modal="true">
+        <div class="modal-panel profile-panel">
+            <button class="close-btn" type="button" data-close="profileModal" data-i18n-aria="close">×</button>
+            <div class="profile-title" data-i18n="profileTitle"></div>
+            <p class="profile-note" data-i18n="profileNote"></p>
+
+            <form id="profileForm" novalidate>
+                <div class="form-group">
+                    <label for="userName" data-i18n="nameLabel"></label>
+                    <input class="field" type="text" id="userName" maxlength="60" autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="userEmail" data-i18n="emailLabel"></label>
+                    <input class="field" type="email" id="userEmail" maxlength="120" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="userLocation" data-i18n="regionLabel"></label>
+                    <input class="field" type="text" id="userLocation" maxlength="60" autocomplete="country-name">
+                </div>
+                <div class="form-msg" id="profileError" role="alert"></div>
+                <button class="submit-btn" type="submit" data-i18n="saveProfile"></button>
+            </form>
+
+            <div id="profileView" hidden>
+                <div class="user-info" id="userInfo"></div>
+                <div class="stats">
+                    <div class="stat"><div class="stat-number" id="statFav">0</div><div class="stat-label" data-i18n="tabFavorites"></div></div>
+                    <div class="stat"><div class="stat-number" id="statReviews">0</div><div class="stat-label" data-i18n="reviewsWord"></div></div>
+                </div>
+                <div class="stack">
+                    <button class="submit-btn secondary" type="button" id="editProfileBtn" data-i18n="editProfile"></button>
+                    <button class="submit-btn" type="button" id="logoutBtn" data-i18n="logout"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const menuData = {
+            1: { // Café Del Mar
+                appetizers: [
+                    {name: "Camarones Grelhados", desc: "Camarões frescos grelhados", price: "15.000 Kz"},
+                    {name: "Ostras Frescas", desc: "6 ostras do dia", price: "12.000 Kz"},
+                    {name: "Peixe Fumado", desc: "Peixe defumado caseiro", price: "10.000 Kz"}
+                ],
+                main: [
+                    {name: "Branzino Grelhado", desc: "Peixe inteiro com legumes", price: "28.000 Kz"},
+                    {name: "Lagosta Thermidor", desc: "Especialidade da casa", price: "35.000 Kz"},
+                    {name: "Filé com Molho Béarnaise", desc: "Corte premium de carne", price: "32.000 Kz"},
+                    {name: "Arroz de Frutos do Mar", desc: "Marisco variado", price: "26.000 Kz"}
+                ],
+                drinks: [
+                    {name: "Vinho Tinto (Copo)", desc: "Vinho português", price: "5.000 Kz"},
+                    {name: "Cerveja Sagres", desc: "Cerveja gelada", price: "2.500 Kz"},
+                    {name: "Coquetel da Casa", desc: "Bebida especial", price: "7.000 Kz"}
+                ]
+            },
+            2: { // Caminito Night Club
+                drinks: [
+                    {name: "Cerveja Sagres", desc: "Cerveja gelada", price: "3.000 Kz"},
+                    {name: "Vinho Branco", desc: "Copo", price: "5.000 Kz"},
+                    {name: "Coquetel Tropical", desc: "Mix de frutas", price: "8.000 Kz"},
+                    {name: "Whisky Importado", desc: "Dose", price: "6.000 Kz"},
+                    {name: "Champagne", desc: "Garrafa", price: "40.000 Kz"}
+                ],
+                appetizers: [
+                    {name: "Tábua de Queijos", desc: "Queijos portugueses", price: "12.000 Kz"},
+                    {name: "Batatas Fritas Gourmet", desc: "Com temperos especiais", price: "4.000 Kz"},
+                    {name: "Camarones", desc: "Pequena porção", price: "8.000 Kz"}
+                ]
+            },
+            3: { // O Madeirense
+                main: [
+                    {name: "Espetada de Vitela", desc: "Especialidade da casa", price: "22.000 Kz"},
+                    {name: "Bife Maturado", desc: "180g grelhado", price: "20.000 Kz"},
+                    {name: "Espetada Mista", desc: "Carne e peixe", price: "24.000 Kz"},
+                    {name: "Costela Grelhada", desc: "Meia porção", price: "18.000 Kz"}
+                ],
+                sides: [
+                    {name: "Batata à Beiroa", desc: "Batata doce assada", price: "3.000 Kz"},
+                    {name: "Milho Grelhado", desc: "Milho fresco", price: "2.500 Kz"},
+                    {name: "Salada Mista", desc: "Fruta e legumes", price: "4.000 Kz"}
+                ],
+                drinks: [
+                    {name: "Cerveja Preta", desc: "Cerveja escura", price: "3.000 Kz"},
+                    {name: "Vinho Tinto Reserva", desc: "Copo", price: "6.000 Kz"}
+                ]
+            },
+            5: { // Lookal Beach Club
+                drinks: [
+                    {name: "Mojito", desc: "Bebida refrescante", price: "8.000 Kz"},
+                    {name: "Pina Colada", desc: "Bebida tropical", price: "9.000 Kz"},
+                    {name: "Cerveja Gelada", desc: "Sagres ou Super Bock", price: "3.000 Kz"},
+                    {name: "Água de Coco", desc: "Água natural", price: "2.000 Kz"}
+                ],
+                food: [
+                    {name: "Peixe Grelhado", desc: "Peixe do dia", price: "18.000 Kz"},
+                    {name: "Camarones na Manteiga", desc: "Camarão fresco", price: "16.000 Kz"},
+                    {name: "Arroz de Marisco", desc: "Misto variado", price: "20.000 Kz"},
+                    {name: "Pasta Frutos do Mar", desc: "Talharim premium", price: "15.000 Kz"}
+                ]
+            },
+            10: { // Batuk Restaurante
+                appetizers: [
+                    {name: "Camarones Crispy", desc: "Camarão empanado", price: "14.000 Kz"},
+                    {name: "Polvo à Lagareiro", desc: "Polvo grelhado", price: "13.000 Kz"}
+                ],
+                main: [
+                    {name: "Peixe Grelhado", desc: "Peixe inteiro do dia", price: "24.000 Kz"},
+                    {name: "Lagosta Grelhada", desc: "1kg com manteiga", price: "40.000 Kz"},
+                    {name: "Arroz de Marisco", desc: "Receita tradicional", price: "22.000 Kz"},
+                    {name: "Filé de Peixe Branco", desc: "Com molho cremoso", price: "20.000 Kz"}
+                ],
+                drinks: [
+                    {name: "Vinho Branco Fresco", desc: "Português", price: "5.000 Kz"},
+                    {name: "Cerveja", desc: "Gelada", price: "3.000 Kz"}
+                ]
+            }
+        };
+
+        const venues = [
+            // LUANDA
+            {id: 1, type: "restaurant", name: "Café Del Mar", location: "Luanda - Mussulo", rating: 4.9, lat: -8.8383, lng: 13.2344, description: "Um dos melhores spots de Luanda com ambiente espetacular, comida internacional e frutos do mar frescos.", image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=400&fit=crop", priceKwanza: "50.000 - 80.000 Kz", phone: ""},
+            {id: 2, type: "nightclub", name: "Caminito Night Club", location: "Luanda - Centro", rating: 4.8, lat: -8.8387, lng: 13.2344, description: "O coração da vida noturna de Luanda. Pista de dança animada, DJ ao vivo e coquetéis premium.", image: "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=800&h=400&fit=crop", priceKwanza: "5.000 - 15.000 Kz", phone: ""},
+            {id: 3, type: "restaurant", name: "O Madeirense", location: "Luanda - Marte", rating: 4.8, lat: -8.8420, lng: 13.2380, description: "Provavelmente a melhor carne em Luanda! Espetadas de vitela e bifes suculentos são especialidade.", image: "https://images.unsplash.com/photo-1558030006-450675393462?w=800&h=400&fit=crop", priceKwanza: "55.000 - 85.000 Kz", phone: ""},
+            {id: 4, type: "nightclub", name: "Lookal Ocean Club", location: "Luanda - Baía", rating: 4.7, lat: -8.8350, lng: 13.2300, description: "Venue de luxo na baía com DJ internacionais, coquetéis artesanais e vista panorâmica do mar.", image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&h=400&fit=crop", priceKwanza: "8.000 - 20.000 Kz", phone: ""},
+            {id: 5, type: "beach", name: "Lookal Beach Club", location: "Luanda - Ilha de Cabo", rating: 4.8, lat: -8.8365, lng: 13.2315, description: "Beach club de luxo com piscina, restaurante, bar e vista espetacular. Perfeito para dia inteiro.", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=400&fit=crop", priceKwanza: "Entrada: 10.000 Kz", phone: ""},
+            {id: 6, type: "accommodation", name: "EPIC SANA Luanda Hotel", location: "Luanda - Baia de Luanda", rating: 4.7, lat: -8.8340, lng: 13.2350, description: "Hotel 5 estrelas de luxo com vista para o mar, piscina, restaurante e spa.", image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=400&fit=crop", priceKwanza: "130.000 - 250.000 Kz/noite", phone: ""},
+            {id: 7, type: "tourism", name: "Miradouro da Lua", location: "Luanda - Benlonga", rating: 4.9, lat: -8.8600, lng: 13.1500, description: "Paisagem natural única com cores intensas. Um dos locais mais bonitos de Angola.", image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: ""},
+            {id: 8, type: "exchange", name: "NovaCâmbios - Centro", location: "Luanda - Baixa", rating: 4.6, lat: -8.8395, lng: 13.2355, description: "Casa de câmbio oficial com melhor taxa de câmbio.", image: "https://images.unsplash.com/photo-1563207153-f403bf289096?w=800&h=400&fit=crop", priceKwanza: "Taxa competitiva", phone: ""},
+
+            // BENGUELA
+            {id: 9, type: "beach", name: "Baía Azul Beach Club", location: "Benguela - Centro", rating: 4.7, lat: -12.5731, lng: 13.4038, description: "A mais bonita baía de Angola com 3km de areia branca e água azul turquesa.", image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&h=400&fit=crop", priceKwanza: "Entrada: 5.000 Kz", phone: ""},
+            {id: 10, type: "restaurant", name: "Batuk Restaurante", location: "Benguela - Lobito", rating: 4.8, lat: -12.3810, lng: 13.5440, description: "Melhor restaurante de Lobito com especialidade em frutos do mar e culinária europeia.", image: "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&h=400&fit=crop", priceKwanza: "45.000 - 75.000 Kz", phone: ""},
+
+            // LUBANGO
+            {id: 11, type: "tourism", name: "Miradouro da Serra da Leba", location: "Lubango - Serra da Leba", rating: 4.9, lat: -14.9500, lng: 13.7800, description: "Uma das 7 Maravilhas de Angola! Falésias vertiginosas com vista panorâmica.", image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: ""},
+            {id: 12, type: "accommodation", name: "Messe Hotel Huila", location: "Lubango - Centro", rating: 5.0, lat: -14.9237, lng: 13.7833, description: "Melhor hotel de Lubango com 5 estrelas. Melhor custo-benefício.", image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&h=400&fit=crop", priceKwanza: "75.000 - 180.000 Kz/noite", phone: ""},
+
+            // CABINDA
+            {id: 13, type: "tourism", name: "Floresta do Mayombe", location: "Cabinda - Mayombe", rating: 4.9, lat: -5.3666, lng: 13.4233, description: "Uma das 7 Maravilhas de Angola! Exuberante selva tropical.", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=400&fit=crop", priceKwanza: "Entrada: 10.000 Kz", phone: ""},
+
+            // NAMIBE
+            {id: 14, type: "tourism", name: "Deserto do Namibe", location: "Namibe - Deserto", rating: 4.8, lat: -15.1961, lng: 12.1522, description: "Deserto único com paisagens áridas e vista espetacular.", image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: ""},
+
+            // HUAMBO
+            {id: 15, type: "tourism", name: "Morro do Môco", location: "Huambo - Môco", rating: 4.9, lat: -12.7667, lng: 15.7833, description: "Uma das 7 Maravilhas de Angola! Montanha sagrada com vista panorâmica.", image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=800&h=400&fit=crop", priceKwanza: "Gratuito", phone: ""},
+        ];
+
+        const DESC_EN = {
+            1: "One of Luanda's best spots, with a spectacular atmosphere, international food and fresh seafood.",
+            2: "The heart of Luanda's nightlife. A lively dance floor, live DJ and premium cocktails.",
+            3: "Probably the best meat in Luanda! Veal skewers and juicy steaks are the speciality.",
+            4: "Luxury venue on the bay with international DJs, craft cocktails and panoramic sea views.",
+            5: "Luxury beach club with a pool, restaurant, bar and a spectacular view. Perfect for a full day out.",
+            6: "Luxury 5-star hotel with sea views, a pool, restaurant and spa.",
+            7: "A unique natural landscape with intense colours. One of the most beautiful places in Angola.",
+            8: "Official currency exchange office with the best exchange rate.",
+            9: "Angola's most beautiful bay, with 3 km of white sand and turquoise water.",
+            10: "Lobito's best restaurant, specialising in seafood and European cuisine.",
+            11: "One of the 7 Wonders of Angola! Dizzying cliffs with panoramic views.",
+            12: "Lubango's best 5-star hotel. Great value for money.",
+            13: "One of the 7 Wonders of Angola! Lush tropical rainforest.",
+            14: "A unique desert with arid landscapes and spectacular views.",
+            15: "One of the 7 Wonders of Angola! A sacred mountain with panoramic views."
+        };
+
+        const MENU_DESC_EN = {
+            "Camarões frescos grelhados": "Fresh grilled prawns",
+            "6 ostras do dia": "6 oysters of the day",
+            "Peixe defumado caseiro": "Home-smoked fish",
+            "Peixe inteiro com legumes": "Whole fish with vegetables",
+            "Especialidade da casa": "House speciality",
+            "Corte premium de carne": "Premium cut of beef",
+            "Marisco variado": "Mixed seafood",
+            "Vinho português": "Portuguese wine",
+            "Cerveja gelada": "Ice-cold beer",
+            "Bebida especial": "Special drink",
+            "Copo": "Glass",
+            "Mix de frutas": "Fruit mix",
+            "Dose": "Single measure",
+            "Garrafa": "Bottle",
+            "Queijos portugueses": "Portuguese cheeses",
+            "Com temperos especiais": "With special seasoning",
+            "Pequena porção": "Small portion",
+            "180g grelhado": "180 g, grilled",
+            "Carne e peixe": "Meat and fish",
+            "Meia porção": "Half portion",
+            "Batata doce assada": "Roasted sweet potato",
+            "Milho fresco": "Fresh corn",
+            "Fruta e legumes": "Fruit and vegetables",
+            "Cerveja escura": "Dark beer",
+            "Bebida refrescante": "Refreshing drink",
+            "Bebida tropical": "Tropical drink",
+            "Sagres ou Super Bock": "Sagres or Super Bock",
+            "Água natural": "Natural",
+            "Peixe do dia": "Catch of the day",
+            "Camarão fresco": "Fresh prawns",
+            "Misto variado": "Mixed selection",
+            "Talharim premium": "Premium tagliatelle",
+            "Camarão empanado": "Breaded prawns",
+            "Polvo grelhado": "Grilled octopus",
+            "Peixe inteiro do dia": "Whole catch of the day",
+            "1kg com manteiga": "1 kg with butter",
+            "Receita tradicional": "Traditional recipe",
+            "Com molho cremoso": "With a creamy sauce",
+            "Português": "Portuguese",
+            "Gelada": "Ice-cold"
+        };
+
+        const I18N = {
+            pt: {
+                tagline: 'O melhor de Angola num só lugar',
+                searchPlaceholder: 'Procurar local, cidade ou descrição',
+                cityLabel: 'Cidade',
+                sortLabel: 'Ordenar',
+                allCities: 'Todas as cidades',
+                sortRating: 'Melhor avaliação',
+                sortDistance: 'Mais perto de mim',
+                sortPrice: 'Preço mais baixo',
+                sortName: 'Nome (A-Z)',
+                nearMe: 'Perto de mim',
+                locating: 'A obter a sua localização...',
+                locError: 'Não foi possível obter a sua localização. Verifique se a localização está ligada e autorizada para este site.',
+                all: 'Todos',
+                tabPlaces: 'Locais',
+                tabFavorites: 'Favoritos',
+                placesCount: '{n} locais',
+                placesCountOne: '1 local',
+                emptyFav: 'Ainda não guardou nenhum local. Abra um local e toque em Guardar.',
+                emptyFilter: 'Nenhum local encontrado com estes filtros.',
+                dark: 'Escuro',
+                light: 'Claro',
+                darkAria: 'Mudar para modo escuro',
+                lightAria: 'Mudar para modo claro',
+                profile: 'Perfil',
+                langOther: 'EN',
+                langAria: 'Mudar para inglês (English)',
+                offline: 'Sem internet. Está a ver a versão guardada da app.',
+                installText: 'Instale o ANGOLIVE no seu telemóvel para abrir mais depressa, mesmo sem internet.',
+                iosText: 'Para instalar no iPhone: toque em Partilhar e depois em "Adicionar ao ecrã principal".',
+                install: 'Instalar',
+                notNow: 'Agora não',
+                ok: 'Ok',
+                directions: 'Como chegar',
+                call: 'Ligar',
+                whatsapp: 'WhatsApp',
+                save: 'Guardar',
+                saved: 'Guardado',
+                share: 'Partilhar',
+                about: 'Sobre',
+                location: 'Localização',
+                viewMap: 'Ver no mapa',
+                contact: 'Contacto',
+                media: 'Vídeos e fotos',
+                mediaHint: 'Abre a pesquisa deste local em cada rede social.',
+                menu: 'Menu e preços',
+                reviews: 'Avaliações e comentários',
+                reviewsWord: 'Avaliações',
+                reviewOne: '1 avaliação',
+                reviewMany: '{n} avaliações',
+                yourReview: 'A sua avaliação',
+                yourName: 'O seu nome',
+                commentPlaceholder: 'Conte como foi a sua experiência',
+                send: 'Enviar comentário',
+                errName: 'Escreva o seu nome.',
+                errStars: 'Escolha de 1 a 5 estrelas.',
+                errComment: 'Escreva um comentário.',
+                thanks: 'Obrigado pelo seu comentário!',
+                noReviews: 'Ainda sem avaliações. Seja o primeiro!',
+                stars: '{n} estrelas',
+                anonymous: 'Anónimo',
+                distance: 'a {d} km',
+                free: 'Gratuito',
+                close: 'Fechar',
+                detailsAria: 'Detalhes do local',
+                profileTitle: 'Meu perfil',
+                profileNote: 'O perfil fica guardado apenas neste dispositivo.',
+                nameLabel: 'Nome',
+                emailLabel: 'Email (opcional)',
+                regionLabel: 'País ou região (opcional)',
+                saveProfile: 'Guardar perfil',
+                editProfile: 'Editar perfil',
+                logout: 'Sair',
+                memberSince: 'Membro desde {d}',
+                noRegion: 'Sem localização',
+                errEmail: 'O email não parece correto.',
+                shareText: '{name} ({location}) no ANGOLIVE'
+            },
+            en: {
+                tagline: 'The best of Angola in one place',
+                searchPlaceholder: 'Search places, cities or descriptions',
+                cityLabel: 'City',
+                sortLabel: 'Sort by',
+                allCities: 'All cities',
+                sortRating: 'Top rated',
+                sortDistance: 'Nearest to me',
+                sortPrice: 'Lowest price',
+                sortName: 'Name (A-Z)',
+                nearMe: 'Near me',
+                locating: 'Getting your location...',
+                locError: 'Could not get your location. Check that location is turned on and allowed for this site.',
+                all: 'All',
+                tabPlaces: 'Places',
+                tabFavorites: 'Favourites',
+                placesCount: '{n} places',
+                placesCountOne: '1 place',
+                emptyFav: 'You have not saved any places yet. Open a place and tap Save.',
+                emptyFilter: 'No places match these filters.',
+                dark: 'Dark',
+                light: 'Light',
+                darkAria: 'Switch to dark mode',
+                lightAria: 'Switch to light mode',
+                profile: 'Profile',
+                langOther: 'PT',
+                langAria: 'Mudar para português (Portuguese)',
+                offline: 'No internet. You are viewing the saved version of the app.',
+                installText: 'Install ANGOLIVE on your phone to open it faster, even without internet.',
+                iosText: 'To install on iPhone: tap Share, then "Add to Home Screen".',
+                install: 'Install',
+                notNow: 'Not now',
+                ok: 'OK',
+                directions: 'Directions',
+                call: 'Call',
+                whatsapp: 'WhatsApp',
+                save: 'Save',
+                saved: 'Saved',
+                share: 'Share',
+                about: 'About',
+                location: 'Location',
+                viewMap: 'View on map',
+                contact: 'Contact',
+                media: 'Videos and photos',
+                mediaHint: 'Opens a search for this place on each social network.',
+                menu: 'Menu and prices',
+                reviews: 'Reviews and comments',
+                reviewsWord: 'Reviews',
+                reviewOne: '1 review',
+                reviewMany: '{n} reviews',
+                yourReview: 'Your review',
+                yourName: 'Your name',
+                commentPlaceholder: 'Tell us about your experience',
+                send: 'Send comment',
+                errName: 'Please enter your name.',
+                errStars: 'Choose 1 to 5 stars.',
+                errComment: 'Please write a comment.',
+                thanks: 'Thank you for your comment!',
+                noReviews: 'No reviews yet. Be the first!',
+                stars: '{n} stars',
+                anonymous: 'Anonymous',
+                distance: '{d} km away',
+                free: 'Free',
+                close: 'Close',
+                detailsAria: 'Place details',
+                profileTitle: 'My profile',
+                profileNote: 'Your profile is saved only on this device.',
+                nameLabel: 'Name',
+                emailLabel: 'Email (optional)',
+                regionLabel: 'Country or region (optional)',
+                saveProfile: 'Save profile',
+                editProfile: 'Edit profile',
+                logout: 'Log out',
+                memberSince: 'Member since {d}',
+                noRegion: 'No location',
+                errEmail: 'That email does not look right.',
+                shareText: '{name} ({location}) on ANGOLIVE'
+            }
+        };
+
+        const CATEGORY = {
+            restaurant: { icon: 'restaurant', pt: ['Restaurantes', 'Restaurante'], en: ['Restaurants', 'Restaurant'], keywords: 'restaurante comida jantar almoço restaurant food dinner lunch' },
+            nightclub: { icon: 'nightclub', pt: ['Festas e Nightclubs', 'Vida noturna'], en: ['Parties and Nightclubs', 'Nightlife'], keywords: 'festa discoteca nightclub noite dança party club night dance' },
+            beach: { icon: 'beach', pt: ['Beach Clubs', 'Beach club'], en: ['Beach Clubs', 'Beach club'], keywords: 'praia beach club mar piscina sea pool' },
+            accommodation: { icon: 'accommodation', pt: ['Alojamento', 'Alojamento'], en: ['Accommodation', 'Accommodation'], keywords: 'hotel alojamento dormir quarto sleep room stay' },
+            tourism: { icon: 'tourism', pt: ['Turismo', 'Turismo'], en: ['Sightseeing', 'Sightseeing'], keywords: 'turismo passeio paisagem natureza tourism sightseeing landscape nature' },
+            exchange: { icon: 'exchange', pt: ['Câmbio', 'Câmbio'], en: ['Currency exchange', 'Currency exchange'], keywords: 'câmbio cambio dinheiro dólar euro exchange money dollar' }
+        };
+
+        const MENU_SECTIONS = [
+            ['appetizers', 'Entradas', 'Starters'],
+            ['main', 'Pratos principais', 'Main courses'],
+            ['food', 'Comida', 'Food'],
+            ['sides', 'Acompanhamentos', 'Sides'],
+            ['drinks', 'Bebidas', 'Drinks']
+        ];
+
+        const ICONS = {
+            all: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
+            restaurant: '<path d="M7 3v8M5 3v5a2 2 0 0 0 4 0V3M7 11v10M17 3c-1.7 1-3 3.5-3 6.5V13h3v8"/>',
+            nightclub: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+            beach: '<path d="M23 12a11.05 11.05 0 0 0-22 0zm-5 7a3 3 0 0 1-6 0v-7"/>',
+            accommodation: '<path d="M3 18V7M3 14h18v4M21 14v-3a3 3 0 0 0-3-3h-7v6"/><circle cx="7" cy="11" r="2"/>',
+            tourism: '<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>',
+            exchange: '<polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>',
+            directions: '<polygon points="3 11 22 2 13 21 11 13 3 11"/>',
+            phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+            chat: '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>',
+            heart: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+            share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>',
+            pin: '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+            locate: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2"/><line x1="12" y1="1" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="23"/><line x1="1" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="23" y2="12"/>',
+            moon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
+            sun: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',
+            user: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+            globe: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+            search: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+            download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>'
+        };
+
+        const store = {
+            get(key, fallback) {
+                try {
+                    const raw = localStorage.getItem(key);
+                    return raw === null ? fallback : JSON.parse(raw);
+                } catch {
+                    return fallback;
+                }
+            },
+            set(key, value) {
+                try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+            },
+            remove(key) {
+                try { localStorage.removeItem(key); } catch {}
+            }
+        };
+
+        const PUBLIC_URL = 'https://kingic17.github.io/ANGOLIVE/angolive-complete.html';
+        // The iOS app loads this page from its bundle (file://).
+        const inNativeApp = location.protocol === 'file:';
+
+        let lang = store.get('angoliveLang', null) || 'pt';
+        let currentUser = store.get('angoliveUser', null);
+        let favorites = store.get('favorites', []);
+        let installPrompt = null;
+        let lastFocus = null;
+
+        const state = { tab: 'list', city: '', category: 'all', sort: 'rating', search: '', rating: 0, openId: null, userPos: null };
+
+        const $ = (id) => document.getElementById(id);
+
+        function t(key, vars = {}) {
+            const text = I18N[lang][key] ?? I18N.pt[key] ?? key;
+            return text.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
+        }
+
+        function icon(name) {
+            return `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name]}</svg>`;
+        }
+
+        function escapeHTML(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        }
+
+        const locale = () => (lang === 'en' ? 'en-GB' : 'pt-PT');
+        const cityOf = (v) => v.location.split(' - ')[0];
+        const catLabel = (type, plural) => CATEGORY[type][lang][plural ? 0 : 1];
+        const descOf = (v) => (lang === 'en' ? DESC_EN[v.id] || v.description : v.description);
+
+        function priceText(v) {
+            if (lang === 'pt') return v.priceKwanza;
+            return v.priceKwanza
+                .replace('Entrada:', 'Entry:')
+                .replace('/noite', '/night')
+                .replace('Gratuito', 'Free')
+                .replace('Taxa competitiva', 'Competitive rate');
+        }
+
+        function priceValue(v) {
+            if (/gratuito/i.test(v.priceKwanza)) return 0;
+            const match = v.priceKwanza.match(/\d{1,3}(?:\.\d{3})+|\d+/);
+            return match ? parseInt(match[0].replace(/\./g, ''), 10) : Infinity;
+        }
+
+        function priceLevel(v) {
+            const value = priceValue(v);
+            if (value === Infinity) return '';
+            if (value === 0) return t('free');
+            if (value <= 10000) return 'Kz';
+            if (value <= 60000) return 'Kz Kz';
+            return 'Kz Kz Kz';
+        }
+
+        function phoneDigits(v) {
+            const digits = v.phone.replace(/\D/g, '');
+            return digits.length >= 9 ? digits : '';
+        }
+
+        function initials(name) {
+            return name.split(/\s+/).filter((w) => /^[A-Za-zÀ-ÿ]/.test(w)).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+        }
+
+        function stars(n) {
+            const full = Math.round(n);
+            return '★'.repeat(full) + '☆'.repeat(5 - full);
+        }
+
+        function distanceKm(v) {
+            if (!state.userPos) return null;
+            const rad = (d) => (d * Math.PI) / 180;
+            const dLat = rad(v.lat - state.userPos.lat);
+            const dLng = rad(v.lng - state.userPos.lng);
+            const a = Math.sin(dLat / 2) ** 2 + Math.cos(rad(state.userPos.lat)) * Math.cos(rad(v.lat)) * Math.sin(dLng / 2) ** 2;
+            return 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        }
+
+        function distanceText(v) {
+            const km = distanceKm(v);
+            if (km === null) return '';
+            const d = km.toLocaleString(locale(), { maximumFractionDigits: km < 100 ? 1 : 0 });
+            return t('distance', { d });
+        }
+
+        function thumbHTML(v, cls) {
+            const lazy = cls === 'thumb' ? ' loading="lazy"' : '';
+            return `<div class="${cls}"><span>${escapeHTML(initials(v.name))}</span><img src="${escapeHTML(v.image)}" alt="${escapeHTML(v.name)}" crossorigin="anonymous"${lazy} onerror="this.remove()"></div>`;
+        }
+
+        function getReviews(venueId) {
+            return store.get('reviews', []).filter((r) => r.venueId === venueId).reverse();
+        }
+
+        /* ---------- List ---------- */
+
+        function filteredVenues() {
+            const q = state.search.trim().toLowerCase();
+            const sorters = {
+                rating: (a, b) => b.rating - a.rating || a.name.localeCompare(b.name, 'pt'),
+                distance: (a, b) => distanceKm(a) - distanceKm(b),
+                price: (a, b) => priceValue(a) - priceValue(b) || b.rating - a.rating,
+                name: (a, b) => a.name.localeCompare(b.name, 'pt')
+            };
+            const sortKey = state.sort === 'distance' && !state.userPos ? 'rating' : state.sort;
+            return venues
+                .filter((v) =>
+                    (state.tab !== 'favorites' || favorites.includes(v.id)) &&
+                    (state.category === 'all' || v.type === state.category) &&
+                    (!state.city || cityOf(v) === state.city) &&
+                    (!q || [v.name, v.location, v.description, DESC_EN[v.id] || '', CATEGORY[v.type].keywords]
+                        .some((text) => text.toLowerCase().includes(q)))
+                )
+                .sort(sorters[sortKey]);
+        }
+
+        function renderList() {
+            const list = filteredVenues();
+            $('countList').textContent = venues.length;
+            $('countFav').textContent = favorites.length;
+            $('resultsMeta').textContent = list.length === 1 ? t('placesCountOne') : t('placesCount', { n: list.length });
+            $('nearBtn').classList.toggle('active', state.sort === 'distance' && !!state.userPos);
+
+            if (!list.length) {
+                const msg = state.tab === 'favorites' && !favorites.length ? t('emptyFav') : t('emptyFilter');
+                $('venueList').innerHTML = `<div class="empty">${msg}</div>`;
+                return;
+            }
+
+            $('venueList').innerHTML = list.map((v) => {
+                const level = priceLevel(v);
+                const dist = distanceText(v);
+                return `
+                    <button class="venue-card" type="button" data-id="${v.id}">
+                        ${thumbHTML(v, 'thumb')}
+                        <span class="card-body">
+                            <span class="card-type">${icon(CATEGORY[v.type].icon)}${catLabel(v.type, false)}</span>
+                            <span class="card-name">${escapeHTML(v.name)}</span>
+                            <span class="card-meta">${escapeHTML(v.location)}</span>
+                            <span class="card-foot">
+                                <span class="rating">★ ${v.rating.toFixed(1)}</span>
+                                ${level ? `<span class="level">${level}</span>` : ''}
+                                ${dist ? `<span class="distance">${dist}</span>` : ''}
+                            </span>
+                        </span>
+                        ${favorites.includes(v.id) ? `<span class="saved-tag">${icon('heart')}${t('saved')}</span>` : ''}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderChips() {
+            const items = [['all', t('all'), 'all'], ...Object.entries(CATEGORY).map(([key, c]) => [key, c[lang][0], c.icon])];
+            $('chips').innerHTML = items.map(([key, label, ic]) => `
+                <button type="button" class="chip${key === state.category ? ' active' : ''}" data-category="${key}" aria-pressed="${key === state.category}">${icon(ic)}${label}</button>
+            `).join('');
+        }
+
+        /* ---------- Location ---------- */
+
+        function setNotice(text) {
+            $('notice').textContent = text;
+        }
+
+        function locate() {
+            if (!navigator.geolocation) {
+                setNotice(t('locError'));
+                return;
+            }
+            setNotice(t('locating'));
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    state.userPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                    state.sort = 'distance';
+                    $('sortSelect').value = 'distance';
+                    setNotice('');
+                    renderList();
+                    if (state.openId) openVenue(state.openId, true);
+                },
+                () => {
+                    setNotice(t('locError'));
+                    if (!state.userPos && state.sort === 'distance') {
+                        state.sort = 'rating';
+                        $('sortSelect').value = 'rating';
+                        renderList();
+                    }
+                },
+                { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 }
+            );
+        }
+
+        /* ---------- Venue modal ---------- */
+
+        function socialLinks(v) {
+            const q = `${v.name} ${cityOf(v)} Angola`;
+            const enc = encodeURIComponent(q);
+            return [
+                ['YouTube', `https://www.youtube.com/results?search_query=${enc}`],
+                ['Instagram', `https://www.google.com/search?q=${encodeURIComponent(q + ' site:instagram.com')}`],
+                ['TikTok', `https://www.tiktok.com/search?q=${enc}`]
+            ].map(([label, url]) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`).join('');
+        }
+
+        function menuHTML(v) {
+            const menu = menuData[v.id];
+            if (!menu) return '';
+            const groups = MENU_SECTIONS.filter(([key]) => menu[key]).map(([key, pt, en]) => `
+                <div class="menu-group">
+                    <div class="menu-group-title">${lang === 'en' ? en : pt}</div>
+                    ${menu[key].map((item) => `
+                        <div class="menu-item">
+                            <div>
+                                <div class="menu-item-name">${escapeHTML(item.name)}</div>
+                                <div class="menu-item-desc">${escapeHTML(lang === 'en' ? MENU_DESC_EN[item.desc] || item.desc : item.desc)}</div>
+                            </div>
+                            <div class="menu-item-price">${escapeHTML(item.price)}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `).join('');
+            return `<section><h3 class="section-title">${t('menu')}</h3><div class="panel">${groups}</div></section>`;
+        }
+
+        function reviewsHTML(v) {
+            const reviews = getReviews(v.id);
+            const avg = reviews.length ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length : 0;
+            const savedName = currentUser?.name || store.get('angoliveReviewerName', '');
+            return `
+                <section>
+                    <h3 class="section-title">${t('reviews')}</h3>
+                    <div class="panel">
+                        <div class="avg">
+                            <div class="avg-number">${reviews.length ? avg.toFixed(1) : '—'}</div>
+                            ${reviews.length ? `<div class="stars" aria-hidden="true">${stars(avg)}</div>` : ''}
+                            <div class="avg-count">${reviews.length === 1 ? t('reviewOne') : t('reviewMany', { n: reviews.length })}</div>
+                        </div>
+                        <form class="review-form" id="reviewForm" novalidate>
+                            <div class="review-form-title">${t('yourReview')}</div>
+                            <div class="star-input" id="starInput" role="group" aria-label="${t('yourReview')}">
+                                ${[1, 2, 3, 4, 5].map((n) => `<button type="button" class="star-btn" data-star="${n}" aria-label="${t('stars', { n })}" aria-pressed="false">☆</button>`).join('')}
+                            </div>
+                            <input class="field" id="reviewName" type="text" maxlength="60" autocomplete="name" placeholder="${t('yourName')}" aria-label="${t('yourName')}" value="${escapeHTML(savedName)}">
+                            <textarea class="field" id="reviewText" maxlength="600" placeholder="${t('commentPlaceholder')}" aria-label="${t('commentPlaceholder')}"></textarea>
+                            <div class="form-msg" id="reviewMsg" role="status" aria-live="polite"></div>
+                            <button class="submit-btn" type="submit">${t('send')}</button>
+                        </form>
+                        ${reviews.length ? reviews.map((r) => `
+                            <div class="review">
+                                <div class="review-head">
+                                    <span class="review-name">${escapeHTML(r.name || t('anonymous'))}</span>
+                                    <span class="review-date">${escapeHTML(r.date)}</span>
+                                </div>
+                                <div class="stars" aria-label="${t('stars', { n: r.rating })}">${stars(r.rating)}</div>
+                                <div class="review-text">${escapeHTML(r.comment)}</div>
+                            </div>
+                        `).join('') : `<p class="hint" style="text-align:center;">${t('noReviews')}</p>`}
+                    </div>
+                </section>
+            `;
+        }
+
+        function favButtonHTML(id) {
+            const isFav = favorites.includes(id);
+            return `${icon('heart')}<span>${isFav ? t('saved') : t('save')}</span>`;
+        }
+
+        function openVenue(id, keepScroll = false) {
+            const v = venues.find((x) => x.id === id);
+            if (!v) return;
+            const panel = $('venuePanel');
+            const scroll = panel.scrollTop;
+            state.openId = id;
+            state.rating = 0;
+
+            const digits = phoneDigits(v);
+            const isFav = favorites.includes(v.id);
+            const dist = distanceText(v);
+
+            panel.innerHTML = `
+                <button class="close-btn" type="button" data-close="venueModal" aria-label="${t('close')}">×</button>
+                ${thumbHTML(v, 'modal-hero')}
+                <div class="modal-body">
+                    <div>
+                        <div class="card-type">${icon(CATEGORY[v.type].icon)}${catLabel(v.type, false)}</div>
+                        <h2 class="modal-name" id="venueTitle">${escapeHTML(v.name)}</h2>
+                        <div class="modal-sub">
+                            <span class="rating">★ ${v.rating.toFixed(1)}</span>
+                            <span>${escapeHTML(priceText(v))}</span>
+                            ${dist ? `<span class="distance">${dist}</span>` : ''}
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <a class="action-btn solid wide" href="https://www.google.com/maps/dir/?api=1&destination=${v.lat},${v.lng}" target="_blank" rel="noopener">${icon('directions')}${t('directions')}</a>
+                        ${digits ? `
+                            <a class="action-btn" href="tel:+${digits}">${icon('phone')}${t('call')}</a>
+                            <a class="action-btn" href="https://wa.me/${digits}" target="_blank" rel="noopener">${icon('chat')}${t('whatsapp')}</a>
+                        ` : ''}
+                        <button class="action-btn${isFav ? ' saved' : ''}" type="button" id="favBtn" aria-pressed="${isFav}">${favButtonHTML(v.id)}</button>
+                        <button class="action-btn" type="button" id="shareBtn">${icon('share')}${t('share')}</button>
+                    </div>
+
+                    <section>
+                        <h3 class="section-title">${t('about')}</h3>
+                        <p class="section-content">${escapeHTML(descOf(v))}</p>
+                    </section>
+
+                    <section>
+                        <h3 class="section-title">${t('location')}</h3>
+                        <p class="section-content">${escapeHTML(v.location)}</p>
+                        <p class="coords">Lat ${v.lat.toFixed(4)} · Long ${v.lng.toFixed(4)}</p>
+                        <a class="text-link" href="https://www.google.com/maps/search/?api=1&query=${v.lat},${v.lng}" target="_blank" rel="noopener">${icon('pin')}${t('viewMap')}</a>
+                    </section>
+
+                    ${digits ? `
+                    <section>
+                        <h3 class="section-title">${t('contact')}</h3>
+                        <p class="section-content">${escapeHTML(v.phone)}</p>
+                    </section>` : ''}
+
+                    <section>
+                        <h3 class="section-title">${t('media')}</h3>
+                        <div class="social">${socialLinks(v)}</div>
+                        <p class="hint">${t('mediaHint')}</p>
+                    </section>
+
+                    ${menuHTML(v)}
+                    ${reviewsHTML(v)}
+                </div>
+            `;
+
+            $('venueModal').setAttribute('aria-labelledby', 'venueTitle');
+            openModal('venueModal');
+            if (keepScroll) panel.scrollTop = scroll;
+            history.replaceState(null, '', `#local-${id}`);
+        }
+
+        function updateStars() {
+            document.querySelectorAll('#starInput .star-btn').forEach((btn) => {
+                const on = Number(btn.dataset.star) <= state.rating;
+                btn.textContent = on ? '★' : '☆';
+                btn.classList.toggle('on', on);
+                btn.setAttribute('aria-pressed', String(Number(btn.dataset.star) === state.rating));
+            });
+        }
+
+        function submitReview(event) {
+            event.preventDefault();
+            const name = $('reviewName').value.trim();
+            const comment = $('reviewText').value.trim();
+            const msg = $('reviewMsg');
+            msg.classList.remove('ok');
+            if (!state.rating) { msg.textContent = t('errStars'); return; }
+            if (!name) { msg.textContent = t('errName'); $('reviewName').focus(); return; }
+            if (!comment) { msg.textContent = t('errComment'); $('reviewText').focus(); return; }
+
+            const reviews = store.get('reviews', []);
+            reviews.push({ venueId: state.openId, name, rating: state.rating, comment, date: new Date().toLocaleDateString(locale()) });
+            store.set('reviews', reviews);
+            store.set('angoliveReviewerName', name);
+
+            openVenue(state.openId, true);
+            const done = $('reviewMsg');
+            done.textContent = t('thanks');
+            done.classList.add('ok');
+        }
+
+        function toggleFavorite() {
+            const id = state.openId;
+            favorites = favorites.includes(id) ? favorites.filter((f) => f !== id) : [...favorites, id];
+            store.set('favorites', favorites);
+            const btn = $('favBtn');
+            const isFav = favorites.includes(id);
+            btn.innerHTML = favButtonHTML(id);
+            btn.classList.toggle('saved', isFav);
+            btn.setAttribute('aria-pressed', String(isFav));
+            renderList();
+        }
+
+        function shareVenue() {
+            const v = venues.find((x) => x.id === state.openId);
+            const base = inNativeApp ? PUBLIC_URL : `${location.origin}${location.pathname}`;
+            const url = `${base}#local-${v.id}`;
+            const text = t('shareText', { name: v.name, location: v.location });
+            if (navigator.share) {
+                navigator.share({ title: v.name, text, url }).catch(() => {});
+            } else {
+                window.open(`https://wa.me/?text=${encodeURIComponent(`${text}: ${url}`)}`, '_blank', 'noopener');
+            }
+        }
+
+        /* ---------- Modals ---------- */
+
+        function openModal(id) {
+            const modal = $(id);
+            if (modal.classList.contains('open')) return;
+            lastFocus = document.activeElement;
+            modal.classList.add('open');
+            document.body.classList.add('no-scroll');
+            modal.querySelector('.modal-panel').scrollTop = 0;
+            modal.querySelector('.close-btn')?.focus();
+        }
+
+        function closeModal(id) {
+            $(id).classList.remove('open');
+            if (!document.querySelector('.modal.open')) document.body.classList.remove('no-scroll');
+            if (id === 'venueModal') {
+                state.openId = null;
+                history.replaceState(null, '', location.pathname + location.search);
+            }
+            if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
+        }
+
+        /* ---------- Profile ---------- */
+
+        function updateHeader() {
+            $('profileLabel').textContent = currentUser ? currentUser.name.split(' ')[0] : t('profile');
+        }
+
+        function showProfile() {
+            const editing = !currentUser;
+            $('profileForm').hidden = !editing;
+            $('profileView').hidden = editing;
+            $('profileError').textContent = '';
+            if (currentUser) {
+                $('userInfo').innerHTML = `
+                    <strong>${escapeHTML(currentUser.name)}</strong><br>
+                    ${currentUser.email ? `${escapeHTML(currentUser.email)}<br>` : ''}
+                    <small>${escapeHTML(currentUser.location || t('noRegion'))} · ${escapeHTML(t('memberSince', { d: currentUser.joinDate }))}</small>
+                `;
+                $('statFav').textContent = favorites.length;
+                $('statReviews').textContent = store.get('reviews', []).filter((r) => r.name === currentUser.name).length;
+            }
+        }
+
+        function editProfile() {
+            $('userName').value = currentUser.name;
+            $('userEmail').value = currentUser.email || '';
+            $('userLocation').value = currentUser.location || '';
+            $('profileForm').hidden = false;
+            $('profileView').hidden = true;
+            $('userName').focus();
+        }
+
+        function saveProfile(event) {
+            event.preventDefault();
+            const name = $('userName').value.trim();
+            const email = $('userEmail').value.trim();
+            const region = $('userLocation').value.trim();
+            if (!name) { $('profileError').textContent = t('errName'); $('userName').focus(); return; }
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { $('profileError').textContent = t('errEmail'); $('userEmail').focus(); return; }
+            currentUser = { name, email, location: region, joinDate: currentUser?.joinDate || new Date().toLocaleDateString(locale()) };
+            store.set('angoliveUser', currentUser);
+            updateHeader();
+            showProfile();
+        }
+
+        function logout() {
+            currentUser = null;
+            store.remove('angoliveUser');
+            ['userName', 'userEmail', 'userLocation'].forEach((id) => { $(id).value = ''; });
+            closeModal('profileModal');
+            updateHeader();
+        }
+
+        /* ---------- Theme ---------- */
+
+        function effectiveTheme() {
+            return document.documentElement.dataset.theme
+                || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        }
+
+        function applyTheme(theme) {
+            if (theme) document.documentElement.dataset.theme = theme;
+            const dark = effectiveTheme() === 'dark';
+            $('themeIcon').innerHTML = icon(dark ? 'sun' : 'moon');
+            $('themeLabel').textContent = dark ? t('light') : t('dark');
+            $('themeBtn').setAttribute('aria-label', dark ? t('lightAria') : t('darkAria'));
+        }
+
+        /* ---------- Language ---------- */
+
+        function applyLanguage() {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => { el.placeholder = t(el.dataset.i18nPlaceholder); });
+            document.querySelectorAll('[data-i18n-aria]').forEach((el) => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+            $('langLabel').textContent = t('langOther');
+            $('langBtn').setAttribute('aria-label', t('langAria'));
+            $('profileModal').setAttribute('aria-label', t('profileTitle'));
+            $('venueModal').setAttribute('aria-label', t('detailsAria'));
+            applyTheme();
+            updateHeader();
+            renderChips();
+            renderList();
+            renderInstallBanner();
+            if ($('notice').textContent) setNotice('');
+            if (state.openId) openVenue(state.openId, true);
+            if ($('profileModal').classList.contains('open') && currentUser && $('profileForm').hidden) showProfile();
+        }
+
+        /* ---------- Install and offline ---------- */
+
+        const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+        const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+
+        function renderInstallBanner() {
+            const banner = $('installBanner');
+            const show = !inNativeApp && !isStandalone() && !store.get('angoliveInstallDismissed', false) && (installPrompt || isIOS);
+            banner.hidden = !show;
+            if (!show) return;
+            banner.innerHTML = `
+                <p>${installPrompt ? t('installText') : t('iosText')}</p>
+                <div class="banner-actions">
+                    ${installPrompt ? `<button class="top-btn solid" type="button" id="installBtn">${icon('download')}${t('install')}</button>` : ''}
+                    <button class="top-btn" type="button" id="dismissInstallBtn">${installPrompt ? t('notNow') : t('ok')}</button>
+                </div>
+            `;
+        }
+
+        function updateOnline() {
+            $('offlineBanner').hidden = navigator.onLine;
+        }
+
+        /* ---------- Wiring ---------- */
+
+        $('searchInput').addEventListener('input', (e) => { state.search = e.target.value; renderList(); });
+        $('citySelect').addEventListener('change', (e) => { state.city = e.target.value; renderList(); });
+
+        $('sortSelect').addEventListener('change', (e) => {
+            state.sort = e.target.value;
+            if (state.sort === 'distance' && !state.userPos) locate();
+            renderList();
+        });
+
+        $('nearBtn').addEventListener('click', () => {
+            if (state.userPos && state.sort !== 'distance') {
+                state.sort = 'distance';
+                $('sortSelect').value = 'distance';
+                renderList();
+            } else {
+                locate();
+            }
+        });
+
+        $('chips').addEventListener('click', (e) => {
+            const chip = e.target.closest('.chip');
+            if (!chip) return;
+            state.category = chip.dataset.category;
+            renderChips();
+            renderList();
+        });
+
+        document.querySelector('.tabs').addEventListener('click', (e) => {
+            const tab = e.target.closest('.tab');
+            if (!tab) return;
+            state.tab = tab.dataset.tab;
+            document.querySelectorAll('.tab').forEach((el) => el.classList.toggle('active', el === tab));
+            renderList();
+        });
+
+        $('venueList').addEventListener('click', (e) => {
+            const card = e.target.closest('.venue-card');
+            if (card) openVenue(Number(card.dataset.id));
+        });
+
+        $('venuePanel').addEventListener('click', (e) => {
+            const star = e.target.closest('.star-btn');
+            if (star) { state.rating = Number(star.dataset.star); updateStars(); return; }
+            if (e.target.closest('#favBtn')) toggleFavorite();
+            else if (e.target.closest('#shareBtn')) shareVenue();
+        });
+
+        $('venuePanel').addEventListener('submit', (e) => {
+            if (e.target.id === 'reviewForm') submitReview(e);
+        });
+
+        $('installBanner').addEventListener('click', async (e) => {
+            if (e.target.closest('#installBtn') && installPrompt) {
+                installPrompt.prompt();
+                await installPrompt.userChoice.catch(() => {});
+                installPrompt = null;
+                renderInstallBanner();
+            } else if (e.target.closest('#dismissInstallBtn')) {
+                store.set('angoliveInstallDismissed', true);
+                renderInstallBanner();
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            const closer = e.target.closest('[data-close]');
+            if (closer) { closeModal(closer.dataset.close); return; }
+            if (e.target.classList.contains('modal')) closeModal(e.target.id);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            if ($('profileModal').classList.contains('open')) closeModal('profileModal');
+            else if ($('venueModal').classList.contains('open')) closeModal('venueModal');
+        });
+
+        $('profileBtn').addEventListener('click', () => { showProfile(); openModal('profileModal'); });
+        $('logoutBtn').addEventListener('click', logout);
+        $('editProfileBtn').addEventListener('click', editProfile);
+        $('profileForm').addEventListener('submit', saveProfile);
+
+        $('themeBtn').addEventListener('click', () => {
+            const next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+            store.set('angoliveTheme', next);
+            applyTheme(next);
+        });
+
+        $('langBtn').addEventListener('click', () => {
+            lang = lang === 'pt' ? 'en' : 'pt';
+            store.set('angoliveLang', lang);
+            applyLanguage();
+        });
+
+        matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => applyTheme());
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            installPrompt = e;
+            renderInstallBanner();
+        });
+
+        window.addEventListener('appinstalled', () => {
+            installPrompt = null;
+            store.set('angoliveInstallDismissed', true);
+            renderInstallBanner();
+        });
+
+        window.addEventListener('online', updateOnline);
+        window.addEventListener('offline', updateOnline);
+
+        document.querySelectorAll('[data-icon]').forEach((el) => { el.innerHTML = icon(el.dataset.icon); });
+        const storedTheme = store.get('angoliveTheme', null);
+        if (storedTheme) document.documentElement.dataset.theme = storedTheme;
+        applyLanguage();
+        updateOnline();
+
+        const deepLink = location.hash.match(/^#local-(\d+)$/);
+        if (deepLink) openVenue(Number(deepLink[1]));
+
+        if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => navigator.serviceWorker.ready)
+                .then((reg) => reg.active?.postMessage({ type: 'warm-images', urls: venues.map((v) => v.image) }))
+                .catch(() => {});
+        }
+    </script>
+</body>
+</html>
