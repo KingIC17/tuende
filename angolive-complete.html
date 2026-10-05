@@ -1018,6 +1018,10 @@
             }
         };
 
+        const PUBLIC_URL = 'https://kingic17.github.io/ANGOLIVE/angolive-complete.html';
+        // The iOS app loads this page from its bundle (file://).
+        const inNativeApp = location.protocol === 'file:';
+
         let lang = store.get('angoliveLang', null) || 'pt';
         let currentUser = store.get('angoliveUser', null);
         let favorites = store.get('favorites', []);
@@ -1396,7 +1400,8 @@
 
         function shareVenue() {
             const v = venues.find((x) => x.id === state.openId);
-            const url = `${location.origin}${location.pathname}#local-${v.id}`;
+            const base = inNativeApp ? PUBLIC_URL : `${location.origin}${location.pathname}`;
+            const url = `${base}#local-${v.id}`;
             const text = t('shareText', { name: v.name, location: v.location });
             if (navigator.share) {
                 navigator.share({ title: v.name, text, url }).catch(() => {});
@@ -1522,7 +1527,7 @@
 
         function renderInstallBanner() {
             const banner = $('installBanner');
-            const show = !isStandalone() && !store.get('angoliveInstallDismissed', false) && (installPrompt || isIOS);
+            const show = !inNativeApp && !isStandalone() && !store.get('angoliveInstallDismissed', false) && (installPrompt || isIOS);
             banner.hidden = !show;
             if (!show) return;
             banner.innerHTML = `
