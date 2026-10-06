@@ -1,4 +1,4 @@
--- ANGOLIVE: comentários, avaliações, fotos, vídeos e sugestões de correção dos visitantes.
+-- ANGOLIVE: comentários, avaliações, fotos, vídeos, correções e recomendações dos visitantes.
 -- Correr uma vez no Supabase: SQL Editor > New query > colar tudo > Run.
 --
 -- Como funciona:
@@ -8,7 +8,9 @@
 --     dos comentários aprovados (vista review_stats).
 --   * Para aprovar: Table Editor > reviews (ou submissions) > mudar status para 'approved' (ou 'rejected').
 --   * Cada "Denunciar" soma 1 a report_count; com 3 denúncias fica 'hidden' automaticamente.
---   * Sugestões de "Adicionar ou corrigir um lugar" ficam em corrections (só visíveis no painel do Supabase).
+--   * Correções ficam em corrections e recomendações de lugares novos em recommendations
+--     (só visíveis no painel do Supabase). As fotos das recomendações ficam na pasta privada
+--     recommendations: Storage > recommendations > pasta indicada na coluna photos.
 
 create table public.submissions (
     id uuid primary key default gen_random_uuid(),
@@ -122,7 +124,7 @@ create policy "Visitantes podem enviar fotos"
     to anon, authenticated
     with check (bucket_id = 'submissions');
 
--- Sugestões "Adicionar ou corrigir um lugar". Os visitantes só podem enviar; ler apenas no painel do Supabase.
+-- Sugestões "Corrigir um lugar". Os visitantes só podem enviar; ler apenas no painel do Supabase.
 create table public.corrections (
     id bigint generated always as identity primary key,
     kind text not null check (kind in ('fix', 'add')),
@@ -140,3 +142,41 @@ create policy "Visitantes podem sugerir correções"
     on public.corrections for insert
     to anon, authenticated
     with check (status = 'new');
+
+-- "Recomendar um lugar". Os visitantes só podem enviar; ler e aprovar no painel do Supabase.
+create table public.recommendations (
+    id bigint generated always as identity primary key,
+    name text not null check (char_length(name) between 1 and 120),
+    category text not null check (char_length(category) <= 40),
+    city text not null check (char_length(city) between 1 and 80),
+    address text check (char_length(address) <= 200),
+    phone text check (char_length(phone) <= 40),
+    email text check (char_length(email) <= 120),
+    website text check (char_length(website) <= 300),
+    press_link text check (char_length(press_link) <= 300),
+    social_links jsonb not null default '[]'::jsonb check (jsonb_typeof(social_links) = 'array' and jsonb_array_length(social_links) <= 5 and pg_column_size(social_links) <= 3000),
+    other_link jsonb check (other_link is null or pg_column_size(other_link) <= 600),
+    reason text check (char_length(reason) <= 500),
+    relationship text not null default 'visitor' check (relationship in ('visitor', 'owner')),
+    contact text check (char_length(contact) <= 120),
+    photos jsonb not null default '[]'::jsonb check (jsonb_typeof(photos) = 'array' and jsonb_array_length(photos) <= 5 and pg_column_size(photos) <= 1000),
+    status text not null default 'new' check (status in ('new', 'approved', 'rejected')),
+    created_at timestamptz not null default now()
+);
+
+alter table public.recommendations enable row level security;
+
+create policy "Visitantes podem recomendar lugares"
+    on public.recommendations for insert
+    to anon, authenticated
+    with check (status = 'new');
+
+-- Fotos das recomendações: pasta privada (só o dono as vê no painel), só JPEG até 5 MB.
+-- Ao aprovar um lugar, copiar as fotos escolhidas para a app à mão.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('recommendations', 'recommendations', false, 5242880, array['image/jpeg']);
+
+create policy "Visitantes podem enviar fotos de recomendações"
+    on storage.objects for insert
+    to anon, authenticated
+    with check (bucket_id = 'recommendations' and storage.extension(name) = 'jpg');
