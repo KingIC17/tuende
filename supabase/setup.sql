@@ -1,4 +1,4 @@
--- ANGOLIVE: comentários, avaliações, fotos e vídeos dos visitantes.
+-- ANGOLIVE: comentários, avaliações, fotos, vídeos e sugestões de correção dos visitantes.
 -- Correr uma vez no Supabase: SQL Editor > New query > colar tudo > Run.
 --
 -- Como funciona:
@@ -8,6 +8,7 @@
 --     dos comentários aprovados (vista review_stats).
 --   * Para aprovar: Table Editor > reviews (ou submissions) > mudar status para 'approved' (ou 'rejected').
 --   * Cada "Denunciar" soma 1 a report_count; com 3 denúncias fica 'hidden' automaticamente.
+--   * Sugestões de "Adicionar ou corrigir um lugar" ficam em corrections (só visíveis no painel do Supabase).
 
 create table public.submissions (
     id uuid primary key default gen_random_uuid(),
@@ -120,3 +121,22 @@ create policy "Visitantes podem enviar fotos"
     on storage.objects for insert
     to anon, authenticated
     with check (bucket_id = 'submissions');
+
+-- Sugestões "Adicionar ou corrigir um lugar". Os visitantes só podem enviar; ler apenas no painel do Supabase.
+create table public.corrections (
+    id bigint generated always as identity primary key,
+    kind text not null check (kind in ('fix', 'add')),
+    venue_id integer,
+    place_name text check (char_length(place_name) <= 120),
+    message text not null check (char_length(message) between 1 and 1000),
+    contact text check (char_length(contact) <= 120),
+    status text not null default 'new' check (status in ('new', 'done', 'rejected')),
+    created_at timestamptz not null default now()
+);
+
+alter table public.corrections enable row level security;
+
+create policy "Visitantes podem sugerir correções"
+    on public.corrections for insert
+    to anon, authenticated
+    with check (status = 'new');
