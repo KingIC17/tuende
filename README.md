@@ -37,7 +37,11 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 ## Como funciona a app web
 
 - Os dados dos locais e menus estão no próprio ficheiro: `const venues` (32 locais) e `const menuData`.
-- Página inicial (por esta ordem): título e pesquisa "O que procura? / Onde?", filtros rápidos, Perto de si, Recomendados (com o motivo), Explorar por categoria, Coleções e Verificados recentemente. Pesquisa, filtros, categorias e coleções abrem a vista de resultados.
+- Página inicial (por esta ordem): título e pesquisa "O que procura? / Onde?", filtros rápidos, Recomendados (com o motivo), Explorar por categoria, Coleções e Viagens de um dia a partir de Luanda (calculado pela distância). Pesquisa, filtros, categorias e coleções abrem a vista de resultados.
+- A vista de resultados fica no endereço e pode ser partilhada: `?q=praia&where=luanda`, `?filter=free`, `?category=culture`, `?collection=beaches`, `?saved=1`. Os botões voltar/avançar do browser funcionam.
+- Pesquisa sem acentos, com plurais (hotéis → hotel) e com tolerância a um erro de escrita por palavra (`tokens`, `stem`, `withinOneEdit`). Sinónimos em `SYNONYMS`.
+- `price`: `{ from, to, per: 'person' | 'night' | 'entry', estimate }` ou `{ free: true }`; sem `price` aparece "Preço por confirmar". Os valores com `estimate` são indicativos.
+- "Guardados" substitui o antigo perfil (que pedia email sem o usar). Os dados antigos de perfil e de comentários locais são apagados ao abrir a app.
 - Campos de cada local: `type` (restaurant, beach, culture, nature, nightclub, accommodation, exchange), `highlight` (destaque útil PT/EN, também usado como motivo das recomendações), `family` (sugestão editorial para famílias), `address`, `hours` (horário por dia da semana, 0 = domingo, hora de Angola), `verified` (data e fontes da verificação; `stale` quando as fontes têm alguns anos).
 - O estado "Aberto/Fechado" só aparece com horário confirmado. O filtro "Aberto agora" aparece automaticamente quando pelo menos 8 locais tiverem `hours` (`MIN_PLACES_WITH_HOURS`). Hoje só a Fortaleza de São Miguel tem horário com fonte.
 - Recomendados, coleções e cidades: `RECOMMENDED`, `COLLECTIONS`, `CITIES`.
@@ -76,6 +80,12 @@ e abrir http://localhost:8000/
 As estrelas de cada local são a média dos comentários aprovados (vista `review_stats`). Tocar na nota leva à secção de comentários, que também tem ligações para as avaliações no Google Maps e no TripAdvisor.
 
 As fotos são comprimidas na app (máx. 1600 px, JPEG) antes de enviar. Os vídeos entram como link do YouTube, TikTok ou Instagram.
+
+## Interruptores de configuração (em `angolive-complete.html`)
+
+- `CONTACT_EMAIL`: enquanto estiver vazio, ficam escondidos Contacto, Privacidade e o envio de correções por email.
+- `SUPABASE_URL` / `SUPABASE_KEY`: enquanto estiverem vazios, ficam escondidos o formulário de avaliações, as estrelas, a ordenação "Melhor avaliação" e a partilha de fotos e vídeos; a secção "Opiniões" mostra só as ligações para o Google Maps e o TripAdvisor.
+- "Adicionar ou corrigir um lugar" aparece quando existe Supabase (tabela `corrections`) ou `CONTACT_EMAIL`.
 
 ## Domínio angolive.net
 
