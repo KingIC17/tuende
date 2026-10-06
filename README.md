@@ -23,6 +23,7 @@ Guia de Angola: restaurantes, festas e nightclubs, beach clubs, alojamento, turi
 angolive-complete.html   App completa num só ficheiro (HTML + CSS + JS, sem dependências)
 index.html               Redireciona para angolive-complete.html (mantém #local-N)
 manifest.json            Manifesto PWA (start_url ./angolive-complete.html)
+og-image.jpg             Imagem de pré-visualização (1200x630) para links partilhados no LinkedIn, WhatsApp, Facebook
 sw.js                    Service worker: network-first para o site, cache-first para fotos Unsplash
 icon-192.png, icon-512.png, apple-touch-icon.png
 privacy.html             Política de privacidade PT/EN (por publicar: falta o email)
@@ -102,7 +103,7 @@ Não adicionar o domínio no GitHub antes de o comprar e configurar o DNS: o end
    - 1 registo `CNAME` para `www` → `kingic17.github.io`
 3. No GitHub: **Settings > Pages > Custom domain** → `angolive.net` → Save. Depois de verificado, ativar **Enforce HTTPS**.
 4. Recomendado: verificar o domínio na conta GitHub (**Settings > Pages > Verified domains**) para ninguém o poder usar noutro repositório.
-5. Atualizar `PUBLIC_URL` em `angolive-complete.html` (e na cópia em `ios/`) para `https://angolive.net/angolive-complete.html`.
+5. Atualizar `PUBLIC_URL` em `angolive-complete.html` (e na cópia em `ios/`) para `https://angolive.net/angolive-complete.html`, e as etiquetas `og:url` e `og:image` em `angolive-complete.html` e `index.html`.
 
 ## O que falta fazer
 
