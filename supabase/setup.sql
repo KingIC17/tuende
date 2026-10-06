@@ -1,4 +1,4 @@
--- ANGOLIVE: comentários, avaliações, fotos, vídeos, correções e recomendações dos visitantes.
+-- ANGOLIVE: comentários, avaliações, fotos, vídeos, correções, recomendações e sugestões de eventos dos visitantes.
 -- Correr uma vez no Supabase: SQL Editor > New query > colar tudo > Run.
 --
 -- Como funciona:
@@ -11,6 +11,8 @@
 --   * Correções ficam em corrections e recomendações de lugares novos em recommendations
 --     (só visíveis no painel do Supabase). As fotos das recomendações ficam na pasta privada
 --     recommendations: Storage > recommendations > pasta indicada na coluna photos.
+--   * Sugestões de eventos ficam em event_suggestions. Depois de confirmar o evento numa fonte,
+--     junta-se à lista EVENTS em angolive-complete.html e muda-se status para 'added'.
 
 create table public.submissions (
     id uuid primary key default gen_random_uuid(),
@@ -180,3 +182,25 @@ create policy "Visitantes podem enviar fotos de recomendações"
     on storage.objects for insert
     to anon, authenticated
     with check (bucket_id = 'recommendations' and storage.extension(name) = 'jpg');
+
+-- "Sugerir um evento" (página Agenda). Os visitantes só podem enviar; ler no painel do Supabase.
+create table public.event_suggestions (
+    id bigint generated always as identity primary key,
+    name text not null check (char_length(name) between 1 and 120),
+    start_date date not null,
+    end_date date check (end_date is null or end_date >= start_date),
+    city text not null check (char_length(city) between 1 and 80),
+    venue text check (char_length(venue) <= 160),
+    link text check (char_length(link) <= 300),
+    details text check (char_length(details) <= 800),
+    contact text check (char_length(contact) <= 120),
+    status text not null default 'new' check (status in ('new', 'added', 'rejected')),
+    created_at timestamptz not null default now()
+);
+
+alter table public.event_suggestions enable row level security;
+
+create policy "Visitantes podem sugerir eventos"
+    on public.event_suggestions for insert
+    to anon, authenticated
+    with check (status = 'new');
