@@ -673,11 +673,55 @@
         .home-cta h2 { font-size: 20px; font-weight: 800; }
         .home-cta p { color: var(--muted); margin-top: 4px; }
 
+        /* Agenda */
+        .events-page { max-width: 900px; margin: 0 auto; padding-top: 12px; }
+        .events-filters { display: grid; gap: 14px; margin-top: 18px; padding: 16px; border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); }
+        .events-filters .field { max-width: 320px; margin-top: 6px; }
+        .events-filters .chips { margin: 8px 0 0; max-width: none; flex-wrap: wrap; overflow: visible; }
+        .chip-count { font-weight: 600; opacity: 0.85; }
+        .events-count { margin-top: 18px; font-size: 15px; font-weight: 700; color: var(--muted); }
+        .event-month { margin-top: 18px; }
+        .event-month h2 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
+        .event-list { display: grid; gap: 12px; }
+        .event-card { display: grid; grid-template-columns: 76px 1fr; gap: 14px; padding: 14px; border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); scroll-margin-top: 16px; }
+        .event-card.highlight { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+        .date-block { display: flex; flex-direction: column; align-items: center; height: fit-content; padding: 8px 4px; border-radius: 12px; background: var(--primary); color: #fff; text-align: center; line-height: 1.1; }
+        .db-month { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
+        .db-day { font-size: 30px; font-weight: 800; }
+        .db-to { font-size: 12px; font-weight: 700; margin-top: 2px; }
+        .event-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+        .event-title { font-size: 19px; font-weight: 800; line-height: 1.25; }
+        .event-title:focus { outline: none; }
+        .event-badges { display: flex; flex-wrap: wrap; gap: 6px; }
+        .event-badges:empty { display: none; }
+        .event-badge { padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 800; background: var(--surface-2); }
+        .event-badge.live { background: var(--accent); color: var(--accent-ink); }
+        .event-badge.tbc { color: var(--primary); border: 1px solid var(--primary); }
+        .event-meta { display: grid; gap: 4px; list-style: none; font-size: 15px; }
+        .event-meta li { display: flex; gap: 8px; align-items: flex-start; }
+        .event-meta .icon { width: 18px; height: 18px; margin-top: 2px; color: var(--muted); }
+        .event-tags { font-size: 14px; color: var(--muted); }
+        .event-details summary { display: flex; align-items: center; min-height: 44px; font-weight: 700; color: var(--primary); cursor: pointer; }
+        .event-details p, .event-details ul { font-size: 15px; margin-top: 6px; }
+        .event-details ul { padding-left: 20px; }
+        .event-source { color: var(--muted); }
+        .event-actions { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin-top: 4px; }
+        .event-actions .action-btn { min-height: 44px; padding: 0 10px; font-size: 14px; white-space: nowrap; }
+        .events-note { margin-top: 18px; }
+        .event-mini-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 12px; }
+        .event-mini { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: start; width: 100%; padding: 12px; border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); text-align: left; }
+        .event-mini:hover { border-color: var(--primary); }
+        .event-mini .db-day { font-size: 24px; }
+        .event-mini-title { display: block; margin-top: 2px; font-size: 17px; font-weight: 800; line-height: 1.25; }
+        .event-mini-meta { display: block; margin-top: 4px; font-size: 14px; color: var(--muted); }
+
         @media (max-width: 720px) {
             .rec-title { font-size: 27px; }
             .rec-grid, .social-row.other-row { grid-template-columns: 1fr; }
             .social-row { grid-template-columns: 1fr 50px; }
             .social-row select { grid-column: 1 / -1; }
+            .event-card { grid-template-columns: 62px 1fr; gap: 10px; padding: 12px; }
+            .event-card .db-day { font-size: 24px; }
         }
 
         @media (min-width: 721px) {
@@ -843,11 +887,39 @@
                 </div>
             </div>
         </section>
+
+        <section id="eventsView" class="events-page" hidden aria-labelledby="eventsTitle">
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"></span><span data-i18n="backHome"></span></button>
+            <h1 class="rec-title" id="eventsTitle" data-i18n="eventsTitle"></h1>
+            <p class="rec-intro" data-i18n="eventsIntro"></p>
+            <div class="events-filters">
+                <div>
+                    <span class="field-label" id="eventsWhenLabel" data-i18n="eventsWhen"></span>
+                    <div class="chips" id="eventsWhen" role="group" aria-labelledby="eventsWhenLabel"></div>
+                </div>
+                <div>
+                    <span class="field-label" id="eventsTypeLabel" data-i18n="eventsType"></span>
+                    <div class="chips" id="eventsType" role="group" aria-labelledby="eventsTypeLabel"></div>
+                </div>
+                <label id="eventsWhereWrap">
+                    <span class="field-label" data-i18n="whereLabel"></span>
+                    <select class="field" id="eventsWhere"></select>
+                </label>
+            </div>
+            <p class="events-count" id="eventsCount" aria-live="polite"></p>
+            <div id="eventsList"></div>
+            <p class="hint events-note" data-i18n="eventsNote"></p>
+            <section class="home-cta" id="eventsCta" hidden aria-labelledby="eventsCtaTitle">
+                <div><h2 id="eventsCtaTitle" data-i18n="eventsCtaTitle"></h2><p data-i18n="eventsCtaText"></p></div>
+                <button class="submit-btn" type="button" data-action="suggest-event" data-i18n="eventSuggest"></button>
+            </section>
+        </section>
     </main>
 
     <footer class="site-footer">
         <div class="container">
             <nav class="footer-links" aria-label="ANGOLIVE">
+                <button type="button" class="footer-link" data-action="events" data-i18n="agenda"></button>
                 <button type="button" class="footer-link" data-info="about" data-i18n="footerAbout"></button>
                 <button type="button" class="footer-link" data-info="verify" data-i18n="footerVerify"></button>
                 <a class="footer-link" id="footerPrivacy" href="privacy.html" hidden data-i18n="footerPrivacy"></a>
@@ -891,6 +963,29 @@
                 </div>
                 <div class="form-msg" id="fixMsg" role="status" aria-live="polite"></div>
                 <button class="submit-btn" type="submit" id="fixSubmit" style="width:100%" data-i18n="fixSend"></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="eventModal" role="dialog" aria-modal="true" aria-labelledby="eventSugTitle">
+        <div class="modal-panel info-panel">
+            <button class="close-btn" type="button" data-close="eventModal" data-i18n-aria="close">×</button>
+            <h2 class="info-title" id="eventSugTitle" data-i18n="eventSuggest"></h2>
+            <p class="hint" data-i18n="evIntro"></p>
+            <form id="eventForm" novalidate>
+                <div class="form-group"><label for="evName"><span data-i18n="evName"></span> *</label><input class="field" id="evName" type="text" maxlength="120"></div>
+                <div class="rec-grid">
+                    <div class="form-group"><label for="evStart"><span data-i18n="evStart"></span> *</label><input class="field" id="evStart" type="date"></div>
+                    <div class="form-group"><label for="evEnd" data-i18n="evEnd"></label><input class="field" id="evEnd" type="date"></div>
+                    <div class="form-group"><label for="evCity"><span data-i18n="recCity"></span> *</label><input class="field" id="evCity" type="text" maxlength="80" list="evCities"></div>
+                    <div class="form-group"><label for="evVenue" data-i18n="evVenue"></label><input class="field" id="evVenue" type="text" maxlength="160"></div>
+                </div>
+                <datalist id="evCities"></datalist>
+                <div class="form-group"><label for="evLink" data-i18n="evLink"></label><input class="field" id="evLink" type="url" inputmode="url" maxlength="300" placeholder="https://"><span class="hint" data-i18n="evLinkHint"></span></div>
+                <div class="form-group"><label for="evDetails" data-i18n="evDetails"></label><textarea class="field" id="evDetails" maxlength="800" data-i18n-placeholder="evDetailsPlaceholder"></textarea></div>
+                <div class="form-group"><label for="evContact" data-i18n="fixContactLabel"></label><input class="field" id="evContact" type="text" maxlength="120" autocomplete="email"></div>
+                <div class="form-msg" id="evMsg" role="status" aria-live="polite"></div>
+                <button class="submit-btn" type="submit" id="evSubmit" style="width:100%" data-i18n="evSend"></button>
             </form>
         </div>
     </div>
@@ -1268,6 +1363,64 @@
                 recOtherLink: 'Outro link',
                 recOtherName: 'Nome do link (ex.: Menu)',
                 recOtherUrl: 'Link',
+                agenda: 'Agenda',
+                eventsTitle: 'Agenda: o que fazer em Angola',
+                eventsIntro: 'Concertos, festivais, dança, cinema, feiras e desporto. Só mostramos eventos com fonte publicada; confirme sempre com a organização antes de ir.',
+                eventsWhen: 'Quando?',
+                eventsType: 'Tipo de evento',
+                whenAll: 'Todos',
+                whenToday: 'Hoje',
+                whenWeekend: 'Este fim de semana',
+                whenWeek: 'Esta semana',
+                whenNextWeek: 'Próxima semana',
+                whenMonth: 'Este mês',
+                whenNextMonth: 'Próximo mês',
+                typeAll: 'Todos',
+                eventsCount: '{n} eventos',
+                eventsCountOne: '1 evento',
+                eventsEmpty: 'Não há eventos para estes filtros.',
+                eventsNone: 'Ainda não há eventos anunciados. Volte em breve.',
+                eventsShowAll: 'Ver todos os eventos',
+                eventsGone: 'Este evento já terminou.',
+                eventsNote: 'Os eventos saem da agenda depois do último dia. Datas, locais e preços podem mudar: confirme na página oficial ou na fonte.',
+                eventsHomeTitle: 'Próximos eventos',
+                eventsHomeSub: 'Concertos, festivais e outras atividades com data marcada.',
+                eventsSeeAll: 'Ver agenda',
+                eventsCtaTitle: 'Conhece um evento que devia estar aqui?',
+                eventsCtaText: 'Envie-nos os detalhes. Confirmamos numa fonte antes de publicar.',
+                eventSuggest: 'Sugerir um evento',
+                dateRange: '{from} a {to}',
+                eventToday: 'Hoje',
+                eventTomorrow: 'Amanhã',
+                eventOngoing: 'A decorrer até {date}',
+                eventTbc: 'Data habitual, por confirmar',
+                eventVenueTbc: 'Local a confirmar',
+                eventMore: 'Mais informações',
+                eventProgramme: 'Programa',
+                eventHost: 'Organização',
+                eventInfoPhone: 'Informações',
+                eventSource: 'Fonte: {source}, verificado a {date}.',
+                eventTickets: 'Comprar bilhetes',
+                eventOfficial: 'Página oficial',
+                eventCalendar: 'Calendário',
+                eventCalendarAria: 'Adicionar ao calendário: {name}',
+                evIntro: 'Diga-nos o essencial. Um link para o anúncio oficial ajuda-nos a confirmar mais depressa.',
+                evName: 'Nome do evento',
+                evStart: 'Data de início',
+                evEnd: 'Data de fim (se durar vários dias)',
+                evVenue: 'Local',
+                evLink: 'Link do anúncio ou dos bilhetes',
+                evLinkHint: 'Ex.: Instagram, Facebook ou página de bilhetes.',
+                evDetails: 'Detalhes',
+                evDetailsPlaceholder: 'Horário, preço, artistas...',
+                evSend: 'Enviar sugestão',
+                evThanks: 'Obrigado! Vamos confirmar o evento antes de o publicar.',
+                evEmailSubject: 'ANGOLIVE: sugestão de evento',
+                evErrName: 'Escreva o nome do evento.',
+                evErrStart: 'Indique a data do evento.',
+                evErrPast: 'Esta data já passou.',
+                evErrEnd: 'A data de fim tem de ser igual ou posterior à de início.',
+                evErrCity: 'Indique a cidade.',
                 recPhotos: 'Fotos do lugar',
                 recPhotosHint: 'Opcional. Até 5 fotos, tiradas por si. Ajudam-nos a verificar e a mostrar o lugar.',
                 recPhotosAdd: 'Escolher fotos',
@@ -1524,6 +1677,64 @@
                 recOtherLink: 'Other link',
                 recOtherName: 'Link name (e.g. Menu)',
                 recOtherUrl: 'Link',
+                agenda: 'Events',
+                eventsTitle: "Events: what's on in Angola",
+                eventsIntro: 'Concerts, festivals, dance, film, fairs and sport. We only list events with a published source; always check with the organisers before you go.',
+                eventsWhen: 'When?',
+                eventsType: 'Type of event',
+                whenAll: 'All',
+                whenToday: 'Today',
+                whenWeekend: 'This weekend',
+                whenWeek: 'This week',
+                whenNextWeek: 'Next week',
+                whenMonth: 'This month',
+                whenNextMonth: 'Next month',
+                typeAll: 'All',
+                eventsCount: '{n} events',
+                eventsCountOne: '1 event',
+                eventsEmpty: 'No events match these filters.',
+                eventsNone: 'No events announced yet. Check back soon.',
+                eventsShowAll: 'See all events',
+                eventsGone: 'This event has already ended.',
+                eventsNote: 'Events leave the list after their last day. Dates, venues and prices can change: check the official page or the source.',
+                eventsHomeTitle: 'Upcoming events',
+                eventsHomeSub: 'Concerts, festivals and other activities with a set date.',
+                eventsSeeAll: 'See all events',
+                eventsCtaTitle: 'Know an event that should be here?',
+                eventsCtaText: 'Send us the details. We check them against a source before publishing.',
+                eventSuggest: 'Suggest an event',
+                dateRange: '{from} – {to}',
+                eventToday: 'Today',
+                eventTomorrow: 'Tomorrow',
+                eventOngoing: 'On until {date}',
+                eventTbc: 'Usual date, to be confirmed',
+                eventVenueTbc: 'Venue to be confirmed',
+                eventMore: 'More information',
+                eventProgramme: 'Programme',
+                eventHost: 'Organiser',
+                eventInfoPhone: 'Information',
+                eventSource: 'Source: {source}, checked on {date}.',
+                eventTickets: 'Buy tickets',
+                eventOfficial: 'Official page',
+                eventCalendar: 'Calendar',
+                eventCalendarAria: 'Add to calendar: {name}',
+                evIntro: 'Tell us the essentials. A link to the official announcement helps us check it faster.',
+                evName: 'Event name',
+                evStart: 'Start date',
+                evEnd: 'End date (if it lasts several days)',
+                evVenue: 'Venue',
+                evLink: 'Link to the announcement or tickets',
+                evLinkHint: 'E.g. Instagram, Facebook or a ticket page.',
+                evDetails: 'Details',
+                evDetailsPlaceholder: 'Times, price, artists...',
+                evSend: 'Send suggestion',
+                evThanks: 'Thank you! We will check the event before publishing it.',
+                evEmailSubject: 'ANGOLIVE: event suggestion',
+                evErrName: 'Please write the event name.',
+                evErrStart: 'Please add the event date.',
+                evErrPast: 'This date has already passed.',
+                evErrEnd: 'The end date must be on or after the start date.',
+                evErrCity: 'Please add the city.',
                 recPhotos: 'Photos of the place',
                 recPhotosHint: 'Optional. Up to 5 photos you took yourself. They help us check and show the place.',
                 recPhotosAdd: 'Choose photos',
@@ -1615,6 +1826,226 @@
             free: { match: (v) => v.family && v.price?.free, cover: 7, title: 'colFreeTitle', desc: 'colFreeDesc' }
         };
 
+        const EVENT_TYPES = {
+            music: { icon: 'nightclub', pt: 'Música', en: 'Music' },
+            dance: { icon: 'users', pt: 'Dança', en: 'Dance' },
+            film: { icon: 'film', pt: 'Cinema', en: 'Film' },
+            fairs: { icon: 'ticket', pt: 'Feiras e festas', en: 'Fairs and festivities' },
+            sports: { icon: 'trophy', pt: 'Desporto', en: 'Sport' }
+        };
+
+        // Agenda: only events with a published source (checked = date we confirmed it). Each event leaves the list by
+        // itself after its last day, in Angola time. days = weekdays it runs on (0 = Sunday), when it is not every day.
+        // confirmed: false = a yearly event whose new edition has not been announced yet.
+        const EVENTS = [
+            {
+                id: 'andebol-clubes-2026',
+                type: 'sports',
+                title: { pt: '47.º Campeonato Africano de Clubes Campeões de Andebol', en: '47th African Club Champions Handball Championship' },
+                city: 'Luanda',
+                venue: 'Arena do Kilamba e Pavilhão Paulo Bunze',
+                mapsQuery: 'Arena do Kilamba, Luanda',
+                start: '2026-10-05',
+                end: '2026-10-14',
+                tags: { pt: ['Andebol', 'Desporto'], en: ['Handball', 'Sport'] },
+                desc: {
+                    pt: 'Os clubes campeões de África, em femininos e masculinos. Entre as equipas estão o 1.º de Agosto, o Petro de Luanda, o Al Ahly e o Zamalek.',
+                    en: "Africa's champion clubs, in the women's and men's tournaments. Teams include 1.º de Agosto, Petro de Luanda, Al Ahly and Zamalek."
+                },
+                host: 'Federação Angolana de Andebol',
+                source: { name: 'Ver Angola', url: 'https://www.verangola.net/va/pt/102026/eventos/50301/47%C2%BA-Campeonato-Africano-de-Clubes-Campe%C3%B5es-de-Andebol-Desporto.htm' },
+                checked: '2026-10-06'
+            },
+            {
+                id: 'sona-137',
+                type: 'dance',
+                title: { pt: 'Sona 137: temporada da Companhia de Dança Contemporânea de Angola', en: 'Sona 137: Contemporary Dance Company of Angola season' },
+                city: 'Luanda',
+                venue: 'Elinga Teatro',
+                start: '2026-10-01',
+                end: '2026-10-18',
+                days: [4, 5, 6, 0],
+                when: { pt: 'Quinta a domingo, às 19h00', en: 'Thursday to Sunday, 7 pm' },
+                price: { from: 10000 },
+                tags: { pt: ['Dança', 'Teatro'], en: ['Dance', 'Theatre'] },
+                desc: {
+                    pt: 'Espetáculo de dança contemporânea com 70 minutos, inspirado nos sona, os desenhos na areia dos Cokwe. Fala de caminhos que se fecham sobre si mesmos e de formas de submissão política, religiosa e social. Coreografia de Ana Clara Guerra Marques e Andy Rodriguez.',
+                    en: 'A 70-minute contemporary dance piece inspired by sona, the Cokwe sand drawings. It is about paths that close in on themselves and about political, religious and social submission. Choreography by Ana Clara Guerra Marques and Andy Rodriguez.'
+                },
+                host: 'Companhia de Dança Contemporânea de Angola',
+                phones: ['959 055 490', '925 155 887'],
+                source: { name: 'Ver Angola', url: 'https://www.verangola.net/va/pt/092026/eventos/50267/Temporada-de-2026-da-Companhia-de-Dan%C3%A7a-Contempor%C3%A2nea-de-Angola-Dan%C3%A7a.htm' },
+                checked: '2026-10-06'
+            },
+            {
+                id: 'angola-kizomba-festival-2026',
+                type: 'dance',
+                title: { pt: 'Angola Kizomba Festival', en: 'Angola Kizomba Festival' },
+                city: 'Luanda',
+                venue: '',
+                start: '2026-10-15',
+                end: '2026-10-26',
+                price: {
+                    text: { pt: 'Passe do festival: 100 €', en: 'Festival pass: €100' },
+                    note: { pt: 'Há pacotes com alojamento a partir de 550 €.', en: 'Packages with accommodation start at €550.' }
+                },
+                tags: { pt: ['Kizomba', 'Semba', 'Dança'], en: ['Kizomba', 'Semba', 'Dance'] },
+                desc: {
+                    pt: 'Oito dias de imersão na kizomba e no semba, que terminam com três dias de festival. Junta dançarinos de vários países.',
+                    en: 'Eight days of kizomba and semba immersion, ending with a three-day festival. It brings together dancers from many countries.'
+                },
+                link: 'https://angolakizombafestival.ao/',
+                source: { name: 'angolakizombafestival.ao', url: 'https://angolakizombafestival.ao/' },
+                checked: '2026-10-06'
+            },
+            {
+                id: 'angojazz-2026',
+                type: 'music',
+                title: { pt: 'Festival Internacional Angojazz', en: 'Angojazz International Festival' },
+                city: 'Luanda',
+                venue: 'Talatona',
+                venueTbc: true,
+                start: '2026-10-21',
+                end: '2026-10-25',
+                tags: { pt: ['Jazz', 'Concertos'], en: ['Jazz', 'Concerts'] },
+                desc: {
+                    pt: 'A 5.ª edição do festival de jazz faz parte das festas dos 10 anos do município de Talatona. Em 2025 houve concertos, workshops e encontros com músicos de Angola, França, Alemanha, Portugal e Nigéria.',
+                    en: "The 5th edition of the jazz festival is part of Talatona's 10th anniversary celebrations. In 2025 it had concerts, workshops and meetings with musicians from Angola, France, Germany, Portugal and Nigeria."
+                },
+                source: { name: 'Ver Angola', url: 'https://www.verangola.net/va/pt/102026/eventos/50280/10%C2%BA-anivers%C3%A1rio-do-Munic%C3%ADpio-de-Talatona-Festas.htm' },
+                checked: '2026-10-06'
+            },
+            {
+                id: 'talatona-10-anos',
+                type: 'fairs',
+                title: { pt: '10 anos do Município de Talatona', en: "Talatona's 10th anniversary" },
+                city: 'Luanda',
+                venue: 'Talatona',
+                start: '2026-10-01',
+                end: '2026-10-31',
+                tags: { pt: ['Festas', 'Gastronomia', 'Jazz'], en: ['Festivities', 'Food', 'Jazz'] },
+                desc: {
+                    pt: 'Um mês de atividades para celebrar o 10.º aniversário do município, com uma corrida para famílias, uma feira de gastronomia e cultura, jazz e kizomba.',
+                    en: "A month of activities for the municipality's 10th anniversary, with a family run, a food and culture fair, jazz and kizomba."
+                },
+                programme: [
+                    { date: '2026-10-17', pt: 'Corrida da Família de Talatona', en: 'Talatona Family Run' },
+                    { date: '2026-10-21', end: '2026-10-25', pt: 'Expo Talatona, Feira de Gastronomia e Cultura e Festival Internacional Angojazz', en: 'Expo Talatona, Food and Culture Fair and the Angojazz International Festival' },
+                    { date: '2026-10-31', pt: 'Edição especial do "Kizomba no Pé", culto ecuménico e espetáculo gospel', en: 'Special "Kizomba no Pé" night, ecumenical service and gospel show' }
+                ],
+                host: 'Administração Municipal de Talatona',
+                source: { name: 'Ver Angola', url: 'https://www.verangola.net/va/pt/102026/eventos/50280/10%C2%BA-anivers%C3%A1rio-do-Munic%C3%ADpio-de-Talatona-Festas.htm' },
+                checked: '2026-10-06'
+            },
+            {
+                id: 'fic-luanda-2026',
+                type: 'film',
+                title: { pt: 'FIC Luanda 2026: Festival Internacional de Cinema de Luanda', en: 'FIC Luanda 2026: Luanda International Film Festival' },
+                city: 'Luanda',
+                venue: '',
+                start: '2026-10-28',
+                end: '2026-11-02',
+                tags: { pt: ['Cinema', 'Documentários'], en: ['Film', 'Documentaries'] },
+                desc: {
+                    pt: 'Longas-metragens, curtas e documentários angolanos e internacionais, com ações de formação para quem trabalha no cinema.',
+                    en: 'Angolan and international feature films, shorts and documentaries, with training for film professionals.'
+                },
+                host: 'Agência Nacional das Indústrias Culturais e Criativas (ANICC)',
+                source: { name: 'Ver Angola', url: 'https://www.verangola.net/va/pt/082026/eventos/49926/FIC-Luanda-2026-TVCinema.htm' },
+                checked: '2026-10-06'
+            },
+            {
+                id: 'expo-cultura-2026',
+                type: 'fairs',
+                title: { pt: 'Expo-Cultura Angola 2026', en: 'Expo-Cultura Angola 2026' },
+                city: 'Luanda',
+                venue: 'Tendas da Parcela A, Baía de Luanda',
+                mapsQuery: 'Baía de Luanda',
+                start: '2026-11-05',
+                end: '2026-11-08',
+                tags: { pt: ['Cultura', 'Tradições', 'Dança'], en: ['Culture', 'Traditions', 'Dance'] },
+                desc: {
+                    pt: 'Primeira edição da feira da cultura angolana: tradições, costumes, história e criações artísticas de todo o país, com um torneio de dança.',
+                    en: 'First edition of the Angolan culture fair: traditions, customs, history and artistic work from all over the country, with a dance competition.'
+                },
+                host: 'Ministério da Cultura',
+                source: { name: 'Ver Angola', url: 'https://www.verangola.net/va/pt/072026/eventos/49346/Expo-Cultura-Angola-2026-Feiras.htm' },
+                checked: '2026-10-06'
+            },
+            {
+                id: 'roda-de-semba-raiz',
+                type: 'music',
+                title: { pt: 'Roda de Semba: Raiz, com Ary', en: 'Roda de Semba: Raiz, with Ary' },
+                city: 'Luanda',
+                venue: 'Arena Bessangana, Ilha de Luanda',
+                start: '2026-11-14',
+                time: '19:00',
+                hours: 6,
+                when: { pt: 'Jantar às 19h00, espetáculo às 21h30', en: 'Dinner at 7 pm, show at 9.30 pm' },
+                price: {
+                    from: 25000,
+                    to: 40000,
+                    note: { pt: 'Há bilhetes mais baratos para mulheres (campanha Outubro Rosa). Jantar com espetáculo e bar aberto: 120 mil Kz por pessoa.', en: 'Cheaper tickets for women (Pink October campaign). Dinner, show and open bar: 120 thousand Kz per person.' }
+                },
+                tags: { pt: ['Semba', 'Concerto'], en: ['Semba', 'Concert'] },
+                desc: {
+                    pt: 'Uma noite de semba com Ary, com jantar e espetáculo ao vivo. Traje: branco.',
+                    en: 'A semba night with Ary, with dinner and a live show. Dress code: white.'
+                },
+                link: 'https://check-in.ao/events/roda-de-semba-raiz',
+                tickets: true,
+                host: 'Dibamba',
+                phones: ['945 025 039'],
+                source: { name: 'Ver Angola', url: 'https://www.verangola.net/va/pt/102026/eventos/50286/Roda-de-Semba-Raiz-com-Ary-M%C3%BAsica.htm' },
+                checked: '2026-10-06'
+            },
+            {
+                id: 'bitur-2026',
+                type: 'fairs',
+                title: { pt: 'BITUR 2026: Bolsa Internacional de Turismo de Angola', en: 'BITUR 2026: Angola International Tourism Fair' },
+                city: 'Luanda',
+                venue: 'Tendas do Grupo Arena, Porto de Luanda',
+                mapsQuery: 'Porto de Luanda',
+                start: '2026-11-20',
+                end: '2026-11-22',
+                when: { pt: 'Das 10h00 às 18h00', en: '10 am to 6 pm' },
+                price: { from: 2500 },
+                tags: { pt: ['Turismo', 'Viagens'], en: ['Tourism', 'Travel'] },
+                desc: {
+                    pt: 'Feira de turismo com operadores de Angola e de outros países: destinos, alojamento e viagens pelo país.',
+                    en: 'Tourism fair with operators from Angola and abroad: destinations, accommodation and trips around the country.'
+                },
+                link: 'https://bitur.ao/',
+                host: 'INFOTUR (Ministério do Turismo)',
+                source: { name: 'Ver Angola', url: 'https://www.verangola.net/va/pt/092026/eventos/50161/Bitur-2026-Feiras.htm' },
+                checked: '2026-10-06'
+            },
+            {
+                id: 'sao-silvestre-luanda-2026',
+                type: 'sports',
+                confirmed: false,
+                title: { pt: 'Corrida de São Silvestre de Luanda', en: 'Luanda São Silvestre Race' },
+                city: 'Luanda',
+                venue: 'Largo da Mutamba',
+                start: '2026-12-31',
+                time: '18:00',
+                hours: 2,
+                when: { pt: 'Em 2025, a partida foi às 18h00', en: 'In 2025 it started at 6 pm' },
+                price: { text: { pt: 'Em 2025: 8 mil Kz (corrida) e 6 mil Kz (caminhada)', en: 'In 2025: 8 thousand Kz (race) and 6 thousand Kz (walk)' } },
+                tags: { pt: ['Corrida', 'Atletismo'], en: ['Running', 'Athletics'] },
+                desc: {
+                    pt: 'A tradicional corrida de 10 km do último dia do ano. Em 2025 (69.ª edição) partiu do Largo da Mutamba e terminou no Estádio dos Coqueiros, com atletas de 12 países. A edição de 2026 ainda não foi anunciada: confirme a data e as inscrições perto do fim do ano.',
+                    en: 'The traditional 10 km race on the last day of the year. In 2025 (69th edition) it started at Largo da Mutamba and finished at Estádio dos Coqueiros, with athletes from 12 countries. The 2026 edition has not been announced yet: check the date and registration near the end of the year.'
+                },
+                host: 'Ministério da Juventude e Desportos',
+                source: { name: 'Ver Angola', url: 'https://www.verangola.net/va/pt/122025/Desporto/47134/Corrida-de-S%C3%A3o-Silvestre-regressa-no-%C3%BAltimo-dia-do-ano-com-participa%C3%A7%C3%A3o-de-atletas-estrangeiros.htm' },
+                checked: '2026-10-06'
+            }
+        ];
+
+        const WHEN_LABELS = { all: 'whenAll', today: 'whenToday', weekend: 'whenWeekend', week: 'whenWeek', nextweek: 'whenNextWeek', month: 'whenMonth', nextmonth: 'whenNextMonth' };
+        const DEFAULT_EVENT_FILTERS = { when: 'all', type: '', where: '' };
+
         // "Aberto agora" only makes sense once enough places have confirmed hours.
         const MIN_PLACES_WITH_HOURS = 8;
 
@@ -1654,6 +2085,11 @@
             tag: '<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>',
             back: '<polyline points="15 18 9 12 15 6"/>',
             next: '<polyline points="9 18 15 12 9 6"/>',
+            calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+            film: '<rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/>',
+            trophy: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+            ticket: '<path d="M2 9a3 3 0 0 0 0 6v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a3 3 0 0 0 0-6V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/><line x1="13" y1="5" x2="13" y2="7"/><line x1="13" y1="11" x2="13" y2="13"/><line x1="13" y1="17" x2="13" y2="19"/>',
+            external: '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
             camera: '<path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>',
             edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>',
             moon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
@@ -1699,7 +2135,7 @@
         let lastFocus = null;
 
         const DEFAULT_FILTERS = { q: '', where: '', quick: null, category: null, collection: null, saved: false };
-        const state = { view: 'home', filters: { ...DEFAULT_FILTERS }, sort: 'relevance', rating: 0, openId: null, userPos: null };
+        const state = { view: 'home', filters: { ...DEFAULT_FILTERS }, events: { ...DEFAULT_EVENT_FILTERS }, sort: 'relevance', rating: 0, openId: null, userPos: null };
 
         const $ = (id) => document.getElementById(id);
         const supabaseReady = () => Boolean(SUPABASE_URL && SUPABASE_KEY);
@@ -2147,13 +2583,17 @@
 
         function applyURL() {
             const filters = filtersFromQuery(location.search);
-            if (new URLSearchParams(location.search).get('page') === 'recommend') {
+            const params = new URLSearchParams(location.search);
+            if (params.get('page') === 'recommend') {
                 if (state.view !== 'recommend') showRecommend({ push: false });
-            } else if (hasFilters(filters)) showResults(filters, { push: false, scroll: false });
+            } else if (params.get('page') === 'events') showEvents({ push: false, filters: eventFiltersFromQuery(params) });
+            else if (hasFilters(filters)) showResults(filters, { push: false, scroll: false });
             else if (state.view !== 'home') goHome({ push: false });
             const deepLink = location.hash.match(/^#local-(\d+)$/);
             if (deepLink) openVenue(Number(deepLink[1]));
             else if (state.openId) closeModal('venueModal', { updateURL: false });
+            const eventLink = location.hash.match(/^#evento-([\w-]+)$/);
+            if (eventLink && state.view === 'events') focusEvent(eventLink[1]);
         }
 
         /* ---------- Cards and rows ---------- */
@@ -2241,6 +2681,19 @@
             if (savedList.length) parts.push(sectionHTML('secSaved', t('savedTitle'), '', rowHTML(savedList), { saved: true }));
 
             parts.push(sectionHTML('secRecommended', t('recommendedTitle'), t('recommendedSub'), rowHTML(recommendedList(), { reason: true })));
+
+            const nextEvents = upcomingEvents().slice(0, 3);
+            if (nextEvents.length) {
+                parts.push(`
+                    <section class="home-section" aria-labelledby="secEvents">
+                        <div class="section-head">
+                            <h2 id="secEvents">${t('eventsHomeTitle')}</h2>
+                            <button class="link-btn" type="button" data-action="events">${t('eventsSeeAll')}</button>
+                        </div>
+                        <p class="section-sub">${t('eventsHomeSub')}</p>
+                        <div class="event-mini-grid">${nextEvents.map(eventMiniHTML).join('')}</div>
+                    </section>`);
+            }
             parts.push(sectionHTML('secCategories', t('categoriesTitle'), '', categoryTilesHTML()));
 
             const collections = Object.entries(COLLECTIONS).map(([key, c]) => {
@@ -2324,7 +2777,8 @@
         }
 
         function renderQuickFilters() {
-            $('quickFilters').innerHTML = Object.entries(QUICK)
+            const agenda = `<button type="button" class="chip" data-action="events">${icon('calendar')}${t('agenda')}</button>`;
+            $('quickFilters').innerHTML = agenda + Object.entries(QUICK)
                 .filter(([, q]) => !q.show || q.show())
                 .map(([key, q]) => {
                     const active = state.view === 'results' && state.filters.quick === key;
@@ -2356,12 +2810,14 @@
         function render() {
             renderQuickFilters();
             renderSavedButton();
-            $('hero').hidden = state.view === 'recommend';
+            $('hero').hidden = state.view === 'recommend' || state.view === 'events';
             $('homeView').hidden = state.view !== 'home';
             $('resultsView').hidden = state.view !== 'results';
             $('recommendView').hidden = state.view !== 'recommend';
+            $('eventsView').hidden = state.view !== 'events';
             if (state.view === 'home') renderHome();
             else if (state.view === 'results') renderResults();
+            else if (state.view === 'events') renderEvents();
         }
 
         /* ---------- Place details ---------- */
@@ -2884,6 +3340,389 @@
             msg.classList.add('ok');
         }
 
+        /* ---------- Agenda ---------- */
+
+        const isoDay = (iso) => new Date(`${iso}T00:00:00Z`);
+        const toISO = (date) => date.toISOString().slice(0, 10);
+        const addDays = (iso, n) => toISO(new Date(isoDay(iso).getTime() + n * 86400000));
+        const luandaToday = () => toISO(new Date(Date.now() + 60 * 60 * 1000));
+        const eventEnd = (e) => e.end || e.start;
+        const eventTitle = (e) => e.title[lang] || e.title.pt;
+        const eventTypeLabel = (type) => EVENT_TYPES[type][lang];
+        const eventsCount = (n) => (n === 1 ? t('eventsCountOne') : t('eventsCount', { n }));
+
+        function fmtDay(iso, options) {
+            return new Intl.DateTimeFormat(locale(), { timeZone: 'UTC', ...options }).format(isoDay(iso));
+        }
+
+        // Weeks run Monday to Sunday.
+        function whenRange(when) {
+            const today = luandaToday();
+            const weekday = isoDay(today).getUTCDay();
+            const sunday = addDays(today, (7 - weekday) % 7);
+            const d = isoDay(today);
+            const monthEnd = (offset) => toISO(new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + offset, 0)));
+            switch (when) {
+                case 'today': return [today, today];
+                case 'weekend': return weekday === 0 ? [today, today] : [addDays(today, 6 - weekday), sunday];
+                case 'week': return [today, sunday];
+                case 'nextweek': return [addDays(sunday, 1), addDays(sunday, 7)];
+                case 'month': return [today, monthEnd(1)];
+                case 'nextmonth': return [addDays(monthEnd(1), 1), monthEnd(2)];
+                default: return [today, eventEnd({ start: '9999-12-31' })];
+            }
+        }
+
+        // The days in [from, to] when the event actually happens. With a programme, only its dates count.
+        function eventDaysBetween(e, from, to) {
+            if (e.programme) {
+                const days = e.programme.flatMap((item) => eventDaysBetween({ start: item.date, end: item.end }, from, to));
+                return [...new Set(days)].sort();
+            }
+            const first = e.start > from ? e.start : from;
+            const last = eventEnd(e) < to ? eventEnd(e) : to;
+            const days = [];
+            for (let day = first; day <= last && days.length < 400; day = addDays(day, 1)) {
+                if (!e.days || e.days.includes(isoDay(day).getUTCDay())) days.push(day);
+            }
+            return days;
+        }
+
+        function upcomingEvents({ when = 'all', type = '', where = '' } = {}) {
+            const [from, to] = whenRange(when);
+            return EVENTS
+                .filter((e) => (!type || e.type === type) && (!where || e.city === where))
+                .map((e) => ({ e, days: eventDaysBetween(e, from, to) }))
+                .filter(({ days }) => days.length)
+                .sort((a, b) => a.days[0].localeCompare(b.days[0]) || a.e.start.localeCompare(b.e.start))
+                .map(({ e, days }) => ({ ...e, next: days[0] }));
+        }
+
+        function eventDateText(e) {
+            const end = eventEnd(e);
+            if (end === e.start) return fmtDay(e.start, { weekday: 'long', day: 'numeric', month: 'long' });
+            const sameMonth = e.start.slice(0, 7) === end.slice(0, 7);
+            const from = fmtDay(e.start, sameMonth ? { day: 'numeric' } : { day: 'numeric', month: 'long' });
+            return t('dateRange', { from, to: fmtDay(end, { day: 'numeric', month: 'long' }) });
+        }
+
+        function eventPriceText(e) {
+            const p = e.price;
+            if (!p) return t('priceTBC');
+            if (p.free) return t('free');
+            if (p.text) return p.text[lang];
+            return p.to ? t('kzThousandRange', { a: kz(p.from), b: kz(p.to) }) : t('kzThousand', { a: kz(p.from) });
+        }
+
+        function eventVenueText(e) {
+            if (!e.venue) return t('eventVenueTbc');
+            return e.venueTbc ? `${e.venue} (${t('eventVenueTbc').toLowerCase()})` : e.venue;
+        }
+
+        function eventBadgesHTML(e) {
+            const today = luandaToday();
+            const end = eventEnd(e);
+            const badges = [];
+            if (e.confirmed === false) badges.push(['tbc', t('eventTbc')]);
+            else if (e.start <= today && end > today) badges.push(['live', t('eventOngoing', { date: fmtDay(end, { day: 'numeric', month: 'long' }) })]);
+            else if (e.start <= today && end === today) badges.push(['live', t('eventToday')]);
+            else if (e.start === addDays(today, 1)) badges.push(['', t('eventTomorrow')]);
+            if (e.price?.free) badges.push(['', t('free')]);
+            return badges.map(([cls, text]) => `<span class="event-badge ${cls}">${escapeHTML(text)}</span>`).join('');
+        }
+
+        function dateBlockHTML(e) {
+            const end = eventEnd(e);
+            const month = (iso) => fmtDay(iso, { month: 'short' }).replace('.', '');
+            const day = (iso) => Number(iso.slice(8));
+            let to = '';
+            if (end !== e.start) to = end.slice(0, 7) === e.start.slice(0, 7) ? `– ${day(end)}` : `– ${day(end)} ${month(end)}`;
+            return `<span class="date-block" aria-hidden="true"><span class="db-month">${month(e.start)}</span><span class="db-day">${day(e.start)}</span>${to ? `<span class="db-to">${to}</span>` : ''}</span>`;
+        }
+
+        function eventCardHTML(e) {
+            const when = [eventDateText(e), e.when?.[lang]].filter(Boolean).join(' · ');
+            const programme = e.programme?.length
+                ? `<p><b>${t('eventProgramme')}</b></p><ul>${e.programme.map((item) => `<li><b>${escapeHTML(eventDateText({ start: item.date, end: item.end }))}:</b> ${escapeHTML(item[lang])}</li>`).join('')}</ul>`
+                : '';
+            const phones = e.phones?.length
+                ? `<p><b>${t('eventInfoPhone')}:</b> ${e.phones.map((n) => `<a href="tel:+244${n.replace(/\D/g, '')}">${escapeHTML(n)}</a>`).join(', ')}</p>`
+                : '';
+            const source = `<a href="${escapeHTML(e.source.url)}" target="_blank" rel="noopener">${escapeHTML(e.source.name)}</a>`;
+            const link = e.link
+                ? `<a class="action-btn solid" href="${escapeHTML(e.link)}" target="_blank" rel="noopener">${icon(e.tickets ? 'ticket' : 'external')}${t(e.tickets ? 'eventTickets' : 'eventOfficial')}</a>`
+                : '';
+            const directions = e.venue && !e.venueTbc
+                ? `<a class="action-btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.mapsQuery || `${e.venue}, ${e.city}, Angola`)}" target="_blank" rel="noopener">${icon('directions')}${t('directions')}</a>`
+                : '';
+            // The iPhone app cannot save downloaded files yet.
+            const calendar = inNativeApp || e.confirmed === false
+                ? ''
+                : `<button class="action-btn" type="button" data-event-ics="${e.id}" aria-label="${escapeHTML(t('eventCalendarAria', { name: eventTitle(e) }))}">${icon('calendar')}${t('eventCalendar')}</button>`;
+            return `
+                <article class="event-card" id="evento-${e.id}" aria-labelledby="evt-${e.id}">
+                    ${dateBlockHTML(e)}
+                    <div class="event-body">
+                        <span class="card-type">${icon(EVENT_TYPES[e.type].icon)}${eventTypeLabel(e.type)} · ${escapeHTML(e.city)}</span>
+                        <h3 class="event-title" id="evt-${e.id}" tabindex="-1">${escapeHTML(eventTitle(e))}</h3>
+                        <div class="event-badges">${eventBadgesHTML(e)}</div>
+                        <ul class="event-meta">
+                            <li>${icon('calendar')}<span>${escapeHTML(when)}</span></li>
+                            <li>${icon('pin')}<span>${escapeHTML(eventVenueText(e))}</span></li>
+                            <li>${icon('tag')}<span>${escapeHTML(eventPriceText(e))}</span></li>
+                        </ul>
+                        ${e.tags ? `<p class="event-tags">${e.tags[lang].map((tag) => `#${escapeHTML(tag.replace(/\s+/g, ''))}`).join(' ')}</p>` : ''}
+                        <details class="event-details">
+                            <summary>${t('eventMore')}</summary>
+                            <p>${escapeHTML(e.desc[lang])}</p>
+                            ${e.price?.note ? `<p>${escapeHTML(e.price.note[lang])}</p>` : ''}
+                            ${programme}
+                            ${e.host ? `<p><b>${t('eventHost')}:</b> ${escapeHTML(e.host)}</p>` : ''}
+                            ${phones}
+                            <p class="event-source">${t('eventSource', { source, date: formatDate(e.checked) })}</p>
+                        </details>
+                        <div class="event-actions">
+                            ${link}${directions}${calendar}
+                            <button class="action-btn" type="button" data-event-share="${e.id}">${icon('share')}${t('share')}</button>
+                        </div>
+                    </div>
+                </article>`;
+        }
+
+        function eventMiniHTML(e) {
+            return `
+                <button class="event-mini" type="button" data-event-open="${e.id}">
+                    ${dateBlockHTML(e)}
+                    <span>
+                        <span class="card-type">${icon(EVENT_TYPES[e.type].icon)}${eventTypeLabel(e.type)}</span>
+                        <span class="event-mini-title">${escapeHTML(eventTitle(e))}</span>
+                        <span class="event-mini-meta">${escapeHTML(eventDateText(e))} · ${escapeHTML(e.city)}</span>
+                    </span>
+                </button>`;
+        }
+
+        function renderEvents() {
+            const f = state.events;
+            const upcoming = upcomingEvents();
+            const cities = [...new Set(upcoming.map((e) => e.city))].sort((a, b) => a.localeCompare(b, 'pt'));
+            $('eventsWhereWrap').hidden = cities.length < 2 && !f.where;
+            $('eventsWhere').innerHTML = [`<option value="">${t('whereAll')}</option>`, ...cities.map((c) => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`)].join('');
+            $('eventsWhere').value = cities.includes(f.where) ? f.where : '';
+
+            $('eventsWhen').innerHTML = Object.entries(WHEN_LABELS).map(([key, label]) => {
+                const active = f.when === key;
+                return `<button type="button" class="chip${active ? ' active' : ''}" data-events-when="${key}" aria-pressed="${active}">${t(label)}</button>`;
+            }).join('');
+
+            const scoped = upcomingEvents({ when: f.when, where: f.where });
+            const types = Object.keys(EVENT_TYPES).filter((type) => upcoming.some((e) => e.type === type));
+            $('eventsType').innerHTML = [['', t('typeAll'), scoped.length], ...types.map((type) => [type, eventTypeLabel(type), scoped.filter((e) => e.type === type).length])]
+                .map(([key, label, n]) => {
+                    const active = f.type === key;
+                    return `<button type="button" class="chip${active ? ' active' : ''}" data-events-type="${key}" aria-pressed="${active}">${key ? icon(EVENT_TYPES[key].icon) : ''}${escapeHTML(label)} <span class="chip-count">(${n})</span></button>`;
+                }).join('');
+
+            const list = f.type ? scoped.filter((e) => e.type === f.type) : scoped;
+            $('eventsCount').textContent = eventsCount(list.length);
+            $('eventsCta').hidden = !canRecommend();
+            if (!list.length) {
+                $('eventsList').innerHTML = `
+                    <div class="empty-block">
+                        <p>${t(upcoming.length ? 'eventsEmpty' : 'eventsNone')}</p>
+                        ${upcoming.length ? `<button class="submit-btn" type="button" data-events-reset style="margin-top:12px">${t('eventsShowAll')}</button>` : ''}
+                    </div>`;
+                return;
+            }
+            const months = [];
+            for (const e of list) {
+                const key = e.next.slice(0, 7);
+                if (months.at(-1)?.key !== key) months.push({ key, items: [] });
+                months.at(-1).items.push(e);
+            }
+            $('eventsList').innerHTML = months.map(({ key, items }) => {
+                const title = fmtDay(`${key}-01`, { month: 'long', year: 'numeric' });
+                return `
+                    <section class="event-month" aria-labelledby="mes-${key}">
+                        <h2 id="mes-${key}">${escapeHTML(title.charAt(0).toUpperCase() + title.slice(1))}</h2>
+                        <div class="event-list">${items.map(eventCardHTML).join('')}</div>
+                    </section>`;
+            }).join('');
+        }
+
+        function eventsQuery() {
+            const params = new URLSearchParams({ page: 'events' });
+            if (state.events.when !== 'all') params.set('when', state.events.when);
+            if (state.events.type) params.set('type', state.events.type);
+            if (state.events.where) params.set('where', state.events.where);
+            return params.toString();
+        }
+
+        function eventFiltersFromQuery(params) {
+            const when = params.get('when');
+            const type = params.get('type');
+            return {
+                when: Object.hasOwn(WHEN_LABELS, when ?? '') ? when : 'all',
+                type: Object.hasOwn(EVENT_TYPES, type ?? '') ? type : '',
+                where: (params.get('where') || '').slice(0, 60)
+            };
+        }
+
+        function showEvents({ push = true, filters = {} } = {}) {
+            state.view = 'events';
+            state.events = { ...DEFAULT_EVENT_FILTERS, ...filters };
+            if (push) history.pushState(null, '', `${location.pathname}?${eventsQuery()}`);
+            render();
+            window.scrollTo({ top: 0 });
+        }
+
+        // Filter changes replace the address instead of adding to the history, so "back" leaves the agenda.
+        function setEventFilters(changes, focusSelector) {
+            state.events = { ...state.events, ...changes };
+            history.replaceState(null, '', `${location.pathname}?${eventsQuery()}`);
+            renderEvents();
+            if (focusSelector) document.querySelector(focusSelector)?.focus();
+        }
+
+        function focusEvent(id) {
+            let card = $(`evento-${id}`);
+            if (!card && EVENTS.some((e) => e.id === id)) {
+                state.events = { ...DEFAULT_EVENT_FILTERS };
+                renderEvents();
+                card = $(`evento-${id}`);
+            }
+            if (!card) {
+                $('eventsCount').textContent = t('eventsGone');
+                return;
+            }
+            history.replaceState(null, '', `${location.pathname}?${eventsQuery()}#evento-${id}`);
+            card.querySelector('details').open = true;
+            card.classList.add('highlight');
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            card.querySelector('.event-title').focus({ preventScroll: true });
+        }
+
+        function icsText(e) {
+            const esc = (s) => String(s).replace(/\\/g, '\\\\').replace(/[;,]/g, (c) => `\\${c}`).replace(/\n/g, '\\n');
+            const fold = (line) => line.match(/.{1,60}/gu).join('\r\n ');
+            const stamp = (date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
+            const place = [e.venue && !e.venueTbc ? e.venue : '', e.city, 'Angola'].filter(Boolean).join(', ');
+            let when;
+            if (e.time && eventEnd(e) === e.start) {
+                // Angola is UTC+1 all year round.
+                const start = new Date(`${e.start}T${e.time}:00+01:00`);
+                const end = new Date(start.getTime() + (e.hours || 3) * 3600000);
+                when = [`DTSTART:${stamp(start)}`, `DTEND:${stamp(end)}`];
+            } else {
+                when = [`DTSTART;VALUE=DATE:${e.start.replace(/-/g, '')}`, `DTEND;VALUE=DATE:${addDays(eventEnd(e), 1).replace(/-/g, '')}`];
+            }
+            const url = e.link || e.source.url;
+            return [
+                'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//ANGOLIVE//Agenda//PT', 'CALSCALE:GREGORIAN', 'BEGIN:VEVENT',
+                `UID:${e.id}@angolive`, `DTSTAMP:${stamp(new Date())}`, ...when,
+                `SUMMARY:${esc(eventTitle(e))}`, `LOCATION:${esc(place)}`, `DESCRIPTION:${esc(`${e.desc[lang]}\n\n${url}`)}`, `URL:${url}`,
+                'END:VEVENT', 'END:VCALENDAR'
+            ].map(fold).join('\r\n') + '\r\n';
+        }
+
+        function downloadICS(e) {
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(new Blob([icsText(e)], { type: 'text/calendar;charset=utf-8' }));
+            link.download = `${e.id}.ics`;
+            document.body.append(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+        }
+
+        function shareEvent(e) {
+            const base = inNativeApp ? PUBLIC_URL : `${location.origin}${location.pathname}`;
+            const url = `${base}?page=events#evento-${e.id}`;
+            const text = `${eventTitle(e)} · ${eventDateText(e)} · ${e.city}`;
+            if (navigator.share) {
+                navigator.share({ title: eventTitle(e), text, url }).catch(() => {});
+            } else {
+                window.open(`https://wa.me/?text=${encodeURIComponent(`${text}: ${url}`)}`, '_blank', 'noopener');
+            }
+        }
+
+        /* ---------- Suggest an event ---------- */
+
+        function openEventSuggest() {
+            $('eventForm').reset();
+            $('evCities').innerHTML = CITIES.map((c) => `<option value="${c}"></option>`).join('');
+            $('evStart').min = luandaToday();
+            $('evEnd').min = luandaToday();
+            $('evMsg').textContent = '';
+            $('evMsg').classList.remove('ok');
+            openModal('eventModal');
+        }
+
+        async function submitEventSuggestion(event) {
+            event.preventDefault();
+            const msg = $('evMsg');
+            msg.classList.remove('ok');
+            const fail = (text, field) => {
+                msg.textContent = text;
+                field.focus();
+            };
+            const name = $('evName').value.trim();
+            const start = $('evStart').value;
+            const end = $('evEnd').value;
+            const city = $('evCity').value.trim();
+            const link = normalizeUrl($('evLink').value);
+            if (!name) return fail(t('evErrName'), $('evName'));
+            if (!start) return fail(t('evErrStart'), $('evStart'));
+            if (end && end < start) return fail(t('evErrEnd'), $('evEnd'));
+            if ((end || start) < luandaToday()) return fail(t('evErrPast'), $(end ? 'evEnd' : 'evStart'));
+            if (!city) return fail(t('evErrCity'), $('evCity'));
+            if (link === null) return fail(t('recErrUrl', { field: t('evLink') }), $('evLink'));
+            const suggestion = {
+                name,
+                start_date: start,
+                end_date: end || null,
+                city,
+                venue: $('evVenue').value.trim() || null,
+                link: link || null,
+                details: $('evDetails').value.trim() || null,
+                contact: $('evContact').value.trim() || null
+            };
+
+            if (supabaseReady()) {
+                const button = $('evSubmit');
+                button.disabled = true;
+                button.textContent = t('sending');
+                try {
+                    await sbRequest('/rest/v1/event_suggestions', {
+                        method: 'POST',
+                        headers: sbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
+                        body: JSON.stringify(suggestion)
+                    });
+                    $('eventForm').reset();
+                    msg.textContent = t('evThanks');
+                    msg.classList.add('ok');
+                } catch {
+                    msg.textContent = t('errSend');
+                } finally {
+                    button.disabled = false;
+                    button.textContent = t('evSend');
+                }
+                return;
+            }
+
+            const body = [
+                name,
+                end ? `${start} – ${end}` : start,
+                [suggestion.venue, city].filter(Boolean).join(', '),
+                suggestion.link || '',
+                '',
+                suggestion.details || '',
+                suggestion.contact ? `\n${suggestion.contact}` : ''
+            ].join('\n');
+            window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(t('evEmailSubject'))}&body=${encodeURIComponent(body)}`;
+            msg.textContent = t('fixEmailOpened');
+            msg.classList.add('ok');
+        }
+
         /* ---------- Recommend a place ---------- */
 
         function socialRowHTML() {
@@ -3235,8 +4074,25 @@
             if (info) { openInfo(info.dataset.info); return; }
             const fix = target.closest('[data-fix]');
             if (fix) { openFix(Number(fix.dataset.fix)); return; }
+            const eventOpen = target.closest('[data-event-open]');
+            if (eventOpen) { showEvents(); focusEvent(eventOpen.dataset.eventOpen); return; }
+            const whenChip = target.closest('[data-events-when]');
+            if (whenChip) { setEventFilters({ when: whenChip.dataset.eventsWhen }, `[data-events-when="${whenChip.dataset.eventsWhen}"]`); return; }
+            const typeChip = target.closest('[data-events-type]');
+            if (typeChip) { setEventFilters({ type: typeChip.dataset.eventsType }, `[data-events-type="${typeChip.dataset.eventsType}"]`); return; }
+            if (target.closest('[data-events-reset]')) { setEventFilters({ ...DEFAULT_EVENT_FILTERS }, '[data-events-when="all"]'); return; }
+            const ics = target.closest('[data-event-ics]');
+            if (ics) { downloadICS(EVENTS.find((e) => e.id === ics.dataset.eventIcs)); return; }
+            const shareBtn = target.closest('[data-event-share]');
+            if (shareBtn) { shareEvent(EVENTS.find((e) => e.id === shareBtn.dataset.eventShare)); return; }
             const action = target.closest('[data-action]');
             if (action?.dataset.action === 'home') { goHome(); return; }
+            if (action?.dataset.action === 'events') {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                showEvents();
+                return;
+            }
+            if (action?.dataset.action === 'suggest-event') { openEventSuggest(); return; }
             if (action?.dataset.action === 'clear') { goHome(); $('qInput').focus(); return; }
             if (action?.dataset.action === 'recommend') {
                 document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
@@ -3283,6 +4139,8 @@
         });
 
         $('fixForm').addEventListener('submit', submitFix);
+        $('eventForm').addEventListener('submit', submitEventSuggestion);
+        $('eventsWhere').addEventListener('change', (e) => setEventFilters({ where: e.target.value }, '#eventsWhere'));
 
         $('recForm').addEventListener('submit', submitRecommend);
         $('recCity').addEventListener('change', (e) => { $('recCityOtherGroup').hidden = e.target.value !== 'other'; });
