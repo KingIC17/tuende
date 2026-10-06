@@ -11,7 +11,7 @@ struct AngoliveApp: App {
     }
 }
 
-/// Shows the bundled ANGOLIVE web app so it works offline; external links open in their own apps.
+/// Shows the bundled Tuende web app so it works offline; external links open in their own apps.
 struct WebAppView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator { Coordinator() }
 
@@ -29,7 +29,7 @@ struct WebAppView: UIViewRepresentable {
         if #available(iOS 16.4, *) { webView.isInspectable = true }
         #endif
 
-        if let page = Bundle.main.url(forResource: "angolive-complete", withExtension: "html") {
+        if let page = Bundle.main.url(forResource: "index", withExtension: "html") {
             webView.loadFileURL(page, allowingReadAccessTo: page.deletingLastPathComponent())
         }
         return webView
