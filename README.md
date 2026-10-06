@@ -1,19 +1,19 @@
 # ANGOLIVE
 
-Guia de Angola: restaurantes, festas e nightclubs, beach clubs, alojamento, turismo e câmbio, com preços em Kwanza.
+Guia de Angola: restaurantes, bares, discotecas, praias, cultura, museus, natureza, alojamento, compras, praças, ginásios e piscinas, transportes e câmbio, com preços em Kwanza, agenda de eventos e contas de utilizador.
 
 - Site: https://kingic17.github.io/ANGOLIVE/
 - Objetivo: publicar como site, na Google Play (Android) e na App Store (iPhone).
 
-## Estado atual (5 de outubro de 2026)
+## Estado atual (6 de outubro de 2026)
 
 | Parte | Estado |
 |---|---|
-| Site (web app) | Online no GitHub Pages, 32 locais |
+| Site (web app) | Online no GitHub Pages, 60 locais e agenda de eventos |
 | App instalável (PWA) | `manifest.json` e `sw.js` publicados; modo offline ainda não testado num browser real |
 | App iPhone (`ios/`) | Projeto Xcode criado; o código Swift passa o `swiftc -typecheck`, mas o build completo e o simulador ainda não foram testados |
 | App Android | Por fazer (depende do domínio próprio) |
-| Comentários, fotos e vídeos dos visitantes | Código pronto e testado com um servidor simulado; falta criar o projeto Supabase (ver abaixo). Sem Supabase, os comentários ficam só no dispositivo |
+| Contas, comentários, fotos e vídeos | Código pronto e testado com um servidor simulado; falta criar o projeto Supabase (ver abaixo). Sem Supabase não há contas e estas funções ficam escondidas |
 | Domínio próprio | angolive.net escolhido; falta comprar e configurar (ver abaixo) |
 | Política de privacidade | Escrita, por publicar (falta confirmar o email de contacto) |
 
@@ -37,16 +37,18 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 
 ## Como funciona a app web
 
-- Os dados dos locais e menus estão no próprio ficheiro: `const venues` (32 locais) e `const menuData`.
+- Os dados dos locais e menus estão no próprio ficheiro: `const venues` (60 locais) e `const menuData`.
 - Página inicial (por esta ordem): título e pesquisa "O que procura? / Onde?", filtros rápidos, Recomendados (com o motivo), Explorar por categoria, Coleções e Viagens de um dia a partir de Luanda (calculado pela distância). Pesquisa, filtros, categorias e coleções abrem a vista de resultados.
 - A vista de resultados fica no endereço e pode ser partilhada: `?q=praia&where=luanda`, `?filter=free`, `?category=culture`, `?collection=beaches`, `?saved=1`. Os botões voltar/avançar do browser funcionam.
 - Pesquisa sem acentos, com plurais (hotéis → hotel) e com tolerância a um erro de escrita por palavra (`tokens`, `stem`, `withinOneEdit`). Sinónimos em `SYNONYMS`.
-- `price`: `{ from, to, per: 'person' | 'night' | 'entry', estimate }` ou `{ free: true }`; sem `price` aparece "Preço por confirmar". Os valores com `estimate` são indicativos.
+- `price`: `{ from, to, per: 'person' | 'night' | 'entry' | 'trip' | 'month', estimate, note: { pt, en } }`, `{ text: { pt, en } }` (quando não há valor fixo, ex.: câmbio, voos) ou `{ free: true }`; sem `price` aparece "Preço por confirmar". Os valores com `estimate` são indicativos; `note` aparece por baixo do preço no detalhe.
+- `hoursText: { pt, en }` mostra um horário em texto quando não há horário completo por dia; `citywide: true` (táxis, apps) esconde "Como chegar" e o mapa.
 - Página "Recomendar um lugar" (inspirada no "Recommend a Pro" da Afenlight): categoria, nome, cidade, morada, telefone/WhatsApp, email, website, artigo, até 5 redes sociais, outro link, até 5 fotos, motivo, relação com o lugar e contacto opcional de quem recomenda. As fotos são comprimidas no telemóvel e enviadas para a pasta privada `recommendations` do Supabase; os caminhos ficam na coluna `photos`. Só com email (sem Supabase), a secção de fotos pede para anexar as fotos ao email.
+- Eventos com `photo` (foto livre do local ou da zona, do Wikimedia Commons, com legenda e créditos; nunca cartazes).
 - Página "Agenda" (`?page=events`, inspirada em https://afenlight.com/events): eventos com filtros Quando (hoje, fim de semana, esta semana, próxima semana, este mês, próximo mês), Tipo (com contagem) e Onde (aparece quando houver eventos em mais de uma cidade), agrupados por mês. Cada evento tem datas, horário, local, preço, etiquetas, "Mais informações" (descrição, programa, organização, contactos e fonte com data de verificação), bilhetes ou página oficial, Como chegar, Calendário (ficheiro .ics; escondido na app iPhone) e Partilhar. A página inicial mostra os 3 próximos eventos, há um botão "Agenda" nos filtros rápidos e no rodapé, e links diretos `?page=events#evento-<id>`. O formulário "Sugerir um evento" envia para a tabela `event_suggestions` (ou por email).
 - Eventos: `const EVENTS`. Só entram eventos com fonte publicada (`source`, `checked`). Campos: `type` (`EVENT_TYPES`: music, dance, film, fairs, sports), `title`/`desc`/`tags` em PT e EN, `city`, `venue` (vazio = local a confirmar; `venueTbc` = só a zona), `mapsQuery`, `start`/`end` (AAAA-MM-DD, hora de Angola), `days` (dias da semana em que acontece), `programme` (datas do programa; os filtros usam só essas datas), `time` e `hours` (para o calendário), `when` (horário em texto), `price` (`from`/`to` em Kz, `text`, `note` ou `free`), `link` e `tickets`, `host`, `phones`, `confirmed: false` (evento anual ainda por anunciar). Cada evento sai da agenda sozinho depois do último dia. Atualizar a lista pelo menos uma vez por mês (fonte principal: secção Eventos do Ver Angola).
 - "Guardados" substitui o antigo perfil (que pedia email sem o usar). Os dados antigos de perfil e de comentários locais são apagados ao abrir a app.
-- Campos de cada local: `type` (restaurant, beach, culture, nature, nightclub, accommodation, exchange), `highlight` (destaque útil PT/EN, também usado como motivo das recomendações), `family` (sugestão editorial para famílias), `address`, `hours` (horário por dia da semana, 0 = domingo, hora de Angola), `verified` (data e fontes da verificação; `stale` quando as fontes têm alguns anos).
+- Campos de cada local: `type` (as chaves de `CATEGORY`: restaurant, bar, nightclub, beach, culture, museum, nature, accommodation, shopping, plaza, sport, transport, services), `highlight` (destaque útil PT/EN, também usado como motivo das recomendações), `family` (sugestão editorial para famílias), `address`, `hours` (horário por dia da semana, 0 = domingo, hora de Angola), `verified` (data e fontes da verificação; `stale` quando as fontes têm alguns anos).
 - O estado "Aberto/Fechado" só aparece com horário confirmado. O filtro "Aberto agora" aparece automaticamente quando pelo menos 8 locais tiverem `hours` (`MIN_PLACES_WITH_HOURS`). Hoje só a Fortaleza de São Miguel tem horário com fonte.
 - Recomendados, coleções e cidades: `RECOMMENDED`, `COLLECTIONS`, `CITIES`.
 - O detalhe mostra primeiro a informação prática (horário, morada, mapa, preço, contacto, o que falta confirmar e quando foi verificado) e só depois a descrição.
@@ -74,14 +76,19 @@ e abrir http://localhost:8000/
 - Bundle ID: `com.angolive.app` (alterar se necessário). iOS 16+.
 - Sempre que se alterar `angolive-complete.html`, é preciso copiá-lo também para `ios/ANGOLIVE/`.
 
-## Comentários, fotos e vídeos dos visitantes (Supabase)
+## Contas, comentários, fotos e vídeos dos visitantes (Supabase)
+
+Com o Supabase ligado aparece o botão "Entrar" no topo. Com conta, as pessoas guardam lugares em todos os dispositivos, avaliam (estrelas opcionais), comentam, enviam fotos e vídeos, corrigem ou acrescentam informação e denunciam conteúdo. Sem conta, continuam a ver tudo e a guardar lugares no próprio dispositivo. Em "A minha conta" veem o estado do que enviaram, mudam o nome público, terminam a sessão ou apagam a conta (obrigatório para a App Store).
 
 1. Criar uma conta gratuita em https://supabase.com e um projeto novo.
 2. Em **SQL Editor**, colar e correr `supabase/setup.sql`.
-3. Em **Project Settings > API**, copiar o Project URL e a chave pública (publishable/anon) para `SUPABASE_URL` e `SUPABASE_KEY` em `angolive-complete.html` (e na cópia em `ios/ANGOLIVE/`). Esta chave é pública por natureza; a segurança vem das regras RLS do `setup.sql`. Nunca usar a chave `service_role` na app.
-4. Moderação: em **Table Editor > reviews** (comentários) e **submissions** (fotos e vídeos), mudar `status` para `approved` para publicar, ou `rejected` para recusar. Com 3 denúncias fica `hidden` automaticamente.
-5. Sugestões de eventos: em **Table Editor > event_suggestions**. Depois de confirmar o evento numa fonte, juntá-lo a `EVENTS` e mudar `status` para `added`.
-6. Recomendações: em **Table Editor > recommendations**. As fotos de cada recomendação estão em **Storage > recommendations**, na pasta indicada na coluna `photos` (pasta privada, só visível no painel).
+3. Em **Authentication > Sign In / Providers > Email**: manter "Confirm email" ligado e pôr o comprimento mínimo da palavra-passe em 8.
+4. Em **Authentication > URL Configuration**: Site URL = `https://kingic17.github.io/ANGOLIVE/angolive-complete.html` (ou o domínio próprio) e juntar o mesmo endereço em "Redirect URLs" (os links de ativação e de recuperação voltam para a app).
+5. Recomendado antes de abrir ao público: em **Authentication > Emails > SMTP Settings**, ligar um serviço de email próprio (ex.: Resend, Brevo); o envio de emails incluído no Supabase tem um limite muito baixo por hora. Os textos dos emails podem ser traduzidos em **Authentication > Emails > Templates**.
+6. Em **Project Settings > API**, copiar o Project URL e a chave pública (publishable/anon) para `SUPABASE_URL` e `SUPABASE_KEY` em `angolive-complete.html` (e na cópia em `ios/ANGOLIVE/`). Esta chave é pública por natureza; a segurança vem das regras RLS do `setup.sql`. Nunca usar a chave `service_role` na app.
+7. Moderação: em **Table Editor > reviews** (comentários) e **submissions** (fotos e vídeos), mudar `status` para `approved` para publicar, ou `rejected` para recusar. Com 3 denúncias fica `hidden` automaticamente.
+8. Sugestões de eventos: em **Table Editor > event_suggestions**. Depois de confirmar o evento numa fonte, juntá-lo a `EVENTS` e mudar `status` para `added`.
+9. Recomendações: em **Table Editor > recommendations**. As fotos de cada recomendação estão em **Storage > recommendations**, na pasta indicada na coluna `photos` (pasta privada, só visível no painel).
 
 As estrelas de cada local são a média dos comentários aprovados (vista `review_stats`). Tocar na nota leva à secção de comentários, que também tem ligações para as avaliações no Google Maps e no TripAdvisor.
 
@@ -118,8 +125,10 @@ Não adicionar o domínio no GitHub antes de o comprar e configurar o DNS: o end
    - As estrelas inventadas foram removidas (outubro de 2026). Agora só aparecem estrelas calculadas a partir de comentários reais.
    - Os telefones foram removidos até serem confirmados (campo `phone` vazio); os botões Ligar e WhatsApp só aparecem quando há número.
    - Os preços dos menus e algumas descrições ainda não foram confirmados com os locais.
-   - As fotos são ilustrativas (Unsplash), não são dos próprios locais.
-7. **Comentários partilhados**: hoje só ficam no dispositivo de quem os escreve. Para todos verem os comentários, é preciso um backend (ex.: Supabase ou Firebase).
+   - Alguns locais ainda usam fotos ilustrativas (Unsplash), marcadas como tal; os outros têm fotos reais do Wikimedia Commons.
+   - Locais acrescentados a 6 de outubro de 2026 (ids 34 a 61): transportes, museus, centros comerciais, praças, bares, discotecas, câmbio, ginásios e piscina. Fontes: sites oficiais, Expansão, Novo Jornal, ANGOP, Ver Angola, Wikipedia e OpenStreetMap. Onde nenhuma fonte publica o preço ou o horário, a app mostra "por confirmar". Tarifas atualizadas: táxi coletivo 300 Kz e autocarro urbano 200 Kz (julho de 2025), comboio suburbano 300 Kz (maio de 2026).
+   - Por confirmar com os próprios locais: preços dos bares, discotecas e ginásios; horário e acesso do público à Piscina do Alvalade (não encontrámos piscinas públicas com preço publicado em Luanda); horários de alguns centros comerciais.
+7. **Supabase**: criar o projeto e seguir os passos acima para ligar contas, comentários, fotos e vídeos.
 
 ## Problema conhecido no Mac do dono
 
