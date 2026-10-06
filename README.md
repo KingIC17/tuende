@@ -41,6 +41,7 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 - A vista de resultados fica no endereço e pode ser partilhada: `?q=praia&where=luanda`, `?filter=free`, `?category=culture`, `?collection=beaches`, `?saved=1`. Os botões voltar/avançar do browser funcionam.
 - Pesquisa sem acentos, com plurais (hotéis → hotel) e com tolerância a um erro de escrita por palavra (`tokens`, `stem`, `withinOneEdit`). Sinónimos em `SYNONYMS`.
 - `price`: `{ from, to, per: 'person' | 'night' | 'entry', estimate }` ou `{ free: true }`; sem `price` aparece "Preço por confirmar". Os valores com `estimate` são indicativos.
+- Página "Recomendar um lugar" (inspirada no "Recommend a Pro" da Afenlight): categoria, nome, cidade, morada, telefone/WhatsApp, email, website, artigo, até 5 redes sociais, outro link, até 5 fotos, motivo, relação com o lugar e contacto opcional de quem recomenda. As fotos são comprimidas no telemóvel e enviadas para a pasta privada `recommendations` do Supabase; os caminhos ficam na coluna `photos`. Só com email (sem Supabase), a secção de fotos pede para anexar as fotos ao email.
 - "Guardados" substitui o antigo perfil (que pedia email sem o usar). Os dados antigos de perfil e de comentários locais são apagados ao abrir a app.
 - Campos de cada local: `type` (restaurant, beach, culture, nature, nightclub, accommodation, exchange), `highlight` (destaque útil PT/EN, também usado como motivo das recomendações), `family` (sugestão editorial para famílias), `address`, `hours` (horário por dia da semana, 0 = domingo, hora de Angola), `verified` (data e fontes da verificação; `stale` quando as fontes têm alguns anos).
 - O estado "Aberto/Fechado" só aparece com horário confirmado. O filtro "Aberto agora" aparece automaticamente quando pelo menos 8 locais tiverem `hours` (`MIN_PLACES_WITH_HOURS`). Hoje só a Fortaleza de São Miguel tem horário com fonte.
@@ -76,6 +77,7 @@ e abrir http://localhost:8000/
 2. Em **SQL Editor**, colar e correr `supabase/setup.sql`.
 3. Em **Project Settings > API**, copiar o Project URL e a chave pública (publishable/anon) para `SUPABASE_URL` e `SUPABASE_KEY` em `angolive-complete.html` (e na cópia em `ios/ANGOLIVE/`). Esta chave é pública por natureza; a segurança vem das regras RLS do `setup.sql`. Nunca usar a chave `service_role` na app.
 4. Moderação: em **Table Editor > reviews** (comentários) e **submissions** (fotos e vídeos), mudar `status` para `approved` para publicar, ou `rejected` para recusar. Com 3 denúncias fica `hidden` automaticamente.
+5. Recomendações: em **Table Editor > recommendations**. As fotos de cada recomendação estão em **Storage > recommendations**, na pasta indicada na coluna `photos` (pasta privada, só visível no painel).
 
 As estrelas de cada local são a média dos comentários aprovados (vista `review_stats`). Tocar na nota leva à secção de comentários, que também tem ligações para as avaliações no Google Maps e no TripAdvisor.
 
@@ -85,7 +87,7 @@ As fotos são comprimidas na app (máx. 1600 px, JPEG) antes de enviar. Os víde
 
 - `CONTACT_EMAIL`: enquanto estiver vazio, ficam escondidos Contacto, Privacidade e o envio de correções por email.
 - `SUPABASE_URL` / `SUPABASE_KEY`: enquanto estiverem vazios, ficam escondidos o formulário de avaliações, as estrelas, a ordenação "Melhor avaliação" e a partilha de fotos e vídeos; a secção "Opiniões" mostra só as ligações para o Google Maps e o TripAdvisor.
-- "Adicionar ou corrigir um lugar" aparece quando existe Supabase (tabela `corrections`) ou `CONTACT_EMAIL`.
+- "Recomendar um lugar" (`?page=recommend`, tabela `recommendations`) e "Corrigir um lugar" (tabela `corrections`) enviam para o Supabase, ou por email se só houver `CONTACT_EMAIL`. Sem nenhum dos dois, as ligações ficam escondidas e a página de recomendação mostra o envio desligado com um aviso.
 
 ## Domínio angolive.net
 
