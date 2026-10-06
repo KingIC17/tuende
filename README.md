@@ -13,7 +13,7 @@ Guia de Angola: restaurantes, bares, discotecas, praias, cultura, museus, nature
 | App instalável (PWA) | `manifest.json` e `sw.js` publicados; modo offline ainda não testado num browser real |
 | App iPhone (`ios/`) | Projeto Xcode criado; o código Swift passa o `swiftc -typecheck`, mas o build completo e o simulador ainda não foram testados |
 | App Android | Por fazer (depende do domínio próprio) |
-| Contas, comentários, fotos e vídeos | Código pronto e testado com um servidor simulado; falta criar o projeto Supabase (ver abaixo). Sem Supabase não há contas e estas funções ficam escondidas |
+| Contas, comentários, fotos e vídeos | Ligado ao Supabase (projeto `angolive`, região West EU / Irlanda, 6 de outubro de 2026). `setup.sql` já foi corrido; email de confirmação ligado; palavra-passe com 8+ caracteres |
 | Domínio próprio | angolive.net escolhido; falta comprar e configurar (ver abaixo) |
 | Política de privacidade | Escrita, por publicar (falta confirmar o email de contacto) |
 
@@ -24,7 +24,8 @@ angolive-complete.html   App completa num só ficheiro (HTML + CSS + JS, sem dep
 index.html               Redireciona para angolive-complete.html (mantém #local-N)
 manifest.json            Manifesto PWA (start_url ./angolive-complete.html)
 og-image.jpg             Imagem de pré-visualização (1200x630) para links partilhados no LinkedIn, WhatsApp, Facebook
-sw.js                    Service worker: network-first para o site, cache-first para fotos Unsplash
+sw.js                    Service worker: network-first para a página, cache-first para as fotos (photos/)
+photos/                  Fotos dos locais e eventos guardadas no próprio site (cópias do Wikimedia Commons e do Unsplash, com créditos na app), em 330/960 px (Commons) e 600/800 px (Unsplash). Assim carregam em qualquer país (o Wikimedia está bloqueado na China) e sem internet
 icon-192.png, icon-512.png, apple-touch-icon.png
 privacy.html             Política de privacidade PT/EN (por publicar: falta o email)
 supabase/setup.sql       Base de dados dos comentários, fotos e vídeos dos visitantes
@@ -53,7 +54,7 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 - Recomendados, coleções e cidades: `RECOMMENDED`, `COLLECTIONS`, `CITIES`.
 - O detalhe mostra primeiro a informação prática (horário, morada, mapa, preço, contacto, o que falta confirmar e quando foi verificado) e só depois a descrição.
 - `exact: true` indica coordenadas confirmadas na Wikipedia/Wikidata. Nos restantes, "Como chegar" e "Ver no mapa" pesquisam o nome do local no Google Maps, e as coordenadas só servem para calcular distâncias aproximadas.
-- `photos`: fotos reais do Wikimedia Commons, com autor e licença (mostrados na app, como as licenças CC BY/CC BY-SA exigem). Locais sem `photos` usam `image`, uma foto ilustrativa do Unsplash, com a etiqueta "Foto ilustrativa".
+- `photos`: fotos reais do Wikimedia Commons, com autor, licença e página de origem (mostrados na app, como as licenças CC BY/CC BY-SA exigem); os ficheiros estão em `photos/` (`url` 960 px, `thumb` 330 px). Locais sem `photos` usam `image` (`photos/unsplash-...-800.jpg`, miniatura `-600.jpg`), uma foto ilustrativa do Unsplash, com a etiqueta "Foto ilustrativa". Para juntar fotos novas, descarregar as versões 330 e 960 px para `photos/`. Na app iPhone as fotos vêm do site público (`asset()`).
 - Português por defeito, com botão para Inglês. Os textos estão em `I18N`; as traduções das descrições estão em `DESC_EN` e `MENU_DESC_EN`.
 - Perfil, favoritos, comentários, idioma e tema ficam no `localStorage` do dispositivo. Não há servidor.
 - "Perto de mim" usa `navigator.geolocation` apenas no dispositivo.
@@ -128,7 +129,7 @@ Não adicionar o domínio no GitHub antes de o comprar e configurar o DNS: o end
    - Alguns locais ainda usam fotos ilustrativas (Unsplash), marcadas como tal; os outros têm fotos reais do Wikimedia Commons.
    - Locais acrescentados a 6 de outubro de 2026 (ids 34 a 61): transportes, museus, centros comerciais, praças, bares, discotecas, câmbio, ginásios e piscina. Fontes: sites oficiais, Expansão, Novo Jornal, ANGOP, Ver Angola, Wikipedia e OpenStreetMap. Onde nenhuma fonte publica o preço ou o horário, a app mostra "por confirmar". Tarifas atualizadas: táxi coletivo 300 Kz e autocarro urbano 200 Kz (julho de 2025), comboio suburbano 300 Kz (maio de 2026).
    - Por confirmar com os próprios locais: preços dos bares, discotecas e ginásios; horário e acesso do público à Piscina do Alvalade (não encontrámos piscinas públicas com preço publicado em Luanda); horários de alguns centros comerciais.
-7. **Supabase**: criar o projeto e seguir os passos acima para ligar contas, comentários, fotos e vídeos.
+7. **Supabase**: ligado. Antes de abrir ao público, configurar um SMTP próprio (o envio de emails incluído no Supabase tem um limite muito baixo por hora) e traduzir os modelos de email para português.
 
 ## Problema conhecido no Mac do dono
 

@@ -1,4 +1,4 @@
-const SHELL_CACHE = 'angolive-shell-v2';
+const SHELL_CACHE = 'angolive-shell-v3';
 const IMAGE_CACHE = 'angolive-images-v1';
 const SHELL = [
     './angolive-complete.html',
@@ -49,7 +49,9 @@ self.addEventListener('fetch', (event) => {
     if (request.method !== 'GET') return;
     const url = new URL(request.url);
 
-    if (url.origin === self.location.origin) {
+    if (url.origin === self.location.origin && url.pathname.includes('/photos/')) {
+        event.respondWith(imageCacheFirst(request));
+    } else if (url.origin === self.location.origin) {
         event.respondWith(networkFirst(request));
     } else if (url.hostname === 'images.unsplash.com' || url.hostname.endsWith('wikimedia.org')) {
         event.respondWith(imageCacheFirst(request));
