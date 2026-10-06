@@ -1,9 +1,9 @@
 {
-  "name": "ANGOLIVE - Guia de Angola",
-  "short_name": "ANGOLIVE",
+  "name": "Tuende - Guia de Angola",
+  "short_name": "Tuende",
   "description": "Restaurantes, festas, praias, alojamento e turismo em Angola.",
   "lang": "pt",
-  "start_url": "./angolive-complete.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#FFFFFF",

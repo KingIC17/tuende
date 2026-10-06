@@ -1,7 +1,7 @@
-const SHELL_CACHE = 'angolive-shell-v3';
-const IMAGE_CACHE = 'angolive-images-v1';
+const SHELL_CACHE = 'tuende-shell-v4';
+const IMAGE_CACHE = 'tuende-images-v1';
 const SHELL = [
-    './angolive-complete.html',
+    './',
     './manifest.json',
     './icon-192.png',
     './icon-512.png',
@@ -31,7 +31,7 @@ async function networkFirst(request) {
         return response;
     } catch {
         return (await cache.match(request, { ignoreSearch: true }))
-            || (request.mode === 'navigate' ? cache.match('./angolive-complete.html') : Response.error());
+            || (request.mode === 'navigate' ? cache.match('./') : Response.error());
     }
 }
 

@@ -1,8 +1,10 @@
-# ANGOLIVE
+# Tuende
+
+Antes chamado ANGOLIVE (mudou de nome a 6 de outubro de 2026).
 
 Guia de Angola: restaurantes, bares, discotecas, praias, cultura, museus, natureza, alojamento, compras, praças, ginásios e piscinas, transportes e câmbio, com preços em Kwanza, agenda de eventos e contas de utilizador.
 
-- Site: https://kingic17.github.io/ANGOLIVE/
+- Site: https://kingic17.github.io/tuende/ (o endereço antigo kingic17.github.io/ANGOLIVE/ redireciona para aqui)
 - Objetivo: publicar como site, na Google Play (Android) e na App Store (iPhone).
 
 ## Estado atual (6 de outubro de 2026)
@@ -14,15 +16,15 @@ Guia de Angola: restaurantes, bares, discotecas, praias, cultura, museus, nature
 | App iPhone (`ios/`) | Projeto Xcode criado; o código Swift passa o `swiftc -typecheck`, mas o build completo e o simulador ainda não foram testados |
 | App Android | Por fazer (depende do domínio próprio) |
 | Contas, comentários, fotos e vídeos | Ligado ao Supabase (projeto `angolive`, região West EU / Irlanda, 6 de outubro de 2026). `setup.sql` já foi corrido; email de confirmação ligado; palavra-passe com 8+ caracteres |
-| Domínio próprio | angolive.net escolhido; falta comprar e configurar (ver abaixo) |
+| Domínio próprio | tuende.app sugerido (tuende.com já está ocupado); falta comprar e configurar (ver abaixo) |
 | Política de privacidade | Escrita, por publicar (falta confirmar o email de contacto) |
 
 ## Estrutura
 
 ```
-angolive-complete.html   App completa num só ficheiro (HTML + CSS + JS, sem dependências)
-index.html               Redireciona para angolive-complete.html (mantém #local-N)
-manifest.json            Manifesto PWA (start_url ./angolive-complete.html)
+index.html               App completa num só ficheiro (HTML + CSS + JS, sem dependências)
+angolive-complete.html   Antigo nome da app: redireciona para ./ (mantém #local-N e ?page=)
+manifest.json            Manifesto PWA (start_url ./)
 og-image.jpg             Imagem de pré-visualização (1200x630) para links partilhados no LinkedIn, WhatsApp, Facebook
 sw.js                    Service worker: network-first para a página, cache-first para as fotos (photos/)
 photos/                  Fotos dos locais e eventos guardadas no próprio site (cópias do Wikimedia Commons e do Unsplash, com créditos na app), em 330/960 px (Commons) e 600/800 px (Unsplash). Assim carregam em qualquer país (o Wikimedia está bloqueado na China) e sem internet
@@ -32,7 +34,7 @@ supabase/setup.sql       Base de dados dos comentários, fotos e vídeos dos vis
 ios/                     Projeto Xcode (SwiftUI + WKWebView)
   ANGOLIVE.xcodeproj
   ANGOLIVE/AngoliveApp.swift
-  ANGOLIVE/angolive-complete.html   Cópia local da app, para funcionar offline
+  ANGOLIVE/index.html               Cópia local da app, para funcionar offline
   ANGOLIVE/Assets.xcassets          Ícone 1024x1024 sem transparência
 ```
 
@@ -47,7 +49,7 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 - Página "Recomendar um lugar" (inspirada no "Recommend a Pro" da Afenlight): categoria, nome, cidade, morada, telefone/WhatsApp, email, website, artigo, até 5 redes sociais, outro link, até 5 fotos, motivo, relação com o lugar e contacto opcional de quem recomenda. As fotos são comprimidas no telemóvel e enviadas para a pasta privada `recommendations` do Supabase; os caminhos ficam na coluna `photos`. Só com email (sem Supabase), a secção de fotos pede para anexar as fotos ao email.
 - Eventos com `photo` (foto livre do local ou da zona, do Wikimedia Commons, com legenda e créditos; nunca cartazes).
 - Página "Agenda" (`?page=events`, inspirada em https://afenlight.com/events): eventos com filtros Quando (hoje, fim de semana, esta semana, próxima semana, este mês, próximo mês), Tipo (com contagem) e Onde (aparece quando houver eventos em mais de uma cidade), agrupados por mês. Cada evento tem datas, horário, local, preço, etiquetas, "Mais informações" (descrição, programa, organização, contactos e fonte com data de verificação), bilhetes ou página oficial, Como chegar, Calendário (ficheiro .ics; escondido na app iPhone) e Partilhar. A página inicial mostra os 3 próximos eventos, há um botão "Agenda" nos filtros rápidos e no rodapé, e links diretos `?page=events#evento-<id>`. O formulário "Sugerir um evento" envia para a tabela `event_suggestions` (ou por email).
-- Eventos: `const EVENTS`. Só entram eventos com fonte publicada (`source`, `checked`). Campos: `type` (`EVENT_TYPES`: music, dance, film, fairs, sports), `title`/`desc`/`tags` em PT e EN, `city`, `venue` (vazio = local a confirmar; `venueTbc` = só a zona), `mapsQuery`, `start`/`end` (AAAA-MM-DD, hora de Angola), `days` (dias da semana em que acontece), `programme` (datas do programa; os filtros usam só essas datas), `time` e `hours` (para o calendário), `when` (horário em texto), `price` (`from`/`to` em Kz, `text`, `note` ou `free`), `link` e `tickets`, `host`, `phones`, `confirmed: false` (evento anual ainda por anunciar). Cada evento sai da agenda sozinho depois do último dia. Atualizar a lista pelo menos uma vez por mês (fonte principal: secção Eventos do Ver Angola).
+- Eventos: `const EVENTS`. Só entram eventos com fonte publicada (`source`, `checked`). Campos: `type` (`EVENT_TYPES`: music, dance, theatre, film, fashion, fairs, sports), `title`/`desc`/`tags` em PT e EN, `city`, `venue` (vazio = local a confirmar; `venueTbc` = só a zona), `mapsQuery`, `start`/`end` (AAAA-MM-DD, hora de Angola), `days` (dias da semana em que acontece), `programme` (datas do programa; os filtros usam só essas datas), `time` e `hours` (para o calendário), `when` (horário em texto), `price` (`from`/`to` em Kz, `text`, `note` ou `free`), `link` e `tickets`, `host`, `phones`, `confirmed: false` (evento anual ainda por anunciar). Cada evento sai da agenda sozinho depois do último dia. Atualizar a lista duas vezes por mês, nos dias 1 e 15 (fontes principais: secção Eventos do Ver Angola, ticket.ao e check-in.ao).
 - "Guardados" substitui o antigo perfil (que pedia email sem o usar). Os dados antigos de perfil e de comentários locais são apagados ao abrir a app.
 - Campos de cada local: `type` (as chaves de `CATEGORY`: restaurant, bar, nightclub, beach, culture, museum, nature, accommodation, shopping, plaza, sport, transport, services), `highlight` (destaque útil PT/EN, também usado como motivo das recomendações), `family` (sugestão editorial para famílias), `address`, `hours` (horário por dia da semana, 0 = domingo, hora de Angola), `verified` (data e fontes da verificação; `stale` quando as fontes têm alguns anos).
 - O estado "Aberto/Fechado" só aparece com horário confirmado. O filtro "Aberto agora" aparece automaticamente quando pelo menos 8 locais tiverem `hours` (`MIN_PLACES_WITH_HOURS`). Hoje só a Fortaleza de São Miguel tem horário com fonte.
@@ -58,7 +60,7 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 - Português por defeito, com botão para Inglês. Os textos estão em `I18N`; as traduções das descrições estão em `DESC_EN` e `MENU_DESC_EN`.
 - Perfil, favoritos, comentários, idioma e tema ficam no `localStorage` do dispositivo. Não há servidor.
 - "Perto de mim" usa `navigator.geolocation` apenas no dispositivo.
-- Links diretos para um local: `angolive-complete.html#local-<id>`.
+- Links diretos para um local: `https://kingic17.github.io/tuende/#local-<id>`.
 - Pedido do dono: sem emojis no design; os ícones são SVG inline (`ICONS`).
 
 Para correr localmente:
@@ -71,11 +73,11 @@ e abrir http://localhost:8000/
 
 ## App iPhone (`ios/`)
 
-- SwiftUI com um `WKWebView` que carrega `ANGOLIVE/angolive-complete.html` do bundle (`file://`).
+- SwiftUI com um `WKWebView` que carrega `ANGOLIVE/index.html` do bundle (`file://`). A app aparece no telemóvel como "Tuende"; o projeto e a pasta no Xcode continuam a chamar-se ANGOLIVE.
 - Links externos (Google Maps, WhatsApp, YouTube...) abrem nas apps do sistema.
 - Dentro da app (`file://`), o aviso "instalar" não aparece e o botão Partilhar usa `PUBLIC_URL`.
-- Bundle ID: `com.angolive.app` (alterar se necessário). iOS 16+.
-- Sempre que se alterar `angolive-complete.html`, é preciso copiá-lo também para `ios/ANGOLIVE/`.
+- Bundle ID: `com.tuende.app`. iOS 16+.
+- Sempre que se alterar `index.html`, é preciso copiá-lo também para `ios/ANGOLIVE/index.html`.
 
 ## Contas, comentários, fotos e vídeos dos visitantes (Supabase)
 
@@ -84,9 +86,9 @@ Com o Supabase ligado aparece o botão "Entrar" no topo. Com conta, as pessoas g
 1. Criar uma conta gratuita em https://supabase.com e um projeto novo.
 2. Em **SQL Editor**, colar e correr `supabase/setup.sql`.
 3. Em **Authentication > Sign In / Providers > Email**: manter "Confirm email" ligado e pôr o comprimento mínimo da palavra-passe em 8.
-4. Em **Authentication > URL Configuration**: Site URL = `https://kingic17.github.io/ANGOLIVE/angolive-complete.html` (ou o domínio próprio) e juntar o mesmo endereço em "Redirect URLs" (os links de ativação e de recuperação voltam para a app).
+4. Em **Authentication > URL Configuration**: Site URL = `https://kingic17.github.io/tuende/` (ou o domínio próprio) e juntar `https://kingic17.github.io/tuende/**` em "Redirect URLs" (os links de ativação e de recuperação voltam para a app).
 5. Recomendado antes de abrir ao público: em **Authentication > Emails > SMTP Settings**, ligar um serviço de email próprio (ex.: Resend, Brevo); o envio de emails incluído no Supabase tem um limite muito baixo por hora. Os textos dos emails podem ser traduzidos em **Authentication > Emails > Templates**.
-6. Em **Project Settings > API**, copiar o Project URL e a chave pública (publishable/anon) para `SUPABASE_URL` e `SUPABASE_KEY` em `angolive-complete.html` (e na cópia em `ios/ANGOLIVE/`). Esta chave é pública por natureza; a segurança vem das regras RLS do `setup.sql`. Nunca usar a chave `service_role` na app.
+6. Em **Project Settings > API**, copiar o Project URL e a chave pública (publishable/anon) para `SUPABASE_URL` e `SUPABASE_KEY` em `index.html` (e na cópia em `ios/ANGOLIVE/`). Esta chave é pública por natureza; a segurança vem das regras RLS do `setup.sql`. Nunca usar a chave `service_role` na app.
 7. Moderação: em **Table Editor > reviews** (comentários) e **submissions** (fotos e vídeos), mudar `status` para `approved` para publicar, ou `rejected` para recusar. Com 3 denúncias fica `hidden` automaticamente.
 8. Sugestões de eventos: em **Table Editor > event_suggestions**. Depois de confirmar o evento numa fonte, juntá-lo a `EVENTS` e mudar `status` para `added`.
 9. Recomendações: em **Table Editor > recommendations**. As fotos de cada recomendação estão em **Storage > recommendations**, na pasta indicada na coluna `photos` (pasta privada, só visível no painel).
@@ -95,28 +97,28 @@ As estrelas de cada local são a média dos comentários aprovados (vista `revie
 
 As fotos são comprimidas na app (máx. 1600 px, JPEG) antes de enviar. Os vídeos entram como link do YouTube, TikTok ou Instagram.
 
-## Interruptores de configuração (em `angolive-complete.html`)
+## Interruptores de configuração (em `index.html`)
 
 - `CONTACT_EMAIL`: enquanto estiver vazio, ficam escondidos Contacto, Privacidade e o envio de correções por email.
 - `SUPABASE_URL` / `SUPABASE_KEY`: enquanto estiverem vazios, ficam escondidos o formulário de avaliações, as estrelas, a ordenação "Melhor avaliação" e a partilha de fotos e vídeos; a secção "Opiniões" mostra só as ligações para o Google Maps e o TripAdvisor.
 - "Recomendar um lugar" (`?page=recommend`, tabela `recommendations`) e "Corrigir um lugar" (tabela `corrections`) enviam para o Supabase, ou por email se só houver `CONTACT_EMAIL`. Sem nenhum dos dois, as ligações ficam escondidas e a página de recomendação mostra o envio desligado com um aviso.
 
-## Domínio angolive.net
+## Domínio tuende.app
 
 Não adicionar o domínio no GitHub antes de o comprar e configurar o DNS: o endereço kingic17.github.io passaria a redirecionar para um domínio que ainda não funciona.
 
-1. Comprar `angolive.net` (ex.: Cloudflare, Namecheap, Porkbun).
+1. Comprar `tuende.app` (ex.: Cloudflare, Porkbun). Os domínios `.app` só funcionam com HTTPS, que o GitHub Pages dá de graça.
 2. No DNS do domínio, criar:
    - 4 registos `A` para `@`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
    - 1 registo `CNAME` para `www` → `kingic17.github.io`
-3. No GitHub: **Settings > Pages > Custom domain** → `angolive.net` → Save. Depois de verificado, ativar **Enforce HTTPS**.
+3. No GitHub: **Settings > Pages > Custom domain** → `tuende.app` → Save. Depois de verificado, ativar **Enforce HTTPS**.
 4. Recomendado: verificar o domínio na conta GitHub (**Settings > Pages > Verified domains**) para ninguém o poder usar noutro repositório.
-5. Atualizar `PUBLIC_URL` em `angolive-complete.html` (e na cópia em `ios/`) para `https://angolive.net/angolive-complete.html`, e as etiquetas `og:url` e `og:image` em `angolive-complete.html` e `index.html`.
+5. Atualizar `PUBLIC_URL` em `index.html` (e na cópia em `ios/`) para `https://tuende.app/`, as etiquetas `og:url` e `og:image`, o `canonical` de `angolive-complete.html` e os endereços no Supabase (Site URL e Redirect URLs).
 
 ## O que falta fazer
 
 1. **Contas** (dono): Apple Developer Program e Google Play Console.
-2. **Domínio próprio**: configurar o custom domain no GitHub Pages e os registos DNS, e atualizar `PUBLIC_URL` em `angolive-complete.html`.
+2. **Domínio próprio**: configurar o custom domain no GitHub Pages e os registos DNS, e atualizar `PUBLIC_URL` em `index.html`.
 3. **Android**: gerar o pacote AAB como Trusted Web Activity (PWABuilder ou Bubblewrap) e publicar `/.well-known/assetlinks.json` no domínio (com `.nojekyll` na raiz do repositório). As contas pessoais novas da Google Play exigem um teste fechado com 12 testadores durante 14 dias.
 4. **iPhone**: build, testes, capturas de ecrã e submissão. Atenção à regra 4.2 da Apple ("minimum functionality"): apps que só mostram um site podem ser recusadas.
 5. **Política de privacidade**: publicar `privacy.html` assim que o email de contacto estiver confirmado, e ligá-la a partir da app e das fichas das lojas.
