@@ -15,7 +15,7 @@ Guia de Angola: restaurantes, bares, discotecas, praias, cultura, museus, nature
 | App instalável (PWA) | `manifest.json` e `sw.js` publicados; modo offline ainda não testado num browser real |
 | App iPhone (`ios/`) | Projeto Xcode criado; o código Swift passa o `swiftc -typecheck`, mas o build completo e o simulador ainda não foram testados |
 | App Android | Por fazer (depende do domínio próprio) |
-| Contas, comentários, fotos e vídeos | Ligado ao Supabase (projeto `angolive`, região West EU / Irlanda, 6 de outubro de 2026). `setup.sql` já foi corrido; email de confirmação ligado; palavra-passe com 8+ caracteres |
+| Contas, comentários, fotos e vídeos | Ligado ao Supabase (organização Tuende, projeto `tuende`, antes `angolive`; região West EU / Irlanda, 6 de outubro de 2026). `setup.sql` já foi corrido; email de confirmação ligado; palavra-passe com 8+ caracteres |
 | Domínio próprio | tuende.app sugerido (tuende.com já está ocupado); falta comprar e configurar (ver abaixo) |
 | Política de privacidade | Escrita, por publicar (falta confirmar o email de contacto) |
 
