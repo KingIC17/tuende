@@ -1,4 +1,4 @@
--- ANGOLIVE: contas, lugares guardados, avaliações, comentários, fotos, vídeos, correções,
+-- Tuende (antes ANGOLIVE): contas, lugares guardados, avaliações, comentários, fotos, vídeos, correções,
 -- recomendações e sugestões de eventos.
 -- Correr uma vez no Supabase: SQL Editor > New query > colar tudo > Run.
 --
