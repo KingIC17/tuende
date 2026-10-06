@@ -394,6 +394,8 @@
         .card-verified { font-size: 13px; color: var(--muted); }
         .card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; padding-top: 6px; }
         .card-actions .action-btn { font-size: 14px; padding: 0 8px; white-space: nowrap; }
+        .card-actions .action-btn:only-child { grid-column: 1 / -1; }
+        .price-note { display: inline-block; margin-top: 4px; font-size: 14px; color: var(--muted); }
 
         .rating {
             display: inline-block;
@@ -683,6 +685,28 @@
         .home-cta h2 { font-size: 20px; font-weight: 800; }
         .home-cta p { color: var(--muted); margin-top: 4px; }
 
+        /* Accounts */
+        .password-wrap { position: relative; }
+        .password-wrap .field { padding-right: 104px; }
+        .password-wrap .link-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); }
+        .auth-switch { margin-top: 10px; text-align: center; font-size: 15px; }
+        .auth-reason { margin: 10px 0 4px; padding: 12px 14px; border-radius: 12px; background: var(--primary-soft); font-weight: 600; }
+        .auth-notice { margin: 10px 0 0; }
+        .signin-prompt { margin-top: 14px; padding: 16px; border-radius: 14px; border: 1.5px dashed var(--primary); background: var(--primary-soft); }
+        .signin-prompt p { font-weight: 600; margin-bottom: 10px; }
+        .signin-prompt .banner-actions { flex-wrap: wrap; }
+        .account-facts { margin-top: 12px; }
+        .contrib-list { list-style: none; display: grid; gap: 8px; margin-top: 8px; }
+        .contrib-list li { display: flex; justify-content: space-between; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; }
+        .contrib-status { font-size: 13px; font-weight: 700; white-space: nowrap; color: var(--muted); }
+        .contrib-status.approved, .contrib-status.done { color: var(--ok); }
+        .contrib-status.rejected, .contrib-status.hidden { color: var(--primary); }
+        .account-name-form { margin-top: 18px; }
+        .danger-zone { margin-top: 18px; padding-top: 6px; border-top: 1px solid var(--border); }
+        .danger-zone summary { display: flex; align-items: center; min-height: 44px; font-weight: 700; color: var(--primary); cursor: pointer; }
+        .danger-zone p { font-size: 15px; margin: 6px 0 10px; }
+        .submit-btn.danger { width: 100%; background: #8B0B19; }
+
         /* Agenda */
         .events-page { max-width: 900px; margin: 0 auto; padding-top: 12px; }
         .events-filters { display: grid; gap: 14px; margin-top: 18px; padding: 16px; border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); }
@@ -694,6 +718,9 @@
         .event-month h2 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
         .event-list { display: grid; gap: 12px; }
         .event-card { display: grid; grid-template-columns: 76px 1fr; gap: 14px; padding: 14px; border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); scroll-margin-top: 16px; }
+        .event-photo { grid-column: 1 / -1; margin: -14px -14px 0; }
+        .event-photo img { display: block; width: 100%; aspect-ratio: 16 / 7; object-fit: cover; border-radius: 15px 15px 0 0; background: var(--surface-2); }
+        .event-photo figcaption { padding: 6px 14px 0; font-size: 12px; color: var(--muted); }
         .event-card.highlight { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
         .date-block { display: flex; flex-direction: column; align-items: center; height: fit-content; padding: 8px 4px; border-radius: 12px; background: var(--primary); color: #fff; text-align: center; line-height: 1.1; }
         .db-month { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
@@ -731,6 +758,7 @@
             .social-row { grid-template-columns: 1fr 50px; }
             .social-row select { grid-column: 1 / -1; }
             .event-card { grid-template-columns: 62px 1fr; gap: 10px; padding: 12px; }
+            .event-photo { margin: -12px -12px 0; }
             .event-card .db-day { font-size: 24px; }
         }
 
@@ -774,6 +802,7 @@
             <div class="topbar-actions">
                 <button class="top-btn" id="langBtn" type="button"><span data-icon="globe"></span><span id="langLabel">EN</span></button>
                 <button class="top-btn" id="themeBtn" type="button"><span id="themeIcon"></span><span id="themeLabel"></span></button>
+                <button class="top-btn" id="accountBtn" type="button" hidden><span data-icon="user"></span><span id="accountLabel"></span></button>
                 <button class="top-btn solid" id="savedBtn" type="button"><span data-icon="heart"></span><span data-i18n="savedBtn"></span><span class="count-pill" id="savedCount" hidden>0</span></button>
             </div>
             <a class="brand" href="./" id="brandLink" aria-label="ANGOLIVE">
@@ -967,13 +996,20 @@
                     <label for="fixMessage" data-i18n="fixMessageLabel"></label>
                     <textarea class="field" id="fixMessage" maxlength="1000" data-i18n-placeholder="fixMessagePlaceholder"></textarea>
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="fixContactGroup">
                     <label for="fixContact" data-i18n="fixContactLabel"></label>
                     <input class="field" id="fixContact" type="text" maxlength="120" autocomplete="email">
                 </div>
                 <div class="form-msg" id="fixMsg" role="status" aria-live="polite"></div>
                 <button class="submit-btn" type="submit" id="fixSubmit" style="width:100%" data-i18n="fixSend"></button>
             </form>
+        </div>
+    </div>
+
+    <div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <div class="modal-panel info-panel">
+            <button class="close-btn" type="button" data-close="authModal" data-i18n-aria="close">×</button>
+            <div id="authContent"></div>
         </div>
     </div>
 
@@ -1086,8 +1122,8 @@
             {"id": 15, "type": "nature", "name": "Morro do Môco", "location": "Huambo - Môco", "lat": -12.4667, "lng": 15.1667, "exact": true, "description": "O ponto mais alto de Angola, com 2620 metros, no planalto central, a cerca de 70 km do Huambo.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Moco.JPG/1280px-Moco.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Moco.JPG/330px-Moco.JPG", "author": "Benjamin Stauch (Wikischaaf (talk))", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Moco.JPG"}], "phone": "", "highlight": {"pt": "O ponto mais alto de Angola, com 2620 metros.", "en": "Angola's highest point, at 2,620 metres."}, "family": true, "verified": {"date": "2026-10-05", "sources": [{"label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Mount_Moco"}]}},
             {"id": 16, "type": "culture", "name": "Fortaleza de São Miguel", "location": "Luanda - Ingombota", "lat": -8.8083, "lng": 13.2234, "exact": true, "description": "Fortaleza portuguesa construída em 1576 sobre a baía de Luanda. Tem vista panorâmica sobre a cidade e a Ilha.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Luanda-SMiguelFort2.jpg/1280px-Luanda-SMiguelFort2.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Luanda-SMiguelFort2.jpg/330px-Luanda-SMiguelFort2.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda-SMiguelFort2.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Luanda-SMiguelFort1.jpg/1280px-Luanda-SMiguelFort1.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Luanda-SMiguelFort1.jpg/330px-Luanda-SMiguelFort1.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda-SMiguelFort1.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Luanda4.jpg/1280px-Luanda4.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Luanda4.jpg/330px-Luanda4.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda4.jpg"}], "phone": "", "highlight": {"pt": "Fortaleza de 1576 com vista sobre a baía de Luanda.", "en": "1576 fortress overlooking Luanda bay."}, "family": true, "address": "Calçada de São Miguel, Ingombota, Luanda", "hours": {"0": [["08:00", "16:00"]], "2": [["08:00", "16:00"]], "3": [["08:00", "16:00"]], "4": [["08:00", "16:00"]], "5": [["08:00", "16:00"]], "6": [["08:00", "16:00"]]}, "verified": {"date": "2026-10-05", "sources": [{"label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Fortress_of_São_Miguel"}, {"label": "Lonely Planet (horário)", "url": "https://www.lonelyplanet.com/pois/1071552"}]}},
             {"id": 17, "type": "culture", "name": "Memorial Dr. António Agostinho Neto", "location": "Luanda - Praia do Bispo", "lat": -8.8236, "lng": 13.2189, "exact": true, "description": "Monumento em homenagem ao primeiro Presidente de Angola, conhecido como \"Foguetão\" pela sua forma.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Agostinhonetomausoleu.jpg/1280px-Agostinhonetomausoleu.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Agostinhonetomausoleu.jpg/330px-Agostinhonetomausoleu.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Agostinhonetomausoleu.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Mausoleu_Agostinho_Neto_Luanda.JPG/1280px-Mausoleu_Agostinho_Neto_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Mausoleu_Agostinho_Neto_Luanda.JPG/330px-Mausoleu_Agostinho_Neto_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Mausoleu_Agostinho_Neto_Luanda.JPG"}], "phone": "", "highlight": {"pt": "Monumento ao primeiro Presidente, conhecido como \"Foguetão\".", "en": "Monument to the first President, nicknamed \"the Rocket\"."}, "family": true, "verified": {"date": "2026-10-05", "sources": [{"label": "Wikipedia", "url": "https://pt.wikipedia.org/wiki/Memorial_Dr._António_Agostinho_Neto"}]}},
-            {"id": 18, "type": "culture", "name": "Museu Nacional de Antropologia", "location": "Luanda - Coqueiros", "lat": -8.8135, "lng": 13.2278, "exact": true, "description": "Museu no bairro dos Coqueiros dedicado às culturas e tradições dos povos de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Museu_antropologia_Luanda.JPG/1280px-Museu_antropologia_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Museu_antropologia_Luanda.JPG/330px-Museu_antropologia_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_antropologia_Luanda.JPG"}], "phone": "", "highlight": {"pt": "Coleção sobre as culturas dos povos de Angola.", "en": "Collection on the cultures of Angola's peoples."}, "family": true, "address": "Rua Friedrich Engels, 61, Ingombota, Luanda", "verified": {"date": "2026-10-05", "sources": [{"label": "Wikipedia", "url": "https://pt.wikipedia.org/wiki/Museu_Nacional_de_Antropologia_(Angola)"}]}},
-            {"id": 19, "type": "culture", "name": "Museu Nacional da Escravatura", "location": "Luanda - Morro da Cruz", "lat": -8.958, "lng": 13.105, "exact": true, "description": "Museu no Morro da Cruz, junto ao mar, sobre a história do tráfico de escravos a partir de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg/1280px-Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg/330px-Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg", "author": "João Sousa", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_da_Escravatura_(Luanda,_Angola).jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Museu_da_Escravatura_Luanda.JPG/1280px-Museu_da_Escravatura_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Museu_da_Escravatura_Luanda.JPG/330px-Museu_da_Escravatura_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_da_Escravatura_Luanda.JPG"}], "phone": "", "highlight": {"pt": "Museu junto ao mar sobre a história do tráfico de escravos.", "en": "Seaside museum on the history of the slave trade."}, "family": true, "verified": {"date": "2026-10-05", "sources": [{"label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/National_Museum_of_Slavery"}]}},
+            {"id": 18, "type": "museum", "name": "Museu Nacional de Antropologia", "location": "Luanda - Coqueiros", "lat": -8.8135, "lng": 13.2278, "exact": true, "description": "Museu no bairro dos Coqueiros dedicado às culturas e tradições dos povos de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Museu_antropologia_Luanda.JPG/1280px-Museu_antropologia_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Museu_antropologia_Luanda.JPG/330px-Museu_antropologia_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_antropologia_Luanda.JPG"}], "phone": "", "highlight": {"pt": "Coleção sobre as culturas dos povos de Angola.", "en": "Collection on the cultures of Angola's peoples."}, "family": true, "address": "Rua Friedrich Engels, 61, Ingombota, Luanda", "verified": {"date": "2026-10-05", "sources": [{"label": "Wikipedia", "url": "https://pt.wikipedia.org/wiki/Museu_Nacional_de_Antropologia_(Angola)"}]}},
+            {"id": 19, "type": "museum", "name": "Museu Nacional da Escravatura", "location": "Luanda - Morro da Cruz", "lat": -8.958, "lng": 13.105, "exact": true, "description": "Museu no Morro da Cruz, junto ao mar, sobre a história do tráfico de escravos a partir de Angola.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg/1280px-Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg/330px-Museu_da_Escravatura_%28Luanda%2C_Angola%29.jpg", "author": "João Sousa", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_da_Escravatura_(Luanda,_Angola).jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Museu_da_Escravatura_Luanda.JPG/1280px-Museu_da_Escravatura_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Museu_da_Escravatura_Luanda.JPG/330px-Museu_da_Escravatura_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_da_Escravatura_Luanda.JPG"}], "phone": "", "highlight": {"pt": "Museu junto ao mar sobre a história do tráfico de escravos.", "en": "Seaside museum on the history of the slave trade."}, "family": true, "verified": {"date": "2026-10-05", "sources": [{"label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/National_Museum_of_Slavery"}]}},
             {"id": 20, "type": "culture", "name": "Palácio de Ferro", "location": "Luanda - Baixa", "lat": -8.8122, "lng": 13.2357, "exact": true, "description": "Edifício histórico de ferro na Baixa de Luanda, durante muito tempo atribuído a Gustave Eiffel.", "photos": [{"url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pal%C3%A1cio_de_Ferro.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/6/62/Pal%C3%A1cio_de_Ferro.jpg", "author": "Zorglub", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Pal%C3%A1cio_de_Ferro.jpg"}], "phone": "", "highlight": {"pt": "Edifício de ferro histórico, atribuído a Gustave Eiffel.", "en": "Historic iron building attributed to Gustave Eiffel."}, "family": true, "verified": {"date": "2026-10-05", "sources": [{"label": "Wikipedia", "url": "https://pt.wikipedia.org/wiki/Palácio_de_Ferro"}]}},
             {"id": 21, "type": "culture", "name": "Sé Catedral de Luanda", "location": "Luanda - Baixa", "lat": -8.8136, "lng": 13.2297, "exact": true, "description": "Também chamada Igreja de Nossa Senhora dos Remédios, é a catedral da Arquidiocese de Luanda.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG/1280px-Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG/330px-Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Igreja_Nossa_Senhora_dos_Remedios_Luanda.JPG"}, {"url": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Luanda_church.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Luanda_church.jpg", "author": "Valentina Buj from Geneva, Switzerland", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda_church.jpg"}], "phone": "", "highlight": {"pt": "A catedral de Luanda, Igreja de Nossa Senhora dos Remédios.", "en": "Luanda's cathedral, the Church of Our Lady of Remedies."}, "family": true, "verified": {"date": "2026-10-05", "sources": [{"label": "Wikipedia", "url": "https://pt.wikipedia.org/wiki/Sé_Catedral_de_Luanda"}]}, "price": {"free": true}},
             {"id": 22, "type": "beach", "name": "Ilha de Luanda", "location": "Luanda - Ilha do Cabo", "lat": -8.7785, "lng": 13.2437, "exact": true, "description": "Faixa de areia de 7 km em frente à cidade, com praias, restaurantes e a vida noturna mais animada de Luanda.", "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Ilha_de_Luanda_02.JPG/1280px-Ilha_de_Luanda_02.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Ilha_de_Luanda_02.JPG/330px-Ilha_de_Luanda_02.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Ilha_de_Luanda_02.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Ilha_de_Luanda_01.JPG/1280px-Ilha_de_Luanda_01.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Ilha_de_Luanda_01.JPG/330px-Ilha_de_Luanda_01.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Ilha_de_Luanda_01.JPG"}], "phone": "", "highlight": {"pt": "7 km de praia em frente à cidade, com restaurantes e vida noturna.", "en": "7 km of beach facing the city, with restaurants and nightlife."}, "family": true, "verified": {"date": "2026-10-05", "sources": [{"label": "Wikipedia", "url": "https://pt.wikipedia.org/wiki/Ilha_de_Luanda"}]}, "price": {"free": true}},
@@ -1101,7 +1137,35 @@
             {"id": 30, "type": "beach", "name": "Praia Morena", "location": "Benguela - Praia Morena", "lat": -12.5853, "lng": 13.3903, "exact": true, "description": "Uma das praias mais conhecidas de Angola, em plena cidade de Benguela.", "photos": [{"url": "https://upload.wikimedia.org/wikipedia/commons/1/14/Praia_Morena_Benguela.jpg", "thumb": "https://upload.wikimedia.org/wikipedia/commons/1/14/Praia_Morena_Benguela.jpg", "author": "David Stanley from Nanaimo, Canada", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Praia_Morena_Benguela.jpg"}], "phone": "", "highlight": {"pt": "A praia urbana mais conhecida de Benguela.", "en": "Benguela's best-known city beach."}, "family": true, "verified": {"date": "2026-10-05", "sources": [{"label": "Wikipedia", "url": "https://pt.wikipedia.org/wiki/Praia_Morena"}]}, "price": {"free": true}},
             {"id": 31, "type": "nightclub", "name": "Miami Beach", "location": "Luanda - Ilha de Luanda", "lat": -8.79, "lng": 13.237, "exact": false, "description": "Espaço à beira-mar na Ilha de Luanda com música ao vivo e noites latinas para dançar junto ao mar.", "image": "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&h=400&fit=crop", "phone": "", "highlight": {"pt": "Música ao vivo e noites latinas junto ao mar.", "en": "Live music and Latin nights by the sea."}, "verified": {"date": "2026-10-05", "sources": [], "stale": true}},
             {"id": 32, "type": "nightclub", "name": "Chill Out", "location": "Luanda - Ilha do Cabo", "lat": -8.786, "lng": 13.24, "exact": false, "description": "Discoteca na Ilha do Cabo com pista de dança ampla e vista sobre a água.", "image": "https://images.unsplash.com/photo-1566737236500-c8ac43014a67?w=800&h=400&fit=crop", "phone": "", "highlight": {"pt": "Pista de dança ampla com vista sobre a água.", "en": "Large dance floor with views over the water."}, "verified": {"date": "2026-10-05", "sources": [{"label": "ITB", "url": "https://www.itb.com/en/ITB-360%C2%B0/News-Insights/Luanda-The-Vibrant-Gateway-to-the-Atlantic-and-Angola%E2%80%99s-Cultural-Heart.html"}], "stale": true}},
-            {"id": 33, "type": "restaurant", "name": "Coconuts", "location": "Luanda - Ilha de Luanda", "lat": -8.7925, "lng": 13.2355, "exact": false, "description": "Restaurante histórico da Ilha de Luanda, considerado uma instituição da gastronomia da cidade.", "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=400&fit=crop", "phone": "", "highlight": {"pt": "Restaurante de referência na Ilha de Luanda.", "en": "A long-standing favourite on Ilha de Luanda."}, "verified": {"date": "2026-10-05", "sources": [{"label": "Ver Angola", "url": "https://www.verangola.net/va/pt/022015/Gastronomia/304/Coconuts-uma-verdadeira-institui%C3%A7%C3%A3o-gastron%C3%B3mica-em-Luanda.htm"}], "stale": true}}
+            {"id": 33, "type": "restaurant", "name": "Coconuts", "location": "Luanda - Ilha de Luanda", "lat": -8.7925, "lng": 13.2355, "exact": false, "description": "Restaurante histórico da Ilha de Luanda, considerado uma instituição da gastronomia da cidade.", "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&h=400&fit=crop", "phone": "", "highlight": {"pt": "Restaurante de referência na Ilha de Luanda.", "en": "A long-standing favourite on Ilha de Luanda."}, "verified": {"date": "2026-10-05", "sources": [{"label": "Ver Angola", "url": "https://www.verangola.net/va/pt/022015/Gastronomia/304/Coconuts-uma-verdadeira-institui%C3%A7%C3%A3o-gastron%C3%B3mica-em-Luanda.htm"}], "stale": true}},
+            {"id": 34, "type": "transport", "name": "Aeroporto Internacional Dr. António Agostinho Neto", "location": "Icolo e Bengo - Bom Jesus", "lat": -9.05366, "lng": 13.49707, "exact": true, "description": "O aeroporto de Luanda desde março de 2026, a cerca de 40 km do centro. Recebe todos os voos nacionais e internacionais; o antigo aeroporto 4 de Fevereiro fechou aos voos comerciais. Há comboio a partir da Estação do Bungo.", "phone": "", "highlight": {"pt": "Todos os voos de Luanda partem daqui desde março de 2026.", "en": "All Luanda flights have used this airport since March 2026."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Dr._Ant%C3%B3nio_Agostinho_Neto_International_Airport"}, {"label": "Wikipedia (antigo aeroporto)", "url": "https://en.wikipedia.org/wiki/Quatro_de_Fevereiro_Airport"}, {"label": "Rádio Nacional de Angola (2026)", "url": "https://rna.ao/rna.ao/2026/02/02/transferencia-de-voos-para-o-aeroporto-dr-antonio-agostinho-neto-entra-na-fase-final/"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/195543465"}]}, "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/ANGOLA_AIRLINES_B777-300er_at_NAIL.jpg/1280px-ANGOLA_AIRLINES_B777-300er_at_NAIL.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/ANGOLA_AIRLINES_B777-300er_at_NAIL.jpg/330px-ANGOLA_AIRLINES_B777-300er_at_NAIL.jpg", "author": "Yezzispapi", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:ANGOLA_AIRLINES_B777-300er_at_NAIL.jpg"}], "price": {"text": {"pt": "O preço depende do voo e da companhia aérea", "en": "Fares depend on the flight and airline"}}, "hoursText": {"pt": "Funciona conforme os horários dos voos.", "en": "Open according to flight schedules."}},
+            {"id": 35, "type": "transport", "name": "Estação do Bungo (Caminho de Ferro de Luanda)", "location": "Luanda - Ingombota", "lat": -8.80527, "lng": 13.24435, "exact": true, "description": "A estação central do Caminho de Ferro de Luanda. Daqui partem os comboios suburbanos para Viana e Catete, o comboio para o aeroporto e as ligações a Dondo e Malanje.", "phone": "", "highlight": {"pt": "Comboio suburbano a 300 Kz; ligação ao aeroporto.", "en": "Suburban trains for 300 Kz; airport link."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Luanda_Bungo"}, {"label": "Expansão (março de 2026)", "url": "https://expansao.co.ao/angola/detalhe/preco-dos-bilhetes-de-comboio-vao-subir-50-para-300-kwanzas-a-partir-de-1-de-maio-70771.html"}, {"label": "ANGOP (comboio para o aeroporto)", "url": "https://angop.ao/en/noticias/economia/comboio-expresso-inicia-circulacao-bungo-novo-aeroporto"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/226831624"}]}, "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Esta%C3%A7%C3%A3o_do_Bungo.jpg/1280px-Esta%C3%A7%C3%A3o_do_Bungo.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Esta%C3%A7%C3%A3o_do_Bungo.jpg/330px-Esta%C3%A7%C3%A3o_do_Bungo.jpg", "author": "Carlos Reis", "license": "CC BY-SA 2.0", "page": "https://commons.wikimedia.org/wiki/File:Esta%C3%A7%C3%A3o_do_Bungo.jpg"}], "address": "Rua Major Kanhangulo, 1, Ingombota, Luanda", "price": {"from": 300, "per": "trip", "note": {"pt": "Suburbano Bungo–Viana: 300 Kz desde 1 de maio de 2026. Comboio para o aeroporto: 1350 Kz (com paragens) ou 5000 Kz (expresso), segundo os preços anunciados pelo CFL.", "en": "Bungo–Viana suburban train: 300 Kz since 1 May 2026. Airport train: 1,350 Kz (stopping) or 5,000 Kz (express), as announced by CFL."}}},
+            {"id": 36, "type": "transport", "name": "Táxis coletivos (candongueiros)", "location": "Luanda - Toda a cidade", "lat": -8.8383, "lng": 13.2344, "exact": false, "description": "Os táxis coletivos azuis e brancos são o transporte mais usado em Luanda. Fazem percursos fixos e param a pedido; paga-se ao cobrador. A tarifa urbana foi fixada pela ANTT.", "phone": "", "highlight": {"pt": "O transporte mais usado em Luanda: 300 Kz por viagem.", "en": "Luanda's most used transport: 300 Kz per ride."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Expansão (julho de 2025)", "url": "https://expansao.co.ao/angola/detalhe/taxi-passa-a-custar-300-kz-e-bilhete-de-autocarro-sobe-para-200-kz-a-partir-desta-segunda-feira-66233.html"}, {"label": "Novo Jornal (março de 2026)", "url": "https://www.novojornal.co.ao/sociedade/detalhe/luanda-bilhete-de-comboio-suburbano-vai-subir-50-e-igualar-o-preco-da-corrrida-de-taxi-a-partir-de-maio-70775.html"}]}, "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/Candongueiros.jpg/1280px-Candongueiros.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/Candongueiros.jpg/330px-Candongueiros.jpg", "author": "Patyfessora", "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:Candongueiros.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Luanda_taxi_called_Candongueiro_after_heavy_rain%2C_Luanda%2C_2008.JPG/1280px-Luanda_taxi_called_Candongueiro_after_heavy_rain%2C_Luanda%2C_2008.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Luanda_taxi_called_Candongueiro_after_heavy_rain%2C_Luanda%2C_2008.JPG/330px-Luanda_taxi_called_Candongueiro_after_heavy_rain%2C_Luanda%2C_2008.JPG", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Luanda_taxi_called_Candongueiro_after_heavy_rain,_Luanda,_2008.JPG"}], "citywide": true, "price": {"from": 300, "per": "trip", "note": {"pt": "Tarifa urbana em vigor desde 7 de julho de 2025, ainda a mesma em março de 2026.", "en": "Urban fare in force since 7 July 2025, still the same in March 2026."}}},
+            {"id": 37, "type": "transport", "name": "Autocarros urbanos (TCUL)", "location": "Luanda - Mutamba", "lat": -8.81516, "lng": 13.23248, "exact": true, "description": "Os autocarros públicos urbanos de Luanda, com terminal na Mutamba, na Baixa. O bilhete tem o preço fixado pela ANTT.", "phone": "", "highlight": {"pt": "Bilhete de autocarro urbano: 200 Kz.", "en": "City bus ticket: 200 Kz."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Expansão (julho de 2025)", "url": "https://expansao.co.ao/angola/detalhe/taxi-passa-a-custar-300-kz-e-bilhete-de-autocarro-sobe-para-200-kz-a-partir-desta-segunda-feira-66233.html"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/4786386788"}]}, "address": "Mutamba, Luanda", "price": {"from": 200, "per": "trip", "note": {"pt": "Tarifa urbana em vigor desde 7 de julho de 2025.", "en": "Urban fare in force since 7 July 2025."}}},
+            {"id": 38, "type": "transport", "name": "Real Express (autocarros entre províncias)", "location": "Luanda - Gamek", "lat": -8.88948, "lng": 13.20804, "exact": false, "description": "Empresa de autocarros entre províncias, a operar desde janeiro de 2023, com partidas de Luanda para Benguela, Huambo e Lubango.", "phone": "", "highlight": {"pt": "Luanda–Benguela desde 11 mil Kz.", "en": "Luanda–Benguela from 11,000 Kz."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Real Express", "url": "http://www.realexpress.ao/public/"}]}, "address": "Avenida 21 de Janeiro, Gamek, Luanda", "price": {"from": 11000, "per": "trip", "note": {"pt": "Luanda–Benguela e Luanda–Huambo desde 11 mil Kz; Luanda–Lubango desde 17 mil Kz. Os horários de partida não estão publicados: confirme com a empresa.", "en": "Luanda–Benguela and Luanda–Huambo from 11,000 Kz; Luanda–Lubango from 17,000 Kz. Departure times are not published: check with the company."}}},
+            {"id": 39, "type": "transport", "name": "Travessia Kapossoca–Mussulo (Sécil Marítima)", "location": "Luanda - Samba (Kapossoca)", "lat": -8.88728, "lng": 13.17601, "exact": true, "description": "Barco regular entre o embarcadouro da Kapossoca e a península do Mussulo, de terça a domingo. Também há pacotes de passeio pela península.", "phone": "", "highlight": {"pt": "Barco para o Mussulo desde 1000 Kz.", "en": "Boat to Mussulo from 1,000 Kz."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Sécil Marítima", "url": "https://secilmaritima.co.ao/kapossoca-mussulo-kapossoca-passeios-e-travessias/"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/search?query=Kapossoca"}]}, "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Mussulo%2C_Angola.jpg/1280px-Mussulo%2C_Angola.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/04/Mussulo%2C_Angola.jpg/330px-Mussulo%2C_Angola.jpg", "author": "Juvenalia Brito", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Mussulo,_Angola.jpg"}], "address": "Embarcadouro da Kapossoca, Estrada da Corimba, Luanda", "family": true, "hours": {"2": [["08:00", "18:00"]], "3": [["08:00", "18:00"]], "4": [["08:00", "18:00"]], "5": [["08:00", "18:00"]], "6": [["08:00", "18:00"]], "0": [["08:00", "18:00"]]}, "price": {"from": 1000, "to": 1500, "per": "trip", "note": {"pt": "1000 Kz de terça a quinta; 1500 Kz de sexta a domingo e feriados. Crianças dos 4 aos 12 anos: 500 Kz (terça a quinta) ou 1000 Kz; até aos 3 anos não pagam.", "en": "1,000 Kz Tuesday to Thursday; 1,500 Kz Friday to Sunday and holidays. Children aged 4–12: 500 Kz (Tue–Thu) or 1,000 Kz; under 4 travel free."}}},
+            {"id": 40, "type": "transport", "name": "Yango (táxi por aplicação)", "location": "Luanda - Toda a cidade", "lat": -8.8383, "lng": 13.2344, "exact": false, "description": "Aplicação de táxi disponível em Luanda desde 2022. Pede-se o carro na app e o preço aparece antes de confirmar a viagem.", "phone": "", "highlight": {"pt": "Táxi por aplicação, com o preço indicado antes da viagem.", "en": "App taxi with the price shown before the ride."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Ver Angola (2022)", "url": "https://www.verangola.net/va/pt/042022/Transportes/30623/Yango-chega-a-Angola-e-est%C3%A1-%C3%A0-procura-de-motoristas.htm"}]}, "citywide": true, "price": {"text": {"pt": "Calculado na app antes de confirmar", "en": "Calculated in the app before you confirm"}}},
+            {"id": 41, "type": "museum", "name": "Museu da Moeda", "location": "Luanda - Marginal", "lat": -8.8109, "lng": 13.2334, "exact": true, "description": "O museu do Banco Nacional de Angola, na marginal, com coleções de moedas e notas e a história do dinheiro em Angola, do zimbo ao kwanza.", "phone": "", "highlight": {"pt": "A história do dinheiro em Angola, com entrada gratuita.", "en": "The history of money in Angola, free entry."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Ver Angola", "url": "https://www.verangola.net/va/pt/032017/sugestoes/7565/Museu-da-Moeda-O-que-fazer.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/10286512369"}], "stale": true}, "family": true, "address": "Avenida 4 de Fevereiro, junto ao BNA, Luanda", "hours": {"1": [["09:00", "15:30"]], "2": [["09:00", "15:30"]], "3": [["09:00", "15:30"]], "4": [["09:00", "15:30"]], "5": [["09:00", "15:00"]], "6": [["09:00", "15:00"]]}, "price": {"free": true}},
+            {"id": 42, "type": "museum", "name": "Museu Nacional de História Natural", "location": "Luanda - Kinaxixi", "lat": -8.81536, "lng": 13.23846, "exact": true, "description": "Criado em 1938 e instalado desde 1956 num edifício de três pisos junto ao Largo do Kinaxixi. Mostra a fauna de Angola: mamíferos, aves, peixes, répteis, insetos e coleções de conchas.", "phone": "", "highlight": {"pt": "A fauna de Angola num edifício de 1956 no Kinaxixi.", "en": "Angola's wildlife in a 1956 building at Kinaxixi."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Wikipedia", "url": "https://pt.wikipedia.org/wiki/Museu_Nacional_de_Hist%C3%B3ria_Natural_de_Angola"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/220689322"}]}, "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Museu_Nacional_Historia_Natural_Luanda_01.JPG/1280px-Museu_Nacional_Historia_Natural_Luanda_01.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9d/Museu_Nacional_Historia_Natural_Luanda_01.JPG/330px-Museu_Nacional_Historia_Natural_Luanda_01.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_Nacional_Historia_Natural_Luanda_01.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Museu_Nacional_Historia_Natural_Luanda_02.JPG/1280px-Museu_Nacional_Historia_Natural_Luanda_02.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Museu_Nacional_Historia_Natural_Luanda_02.JPG/330px-Museu_Nacional_Historia_Natural_Luanda_02.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Museu_Nacional_Historia_Natural_Luanda_02.JPG"}], "family": true, "address": "Rua Gamal Abdel Nasser, Largo do Kinaxixi, Luanda"},
+            {"id": 43, "type": "shopping", "name": "Belas Shopping", "location": "Luanda - Talatona", "lat": -8.9247, "lng": 13.18561, "exact": true, "description": "O primeiro centro comercial moderno de Angola, aberto em 2007 em Talatona, com mais de cem lojas, cinemas, praça da alimentação e área de diversões.", "phone": "", "highlight": {"pt": "Mais de cem lojas, cinemas e praça da alimentação.", "en": "Over a hundred shops, cinemas and a food court."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Wikipedia", "url": "https://en.wikipedia.org/wiki/Belas_Shopping"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/359300958"}]}, "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/67/Luanda-Sul_Talatona_Belas-Shopping_19.JPG/1280px-Luanda-Sul_Talatona_Belas-Shopping_19.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/67/Luanda-Sul_Talatona_Belas-Shopping_19.JPG/330px-Luanda-Sul_Talatona_Belas-Shopping_19.JPG", "author": "L.Willms", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda-Sul_Talatona_Belas-Shopping_19.JPG"}], "family": true, "address": "Via Luanda Sul, Talatona, Luanda", "hours": {"0": [["09:00", "22:00"]], "1": [["09:00", "22:00"]], "2": [["09:00", "22:00"]], "3": [["09:00", "22:00"]], "4": [["09:00", "22:00"]], "5": [["09:00", "22:00"]], "6": [["09:00", "22:00"]]}, "price": {"free": true}},
+            {"id": 44, "type": "shopping", "name": "Talatona Shopping", "location": "Luanda - Talatona", "lat": -8.91096, "lng": 13.20209, "exact": true, "description": "Centro comercial em Talatona, inaugurado em dezembro de 2019, com lojas e restaurantes.", "phone": "", "highlight": {"pt": "Centro comercial aberto em 2019 em Talatona.", "en": "Shopping centre opened in 2019 in Talatona."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Ver Angola (2019)", "url": "https://www.verangola.net/va/pt/112019/ComercioIndustria/17346/Talatona-Shopping-o-novo-espa%C3%A7o-comercial-da-capital-inaugura-j%C3%A1-em-Dezembro.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/591887383"}]}, "family": true, "address": "Via A2, Talatona, Luanda", "price": {"free": true}},
+            {"id": 45, "type": "shopping", "name": "Shopping Avennida", "location": "Luanda - Talatona", "lat": -8.92019, "lng": 13.18041, "exact": true, "description": "Centro comercial em Talatona com lojas, restaurantes e cinema. Aberto todos os dias até às 22h00.", "phone": "", "highlight": {"pt": "Lojas, restaurantes e cinema, todos os dias até às 22h00.", "en": "Shops, restaurants and a cinema, daily until 10 pm."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Ver Angola (2023)", "url": "https://www.verangola.net/va/pt/072023/sugestoes/36533/Shopping-Avennida-O-que-fazer.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/440439005"}]}, "family": true, "price": {"free": true}, "hoursText": {"pt": "Todos os dias até às 22h00 (hora de abertura por confirmar).", "en": "Every day until 10 pm (opening time to be confirmed)."}},
+            {"id": 46, "type": "shopping", "name": "Xyami Shopping Nova Vida", "location": "Luanda - Nova Vida", "lat": -8.89721, "lng": 13.22544, "exact": true, "description": "Centro comercial no bairro Nova Vida, com o hipermercado Kero, lojas e restaurantes.", "phone": "", "highlight": {"pt": "Hipermercado Kero, lojas e restaurantes.", "en": "Kero hypermarket, shops and restaurants."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Ver Angola", "url": "https://www.verangola.net/va/pt/122015/ComercioIndustria/3189/Xyami-Shopping-Nova-Vida-63-novas-lojas-no-maior-investimento-privado-do-retalho-a-abrir-portas-em-2015.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/385165212"}]}, "family": true, "address": "Avenida Pedro de Castro Van-Dúnem Loy, Nova Vida, Luanda", "price": {"free": true}},
+            {"id": 47, "type": "shopping", "name": "Shopping Fortaleza", "location": "Luanda - Baixa", "lat": -8.80858, "lng": 13.22437, "exact": true, "description": "Centro comercial na Baixa de Luanda, perto da Fortaleza de São Miguel, com lojas, restaurantes e salas de cinema.", "phone": "", "highlight": {"pt": "Lojas e cinema na Baixa, perto da Fortaleza.", "en": "Shops and a cinema downtown, near the Fortress."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Ver Angola (2022)", "url": "https://www.verangola.net/va/pt/062022/Comercio/31438/Shopping-Fortaleza-j%C3%A1-investiu-60-milh%C3%B5es-mas-prev%C3%AA-expans%C3%A3o-e-vai-abrir-salas-de-cinema-at%C3%A9-ao-fim-do-ano.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/369001086"}]}, "family": true, "address": "Avenida Agostinho Neto, Luanda", "price": {"free": true}},
+            {"id": 48, "type": "plaza", "name": "Largo da Independência", "location": "Luanda - Ingombota", "lat": -8.82714, "lng": 13.24393, "exact": true, "description": "A praça onde Agostinho Neto proclamou a independência de Angola em 1975, com a sua estátua ao centro. Requalificada, reabriu a 10 de novembro de 2025, nos 50 anos da independência.", "phone": "", "highlight": {"pt": "Onde foi proclamada a independência, em 1975.", "en": "Where independence was proclaimed in 1975."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Ver Angola (novembro de 2025)", "url": "https://www.verangola.net/va/pt/112025/sugestoes/46842/Largo-da-Independ%C3%AAncia-O-que-fazer.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/search?query=Largo%20da%20Independ%C3%AAncia%20Luanda"}]}, "family": true, "price": {"free": true}},
+            {"id": 49, "type": "plaza", "name": "Marginal da Baía de Luanda", "location": "Luanda - Baía de Luanda", "lat": -8.8107, "lng": 13.2284, "exact": false, "description": "O passeio à beira da baía, requalificado e inaugurado em 2012, com jardins e espaço para caminhar, correr e andar de bicicleta, com vista para a Ilha.", "phone": "", "highlight": {"pt": "Passeio à beira da baía, ideal ao fim da tarde.", "en": "Bayside promenade, best in the late afternoon."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Ver Angola", "url": "https://www.verangola.net/va/pt/122016/CulturaEducacao/6802/Nova-marginal-de-Luanda-transformou-se-em-moldura-fotogr%C3%A1fica-de-casamentos.htm"}]}, "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Luanda_Bay_-_panoramio.jpg/1280px-Luanda_Bay_-_panoramio.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Luanda_Bay_-_panoramio.jpg/330px-Luanda_Bay_-_panoramio.jpg", "author": "---=XEON=---", "license": "CC BY 3.0", "page": "https://commons.wikimedia.org/wiki/File:Luanda_Bay_-_panoramio.jpg"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Bay_of_Luanda.jpg/1280px-Bay_of_Luanda.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Bay_of_Luanda.jpg/330px-Bay_of_Luanda.jpg", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Bay_of_Luanda.jpg"}], "family": true, "price": {"free": true}},
+            {"id": 50, "type": "bar", "name": "Elinga (bar)", "location": "Luanda - Baixa", "lat": -8.81234, "lng": 13.23263, "exact": true, "description": "Bar no edifício histórico do Elinga Teatro, na Baixa de Luanda, um dos espaços culturais conhecidos da cidade.", "phone": "", "highlight": {"pt": "Bar num espaço cultural histórico da Baixa.", "en": "Bar in a historic downtown cultural venue."}, "verified": {"date": "2026-10-06", "sources": [{"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/5891924767"}]}, "photos": [{"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Elinga_teatro_Luanda_01.JPG/1280px-Elinga_teatro_Luanda_01.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Elinga_teatro_Luanda_01.JPG/330px-Elinga_teatro_Luanda_01.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Elinga_teatro_Luanda_01.JPG"}, {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Elinga_teatro_Luanda_02.JPG/1280px-Elinga_teatro_Luanda_02.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Elinga_teatro_Luanda_02.JPG/330px-Elinga_teatro_Luanda_02.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Elinga_teatro_Luanda_02.JPG"}], "address": "Largo Tristão da Cunha, Luanda"},
+            {"id": 51, "type": "bar", "name": "Infinitus Gastrobar", "location": "Luanda - Ilha do Cabo", "lat": -8.78988, "lng": 13.22829, "exact": true, "description": "Gastrobar na Ilha do Cabo, com petiscos e cocktails, incluindo uma carta de gin.", "phone": "", "highlight": {"pt": "Petiscos e cocktails na Ilha.", "en": "Small plates and cocktails on the Ilha."}, "verified": {"date": "2026-10-06", "sources": [{"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/8874082990"}, {"label": "TripXL", "url": "https://tripxl.com/blog/nightlife-in-luanda/"}]}},
+            {"id": 52, "type": "bar", "name": "Kilambar", "location": "Luanda - Kilamba", "lat": -8.99276, "lng": 13.27728, "exact": true, "description": "Bar na Cidade do Kilamba, aberto todos os dias da tarde até de madrugada.", "phone": "", "highlight": {"pt": "Aberto todos os dias até às 2h00.", "en": "Open every day until 2 am."}, "verified": {"date": "2026-10-06", "sources": [{"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/5893915786"}]}, "hours": {"0": [["15:00", "02:00"]], "1": [["15:00", "02:00"]], "2": [["15:00", "02:00"]], "3": [["15:00", "02:00"]], "4": [["15:00", "02:00"]], "5": [["15:00", "02:00"]], "6": [["15:00", "02:00"]]}},
+            {"id": 53, "type": "bar", "name": "Plano B", "location": "Luanda - Samba", "lat": -8.83752, "lng": 13.22023, "exact": true, "description": "Bar na zona da Samba, aberto todos os dias das 9h00 às 23h00.", "phone": "", "highlight": {"pt": "Aberto todos os dias até às 23h00.", "en": "Open every day until 11 pm."}, "verified": {"date": "2026-10-06", "sources": [{"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/11577084154"}]}, "address": "Rua Frederico Santos, Luanda", "hours": {"0": [["09:00", "23:00"]], "1": [["09:00", "23:00"]], "2": [["09:00", "23:00"]], "3": [["09:00", "23:00"]], "4": [["09:00", "23:00"]], "5": [["09:00", "23:00"]], "6": [["09:00", "23:00"]]}},
+            {"id": 54, "type": "nightclub", "name": "Luxxe Luanda", "location": "Luanda - Talatona", "lat": -8.91096, "lng": 13.20209, "exact": false, "description": "Rooftop com bar, lounge e festas no terraço do Talatona Shopping. Ao fim de semana fica aberto até às 4h00 e recebe festas temáticas.", "phone": "", "highlight": {"pt": "Rooftop em Talatona, aberto até às 4h00 ao fim de semana.", "en": "Talatona rooftop, open until 4 am at weekends."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Ver Angola (evento em 2025)", "url": "https://www.verangola.net/va/en/012025/Events/42816/%E2%80%98Make-Sense%E2%80%99-Party-at-Luxxe-Luanda-Parties.htm"}, {"label": "Wanderlog", "url": "https://wanderlog.com/place/details/11951546/luxxe-luanda"}]}, "address": "Terraço do Talatona Shopping, Talatona, Luanda"},
+            {"id": 55, "type": "services", "name": "Gems Câmbio", "location": "Luanda - Ingombota", "lat": -8.82455, "lng": 13.22956, "exact": true, "description": "Casa de câmbio na Avenida Marien Ngouabi, para trocar moeda estrangeira por kwanzas e vice-versa.", "phone": "", "highlight": {"pt": "Casa de câmbio no centro de Luanda.", "en": "Currency exchange in central Luanda."}, "verified": {"date": "2026-10-06", "sources": [{"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/5058158222"}, {"label": "Gems Câmbio", "url": "http://www.gemscambio.com"}]}, "address": "Avenida Marien Ngouabi (ex António Barroso), Luanda", "hoursText": {"pt": "Segunda a sábado, 07h00–17h00 (domingo por confirmar).", "en": "Monday to Saturday, 7 am–5 pm (Sunday to be confirmed)."}, "price": {"text": {"pt": "Taxa de câmbio do dia, indicada no balcão", "en": "Daily exchange rate, shown at the counter"}}},
+            {"id": 56, "type": "services", "name": "NovaCâmbios (Xyami Nova Vida)", "location": "Luanda - Nova Vida", "lat": -8.89665, "lng": 13.2256, "exact": true, "description": "Balcão da NovaCâmbios no centro comercial Xyami Nova Vida, aberto até à noite, também ao fim de semana.", "phone": "", "highlight": {"pt": "Câmbio aberto até às 22h00, todos os dias.", "en": "Exchange open until 10 pm, every day."}, "verified": {"date": "2026-10-06", "sources": [{"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/5553419964"}]}, "hours": {"0": [["09:00", "22:00"]], "1": [["09:00", "22:00"]], "2": [["09:00", "22:00"]], "3": [["09:00", "22:00"]], "4": [["09:00", "22:00"]], "5": [["09:00", "23:00"]], "6": [["09:00", "23:00"]]}, "price": {"text": {"pt": "Taxa de câmbio do dia, indicada no balcão", "en": "Daily exchange rate, shown at the counter"}}},
+            {"id": 57, "type": "services", "name": "Lubongo Casa de Câmbios", "location": "Luanda - Talatona", "lat": -8.92141, "lng": 13.18729, "exact": false, "description": "Casa de câmbio em Talatona, no edifício One Metropolis.", "phone": "", "highlight": {"pt": "Câmbio em Talatona, nos dias úteis.", "en": "Currency exchange in Talatona on weekdays."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Lubongo (site oficial)", "url": "https://lubongo.com/"}]}, "address": "Avenida de Luanda Sul, Edifício One Metropolis, Bloco B, 2.º andar, Talatona", "hours": {"1": [["08:30", "16:00"]], "2": [["08:30", "16:00"]], "3": [["08:30", "16:00"]], "4": [["08:30", "16:00"]], "5": [["08:30", "16:00"]]}, "price": {"text": {"pt": "Taxa de câmbio do dia, indicada no balcão", "en": "Daily exchange rate, shown at the counter"}}},
+            {"id": 58, "type": "sport", "name": "Seven Gym Luanda", "location": "Luanda - Maculusso", "lat": -8.82464, "lng": 13.23546, "exact": true, "description": "Ginásio no Maculusso com musculação, cardio e aulas de grupo.", "phone": "", "highlight": {"pt": "Ginásio no centro, aberto às 6h00 nos dias úteis.", "en": "Central gym, opens at 6 am on weekdays."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Seven Gym (site oficial)", "url": "http://www.sevengym.ao/"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/4895837226"}]}, "address": "Rua Bento Banha Cardoso, 27, Maculusso, Luanda", "hours": {"1": [["06:00", "21:00"]], "2": [["06:00", "21:00"]], "3": [["06:00", "21:00"]], "4": [["06:00", "21:00"]], "5": [["06:00", "21:00"]], "6": [["08:00", "12:00"]]}},
+            {"id": 59, "type": "sport", "name": "New Body by EMS Fitness", "location": "Luanda - Maculusso", "lat": -8.82036, "lng": 13.24013, "exact": false, "description": "Ginásio com sala de musculação, aulas de grupo, sessões de eletroestimulação (EMS) de 20 minutos e treino de boxe, kickboxing e MMA. Os serviços são por marcação.", "phone": "", "highlight": {"pt": "Treinos EMS de 20 minutos e artes marciais.", "en": "20-minute EMS workouts and martial arts."}, "verified": {"date": "2026-10-06", "sources": [{"label": "Medicare Club", "url": "https://medicareclub.ao/lazer-e-bem-estar/ems-fitness.html"}]}, "address": "Avenida Comandante Che Guevara, 138, 3.º andar, Maculusso, Luanda", "hours": {"1": [["05:30", "21:00"]], "2": [["05:30", "21:00"]], "3": [["05:30", "21:00"]], "4": [["05:30", "21:00"]], "5": [["05:30", "21:00"]], "6": [["07:00", "14:00"]], "0": [["07:00", "14:00"]]}},
+            {"id": 60, "type": "sport", "name": "Luanda Sport Center", "location": "Luanda - Talatona", "lat": -8.90756, "lng": 13.19561, "exact": true, "description": "Ginásio e centro desportivo em Talatona, com musculação e várias modalidades e aulas de grupo.", "phone": "", "highlight": {"pt": "Ginásio aberto até às 23h00 nos dias úteis.", "en": "Gym open until 11 pm on weekdays."}, "verified": {"date": "2026-10-06", "sources": [{"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/1618554514"}, {"label": "Ver Angola (2015)", "url": "https://www.verangola.net/va/pt/042015/Desporto/680/Luanda-Sport-Center-novos-espa%C3%A7os-e-modalidades-resultam-de-investimento-de-500-mil-d%C3%B3lares.htm"}]}, "address": "Via S15, Talatona, Luanda", "hours": {"1": [["05:00", "23:00"]], "2": [["05:00", "23:00"]], "3": [["05:00", "23:00"]], "4": [["05:00", "23:00"]], "5": [["05:00", "23:00"]], "6": [["08:00", "20:00"]], "0": [["09:00", "15:00"]]}},
+            {"id": 61, "type": "sport", "name": "Piscina do Alvalade", "location": "Luanda - Alvalade", "lat": -8.83142, "lng": 13.23494, "exact": true, "description": "Piscina de competição com oito pistas, usada por clubes e provas de natação, renovada em 2023 com novos blocos de partida.", "phone": "", "highlight": {"pt": "Piscina de competição com oito pistas.", "en": "Eight-lane competition pool."}, "verified": {"date": "2026-10-06", "sources": [{"label": "ANGOP (2023)", "url": "https://angop.ao/en/noticias/desporto/piscina-do-alvalade-modernizada-com-novos-blocos-de-partida"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/204083012"}]}, "hoursText": {"pt": "Acesso do público, horário e preço por confirmar: é usada sobretudo por clubes.", "en": "Public access, hours and price to be confirmed: it is mainly used by clubs."}}
         ];
 
         const DESC_EN = {
@@ -1136,7 +1200,35 @@
             30: "One of Angola's best-known beaches, right in the city of Benguela.",
             31: "Seafront venue on Ilha de Luanda with live music and Latin nights for dancing by the sea.",
             32: "Nightclub on Ilha do Cabo with a large dance floor and views over the water.",
-            33: "Long-standing restaurant on Ilha de Luanda, considered an institution of the city's food scene."
+            33: "Long-standing restaurant on Ilha de Luanda, considered an institution of the city's food scene.",
+            34: "Luanda's airport since March 2026, about 40 km from the centre. It handles all domestic and international flights; the old 4 de Fevereiro airport closed to commercial flights. Trains run from Bungo Station.",
+            35: "The central station of the Luanda Railway. Suburban trains to Viana and Catete, the airport train and services to Dondo and Malanje leave from here.",
+            36: "Blue-and-white shared minibus taxis are Luanda's most used transport. They run fixed routes and stop on request; you pay the conductor. The urban fare is set by the transport regulator (ANTT).",
+            37: "Luanda's public city buses, with a terminal at Mutamba, downtown. The fare is set by the transport regulator (ANTT).",
+            38: "Intercity bus company operating since January 2023, with departures from Luanda to Benguela, Huambo and Lubango.",
+            39: "Regular boat between the Kapossoca pier and the Mussulo peninsula, Tuesday to Sunday. Sightseeing packages around the peninsula are also available.",
+            40: "Ride-hailing app available in Luanda since 2022. You order a car in the app and see the price before confirming.",
+            41: "The National Bank of Angola's museum on the waterfront, with coin and banknote collections and the history of money in Angola, from the zimbo shell to the kwanza.",
+            42: "Founded in 1938 and housed since 1956 in a three-storey building by Largo do Kinaxixi. It shows Angola's wildlife: mammals, birds, fish, reptiles, insects and shell collections.",
+            43: "Angola's first modern shopping centre, opened in 2007 in Talatona, with over a hundred shops, cinemas, a food court and an entertainment area.",
+            44: "Shopping centre in Talatona, opened in December 2019, with shops and restaurants.",
+            45: "Shopping centre in Talatona with shops, restaurants and a cinema. Open every day until 10 pm.",
+            46: "Shopping centre in the Nova Vida neighbourhood, with the Kero hypermarket, shops and restaurants.",
+            47: "Shopping centre in downtown Luanda, near the Fortress of São Miguel, with shops, restaurants and cinemas.",
+            48: "The square where Agostinho Neto proclaimed Angola's independence in 1975, with his statue at the centre. Renovated, it reopened on 10 November 2025, for the 50th anniversary of independence.",
+            49: "The waterfront promenade along the bay, redeveloped and opened in 2012, with gardens and space to walk, run and cycle, facing the Ilha.",
+            50: "Bar in the historic Elinga Teatro building in downtown Luanda, one of the city's well-known cultural venues.",
+            51: "Gastrobar on Ilha do Cabo with small plates and cocktails, including a gin menu.",
+            52: "Bar in Kilamba City, open every day from the afternoon until the early hours.",
+            53: "Bar in the Samba area, open every day from 9 am to 11 pm.",
+            54: "Rooftop bar, lounge and party venue on the Talatona Shopping terrace. At weekends it stays open until 4 am and hosts themed parties.",
+            55: "Currency exchange office on Avenida Marien Ngouabi, to change foreign currency into kwanzas and back.",
+            56: "NovaCâmbios counter in the Xyami Nova Vida shopping centre, open into the evening, weekends included.",
+            57: "Currency exchange office in Talatona, in the One Metropolis building.",
+            58: "Gym in Maculusso with weights, cardio and group classes.",
+            59: "Gym with a weights room, group classes, 20-minute electrical muscle stimulation (EMS) sessions and boxing, kickboxing and MMA training. Services are by appointment.",
+            60: "Gym and sports centre in Talatona, with weights and a range of sports and group classes.",
+            61: "Eight-lane competition pool used by clubs and swimming events, upgraded in 2023 with new starting blocks."
         };
 
         const MENU_DESC_EN = {
@@ -1268,7 +1360,7 @@
                 notVerified: 'Ainda não verificado.',
                 sourcesLabel: 'Fontes',
                 approxMap: 'Localização aproximada: o Google Maps procura o lugar pelo nome.',
-                suggestFix: 'Sugerir uma correção',
+                suggestFix: 'Corrigir ou acrescentar informação',
                 aboutRatings: 'Média das avaliações aprovadas de visitantes do ANGOLIVE.',
                 about: 'Sobre',
                 viewMap: 'Ver no mapa',
@@ -1373,6 +1465,84 @@
                 recOtherLink: 'Outro link',
                 recOtherName: 'Nome do link (ex.: Menu)',
                 recOtherUrl: 'Link',
+                perTrip: 'por viagem',
+                perMonth: 'por mês',
+                citywide: 'Em toda a cidade',
+                citywideMap: 'Não é um sítio fixo: funciona em toda a cidade.',
+                venuePhoto: 'Foto do local: {place}',
+                colTransportTitle: 'Como se deslocar',
+                colTransportDesc: 'Aeroporto, comboio, táxis, autocarros e barco, com preços',
+                signIn: 'Entrar',
+                account: 'A minha conta',
+                accountAria: 'A minha conta ({name})',
+                createAccount: 'Criar conta',
+                authIntro: 'Com uma conta pode guardar lugares em todos os seus dispositivos, avaliar, comentar, enviar fotos e corrigir informação.',
+                authName: 'Nome (aparece junto dos seus comentários e fotos)',
+                authEmail: 'Email',
+                authPassword: 'Palavra-passe',
+                authNewPassword: 'Nova palavra-passe',
+                authPasswordHint: 'Pelo menos 8 caracteres.',
+                authShow: 'Mostrar',
+                authHide: 'Esconder',
+                authConsent: 'Aceito que o meu nome e email sejam guardados para gerir a conta. O nome aparece junto do que eu publicar.',
+                authForgot: 'Esqueci-me da palavra-passe',
+                authNoAccount: 'Ainda não tem conta?',
+                authHaveAccount: 'Já tem conta?',
+                authForgotTitle: 'Recuperar a palavra-passe',
+                authForgotIntro: 'Indique o email da conta. Enviamos um link para criar uma nova palavra-passe.',
+                authSendLink: 'Enviar link',
+                authLinkSent: 'Se existir uma conta com {email}, vai receber um email com o link.',
+                authResetTitle: 'Nova palavra-passe',
+                authSavePassword: 'Guardar palavra-passe',
+                authPasswordSaved: 'Palavra-passe alterada.',
+                authCheckEmail: 'Enviámos um email para {email}. Abra o link para ativar a conta e depois entre.',
+                authWelcome: 'Conta ativada. Já pode avaliar, comentar e enviar fotos.',
+                authHello: 'Olá, {name}',
+                authSignOut: 'Terminar sessão',
+                authSavedCount: 'Lugares guardados',
+                authSyncNote: 'Os lugares guardados ficam sincronizados em todos os dispositivos onde entrar com esta conta.',
+                authContrib: 'As minhas contribuições',
+                authContribEmpty: 'Ainda não enviou avaliações, comentários, fotos ou correções.',
+                contribReview: 'Avaliação',
+                contribComment: 'Comentário',
+                contribPhoto: 'Foto',
+                contribVideo: 'Vídeo',
+                contribFix: 'Correção',
+                statusPending: 'À espera de aprovação',
+                statusApproved: 'Publicado',
+                statusRejected: 'Não publicado',
+                statusHidden: 'Escondido após denúncias',
+                statusNew: 'À espera de revisão',
+                statusDone: 'Corrigido',
+                authChangeName: 'Nome público',
+                authSaveName: 'Guardar nome',
+                authNameSaved: 'Nome atualizado.',
+                authDeleteTitle: 'Apagar conta',
+                authDeleteText: 'Apaga a conta e tudo o que enviou (avaliações, comentários, fotos, vídeos e correções), bem como os lugares guardados na conta. Não pode ser desfeito.',
+                authDeleteBtn: 'Apagar a minha conta',
+                authDeleteConfirm: 'Tem a certeza? A conta e tudo o que enviou serão apagados para sempre.',
+                authDeleted: 'A sua conta foi apagada.',
+                authWait: 'Um momento...',
+                authErrEmail: 'Escreva um email válido.',
+                authErrPassword: 'A palavra-passe precisa de pelo menos 8 caracteres.',
+                authErrName: 'Escreva o seu nome.',
+                authErrConsent: 'Confirme que aceita para criar a conta.',
+                authErrCredentials: 'Email ou palavra-passe incorretos.',
+                authErrNotConfirmed: 'Ainda não ativou a conta. Abra o link que enviámos para o seu email.',
+                authErrExists: 'Já existe uma conta com este email. Entre ou recupere a palavra-passe.',
+                authErrWeak: 'Escolha uma palavra-passe mais forte (misture letras e números).',
+                authErrRate: 'Demasiadas tentativas. Espere uns minutos e tente de novo.',
+                authErrLink: 'O link expirou ou já foi usado. Peça um novo.',
+                authExpired: 'A sessão terminou. Entre de novo para continuar.',
+                authNeedReview: 'Entre na sua conta para avaliar e comentar este lugar.',
+                authNeedMedia: 'Entre na sua conta para partilhar fotos e vídeos deste lugar.',
+                authNeedFix: 'Entre na sua conta para corrigir ou acrescentar informação.',
+                authNeedReport: 'Entre na sua conta para denunciar conteúdo.',
+                postingAs: 'Publica como {name}.',
+                reviewOptionalStars: 'Estrelas (opcional). Pode deixar só um comentário.',
+                errReviewEmpty: 'Dê estrelas ou escreva um comentário.',
+                errAlreadyRated: 'Já deu estrelas a este lugar. Pode continuar a deixar comentários sem estrelas.',
+                alreadyReported: 'Já denunciou este conteúdo.',
                 agenda: 'Agenda',
                 eventsTitle: 'Agenda: o que fazer em Angola',
                 eventsIntro: 'Concertos, festivais, dança, cinema, feiras e desporto. Só mostramos eventos com fonte publicada; confirme sempre com a organização antes de ir.',
@@ -1582,7 +1752,7 @@
                 notVerified: 'Not verified yet.',
                 sourcesLabel: 'Sources',
                 approxMap: 'Approximate location: Google Maps finds the place by name.',
-                suggestFix: 'Suggest a correction',
+                suggestFix: 'Correct or add information',
                 aboutRatings: 'Average of approved ratings from ANGOLIVE visitors.',
                 about: 'About',
                 viewMap: 'View on map',
@@ -1687,6 +1857,84 @@
                 recOtherLink: 'Other link',
                 recOtherName: 'Link name (e.g. Menu)',
                 recOtherUrl: 'Link',
+                perTrip: 'per trip',
+                perMonth: 'per month',
+                citywide: 'Across the city',
+                citywideMap: 'Not a fixed place: it works across the city.',
+                venuePhoto: 'Photo of the venue: {place}',
+                colTransportTitle: 'Getting around',
+                colTransportDesc: 'Airport, train, taxis, buses and boat, with fares',
+                signIn: 'Sign in',
+                account: 'My account',
+                accountAria: 'My account ({name})',
+                createAccount: 'Create account',
+                authIntro: 'With an account you can keep saved places on all your devices, rate, comment, share photos and correct information.',
+                authName: 'Name (shown next to your comments and photos)',
+                authEmail: 'Email',
+                authPassword: 'Password',
+                authNewPassword: 'New password',
+                authPasswordHint: 'At least 8 characters.',
+                authShow: 'Show',
+                authHide: 'Hide',
+                authConsent: 'I agree that my name and email are stored to manage the account. My name is shown next to what I publish.',
+                authForgot: 'Forgot your password?',
+                authNoAccount: "Don't have an account?",
+                authHaveAccount: 'Already have an account?',
+                authForgotTitle: 'Reset your password',
+                authForgotIntro: "Enter your account's email. We will send you a link to create a new password.",
+                authSendLink: 'Send link',
+                authLinkSent: 'If an account exists for {email}, you will get an email with the link.',
+                authResetTitle: 'New password',
+                authSavePassword: 'Save password',
+                authPasswordSaved: 'Password changed.',
+                authCheckEmail: 'We sent an email to {email}. Open the link to activate your account, then sign in.',
+                authWelcome: 'Account activated. You can now rate, comment and share photos.',
+                authHello: 'Hello, {name}',
+                authSignOut: 'Sign out',
+                authSavedCount: 'Saved places',
+                authSyncNote: 'Saved places stay in sync on every device where you sign in with this account.',
+                authContrib: 'My contributions',
+                authContribEmpty: 'You have not sent any reviews, comments, photos or corrections yet.',
+                contribReview: 'Review',
+                contribComment: 'Comment',
+                contribPhoto: 'Photo',
+                contribVideo: 'Video',
+                contribFix: 'Correction',
+                statusPending: 'Awaiting approval',
+                statusApproved: 'Published',
+                statusRejected: 'Not published',
+                statusHidden: 'Hidden after reports',
+                statusNew: 'Awaiting review',
+                statusDone: 'Fixed',
+                authChangeName: 'Public name',
+                authSaveName: 'Save name',
+                authNameSaved: 'Name updated.',
+                authDeleteTitle: 'Delete account',
+                authDeleteText: 'Deletes the account and everything you sent (reviews, comments, photos, videos and corrections), as well as the places saved to it. This cannot be undone.',
+                authDeleteBtn: 'Delete my account',
+                authDeleteConfirm: 'Are you sure? The account and everything you sent will be deleted for good.',
+                authDeleted: 'Your account has been deleted.',
+                authWait: 'One moment...',
+                authErrEmail: 'Please enter a valid email.',
+                authErrPassword: 'The password needs at least 8 characters.',
+                authErrName: 'Please enter your name.',
+                authErrConsent: 'Please confirm you agree to create the account.',
+                authErrCredentials: 'Wrong email or password.',
+                authErrNotConfirmed: 'Your account is not active yet. Open the link we sent to your email.',
+                authErrExists: 'An account with this email already exists. Sign in or reset your password.',
+                authErrWeak: 'Choose a stronger password (mix letters and numbers).',
+                authErrRate: 'Too many attempts. Wait a few minutes and try again.',
+                authErrLink: 'The link has expired or was already used. Ask for a new one.',
+                authExpired: 'Your session ended. Sign in again to continue.',
+                authNeedReview: 'Sign in to rate and comment on this place.',
+                authNeedMedia: 'Sign in to share photos and videos of this place.',
+                authNeedFix: 'Sign in to correct or add information.',
+                authNeedReport: 'Sign in to report content.',
+                postingAs: 'Posting as {name}.',
+                reviewOptionalStars: 'Stars (optional). You can leave just a comment.',
+                errReviewEmpty: 'Add stars or write a comment.',
+                errAlreadyRated: 'You have already rated this place. You can still leave comments without stars.',
+                alreadyReported: 'You have already reported this.',
                 agenda: 'Events',
                 eventsTitle: "Events: what's on in Angola",
                 eventsIntro: 'Concerts, festivals, dance, film, fairs and sport. We only list events with a published source; always check with the organisers before you go.',
@@ -1815,12 +2063,18 @@
 
         const CATEGORY = {
             restaurant: { icon: 'restaurant', pt: ['Comida', 'Restaurante'], en: ['Food', 'Restaurant'], keywords: 'restaurante comida jantar almoço restaurant food dinner lunch' },
+            bar: { icon: 'glass', pt: ['Bares', 'Bar'], en: ['Bars', 'Bar'], keywords: 'bar bares bebida cocktail cerveja pub drinks beer lounge' },
+            nightclub: { icon: 'nightclub', pt: ['Discotecas e festa', 'Discoteca'], en: ['Clubs and parties', 'Club'], keywords: 'festa discoteca nightclub noite dança música dj party club night dance music' },
             beach: { icon: 'beach', pt: ['Praias', 'Praia'], en: ['Beaches', 'Beach'], keywords: 'praia mar beach sea' },
-            culture: { icon: 'museum', pt: ['Cultura', 'Cultura'], en: ['Culture', 'Culture'], keywords: 'cultura história culture history' },
+            culture: { icon: 'landmark', pt: ['Cultura e monumentos', 'Cultura'], en: ['Culture and landmarks', 'Culture'], keywords: 'cultura história monumento culture history landmark monument' },
+            museum: { icon: 'museum', pt: ['Museus', 'Museu'], en: ['Museums', 'Museum'], keywords: 'museu museus exposição museum museums exhibition' },
             nature: { icon: 'mountain', pt: ['Natureza', 'Natureza'], en: ['Nature', 'Nature'], keywords: 'natureza paisagem nature landscape outdoors' },
-            nightclub: { icon: 'nightclub', pt: ['Vida noturna', 'Vida noturna'], en: ['Nightlife', 'Nightlife'], keywords: 'festa discoteca nightclub noite dança música dj party club night dance music' },
             accommodation: { icon: 'accommodation', pt: ['Alojamento', 'Alojamento'], en: ['Accommodation', 'Accommodation'], keywords: 'hotel alojamento dormir quarto sleep room stay' },
-            services: { icon: 'exchange', pt: ['Serviços úteis', 'Serviço útil'], en: ['Useful services', 'Useful service'], keywords: 'serviço service' }
+            shopping: { icon: 'bag', pt: ['Compras', 'Centro comercial'], en: ['Shopping', 'Shopping centre'], keywords: 'shopping compras loja lojas centro comercial mall shop shops' },
+            plaza: { icon: 'plaza', pt: ['Praças e passeios', 'Praça e passeio'], en: ['Squares and promenades', 'Square and promenade'], keywords: 'praça largo passeio marginal square promenade walk' },
+            sport: { icon: 'dumbbell', pt: ['Ginásios e piscinas', 'Desporto'], en: ['Gyms and pools', 'Sport'], keywords: 'ginásio desporto treino gym sport fitness' },
+            transport: { icon: 'bus', pt: ['Transportes', 'Transporte'], en: ['Getting around', 'Transport'], keywords: 'transporte transportes deslocar transport getting around' },
+            services: { icon: 'exchange', pt: ['Câmbio e serviços', 'Câmbio'], en: ['Exchange and services', 'Exchange'], keywords: 'câmbio dinheiro trocar serviço exchange money service' }
         };
 
         const CITIES = ['Luanda', 'Benguela', 'Lubango', 'Cabinda', 'Namibe', 'Huambo', 'Icolo e Bengo', 'Malanje'];
@@ -1833,7 +2087,8 @@
             history: { ids: [16, 19, 21, 20, 17, 18], cover: 16, title: 'colHistoryTitle', desc: 'colHistoryDesc' },
             ilha: { ids: [1, 4, 33], cover: 22, title: 'colIlhaTitle', desc: 'colIlhaDesc' },
             nature: { ids: [26, 11, 28, 27, 7, 29, 15], cover: 26, title: 'colNatureTitle', desc: 'colNatureDesc' },
-            free: { match: (v) => v.family && v.price?.free, cover: 7, title: 'colFreeTitle', desc: 'colFreeDesc' }
+            free: { match: (v) => v.family && v.price?.free, cover: 7, title: 'colFreeTitle', desc: 'colFreeDesc' },
+            transport: { ids: [34, 35, 36, 37, 38, 39, 40], cover: 35, title: 'colTransportTitle', desc: 'colTransportDesc' }
         };
 
         const EVENT_TYPES = {
@@ -1844,7 +2099,8 @@
             sports: { icon: 'trophy', pt: 'Desporto', en: 'Sport' }
         };
 
-        // Agenda: only events with a published source (checked = date we confirmed it). Each event leaves the list by
+        // Agenda: only events with a published source (checked = date we confirmed it). photo = a freely licensed photo of the
+        // venue or area (Wikimedia Commons), never a poster, and always shown with its caption and credit. Each event leaves the list by
         // itself after its last day, in Angola time. days = weekdays it runs on (0 = Sunday), when it is not every day.
         // confirmed: false = a yearly event whose new edition has not been announced yet.
         const EVENTS = [
@@ -1868,6 +2124,7 @@
             },
             {
                 id: 'sona-137',
+                photo: {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Elinga_teatro_Luanda_01.JPG/1280px-Elinga_teatro_Luanda_01.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/ba/Elinga_teatro_Luanda_01.JPG/330px-Elinga_teatro_Luanda_01.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Elinga_teatro_Luanda_01.JPG", "caption": {"pt": "Elinga Teatro", "en": "Elinga Teatro"}},
                 type: 'dance',
                 title: { pt: 'Sona 137: temporada da Companhia de Dança Contemporânea de Angola', en: 'Sona 137: Contemporary Dance Company of Angola season' },
                 city: 'Luanda',
@@ -1910,6 +2167,7 @@
             },
             {
                 id: 'angojazz-2026',
+                photo: {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/21/Cidade_Financeira_de_Luanda.jpg/1280px-Cidade_Financeira_de_Luanda.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/21/Cidade_Financeira_de_Luanda.jpg/330px-Cidade_Financeira_de_Luanda.jpg", "author": "André Pereira", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Cidade_Financeira_de_Luanda.jpg", "caption": {"pt": "Talatona", "en": "Talatona"}},
                 type: 'music',
                 title: { pt: 'Festival Internacional Angojazz', en: 'Angojazz International Festival' },
                 city: 'Luanda',
@@ -1927,6 +2185,7 @@
             },
             {
                 id: 'talatona-10-anos',
+                photo: {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/21/Cidade_Financeira_de_Luanda.jpg/1280px-Cidade_Financeira_de_Luanda.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/21/Cidade_Financeira_de_Luanda.jpg/330px-Cidade_Financeira_de_Luanda.jpg", "author": "André Pereira", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Cidade_Financeira_de_Luanda.jpg", "caption": {"pt": "Talatona", "en": "Talatona"}},
                 type: 'fairs',
                 title: { pt: '10 anos do Município de Talatona', en: "Talatona's 10th anniversary" },
                 city: 'Luanda',
@@ -1966,6 +2225,7 @@
             },
             {
                 id: 'expo-cultura-2026',
+                photo: {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Bay_of_Luanda.jpg/1280px-Bay_of_Luanda.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3b/Bay_of_Luanda.jpg/330px-Bay_of_Luanda.jpg", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Bay_of_Luanda.jpg", "caption": {"pt": "Baía de Luanda", "en": "Bay of Luanda"}},
                 type: 'fairs',
                 title: { pt: 'Expo-Cultura Angola 2026', en: 'Expo-Cultura Angola 2026' },
                 city: 'Luanda',
@@ -1984,6 +2244,7 @@
             },
             {
                 id: 'roda-de-semba-raiz',
+                photo: {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Ilha_de_Luanda_02.JPG/1280px-Ilha_de_Luanda_02.JPG", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Ilha_de_Luanda_02.JPG/330px-Ilha_de_Luanda_02.JPG", "author": "Fabio Vanin", "license": "CC BY-SA 3.0", "page": "https://commons.wikimedia.org/wiki/File:Ilha_de_Luanda_02.JPG", "caption": {"pt": "Ilha de Luanda", "en": "Ilha de Luanda"}},
                 type: 'music',
                 title: { pt: 'Roda de Semba: Raiz, com Ary', en: 'Roda de Semba: Raiz, with Ary' },
                 city: 'Luanda',
@@ -2011,6 +2272,7 @@
             },
             {
                 id: 'bitur-2026',
+                photo: {"url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Port_of_Luanda_Seen_From_Secretary_John_Kerry%27s_Plane_Upon_Arrival_in_Angola.jpg/1280px-Port_of_Luanda_Seen_From_Secretary_John_Kerry%27s_Plane_Upon_Arrival_in_Angola.jpg", "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Port_of_Luanda_Seen_From_Secretary_John_Kerry%27s_Plane_Upon_Arrival_in_Angola.jpg/330px-Port_of_Luanda_Seen_From_Secretary_John_Kerry%27s_Plane_Upon_Arrival_in_Angola.jpg", "author": "U.S. Department of State", "license": "Domínio público", "page": "https://commons.wikimedia.org/wiki/File:Port_of_Luanda_Seen_From_Secretary_John_Kerry%27s_Plane_Upon_Arrival_in_Angola.jpg", "caption": {"pt": "Porto de Luanda", "en": "Port of Luanda"}},
                 type: 'fairs',
                 title: { pt: 'BITUR 2026: Bolsa Internacional de Turismo de Angola', en: 'BITUR 2026: Angola International Tourism Fair' },
                 city: 'Luanda',
@@ -2063,7 +2325,7 @@
             near: { label: 'nearMe', icon: 'locate', match: () => true },
             open: { label: 'openNow', icon: 'clock', match: (v) => openStatus(v)?.open, note: 'openNote', show: () => venues.filter((v) => v.hours).length >= MIN_PLACES_WITH_HOURS },
             family: { label: 'forFamilies', icon: 'users', match: (v) => v.family, note: 'familyNote' },
-            nightlife: { label: 'nightlife', icon: 'nightclub', match: (v) => v.type === 'nightclub' },
+            nightlife: { label: 'nightlife', icon: 'nightclub', match: (v) => v.type === 'nightclub' || v.type === 'bar' },
             free: { label: 'free', icon: 'tag', match: (v) => Boolean(v.price?.free), note: 'freeNote' }
         };
 
@@ -2095,6 +2357,13 @@
             tag: '<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>',
             back: '<polyline points="15 18 9 12 15 6"/>',
             next: '<polyline points="9 18 15 12 9 6"/>',
+            glass: '<path d="M8 22h8M12 15v7M5 3h14l-7 12z"/>',
+            bag: '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+            plaza: '<path d="M3 22h18"/><path d="M6 22v-4h12v4"/><path d="M12 18V9"/><path d="M8 9a4 4 0 0 1 8 0"/><circle cx="12" cy="4" r="1.5"/>',
+            dumbbell: '<path d="M6.5 6.5l11 11"/><path d="M21 21l-1-1"/><path d="M3 3l1 1"/><path d="M18 22l4-4"/><path d="M2 6l4-4"/><path d="M3 10l7-7"/><path d="M14 21l7-7"/>',
+            bus: '<rect x="4" y="3" width="16" height="15" rx="2"/><path d="M4 11h16"/><path d="M8 3v8"/><path d="M16 3v8"/><circle cx="8" cy="21" r="1.5"/><circle cx="16" cy="21" r="1.5"/>',
+            landmark: '<path d="M12 2l2.5 5v13h-5V7z"/><path d="M5 22h14"/>',
+            user: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
             calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
             film: '<rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/>',
             trophy: '<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
@@ -2189,13 +2458,19 @@
             return (value / 1000).toLocaleString(locale(), { maximumFractionDigits: 1 });
         }
 
+        // Small fares read better in full (300 Kz) than in thousands (0,3 mil Kz).
+        function kzAmount(from, to) {
+            if (from < 1000 && (!to || to < 1000)) return `${from.toLocaleString(locale())}${to ? `–${to.toLocaleString(locale())}` : ''} Kz`;
+            return to ? t('kzThousandRange', { a: kz(from), b: kz(to) }) : t('kzThousand', { a: kz(from) });
+        }
+
         function priceText(v) {
             const p = v.price;
             if (!p) return t('priceTBC');
             if (p.free) return t('free');
-            const amount = p.to ? t('kzThousandRange', { a: kz(p.from), b: kz(p.to) }) : t('kzThousand', { a: kz(p.from) });
-            const unit = { person: t('perPerson'), night: t('perNight'), entry: t('perEntry') }[p.per];
-            return `${amount} ${unit}`;
+            if (p.text) return p.text[lang] || p.text.pt;
+            const unit = { person: t('perPerson'), night: t('perNight'), entry: t('perEntry'), trip: t('perTrip'), month: t('perMonth') }[p.per];
+            return [kzAmount(p.from, p.to), unit].filter(Boolean).join(' ');
         }
 
         function priceValue(v) {
@@ -2225,7 +2500,11 @@
             pousada: ['hotel', 'alojamento'], hospedagem: ['hotel', 'alojamento'], hostel: ['hotel', 'alojamento'],
             boate: ['discoteca'], balada: ['discoteca'], disco: ['discoteca'],
             dinheiro: ['cambio'], money: ['cambio'], exchange: ['cambio'],
-            museum: ['museu'], church: ['igreja'], igreja: ['catedral']
+            museum: ['museu'], church: ['igreja'], igreja: ['catedral'],
+            taxi: ['candongueiro', 'yango'], uber: ['yango'], onibus: ['autocarro'], bus: ['autocarro'], train: ['comboio'],
+            voo: ['aeroporto'], flight: ['aeroporto'], airport: ['aeroporto'], ferry: ['travessia'], boat: ['barco', 'travessia'],
+            gym: ['ginasio'], academia: ['ginasio'], pool: ['piscina'], swimming: ['piscina'], natacao: ['piscina'],
+            mall: ['shopping'], compras: ['shopping'], square: ['largo'], praca: ['largo'], pub: ['bar'], cocktail: ['bar']
         };
 
         const STOPWORDS = new Set(['a', 'o', 'as', 'os', 'e', 'em', 'no', 'na', 'nos', 'nas', 'de', 'da', 'do', 'das', 'dos', 'para', 'com', 'um', 'uma', 'the', 'of', 'in', 'and', 'to', 'at']);
@@ -2390,7 +2669,8 @@
         /* ---------- Images ---------- */
 
         function thumbSrc(v) {
-            return v.photos ? v.photos[0].thumb : v.image.replace('w=800&h=400', 'w=600&h=300');
+            if (v.photos) return v.photos[0].thumb;
+            return v.image ? v.image.replace('w=800&h=400', 'w=600&h=300') : '';
         }
 
         const fullSrc = (photo) => photo.url.replace('/1280px-', '/960px-');
@@ -2414,8 +2694,8 @@
             const hero = `
                 <div class="modal-hero">
                     <span>${escapeHTML(initials(v.name))}</span>
-                    <img id="heroImg" src="${escapeHTML(thumbSrc(v))}" alt="${escapeHTML(v.name)}" crossorigin="anonymous" onerror="this.remove()">
-                    ${photos.length ? '' : `<span class="photo-badge">${t('illustrative')}</span>`}
+                    ${thumbSrc(v) ? `<img id="heroImg" src="${escapeHTML(thumbSrc(v))}" alt="${escapeHTML(v.name)}" crossorigin="anonymous" onerror="this.remove()">` : ''}
+                    ${!photos.length && v.image ? `<span class="photo-badge">${t('illustrative')}</span>` : ''}
                 </div>`;
             if (!photos.length) return hero;
             return `${hero}
@@ -2619,7 +2899,7 @@
                 <article class="card">
                     <button class="card-media" type="button" data-open="${v.id}" aria-label="${t('viewPlace')}: ${escapeHTML(v.name)}">
                         <span aria-hidden="true">${escapeHTML(initials(v.name))}</span>
-                        <img src="${escapeHTML(thumbSrc(v))}" alt="" crossorigin="anonymous" loading="lazy" onerror="this.remove()">
+                        ${thumbSrc(v) ? `<img src="${escapeHTML(thumbSrc(v))}" alt="" crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}
                         ${saved ? `<span class="saved-tag">${icon('heart')}${t('saved')}</span>` : ''}
                     </button>
                     <div class="card-body">
@@ -2634,7 +2914,7 @@
                         ${highlight}
                         <div class="card-actions">
                             <button class="action-btn" type="button" data-open="${v.id}">${t('viewPlace')}</button>
-                            <a class="action-btn solid" href="${mapsURL(v, 'directions')}" target="_blank" rel="noopener">${t('directions')}</a>
+                            ${v.citywide ? '' : `<a class="action-btn solid" href="${mapsURL(v, 'directions')}" target="_blank" rel="noopener">${t('directions')}</a>`}
                         </div>
                     </div>
                 </article>
@@ -2843,7 +3123,7 @@
         }
 
         function hoursHTML(v) {
-            if (!v.hours) return t('toConfirm');
+            if (!v.hours) return v.hoursText ? escapeHTML(v.hoursText[lang] || v.hoursText.pt) : t('toConfirm');
             const today = luandaNow().day;
             const order = [1, 2, 3, 4, 5, 6, 0];
             return `${statusHTML(v)}<ul class="week">${order.map((d) => {
@@ -2867,7 +3147,9 @@
         function practicalHTML(v) {
             const digits = phoneDigits(v);
             const address = v.address || placeLine(v);
-            const map = v.exact
+            const map = v.citywide
+                ? `<p class="hint">${t('citywideMap')}</p>`
+                : v.exact
                 ? `<iframe class="map-frame" src="${mapEmbedURL(v)}" title="${escapeHTML(v.name)}" loading="lazy"></iframe>
                    <p class="coords">Lat ${v.lat.toFixed(4)} · Long ${v.lng.toFixed(4)}</p>`
                 : `<p class="hint">${t('approxMap')}</p>`;
@@ -2877,8 +3159,8 @@
                     <dl class="facts">
                         <div class="fact"><dt>${t('hoursLabel')}</dt><dd>${hoursHTML(v)}</dd></div>
                         <div class="fact"><dt>${t('addressLabel')}</dt><dd>${escapeHTML(address)}</dd></div>
-                        <div class="fact"><dt>${t('mapLabel')}</dt><dd>${map}<a class="text-link" href="${mapsURL(v, 'search')}" target="_blank" rel="noopener">${icon('pin')}${t('viewMap')}</a></dd></div>
-                        <div class="fact"><dt>${t('priceLabel')}</dt><dd>${escapeHTML(priceText(v))}${v.price?.estimate ? `<br>${t('priceEstimate')}` : ''}</dd></div>
+                        <div class="fact"><dt>${t('mapLabel')}</dt><dd>${map}${v.citywide ? '' : `<a class="text-link" href="${mapsURL(v, 'search')}" target="_blank" rel="noopener">${icon('pin')}${t('viewMap')}</a>`}</dd></div>
+                        <div class="fact"><dt>${t('priceLabel')}</dt><dd>${escapeHTML(priceText(v))}${v.price?.estimate ? `<br>${t('priceEstimate')}` : ''}${v.price?.note ? `<br><span class="price-note">${escapeHTML(v.price.note[lang] || v.price.note.pt)}</span>` : ''}</dd></div>
                         <div class="fact"><dt>${t('contactLabel')}</dt><dd>${digits ? escapeHTML(v.phone) : t('toConfirm')}</dd></div>
                         <div class="fact"><dt>${t('stillToConfirm')}</dt><dd>${t('unknownFacts')}</dd></div>
                         ${verifiedRowHTML(v)}
@@ -2934,8 +3216,8 @@
                         <span class="review-name">${escapeHTML(r.author)}</span>
                         <span class="review-date">${escapeHTML(new Date(r.created_at).toLocaleDateString(locale()))}</span>
                     </div>
-                    <div class="stars" aria-label="${t('stars', { n: r.rating })}">${stars(r.rating)}</div>
-                    <div class="review-text">${escapeHTML(r.comment)}</div>
+                    ${r.rating ? `<div class="stars" aria-label="${t('stars', { n: r.rating })}">${stars(r.rating)}</div>` : ''}
+                    ${r.comment ? `<div class="review-text">${escapeHTML(r.comment)}</div>` : ''}
                     <button type="button" class="report-btn" data-report-review="${escapeHTML(r.id)}">${t('report')}</button>
                 </div>
             `;
@@ -2950,24 +3232,25 @@
                         <div class="panel">${externalReviewsHTML(v)}</div>
                     </section>`;
             }
-            const savedName = store.get('angoliveReviewerName', '');
+            const form = signedIn() ? `
+                        <form class="review-form" id="reviewForm" novalidate>
+                            <div class="review-form-title">${t('yourReview')}</div>
+                            <p class="hint">${t('reviewOptionalStars')}</p>
+                            <div class="star-input" id="starInput" role="group" aria-label="${t('yourReview')}">
+                                ${[1, 2, 3, 4, 5].map((n) => `<button type="button" class="star-btn" data-star="${n}" aria-label="${t('stars', { n })}" aria-pressed="false">☆</button>`).join('')}
+                            </div>
+                            <textarea class="field" id="reviewText" maxlength="600" placeholder="${t('commentPlaceholder')}" aria-label="${t('commentPlaceholder')}"></textarea>
+                            <div class="form-msg" id="reviewMsg" role="status" aria-live="polite"></div>
+                            <button class="submit-btn" type="submit" id="reviewSubmit">${t('send')}</button>
+                            <p class="hint">${t('postingAs', { name: escapeHTML(accountName()) })} ${t('moderationNote')}</p>
+                        </form>` : signInPromptHTML('authNeedReview');
             return `
                 <section id="reviewsSection">
                     <h3 class="section-title">${t('reviews')}</h3>
                     <div class="panel">
                         <div class="avg">${avgHTML(statsOf(v))}</div>
                         ${externalReviewsHTML(v)}
-                        <form class="review-form" id="reviewForm" novalidate>
-                            <div class="review-form-title">${t('yourReview')}</div>
-                            <div class="star-input" id="starInput" role="group" aria-label="${t('yourReview')}">
-                                ${[1, 2, 3, 4, 5].map((n) => `<button type="button" class="star-btn" data-star="${n}" aria-label="${t('stars', { n })}" aria-pressed="false">☆</button>`).join('')}
-                            </div>
-                            <input class="field" id="reviewName" type="text" maxlength="60" autocomplete="name" placeholder="${t('yourName')}" aria-label="${t('yourName')}" value="${escapeHTML(savedName)}">
-                            <textarea class="field" id="reviewText" maxlength="600" placeholder="${t('commentPlaceholder')}" aria-label="${t('commentPlaceholder')}"></textarea>
-                            <div class="form-msg" id="reviewMsg" role="status" aria-live="polite"></div>
-                            <button class="submit-btn" type="submit" id="reviewSubmit">${t('send')}</button>
-                            <p class="hint">${t('moderationNote')}</p>
-                        </form>
+                        ${form}
                         <div id="reviewList"><p class="hint">${t('loading')}</p></div>
                     </div>
                 </section>
@@ -3024,7 +3307,7 @@
                     </div>
 
                     <div class="actions">
-                        <a class="action-btn solid wide" href="${mapsURL(v, 'directions')}" target="_blank" rel="noopener">${icon('directions')}${t('directions')}</a>
+                        ${v.citywide ? '' : `<a class="action-btn solid wide" href="${mapsURL(v, 'directions')}" target="_blank" rel="noopener">${icon('directions')}${t('directions')}</a>`}
                         ${digits ? `
                             <a class="action-btn" href="tel:+${digits}">${icon('phone')}${t('call')}</a>
                             <a class="action-btn" href="https://wa.me/${digits}" target="_blank" rel="noopener">${icon('chat')}${t('whatsapp')}</a>
@@ -3056,7 +3339,7 @@
             openModal('venueModal');
             if (keepScroll) panel.scrollTop = scroll;
             history.replaceState(null, '', `${location.pathname}${location.search}#local-${id}`);
-            upgradeHero(v.photos ? fullSrc(v.photos[0]) : v.image);
+            if (v.photos || v.image) upgradeHero(v.photos ? fullSrc(v.photos[0]) : v.image);
             loadSubmissions(id);
             loadReviews(id);
         }
@@ -3070,33 +3353,31 @@
             });
         }
 
+        // The author name and account are filled in by the database from the signed-in account.
         async function submitReview(event) {
             event.preventDefault();
-            const name = $('reviewName').value.trim();
             const comment = $('reviewText').value.trim();
             const msg = $('reviewMsg');
             const button = $('reviewSubmit');
             msg.classList.remove('ok');
-            if (!state.rating) { msg.textContent = t('errStars'); return; }
-            if (!name) { msg.textContent = t('errName'); $('reviewName').focus(); return; }
-            if (!comment) { msg.textContent = t('errComment'); $('reviewText').focus(); return; }
-            store.set('angoliveReviewerName', name);
+            if (!state.rating && !comment) { msg.textContent = t('errReviewEmpty'); $('reviewText').focus(); return; }
 
             button.disabled = true;
             button.textContent = t('sending');
             try {
                 await sbRequest('/rest/v1/reviews', {
                     method: 'POST',
-                    headers: sbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
-                    body: JSON.stringify({ venue_id: state.openId, author: name, rating: state.rating, comment })
+                    headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
+                    body: JSON.stringify({ venue_id: state.openId, rating: state.rating || null, comment: comment || null })
                 });
                 $('reviewText').value = '';
                 state.rating = 0;
                 updateStars();
                 msg.textContent = t('reviewPending');
                 msg.classList.add('ok');
-            } catch {
-                msg.textContent = t('errSend');
+            } catch (err) {
+                if (needsSignIn(err, msg)) return;
+                msg.textContent = err.status === 409 ? t('errAlreadyRated') : t('errSend');
             } finally {
                 button.disabled = false;
                 button.textContent = t('send');
@@ -3107,6 +3388,7 @@
             const id = state.openId;
             favorites = favorites.includes(id) ? favorites.filter((f) => f !== id) : [...favorites, id];
             store.set('favorites', favorites);
+            pushFavorite(id, favorites.includes(id));
             const btn = $('favBtn');
             const isFav = favorites.includes(id);
             btn.innerHTML = favButtonHTML(id);
@@ -3140,7 +3422,7 @@
 
         async function sbRequest(path, options = {}) {
             const res = await fetch(`${SUPABASE_URL}${path}`, options);
-            if (!res.ok) throw new Error(`Supabase ${res.status}`);
+            if (!res.ok) throw Object.assign(new Error(`Supabase ${res.status}`), { status: res.status });
             return res;
         }
 
@@ -3157,7 +3439,14 @@
 
         function visitorHTML(v) {
             if (!supabaseReady()) return '';
-            const savedName = store.get('angoliveReviewerName', '');
+            if (!signedIn()) {
+                return `
+                    <section>
+                        <h3 class="section-title">${t('visitorMedia')}</h3>
+                        <div class="visitor-gallery" id="visitorGallery"><p class="hint">${t('loading')}</p></div>
+                        ${signInPromptHTML('authNeedMedia')}
+                    </section>`;
+            }
             return `
                 <section>
                     <h3 class="section-title">${t('visitorMedia')}</h3>
@@ -3171,12 +3460,11 @@
                             </div>
                             <div id="photoField"><input class="field" type="file" id="mediaFile" accept="image/*" aria-label="${t('kindPhoto')}"></div>
                             <div id="videoField" hidden><input class="field" type="url" id="mediaUrl" inputmode="url" placeholder="https://www.youtube.com/..." aria-label="${t('videoLink')}"></div>
-                            <input class="field" id="mediaName" type="text" maxlength="60" autocomplete="name" placeholder="${t('yourName')}" aria-label="${t('yourName')}" value="${escapeHTML(savedName)}">
                             <input class="field" id="mediaCaption" type="text" maxlength="200" placeholder="${t('captionPlaceholder')}" aria-label="${t('captionPlaceholder')}">
                             <label class="consent"><input type="checkbox" id="mediaConsent"><span>${t('consent')}</span></label>
                             <div class="form-msg" id="mediaMsg" role="status" aria-live="polite"></div>
                             <button class="submit-btn" type="submit" id="mediaSubmit">${t('sendMedia')}</button>
-                            <p class="hint">${t('moderationNote')}</p>
+                            <p class="hint">${t('postingAs', { name: escapeHTML(accountName()) })} ${t('moderationNote')}</p>
                         </form>
                     </details>
                 </section>
@@ -3217,7 +3505,6 @@
             event.preventDefault();
             const venueId = state.openId;
             const kind = document.querySelector('input[name="mediaKind"]:checked').value;
-            const name = $('mediaName').value.trim();
             const caption = $('mediaCaption').value.trim();
             const msg = $('mediaMsg');
             const button = $('mediaSubmit');
@@ -3228,7 +3515,6 @@
             if (kind === 'photo' && !file) { msg.textContent = t('errFile'); return; }
             if (kind === 'photo' && !file.type.startsWith('image/')) { msg.textContent = t('errFileType'); return; }
             if (kind === 'video' && !VIDEO_URL.test(videoUrl)) { msg.textContent = t('errVideo'); $('mediaUrl').focus(); return; }
-            if (!name) { msg.textContent = t('errName'); $('mediaName').focus(); return; }
             if (!$('mediaConsent').checked) { msg.textContent = t('errConsent'); return; }
 
             button.disabled = true;
@@ -3238,28 +3524,28 @@
                 let url = videoUrl;
                 if (kind === 'photo') {
                     const blob = await compressPhoto(file);
-                    const path = `${venueId}/${Date.now()}-${Math.random().toString(36).slice(2, 10)}.jpg`;
+                    // Each account uploads into its own folder, so the files can be removed with the account.
+                    const path = `${session.user.id}/${venueId}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}.jpg`;
                     await sbRequest(`/storage/v1/object/submissions/${path}`, {
                         method: 'POST',
-                        headers: sbHeaders({ 'Content-Type': 'image/jpeg', 'x-upsert': 'false' }),
+                        headers: await userHeaders({ 'Content-Type': 'image/jpeg', 'x-upsert': 'false' }),
                         body: blob
                     });
                     url = photoBase() + path;
                 }
                 await sbRequest('/rest/v1/submissions', {
                     method: 'POST',
-                    headers: sbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
-                    body: JSON.stringify({ venue_id: venueId, kind, url, author: name, caption: caption || null })
+                    headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
+                    body: JSON.stringify({ venue_id: venueId, kind, url, caption: caption || null })
                 });
-                store.set('angoliveReviewerName', name);
                 if (state.openId !== venueId) return;
                 $('mediaForm').reset();
-                $('mediaName').value = name;
                 $('photoField').hidden = false;
                 $('videoField').hidden = true;
                 msg.textContent = t('mediaThanks');
                 msg.classList.add('ok');
-            } catch {
+            } catch (err) {
+                if (needsSignIn(err, msg)) return;
                 msg.textContent = t('errSend');
             } finally {
                 button.disabled = false;
@@ -3268,19 +3554,394 @@
         }
 
         async function reportSubmission(button) {
+            if (!signedIn()) { openAuth('signin', { reason: t('authNeedReport') }); return; }
             if (!confirm(t('reportConfirm'))) return;
             button.disabled = true;
             try {
                 await sbRequest('/rest/v1/reports', {
                     method: 'POST',
-                    headers: sbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
+                    headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
                     body: JSON.stringify(button.dataset.report ? { submission_id: button.dataset.report } : { review_id: button.dataset.reportReview })
                 });
                 button.textContent = t('reported');
-            } catch {
+            } catch (err) {
+                if (err.status === 409) { button.textContent = t('alreadyReported'); return; }
                 button.disabled = false;
-                button.textContent = t('errSend');
+                button.textContent = needsSignIn(err) ? t('signIn') : t('errSend');
             }
+        }
+
+        /* ---------- Accounts (Supabase Auth: email and password) ---------- */
+
+        let session = store.get('angoliveSession', null);
+        let authView = 'signin';
+        let afterAuth = null;
+        let refreshing = null;
+        const accountsEnabled = supabaseReady;
+        const signedIn = () => accountsEnabled() && Boolean(session?.access_token);
+        const accountName = () => session?.user?.user_metadata?.display_name || session?.user?.email?.split('@')[0] || '';
+        const authRedirect = () => (inNativeApp ? PUBLIC_URL : `${location.origin}${location.pathname}`);
+        const validEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        const STATUS_LABELS = { pending: 'statusPending', approved: 'statusApproved', rejected: 'statusRejected', hidden: 'statusHidden', new: 'statusNew', done: 'statusDone' };
+
+        function saveSession(data) {
+            if (!data) {
+                session = null;
+                store.remove('angoliveSession');
+            } else {
+                session = {
+                    access_token: data.access_token,
+                    refresh_token: data.refresh_token || session?.refresh_token,
+                    expires_at: Number(data.expires_at) || Math.floor(Date.now() / 1000) + Number(data.expires_in || 3600),
+                    user: data.user ? { id: data.user.id, email: data.user.email, user_metadata: data.user.user_metadata || {} } : session?.user || null
+                };
+                store.set('angoliveSession', session);
+            }
+            renderAccountButton();
+        }
+
+        async function authRequest(path, body, { method = 'POST', token } = {}) {
+            const headers = { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' };
+            if (token) headers.Authorization = `Bearer ${token}`;
+            const res = await fetch(`${SUPABASE_URL}/auth/v1${path}`, { method, headers, body: body ? JSON.stringify(body) : undefined });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) {
+                throw Object.assign(new Error('auth'), { status: res.status, code: data.error_code || data.code || data.error || '', text: data.msg || data.error_description || data.message || '' });
+            }
+            return data;
+        }
+
+        // Access tokens last about an hour; renew them a minute before they run out.
+        async function accessToken() {
+            if (!signedIn()) return null;
+            if (session.expires_at - 60 > Date.now() / 1000) return session.access_token;
+            refreshing ||= authRequest('/token?grant_type=refresh_token', { refresh_token: session.refresh_token })
+                .then((data) => {
+                    saveSession(data);
+                    return session.access_token;
+                })
+                .catch((err) => {
+                    if (err.status && err.status < 500) signOutLocally();
+                    return null;
+                })
+                .finally(() => { refreshing = null; });
+            return refreshing;
+        }
+
+        // Requests made as the signed-in person; the database's row-level security checks who they are.
+        async function userHeaders(extra = {}) {
+            const token = await accessToken();
+            if (!token) throw Object.assign(new Error('signin'), { status: 401 });
+            return { apikey: SUPABASE_KEY, Authorization: `Bearer ${token}`, ...extra };
+        }
+
+        function needsSignIn(err, msg) {
+            if (err?.status !== 401) return false;
+            if (msg) msg.textContent = t('authExpired');
+            openAuth('signin', { reason: t('authExpired') });
+            return true;
+        }
+
+        function authErrorText(err) {
+            const code = String(err.code || '');
+            const text = String(err.text || '').toLowerCase();
+            if (err.status === 429 || code.includes('rate_limit')) return t('authErrRate');
+            if (code === 'invalid_credentials' || text.includes('invalid login')) return t('authErrCredentials');
+            if (code === 'email_not_confirmed' || text.includes('not confirmed')) return t('authErrNotConfirmed');
+            if (code === 'user_already_exists' || code === 'email_exists' || text.includes('already registered')) return t('authErrExists');
+            if (code === 'weak_password' || text.includes('password should')) return t('authErrWeak');
+            if (code === 'otp_expired' || code === 'flow_state_expired') return t('authErrLink');
+            return t('errSend');
+        }
+
+        function renderAccountButton() {
+            const btn = $('accountBtn');
+            btn.hidden = !accountsEnabled();
+            $('accountLabel').textContent = signedIn() ? t('account') : t('signIn');
+            btn.setAttribute('aria-label', signedIn() ? t('accountAria', { name: accountName() }) : t('signIn'));
+        }
+
+        function signInPromptHTML(reasonKey) {
+            return `
+                <div class="signin-prompt">
+                    <p>${t(reasonKey)}</p>
+                    <div class="banner-actions">
+                        <button class="submit-btn" type="button" data-auth-open="signin">${t('signIn')}</button>
+                        <button class="submit-btn secondary" type="button" data-auth-open="signup">${t('createAccount')}</button>
+                    </div>
+                </div>`;
+        }
+
+        function passwordFieldHTML(labelKey, autocomplete) {
+            return `
+                <div class="form-group">
+                    <label for="authPassword">${t(labelKey)}</label>
+                    <div class="password-wrap">
+                        <input class="field" id="authPassword" type="password" autocomplete="${autocomplete}" minlength="8" maxlength="72">
+                        <button type="button" class="link-btn" data-toggle-password aria-pressed="false">${t('authShow')}</button>
+                    </div>
+                    ${autocomplete === 'new-password' ? `<span class="hint">${t('authPasswordHint')}</span>` : ''}
+                </div>`;
+        }
+
+        const emailFieldHTML = (value) => `
+            <div class="form-group"><label for="authEmail">${t('authEmail')}</label><input class="field" id="authEmail" type="email" autocomplete="email" maxlength="254" value="${escapeHTML(value)}"></div>`;
+        const authSubmitHTML = (key) => `
+            <div class="form-msg" id="authMsg" role="status" aria-live="polite"></div>
+            <button class="submit-btn" type="submit" id="authSubmit" style="width:100%">${t(key)}</button>`;
+
+        function renderAuth(view, { reason = '', notice = '', email = '' } = {}) {
+            authView = view;
+            const top = `${reason ? `<p class="auth-reason">${escapeHTML(reason)}</p>` : ''}${notice ? `<p class="form-msg ok auth-notice">${escapeHTML(notice)}</p>` : ''}`;
+            const views = {
+                signin: () => `
+                    <h2 class="info-title" id="authTitle">${t('signIn')}</h2>
+                    ${top || `<p class="hint">${t('authIntro')}</p>`}
+                    <form id="authForm" novalidate>
+                        ${emailFieldHTML(email)}
+                        ${passwordFieldHTML('authPassword', 'current-password')}
+                        ${authSubmitHTML('signIn')}
+                    </form>
+                    <p class="auth-switch"><button type="button" class="link-btn" data-auth-view="forgot">${t('authForgot')}</button></p>
+                    <p class="auth-switch">${t('authNoAccount')} <button type="button" class="link-btn" data-auth-view="signup">${t('createAccount')}</button></p>`,
+                signup: () => `
+                    <h2 class="info-title" id="authTitle">${t('createAccount')}</h2>
+                    ${top || `<p class="hint">${t('authIntro')}</p>`}
+                    <form id="authForm" novalidate>
+                        <div class="form-group"><label for="authName">${t('authName')}</label><input class="field" id="authName" type="text" maxlength="60" autocomplete="name"></div>
+                        ${emailFieldHTML(email)}
+                        ${passwordFieldHTML('authPassword', 'new-password')}
+                        <label class="consent"><input type="checkbox" id="authConsent"><span>${t('authConsent')}</span></label>
+                        ${authSubmitHTML('createAccount')}
+                    </form>
+                    <p class="auth-switch">${t('authHaveAccount')} <button type="button" class="link-btn" data-auth-view="signin">${t('signIn')}</button></p>`,
+                forgot: () => `
+                    <h2 class="info-title" id="authTitle">${t('authForgotTitle')}</h2>
+                    ${top || `<p class="hint">${t('authForgotIntro')}</p>`}
+                    <form id="authForm" novalidate>
+                        ${emailFieldHTML(email)}
+                        ${authSubmitHTML('authSendLink')}
+                    </form>
+                    <p class="auth-switch"><button type="button" class="link-btn" data-auth-view="signin">${t('signIn')}</button></p>`,
+                reset: () => `
+                    <h2 class="info-title" id="authTitle">${t('authResetTitle')}</h2>
+                    ${top}
+                    <form id="authForm" novalidate>
+                        ${passwordFieldHTML('authNewPassword', 'new-password')}
+                        ${authSubmitHTML('authSavePassword')}
+                    </form>`,
+                account: () => `
+                    <h2 class="info-title" id="authTitle">${t('authHello', { name: escapeHTML(accountName()) })}</h2>
+                    <p class="hint">${escapeHTML(session?.user?.email || '')}</p>
+                    ${top}
+                    <dl class="facts account-facts">
+                        <div class="fact"><dt>${t('authSavedCount')}</dt><dd>${favorites.length} ${favorites.length ? `<button type="button" class="link-btn" data-action="show-saved">${t('seeAll')}</button>` : ''}</dd></div>
+                    </dl>
+                    <p class="hint">${t('authSyncNote')}</p>
+                    <h3 class="section-title">${t('authContrib')}</h3>
+                    <div id="myContrib"><p class="hint">${t('loading')}</p></div>
+                    <form id="authForm" class="account-name-form" novalidate>
+                        <div class="form-group"><label for="authName">${t('authChangeName')}</label><input class="field" id="authName" type="text" maxlength="60" autocomplete="nickname" value="${escapeHTML(accountName())}"></div>
+                        ${authSubmitHTML('authSaveName')}
+                    </form>
+                    <button class="submit-btn secondary" type="button" data-action="signout" style="width:100%;margin-top:12px">${t('authSignOut')}</button>
+                    <details class="danger-zone">
+                        <summary>${t('authDeleteTitle')}</summary>
+                        <p>${t('authDeleteText')}</p>
+                        <div class="form-msg" id="deleteMsg" role="status" aria-live="polite"></div>
+                        <button class="submit-btn danger" type="button" data-action="delete-account">${t('authDeleteBtn')}</button>
+                    </details>`
+            };
+            $('authContent').innerHTML = (views[view] || views.signin)();
+            if (view === 'account') loadContributions();
+        }
+
+        function openAuth(view, { reason = '', notice = '', after = null } = {}) {
+            if (!accountsEnabled()) return;
+            afterAuth = after;
+            renderAuth(view || (signedIn() ? 'account' : 'signin'), { reason, notice });
+            openModal('authModal');
+            $('authContent').querySelector('input:not([type="checkbox"])')?.focus();
+        }
+
+        async function afterSignIn() {
+            const next = afterAuth;
+            afterAuth = null;
+            closeModal('authModal');
+            await syncFavorites();
+            render();
+            if (state.openId) openVenue(state.openId, true);
+            if (next) next();
+        }
+
+        async function submitAuth(event) {
+            event.preventDefault();
+            const msg = $('authMsg');
+            const button = $('authSubmit');
+            msg.classList.remove('ok');
+            msg.textContent = '';
+            const email = $('authEmail')?.value.trim() || '';
+            const password = $('authPassword')?.value || '';
+            const name = $('authName')?.value.trim().slice(0, 60) || '';
+            const fail = (key, field) => {
+                msg.textContent = t(key);
+                field?.focus();
+            };
+            if (['signup', 'account'].includes(authView) && !name) return fail('authErrName', $('authName'));
+            if (['signin', 'signup', 'forgot'].includes(authView) && !validEmail(email)) return fail('authErrEmail', $('authEmail'));
+            if (['signin', 'signup', 'reset'].includes(authView) && password.length < 8) return fail('authErrPassword', $('authPassword'));
+            if (authView === 'signup' && !$('authConsent').checked) return fail('authErrConsent', $('authConsent'));
+
+            const label = button.textContent;
+            button.disabled = true;
+            button.textContent = t('authWait');
+            try {
+                if (authView === 'signin') {
+                    saveSession(await authRequest('/token?grant_type=password', { email, password }));
+                    await afterSignIn();
+                } else if (authView === 'signup') {
+                    const data = await authRequest(`/signup?redirect_to=${encodeURIComponent(authRedirect())}`, { email, password, data: { display_name: name } });
+                    if (data.access_token) {
+                        saveSession(data);
+                        await afterSignIn();
+                    } else {
+                        renderAuth('signin', { notice: t('authCheckEmail', { email }), email });
+                    }
+                } else if (authView === 'forgot') {
+                    await authRequest(`/recover?redirect_to=${encodeURIComponent(authRedirect())}`, { email });
+                    renderAuth('signin', { notice: t('authLinkSent', { email }), email });
+                } else if (authView === 'reset') {
+                    const user = await authRequest('/user', { password }, { method: 'PUT', token: await accessToken() });
+                    saveSession({ ...session, user });
+                    renderAuth('account', { notice: t('authPasswordSaved') });
+                } else if (authView === 'account') {
+                    const user = await authRequest('/user', { data: { display_name: name } }, { method: 'PUT', token: await accessToken() });
+                    saveSession({ ...session, user });
+                    renderAuth('account', { notice: t('authNameSaved') });
+                }
+            } catch (err) {
+                if ($('authMsg')) $('authMsg').textContent = authErrorText(err);
+            } finally {
+                if (document.contains(button)) {
+                    button.disabled = false;
+                    button.textContent = label;
+                }
+            }
+        }
+
+        function signOutLocally() {
+            saveSession(null);
+            render();
+            if (state.openId) openVenue(state.openId, true);
+        }
+
+        function signOut() {
+            const token = session?.access_token;
+            signOutLocally();
+            closeModal('authModal');
+            if (token) authRequest('/logout', null, { token }).catch(() => {});
+        }
+
+        async function loadContributions() {
+            try {
+                const headers = await userHeaders();
+                const uid = session.user.id;
+                const get = (path) => sbRequest(path, { headers }).then((res) => res.json());
+                const [reviews, media, fixes] = await Promise.all([
+                    get(`/rest/v1/reviews?select=venue_id,rating,status,created_at&user_id=eq.${uid}&order=created_at.desc&limit=30`),
+                    get(`/rest/v1/submissions?select=venue_id,kind,status,created_at&user_id=eq.${uid}&order=created_at.desc&limit=30`),
+                    get(`/rest/v1/corrections?select=venue_id,status,created_at&user_id=eq.${uid}&order=created_at.desc&limit=30`)
+                ]);
+                const items = [
+                    ...reviews.map((r) => ({ ...r, label: t(r.rating ? 'contribReview' : 'contribComment') })),
+                    ...media.map((m) => ({ ...m, label: t(m.kind === 'photo' ? 'contribPhoto' : 'contribVideo') })),
+                    ...fixes.map((f) => ({ ...f, label: t('contribFix') }))
+                ].sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+                const box = $('myContrib');
+                if (!box) return;
+                box.innerHTML = items.length
+                    ? `<ul class="contrib-list">${items.map((item) => {
+                        const place = venues.find((v) => v.id === item.venue_id)?.name;
+                        return `<li><span><b>${escapeHTML(item.label)}</b>${place ? ` · ${escapeHTML(place)}` : ''}</span><span class="contrib-status ${escapeHTML(item.status)}">${t(STATUS_LABELS[item.status] || 'statusPending')}</span></li>`;
+                    }).join('')}</ul>`
+                    : `<p class="hint">${t('authContribEmpty')}</p>`;
+            } catch {
+                if ($('myContrib')) $('myContrib').innerHTML = `<p class="hint">${t('errSend')}</p>`;
+            }
+        }
+
+        // Photos are removed through the storage API first; the database then deletes the account and, in cascade, everything linked to it.
+        async function deleteAccount(button) {
+            if (!confirm(t('authDeleteConfirm'))) return;
+            const msg = $('deleteMsg');
+            button.disabled = true;
+            try {
+                const headers = await userHeaders({ 'Content-Type': 'application/json' });
+                const folder = `${session.user.id}/`;
+                const files = await sbRequest('/storage/v1/object/list/submissions', { method: 'POST', headers, body: JSON.stringify({ prefix: folder, limit: 1000 }) }).then((res) => res.json());
+                const paths = files.filter((f) => f.name).map((f) => folder + f.name);
+                if (paths.length) await sbRequest('/storage/v1/object/submissions', { method: 'DELETE', headers, body: JSON.stringify({ prefixes: paths }) });
+                await sbRequest('/rest/v1/rpc/delete_my_account', { method: 'POST', headers, body: '{}' });
+                favorites = [];
+                store.set('favorites', favorites);
+                saveSession(null);
+                render();
+                if (state.openId) openVenue(state.openId, true);
+                renderAuth('signin', { notice: t('authDeleted') });
+            } catch (err) {
+                button.disabled = false;
+                if (!needsSignIn(err, msg)) msg.textContent = t('errSend');
+            }
+        }
+
+        // Saved places stay on the device; with an account they are also kept in the database and merged on sign-in.
+        async function syncFavorites() {
+            if (!signedIn()) return;
+            try {
+                const headers = await userHeaders();
+                const remote = (await sbRequest('/rest/v1/favorites?select=venue_id', { headers }).then((res) => res.json())).map((r) => r.venue_id);
+                const missing = favorites.filter((id) => !remote.includes(id));
+                if (missing.length) {
+                    await sbRequest('/rest/v1/favorites', {
+                        method: 'POST',
+                        headers: { ...headers, 'Content-Type': 'application/json', Prefer: 'return=minimal,resolution=ignore-duplicates' },
+                        body: JSON.stringify(missing.map((venue_id) => ({ venue_id })))
+                    });
+                }
+                favorites = [...new Set([...remote, ...favorites])].filter((id) => venues.some((v) => v.id === id));
+                store.set('favorites', favorites);
+                render();
+            } catch {}
+        }
+
+        function pushFavorite(id, add) {
+            if (!signedIn()) return;
+            userHeaders(add ? { 'Content-Type': 'application/json', Prefer: 'return=minimal,resolution=ignore-duplicates' } : {})
+                .then((headers) => sbRequest(add ? '/rest/v1/favorites' : `/rest/v1/favorites?venue_id=eq.${id}`, add
+                    ? { method: 'POST', headers, body: JSON.stringify({ venue_id: id }) }
+                    : { method: 'DELETE', headers }))
+                .catch(() => {});
+        }
+
+        // The confirmation and password emails link back here with the session in the address (#access_token=...).
+        async function consumeAuthRedirect() {
+            if (!accountsEnabled()) return;
+            const params = new URLSearchParams(location.hash.slice(1));
+            const error = params.get('error_description') || params.get('error');
+            if (!params.get('access_token') && !error) return;
+            history.replaceState(null, '', location.pathname + location.search);
+            if (error) {
+                openAuth('signin', { reason: t('authErrLink') });
+                return;
+            }
+            saveSession({ access_token: params.get('access_token'), refresh_token: params.get('refresh_token'), expires_in: params.get('expires_in'), expires_at: params.get('expires_at') });
+            try {
+                saveSession({ ...session, user: await authRequest('/user', null, { method: 'GET', token: session.access_token }) });
+            } catch {}
+            await syncFavorites();
+            render();
+            if (params.get('type') === 'recovery') openAuth('reset');
+            else openAuth('account', { notice: t('authWelcome') });
         }
 
         /* ---------- About, verification and corrections ---------- */
@@ -3301,6 +3962,11 @@
         }
 
         function openFix(venueId) {
+            if (supabaseReady() && !signedIn()) {
+                openAuth('signin', { reason: t('authNeedFix'), after: () => openFix(venueId) });
+                return;
+            }
+            $('fixContactGroup').hidden = signedIn();
             $('fixPlace').innerHTML = [...venues]
                 .sort((a, b) => a.name.localeCompare(b.name, 'pt'))
                 .map((v) => `<option value="${v.id}">${escapeHTML(v.name)} (${escapeHTML(cityOf(v))})</option>`)
@@ -3328,14 +3994,15 @@
                 try {
                     await sbRequest('/rest/v1/corrections', {
                         method: 'POST',
-                        headers: sbHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
-                        body: JSON.stringify({ kind: 'fix', venue_id: venue?.id ?? null, place_name: null, message, contact: contact || null })
+                        headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
+                        body: JSON.stringify({ kind: 'fix', venue_id: venue?.id ?? null, place_name: null, message })
                     });
                     $('fixForm').reset();
                     if (venue) $('fixPlace').value = String(venue.id);
                     msg.textContent = t('fixThanks');
                     msg.classList.add('ok');
-                } catch {
+                } catch (err) {
+                    if (needsSignIn(err, msg)) return;
                     msg.textContent = t('errSend');
                 } finally {
                     button.disabled = false;
@@ -3471,6 +4138,11 @@
                 : `<button class="action-btn" type="button" data-event-ics="${e.id}" aria-label="${escapeHTML(t('eventCalendarAria', { name: eventTitle(e) }))}">${icon('calendar')}${t('eventCalendar')}</button>`;
             return `
                 <article class="event-card" id="evento-${e.id}" aria-labelledby="evt-${e.id}">
+                    ${e.photo ? `
+                        <figure class="event-photo">
+                            <img src="${escapeHTML(fullSrc(e.photo))}" alt="${escapeHTML(e.photo.caption[lang])}" loading="lazy" crossorigin="anonymous" onerror="this.closest('figure').remove()">
+                            <figcaption>${t('venuePhoto', { place: escapeHTML(e.photo.caption[lang]) })} · ${creditHTML(e.photo)}</figcaption>
+                        </figure>` : ''}
                     ${dateBlockHTML(e)}
                     <div class="event-body">
                         <span class="card-type">${icon(EVENT_TYPES[e.type].icon)}${eventTypeLabel(e.type)} · ${escapeHTML(e.city)}</span>
@@ -4011,6 +4683,7 @@
             renderWhereOptions();
             renderSortOptions();
             renderFooter();
+            renderAccountButton();
             prepareRecommendForm();
             applyTheme();
             render();
@@ -4056,6 +4729,24 @@
         });
 
         $('savedBtn').addEventListener('click', () => showResults({ saved: true }));
+        $('accountBtn').addEventListener('click', () => openAuth());
+        $('authContent').addEventListener('submit', submitAuth);
+        $('authContent').addEventListener('click', (e) => {
+            const toggle = e.target.closest('[data-toggle-password]');
+            if (toggle) {
+                const input = $('authPassword');
+                const show = input.type === 'password';
+                input.type = show ? 'text' : 'password';
+                toggle.textContent = show ? t('authHide') : t('authShow');
+                toggle.setAttribute('aria-pressed', String(show));
+                return;
+            }
+            const view = e.target.closest('[data-auth-view]');
+            if (view) {
+                renderAuth(view.dataset.authView, { email: $('authEmail')?.value.trim() || '' });
+                $('authContent').querySelector('input:not([type="checkbox"])')?.focus();
+            }
+        });
 
         document.addEventListener('click', (e) => {
             const target = e.target;
@@ -4103,6 +4794,15 @@
                 return;
             }
             if (action?.dataset.action === 'suggest-event') { openEventSuggest(); return; }
+            const authOpen = target.closest('[data-auth-open]');
+            if (authOpen) {
+                const reason = target.closest('.signin-prompt')?.querySelector('p')?.textContent || '';
+                openAuth(authOpen.dataset.authOpen, { reason });
+                return;
+            }
+            if (action?.dataset.action === 'signout') { signOut(); return; }
+            if (action?.dataset.action === 'delete-account') { deleteAccount(action); return; }
+            if (action?.dataset.action === 'show-saved') { closeModal('authModal'); showResults({ saved: true }); return; }
             if (action?.dataset.action === 'clear') { goHome(); $('qInput').focus(); return; }
             if (action?.dataset.action === 'recommend') {
                 document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
@@ -4239,12 +4939,15 @@
         applyLanguage();
         updateOnline();
         loadRatingStats();
+        consumeAuthRedirect().then(() => {
+            if (signedIn()) accessToken().then(syncFavorites);
+        });
         applyURL();
 
         if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
             navigator.serviceWorker.register('sw.js')
                 .then(() => navigator.serviceWorker.ready)
-                .then((reg) => reg.active?.postMessage({ type: 'warm-images', urls: venues.map(thumbSrc) }))
+                .then((reg) => reg.active?.postMessage({ type: 'warm-images', urls: venues.map(thumbSrc).filter(Boolean) }))
                 .catch(() => {});
         }
     </script>
