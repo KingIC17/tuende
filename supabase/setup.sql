@@ -1,21 +1,78 @@
--- ANGOLIVE: comentários, avaliações, fotos, vídeos, correções, recomendações e sugestões de eventos dos visitantes.
+-- ANGOLIVE: contas, lugares guardados, avaliações, comentários, fotos, vídeos, correções,
+-- recomendações e sugestões de eventos.
 -- Correr uma vez no Supabase: SQL Editor > New query > colar tudo > Run.
 --
 -- Como funciona:
---   * Qualquer pessoa pode enviar um comentário com estrelas, uma foto ou um link de vídeo;
---     tudo fica com o estado 'pending'.
---   * Só aparecem na app as linhas com estado 'approved'. As estrelas de cada local são a média
---     dos comentários aprovados (vista review_stats).
---   * Para aprovar: Table Editor > reviews (ou submissions) > mudar status para 'approved' (ou 'rejected').
---   * Cada "Denunciar" soma 1 a report_count; com 3 denúncias fica 'hidden' automaticamente.
---   * Correções ficam em corrections e recomendações de lugares novos em recommendations
---     (só visíveis no painel do Supabase). As fotos das recomendações ficam na pasta privada
---     recommendations: Storage > recommendations > pasta indicada na coluna photos.
---   * Sugestões de eventos ficam em event_suggestions. Depois de confirmar o evento numa fonte,
---     junta-se à lista EVENTS em angolive-complete.html e muda-se status para 'added'.
+--   * Contas: Supabase Auth com email e palavra-passe (Authentication > Sign In / Providers > Email).
+--     O nome público de cada pessoa fica em user_metadata.display_name.
+--   * Só quem tem conta pode avaliar, comentar, enviar fotos ou vídeos, corrigir ou acrescentar
+--     informação e denunciar. O autor de cada envio é preenchido pela base de dados a partir da conta.
+--   * Tudo o que se envia fica 'pending' até ser aprovado:
+--     Table Editor > reviews (ou submissions) > status = 'approved' (ou 'rejected').
+--   * As estrelas de cada local são a média das avaliações aprovadas (vista review_stats).
+--     Cada conta só dá estrelas uma vez por local; comentários sem estrelas não têm limite.
+--   * Cada "Denunciar" soma 1 a report_count (uma vez por conta); com 3 denúncias fica 'hidden'.
+--   * Os lugares guardados ficam em favorites e são sincronizados entre dispositivos.
+--   * "Apagar conta" na app apaga as fotos da pessoa e chama delete_my_account(), que apaga a conta
+--     e, em cascata, os lugares guardados, avaliações, envios, denúncias e correções.
+--   * Correções ficam em corrections; recomendações de lugares novos em recommendations (com fotos na
+--     pasta privada recommendations); sugestões de eventos em event_suggestions. As recomendações e as
+--     sugestões de eventos continuam abertas a todos, com ou sem conta.
 
+-- Nome público da conta (ou a parte do email antes do @).
+create function public.current_display_name() returns text
+    language sql
+    stable
+    security definer
+    set search_path = public
+as $$
+    select left(coalesce(nullif(trim(raw_user_meta_data ->> 'display_name'), ''), split_part(email, '@', 1)), 60)
+      from auth.users
+     where id = auth.uid();
+$$;
+
+-- Liga cada envio à conta que o fez e põe o nome público como autor (não pode ser falsificado).
+create function public.set_contributor() returns trigger
+    language plpgsql
+    security definer
+    set search_path = public
+as $$
+begin
+    new.user_id := auth.uid();
+    new.author := coalesce(public.current_display_name(), 'Visitante');
+    return new;
+end;
+$$;
+
+-- Lugares guardados de cada conta.
+create table public.favorites (
+    user_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+    venue_id integer not null,
+    created_at timestamptz not null default now(),
+    primary key (user_id, venue_id)
+);
+
+alter table public.favorites enable row level security;
+
+create policy "Cada conta vê os seus lugares guardados"
+    on public.favorites for select
+    to authenticated
+    using (user_id = auth.uid());
+
+create policy "Cada conta guarda lugares"
+    on public.favorites for insert
+    to authenticated
+    with check (user_id = auth.uid());
+
+create policy "Cada conta remove lugares guardados"
+    on public.favorites for delete
+    to authenticated
+    using (user_id = auth.uid());
+
+-- Fotos e vídeos dos visitantes.
 create table public.submissions (
     id uuid primary key default gen_random_uuid(),
+    user_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
     venue_id integer not null,
     kind text not null check (kind in ('photo', 'video')),
     url text not null check (url like 'https://%' and char_length(url) <= 500),
@@ -27,70 +84,89 @@ create table public.submissions (
 );
 
 create index submissions_venue_status_idx on public.submissions (venue_id, status, created_at desc);
+create index submissions_user_idx on public.submissions (user_id);
+
+create trigger submissions_contributor
+    before insert on public.submissions
+    for each row execute function public.set_contributor();
 
 alter table public.submissions enable row level security;
 
-create policy "Visitantes veem apenas envios aprovados"
+create policy "Todos veem os envios aprovados; cada conta vê os seus"
     on public.submissions for select
     to anon, authenticated
-    using (status = 'approved');
+    using (status = 'approved' or user_id = auth.uid());
 
-create policy "Visitantes podem enviar, sempre como pendente"
+create policy "Contas enviam fotos e vídeos, sempre como pendentes"
     on public.submissions for insert
-    to anon, authenticated
-    with check (status = 'pending' and report_count = 0);
+    to authenticated
+    with check (user_id = auth.uid() and status = 'pending' and report_count = 0);
 
+-- Avaliações (estrelas) e comentários. Pode haver só estrelas, só comentário ou os dois.
 create table public.reviews (
     id uuid primary key default gen_random_uuid(),
+    user_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
     venue_id integer not null,
     author text not null check (char_length(author) between 1 and 60),
-    rating integer not null check (rating between 1 and 5),
-    comment text not null check (char_length(comment) between 1 and 600),
+    rating integer check (rating between 1 and 5),
+    comment text check (char_length(comment) between 1 and 600),
     status text not null default 'pending' check (status in ('pending', 'approved', 'rejected', 'hidden')),
     report_count integer not null default 0,
-    created_at timestamptz not null default now()
+    created_at timestamptz not null default now(),
+    check (rating is not null or comment is not null)
 );
 
 create index reviews_venue_status_idx on public.reviews (venue_id, status, created_at desc);
+create index reviews_user_idx on public.reviews (user_id);
+-- Estrelas: uma vez por conta e por local.
+create unique index reviews_one_rating_per_account on public.reviews (venue_id, user_id) where rating is not null;
+
+create trigger reviews_contributor
+    before insert on public.reviews
+    for each row execute function public.set_contributor();
 
 alter table public.reviews enable row level security;
 
-create policy "Visitantes veem apenas comentários aprovados"
+create policy "Todos veem as avaliações aprovadas; cada conta vê as suas"
     on public.reviews for select
     to anon, authenticated
-    using (status = 'approved');
+    using (status = 'approved' or user_id = auth.uid());
 
-create policy "Visitantes podem comentar, sempre como pendente"
+create policy "Contas avaliam e comentam, sempre como pendente"
     on public.reviews for insert
-    to anon, authenticated
-    with check (status = 'pending' and report_count = 0);
+    to authenticated
+    with check (user_id = auth.uid() and status = 'pending' and report_count = 0);
 
--- Média e número de comentários aprovados por local (respeita as regras acima).
+-- Média e número de avaliações com estrelas aprovadas por local.
 create view public.review_stats with (security_invoker = true) as
     select venue_id,
            round(avg(rating)::numeric, 1) as avg_rating,
-           count(*)::integer as review_count
+           count(rating)::integer as review_count
       from public.reviews
-     where status = 'approved'
+     where status = 'approved' and rating is not null
      group by venue_id;
 
 grant select on public.review_stats to anon, authenticated;
 
+-- Denúncias: uma por conta e por conteúdo.
 create table public.reports (
     id bigint generated always as identity primary key,
+    reporter_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
     submission_id uuid references public.submissions (id) on delete cascade,
     review_id uuid references public.reviews (id) on delete cascade,
     reason text check (char_length(reason) <= 200),
     created_at timestamptz not null default now(),
-    check ((submission_id is null) <> (review_id is null))
+    check ((submission_id is null) <> (review_id is null)),
+    unique (reporter_id, submission_id),
+    unique (reporter_id, review_id)
 );
 
 alter table public.reports enable row level security;
 
-create policy "Visitantes podem denunciar"
+create policy "Contas podem denunciar"
     on public.reports for insert
-    to anon, authenticated
-    with check (true);
+    to authenticated
+    with check (reporter_id = auth.uid());
 
 create function public.handle_report() returns trigger
     language plpgsql
@@ -118,17 +194,30 @@ create trigger on_report
     for each row execute function public.handle_report();
 
 -- Fotos: pasta pública, só JPEG até 5 MB (a app comprime antes de enviar).
+-- Cada conta só escreve, lista e apaga dentro da sua pasta (o nome da pasta é o id da conta).
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('submissions', 'submissions', true, 5242880, array['image/jpeg']);
 
-create policy "Visitantes podem enviar fotos"
+create policy "Contas enviam fotos para a sua pasta"
     on storage.objects for insert
-    to anon, authenticated
-    with check (bucket_id = 'submissions');
+    to authenticated
+    with check (bucket_id = 'submissions' and (storage.foldername(name))[1] = auth.uid()::text);
 
--- Sugestões "Corrigir um lugar". Os visitantes só podem enviar; ler apenas no painel do Supabase.
+create policy "Contas veem a sua pasta"
+    on storage.objects for select
+    to authenticated
+    using (bucket_id = 'submissions' and (storage.foldername(name))[1] = auth.uid()::text);
+
+create policy "Contas apagam as suas fotos"
+    on storage.objects for delete
+    to authenticated
+    using (bucket_id = 'submissions' and (storage.foldername(name))[1] = auth.uid()::text);
+
+-- "Corrigir ou acrescentar informação" a um lugar. Só com conta; ler no painel do Supabase.
 create table public.corrections (
     id bigint generated always as identity primary key,
+    user_id uuid not null default auth.uid() references auth.users (id) on delete cascade,
+    author text not null check (char_length(author) between 1 and 60),
     kind text not null check (kind in ('fix', 'add')),
     venue_id integer,
     place_name text check (char_length(place_name) <= 120),
@@ -138,12 +227,38 @@ create table public.corrections (
     created_at timestamptz not null default now()
 );
 
+create trigger corrections_contributor
+    before insert on public.corrections
+    for each row execute function public.set_contributor();
+
 alter table public.corrections enable row level security;
 
-create policy "Visitantes podem sugerir correções"
+create policy "Cada conta vê as suas correções"
+    on public.corrections for select
+    to authenticated
+    using (user_id = auth.uid());
+
+create policy "Contas sugerem correções"
     on public.corrections for insert
-    to anon, authenticated
-    with check (status = 'new');
+    to authenticated
+    with check (user_id = auth.uid() and status = 'new');
+
+-- "Apagar conta": apaga a conta de quem chama e, em cascata, tudo o que está ligado a ela.
+create function public.delete_my_account() returns void
+    language plpgsql
+    security definer
+    set search_path = public
+as $$
+begin
+    if auth.uid() is null then
+        raise exception 'not signed in';
+    end if;
+    delete from auth.users where id = auth.uid();
+end;
+$$;
+
+revoke execute on function public.delete_my_account() from public, anon;
+grant execute on function public.delete_my_account() to authenticated;
 
 -- "Recomendar um lugar". Os visitantes só podem enviar; ler e aprovar no painel do Supabase.
 create table public.recommendations (
