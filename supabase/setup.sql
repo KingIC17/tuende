@@ -7,8 +7,8 @@
 --     O nome público de cada pessoa fica em user_metadata.display_name.
 --   * Só quem tem conta pode avaliar, comentar, enviar fotos ou vídeos, corrigir ou acrescentar
 --     informação e denunciar. O autor de cada envio é preenchido pela base de dados a partir da conta.
---   * Tudo o que se envia fica 'pending' até ser aprovado:
---     Table Editor > reviews (ou submissions) > status = 'approved' (ou 'rejected').
+--   * Avaliações, comentários, fotos e vídeos ficam públicos logo que são enviados (status 'approved').
+--     Para tirar algo do ar: Table Editor > reviews (ou submissions) > status = 'rejected'.
 --   * As estrelas de cada local são a média das avaliações aprovadas (vista review_stats).
 --     Cada conta só dá estrelas uma vez por local; comentários sem estrelas não têm limite.
 --   * Cada "Denunciar" soma 1 a report_count (uma vez por conta); com 3 denúncias fica 'hidden'.
@@ -78,7 +78,7 @@ create table public.submissions (
     url text not null check (url like 'https://%' and char_length(url) <= 500),
     author text not null check (char_length(author) between 1 and 60),
     caption text check (char_length(caption) <= 200),
-    status text not null default 'pending' check (status in ('pending', 'approved', 'rejected', 'hidden')),
+    status text not null default 'approved' check (status in ('pending', 'approved', 'rejected', 'hidden')),
     report_count integer not null default 0,
     created_at timestamptz not null default now()
 );
@@ -97,10 +97,10 @@ create policy "Todos veem os envios aprovados; cada conta vê os seus"
     to anon, authenticated
     using (status = 'approved' or user_id = auth.uid());
 
-create policy "Contas enviam fotos e vídeos, sempre como pendentes"
+create policy "Contas enviam fotos e vídeos, publicados logo"
     on public.submissions for insert
     to authenticated
-    with check (user_id = auth.uid() and status = 'pending' and report_count = 0);
+    with check (user_id = auth.uid() and status = 'approved' and report_count = 0);
 
 -- Avaliações (estrelas) e comentários. Pode haver só estrelas, só comentário ou os dois.
 create table public.reviews (
@@ -110,7 +110,7 @@ create table public.reviews (
     author text not null check (char_length(author) between 1 and 60),
     rating integer check (rating between 1 and 5),
     comment text check (char_length(comment) between 1 and 600),
-    status text not null default 'pending' check (status in ('pending', 'approved', 'rejected', 'hidden')),
+    status text not null default 'approved' check (status in ('pending', 'approved', 'rejected', 'hidden')),
     report_count integer not null default 0,
     created_at timestamptz not null default now(),
     check (rating is not null or comment is not null)
@@ -132,10 +132,10 @@ create policy "Todos veem as avaliações aprovadas; cada conta vê as suas"
     to anon, authenticated
     using (status = 'approved' or user_id = auth.uid());
 
-create policy "Contas avaliam e comentam, sempre como pendente"
+create policy "Contas avaliam e comentam, publicado logo"
     on public.reviews for insert
     to authenticated
-    with check (user_id = auth.uid() and status = 'pending' and report_count = 0);
+    with check (user_id = auth.uid() and status = 'approved' and report_count = 0);
 
 -- Média e número de avaliações com estrelas aprovadas por local.
 create view public.review_stats with (security_invoker = true) as
