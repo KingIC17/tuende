@@ -27,6 +27,7 @@ angolive-complete.html   Antigo nome da app: redireciona para ./ (mantém #local
 manifest.json            Manifesto PWA (start_url ./)
 og-image.jpg             Imagem de pré-visualização (1200x630) para links partilhados no LinkedIn, WhatsApp, Facebook
 sw.js                    Service worker: network-first para a página, cache-first para as fotos (photos/)
+fonts/                   Letra Plus Jakarta Sans (licença SIL OFL, em fonts/OFL.txt), guardada no próprio site para carregar também na China; copiada para ios/ANGOLIVE/fonts/
 photos/                  Fotos dos locais e eventos guardadas no próprio site (cópias do Wikimedia Commons e do Unsplash, com créditos na app), em 330/960 px (Commons) e 600/800 px (Unsplash). Assim carregam em qualquer país (o Wikimedia está bloqueado na China) e sem internet
 icon-192.png, icon-512.png, apple-touch-icon.png
 privacy.html             Política de privacidade PT/EN (por publicar: falta o email)
@@ -40,6 +41,8 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 ```
 
 ## Como funciona a app web
+
+- Design "E" (outubro de 2026): letra Plus Jakarta Sans; cabeçalho numa linha (logótipo, secções, EN, Claro/Escuro, Entrar, Guardados); faixa com o padrão samakaka (losangos vermelhos e amarelos da bandeira) no topo e no fim da página, atrás da foto da Ilha e à volta das datas dos eventos; seis mosaicos coloridos de categorias (Praias, Natureza, Cultura, Restaurantes, Vida noturna, Agenda); no telemóvel, barra de separadores em baixo (Explorar, Agenda, Guardados, Conta). As cores estão nas variáveis `:root` (claro) e nos blocos de modo escuro: `--primary` é para texto e contornos, `--primary-fill` para fundos com texto branco.
 
 - Os dados dos locais e menus estão no próprio ficheiro: `const venues` (60 locais) e `const menuData`.
 - Página inicial (por esta ordem): título e pesquisa "O que procura? / Onde?", filtros rápidos, Recomendados (com o motivo), Explorar por categoria, Coleções e Viagens de um dia a partir de Luanda (calculado pela distância). Pesquisa, filtros, categorias e coleções abrem a vista de resultados.

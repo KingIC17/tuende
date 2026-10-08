@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Tuende - Descubra onde ir em Angola</title>
     <meta name="description" content="Encontre restaurantes, praias, hotéis, vida noturna e experiências em Angola, perto de si. Com preços em Kwanza e indicações para chegar.">
     <meta property="og:type" content="website">
@@ -24,18 +24,36 @@
     <link rel="icon" type="image/png" href="icon-192.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <style>
+        @font-face {
+            font-family: 'Plus Jakarta Sans';
+            font-style: normal;
+            font-weight: 400 800;
+            font-display: swap;
+            src: url('fonts/plus-jakarta-sans-latin.woff2') format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
+        /* --primary colours text and outlines; --primary-fill sits behind white text, so it stays dark enough in both themes. */
         :root {
             --primary: #CE1126;
             --primary-strong: #A50E1F;
+            --primary-fill: #CE1126;
+            --primary-fill-strong: #A50E1F;
             --primary-soft: rgba(206, 17, 38, 0.08);
-            --accent: #FFD100;
-            --accent-ink: #1a1a1a;
-            --bg: #F6F6F7;
+            --accent: #FFCB00;
+            --accent-ink: #111111;
+            --bg: #FFFFFF;
             --surface: #FFFFFF;
-            --surface-2: #F1F1F3;
+            --surface-2: #F3F3F5;
             --text: #161618;
             --muted: #55555D;
             --border: #DADADF;
+            --line: #E4E4E8;
+            --tile-night: #111111;
+            --free-bg: #E9F6EE;
+            --free-ink: #1E6B3A;
+            --tbc-bg: #F3F3F5;
+            --tbc-ink: #55555D;
             --ok: #127A3E;
             --overlay: rgba(0, 0, 0, 0.6);
             --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.06);
@@ -44,15 +62,21 @@
 
         @media (prefers-color-scheme: dark) {
             :root:not([data-theme="light"]) {
-                --primary: #EF4458;
-                --primary-strong: #F2606F;
-                --primary-soft: rgba(239, 68, 88, 0.14);
+                --primary: #FF6B7A;
+                --primary-strong: #FF8A96;
+                --primary-soft: rgba(255, 107, 122, 0.14);
                 --bg: #0E0E10;
-                --surface: #18181B;
+                --surface: #1A1A1F;
                 --surface-2: #222226;
                 --text: #F2F2F4;
                 --muted: #B4B4BC;
                 --border: #34343A;
+                --line: #2E2E35;
+                --tile-night: #2B2B33;
+                --free-bg: #12301E;
+                --free-ink: #7EDB9C;
+                --tbc-bg: #1F1F25;
+                --tbc-ink: #C9C9D1;
                 --ok: #4ADE80;
                 --overlay: rgba(0, 0, 0, 0.75);
                 --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -61,15 +85,21 @@
         }
 
         :root[data-theme="dark"] {
-            --primary: #EF4458;
-            --primary-strong: #F2606F;
-            --primary-soft: rgba(239, 68, 88, 0.14);
+            --primary: #FF6B7A;
+            --primary-strong: #FF8A96;
+            --primary-soft: rgba(255, 107, 122, 0.14);
             --bg: #0E0E10;
-            --surface: #18181B;
+            --surface: #1A1A1F;
             --surface-2: #222226;
             --text: #F2F2F4;
             --muted: #B4B4BC;
             --border: #34343A;
+            --line: #2E2E35;
+            --tile-night: #2B2B33;
+            --free-bg: #12301E;
+            --free-ink: #7EDB9C;
+            --tbc-bg: #1F1F25;
+            --tbc-ink: #C9C9D1;
             --ok: #4ADE80;
             --overlay: rgba(0, 0, 0, 0.75);
             --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -79,7 +109,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             font-size: 16px;
             line-height: 1.45;
             background: var(--bg);
@@ -96,7 +126,7 @@
 
         :focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
 
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
 
         .icon {
             width: 20px;
@@ -112,8 +142,23 @@
         [data-icon] { display: inline-flex; }
 
         /* Header */
-        .topbar { background: var(--surface); padding: 12px 0 4px; }
-        .topbar-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
+        /* Samakaka: the diamond pattern of Angolan printed cloth, in the flag's red and yellow. */
+        .samakaka {
+            background:
+                linear-gradient(135deg, var(--accent) 25%, transparent 25%) -10px 0 / 20px 20px,
+                linear-gradient(225deg, var(--accent) 25%, transparent 25%) -10px 0 / 20px 20px,
+                linear-gradient(315deg, var(--accent) 25%, transparent 25%) 0 0 / 20px 20px,
+                linear-gradient(45deg, var(--accent) 25%, transparent 25%) 0 0 / 20px 20px,
+                var(--primary-fill);
+        }
+        .samakaka-strip { height: 12px; }
+
+        .topbar { background: var(--bg); border-bottom: 1px solid var(--line); }
+        .topbar-inner { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 24px; padding: 10px 16px; }
+        .top-nav { display: flex; flex-wrap: wrap; gap: 0 20px; }
+        .top-nav button { min-height: 44px; padding: 0 2px; background: none; border: none; font-size: 15px; font-weight: 600; color: var(--text); }
+        .top-nav button:hover { color: var(--primary); }
+        .topbar-actions { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px; }
 
         .top-btn {
             display: inline-flex;
@@ -122,50 +167,48 @@
             min-height: 44px;
             padding: 0 14px;
             border-radius: 999px;
-            border: 1.5px solid var(--primary);
-            background: transparent;
-            color: var(--primary);
+            border: 1.5px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
             font-size: 14px;
             font-weight: 700;
             text-decoration: none;
         }
 
-        .top-btn:hover { background: var(--primary-soft); }
-        .top-btn.solid { background: var(--primary); color: #fff; }
-        .top-btn.solid:hover { background: var(--primary-strong); }
+        .top-btn:hover { border-color: var(--primary); }
+        .top-btn.solid { background: var(--primary-fill); border-color: var(--primary-fill); color: #fff; }
+        .top-btn.solid:hover { background: var(--primary-fill-strong); }
 
-        .brand { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px auto 0; text-decoration: none; width: fit-content; }
-        .brand-logo { width: 96px; height: 45px; display: block; }
+        .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+        .brand-logo { width: 54px; height: 26px; display: block; }
         .brand-logo .wave-red { stroke: var(--primary); }
         .brand-logo .wave-yellow { stroke: var(--accent); }
         .brand-logo .dot { fill: var(--text); }
 
-        .brand-name {
-            font-size: 30px;
-            font-weight: 800;
-            letter-spacing: 0.02em;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--text) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .brand-name { font-size: 24px; font-weight: 800; letter-spacing: -0.01em; color: var(--primary); }
 
         /* Hero and search */
-        .hero { background: var(--surface); border-bottom: 1px solid var(--border); padding: 18px 0 16px; }
-        .hero h1 { font-size: 34px; line-height: 1.15; font-weight: 800; text-align: center; }
-        .hero-sub { text-align: center; color: var(--muted); font-size: 17px; margin: 8px auto 0; max-width: 560px; }
+        .hero { background: var(--bg); padding: 32px 0 4px; }
+        .hero-grid { display: flex; flex-wrap: wrap; align-items: center; gap: 28px 44px; }
+        .hero-main { flex: 3 1 460px; min-width: 0; }
+        .hero h1 { font-size: 46px; line-height: 1.06; font-weight: 800; letter-spacing: -0.03em; }
+        .hero-sub { color: var(--muted); font-size: 18px; margin: 12px 0 0; max-width: 540px; }
+        .hero-photo { flex: 2 1 340px; max-width: 480px; margin: 0; position: relative; }
+        .hero-photo .samakaka { position: absolute; right: -12px; bottom: 14px; width: 60%; height: 60%; border-radius: 24px; }
+        .hero-photo img { position: relative; display: block; width: 100%; height: 360px; object-fit: cover; border-radius: 24px; background: var(--surface-2); }
+        .hero-photo figcaption { position: relative; margin-top: 18px; font-size: 12px; color: var(--muted); }
+        .hero-photo figcaption a { color: inherit; }
 
         .search-card {
             display: grid;
             grid-template-columns: 1.4fr 1fr auto;
             gap: 10px;
             align-items: end;
-            margin: 18px auto 0;
-            max-width: 880px;
+            margin: 22px 0 0;
             padding: 14px;
             background: var(--surface-2);
-            border: 1.5px solid var(--border);
-            border-radius: 16px;
+            border: 1px solid var(--line);
+            border-radius: 18px;
         }
 
         .search-field { display: grid; gap: 6px; }
@@ -192,16 +235,16 @@
             padding: 0 22px;
             border: none;
             border-radius: 12px;
-            background: var(--primary);
+            background: var(--primary-fill);
             color: #fff;
             font-size: 16px;
             font-weight: 700;
         }
 
-        .submit-btn:hover { background: var(--primary-strong); }
+        .submit-btn:hover { background: var(--primary-fill-strong); }
         .submit-btn.secondary { background: var(--surface-2); color: var(--text); border: 1.5px solid var(--border); }
 
-        .chips { display: flex; gap: 8px; margin: 14px auto 0; max-width: 880px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+        .chips { display: flex; gap: 8px; margin: 14px 0 0; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
         .chips::-webkit-scrollbar { display: none; }
 
         .chip {
@@ -212,18 +255,19 @@
             min-height: 44px;
             padding: 0 16px;
             border-radius: 999px;
-            border: 1.5px solid var(--primary);
-            background: transparent;
-            color: var(--primary);
+            border: 1.5px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
             font-size: 15px;
             font-weight: 700;
         }
 
-        .chip .icon { width: 18px; height: 18px; }
-        .chip:hover { background: var(--primary-soft); }
-        .chip.active { background: var(--primary); color: #fff; }
+        .chip .icon { width: 18px; height: 18px; color: var(--primary); }
+        .chip.active .icon { color: #fff; }
+        .chip:hover { border-color: var(--primary); }
+        .chip.active { background: var(--primary-fill); border-color: var(--primary-fill); color: #fff; }
 
-        .notice { font-size: 15px; color: var(--primary); font-weight: 600; margin: 10px auto 0; max-width: 880px; }
+        .notice { font-size: 15px; color: var(--primary); font-weight: 600; margin: 10px 0 0; }
         .notice:empty { display: none; }
 
         /* Banners */
@@ -243,9 +287,34 @@
         .banner p { flex: 1 1 240px; }
         .banner-actions { display: flex; gap: 8px; }
 
+        /* Main category tiles */
+        .feature-tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
+        .ftile {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            min-height: 104px;
+            padding: 14px 16px;
+            border: 2px solid transparent;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 17px;
+            font-weight: 800;
+            text-align: left;
+        }
+        .ftile .icon { width: 26px; height: 26px; }
+        .ftile:hover { filter: brightness(1.1); }
+        .ftile.beach { background: #1D4E89; }
+        .ftile.nature { background: #1E6B3A; }
+        .ftile.culture { background: var(--accent); color: var(--accent-ink); }
+        .ftile.food { background: var(--primary-fill); }
+        .ftile.night { background: var(--tile-night); }
+        .ftile.agenda { background: var(--bg); color: var(--text); border-color: var(--text); }
+
         /* Home sections */
         main { padding-bottom: 56px; }
-        .home-section { margin-top: 30px; }
+        .home-section { margin-top: 36px; }
         .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
         .section-head h2 { font-size: 22px; line-height: 1.25; font-weight: 800; }
         .section-sub { color: var(--muted); font-size: 15px; margin-top: 4px; }
@@ -326,7 +395,7 @@
             overflow: hidden;
             text-align: left;
             color: #fff;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
+            background: linear-gradient(135deg, var(--primary-fill) 0%, var(--primary-fill-strong) 100%);
         }
 
         .collection img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -336,26 +405,19 @@
         .collection-desc { font-size: 14px; opacity: 0.95; margin-top: 4px; }
 
         /* Place cards */
-        .card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            background: var(--surface);
-            border: 1.5px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
+        .card { position: relative; display: flex; flex-direction: column; }
 
         .card-media {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 150px;
+            height: 170px;
             padding: 0;
             border: none;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
+            border-radius: 16px;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-fill) 0%, var(--primary-fill-strong) 100%);
             color: #fff;
             font-size: 30px;
             font-weight: 800;
@@ -381,12 +443,15 @@
 
         .saved-tag .icon { width: 14px; height: 14px; fill: currentColor; }
 
-        .card-body { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px 14px; flex: 1; }
-        .card-type { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--primary); }
-        .card-type .icon { width: 16px; height: 16px; }
-        .card-name { font-size: 19px; font-weight: 800; line-height: 1.2; }
+        .card-body { display: flex; flex-direction: column; gap: 6px; padding: 10px 2px 4px; flex: 1; }
+        .card-type { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.04em; }
+        .card-type .icon { width: 14px; height: 14px; }
+        .card-name { font-size: 18px; font-weight: 800; line-height: 1.2; }
+        .price-pill { display: inline-block; padding: 3px 10px; border-radius: 10px; background: var(--surface-2); color: var(--text); font-size: 13px; font-weight: 700; }
+        .price-pill.free { background: var(--free-bg); color: var(--free-ink); }
+        .price-pill.tbc { background: var(--tbc-bg); color: var(--tbc-ink); }
         .card-name button { background: none; border: none; padding: 0; text-align: left; font-weight: inherit; }
-        .card-facts { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 14px; color: var(--muted); }
+        .card-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 14px; color: var(--muted); }
         .card-facts strong { color: var(--text); }
         .card-highlight { font-size: 15px; }
         .card-reason { font-size: 15px; }
@@ -427,8 +492,8 @@
         }
 
         .action-btn:hover { background: var(--primary-soft); }
-        .action-btn.solid { background: var(--primary); color: #fff; }
-        .action-btn.solid:hover { background: var(--primary-strong); }
+        .action-btn.solid { background: var(--primary-fill); color: #fff; }
+        .action-btn.solid:hover { background: var(--primary-fill-strong); }
         .action-btn.wide { grid-column: 1 / -1; min-height: 56px; font-size: 17px; }
         .action-btn.saved .icon { fill: currentColor; }
 
@@ -482,7 +547,7 @@
             align-items: center;
             justify-content: center;
             height: 240px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
+            background: linear-gradient(135deg, var(--primary-fill) 0%, var(--primary-fill-strong) 100%);
             color: #fff;
             font-size: 52px;
             font-weight: 800;
@@ -605,7 +670,7 @@
         .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; color: var(--muted); margin: 4px 0 6px; }
         .consent input { width: 22px; height: 22px; margin-top: 2px; flex: none; accent-color: var(--primary); }
 
-        .count-pill { display: inline-block; min-width: 24px; padding: 0 7px; border-radius: 999px; background: #fff; color: var(--primary); font-size: 13px; line-height: 22px; text-align: center; }
+        .count-pill { display: inline-block; min-width: 24px; padding: 0 7px; border-radius: 999px; background: #fff; color: var(--primary-fill); font-size: 13px; line-height: 22px; text-align: center; }
 
         .row-wrap { position: relative; }
         .row-nav { display: none; }
@@ -618,7 +683,7 @@
 
         .fix-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; background: none; border: none; padding: 0; min-height: 44px; color: var(--primary); font-size: 15px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 
-        .site-footer { margin-top: 48px; padding: 24px 0 36px; background: var(--surface); border-top: 1px solid var(--border); }
+        .site-footer { margin-top: 48px; padding: 24px 0 36px; background: var(--bg); border-top: 1px solid var(--line); }
         .footer-links { display: flex; flex-wrap: wrap; gap: 4px 18px; }
         .footer-link { background: none; border: none; padding: 0; min-height: 44px; display: inline-flex; align-items: center; color: var(--text); font-size: 15px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
         .footer-note { margin-top: 10px; font-size: 13px; color: var(--muted); }
@@ -722,7 +787,25 @@
         .event-photo img { display: block; width: 100%; aspect-ratio: 16 / 7; object-fit: cover; border-radius: 15px 15px 0 0; background: var(--surface-2); }
         .event-photo figcaption { padding: 6px 14px 0; font-size: 12px; color: var(--muted); }
         .event-card.highlight { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
-        .date-block { display: flex; flex-direction: column; align-items: center; height: fit-content; padding: 8px 4px; border-radius: 12px; background: var(--primary); color: #fff; text-align: center; line-height: 1.1; }
+        .date-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: fit-content;
+            padding: 6px 2px;
+            border: 5px solid transparent;
+            border-radius: 14px;
+            background:
+                linear-gradient(var(--primary-fill), var(--primary-fill)) padding-box,
+                linear-gradient(135deg, var(--accent) 25%, transparent 25%) -6px 0 / 12px 12px border-box,
+                linear-gradient(225deg, var(--accent) 25%, transparent 25%) -6px 0 / 12px 12px border-box,
+                linear-gradient(315deg, var(--accent) 25%, transparent 25%) 0 0 / 12px 12px border-box,
+                linear-gradient(45deg, var(--accent) 25%, transparent 25%) 0 0 / 12px 12px border-box,
+                linear-gradient(var(--primary-fill), var(--primary-fill)) border-box;
+            color: #fff;
+            text-align: center;
+            line-height: 1.1;
+        }
         .db-month { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; }
         .db-day { font-size: 30px; font-weight: 800; }
         .db-to { font-size: 12px; font-weight: 700; margin-top: 2px; }
@@ -783,11 +866,46 @@
             .row-nav:disabled { opacity: 0; pointer-events: none; }
         }
 
+        /* Phone tab bar: the app's main sections, always one tap away. */
+        .tabbar { display: none; }
+
+        @media (max-width: 900px) {
+            .hero-photo { display: none; }
+            .feature-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+
+        @media (min-width: 721px) {
+            .samakaka-strip { height: 16px; }
+        }
+
         @media (max-width: 720px) {
-            .search-card { grid-template-columns: 1fr; }
-            .hero h1 { font-size: 29px; }
-            .brand-name { font-size: 26px; }
-            .brand-logo { width: 80px; height: 38px; }
+            .top-nav, .desktop-only, #themeLabel { display: none !important; }
+            .topbar-inner { padding: 8px 16px; }
+            .hero { padding: 14px 0 0; }
+            .hero-sub { display: none; }
+            .search-card { grid-template-columns: 1fr; margin-top: 14px; }
+            .hero h1 { font-size: 28px; line-height: 1.12; }
+            .brand-name { font-size: 22px; }
+            .brand-logo { width: 46px; height: 22px; }
+            .feature-tiles { gap: 8px; margin-top: 18px; }
+            .ftile { min-height: 78px; padding: 10px; border-radius: 16px; font-size: 13px; letter-spacing: -0.01em; }
+            .ftile .icon { width: 22px; height: 22px; }
+            .home-section { margin-top: 28px; }
+            .tabbar {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 60;
+                display: flex;
+                padding: 6px 4px calc(8px + env(safe-area-inset-bottom));
+                background: var(--surface);
+                border-top: 1px solid var(--line);
+            }
+            .tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 52px; padding: 4px 0; background: none; border: none; color: var(--muted); font-size: 12px; font-weight: 700; }
+            .tab .icon { width: 24px; height: 24px; }
+            .tab.active { color: var(--primary); }
+            body { padding-bottom: calc(70px + env(safe-area-inset-bottom)); }
             .modal { padding: 0; align-items: flex-end; }
             .modal-panel { max-height: 94vh; border-radius: 18px 18px 0 0; }
             .modal-hero { height: 200px; }
@@ -797,27 +915,34 @@
     </style>
 </head>
 <body>
+    <div class="samakaka samakaka-strip" aria-hidden="true"></div>
     <header class="topbar">
-        <div class="container">
-            <div class="topbar-actions">
-                <button class="top-btn" id="langBtn" type="button"><span data-icon="globe"></span><span id="langLabel">EN</span></button>
-                <button class="top-btn" id="themeBtn" type="button"><span id="themeIcon"></span><span id="themeLabel"></span></button>
-                <button class="top-btn" id="accountBtn" type="button" hidden><span data-icon="user"></span><span id="accountLabel"></span></button>
-                <button class="top-btn solid" id="savedBtn" type="button"><span data-icon="heart"></span><span data-i18n="savedBtn"></span><span class="count-pill" id="savedCount" hidden>0</span></button>
-            </div>
+        <div class="container topbar-inner">
             <a class="brand" href="./" id="brandLink" aria-label="Tuende">
                 <svg class="brand-logo" viewBox="20 45 160 75" aria-hidden="true">
-                    <path class="wave-red" d="M 30 90 Q 40 80 50 90 T 70 90 T 90 90 T 110 90 T 130 90 T 150 90 T 170 90" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                    <path class="wave-yellow" d="M 30 110 Q 40 100 50 110 T 70 110 T 90 110 T 110 110 T 130 110 T 150 110 T 170 110" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                    <circle class="dot" cx="100" cy="60" r="6"/>
+                    <path class="wave-red" d="M 30 90 Q 40 80 50 90 T 70 90 T 90 90 T 110 90 T 130 90 T 150 90 T 170 90" stroke-width="5" stroke-linecap="round" fill="none"/>
+                    <path class="wave-yellow" d="M 30 110 Q 40 100 50 110 T 70 110 T 90 110 T 110 110 T 130 110 T 150 110 T 170 110" stroke-width="5" stroke-linecap="round" fill="none"/>
+                    <circle class="dot" cx="100" cy="60" r="8"/>
                 </svg>
                 <span class="brand-name">Tuende</span>
             </a>
+            <nav class="top-nav" data-i18n-aria="navMain">
+                <button type="button" data-action="home" data-i18n="navExplore"></button>
+                <button type="button" data-action="events" data-i18n="agenda"></button>
+                <button type="button" id="navRecommend" data-action="recommend" hidden data-i18n="recTitle"></button>
+            </nav>
+            <div class="topbar-actions">
+                <button class="top-btn" id="langBtn" type="button"><span data-icon="globe"></span><span id="langLabel">EN</span></button>
+                <button class="top-btn" id="themeBtn" type="button"><span id="themeIcon"></span><span id="themeLabel"></span></button>
+                <button class="top-btn desktop-only" id="accountBtn" type="button" hidden><span data-icon="user"></span><span id="accountLabel"></span></button>
+                <button class="top-btn solid desktop-only" id="savedBtn" type="button"><span data-icon="heart"></span><span data-i18n="savedBtn"></span><span class="count-pill" id="savedCount" hidden>0</span></button>
+            </div>
         </div>
     </header>
 
     <section class="hero" id="hero">
-        <div class="container">
+        <div class="container hero-grid">
+            <div class="hero-main">
             <h1 data-i18n="heroTitle"></h1>
             <p class="hero-sub" data-i18n="heroSub"></p>
             <form class="search-card" id="searchForm" role="search">
@@ -833,6 +958,12 @@
             </form>
             <div class="chips" id="quickFilters" role="group"></div>
             <div class="notice" id="notice" role="status" aria-live="polite"></div>
+            </div>
+            <figure class="hero-photo" id="heroPhoto" hidden>
+                <div class="samakaka" aria-hidden="true"></div>
+                <img id="heroPhotoImg" alt="" width="520" height="360">
+                <figcaption id="heroPhotoCredit"></figcaption>
+            </figure>
         </div>
     </section>
 
@@ -969,6 +1100,14 @@
             <p class="footer-note" data-i18n="footerNote"></p>
         </div>
     </footer>
+    <div class="samakaka samakaka-strip" aria-hidden="true"></div>
+
+    <nav class="tabbar" id="tabbar" data-i18n-aria="navMain">
+        <button class="tab" type="button" data-tab="home" data-action="home"><span data-icon="compass"></span><span data-i18n="navExplore"></span></button>
+        <button class="tab" type="button" data-tab="events" data-action="events"><span data-icon="calendar"></span><span data-i18n="agenda"></span></button>
+        <button class="tab" type="button" data-tab="saved" data-action="show-saved"><span data-icon="heart"></span><span data-i18n="savedBtn"></span></button>
+        <button class="tab" type="button" data-tab="account" id="tabAccount" hidden><span data-icon="user"></span><span id="tabAccountLabel"></span></button>
+    </nav>
 
     <div class="modal" id="venueModal" role="dialog" aria-modal="true">
         <div class="modal-panel" id="venuePanel"></div>
@@ -1287,6 +1426,14 @@
                 nightlife: 'Vida noturna',
                 free: 'Entrada gratuita',
                 savedBtn: 'Guardados',
+                navMain: 'Navegação principal',
+                navExplore: 'Explorar',
+                tabAccount: 'Conta',
+                tilesTitle: 'Categorias principais',
+                tileBeach: 'Praias',
+                tileNature: 'Natureza',
+                tileCulture: 'Cultura',
+                tileFood: 'Restaurantes',
                 savedTitle: 'Os seus lugares guardados',
                 recommendedTitle: 'Recomendados pela equipa Tuende',
                 recommendedSub: 'O motivo de cada escolha está no cartão.',
@@ -1678,6 +1825,14 @@
                 nightlife: 'Nightlife',
                 free: 'Free entry',
                 savedBtn: 'Saved',
+                navMain: 'Main navigation',
+                navExplore: 'Explore',
+                tabAccount: 'Account',
+                tilesTitle: 'Main categories',
+                tileBeach: 'Beaches',
+                tileNature: 'Nature',
+                tileCulture: 'Culture',
+                tileFood: 'Restaurants',
                 savedTitle: 'Your saved places',
                 recommendedTitle: 'Recommended by the Tuende team',
                 recommendedSub: 'The reason for each pick is on its card.',
@@ -2805,6 +2960,7 @@
             sun: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',
             globe: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
             search: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+            compass: '<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
             play: '<polygon points="5 3 19 12 5 21 5 3"/>',
             plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
             download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>'
@@ -3346,7 +3502,7 @@
                         <h3 class="card-name"><button type="button" data-open="${v.id}">${escapeHTML(v.name)}</button></h3>
                         <div class="card-facts">
                             ${stats ? `<span><span class="rating">★ ${stats.avg.toFixed(1)}</span> ${reviewCountText(stats.count)}</span>` : ''}
-                            <span><strong>${escapeHTML(priceText(v))}</strong></span>
+                            <span class="price-pill${!v.price ? ' tbc' : v.price.free ? ' free' : ''}">${escapeHTML(priceText(v))}</span>
                             ${options.fromLuanda ? `<span>${t('fromLuanda', { d: formatKm(kmBetween(LUANDA_CENTRE, v)) })}</span>` : dist ? `<span>${dist}</span>` : ''}
                             ${statusHTML(v)}
                         </div>
@@ -3400,12 +3556,26 @@
             }).join('')}</div>`;
         }
 
+        // The six big tiles under the search: four categories, nightlife (bars and clubs) and the agenda.
+        function featureTilesHTML() {
+            const tiles = [
+                ['beach', 'tileBeach', 'beach', 'data-category="beach"'],
+                ['nature', 'tileNature', 'mountain', 'data-category="nature"'],
+                ['culture', 'tileCulture', 'landmark', 'data-category="culture"'],
+                ['food', 'tileFood', 'restaurant', 'data-category="restaurant"'],
+                ['night', 'nightlife', 'moon', 'data-quick="nightlife"'],
+                ['agenda', 'agenda', 'calendar', 'data-action="events"']
+            ];
+            return `<nav class="feature-tiles" aria-label="${t('tilesTitle')}">${tiles.map(([cls, label, ic, attr]) =>
+                `<button class="ftile ${cls}" type="button" ${attr}>${icon(ic)}<span>${t(label)}</span></button>`).join('')}</nav>`;
+        }
+
         const recommendedList = () => RECOMMENDED.map((id) => venues.find((v) => v.id === id)).filter(Boolean);
 
         /* ---------- Home ---------- */
 
         function renderHome() {
-            const parts = [];
+            const parts = [featureTilesHTML()];
             const savedList = venues.filter((v) => favorites.includes(v.id));
             if (savedList.length) parts.push(sectionHTML('secSaved', t('savedTitle'), '', rowHTML(savedList), { saved: true }));
 
@@ -3506,8 +3676,7 @@
         }
 
         function renderQuickFilters() {
-            const agenda = `<button type="button" class="chip" data-action="events">${icon('calendar')}${t('agenda')}</button>`;
-            $('quickFilters').innerHTML = agenda + Object.entries(QUICK)
+            $('quickFilters').innerHTML = Object.entries(QUICK)
                 .filter(([, q]) => !q.show || q.show())
                 .map(([key, q]) => {
                     const active = state.view === 'results' && state.filters.quick === key;
@@ -3536,9 +3705,20 @@
             $('savedCount').hidden = favorites.length === 0;
         }
 
+        function renderTabbar() {
+            const active = state.view === 'events' ? 'events' : state.view === 'results' && state.filters.saved ? 'saved' : state.view === 'home' ? 'home' : '';
+            document.querySelectorAll('#tabbar .tab').forEach((tab) => {
+                const on = tab.dataset.tab === active;
+                tab.classList.toggle('active', on);
+                if (on) tab.setAttribute('aria-current', 'page');
+                else tab.removeAttribute('aria-current');
+            });
+        }
+
         function render() {
             renderQuickFilters();
             renderSavedButton();
+            renderTabbar();
             $('hero').hidden = state.view === 'recommend' || state.view === 'events';
             $('homeView').hidden = state.view !== 'home';
             $('resultsView').hidden = state.view !== 'results';
@@ -4098,6 +4278,8 @@
             btn.hidden = !accountsEnabled();
             $('accountLabel').textContent = signedIn() ? t('account') : t('signIn');
             btn.setAttribute('aria-label', signedIn() ? t('accountAria', { name: accountName() }) : t('signIn'));
+            $('tabAccount').hidden = !accountsEnabled();
+            $('tabAccountLabel').textContent = signedIn() ? t('tabAccount') : t('signIn');
         }
 
         function signInPromptHTML(reasonKey) {
@@ -5066,12 +5248,23 @@
             $('recName').focus();
         }
 
+        function renderHeroPhoto() {
+            const v = venues.find((x) => x.id === 22);
+            const photo = v?.photos?.[0];
+            $('heroPhoto').hidden = !photo;
+            if (!photo) return;
+            if (!$('heroPhotoImg').getAttribute('src')) $('heroPhotoImg').src = fullSrc(photo);
+            $('heroPhotoImg').alt = v.name;
+            $('heroPhotoCredit').innerHTML = `${escapeHTML(v.name)} · ${creditHTML(photo)}`;
+        }
+
         function renderFooter() {
             $('footerPrivacy').hidden = !CONTACT_EMAIL;
             $('footerContact').hidden = !CONTACT_EMAIL;
             if (CONTACT_EMAIL) $('footerContact').href = `mailto:${CONTACT_EMAIL}`;
             $('footerFix').hidden = !canSuggestFix();
             $('footerRecommend').hidden = !canRecommend();
+            $('navRecommend').hidden = !canRecommend();
         }
 
         /* ---------- Modals ---------- */
@@ -5122,6 +5315,7 @@
             renderWhereOptions();
             renderSortOptions();
             renderFooter();
+            renderHeroPhoto();
             renderAccountButton();
             prepareRecommendForm();
             applyTheme();
@@ -5169,6 +5363,7 @@
 
         $('savedBtn').addEventListener('click', () => showResults({ saved: true }));
         $('accountBtn').addEventListener('click', () => openAuth());
+        $('tabAccount').addEventListener('click', () => openAuth());
         $('authContent').addEventListener('submit', submitAuth);
         $('authContent').addEventListener('click', (e) => {
             const toggle = e.target.closest('[data-toggle-password]');
