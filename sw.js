@@ -1,4 +1,4 @@
-const SHELL_CACHE = 'tuende-shell-v5';
+const SHELL_CACHE = 'tuende-shell-v6';
 const IMAGE_CACHE = 'tuende-images-v1';
 const SHELL = [
     './',
@@ -49,7 +49,7 @@ self.addEventListener('fetch', (event) => {
     if (request.method !== 'GET') return;
     const url = new URL(request.url);
 
-    if (url.origin === self.location.origin && (url.pathname.includes('/photos/') || url.pathname.includes('/fonts/'))) {
+    if (url.origin === self.location.origin && (url.pathname.includes('/photos/') || url.pathname.includes('/fonts/') || url.pathname.includes('/avatars/'))) {
         event.respondWith(imageCacheFirst(request));
     } else if (url.origin === self.location.origin) {
         event.respondWith(networkFirst(request));

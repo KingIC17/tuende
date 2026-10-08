@@ -660,7 +660,25 @@
         .form-msg.ok { color: var(--ok); }
 
         .review { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-        .review-avatar { flex: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--primary-fill); color: #fff; font-size: 16px; font-weight: 800; }
+        /* Profile pictures: a drawn Angolan mask, the person's own photo or the initial of their name. */
+        .avatar { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--surface-2); box-shadow: 0 0 0 1.5px var(--line); }
+        .avatar-initial { background: var(--primary-fill); color: #fff; font-size: 16px; font-weight: 800; box-shadow: none; }
+        .avatar.sm { width: 22px; height: 22px; font-size: 11px; }
+        .avatar.xs { width: 24px; height: 24px; font-size: 12px; }
+        .avatar.lg { width: 72px; height: 72px; font-size: 30px; }
+        .account-head { display: flex; align-items: center; gap: 14px; padding-right: 44px; margin-bottom: 4px; }
+        .account-head .info-title { margin: 0; padding: 0; }
+        .avatar-picker { border: none; margin: 4px 0 14px; padding: 0; }
+        .avatar-picker legend { font-size: 15px; font-weight: 700; }
+        .avatar-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: 14px 12px; margin-top: 10px; }
+        .avatar-opt { position: relative; display: flex; justify-content: center; cursor: pointer; }
+        .avatar-opt input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+        .avatar-opt img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 1.5px var(--line); transition: transform 0.12s; }
+        .avatar-opt input:checked + img { box-shadow: 0 0 0 3px var(--surface), 0 0 0 6px var(--primary-fill); transform: scale(1.05); }
+        .avatar-opt input:focus-visible + img { outline: 3px solid var(--primary); outline-offset: 5px; }
+        .avatar-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 14px; }
+        @media (max-width: 480px) { .avatar-options { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        .avatar-actions .photo-picker { min-height: 46px; }
         .review-main { flex: 1; min-width: 0; }
         .review-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 14px; }
         .review-name { font-weight: 800; font-size: 15px; }
@@ -676,7 +694,7 @@
         .visitor-item img { width: 100%; height: 130px; object-fit: cover; display: block; }
         .visitor-item .video-link { display: flex; align-items: center; justify-content: center; gap: 8px; height: 130px; color: var(--primary); font-weight: 700; text-decoration: none; text-align: center; padding: 8px; }
         .visitor-item .video-link .icon { fill: currentColor; }
-        .visitor-caption { padding: 8px 10px 0; color: var(--muted); overflow-wrap: anywhere; }
+        .visitor-caption { display: flex; align-items: center; gap: 6px; padding: 8px 10px 0; color: var(--muted); overflow-wrap: anywhere; }
         .visitor-form-wrap { margin-top: 12px; }
         .visitor-form-wrap > summary { list-style: none; cursor: pointer; }
         .visitor-form-wrap > summary::-webkit-details-marker { display: none; }
@@ -922,7 +940,7 @@
                 border-top: 1px solid var(--line);
             }
             .tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 52px; padding: 4px 0; background: none; border: none; color: var(--muted); font-size: 12px; font-weight: 700; }
-            .tab .icon { width: 24px; height: 24px; }
+            .tab .icon, .tab .avatar { width: 24px; height: 24px; }
             .tab.active { color: var(--primary); }
             body { padding-bottom: calc(70px + env(safe-area-inset-bottom)); }
             .modal { padding: 0; align-items: flex-end; }
@@ -953,7 +971,7 @@
             <div class="topbar-actions">
                 <button class="top-btn" id="langBtn" type="button"><span data-icon="globe"></span><span id="langLabel">EN</span></button>
                 <button class="top-btn" id="themeBtn" type="button"><span id="themeIcon"></span><span id="themeLabel"></span></button>
-                <button class="top-btn desktop-only" id="accountBtn" type="button" hidden><span data-icon="user"></span><span id="accountLabel"></span></button>
+                <button class="top-btn desktop-only" id="accountBtn" type="button" hidden><span id="accountIcon"></span><span id="accountLabel"></span></button>
                 <button class="top-btn solid desktop-only" id="savedBtn" type="button"><span data-icon="heart"></span><span data-i18n="savedBtn"></span><span class="count-pill" id="savedCount" hidden>0</span></button>
             </div>
         </div>
@@ -1125,7 +1143,7 @@
         <button class="tab" type="button" data-tab="home" data-action="home"><span data-icon="compass"></span><span data-i18n="navExplore"></span></button>
         <button class="tab" type="button" data-tab="events" data-action="events"><span data-icon="calendar"></span><span data-i18n="agenda"></span></button>
         <button class="tab" type="button" data-tab="saved" data-action="show-saved"><span data-icon="heart"></span><span data-i18n="savedBtn"></span></button>
-        <button class="tab" type="button" data-tab="account" id="tabAccount" hidden><span data-icon="user"></span><span id="tabAccountLabel"></span></button>
+        <button class="tab" type="button" data-tab="account" id="tabAccount" hidden><span id="tabAccountIcon"></span><span id="tabAccountLabel"></span></button>
     </nav>
 
     <div class="modal" id="venueModal" role="dialog" aria-modal="true">
@@ -1448,6 +1466,14 @@
                 navMain: 'Navegação principal',
                 navExplore: 'Explorar',
                 tabAccount: 'Conta',
+                avatarTitle: 'Foto de perfil',
+                avatarSignupHint: 'Escolha uma máscara tradicional angolana (opcional). Depois de entrar também pode usar uma foto sua.',
+                avatarAccountHint: 'Aparece junto dos seus comentários, fotos e vídeos. Escolha uma máscara ou use uma foto sua.',
+                avatarUpload: 'Carregar da galeria',
+                avatarRemove: 'Usar a inicial do nome',
+                avatarSaved: 'Foto de perfil guardada.',
+                avatarYourPhoto: 'A sua foto',
+                avatarCredit: 'Desenhos inspirados em máscaras tradicionais dos povos Cokwe e Lwena, nas cores da bandeira.',
                 tilesTitle: 'Categorias principais',
                 tileBeach: 'Praias',
                 tileNature: 'Natureza',
@@ -1848,6 +1874,14 @@
                 navMain: 'Main navigation',
                 navExplore: 'Explore',
                 tabAccount: 'Account',
+                avatarTitle: 'Profile picture',
+                avatarSignupHint: 'Pick a traditional Angolan mask (optional). Once signed in, you can also use your own photo.',
+                avatarAccountHint: 'Shown next to your comments, photos and videos. Pick a mask or use your own photo.',
+                avatarUpload: 'Upload from gallery',
+                avatarRemove: 'Use my initial',
+                avatarSaved: 'Profile picture saved.',
+                avatarYourPhoto: 'Your photo',
+                avatarCredit: 'Drawings inspired by traditional Chokwe and Lwena masks, in the colours of the flag.',
                 tilesTitle: 'Main categories',
                 tileBeach: 'Beaches',
                 tileNature: 'Nature',
@@ -3855,7 +3889,7 @@
         function reviewItemHTML(r) {
             return `
                 <div class="review">
-                    <span class="review-avatar" aria-hidden="true">${escapeHTML(r.author.trim().charAt(0).toUpperCase() || '?')}</span>
+                    ${avatarHTML(r.author_avatar, r.author)}
                     <div class="review-main">
                         <div class="review-head">
                             <span class="review-name">${escapeHTML(r.author)}</span>
@@ -3904,7 +3938,7 @@
         async function loadReviews(venueId) {
             if (!reviewsEnabled()) return;
             try {
-                const res = await sbRequest(`/rest/v1/reviews?select=id,author,rating,comment,created_at&venue_id=eq.${venueId}&status=eq.approved&order=created_at.desc&limit=50`, { headers: sbHeaders() });
+                const res = await sbRequest(`/rest/v1/reviews?select=id,author,author_avatar,rating,comment,created_at&venue_id=eq.${venueId}&status=eq.approved&order=created_at.desc&limit=50`, { headers: sbHeaders() });
                 const items = await res.json();
                 const list = $('reviewList');
                 if (state.openId !== venueId || !list) return;
@@ -4119,7 +4153,7 @@
         }
 
         function submissionHTML(s, v) {
-            const caption = `<div class="visitor-caption">${escapeHTML(s.author)}${s.caption ? ` · ${escapeHTML(s.caption)}` : ''}</div>`;
+            const caption = `<div class="visitor-caption">${avatarHTML(s.author_avatar, s.author, 'sm')}<span>${escapeHTML(s.author)}${s.caption ? ` · ${escapeHTML(s.caption)}` : ''}</span></div>`;
             const report = `<button type="button" class="report-btn" data-report="${escapeHTML(s.id)}">${t('report')}</button>`;
             if (s.kind === 'photo' && s.url.startsWith(photoBase())) {
                 return `<figure class="visitor-item"><a href="${escapeHTML(s.url)}" target="_blank" rel="noopener"><img src="${escapeHTML(s.url)}" alt="${escapeHTML(s.caption || v.name)}" loading="lazy"></a>${caption}${report}</figure>`;
@@ -4135,7 +4169,7 @@
         async function loadSubmissions(venueId) {
             if (!supabaseReady()) return;
             try {
-                const res = await sbRequest(`/rest/v1/submissions?select=id,kind,url,author,caption&venue_id=eq.${venueId}&status=eq.approved&order=created_at.desc&limit=30`, { headers: sbHeaders() });
+                const res = await sbRequest(`/rest/v1/submissions?select=id,kind,url,author,author_avatar,caption&venue_id=eq.${venueId}&status=eq.approved&order=created_at.desc&limit=30`, { headers: sbHeaders() });
                 const items = await res.json();
                 const gallery = $('visitorGallery');
                 if (state.openId !== venueId || !gallery) return;
@@ -4228,6 +4262,42 @@
         const accountsEnabled = supabaseReady;
         const signedIn = () => accountsEnabled() && Boolean(session?.access_token);
         const accountName = () => session?.user?.user_metadata?.display_name || session?.user?.email?.split('@')[0] || '';
+        const myAvatar = () => session?.user?.user_metadata?.avatar || null;
+
+        // Profile pictures: cartoon drawings of traditional masks from Angola, in the flag's colours (avatars/).
+        const AVATARS = {
+            'mask-mwana-pwo': { pt: 'Máscara Mwana Pwo (Cokwe)', en: 'Mwana Pwo mask (Chokwe)' },
+            'mask-pwo': { pt: 'Máscara Pwo (Cokwe)', en: 'Pwo mask (Chokwe)' },
+            'mask-chihongo': { pt: 'Máscara Chihongo (Cokwe)', en: 'Chihongo mask (Chokwe)' },
+            'mask-chikunza': { pt: 'Máscara Chikunza (Cokwe)', en: 'Chikunza mask (Chokwe)' },
+            'mask-danca': { pt: 'Máscara de dança (Cokwe)', en: 'Dance mask (Chokwe)' },
+            'mask-lwena': { pt: 'Máscara Lwena', en: 'Lwena mask' }
+        };
+
+        // Only the app's own masks or a photo in a person's own folder are shown, never any other link.
+        const isAvatarPhoto = (value) => typeof value === 'string' && value.startsWith(photoBase()) && /^[0-9a-f-]{36}\/avatar-\d+\.jpg$/.test(value.slice(photoBase().length));
+        function avatarSrc(value) {
+            if (AVATARS[value]) return asset(`avatars/${value}.svg`);
+            return isAvatarPhoto(value) ? value : '';
+        }
+
+        function avatarHTML(value, name, size = '') {
+            const src = avatarSrc(value);
+            return src
+                ? `<img class="avatar ${size}" src="${escapeHTML(src)}" alt="" loading="lazy">`
+                : `<span class="avatar avatar-initial ${size}" aria-hidden="true">${escapeHTML((name || '?').trim().charAt(0).toUpperCase() || '?')}</span>`;
+        }
+
+        function avatarOptionsHTML(current, inputName) {
+            const own = isAvatarPhoto(current)
+                ? `<label class="avatar-opt" title="${t('avatarYourPhoto')}"><input type="radio" name="${inputName}" value="${escapeHTML(current)}" checked><img src="${escapeHTML(current)}" alt="${t('avatarYourPhoto')}" width="56" height="56"></label>`
+                : '';
+            return `<div class="avatar-options">${own}${Object.entries(AVATARS).map(([key, a]) => `
+                <label class="avatar-opt" title="${escapeHTML(a[lang])}">
+                    <input type="radio" name="${inputName}" value="${key}" ${current === key ? 'checked' : ''}>
+                    <img src="${escapeHTML(asset(`avatars/${key}.svg`))}" alt="${escapeHTML(a[lang])}" width="56" height="56">
+                </label>`).join('')}</div>`;
+        }
         const authRedirect = () => (inNativeApp ? PUBLIC_URL : `${location.origin}${location.pathname}`);
         const validEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
         const STATUS_LABELS = { pending: 'statusPending', approved: 'statusApproved', rejected: 'statusRejected', hidden: 'statusHidden', new: 'statusNew', done: 'statusDone' };
@@ -4309,6 +4379,9 @@
             btn.setAttribute('aria-label', signedIn() ? t('accountAria', { name: accountName() }) : t('signIn'));
             $('tabAccount').hidden = !accountsEnabled();
             $('tabAccountLabel').textContent = signedIn() ? t('tabAccount') : t('signIn');
+            const face = signedIn() ? avatarHTML(myAvatar(), accountName(), 'xs') : icon('user');
+            $('accountIcon').innerHTML = face;
+            $('tabAccountIcon').innerHTML = face;
         }
 
         function signInPromptHTML(reasonKey) {
@@ -4359,6 +4432,11 @@
                     ${top || `<p class="hint">${t('authIntro')}</p>`}
                     <form id="authForm" novalidate>
                         <div class="form-group"><label for="authName">${t('authName')}</label><input class="field" id="authName" type="text" maxlength="60" autocomplete="name"></div>
+                        <fieldset class="avatar-picker">
+                            <legend>${t('avatarTitle')}</legend>
+                            <p class="hint">${t('avatarSignupHint')}</p>
+                            ${avatarOptionsHTML('', 'signupAvatar')}
+                        </fieldset>
                         ${emailFieldHTML(email)}
                         ${passwordFieldHTML('authPassword', 'new-password')}
                         <label class="consent"><input type="checkbox" id="authConsent"><span>${t('authConsent')}</span></label>
@@ -4381,9 +4459,25 @@
                         ${authSubmitHTML('authSavePassword')}
                     </form>`,
                 account: () => `
-                    <h2 class="info-title" id="authTitle">${t('authHello', { name: escapeHTML(accountName()) })}</h2>
-                    <p class="hint">${escapeHTML(session?.user?.email || '')}</p>
+                    <div class="account-head">
+                        ${avatarHTML(myAvatar(), accountName(), 'lg')}
+                        <div>
+                            <h2 class="info-title" id="authTitle">${t('authHello', { name: escapeHTML(accountName()) })}</h2>
+                            <p class="hint">${escapeHTML(session?.user?.email || '')}</p>
+                        </div>
+                    </div>
                     ${top}
+                    <section class="avatar-picker" aria-labelledby="avatarTitle">
+                        <h3 class="section-title" id="avatarTitle">${t('avatarTitle')}</h3>
+                        <p class="hint">${t('avatarAccountHint')}</p>
+                        ${avatarOptionsHTML(myAvatar(), 'accountAvatar')}
+                        <div class="avatar-actions">
+                            <label class="photo-picker">${icon('camera')}<span>${t('avatarUpload')}</span><input id="avatarFile" type="file" accept="image/*"></label>
+                            ${myAvatar() ? `<button type="button" class="link-btn" data-avatar-remove>${t('avatarRemove')}</button>` : ''}
+                        </div>
+                        <div class="form-msg" id="avatarMsg" role="status" aria-live="polite"></div>
+                        <p class="hint">${t('avatarCredit')}</p>
+                    </section>
                     <dl class="facts account-facts">
                         <div class="fact"><dt>${t('authSavedCount')}</dt><dd>${favorites.length} ${favorites.length ? `<button type="button" class="link-btn" data-action="show-saved">${t('seeAll')}</button>` : ''}</dd></div>
                     </dl>
@@ -4411,7 +4505,7 @@
             afterAuth = after;
             renderAuth(view || (signedIn() ? 'account' : 'signin'), { reason, notice });
             openModal('authModal');
-            $('authContent').querySelector('input:not([type="checkbox"])')?.focus();
+            $('authContent').querySelector('input:not([type="checkbox"]):not([type="radio"]):not([type="file"])')?.focus();
         }
 
         async function afterSignIn() {
@@ -4450,7 +4544,8 @@
                     saveSession(await authRequest('/token?grant_type=password', { email, password }));
                     await afterSignIn();
                 } else if (authView === 'signup') {
-                    const data = await authRequest(`/signup?redirect_to=${encodeURIComponent(authRedirect())}`, { email, password, data: { display_name: name } });
+                    const avatar = document.querySelector('input[name="signupAvatar"]:checked')?.value;
+                    const data = await authRequest(`/signup?redirect_to=${encodeURIComponent(authRedirect())}`, { email, password, data: { display_name: name, ...(AVATARS[avatar] ? { avatar } : {}) } });
                     if (data.access_token) {
                         saveSession(data);
                         await afterSignIn();
@@ -4467,6 +4562,7 @@
                 } else if (authView === 'account') {
                     const user = await authRequest('/user', { data: { display_name: name } }, { method: 'PUT', token: await accessToken() });
                     saveSession({ ...session, user });
+                    await syncProfile();
                     renderAuth('account', { notice: t('authNameSaved') });
                 }
             } catch (err) {
@@ -4476,6 +4572,62 @@
                     button.disabled = false;
                     button.textContent = label;
                 }
+            }
+        }
+
+        // Show the new name and picture on everything the person has already posted.
+        async function syncProfile() {
+            try {
+                await sbRequest('/rest/v1/rpc/sync_my_profile', { method: 'POST', headers: await userHeaders({ 'Content-Type': 'application/json' }), body: '{}' });
+            } catch {}
+            render();
+            if (state.openId) openVenue(state.openId, true);
+        }
+
+        async function saveAvatar(value) {
+            const msg = $('avatarMsg');
+            const previous = myAvatar();
+            if (msg) { msg.classList.remove('ok'); msg.textContent = t('sending'); }
+            try {
+                const user = await authRequest('/user', { data: { avatar: value } }, { method: 'PUT', token: await accessToken() });
+                saveSession({ ...session, user });
+                await syncProfile();
+                // A replaced photo is no longer used anywhere, so remove it from the account's folder.
+                if (isAvatarPhoto(previous) && previous !== value) {
+                    sbRequest('/storage/v1/object/submissions', { method: 'DELETE', headers: await userHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ prefixes: [previous.slice(photoBase().length)] }) }).catch(() => {});
+                }
+                renderAuth('account', { notice: t('avatarSaved') });
+            } catch (err) {
+                if (!needsSignIn(err, msg) && msg) msg.textContent = t('errSend');
+            }
+        }
+
+        // Square crop from the middle of the photo, 256 px, so it looks the same everywhere.
+        async function squareAvatar(file) {
+            const bitmap = await createImageBitmap(file);
+            const side = Math.min(bitmap.width, bitmap.height);
+            const canvas = document.createElement('canvas');
+            canvas.width = canvas.height = 256;
+            canvas.getContext('2d').drawImage(bitmap, (bitmap.width - side) / 2, (bitmap.height - side) / 2, side, side, 0, 0, 256, 256);
+            bitmap.close?.();
+            return new Promise((resolve, reject) => canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('encode'))), 'image/jpeg', 0.85));
+        }
+
+        async function uploadAvatar(file) {
+            const msg = $('avatarMsg');
+            msg.classList.remove('ok');
+            if (!file.type.startsWith('image/')) { msg.textContent = t('errFileType'); return; }
+            msg.textContent = t('sending');
+            try {
+                const path = `${session.user.id}/avatar-${Date.now()}.jpg`;
+                await sbRequest(`/storage/v1/object/submissions/${path}`, {
+                    method: 'POST',
+                    headers: await userHeaders({ 'Content-Type': 'image/jpeg', 'x-upsert': 'false' }),
+                    body: await squareAvatar(file)
+                });
+                await saveAvatar(photoBase() + path);
+            } catch (err) {
+                if (!needsSignIn(err, msg)) msg.textContent = t('errSend');
             }
         }
 
@@ -5394,6 +5546,10 @@
         $('accountBtn').addEventListener('click', () => openAuth());
         $('tabAccount').addEventListener('click', () => openAuth());
         $('authContent').addEventListener('submit', submitAuth);
+        $('authContent').addEventListener('change', (e) => {
+            if (e.target.name === 'accountAvatar') saveAvatar(e.target.value);
+            else if (e.target.id === 'avatarFile' && e.target.files[0]) uploadAvatar(e.target.files[0]);
+        });
         $('authContent').addEventListener('click', (e) => {
             const toggle = e.target.closest('[data-toggle-password]');
             if (toggle) {
@@ -5404,6 +5560,7 @@
                 toggle.setAttribute('aria-pressed', String(show));
                 return;
             }
+            if (e.target.closest('[data-avatar-remove]')) { saveAvatar(null); return; }
             const view = e.target.closest('[data-auth-view]');
             if (view) {
                 renderAuth(view.dataset.authView, { email: $('authEmail')?.value.trim() || '' });
