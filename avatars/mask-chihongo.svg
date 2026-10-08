@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Chihongo (Cokwe): wide feather headdress, ribbed cap, cheek marks and a flat chin disc. -->
+  <defs><clipPath id="c"><circle cx="50" cy="50" r="50"/></clipPath></defs>
+  <g clip-path="url(#c)">
+    <rect width="100" height="100" fill="#111111"/>
+    <g>
+      <path d="M50 46 L4 30 L8 18 Z" fill="#CE1126"/>
+      <path d="M50 46 L8 18 L16 8 Z" fill="#FFCB00"/>
+      <path d="M50 46 L16 8 L28 1 Z" fill="#CE1126"/>
+      <path d="M50 46 L28 1 L42 -2 Z" fill="#FFCB00"/>
+      <path d="M50 46 L42 -2 L58 -2 Z" fill="#CE1126"/>
+      <path d="M50 46 L58 -2 L72 1 Z" fill="#FFCB00"/>
+      <path d="M50 46 L72 1 L84 8 Z" fill="#CE1126"/>
+      <path d="M50 46 L84 8 L92 18 Z" fill="#FFCB00"/>
+      <path d="M50 46 L92 18 L96 30 Z" fill="#CE1126"/>
+    </g>
+    <path d="M16 36 Q50 2 84 36" fill="none" stroke="#FFCB00" stroke-width="2"/>
+    <path d="M24 40 Q50 14 76 40" fill="none" stroke="#8E0C1B" stroke-width="2"/>
+    <path d="M30 46 Q30 34 50 34 Q70 34 70 46 L70 48 L30 48 Z" fill="#8E0C1B"/>
+    <path d="M33 37 L33 47 M38 35.5 L38 47 M44 34.6 L44 47 M50 34.3 L50 47 M56 34.6 L56 47 M62 35.5 L62 47 M67 37 L67 47" stroke="#CE1126" stroke-width="1.6"/>
+    <path d="M32 50 Q32 46 36 46 L64 46 Q68 46 68 50 L68 70 Q68 78 50 80 Q32 78 32 70 Z" fill="#CE1126"/>
+    <ellipse cx="30" cy="60" rx="3.5" ry="5" fill="#CE1126"/>
+    <ellipse cx="70" cy="60" rx="3.5" ry="5" fill="#CE1126"/>
+    <path d="M36 56 Q42 50 49 55 M64 56 Q58 50 51 55" fill="none" stroke="#111111" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M38 59 Q42 57 47 59 M53 59 Q58 57 62 59" fill="none" stroke="#111111" stroke-width="2" stroke-linecap="round"/>
+    <path d="M50 55 L47 66 L53 66 Z" fill="#8E0C1B"/>
+    <path d="M36 63 L36 68 L41 68 M64 63 L64 68 L59 68" fill="none" stroke="#FFCB00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M45 41 L50 45 L55 41" fill="none" stroke="#FFCB00" stroke-width="1.4" stroke-linecap="round"/>
+    <rect x="39" y="69" width="22" height="6" rx="3" fill="#111111"/>
+    <path d="M41 69 L42.5 72 L44 69 L45.5 72 L47 69 L48.5 72 L50 69 L51.5 72 L53 69 L54.5 72 L56 69 L57.5 72 L59 69" fill="none" stroke="#FFCB00" stroke-width="1.1" stroke-linejoin="round"/>
+    <ellipse cx="50" cy="80" rx="22" ry="5" fill="#FFCB00"/>
+    <path d="M32 84 L68 84 L64 100 L36 100 Z" fill="none" stroke="#CE1126" stroke-width="1.2"/>
+    <path d="M36 86 L64 98 M64 86 L36 98 M40 84 L60 100 M60 84 L40 100 M44 84 L52 100 M56 84 L48 100" stroke="#8E0C1B" stroke-width="1.2"/>
+  </g>
+</svg>

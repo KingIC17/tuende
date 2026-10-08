@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Dancer's mask (Cokwe): round halo with bands, a long nose line, round eyes and a chin disc. -->
+  <defs><clipPath id="c"><circle cx="50" cy="50" r="50"/></clipPath></defs>
+  <g clip-path="url(#c)">
+    <rect width="100" height="100" fill="#CE1126"/>
+    <circle cx="50" cy="42" r="36" fill="#111111" stroke="#FFCB00" stroke-width="3"/>
+    <path d="M46 7 L54 7 L53 20 L47 20 Z M15 36 L28 38 L27 45 L15 44 Z M85 36 L72 38 L73 45 L85 44 Z M24 16 L33 25 L28 29 L19 21 Z M76 16 L67 25 L72 29 L81 21 Z" fill="#FFCB00"/>
+    <circle cx="50" cy="44" r="23" fill="none" stroke="#FFCB00" stroke-width="2.4"/>
+    <ellipse cx="50" cy="84" rx="25" ry="11" fill="#111111" stroke="#FFCB00" stroke-width="2.4"/>
+    <path d="M36 52 Q36 34 50 34 Q64 34 64 52 L64 70 Q64 80 50 82 Q36 80 36 70 Z" fill="#111111"/>
+    <circle cx="50" cy="28" r="3.2" fill="#FFCB00"/>
+    <rect x="47.5" y="34" width="5" height="30" rx="2.5" fill="#FFCB00"/>
+    <path d="M38 40 L45 42 M62 40 L55 42" stroke="#FFCB00" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="41" cy="58" r="5.5" fill="none" stroke="#FFCB00" stroke-width="2.4"/>
+    <circle cx="59" cy="58" r="5.5" fill="none" stroke="#FFCB00" stroke-width="2.4"/>
+    <path d="M37 58 Q41 55 45 58 M55 58 Q59 55 63 58" fill="none" stroke="#FFCB00" stroke-width="1.6" stroke-linecap="round"/>
+    <rect x="45" y="63" width="10" height="5" rx="2.5" fill="#FFCB00"/>
+    <path d="M39 72 Q50 77 61 72" fill="none" stroke="#FFCB00" stroke-width="3" stroke-linecap="round"/>
+    <path d="M50 84 L50 95" stroke="#FFCB00" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+</svg>

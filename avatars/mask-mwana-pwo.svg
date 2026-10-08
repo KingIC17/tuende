@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Mwana Pwo (Cokwe): braided hair, forehead cross, cheek and chin marks, open mouth with filed teeth. -->
+  <defs><clipPath id="c"><circle cx="50" cy="50" r="50"/></clipPath></defs>
+  <g clip-path="url(#c)">
+    <rect width="100" height="100" fill="#FFCB00"/>
+    <path d="M30 100 Q30 84 40 80 L60 80 Q70 84 70 100 Z" fill="#8E0C1B"/>
+    <g fill="#111111">
+      <ellipse cx="50" cy="34" rx="33" ry="21"/>
+      <circle cx="22" cy="40" r="9"/>
+      <circle cx="78" cy="40" r="9"/>
+      <circle cx="33" cy="18" r="8"/>
+      <circle cx="50" cy="14" r="8"/>
+      <circle cx="67" cy="18" r="8"/>
+    </g>
+    <g fill="none" stroke="#3A3A3A" stroke-width="1.6" stroke-linecap="round">
+      <path d="M28 22 q4 -4 8 0"/><path d="M45 12 q4 -4 8 0"/><path d="M62 16 q4 -4 8 0"/>
+      <path d="M17 38 q4 -4 8 0"/><path d="M75 38 q4 -4 8 0"/><path d="M38 26 q4 -4 8 0"/><path d="M54 26 q4 -4 8 0"/>
+    </g>
+    <path d="M24 46 Q50 28 76 46 L74 52 Q50 36 26 52 Z" fill="#8E0C1B"/>
+    <ellipse cx="27" cy="62" rx="5" ry="8" fill="#CE1126"/>
+    <ellipse cx="73" cy="62" rx="5" ry="8" fill="#CE1126"/>
+    <path d="M28 56 Q28 40 50 40 Q72 40 72 56 Q72 80 50 90 Q28 80 28 56 Z" fill="#CE1126"/>
+    <path d="M47 41 L53 41 L52 46 L57 45 L57 49 L52 48 L53 53 L47 53 L48 48 L43 49 L43 45 L48 46 Z" fill="#111111"/>
+    <path d="M33 56 Q41 51 49 55 L50 70" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M67 56 Q59 51 51 55" fill="none" stroke="#111111" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M35 61 Q41 57 47 61 Q41 63 35 61 Z" fill="#111111"/>
+    <path d="M53 61 Q59 57 65 61 Q59 63 53 61 Z" fill="#111111"/>
+    <path d="M47 70 Q50 73 53 70" fill="none" stroke="#8E0C1B" stroke-width="2" stroke-linecap="round"/>
+    <g fill="#111111"><rect x="35" y="66" width="2.4" height="7" rx="1"/><rect x="62.6" y="66" width="2.4" height="7" rx="1"/><rect x="49" y="84" width="2" height="5" rx="1"/></g>
+    <path d="M41 77 Q50 73 59 77 Q50 83 41 77 Z" fill="#111111"/>
+    <path d="M43 77 L45 79 L47 77 L49 79 L51 77 L53 79 L55 77 L57 79" fill="none" stroke="#FFCB00" stroke-width="1.3" stroke-linejoin="round"/>
+  </g>
+</svg>

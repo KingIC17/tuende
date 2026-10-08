@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Lwena mask: long hair with a beaded parting, smooth face with a forehead line and pointed teeth. -->
+  <defs><clipPath id="c"><circle cx="50" cy="50" r="50"/></clipPath></defs>
+  <g clip-path="url(#c)">
+    <rect width="100" height="100" fill="#111111"/>
+    <path d="M34 100 Q34 86 42 84 L58 84 Q66 86 66 100 Z" fill="#8E0C1B"/>
+    <path d="M36 88 L64 88 M35 93 L65 93 M34 98 L66 98" stroke="#CE1126" stroke-width="1.4"/>
+    <path d="M50 8 Q20 8 16 40 Q13 60 10 80 L18 76 L20 86 L26 74 L30 84 L32 70 L50 60 L68 70 L70 84 L74 74 L80 86 L82 76 L90 80 Q87 60 84 40 Q80 8 50 8 Z" fill="#CE1126"/>
+    <path d="M30 22 Q22 44 18 72 M38 16 Q30 40 28 66 M62 16 Q70 40 72 66 M70 22 Q78 44 82 72" fill="none" stroke="#8E0C1B" stroke-width="2" stroke-linecap="round"/>
+    <path d="M50 8 L50 32" stroke="#FFF4CC" stroke-width="3" stroke-dasharray="2 1.5"/>
+    <path d="M31 58 Q31 34 50 32 Q69 34 69 58 Q69 78 50 84 Q31 78 31 58 Z" fill="#FFCB00"/>
+    <path d="M31 50 Q38 36 50 34 Q42 40 40 50 Z M69 50 Q62 36 50 34 Q58 40 60 50 Z" fill="#CE1126"/>
+    <path d="M50 36 L50 66" stroke="#8E0C1B" stroke-width="1.8" stroke-linecap="round"/>
+    <g fill="#111111"><circle cx="37" cy="53" r="0.9"/><circle cx="40" cy="51.5" r="0.9"/><circle cx="43" cy="51" r="0.9"/><circle cx="57" cy="51" r="0.9"/><circle cx="60" cy="51.5" r="0.9"/><circle cx="63" cy="53" r="0.9"/></g>
+    <path d="M36 58 Q41 54 46 58 Q41 61 36 58 Z" fill="#111111"/>
+    <path d="M54 58 Q59 54 64 58 Q59 61 54 58 Z" fill="#111111"/>
+    <path d="M47 66 L50 70 L53 66" fill="none" stroke="#8E0C1B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M40 74 Q50 70 60 74 Q50 80 40 74 Z" fill="#111111"/>
+    <path d="M42 74 L44 77 L46 74 L48 77 L50 74 L52 77 L54 74 L56 77 L58 74" fill="none" stroke="#FFF4CC" stroke-width="1.2" stroke-linejoin="round"/>
+  </g>
+</svg>
