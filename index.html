@@ -608,15 +608,16 @@
             align-items: center;
             min-height: 44px;
             padding: 0 16px;
-            border-radius: 10px;
-            border: 1.5px solid var(--primary);
-            color: var(--primary);
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
             font-size: 15px;
             font-weight: 700;
             text-decoration: none;
         }
 
-        .social a:hover { background: var(--primary-soft); }
+        .social a:hover { border-color: var(--primary); }
 
         .panel { background: var(--surface-2); border-radius: 14px; padding: 14px; margin-top: 10px; }
 
@@ -628,13 +629,25 @@
         .menu-item-desc { font-size: 14px; color: var(--muted); }
         .menu-item-price { font-size: 15px; font-weight: 800; color: var(--primary); white-space: nowrap; }
 
-        .avg { text-align: center; padding: 6px 0 14px; }
-        .avg-number { font-size: 34px; font-weight: 800; color: var(--primary); }
+        /* Reviews: summary card, comment list, write or sign-in card, then outside links. */
+        .avg { display: flex; align-items: center; gap: 14px; margin-top: 10px; padding: 14px 16px; border-radius: 16px; background: var(--surface-2); }
+        .avg-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .avg-number { font-size: 38px; line-height: 1; font-weight: 800; color: var(--text); }
+        .avg-icon { flex: none; display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); }
+        .avg-icon .icon { width: 24px; height: 24px; }
+        .avg-title { font-size: 16px; font-weight: 800; }
         .stars { color: #E0A800; font-size: 18px; letter-spacing: 2px; }
         .avg-count { font-size: 14px; color: var(--muted); }
-        .external-reviews { margin-bottom: 14px; }
 
-        .review-form { background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px; }
+        .review-list:empty { display: none; }
+        .review-list { margin-top: 4px; }
+        .rv-more { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 16px; font-size: 14px; color: var(--muted); }
+        .rv-more > span { flex-basis: 100%; }
+        .rv-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 14px; font-weight: 700; text-decoration: none; }
+        .rv-link .icon { width: 14px; height: 14px; color: var(--muted); }
+        .rv-link:hover { border-color: var(--primary); }
+
+        .review-form { margin-top: 14px; background: var(--surface-2); border: none; border-radius: 16px; padding: 16px; }
         .review-form-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
         .review-form .field { margin-bottom: 10px; }
         .star-input { display: flex; gap: 2px; margin-bottom: 8px; }
@@ -646,12 +659,16 @@
         .form-msg { font-size: 15px; font-weight: 600; color: var(--primary); min-height: 22px; margin: 4px 0 8px; }
         .form-msg.ok { color: var(--ok); }
 
-        .review { background: var(--surface); border-left: 4px solid var(--primary); border-radius: 10px; padding: 12px; margin-top: 10px; }
-        .review-head { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
-        .review-name { font-weight: 700; }
-        .review-date { color: var(--muted); }
-        .review-text { font-size: 15px; color: var(--muted); margin-top: 4px; white-space: pre-wrap; overflow-wrap: anywhere; }
-        .report-btn { background: none; border: none; color: var(--primary); font-size: 14px; font-weight: 600; min-height: 40px; padding: 0 10px; }
+        .review { display: flex; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+        .review-avatar { flex: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--primary-fill); color: #fff; font-size: 16px; font-weight: 800; }
+        .review-main { flex: 1; min-width: 0; }
+        .review-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-size: 14px; }
+        .review-name { font-weight: 800; font-size: 15px; }
+        .review-date { color: var(--muted); font-size: 13px; }
+        .review-main .stars { font-size: 15px; }
+        .review-text { font-size: 15px; margin-top: 2px; white-space: pre-wrap; overflow-wrap: anywhere; }
+        .report-btn { background: none; border: none; color: var(--muted); font-size: 13px; font-weight: 600; min-height: 36px; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+        .report-btn:hover { color: var(--primary); }
 
         .visitor-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 10px; }
         .visitor-gallery > .hint { grid-column: 1 / -1; }
@@ -757,9 +774,11 @@
         .auth-switch { margin-top: 10px; text-align: center; font-size: 15px; }
         .auth-reason { margin: 10px 0 4px; padding: 12px 14px; border-radius: 12px; background: var(--primary-soft); font-weight: 600; }
         .auth-notice { margin: 10px 0 0; }
-        .signin-prompt { margin-top: 14px; padding: 16px; border-radius: 14px; border: 1.5px dashed var(--primary); background: var(--primary-soft); }
-        .signin-prompt p { font-weight: 600; margin-bottom: 10px; }
+        .signin-prompt { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-top: 14px; padding: 16px; border-radius: 16px; background: var(--surface-2); }
+        .signin-prompt p { flex: 1 1 260px; font-weight: 600; }
         .signin-prompt .banner-actions { flex-wrap: wrap; }
+        .signin-prompt .submit-btn { min-height: 46px; }
+        .signin-prompt .submit-btn.secondary { background: var(--surface); }
         .account-facts { margin-top: 12px; }
         .contrib-list { list-style: none; display: grid; gap: 8px; margin-top: 8px; }
         .contrib-list li { display: flex; justify-content: space-between; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 15px; }
@@ -1506,7 +1525,7 @@
                 sourcesLabel: 'Fontes',
                 approxMap: 'Localização aproximada: o Google Maps procura o lugar pelo nome.',
                 suggestFix: 'Corrigir ou acrescentar informação',
-                aboutRatings: 'Média das avaliações aprovadas de visitantes do Tuende.',
+                aboutRatings: 'Média das avaliações dos visitantes do Tuende.',
                 about: 'Sobre',
                 viewMap: 'Ver no mapa',
                 media: 'Vídeos e fotos',
@@ -1519,8 +1538,8 @@
                 reviewOne: '1 avaliação',
                 reviewMany: '{n} avaliações',
                 seeReviews: 'Ver avaliações e comentários',
-                externalReviews: 'Veja o que outras pessoas dizem sobre este lugar:',
-                reviewPending: 'Obrigado! O seu comentário vai aparecer depois de aprovado.',
+                externalReviews: 'Mais opiniões em',
+                reviewPending: 'Obrigado! O seu comentário já está publicado.',
                 reviewsError: 'Não foi possível carregar os comentários.',
                 yourReview: 'A sua avaliação',
                 yourName: 'O seu nome',
@@ -1529,7 +1548,8 @@
                 errName: 'Escreva o seu nome.',
                 errStars: 'Escolha de 1 a 5 estrelas.',
                 errComment: 'Escreva um comentário.',
-                noReviews: 'Ainda sem avaliações aprovadas.',
+                noStarsTitle: 'Ainda sem estrelas',
+                noStarsSub: 'Seja o primeiro a avaliar este lugar.',
                 stars: '{n} estrelas',
                 distance: 'a {d} km',
                 close: 'Fechar',
@@ -1562,8 +1582,8 @@
                 consent: 'Confirmo que a foto ou vídeo é meu ou que tenho autorização para o partilhar.',
                 sendMedia: 'Enviar',
                 sending: 'A enviar...',
-                moderationNote: 'Os envios são revistos antes de aparecerem.',
-                mediaThanks: 'Obrigado! A sua partilha vai aparecer depois de aprovada.',
+                moderationNote: 'Aparece logo para todos. Conteúdo impróprio pode ser denunciado.',
+                mediaThanks: 'Obrigado! A sua partilha já está publicada.',
                 errFile: 'Escolha uma foto.',
                 errFileType: 'Esse ficheiro não é uma imagem.',
                 errVideo: 'Cole um link do YouTube, TikTok ou Instagram.',
@@ -1796,7 +1816,7 @@
                 verifyLocation: '<strong>Localização verificada</strong> quer dizer que as coordenadas vêm da Wikipedia ou do Wikidata. <strong>Existência verificada</strong> quer dizer que o lugar existe, mas a posição no mapa é aproximada; nesse caso, "Como chegar" procura o nome no Google Maps.',
                 verifyHours: '<strong>Horários e preços.</strong> Os horários só aparecem quando há uma fonte. Os preços marcados como indicativos ainda não foram confirmados com o local.',
                 verifyPhotos: '<strong>Fotos.</strong> As fotos reais vêm do Wikimedia Commons, com autor e licença. Confirmamos pelo GPS ou pela descrição que foram tiradas em Angola. As restantes estão assinaladas como ilustrativas.',
-                verifyReviewsOn: '<strong>Avaliações.</strong> Só mostramos avaliações de visitantes depois de aprovadas. Pode denunciar qualquer conteúdo impróprio.',
+                verifyReviewsOn: '<strong>Avaliações.</strong> As avaliações, os comentários, as fotos e os vídeos dos visitantes aparecem logo que são publicados. Quem tem conta pode denunciar conteúdo impróprio; com 3 denúncias fica escondido até ser revisto.',
                 verifyReviewsOff: '<strong>Avaliações.</strong> As avaliações de visitantes ainda não estão ativas. Até lá, indicamos as opiniões publicadas no Google Maps e no TripAdvisor.',
                 verifyFix: 'Encontrou um erro? Use "Sugerir uma correção" na página do lugar. Conhece um lugar que devia estar aqui? Use "Recomendar um lugar".',
                 fixTitle: 'Corrigir um lugar',
@@ -1905,7 +1925,7 @@
                 sourcesLabel: 'Sources',
                 approxMap: 'Approximate location: Google Maps finds the place by name.',
                 suggestFix: 'Correct or add information',
-                aboutRatings: 'Average of approved ratings from Tuende visitors.',
+                aboutRatings: 'Average rating from Tuende visitors.',
                 about: 'About',
                 viewMap: 'View on map',
                 media: 'Videos and photos',
@@ -1918,8 +1938,8 @@
                 reviewOne: '1 review',
                 reviewMany: '{n} reviews',
                 seeReviews: 'See reviews and comments',
-                externalReviews: 'See what other people say about this place:',
-                reviewPending: 'Thank you! Your comment will appear once it is approved.',
+                externalReviews: 'More opinions on',
+                reviewPending: 'Thank you! Your comment is now live.',
                 reviewsError: 'Could not load the comments.',
                 yourReview: 'Your review',
                 yourName: 'Your name',
@@ -1928,7 +1948,8 @@
                 errName: 'Please enter your name.',
                 errStars: 'Choose 1 to 5 stars.',
                 errComment: 'Please write a comment.',
-                noReviews: 'No approved reviews yet.',
+                noStarsTitle: 'No stars yet',
+                noStarsSub: 'Be the first to rate this place.',
                 stars: '{n} stars',
                 distance: '{d} km away',
                 close: 'Close',
@@ -1961,8 +1982,8 @@
                 consent: 'I confirm the photo or video is mine or that I have permission to share it.',
                 sendMedia: 'Send',
                 sending: 'Sending...',
-                moderationNote: 'Submissions are reviewed before they appear.',
-                mediaThanks: 'Thank you! Your post will appear once it is approved.',
+                moderationNote: 'It appears for everyone straight away. Inappropriate content can be reported.',
+                mediaThanks: 'Thank you! Your post is now live.',
                 errFile: 'Please choose a photo.',
                 errFileType: 'That file is not an image.',
                 errVideo: 'Paste a YouTube, TikTok or Instagram link.',
@@ -2195,7 +2216,7 @@
                 verifyLocation: '<strong>Location verified</strong> means the coordinates come from Wikipedia or Wikidata. <strong>Existence verified</strong> means the place exists but its map position is approximate; in that case "Directions" searches for the name in Google Maps.',
                 verifyHours: '<strong>Opening hours and prices.</strong> Opening hours are only shown when there is a source. Prices marked as indicative have not yet been confirmed with the venue.',
                 verifyPhotos: '<strong>Photos.</strong> Real photos come from Wikimedia Commons, with author and licence. We check from GPS data or the description that they were taken in Angola. The rest are marked as illustrative.',
-                verifyReviewsOn: '<strong>Reviews.</strong> Visitor reviews are only shown after approval. You can report any inappropriate content.',
+                verifyReviewsOn: '<strong>Reviews.</strong> Visitor reviews, comments, photos and videos appear as soon as they are posted. Anyone with an account can report inappropriate content; after 3 reports it is hidden until reviewed.',
                 verifyReviewsOff: '<strong>Reviews.</strong> Visitor reviews are not live yet. Until then, we link to the reviews published on Google Maps and TripAdvisor.',
                 verifyFix: 'Found a mistake? Use "Suggest a correction" on the place page. Know a place that should be here? Use "Recommend a place".',
                 fixTitle: 'Correct a place',
@@ -2960,6 +2981,7 @@
             sun: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',
             globe: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
             search: '<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+            star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
             compass: '<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
             play: '<polygon points="5 3 19 12 5 21 5 3"/>',
             plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
@@ -3328,7 +3350,7 @@
             return `https://www.openstreetmap.org/export/embed.html?bbox=${v.lng - dLng},${v.lat - dLat},${v.lng + dLng},${v.lat + dLat}&layer=mapnik&marker=${v.lat},${v.lng}`;
         }
 
-        /* ---------- Ratings (only real, approved reviews) ---------- */
+        /* ---------- Ratings (only real reviews from visitors) ---------- */
 
         const statsOf = (v) => ratingStats[v.id];
         const reviewCountText = (n) => (n === 1 ? t('reviewOne') : t('reviewMany', { n }));
@@ -3338,10 +3360,14 @@
         }
 
         function avgHTML(stats) {
+            if (!stats) {
+                return `
+                    <span class="avg-icon" aria-hidden="true">${icon('star')}</span>
+                    <span class="avg-text"><span class="avg-title">${t('noStarsTitle')}</span><span class="avg-count">${t('noStarsSub')}</span></span>`;
+            }
             return `
-                <div class="avg-number">${stats ? stats.avg.toFixed(1) : '—'}</div>
-                ${stats ? `<div class="stars" aria-hidden="true">${stars(stats.avg)}</div>` : ''}
-                <div class="avg-count">${reviewCountText(stats?.count || 0)}</div>`;
+                <span class="avg-number">${stats.avg.toFixed(1)}</span>
+                <span class="avg-text"><span class="stars" aria-hidden="true">${stars(stats.avg)}</span><span class="avg-count">${reviewCountText(stats.count)}</span></span>`;
         }
 
         // Stats arrive after the first render; update an already open place in place.
@@ -3819,25 +3845,26 @@
 
         function externalReviewsHTML(v) {
             return `
-                <div class="external-reviews">
-                    <p class="hint">${t('externalReviews')}</p>
-                    <div class="social">
-                        <a href="${googleReviewsURL(v)}" target="_blank" rel="noopener">Google Maps</a>
-                        <a href="${tripadvisorURL(v)}" target="_blank" rel="noopener">TripAdvisor</a>
-                    </div>
+                <div class="rv-more">
+                    <span>${t('externalReviews')}</span>
+                    <a class="rv-link" href="${googleReviewsURL(v)}" target="_blank" rel="noopener">Google Maps${icon('external')}</a>
+                    <a class="rv-link" href="${tripadvisorURL(v)}" target="_blank" rel="noopener">TripAdvisor${icon('external')}</a>
                 </div>`;
         }
 
         function reviewItemHTML(r) {
             return `
                 <div class="review">
-                    <div class="review-head">
-                        <span class="review-name">${escapeHTML(r.author)}</span>
-                        <span class="review-date">${escapeHTML(new Date(r.created_at).toLocaleDateString(locale()))}</span>
+                    <span class="review-avatar" aria-hidden="true">${escapeHTML(r.author.trim().charAt(0).toUpperCase() || '?')}</span>
+                    <div class="review-main">
+                        <div class="review-head">
+                            <span class="review-name">${escapeHTML(r.author)}</span>
+                            <span class="review-date">${escapeHTML(new Date(r.created_at).toLocaleDateString(locale()))}</span>
+                        </div>
+                        ${r.rating ? `<div class="stars" aria-label="${t('stars', { n: r.rating })}">${stars(r.rating)}</div>` : ''}
+                        ${r.comment ? `<div class="review-text">${escapeHTML(r.comment)}</div>` : ''}
+                        <button type="button" class="report-btn" data-report-review="${escapeHTML(r.id)}">${t('report')}</button>
                     </div>
-                    ${r.rating ? `<div class="stars" aria-label="${t('stars', { n: r.rating })}">${stars(r.rating)}</div>` : ''}
-                    ${r.comment ? `<div class="review-text">${escapeHTML(r.comment)}</div>` : ''}
-                    <button type="button" class="report-btn" data-report-review="${escapeHTML(r.id)}">${t('report')}</button>
                 </div>
             `;
         }
@@ -3848,7 +3875,7 @@
                 return `
                     <section id="reviewsSection">
                         <h3 class="section-title">${t('opinions')}</h3>
-                        <div class="panel">${externalReviewsHTML(v)}</div>
+                        ${externalReviewsHTML(v)}
                     </section>`;
             }
             const form = signedIn() ? `
@@ -3866,12 +3893,10 @@
             return `
                 <section id="reviewsSection">
                     <h3 class="section-title">${t('reviews')}</h3>
-                    <div class="panel">
-                        <div class="avg">${avgHTML(statsOf(v))}</div>
-                        ${externalReviewsHTML(v)}
-                        ${form}
-                        <div id="reviewList"><p class="hint">${t('loading')}</p></div>
-                    </div>
+                    <div class="avg">${avgHTML(statsOf(v))}</div>
+                    <div class="review-list" id="reviewList"><p class="hint">${t('loading')}</p></div>
+                    ${form}
+                    ${externalReviewsHTML(v)}
                 </section>
             `;
         }
@@ -3883,9 +3908,8 @@
                 const items = await res.json();
                 const list = $('reviewList');
                 if (state.openId !== venueId || !list) return;
-                list.innerHTML = items.length
-                    ? items.map(reviewItemHTML).join('')
-                    : `<p class="hint" style="text-align:center;">${t('noReviews')}</p>`;
+                // With no comments the summary card already invites people to be the first.
+                list.innerHTML = items.map(reviewItemHTML).join('');
             } catch {
                 const list = $('reviewList');
                 if (list && state.openId === venueId) list.innerHTML = `<p class="hint">${t('reviewsError')}</p>`;
@@ -3989,11 +4013,15 @@
                     headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
                     body: JSON.stringify({ venue_id: state.openId, rating: state.rating || null, comment: comment || null })
                 });
+                const rated = Boolean(state.rating);
                 $('reviewText').value = '';
                 state.rating = 0;
                 updateStars();
                 msg.textContent = t('reviewPending');
                 msg.classList.add('ok');
+                // Posts go live straight away, so show the new comment and the updated stars.
+                loadReviews(state.openId);
+                if (rated) loadRatingStats();
             } catch (err) {
                 if (needsSignIn(err, msg)) return;
                 msg.textContent = err.status === 409 ? t('errAlreadyRated') : t('errSend');
@@ -4163,6 +4191,7 @@
                 $('videoField').hidden = true;
                 msg.textContent = t('mediaThanks');
                 msg.classList.add('ok');
+                loadSubmissions(venueId);
             } catch (err) {
                 if (needsSignIn(err, msg)) return;
                 msg.textContent = t('errSend');
