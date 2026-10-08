@@ -31,6 +31,7 @@ photos/                  Fotos dos locais e eventos guardadas no próprio site (
 icon-192.png, icon-512.png, apple-touch-icon.png
 privacy.html             Política de privacidade PT/EN (por publicar: falta o email)
 supabase/setup.sql       Base de dados dos comentários, fotos e vídeos dos visitantes
+supabase/emails/         Emails de confirmação de conta e de nova palavra-passe (PT/EN, marca Tuende), prontos a colar no Supabase
 ios/                     Projeto Xcode (SwiftUI + WKWebView)
   ANGOLIVE.xcodeproj
   ANGOLIVE/AngoliveApp.swift
@@ -87,7 +88,7 @@ Com o Supabase ligado aparece o botão "Entrar" no topo. Com conta, as pessoas g
 2. Em **SQL Editor**, colar e correr `supabase/setup.sql`.
 3. Em **Authentication > Sign In / Providers > Email**: manter "Confirm email" ligado e pôr o comprimento mínimo da palavra-passe em 8.
 4. Em **Authentication > URL Configuration**: Site URL = `https://kingic17.github.io/tuende/` (ou o domínio próprio) e juntar `https://kingic17.github.io/tuende/**` em "Redirect URLs" (os links de ativação e de recuperação voltam para a app).
-5. Recomendado antes de abrir ao público: em **Authentication > Emails > SMTP Settings**, ligar um serviço de email próprio (ex.: Resend, Brevo); o envio de emails incluído no Supabase tem um limite muito baixo por hora. Os textos dos emails podem ser traduzidos em **Authentication > Emails > Templates**.
+5. Recomendado antes de abrir ao público: em **Authentication > Emails > SMTP Settings**, ligar um serviço de email próprio (ex.: Resend, Brevo), com remetente "Tuende" num endereço do domínio próprio; o envio de emails incluído no Supabase tem um limite muito baixo por hora. Só com SMTP próprio o Supabase deixa mudar os emails: depois, em **Authentication > Emails > Templates**, colar `supabase/emails/confirm-signup.html` em "Confirm sign up" (assunto: "Tuende: confirme o seu email / confirm your email") e `supabase/emails/reset-password.html` em "Reset password" (assunto: "Tuende: nova palavra-passe / new password").
 6. Em **Project Settings > API**, copiar o Project URL e a chave pública (publishable/anon) para `SUPABASE_URL` e `SUPABASE_KEY` em `index.html` (e na cópia em `ios/ANGOLIVE/`). Esta chave é pública por natureza; a segurança vem das regras RLS do `setup.sql`. Nunca usar a chave `service_role` na app.
 7. Moderação: em **Table Editor > reviews** (comentários) e **submissions** (fotos e vídeos), mudar `status` para `approved` para publicar, ou `rejected` para recusar. Com 3 denúncias fica `hidden` automaticamente.
 8. Sugestões de eventos: em **Table Editor > event_suggestions**. Depois de confirmar o evento numa fonte, juntá-lo a `EVENTS` e mudar `status` para `added`.
@@ -123,11 +124,11 @@ Não adicionar o domínio no GitHub antes de o comprar e configurar o DNS: o end
 4. **iPhone**: build, testes, capturas de ecrã e submissão. Atenção à regra 4.2 da Apple ("minimum functionality"): apps que só mostram um site podem ser recusadas.
 5. **Política de privacidade**: publicar `privacy.html` assim que o email de contacto estiver confirmado, e ligá-la a partir da app e das fichas das lojas.
 6. **Dados por confirmar** (verificação feita em outubro de 2026 com Wikipedia e o guia Ver Angola):
-   - Confirmados como existentes: Café del Mar (Ilha de Luanda), O Madeirense (Liga Africana), Lookal Mar e Lookal Beach Club (Ilha do Cabo), EPIC SANA Luanda, NovaCâmbios, Batuk (Restinga do Lobito), Hotel Serra da Chela. Miami Beach, Chill Out e Coconuts vêm de artigos de 2015 a 2021: confirmar se continuam abertos.
+   - Confirmados como existentes: Café del Mar (Ilha de Luanda), O Madeirense (Liga Africana), Lookal Mar e Lookal Beach Club (Ilha do Cabo), EPIC SANA Luanda, NovaCâmbios, Batuk (Restinga do Lobito), Hotel Serra da Chela. Verificação de 8 de outubro de 2026: o Miami Beach está aberto (menu digital com horário e preços; passou de discoteca a restaurante); o Coconuts foi removido (fechado de vez segundo o TripAdvisor); o Chill Out continua por confirmar (domínio do site renovado até 2027, mas sem fonte recente com horário).
    - Removidos por não haver fontes: "Caminito Night Club" e "Messe Hotel Huila" (substituído pelo Hotel Serra da Chela). "Lookal Ocean Club" passou a "Lookal Mar".
    - As estrelas inventadas foram removidas (outubro de 2026). Agora só aparecem estrelas calculadas a partir de comentários reais.
    - Os telefones foram removidos até serem confirmados (campo `phone` vazio); os botões Ligar e WhatsApp só aparecem quando há número.
-   - Os preços dos menus e algumas descrições ainda não foram confirmados com os locais.
+   - Algumas descrições ainda não foram confirmadas com os locais.
    - Alguns locais ainda usam fotos ilustrativas (Unsplash), marcadas como tal; os outros têm fotos reais do Wikimedia Commons.
    - Locais acrescentados a 6 de outubro de 2026 (ids 34 a 61): transportes, museus, centros comerciais, praças, bares, discotecas, câmbio, ginásios e piscina. Fontes: sites oficiais, Expansão, Novo Jornal, ANGOP, Ver Angola, Wikipedia e OpenStreetMap. Onde nenhuma fonte publica o preço ou o horário, a app mostra "por confirmar". Tarifas atualizadas: táxi coletivo 300 Kz e autocarro urbano 200 Kz (julho de 2025), comboio suburbano 300 Kz (maio de 2026).
    - Por confirmar com os próprios locais: preços dos bares, discotecas e ginásios; horário e acesso do público à Piscina do Alvalade (não encontrámos piscinas públicas com preço publicado em Luanda); horários de alguns centros comerciais.
