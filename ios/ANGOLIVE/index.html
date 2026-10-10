@@ -29,7 +29,8 @@
             font-style: normal;
             font-weight: 400 800;
             font-display: swap;
-            src: url('fonts/plus-jakarta-sans-latin.woff2') format('woff2');
+            /* The iPhone app bundles the font next to the page, so the second address is its fallback. */
+            src: url('fonts/plus-jakarta-sans-latin.woff2') format('woff2'), url('plus-jakarta-sans-latin.woff2') format('woff2');
             unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
 
@@ -811,6 +812,28 @@
 
         /* Agenda */
         .events-page { max-width: 900px; margin: 0 auto; padding-top: 12px; }
+        .guide-page { max-width: 820px; margin: 0 auto; padding-top: 12px; }
+        .guide-page > .hint { margin-top: 6px; }
+        .guide-jump { margin: 18px 0 0; max-width: none; flex-wrap: wrap; overflow: visible; }
+        .guide-card { margin-top: 18px; padding: 18px; border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); scroll-margin-top: 16px; }
+        .guide-card h2 { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 800; }
+        .guide-card h2 .icon { width: 26px; height: 26px; color: var(--primary); flex: none; }
+        .guide-list { list-style: none; display: grid; gap: 12px; margin-top: 14px; }
+        .guide-list li { padding-left: 14px; border-left: 3px solid var(--line); font-size: 15px; }
+        .guide-list li > b { display: block; font-size: 16px; }
+        .guide-list li > .price-pill { margin: 2px 0 4px; }
+        .guide-list li > span:not(.price-pill):not(.guide-links) { color: var(--muted); }
+        .guide-links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 4px; }
+        .guide-links .link-btn { display: inline-flex; flex: 0 1 auto; align-items: center; gap: 4px; min-width: 0; max-width: 100%; min-height: 36px; text-align: left; text-decoration: none; }
+        .guide-links .icon { width: 14px; height: 14px; }
+        .guide-sources { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+        .guide-sources a { color: var(--primary); font-weight: 600; }
+        .guide-card.sos { border-color: var(--primary); }
+        .sos-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+        .sos-call { display: flex; flex-direction: column; gap: 2px; padding: 14px; border-radius: 14px; background: var(--primary-fill); color: #fff; text-decoration: none; }
+        .sos-call b { font-size: 34px; line-height: 1; font-weight: 800; letter-spacing: 0.02em; }
+        .sos-call span { font-size: 14px; font-weight: 700; }
+        .sos-call:hover { background: var(--primary-fill-strong); }
         .events-filters { display: grid; gap: 14px; margin-top: 18px; padding: 16px; border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); }
         .events-filters .field { max-width: 320px; margin-top: 6px; }
         .events-filters .chips { margin: 8px 0 0; max-width: none; flex-wrap: wrap; overflow: visible; }
@@ -874,6 +897,11 @@
 
         @media (max-width: 720px) {
             .rec-title { font-size: 27px; }
+            .guide-jump { flex-wrap: nowrap; overflow-x: auto; }
+            .sos-grid { grid-template-columns: 1fr; }
+            .sos-call { flex-direction: row; align-items: center; gap: 14px; }
+            .sos-call b { font-size: 28px; min-width: 64px; }
+            .guide-card { padding: 16px; }
             .rec-grid, .social-row.other-row { grid-template-columns: 1fr; }
             .social-row { grid-template-columns: 1fr 50px; }
             .social-row select { grid-column: 1 / -1; }
@@ -966,6 +994,7 @@
             <nav class="top-nav" data-i18n-aria="navMain">
                 <button type="button" data-action="home" data-i18n="navExplore"></button>
                 <button type="button" data-action="events" data-i18n="agenda"></button>
+                <button type="button" data-action="guide" data-i18n="guideNav"></button>
                 <button type="button" id="navRecommend" data-action="recommend" hidden data-i18n="recTitle"></button>
             </nav>
             <div class="topbar-actions">
@@ -1121,12 +1150,21 @@
                 <button class="submit-btn" type="button" data-action="suggest-event" data-i18n="eventSuggest"></button>
             </section>
         </section>
+
+        <section id="guideView" class="guide-page" hidden aria-labelledby="guideTitle">
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"></span><span data-i18n="backHome"></span></button>
+            <h1 class="rec-title" id="guideTitle" data-i18n="guideTitle"></h1>
+            <p class="rec-intro" data-i18n="guideIntro"></p>
+            <p class="hint" id="guideChecked"></p>
+            <div id="guideBody"></div>
+        </section>
     </main>
 
     <footer class="site-footer">
         <div class="container">
             <nav class="footer-links" aria-label="Tuende">
                 <button type="button" class="footer-link" data-action="events" data-i18n="agenda"></button>
+                <button type="button" class="footer-link" data-action="guide" data-i18n="guideTitle"></button>
                 <button type="button" class="footer-link" data-info="about" data-i18n="footerAbout"></button>
                 <button type="button" class="footer-link" data-info="verify" data-i18n="footerVerify"></button>
                 <a class="footer-link" id="footerPrivacy" href="privacy.html" hidden data-i18n="footerPrivacy"></a>
@@ -1142,6 +1180,7 @@
     <nav class="tabbar" id="tabbar" data-i18n-aria="navMain">
         <button class="tab" type="button" data-tab="home" data-action="home"><span data-icon="compass"></span><span data-i18n="navExplore"></span></button>
         <button class="tab" type="button" data-tab="events" data-action="events"><span data-icon="calendar"></span><span data-i18n="agenda"></span></button>
+        <button class="tab" type="button" data-tab="guide" data-action="guide"><span data-icon="info"></span><span data-i18n="guideNav"></span></button>
         <button class="tab" type="button" data-tab="saved" data-action="show-saved"><span data-icon="heart"></span><span data-i18n="savedBtn"></span></button>
         <button class="tab" type="button" data-tab="account" id="tabAccount" hidden><span id="tabAccountIcon"></span><span id="tabAccountLabel"></span></button>
     </nav>
@@ -1759,6 +1798,17 @@
                 eventsCtaTitle: 'Conhece um evento que devia estar aqui?',
                 eventsCtaText: 'Envie-nos os detalhes. Confirmamos numa fonte antes de publicar.',
                 eventSuggest: 'Sugerir um evento',
+                guideNav: 'Guia',
+                guideTitle: 'Guia prático',
+                guideIntro: 'O essencial antes de ir: números de emergência, vistos, dinheiro, rede móvel, transportes, segurança e saúde. As regras mudam; confirme sempre nas fontes de cada secção.',
+                guideChecked: 'Verificado a {date}.',
+                guideJump: 'Secções do guia',
+                guideCall: 'Ligar {number}: {name}',
+                guideSeePlace: 'Ver {name}',
+                guideSeeCategory: 'Ver {name}',
+                guideCtaTitle: 'Antes de ir',
+                guideCtaText: 'Vistos, dinheiro, rede móvel, transportes, segurança e números de emergência, num só sítio.',
+                guideOpen: 'Abrir o guia prático',
                 dateRange: '{from} a {to}',
                 eventToday: 'Hoje',
                 eventTomorrow: 'Amanhã',
@@ -2167,6 +2217,17 @@
                 eventsCtaTitle: 'Know an event that should be here?',
                 eventsCtaText: 'Send us the details. We check them against a source before publishing.',
                 eventSuggest: 'Suggest an event',
+                guideNav: 'Guide',
+                guideTitle: 'Practical guide',
+                guideIntro: 'The essentials before you go: emergency numbers, visas, money, mobile networks, transport, safety and health. Rules change; always check the sources under each section.',
+                guideChecked: 'Checked on {date}.',
+                guideJump: 'Guide sections',
+                guideCall: 'Call {number}: {name}',
+                guideSeePlace: 'See {name}',
+                guideSeeCategory: 'See {name}',
+                guideCtaTitle: 'Before you go',
+                guideCtaText: 'Visas, money, mobile networks, transport, safety and emergency numbers, all in one place.',
+                guideOpen: 'Open the practical guide',
                 dateRange: '{from} – {to}',
                 eventToday: 'Today',
                 eventTomorrow: 'Tomorrow',
@@ -2958,6 +3019,102 @@
         const WHEN_LABELS = { all: 'whenAll', today: 'whenToday', weekend: 'whenWeekend', week: 'whenWeek', nextweek: 'whenNextWeek', month: 'whenMonth', nextmonth: 'whenNextMonth' };
         const DEFAULT_EVENT_FILTERS = { when: 'all', type: '', where: '' };
 
+        // Guia prático. Each line comes from the sources listed under its section; check them again before changing a fact.
+        const GUIDE_CHECKED = '2026-10-10';
+        const PT_ADVICE = { label: 'Portal das Comunidades Portuguesas (abril de 2026)', url: 'https://portaldascomunidades.mne.gov.pt/pt/vai-viajar/conselhos-aos-viajantes/africa/angola' };
+        const UK_ADVICE = { label: 'GOV.UK (FCDO)', url: 'https://www.gov.uk/foreign-travel-advice/angola/safety-and-security' };
+        const EMERGENCY = [
+            { number: '111', pt: 'Emergência nacional e polícia', en: 'National emergency and police' },
+            { number: '115', pt: 'Bombeiros', en: 'Fire brigade' },
+            { number: '116', pt: 'Ambulância', en: 'Ambulance' }
+        ];
+        const GUIDE = [
+            {
+                id: 'emergencia', icon: 'phone', title: { pt: 'Números de emergência', en: 'Emergency numbers' },
+                emergency: true,
+                items: [
+                    { pt: 'O antigo 113 da polícia foi desativado em 2020: para a polícia, ligue 111.', en: 'The old police number 113 was switched off in 2020: for the police, call 111.' },
+                    { pt: 'Guarde antes de viajar o contacto da embaixada ou do consulado do seu país em Luanda.', en: 'Before you travel, save the contact of your country\'s embassy or consulate in Luanda.' }
+                ],
+                sources: [PT_ADVICE, { label: 'Novo Jornal (2020)', url: 'https://www.novojornal.co.ao/sociedade/detalhe/terminal-113-deixou-de-estar-ao-servico-do-cidadao---111-e-o-novo-numero-de-emergencia-policial-23093.html' }, { label: 'Ver Angola (maio de 2020)', url: 'https://www.verangola.net/va/pt/052020/Defesa/19868/Pol%C3%ADcia-desactivou-o-n%C3%BAmero-113-Em-caso-de-emerg%C3%AAncia-deve-ligar-para-o-111.htm' }]
+            },
+            {
+                id: 'vistos', icon: 'passport', title: { pt: 'Vistos e entrada', en: 'Visas and entry' },
+                items: [
+                    { lead: { pt: 'Sem visto', en: 'No visa' }, pt: 'Cidadãos de 98 países, entre eles Portugal, Brasil, Estados Unidos, Reino Unido, África do Sul, Namíbia e Moçambique, não precisam de visto de turismo: até 30 dias por entrada e 90 dias por ano. Vale só para turismo (Decreto Presidencial n.º 189/23, desde 29 de setembro de 2023).', en: 'Citizens of 98 countries, including Portugal, Brazil, the United States, the United Kingdom, South Africa, Namibia and Mozambique, do not need a tourist visa: up to 30 days per entry and 90 days a year. It covers tourism only (Presidential Decree 189/23, since 29 September 2023).' },
+                    { lead: { pt: 'Confirme o seu país', en: 'Check your country' }, pt: 'A lista pode mudar. Antes de comprar o bilhete, veja a lista completa no portal do SME (Serviço de Migração e Estrangeiros).', en: 'The list can change. Before you buy your ticket, check the full list on the SME (Migration and Foreigners Service) portal.', link: 'https://evisa.ao/ao/' },
+                    { lead: { pt: 'Restantes países', en: 'Other countries' }, pt: 'Peça o visto no portal eVISA do SME: preencha o formulário, junte os documentos e pague a taxa. O portal indica 72 horas para a decisão, que chega por e-mail; mostre o visto à chegada. O valor da taxa não está publicado no portal.', en: 'Apply on the SME eVISA portal: fill in the form, attach the documents and pay the fee. The portal says a decision takes 72 hours and arrives by email; show the visa on arrival. The fee is not published on the portal.' },
+                    { lead: { pt: 'O que o eVISA pede', en: 'What the eVISA asks for' }, pt: 'Passaporte, reserva do voo de ida e volta, reserva do alojamento, prova de meios para a estadia e certificado de vacinação contra a febre-amarela.', en: 'Passport, return flight booking, accommodation booking, proof of funds for the stay and a yellow fever vaccination certificate.' },
+                    { lead: { pt: 'Passaporte', en: 'Passport' }, pt: 'Tem de ser válido por pelo menos 6 meses a contar da data de entrada.', en: 'It must be valid for at least 6 months from the date you enter.' },
+                    { lead: { pt: 'Febre-amarela', en: 'Yellow fever' }, pt: 'Desde outubro de 2023, quem chega de países sem febre-amarela (Portugal, por exemplo) já não tem de mostrar o certificado à entrada; pode ser pedido a quem vem de países de risco (Decreto Presidencial n.º 197/23).', en: 'Since October 2023, travellers arriving from countries without yellow fever (Portugal, for example) no longer have to show the certificate at entry; it may be requested from those coming from at-risk countries (Presidential Decree 197/23).' },
+                    { lead: { pt: 'Prazos', en: 'Time limits' }, pt: 'Ficar além do prazo dá multa ou pode levar à expulsão. Para trabalhar, estudar ou viver em Angola é preciso outro visto, pedido num consulado de Angola; evite intermediários.', en: 'Overstaying brings a fine or can lead to removal. To work, study or live in Angola you need a different visa from an Angolan consulate; avoid middlemen.' }
+                ],
+                sources: [{ label: 'SME eVISA', url: 'https://evisa.ao/ao/' }, { label: 'Governo de Angola (setembro de 2023)', url: 'https://governo.gov.ao/noticias/1046/governo/decreto-presidencial/angola-isenta-cidadaos-de-98-paises-de-vistos-de-turismo' }, { label: 'Secretariado do Conselho de Ministros', url: 'https://scm.gov.ao/web/noticias/cidadaos-de-98-paises-tem-isencao-de-visto-de-entrada' }, PT_ADVICE]
+            },
+            {
+                id: 'dinheiro', icon: 'card', title: { pt: 'Dinheiro e pagamentos', en: 'Money and payments' },
+                items: [
+                    { lead: { pt: 'Moeda', en: 'Currency' }, pt: 'O kwanza (Kz, código AOA). Todos os preços na Tuende estão em kwanzas. O câmbio oficial está no site do Banco Nacional de Angola.', en: 'The kwanza (Kz, code AOA). All prices on Tuende are in kwanzas. The official exchange rate is on the Banco Nacional de Angola website.', link: 'https://www.bna.ao/' },
+                    { lead: { pt: 'Multicaixa', en: 'Multicaixa' }, pt: 'A rede angolana de cartões de débito, a mais usada para pagar e levantar dinheiro. Os cartões de crédito ainda são aceites sobretudo nos principais hotéis e restaurantes.', en: 'Angola\'s debit card network, the most used way to pay and withdraw cash. Credit cards are still accepted mainly in the main hotels and restaurants.' },
+                    { lead: { pt: 'Cartões estrangeiros', en: 'Foreign cards' }, pt: 'As caixas Multicaixa permitem levantar dinheiro com cartões da rede Visa. Antes de viajar, pergunte ao seu banco se o cartão funciona em Angola.', en: 'Multicaixa cash machines accept cards on the Visa network. Before you travel, ask your bank whether your card works in Angola.' },
+                    { lead: { pt: 'Mastercard e outros cartões', en: 'Mastercard and other cards' }, tbc: true, pt: 'Não encontrámos uma fonte oficial sobre levantamentos com estes cartões. Confirme com o seu banco.', en: 'We found no official source on withdrawals with these cards. Check with your bank.' },
+                    { lead: { pt: 'Nas caixas', en: 'At cash machines' }, pt: 'Tenha cuidado ao levantar dinheiro: há casos de pessoas seguidas e assaltadas depois de usar a caixa.', en: 'Take care when withdrawing cash: people have been followed and robbed after using a cash machine.' },
+                    { lead: { pt: 'Câmbio', en: 'Exchange' }, pt: 'Troque dinheiro em bancos ou em casas de câmbio. Há algumas na Tuende.', en: 'Change money at banks or exchange bureaus. Tuende lists some.', category: 'services' },
+                    { lead: { pt: 'Entrar e sair com dinheiro', en: 'Bringing money in and out' }, pt: 'Quem entra com 10 mil dólares ou mais (somando kwanzas e moeda estrangeira) tem de declarar na alfândega e guardar o duplicado. À saída, quem não vive em Angola pode levar a moeda estrangeira com que entrou, mostrando esse duplicado (Aviso n.º 6/22 do BNA).', en: 'If you arrive with 10,000 US dollars or more (kwanzas and foreign currency added together), you must declare it at customs and keep the copy. When leaving, non-residents can take out the foreign currency they brought in by showing that copy (BNA Notice 6/22).' }
+                ],
+                sources: [PT_ADVICE, UK_ADVICE, { label: 'Aviso n.º 6/22 do BNA (lex.ao)', url: 'https://lex.ao/docs/banco-nacional-de-angola/2022/aviso-n-o-6-22-de-03-de-marco/' }, { label: 'Ver Angola (março de 2022)', url: 'https://www.verangola.net/va/pt/032022/BancaSeguros/29826/BNA-vai-autorizar-residentes-cambiais-a-sair-do-pa%C3%ADs-com-moeda-nacional-ou-estrangeira-at%C3%A9-10-mil-d%C3%B3lares.htm' }]
+            },
+            {
+                id: 'rede', icon: 'signal', title: { pt: 'Telemóvel e internet', en: 'Phone and internet' },
+                items: [
+                    { lead: { pt: 'Unitel', en: 'Unitel' }, pt: 'A maior operadora, com cerca de 7 em cada 10 clientes de telemóvel (dados de setembro de 2023).', en: 'The biggest operator, with about 7 in 10 mobile customers (September 2023 figures).', link: 'https://unitel.ao/' },
+                    { lead: { pt: 'Africell', en: 'Africell' }, pt: 'A segunda, com cerca de 2 em cada 10 clientes (setembro de 2023). Também vende eSIM, que se instala sem cartão físico num telemóvel compatível.', en: 'The second, with about 2 in 10 customers (September 2023). It also sells eSIMs, which install without a physical card on a compatible phone.', link: 'https://www.africell.ao/' },
+                    { lead: { pt: 'Movicel', en: 'Movicel' }, pt: 'A terceira. Perdeu a maior parte dos clientes nos últimos anos (cerca de 302 mil no fim de 2025, perto de 1% do mercado) e passa por dificuldades financeiras. A cobertura atual está por confirmar: pergunte na loja antes de comprar.', en: 'The third. It has lost most of its customers in recent years (about 302,000 at the end of 2025, close to 1% of the market) and is in financial difficulty. Current coverage is to be confirmed: ask in the shop before you buy.', link: 'https://www.movicel.co.ao/' },
+                    { lead: { pt: 'Cartão SIM', en: 'SIM card' }, pt: 'O registo do cartão é obrigatório. Leve o passaporte à loja da operadora.', en: 'SIM registration is mandatory. Take your passport to the operator\'s shop.' },
+                    { lead: { pt: 'Documentos para estrangeiros', en: 'Documents for visitors' }, tbc: true, pt: 'Não encontrámos a lista oficial dos documentos aceites para quem não é angolano. Confirme na loja.', en: 'We found no official list of documents accepted from non-Angolans. Check in the shop.' },
+                    { lead: { pt: 'Telemóvel', en: 'Your phone' }, pt: 'Para usar um cartão angolano, o telemóvel tem de estar desbloqueado (sem bloqueio de operadora).', en: 'To use an Angolan SIM, your phone must be unlocked (not tied to a carrier).' }
+                ],
+                sources: [{ label: 'Expansão (janeiro de 2024)', url: 'https://expansao.co.ao/empresas/interior/sete-em-cada-dez-subscritores-de-telemovel-sao-da-unitel-e-dois-sao-da-africell-116483.html' }, { label: 'Okusaka (julho de 2026)', url: 'https://www.okusaka.com/2026/07/movicel-perde-quase-80-dos-clientes-e.html' }, { label: 'Ver Angola (setembro de 2022)', url: 'https://www.verangola.net/va/pt/092022/Telecomunicacoes/32653/Africell-lan%C3%A7a-%E2%80%98eSIM%E2%80%99-no-pa%C3%ADs-Servi%C3%A7o-permite-localizar-telem%C3%B3veis-em-caso-de-perda-ou-roubo.htm' }, { label: 'Ver Angola (dezembro de 2017)', url: 'https://www.verangola.net/va/pt/122017/Telecomunicacoes/10403/Governo-vai-desactivar-500000-n%C3%BAmeros-telef%C3%B3nicos-a-partir-de-Quarta-feira.htm' }]
+            },
+            {
+                id: 'transportes', icon: 'bus', title: { pt: 'Como se deslocar', en: 'Getting around' },
+                items: [
+                    { lead: { pt: 'Chegada', en: 'Arrival' }, pt: 'Entre 2025 e 2026, os voos internacionais de Luanda passaram para o novo Aeroporto Internacional Dr. António Agostinho Neto (AIAAN), em Icolo e Bengo. Confirme no bilhete o aeroporto de chegada.', en: 'Between 2025 and 2026, Luanda\'s international flights moved to the new Dr. António Agostinho Neto International Airport (AIAAN) in Icolo e Bengo. Check your ticket for the arrival airport.' },
+                    { lead: { pt: 'Comboio para o aeroporto', en: 'Airport train' }, pt: 'Liga a estação do Bungo, na Baixa de Luanda, ao AIAAN: 1350 Kz com paragens ou 5000 Kz no expresso.', en: 'It links Bungo station, in downtown Luanda, to AIAAN: 1,350 Kz with stops or 5,000 Kz on the express.', place: 35 },
+                    { lead: { pt: 'Yango', en: 'Yango' }, pt: 'Táxi por aplicação, com o preço mostrado antes de confirmar. O Governo britânico pede cautela com estas aplicações: confira o motorista e a matrícula antes de entrar e partilhe a viagem com alguém de confiança.', en: 'App taxi, with the price shown before you confirm. The UK government urges caution with these apps: check the driver and number plate before getting in and share the trip with someone you trust.', place: 40 },
+                    { lead: { pt: 'Táxi', en: 'Taxi' }, pt: 'Num táxi normal, confirme que o taxímetro está ligado ou peça o preço antes de partir.', en: 'In a regular taxi, check the meter is on or ask for the price before you set off.' },
+                    { lead: { pt: 'Candongueiros', en: 'Candongueiros' }, pt: 'Os táxis coletivos azuis e brancos fazem percursos fixos por 300 Kz. São o transporte mais usado em Luanda, mas os conselhos de viagem de Portugal e do Reino Unido recomendam aos visitantes que os evitem.', en: 'The blue and white shared minibuses run fixed routes for 300 Kz. They are Luanda\'s most used transport, but Portuguese and UK travel advice tells visitors to avoid them.', place: 36 },
+                    { lead: { pt: 'Autocarro e comboio', en: 'Bus and train' }, pt: 'Autocarro urbano TCUL: 200 Kz. Comboio suburbano Bungo–Viana: 300 Kz.', en: 'TCUL city bus: 200 Kz. Bungo–Viana suburban train: 300 Kz.', place: 37 },
+                    { lead: { pt: 'Entre províncias', en: 'Between provinces' }, pt: 'Há autocarros de longa distância, como a Real Express. Se conduzir, evite a estrada à noite fora das cidades e conte com estradas piores na época das chuvas (outubro a abril).', en: 'There are long-distance coaches such as Real Express. If you drive, avoid the road at night outside the cities and expect worse roads in the rainy season (October to April).', place: 38 }
+                ],
+                sources: [PT_ADVICE, UK_ADVICE, { label: 'Expansão (AIAAN, 2026)', url: 'https://expansao.co.ao/angola/detalhe/royal-air-maroc-turkish-airlines-e-asky-mudam-se-para-o-aiaan-a-2-de-fevereiro-69530.html' }, { label: 'ANGOP (comboio para o aeroporto)', url: 'https://angop.ao/en/noticias/economia/comboio-expresso-inicia-circulacao-bungo-novo-aeroporto' }, { label: 'Expansão (julho de 2025)', url: 'https://expansao.co.ao/angola/detalhe/taxi-passa-a-custar-300-kz-e-bilhete-de-autocarro-sobe-para-200-kz-a-partir-desta-segunda-feira-66233.html' }]
+            },
+            {
+                id: 'seguranca', icon: 'shield', title: { pt: 'Segurança', en: 'Safety' },
+                items: [
+                    { lead: { pt: 'Na rua', en: 'On the street' }, pt: 'Há crime, por vezes violento, sobretudo em Luanda. Evite andar a pé sozinho, principalmente depois de escurecer.', en: 'There is crime, sometimes violent, especially in Luanda. Avoid walking alone, above all after dark.' },
+                    { lead: { pt: 'Objetos de valor', en: 'Valuables' }, pt: 'Não mostre joias, relógios caros, telemóvel ou computador na rua. Se for assaltado, entregue o que pedem.', en: 'Do not show jewellery, expensive watches, phones or laptops on the street. If you are robbed, hand over what is asked for.' },
+                    { lead: { pt: 'À noite', en: 'At night' }, pt: 'Há assaltos à saída de restaurantes e discotecas. Combine o transporte de regresso antes de sair.', en: 'Robberies happen outside restaurants and nightclubs. Arrange your ride home before you go out.' },
+                    { lead: { pt: 'Documentos', en: 'Documents' }, pt: 'Ande sempre com identificação, de preferência uma cópia certificada da página do passaporte; sem ela pode pagar uma multa de 15 000 Kz na hora. Fora de Luanda e das capitais de província, leve os originais bem guardados.', en: 'Always carry ID, ideally a certified copy of your passport photo page; without it you may get an on-the-spot fine of 15,000 Kz. Outside Luanda and the provincial capitals, carry the originals, safely packed.' },
+                    { lead: { pt: 'Fotografias', en: 'Photos' }, pt: 'Não fotografe edifícios do governo e peça autorização antes de fotografar pessoas.', en: 'Do not photograph government buildings, and ask before taking photos of people.' },
+                    { lead: { pt: 'Drogas', en: 'Drugs' }, pt: 'Tráfico e consumo são crime, punidos com severidade.', en: 'Trafficking and use are crimes, punished severely.' },
+                    { lead: { pt: 'Antes de ir', en: 'Before you go' }, pt: 'Veja os conselhos de viagem atualizados do seu país: mudam com cheias e outros acontecimentos.', en: 'Read your own country\'s latest travel advice: it changes with floods and other events.' }
+                ],
+                sources: [PT_ADVICE, UK_ADVICE]
+            },
+            {
+                id: 'saude', icon: 'health', title: { pt: 'Saúde', en: 'Health' },
+                items: [
+                    { lead: { pt: 'Malária', en: 'Malaria' }, pt: 'Existe em Angola. Fale com um médico antes de viajar sobre a prevenção (profilaxia).', en: 'It is present in Angola. Talk to a doctor before you travel about prevention (prophylaxis).' },
+                    { lead: { pt: 'Outras doenças', en: 'Other diseases' }, pt: 'Há hepatite A e B, e surtos de cólera e raiva são relativamente frequentes. Veja com o médico as vacinas recomendadas.', en: 'Hepatitis A and B are present, and cholera and rabies outbreaks are fairly frequent. Ask your doctor which vaccines are recommended.' },
+                    { lead: { pt: 'Água', en: 'Water' }, pt: 'Beba só água engarrafada ou fervida e evite gelo nas bebidas.', en: 'Drink only bottled or boiled water and avoid ice in drinks.' },
+                    { lead: { pt: 'Médicos', en: 'Doctors' }, pt: 'Prefira clínicas privadas; é frequente pedirem uma caução em dinheiro antes do tratamento. Faça um seguro de viagem que cubra a evacuação médica.', en: 'Choose private clinics; they often ask for a cash deposit before treatment. Get travel insurance that covers medical evacuation.' },
+                    { lead: { pt: 'Medicamentos', en: 'Medicines' }, pt: 'Leve os seus medicamentos habituais. Evite farmácias não legalizadas.', en: 'Bring your usual medicines. Avoid unlicensed pharmacies.' }
+                ],
+                sources: [PT_ADVICE]
+            }
+        ];
+
         // "Aberto agora" only makes sense once enough places have confirmed hours.
         const MIN_PLACES_WITH_HOURS = 8;
 
@@ -3019,7 +3176,13 @@
             compass: '<circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>',
             play: '<polygon points="5 3 19 12 5 21 5 3"/>',
             plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
-            download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>'
+            download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+            info: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
+            passport: '<rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="10" r="3"/><line x1="8" y1="17" x2="16" y2="17"/>',
+            card: '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/>',
+            signal: '<line x1="4" y1="20" x2="4" y2="17"/><line x1="9" y1="20" x2="9" y2="13"/><line x1="14" y1="20" x2="14" y2="9"/><line x1="19" y1="20" x2="19" y2="4"/>',
+            shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+            health: '<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>'
         };
 
         // Keys keep the old 'angolive' prefix so saved places, settings and sign-ins carry over from before the rename.
@@ -3517,6 +3680,15 @@
             $('recTitle').focus?.();
         }
 
+        function showGuide({ push = true, section = '' } = {}) {
+            state.view = 'guide';
+            if (push) history.pushState(null, '', `${location.pathname}?page=guide${section ? `#guia-${section}` : ''}`);
+            render();
+            const target = section && $(`guia-${section}`);
+            if (target) target.scrollIntoView({ block: 'start' });
+            else window.scrollTo({ top: 0 });
+        }
+
         function goHome({ push = true } = {}) {
             state.view = 'home';
             state.filters = { ...DEFAULT_FILTERS };
@@ -3532,6 +3704,10 @@
             if (params.get('page') === 'recommend') {
                 if (state.view !== 'recommend') showRecommend({ push: false });
             } else if (params.get('page') === 'events') showEvents({ push: false, filters: eventFiltersFromQuery(params) });
+            else if (params.get('page') === 'guide') {
+                const section = location.hash.match(/^#guia-([a-z]+)$/)?.[1] || '';
+                if (state.view !== 'guide' || section) showGuide({ push: false, section: GUIDE.some((g) => g.id === section) ? section : '' });
+            }
             else if (hasFilters(filters)) showResults(filters, { push: false, scroll: false });
             else if (state.view !== 'home') goHome({ push: false });
             const deepLink = location.hash.match(/^#local-(\d+)$/);
@@ -3653,6 +3829,11 @@
                         <div class="event-mini-grid">${nextEvents.map(eventMiniHTML).join('')}</div>
                     </section>`);
             }
+            parts.push(`
+                <section class="home-cta guide-cta" aria-labelledby="guideCtaTitle">
+                    <div><h2 id="guideCtaTitle">${t('guideCtaTitle')}</h2><p>${t('guideCtaText')}</p></div>
+                    <button class="submit-btn" type="button" data-action="guide">${t('guideOpen')}</button>
+                </section>`);
             parts.push(sectionHTML('secCategories', t('categoriesTitle'), '', categoryTilesHTML()));
 
             const collections = Object.entries(COLLECTIONS).map(([key, c]) => {
@@ -3766,7 +3947,7 @@
         }
 
         function renderTabbar() {
-            const active = state.view === 'events' ? 'events' : state.view === 'results' && state.filters.saved ? 'saved' : state.view === 'home' ? 'home' : '';
+            const active = state.view === 'events' || state.view === 'guide' ? state.view : state.view === 'results' && state.filters.saved ? 'saved' : state.view === 'home' ? 'home' : '';
             document.querySelectorAll('#tabbar .tab').forEach((tab) => {
                 const on = tab.dataset.tab === active;
                 tab.classList.toggle('active', on);
@@ -3779,14 +3960,49 @@
             renderQuickFilters();
             renderSavedButton();
             renderTabbar();
-            $('hero').hidden = state.view === 'recommend' || state.view === 'events';
+            $('hero').hidden = state.view === 'recommend' || state.view === 'events' || state.view === 'guide';
             $('homeView').hidden = state.view !== 'home';
             $('resultsView').hidden = state.view !== 'results';
             $('recommendView').hidden = state.view !== 'recommend';
             $('eventsView').hidden = state.view !== 'events';
+            $('guideView').hidden = state.view !== 'guide';
             if (state.view === 'home') renderHome();
             else if (state.view === 'results') renderResults();
             else if (state.view === 'events') renderEvents();
+            else if (state.view === 'guide') renderGuide();
+        }
+
+        /* ---------- Practical guide ---------- */
+
+        function guideItemHTML(item) {
+            const place = item.place && venues.find((v) => v.id === item.place);
+            const links = [
+                place ? `<button class="link-btn" type="button" data-open="${place.id}">${t('guideSeePlace', { name: escapeHTML(place.name) })}</button>` : '',
+                item.category ? `<button class="link-btn" type="button" data-category="${item.category}">${t('guideSeeCategory', { name: catLabel(item.category, true) })}</button>` : '',
+                item.link ? `<a class="link-btn" href="${escapeHTML(item.link)}" target="_blank" rel="noopener">${escapeHTML(new URL(item.link).hostname.replace(/^www\./, ''))}${icon('external')}</a>` : ''
+            ].join('');
+            return `
+                <li>
+                    ${item.lead ? `<b>${escapeHTML(item.lead[lang])}</b>` : ''}
+                    ${item.tbc ? `<span class="price-pill tbc">${t('toConfirm')}</span>` : ''}
+                    <span>${escapeHTML(item[lang])}</span>
+                    ${links ? `<span class="guide-links">${links}</span>` : ''}
+                </li>`;
+        }
+
+        function renderGuide() {
+            $('guideChecked').textContent = t('guideChecked', { date: formatDate(GUIDE_CHECKED) });
+            const jump = `<nav class="chips guide-jump" aria-label="${t('guideJump')}">${GUIDE.map((g) =>
+                `<button class="chip" type="button" data-guide-jump="${g.id}">${icon(g.icon)}${escapeHTML(g.title[lang])}</button>`).join('')}</nav>`;
+            const sections = GUIDE.map((g) => `
+                <section class="guide-card${g.emergency ? ' sos' : ''}" id="guia-${g.id}" aria-labelledby="guia-${g.id}-title">
+                    <h2 id="guia-${g.id}-title">${icon(g.icon)}${escapeHTML(g.title[lang])}</h2>
+                    ${g.emergency ? `<div class="sos-grid">${EMERGENCY.map((e) =>
+                        `<a class="sos-call" href="tel:${e.number}" aria-label="${t('guideCall', { number: e.number, name: escapeHTML(e[lang]) })}"><b>${e.number}</b><span>${escapeHTML(e[lang])}</span></a>`).join('')}</div>` : ''}
+                    <ul class="guide-list">${g.items.map(guideItemHTML).join('')}</ul>
+                    <p class="guide-sources">${t('sourcesLabel')}: ${g.sources.map((src) => `<a href="${escapeHTML(src.url)}" target="_blank" rel="noopener">${escapeHTML(src.label)}</a>`).join(', ')}</p>
+                </section>`).join('');
+            $('guideBody').innerHTML = jump + sections;
         }
 
         /* ---------- Place details ---------- */
@@ -5614,6 +5830,18 @@
                 return;
             }
             if (action?.dataset.action === 'suggest-event') { openEventSuggest(); return; }
+            if (action?.dataset.action === 'guide') {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                showGuide();
+                return;
+            }
+            const guideJump = target.closest('[data-guide-jump]');
+            if (guideJump) {
+                const id = guideJump.dataset.guideJump;
+                history.replaceState(null, '', `${location.pathname}?page=guide#guia-${id}`);
+                $(`guia-${id}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
             const authOpen = target.closest('[data-auth-open]');
             if (authOpen) {
                 const reason = target.closest('.signin-prompt')?.querySelector('p')?.textContent || '';
