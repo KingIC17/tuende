@@ -833,6 +833,14 @@
         .guide-sources { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
         .guide-sources a { color: var(--primary); font-weight: 600; }
         .guide-card.sos { border-color: var(--primary); }
+        .info-panel .section-title { margin-top: 18px; }
+        .install-steps { list-style: decimal; padding-left: 20px; }
+        .install-steps li + li { margin-top: 4px; }
+        .install-now, .install-stores .submit-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 14px; text-decoration: none; }
+        .install-stores { display: grid; gap: 10px; }
+        .install-note { margin-top: 14px; }
+        .home-cta .submit-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .home-cta .submit-btn .icon { width: 18px; height: 18px; }
         .map-page { max-width: 1100px; margin: 0 auto; padding-top: 12px; }
         .map-filter { margin: 16px 0 0; }
         .map-box { position: relative; z-index: 0; height: min(70vh, 640px); margin-top: 14px; border-radius: 16px; overflow: hidden; border: 1.5px solid var(--border); background: var(--surface-2); display: flex; align-items: center; justify-content: center; }
@@ -971,7 +979,9 @@
 
         @media (max-width: 720px) {
             .top-nav, .desktop-only, #themeLabel { display: none !important; }
-            .topbar-inner { padding: 8px 16px; }
+            .topbar-inner { padding: 8px 16px; column-gap: 12px; }
+            .topbar-actions { gap: 6px; }
+            .top-btn { padding: 0 11px; }
             .hero { padding: 14px 0 0; }
             .hero-sub { display: none; }
             .search-card { grid-template-columns: 1fr; margin-top: 14px; }
@@ -1027,6 +1037,7 @@
             </nav>
             <div class="topbar-actions">
                 <button class="top-btn" id="langBtn" type="button"><span data-icon="globe"></span><span id="langLabel">EN</span></button>
+                <button class="top-btn" id="installTopBtn" type="button" data-info="install" data-i18n-aria="installTitle" hidden><span data-icon="download"></span><span class="desktop-only" data-i18n="installTitle"></span></button>
                 <button class="top-btn" id="themeBtn" type="button"><span id="themeIcon"></span><span id="themeLabel"></span></button>
                 <button class="top-btn desktop-only" id="accountBtn" type="button" hidden><span id="accountIcon"></span><span id="accountLabel"></span></button>
                 <button class="top-btn solid desktop-only" id="savedBtn" type="button"><span data-icon="heart"></span><span data-i18n="savedBtn"></span><span class="count-pill" id="savedCount" hidden>0</span></button>
@@ -1207,6 +1218,7 @@
     <footer class="site-footer">
         <div class="container">
             <nav class="footer-links" aria-label="Tuende">
+                <button type="button" class="footer-link" id="footerInstall" data-info="install" hidden data-i18n="installTitle"></button>
                 <button type="button" class="footer-link" data-action="events" data-i18n="agenda"></button>
                 <button type="button" class="footer-link" data-action="guide" data-i18n="guideTitle"></button>
                 <button type="button" class="footer-link" data-action="routes" data-i18n="routesTitle"></button>
@@ -1704,6 +1716,25 @@
                 installText: 'Instale o Tuende no seu telemóvel para abrir mais depressa, mesmo sem internet.',
                 iosText: 'Para instalar no iPhone: toque em Partilhar e depois em "Adicionar ao ecrã principal".',
                 install: 'Instalar',
+                installTitle: 'Descarregar a app',
+                installIntro: 'O Tuende instala-se no telemóvel como uma app: fica com um ícone no ecrã principal, abre em ecrã inteiro e funciona mesmo sem internet. É grátis.',
+                installNow: 'Instalar agora',
+                installIosTitle: 'iPhone e iPad (Safari)',
+                installIos1: 'Abra este site no Safari.',
+                installIos2: 'Toque em Partilhar (o quadrado com uma seta para cima).',
+                installIos3: 'Escolha "Adicionar ao ecrã principal" e toque em Adicionar.',
+                installAndroidTitle: 'Android (Chrome)',
+                installAndroid1: 'Abra este site no Chrome.',
+                installAndroid2: 'Toque no menu (os três pontos, no canto superior direito).',
+                installAndroid3: 'Escolha "Instalar app" ou "Adicionar ao ecrã principal".',
+                installDesktopTitle: 'Computador (Chrome ou Edge)',
+                installDesktopText: 'Clique no ícone de instalar, à direita da barra de endereço, ou procure "Instalar" no menu do navegador.',
+                installStoresSoon: 'As versões para a App Store e para a Google Play ainda não estão disponíveis.',
+                installAlready: 'Já está a usar o Tuende como app neste dispositivo.',
+                installCtaTitle: 'Leve o Tuende no telemóvel',
+                installCtaText: 'Instale a app grátis: abre mais depressa e funciona mesmo sem internet.',
+                getAppStore: 'Descarregar na App Store',
+                getPlayStore: 'Descarregar no Google Play',
                 notNow: 'Agora não',
                 ok: 'Ok',
                 shareText: '{name} ({location}) no Tuende',
@@ -2152,6 +2183,25 @@
                 offline: 'No internet. You are viewing the saved version of the app.',
                 installText: 'Install Tuende on your phone to open it faster, even without internet.',
                 iosText: 'To install on iPhone: tap Share, then "Add to Home Screen".',
+                installTitle: 'Download the app',
+                installIntro: 'Tuende installs on your phone like an app: it gets an icon on your home screen, opens full screen and works even without internet. It is free.',
+                installNow: 'Install now',
+                installIosTitle: 'iPhone and iPad (Safari)',
+                installIos1: 'Open this website in Safari.',
+                installIos2: 'Tap Share (the square with an arrow pointing up).',
+                installIos3: 'Choose "Add to Home Screen" and tap Add.',
+                installAndroidTitle: 'Android (Chrome)',
+                installAndroid1: 'Open this website in Chrome.',
+                installAndroid2: 'Tap the menu (the three dots, top right).',
+                installAndroid3: 'Choose "Install app" or "Add to Home screen".',
+                installDesktopTitle: 'Computer (Chrome or Edge)',
+                installDesktopText: 'Click the install icon at the right of the address bar, or look for "Install" in the browser menu.',
+                installStoresSoon: 'The App Store and Google Play versions are not available yet.',
+                installAlready: 'You are already using Tuende as an app on this device.',
+                installCtaTitle: 'Take Tuende on your phone',
+                installCtaText: 'Install the free app: it opens faster and works even without internet.',
+                getAppStore: 'Download on the App Store',
+                getPlayStore: 'Get it on Google Play',
                 install: 'Install',
                 notNow: 'Not now',
                 ok: 'OK',
@@ -3394,6 +3444,9 @@
         const PUBLIC_URL = 'https://kingic17.github.io/tuende/';
         // Public contact address. While empty, the contact link, the privacy link and the e-mail fallback stay hidden.
         const CONTACT_EMAIL = '';
+        // Store pages of the phone apps: leave empty until each app is published; the install guide shows them when set.
+        const APP_STORE_URL = '';
+        const PLAY_STORE_URL = '';
         // Visitor content (Supabase). Fill in after creating the project; see supabase/setup.sql.
         // The publishable/anon key is meant to be public: access is limited by the row-level security rules.
         const SUPABASE_URL = 'https://dbwymcfmputeaggeeqfo.supabase.co';
@@ -4106,6 +4159,13 @@
                 .sort((a, b) => kmBetween(LUANDA_CENTRE, a) - kmBetween(LUANDA_CENTRE, b));
             if (dayTrips.length) parts.push(sectionHTML('secDayTrips', t('dayTripsTitle'), t('dayTripsSub'), rowHTML(dayTrips, { fromLuanda: true })));
 
+            if (canInstallSite()) {
+                parts.push(`
+                    <section class="home-cta" aria-labelledby="installCtaTitle">
+                        <div><h2 id="installCtaTitle">${t('installCtaTitle')}</h2><p>${t('installCtaText')}</p></div>
+                        <button class="submit-btn" type="button" data-info="install">${icon('download')}${t('installTitle')}</button>
+                    </section>`);
+            }
             if (canRecommend()) {
                 parts.push(`
                     <section class="home-cta" aria-labelledby="recCtaTitle">
@@ -5423,7 +5483,40 @@
 
         /* ---------- About, verification and corrections ---------- */
 
+        // Installing the website as an app (it works offline through the service worker) and, once they exist, the store apps.
+        const canInstallSite = () => !inNativeApp && !isStandalone();
+
+        function installGuideHTML() {
+            const title = `<h2 class="info-title" id="infoTitle">${t('installTitle')}</h2>`;
+            if (!canInstallSite()) return `${title}<p>${t('installAlready')}</p>`;
+            const stores = [
+                APP_STORE_URL && `<a class="submit-btn" href="${escapeHTML(APP_STORE_URL)}" target="_blank" rel="noopener">${icon('download')}${t('getAppStore')}</a>`,
+                PLAY_STORE_URL && `<a class="submit-btn" href="${escapeHTML(PLAY_STORE_URL)}" target="_blank" rel="noopener">${icon('download')}${t('getPlayStore')}</a>`
+            ].filter(Boolean).join('');
+            const steps = (keys) => `<ol class="info-list install-steps">${keys.map((k) => `<li>${t(k)}</li>`).join('')}</ol>`;
+            const ios = `<h3 class="section-title">${t('installIosTitle')}</h3>${steps(['installIos1', 'installIos2', 'installIos3'])}`;
+            const android = `<h3 class="section-title">${t('installAndroidTitle')}</h3>${steps(['installAndroid1', 'installAndroid2', 'installAndroid3'])}`;
+            const desktop = `<h3 class="section-title">${t('installDesktopTitle')}</h3><p>${t('installDesktopText')}</p>`;
+            return `${title}
+                <p>${t('installIntro')}</p>
+                ${stores ? `<div class="install-stores">${stores}</div>` : ''}
+                ${installPrompt ? `<button class="submit-btn install-now" type="button" id="installNowBtn">${icon('download')}${t('installNow')}</button>` : ''}
+                ${isIOS ? ios + android : android + ios}
+                ${desktop}
+                ${APP_STORE_URL && PLAY_STORE_URL ? '' : `<p class="hint install-note">${t('installStoresSoon')}</p>`}`;
+        }
+
+        function renderInstallLinks() {
+            $('installTopBtn').hidden = !canInstallSite();
+            $('footerInstall').hidden = !canInstallSite();
+        }
+
         function openInfo(kind) {
+            if (kind === 'install') {
+                $('infoContent').innerHTML = installGuideHTML();
+                openModal('infoModal');
+                return;
+            }
             $('infoContent').innerHTML = kind === 'about'
                 ? `<h2 class="info-title" id="infoTitle">${t('aboutTitle')}</h2><p>${t('aboutP1')}</p><p>${t('aboutP2')}</p>`
                 : `<h2 class="info-title" id="infoTitle">${t('verifyTitle')}</h2>
@@ -6281,6 +6374,16 @@
             }
             const info = target.closest('[data-info]');
             if (info) { openInfo(info.dataset.info); return; }
+            if (target.closest('#installNowBtn') && installPrompt) {
+                installPrompt.prompt();
+                installPrompt.userChoice.catch(() => {}).then(() => {
+                    installPrompt = null;
+                    closeModal('infoModal');
+                    renderInstallBanner();
+                    renderInstallLinks();
+                });
+                return;
+            }
             const fix = target.closest('[data-fix]');
             if (fix) { openFix(Number(fix.dataset.fix)); return; }
             const eventOpen = target.closest('[data-event-open]');
@@ -6468,6 +6571,7 @@
             installPrompt = null;
             store.set('angoliveInstallDismissed', true);
             renderInstallBanner();
+            renderInstallLinks();
         });
 
         window.addEventListener('online', updateOnline);
@@ -6482,6 +6586,7 @@
         if (storedTheme) document.documentElement.dataset.theme = storedTheme;
         applyLanguage();
         updateOnline();
+        renderInstallLinks();
         loadRatingStats();
         loadFx();
         consumeAuthRedirect().then(() => {
