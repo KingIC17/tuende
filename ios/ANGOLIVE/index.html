@@ -453,6 +453,7 @@
         .price-pill { display: inline-block; padding: 3px 10px; border-radius: 10px; background: var(--surface-2); color: var(--text); font-size: 13px; font-weight: 700; }
         .price-pill.free { background: var(--free-bg); color: var(--free-ink); }
         .price-pill.tbc { background: var(--tbc-bg); color: var(--tbc-ink); }
+        .fx { font-weight: 700; color: var(--text); }
         .card-name button { background: none; border: none; padding: 0; text-align: left; font-weight: inherit; }
         .card-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 14px; color: var(--muted); }
         .card-facts strong { color: var(--text); }
@@ -690,6 +691,7 @@
         .review-text { font-size: 15px; margin-top: 2px; white-space: pre-wrap; overflow-wrap: anywhere; }
         .report-btn { background: none; border: none; color: var(--muted); font-size: 13px; font-weight: 600; min-height: 36px; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
         .report-btn:hover { color: var(--primary); }
+        .post-actions { display: flex; flex-wrap: wrap; gap: 0 16px; }
 
         .visitor-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 10px; }
         .visitor-gallery > .hint { grid-column: 1 / -1; }
@@ -831,6 +833,28 @@
         .guide-sources { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
         .guide-sources a { color: var(--primary); font-weight: 600; }
         .guide-card.sos { border-color: var(--primary); }
+        .map-page { max-width: 1100px; margin: 0 auto; padding-top: 12px; }
+        .map-filter { margin: 16px 0 0; }
+        .map-box { position: relative; z-index: 0; height: min(70vh, 640px); margin-top: 14px; border-radius: 16px; overflow: hidden; border: 1.5px solid var(--border); background: var(--surface-2); display: flex; align-items: center; justify-content: center; }
+        .map-box.leaflet-container { display: block; }
+        .section-map { order: 2; display: inline-flex; align-items: center; gap: 4px; }
+        .section-map .icon { width: 16px; height: 16px; }
+        .map-pop { display: grid; gap: 2px; font-family: inherit; font-size: 14px; }
+        .map-pop strong { font-size: 15px; }
+        .map-pop .link-btn { justify-self: start; min-height: 36px; }
+        .route-meta { color: var(--primary); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+        .route-card h2 { margin-top: 2px; }
+        .route-intro { color: var(--muted); margin-top: 6px; }
+        .route-day { font-size: 17px; font-weight: 800; margin-top: 18px; }
+        .route-stops { list-style: none; display: grid; gap: 10px; margin-top: 10px; counter-reset: stop; }
+        .route-stop { display: grid; grid-template-columns: 72px 1fr; gap: 12px; align-items: start; }
+        .route-thumb { position: relative; width: 72px; height: 72px; border: none; border-radius: 12px; overflow: hidden; background: var(--primary-fill); color: #fff; font-weight: 800; padding: 0; }
+        .route-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .route-name { background: none; border: none; padding: 0; text-align: left; font-size: 16px; font-weight: 800; color: var(--text); }
+        .route-name:hover { color: var(--primary); }
+        .route-where { font-size: 13px; color: var(--muted); margin-top: 2px; }
+        .route-why { font-size: 14px; margin-top: 2px; }
+        .route-note { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--surface-2); font-size: 14px; }
         .sos-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
         .sos-call { display: flex; flex-direction: column; gap: 2px; padding: 14px; border-radius: 14px; background: var(--primary-fill); color: #fff; text-decoration: none; }
         .sos-call b { font-size: 34px; line-height: 1; font-weight: 800; letter-spacing: 0.02em; }
@@ -997,6 +1021,8 @@
                 <button type="button" data-action="home" data-i18n="navExplore"></button>
                 <button type="button" data-action="events" data-i18n="agenda"></button>
                 <button type="button" data-action="guide" data-i18n="guideNav"></button>
+                <button type="button" data-action="routes" data-i18n="routesNav"></button>
+                <button type="button" data-action="map" data-i18n="mapNav"></button>
                 <button type="button" id="navRecommend" data-action="recommend" hidden data-i18n="recTitle"></button>
             </nav>
             <div class="topbar-actions">
@@ -1160,6 +1186,22 @@
             <p class="hint" id="guideChecked"></p>
             <div id="guideBody"></div>
         </section>
+
+        <section id="mapView" class="map-page" hidden aria-labelledby="mapTitle">
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"></span><span data-i18n="backHome"></span></button>
+            <h1 class="rec-title" id="mapTitle" data-i18n="mapTitle"></h1>
+            <p class="rec-intro" id="mapIntro"></p>
+            <div class="chips map-filter" id="mapFilter" role="group" data-i18n-aria="mapFilter"></div>
+            <div class="map-box" id="mapBox"><p class="hint" id="mapStatus" data-i18n="loading"></p></div>
+            <p class="hint events-note" data-i18n="mapNote"></p>
+        </section>
+
+        <section id="routesView" class="guide-page" hidden aria-labelledby="routesTitle">
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"></span><span data-i18n="backHome"></span></button>
+            <h1 class="rec-title" id="routesTitle" data-i18n="routesTitle"></h1>
+            <p class="rec-intro" data-i18n="routesIntro"></p>
+            <div id="routesBody"></div>
+        </section>
     </main>
 
     <footer class="site-footer">
@@ -1167,8 +1209,12 @@
             <nav class="footer-links" aria-label="Tuende">
                 <button type="button" class="footer-link" data-action="events" data-i18n="agenda"></button>
                 <button type="button" class="footer-link" data-action="guide" data-i18n="guideTitle"></button>
+                <button type="button" class="footer-link" data-action="routes" data-i18n="routesTitle"></button>
+                <button type="button" class="footer-link" data-action="map" data-i18n="mapTitle"></button>
                 <button type="button" class="footer-link" data-info="about" data-i18n="footerAbout"></button>
                 <button type="button" class="footer-link" data-info="verify" data-i18n="footerVerify"></button>
+                <a class="footer-link" id="footerPlaces" href="lugares/" data-i18n="footerPlaces"></a>
+                <a class="footer-link" id="footerTerms" href="termos.html" data-i18n="footerTerms"></a>
                 <a class="footer-link" id="footerPrivacy" href="privacy.html" hidden data-i18n="footerPrivacy"></a>
                 <a class="footer-link" id="footerContact" hidden data-i18n="footerContact"></a>
                 <button type="button" class="footer-link" id="footerRecommend" data-action="recommend" hidden data-i18n="footerRecommend"></button>
@@ -1604,6 +1650,7 @@
                 addressLabel: 'Morada',
                 mapLabel: 'Mapa',
                 priceLabel: 'Preço',
+                fxNote: 'câmbio de referência do BNA de {date}',
                 contactLabel: 'Contacto',
                 toConfirm: 'Por confirmar',
                 stillToConfirm: 'Por confirmar',
@@ -1742,7 +1789,16 @@
                 authPasswordHint: 'Pelo menos 8 caracteres.',
                 authShow: 'Mostrar',
                 authHide: 'Esconder',
-                authConsent: 'Aceito que o meu nome e email sejam guardados para gerir a conta. O nome aparece junto do que eu publicar.',
+                authConsent: 'Aceito os {terms}, que não toleram conteúdo ofensivo ou abusivo, e que o meu nome e email sejam guardados para gerir a conta. O nome aparece junto do que eu publicar.',
+                termsLink: 'Termos de utilização',
+                footerTerms: 'Termos de utilização',
+                footerPlaces: 'Todos os lugares',
+                block: 'Bloquear',
+                blockConfirm: 'Bloquear esta pessoa? Deixa de ver os comentários, fotos e vídeos dela no Tuende. Pode desbloquear na sua conta.',
+                blockSelf: 'É uma publicação sua',
+                authNeedBlock: 'Entre na sua conta para bloquear alguém.',
+                blockedCount: 'Pessoas bloqueadas',
+                unblockAll: 'Desbloquear todas',
                 authForgot: 'Esqueci-me da palavra-passe',
                 authNoAccount: 'Ainda não tem conta?',
                 authHaveAccount: 'Já tem conta?',
@@ -1799,6 +1855,9 @@
                 reviewOptionalStars: 'Estrelas (opcional). Pode deixar só um comentário.',
                 errReviewEmpty: 'Dê estrelas ou escreva um comentário.',
                 errAlreadyRated: 'Já deu estrelas a este lugar. Pode continuar a deixar comentários sem estrelas.',
+                errBlockedText: 'O texto tem palavras que não são permitidas no Tuende. Reescreva-o, por favor.',
+                errBlockedName: 'Esse nome tem palavras que não são permitidas no Tuende. Escolha outro, por favor.',
+                errBlockedAccountName: 'O nome da sua conta tem palavras que não são permitidas. Mude-o em Conta antes de publicar.',
                 alreadyReported: 'Já denunciou este conteúdo.',
                 agenda: 'Agenda',
                 eventsTitle: 'Agenda: o que fazer em Angola',
@@ -1827,6 +1886,23 @@
                 eventsCtaText: 'Envie-nos os detalhes. Confirmamos numa fonte antes de publicar.',
                 eventSuggest: 'Sugerir um evento',
                 guideNav: 'Guia',
+                routesNav: 'Roteiros',
+                mapNav: 'Mapa',
+                mapTitle: 'Mapa dos lugares',
+                mapIntro: '{n} dos {total} lugares têm localização confirmada e aparecem no mapa. Toque num ponto para ver o lugar.',
+                mapFilter: 'Filtrar o mapa por categoria',
+                mapAll: 'Todos',
+                mapSeeOnMap: 'Ver no mapa',
+                mapError: 'Não foi possível carregar o mapa. Verifique a internet e tente de novo.',
+                mapNote: 'Os lugares sem localização confirmada (por exemplo, táxis e alguns restaurantes) não aparecem no mapa, mas podem ser encontrados na pesquisa. Mapa: OpenStreetMap.',
+                routesTitle: 'Roteiros',
+                routesIntro: 'Sugestões de 1 a 3 dias com lugares do Tuende. Toque num lugar para ver horário, preço e como chegar.',
+                routesHomeSub: 'Sugestões de 1 a 3 dias, dentro e fora de Luanda.',
+                routesNote: 'As distâncias são em linha reta entre um lugar e o anterior; pela estrada são maiores. Confirme horários e preços em cada lugar antes de ir.',
+                routeOneDay: '1 dia',
+                routeDays: '{n} dias',
+                routeDay: 'Dia {n}',
+                routeKm: 'a {km} km do anterior',
                 guideTitle: 'Guia prático',
                 guideIntro: 'O essencial antes de ir: números de emergência, vistos, dinheiro, rede móvel, transportes, segurança e saúde. As regras mudam; confirme sempre nas fontes de cada secção.',
                 guideChecked: 'Verificado a {date}.',
@@ -2023,6 +2099,7 @@
                 addressLabel: 'Address',
                 mapLabel: 'Map',
                 priceLabel: 'Price',
+                fxNote: 'BNA reference rate of {date}',
                 contactLabel: 'Contact',
                 toConfirm: 'To be confirmed',
                 stillToConfirm: 'To be confirmed',
@@ -2161,7 +2238,16 @@
                 authPasswordHint: 'At least 8 characters.',
                 authShow: 'Show',
                 authHide: 'Hide',
-                authConsent: 'I agree that my name and email are stored to manage the account. My name is shown next to what I publish.',
+                authConsent: 'I accept the {terms}, which do not tolerate offensive or abusive content, and agree that my name and email are stored to manage the account. My name is shown next to what I publish.',
+                termsLink: 'Terms of use',
+                footerTerms: 'Terms of use',
+                footerPlaces: 'All places',
+                block: 'Block',
+                blockConfirm: 'Block this person? You will no longer see their comments, photos and videos on Tuende. You can unblock them from your account.',
+                blockSelf: 'This is your own post',
+                authNeedBlock: 'Sign in to block someone.',
+                blockedCount: 'Blocked people',
+                unblockAll: 'Unblock all',
                 authForgot: 'Forgot your password?',
                 authNoAccount: "Don't have an account?",
                 authHaveAccount: 'Already have an account?',
@@ -2218,6 +2304,9 @@
                 reviewOptionalStars: 'Stars (optional). You can leave just a comment.',
                 errReviewEmpty: 'Add stars or write a comment.',
                 errAlreadyRated: 'You have already rated this place. You can still leave comments without stars.',
+                errBlockedText: 'Your text contains words that are not allowed on Tuende. Please rewrite it.',
+                errBlockedName: 'That name contains words that are not allowed on Tuende. Please choose another.',
+                errBlockedAccountName: 'Your account name contains words that are not allowed. Change it under Account before posting.',
                 alreadyReported: 'You have already reported this.',
                 agenda: 'Events',
                 eventsTitle: "Events: what's on in Angola",
@@ -2246,6 +2335,23 @@
                 eventsCtaText: 'Send us the details. We check them against a source before publishing.',
                 eventSuggest: 'Suggest an event',
                 guideNav: 'Guide',
+                routesNav: 'Itineraries',
+                mapNav: 'Map',
+                mapTitle: 'Map of places',
+                mapIntro: '{n} of the {total} places have a confirmed location and appear on the map. Tap a dot to see the place.',
+                mapFilter: 'Filter the map by category',
+                mapAll: 'All',
+                mapSeeOnMap: 'See on the map',
+                mapError: 'The map could not be loaded. Check your internet connection and try again.',
+                mapNote: 'Places without a confirmed location (such as taxis and some restaurants) are not on the map but can be found with search. Map: OpenStreetMap.',
+                routesTitle: 'Itineraries',
+                routesIntro: 'Ideas for 1 to 3 days using places on Tuende. Tap a place for opening hours, prices and directions.',
+                routesHomeSub: 'Ideas for 1 to 3 days, in and outside Luanda.',
+                routesNote: 'Distances are in a straight line from the previous place; by road they are longer. Check opening hours and prices for each place before you go.',
+                routeOneDay: '1 day',
+                routeDays: '{n} days',
+                routeDay: 'Day {n}',
+                routeKm: '{km} km from the previous stop',
                 guideTitle: 'Practical guide',
                 guideIntro: 'The essentials before you go: emergency numbers, visas, money, mobile networks, transport, safety and health. Rules change; always check the sources under each section.',
                 guideChecked: 'Checked on {date}.',
@@ -3047,6 +3153,60 @@
         const WHEN_LABELS = { all: 'whenAll', today: 'whenToday', weekend: 'whenWeekend', week: 'whenWeek', nextweek: 'whenNextWeek', month: 'whenMonth', nextmonth: 'whenNextMonth' };
         const DEFAULT_EVENT_FILTERS = { when: 'all', type: '', where: '' };
 
+        // Roteiros: only places already in the app; each note repeats facts from those places or the cited source.
+        const ITINERARIES = [
+            {
+                id: 'luanda', area: 'Luanda',
+                title: { pt: 'Luanda em 2 dias', en: 'Luanda in 2 days' },
+                intro: { pt: 'A história da cidade na Baixa no primeiro dia e a costa a sul no segundo.', en: 'The city\'s history downtown on day one, the coast to the south on day two.' },
+                days: [
+                    { title: { pt: 'Baixa e Marginal', en: 'Downtown and the Marginal' }, stops: [16, 21, 20, 63, 41, 62, 49, 22],
+                      note: { pt: 'Da Fortaleza à Igreja da Nazaré, as paragens ficam a menos de 2 km umas das outras. Acabe o dia na Marginal e na Ilha de Luanda.', en: 'From the Fortress to Nazaré Church, the stops are less than 2 km apart. End the day on the Marginal and Ilha de Luanda.' } },
+                    { title: { pt: 'Costa a sul', en: 'The coast to the south' }, stops: [17, 19, 7],
+                      note: { pt: 'O Miradouro da Lua fica a cerca de 40 km de Luanda e é mais bonito ao pôr do sol: deixe-o para o fim.', en: 'Miradouro da Lua is about 40 km from Luanda and is best at sunset: leave it for last.' } }
+                ]
+            },
+            {
+                id: 'litoral-sul', area: 'Luanda',
+                title: { pt: 'Costa a sul de Luanda num dia', en: 'The coast south of Luanda in a day' },
+                intro: { pt: 'A rota turística que o Infotur criou em 2021 entre Luanda e Cabo Ledo.', en: 'The tourist route Infotur created in 2021 between Luanda and Cabo Ledo.' },
+                source: { label: 'Ver Angola (junho de 2021)', url: 'https://www.verangola.net/va/pt/062021/Turismo/26079/Infotur-cria-rota-tur%C3%ADstica-entre-Luanda-e-Cabo-Ledo-para-mostrar-o-que-a-capital-tem-de-melhor.htm' },
+                days: [
+                    { title: { pt: 'Miradouro da Lua, Quiçama e Cabo Ledo', en: 'Miradouro da Lua, Quiçama and Cabo Ledo' }, stops: [7, 24, 25],
+                      note: { pt: 'Cabo Ledo fica a cerca de 120 km de Luanda: saia cedo.', en: 'Cabo Ledo is about 120 km from Luanda: leave early.' } }
+                ]
+            },
+            {
+                id: 'benguela', area: 'Benguela',
+                title: { pt: 'Benguela e Lobito em 2 dias', en: 'Benguela and Lobito in 2 days' },
+                intro: { pt: 'A cidade velha e as praias de Benguela, e no segundo dia a Restinga do Lobito.', en: 'Benguela\'s old town and beaches, then Lobito\'s Restinga on day two.' },
+                days: [
+                    { title: { pt: 'Benguela', en: 'Benguela' }, stops: [68, 30, 9] },
+                    { title: { pt: 'Lobito', en: 'Lobito' }, stops: [69, 10] }
+                ]
+            },
+            {
+                id: 'sul', area: 'Lubango',
+                title: { pt: 'Lubango e Namibe em 3 dias', en: 'Lubango and Namibe in 3 days' },
+                intro: { pt: 'O planalto da Huíla, a descida da Serra da Leba e o deserto junto ao mar.', en: 'The Huíla highlands, the road down the Serra da Leba and the desert by the sea.' },
+                days: [
+                    { title: { pt: 'Lubango', en: 'Lubango' }, stops: [67, 28, 12] },
+                    { title: { pt: 'Serra da Leba e Namibe', en: 'Serra da Leba and Namibe' }, stops: [11, 14] },
+                    { title: { pt: 'Parque Nacional do Iona', en: 'Iona National Park' }, stops: [29],
+                      note: { pt: 'Confirme o acesso ao parque antes de ir.', en: 'Check park access before you go.' } }
+                ]
+            },
+            {
+                id: 'malanje', area: 'Malanje',
+                title: { pt: 'Malanje em 2 dias', en: 'Malanje in 2 days' },
+                intro: { pt: 'Duas das paisagens mais conhecidas de Angola: as quedas de Kalandula e as Pedras Negras.', en: 'Two of Angola\'s best-known landscapes: Kalandula Falls and the Black Rocks.' },
+                days: [
+                    { title: { pt: 'Quedas de Kalandula', en: 'Kalandula Falls' }, stops: [26] },
+                    { title: { pt: 'Pedras Negras de Pungo Andongo', en: 'Pungo Andongo Black Rocks' }, stops: [27] }
+                ]
+            }
+        ];
+
         // Guia prático. Each line comes from the sources listed under its section; check them again before changing a fact.
         const GUIDE_CHECKED = '2026-10-10';
         const PT_ADVICE = { label: 'Portal das Comunidades Portuguesas (abril de 2026)', url: 'https://portaldascomunidades.mne.gov.pt/pt/vai-viajar/conselhos-aos-viajantes/africa/angola' };
@@ -3307,6 +3467,42 @@
             const unit = { person: t('perPerson'), night: t('perNight'), entry: t('perEntry'), trip: t('perTrip'), month: t('perMonth') }[p.per];
             return [kzAmount(p.from, p.to), unit].filter(Boolean).join(' ');
         }
+
+        /* ---------- Dollars and euros (official BNA reference rate) ---------- */
+
+        // Rate checked on 10 October 2026; the app refreshes it from the BNA at most once a day.
+        let fx = store.get('angoliveFx', null) || { date: '2026-10-09', usd: 913, eur: 1048.8286 };
+
+        async function loadFx() {
+            if (fx.checked === new Date().toISOString().slice(0, 10)) return;
+            try {
+                const rate = async (code) => {
+                    const res = await fetch(`https://www.bna.ao/service/rest/taxas/get/taxa/referencia?moeda=${code}&tipocambio=m`);
+                    const row = (await res.json())?.genericResponse?.[0];
+                    if (!res.ok || !(row?.taxa > 0) || !/^\d{4}-\d{2}-\d{2}$/.test(row.data)) throw new Error('fx');
+                    return row;
+                };
+                const [usd, eur] = await Promise.all([rate('usd'), rate('eur')]);
+                fx = { date: usd.data, usd: usd.taxa, eur: eur.taxa, checked: new Date().toISOString().slice(0, 10) };
+                store.set('angoliveFx', fx);
+            } catch {}
+        }
+
+        function foreign(value, rate) {
+            const amount = value / rate;
+            const digits = amount < 1 ? 2 : amount < 10 ? 1 : 0;
+            return amount.toLocaleString(locale(), { minimumFractionDigits: amount < 1 ? 2 : 0, maximumFractionDigits: digits });
+        }
+
+        // "≈ 12 USD · 11 EUR" next to a price in Kwanza; nothing when the price is free, text-only or unknown.
+        function fxText(v) {
+            const p = v.price;
+            if (!p || p.free || p.text || !p.from) return '';
+            const range = (rate) => (p.to ? `${foreign(p.from, rate)}–${foreign(p.to, rate)}` : foreign(p.from, rate));
+            return `≈ ${range(fx.usd)} USD · ${range(fx.eur)} EUR`;
+        }
+
+        const fxNote = () => t('fxNote', { date: formatDate(fx.date) });
 
         function priceValue(v) {
             if (!v.price) return Infinity;
@@ -3724,6 +3920,22 @@
             else window.scrollTo({ top: 0 });
         }
 
+        function showMap({ push = true } = {}) {
+            state.view = 'map';
+            if (push) history.pushState(null, '', `${location.pathname}?page=map`);
+            render();
+            window.scrollTo({ top: 0 });
+        }
+
+        function showRoutes({ push = true, route = '' } = {}) {
+            state.view = 'routes';
+            if (push) history.pushState(null, '', `${location.pathname}?page=routes${route ? `#roteiro-${route}` : ''}`);
+            render();
+            const target = route && $(`roteiro-${route}`);
+            if (target) target.scrollIntoView({ block: 'start' });
+            else window.scrollTo({ top: 0 });
+        }
+
         function goHome({ push = true } = {}) {
             state.view = 'home';
             state.filters = { ...DEFAULT_FILTERS };
@@ -3739,7 +3951,11 @@
             if (params.get('page') === 'recommend') {
                 if (state.view !== 'recommend') showRecommend({ push: false });
             } else if (params.get('page') === 'events') showEvents({ push: false, filters: eventFiltersFromQuery(params) });
-            else if (params.get('page') === 'guide') {
+            else if (params.get('page') === 'map') { if (state.view !== 'map') showMap({ push: false }); }
+            else if (params.get('page') === 'routes') {
+                const route = location.hash.match(/^#roteiro-([a-z-]+)$/)?.[1] || '';
+                if (state.view !== 'routes' || route) showRoutes({ push: false, route: ITINERARIES.some((r) => r.id === route) ? route : '' });
+            } else if (params.get('page') === 'guide') {
                 const section = location.hash.match(/^#guia-([a-z]+)$/)?.[1] || '';
                 if (state.view !== 'guide' || section) showGuide({ push: false, section: GUIDE.some((g) => g.id === section) ? section : '' });
             }
@@ -3869,7 +4085,8 @@
                     <div><h2 id="guideCtaTitle">${t('guideCtaTitle')}</h2><p>${t('guideCtaText')}</p></div>
                     <button class="submit-btn" type="button" data-action="guide">${t('guideOpen')}</button>
                 </section>`);
-            parts.push(sectionHTML('secCategories', t('categoriesTitle'), '', categoryTilesHTML()));
+            parts.push(sectionHTML('secCategories', t('categoriesTitle'), '', categoryTilesHTML())
+                .replace('<h2 id="secCategories">', `<button class="link-btn section-map" type="button" data-action="map">${icon('pin')}${t('mapSeeOnMap')}</button><h2 id="secCategories">`));
 
             const collections = Object.entries(COLLECTIONS).map(([key, c]) => {
                 const count = venues.filter((v) => collectionMatch(key, v)).length;
@@ -3882,6 +4099,7 @@
                     </button>`;
             }).join('');
             parts.push(sectionHTML('secCollections', t('collectionsTitle'), t('collectionsSub'), `<div class="collection-grid">${collections}</div>`));
+            parts.push(sectionHTML('secRoutes', t('routesTitle'), t('routesHomeSub'), routesHomeHTML()));
 
             const dayTrips = venues
                 .filter((v) => v.exact && kmBetween(LUANDA_CENTRE, v) >= 25 && kmBetween(LUANDA_CENTRE, v) <= 160)
@@ -3995,16 +4213,20 @@
             renderQuickFilters();
             renderSavedButton();
             renderTabbar();
-            $('hero').hidden = state.view === 'recommend' || state.view === 'events' || state.view === 'guide';
+            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map'].includes(state.view);
             $('homeView').hidden = state.view !== 'home';
             $('resultsView').hidden = state.view !== 'results';
             $('recommendView').hidden = state.view !== 'recommend';
             $('eventsView').hidden = state.view !== 'events';
             $('guideView').hidden = state.view !== 'guide';
+            $('routesView').hidden = state.view !== 'routes';
+            $('mapView').hidden = state.view !== 'map';
             if (state.view === 'home') renderHome();
             else if (state.view === 'results') renderResults();
             else if (state.view === 'events') renderEvents();
             else if (state.view === 'guide') renderGuide();
+            else if (state.view === 'routes') renderRoutes();
+            else if (state.view === 'map') renderMap();
         }
 
         /* ---------- Practical guide ---------- */
@@ -4038,6 +4260,119 @@
                     <p class="guide-sources">${t('sourcesLabel')}: ${g.sources.map((src) => `<a href="${escapeHTML(src.url)}" target="_blank" rel="noopener">${escapeHTML(src.label)}</a>`).join(', ')}</p>
                 </section>`).join('');
             $('guideBody').innerHTML = jump + sections;
+        }
+
+        /* ---------- Map (Leaflet + OpenStreetMap, loaded only when the map opens) ---------- */
+
+        const LEAFLET = {
+            css: { href: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', integrity: 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=' },
+            js: { src: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', integrity: 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=' }
+        };
+        let leafletReady = null;
+        let placesMap = null;
+        let mapLayer = null;
+        let mapCategory = '';
+
+        function loadLeaflet() {
+            leafletReady ??= new Promise((resolve, reject) => {
+                const css = Object.assign(document.createElement('link'), { rel: 'stylesheet', href: LEAFLET.css.href, integrity: LEAFLET.css.integrity, crossOrigin: '' });
+                const js = Object.assign(document.createElement('script'), { src: LEAFLET.js.src, integrity: LEAFLET.js.integrity, crossOrigin: '' });
+                js.onload = () => resolve(window.L);
+                js.onerror = () => { leafletReady = null; reject(new Error('leaflet')); };
+                document.head.append(css, js);
+            });
+            return leafletReady;
+        }
+
+        // Only places with confirmed coordinates go on the map; the others would land in the wrong spot.
+        const mappable = () => venues.filter((v) => v.exact && (!mapCategory || v.type === mapCategory));
+
+        function mapPopupHTML(v) {
+            return `<div class="map-pop"><strong>${escapeHTML(v.name)}</strong><span>${escapeHTML(catLabel(v.type))} · ${escapeHTML(placeLine(v))}</span><button type="button" class="link-btn" data-open="${v.id}">${t('viewPlace')}</button></div>`;
+        }
+
+        async function renderMap() {
+            const all = venues.filter((v) => v.exact);
+            $('mapIntro').textContent = t('mapIntro', { n: all.length, total: venues.length });
+            const types = Object.keys(CATEGORY).filter((k) => all.some((v) => v.type === k));
+            $('mapFilter').innerHTML = [`<button class="chip${mapCategory ? '' : ' active'}" type="button" data-map-cat="" aria-pressed="${!mapCategory}">${t('mapAll')}</button>`,
+                ...types.map((k) => `<button class="chip${mapCategory === k ? ' active' : ''}" type="button" data-map-cat="${k}" aria-pressed="${mapCategory === k}">${icon(CATEGORY[k].icon)}${escapeHTML(catLabel(k, true))}</button>`)].join('');
+            let L;
+            try {
+                L = await loadLeaflet();
+            } catch {
+                $('mapStatus').textContent = t('mapError');
+                return;
+            }
+            if (state.view !== 'map') return;
+            if (!placesMap) {
+                $('mapBox').innerHTML = '';
+                placesMap = L.map('mapBox', { scrollWheelZoom: false });
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 18,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+                }).addTo(placesMap);
+            }
+            mapLayer?.remove();
+            const fill = getComputedStyle(document.documentElement).getPropertyValue('--primary-fill').trim() || '#CE1126';
+            const markers = mappable().map((v) => L.circleMarker([v.lat, v.lng], { radius: 8, color: '#FFFFFF', weight: 2, fillColor: fill, fillOpacity: 1 })
+                .bindPopup(mapPopupHTML(v)).bindTooltip(v.name));
+            mapLayer = L.featureGroup(markers).addTo(placesMap);
+            placesMap.invalidateSize();
+            if (markers.length) placesMap.fitBounds(mapLayer.getBounds(), { padding: [24, 24], maxZoom: 13 });
+        }
+
+        /* ---------- Itineraries ---------- */
+
+        const routeStops = (r) => r.days.flatMap((d) => d.stops);
+        const routeDays = (r) => (r.days.length === 1 ? t('routeOneDay') : t('routeDays', { n: r.days.length }));
+
+        function routeStopHTML(id, prev) {
+            const v = venues.find((x) => x.id === id);
+            if (!v) return '';
+            const before = prev && venues.find((x) => x.id === prev);
+            const km = before?.exact && v.exact ? Math.round(kmBetween(before, v)) : null;
+            return `
+                <li class="route-stop">
+                    <button class="route-thumb" type="button" data-open="${v.id}" aria-label="${t('viewPlace')}: ${escapeHTML(v.name)}">
+                        <span aria-hidden="true">${escapeHTML(initials(v.name))}</span>
+                        ${thumbSrc(v) ? `<img src="${escapeHTML(thumbSrc(v))}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}
+                    </button>
+                    <div>
+                        <button class="route-name" type="button" data-open="${v.id}">${escapeHTML(v.name)}</button>
+                        <p class="route-where">${escapeHTML(placeLine(v))}${km ? ` · ${t('routeKm', { km })}` : ''}</p>
+                        <p class="route-why">${escapeHTML(highlightOf(v))}</p>
+                    </div>
+                </li>`;
+        }
+
+        function renderRoutes() {
+            const jump = `<nav class="chips guide-jump" aria-label="${t('routesTitle')}">${ITINERARIES.map((r) =>
+                `<button class="chip" type="button" data-route-jump="${r.id}">${escapeHTML(r.title[lang])}</button>`).join('')}</nav>`;
+            const cards = ITINERARIES.map((r) => `
+                <section class="guide-card route-card" id="roteiro-${r.id}" aria-labelledby="roteiro-${r.id}-title">
+                    <p class="route-meta">${escapeHTML(r.area)} · ${routeDays(r)}</p>
+                    <h2 id="roteiro-${r.id}-title">${escapeHTML(r.title[lang])}</h2>
+                    <p class="route-intro">${escapeHTML(r.intro[lang])}</p>
+                    ${r.days.map((d, i) => `
+                        <h3 class="route-day">${r.days.length > 1 ? `${t('routeDay', { n: i + 1 })}: ` : ''}${escapeHTML(d.title[lang])}</h3>
+                        <ol class="route-stops">${d.stops.map((id, k) => routeStopHTML(id, d.stops[k - 1])).join('')}</ol>
+                        ${d.note ? `<p class="route-note">${escapeHTML(d.note[lang])}</p>` : ''}`).join('')}
+                    ${r.source ? `<p class="guide-sources">${t('sourcesLabel')}: <a href="${escapeHTML(r.source.url)}" target="_blank" rel="noopener">${escapeHTML(r.source.label)}</a></p>` : ''}
+                </section>`).join('');
+            $('routesBody').innerHTML = `${jump}${cards}<p class="hint events-note">${t('routesNote')}</p>`;
+        }
+
+        function routesHomeHTML() {
+            return `<div class="collection-grid">${ITINERARIES.map((r) => {
+                const cover = venues.find((v) => v.id === routeStops(r)[0]);
+                return `
+                    <button class="collection" type="button" data-route-open="${r.id}">
+                        ${cover?.photos ? `<img src="${escapeHTML(asset(cover.photos[0].thumb))}" alt=""${focusAttr(cover.photos[0])} crossorigin="anonymous" loading="lazy">` : ''}
+                        <span class="collection-title">${escapeHTML(r.title[lang])}</span>
+                        <span class="collection-desc">${escapeHTML(r.area)} · ${routeDays(r)} · ${placesCount(routeStops(r).length)}</span>
+                    </button>`;
+            }).join('')}</div>`;
         }
 
         /* ---------- Place details ---------- */
@@ -4090,7 +4425,7 @@
                         <div class="fact"><dt>${t('hoursLabel')}</dt><dd>${hoursHTML(v)}</dd></div>
                         <div class="fact"><dt>${t('addressLabel')}</dt><dd>${escapeHTML(address)}</dd></div>
                         <div class="fact"><dt>${t('mapLabel')}</dt><dd>${map}${v.citywide ? '' : `<a class="text-link" href="${mapsURL(v, 'search')}" target="_blank" rel="noopener">${icon('pin')}${t('viewMap')}</a>`}</dd></div>
-                        <div class="fact"><dt>${t('priceLabel')}</dt><dd>${escapeHTML(priceText(v))}${v.price?.estimate ? `<br>${t('priceEstimate')}` : ''}${v.price?.note ? `<br><span class="price-note">${escapeHTML(v.price.note[lang] || v.price.note.pt)}</span>` : ''}</dd></div>
+                        <div class="fact"><dt>${t('priceLabel')}</dt><dd>${escapeHTML(priceText(v))}${fxText(v) ? `<br><span class="fx">${escapeHTML(fxText(v))}</span> <span class="price-note">(${escapeHTML(fxNote())})</span>` : ''}${v.price?.estimate ? `<br>${t('priceEstimate')}` : ''}${v.price?.note ? `<br><span class="price-note">${escapeHTML(v.price.note[lang] || v.price.note.pt)}</span>` : ''}</dd></div>
                         <div class="fact"><dt>${t('contactLabel')}</dt><dd>${digits ? escapeHTML(v.phone) : t('toConfirm')}</dd></div>
                         <div class="fact"><dt>${t('stillToConfirm')}</dt><dd>${t('unknownFacts')}</dd></div>
                         ${verifiedRowHTML(v)}
@@ -4148,7 +4483,10 @@
                         </div>
                         ${r.rating ? `<div class="stars" aria-label="${t('stars', { n: r.rating })}">${stars(r.rating)}</div>` : ''}
                         ${r.comment ? `<div class="review-text">${escapeHTML(r.comment)}</div>` : ''}
-                        <button type="button" class="report-btn" data-report-review="${escapeHTML(r.id)}">${t('report')}</button>
+                        <div class="post-actions">
+                            <button type="button" class="report-btn" data-report-review="${escapeHTML(r.id)}">${t('report')}</button>
+                            <button type="button" class="report-btn" data-block-review="${escapeHTML(r.id)}">${t('block')}</button>
+                        </div>
                     </div>
                 </div>
             `;
@@ -4293,6 +4631,7 @@
             button.disabled = true;
             button.textContent = t('sending');
             try {
+                if (await hasBlockedWords(comment)) { msg.textContent = t('errBlockedText'); $('reviewText').focus(); return; }
                 await sbRequest('/rest/v1/reviews', {
                     method: 'POST',
                     headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
@@ -4309,7 +4648,7 @@
                 if (rated) loadRatingStats();
             } catch (err) {
                 if (needsSignIn(err, msg)) return;
-                msg.textContent = err.status === 409 ? t('errAlreadyRated') : t('errSend');
+                msg.textContent = blockedWordsText(err) || (err.status === 409 ? t('errAlreadyRated') : t('errSend'));
             } finally {
                 button.disabled = false;
                 button.textContent = t('send');
@@ -4329,16 +4668,25 @@
             render();
         }
 
+        // The iPhone app adds the native share sheet and Calendar (see AngoliveApp.swift); the website uses the browser's.
+        const nativeBridge = (name) => (inNativeApp ? window.webkit?.messageHandlers?.[name] : null);
+
+        function shareLink(title, text, url) {
+            const native = nativeBridge('share');
+            if (native) native.postMessage({ title, text, url });
+            else if (navigator.share) navigator.share({ title, text, url }).catch(() => {});
+            else window.open(`https://wa.me/?text=${encodeURIComponent(`${text}: ${url}`)}`, '_blank', 'noopener');
+        }
+
+        // Same as slug() in tools/gerar_paginas.py, which builds one page per place (lugares/<slug>.html).
+        const placeSlug = (name) => name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+        // Shares the place's own page, so WhatsApp and social networks show its photo and name.
         function shareVenue() {
             const v = venues.find((x) => x.id === state.openId);
-            const base = inNativeApp ? PUBLIC_URL : `${location.origin}${location.pathname}`;
-            const url = `${base}#local-${v.id}`;
-            const text = t('shareText', { name: v.name, location: v.location });
-            if (navigator.share) {
-                navigator.share({ title: v.name, text, url }).catch(() => {});
-            } else {
-                window.open(`https://wa.me/?text=${encodeURIComponent(`${text}: ${url}`)}`, '_blank', 'noopener');
-            }
+            const base = inNativeApp ? PUBLIC_URL : new URL('./', location.href).href;
+            const url = `${base}lugares/${placeSlug(v.name)}.html`;
+            shareLink(v.name, t('shareText', { name: v.name, location: v.location }), url);
         }
 
         /* ---------- Visitor photos and videos (Supabase) ---------- */
@@ -4354,9 +4702,31 @@
 
         async function sbRequest(path, options = {}) {
             const res = await fetch(`${SUPABASE_URL}${path}`, options);
-            if (!res.ok) throw Object.assign(new Error(`Supabase ${res.status}`), { status: res.status });
+            if (!res.ok) {
+                let detail = '';
+                try { detail = String((await res.json())?.message || ''); } catch {}
+                throw Object.assign(new Error(`Supabase ${res.status}`), { status: res.status, detail });
+            }
             return res;
         }
+
+        // Asks the database whether a text has a word from its blocked list (it never says which).
+        // The database also refuses such posts itself; this only lets the app explain before sending.
+        async function hasBlockedWords(text) {
+            if (!text || !supabaseReady()) return false;
+            try {
+                const res = await sbRequest('/rest/v1/rpc/has_blocked_words', {
+                    method: 'POST',
+                    headers: sbHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({ content: text })
+                });
+                return (await res.json()) === true;
+            } catch {
+                return false;
+            }
+        }
+
+        const blockedWordsText = (err) => ({ blocked_words_text: t('errBlockedText'), blocked_words_name: t('errBlockedAccountName') }[err?.detail] || '');
 
         async function compressPhoto(file) {
             const bitmap = await createImageBitmap(file);
@@ -4405,7 +4775,7 @@
 
         function submissionHTML(s, v) {
             const caption = `<div class="visitor-caption">${avatarHTML(s.author_avatar, s.author, 'sm')}<span>${escapeHTML(s.author)}${s.caption ? ` · ${escapeHTML(s.caption)}` : ''}</span></div>`;
-            const report = `<button type="button" class="report-btn" data-report="${escapeHTML(s.id)}">${t('report')}</button>`;
+            const report = `<div class="post-actions"><button type="button" class="report-btn" data-report="${escapeHTML(s.id)}">${t('report')}</button><button type="button" class="report-btn" data-block="${escapeHTML(s.id)}">${t('block')}</button></div>`;
             if (s.kind === 'photo' && s.url.startsWith(photoBase())) {
                 return `<figure class="visitor-item"><a href="${escapeHTML(s.url)}" target="_blank" rel="noopener"><img src="${escapeHTML(s.url)}" alt="${escapeHTML(s.caption || v.name)}" loading="lazy"></a>${caption}${report}</figure>`;
             }
@@ -4453,6 +4823,8 @@
             button.textContent = t('sending');
             msg.textContent = '';
             try {
+                if (await hasBlockedWords(caption)) { msg.textContent = t('errBlockedText'); $('mediaCaption').focus(); return; }
+                if (await hasBlockedWords(accountName())) { msg.textContent = t('errBlockedAccountName'); return; }
                 let url = videoUrl;
                 if (kind === 'photo') {
                     const blob = await compressPhoto(file);
@@ -4479,7 +4851,7 @@
                 loadSubmissions(venueId);
             } catch (err) {
                 if (needsSignIn(err, msg)) return;
-                msg.textContent = t('errSend');
+                msg.textContent = blockedWordsText(err) || t('errSend');
             } finally {
                 button.disabled = false;
                 button.textContent = t('sendMedia');
@@ -4501,6 +4873,53 @@
                 if (err.status === 409) { button.textContent = t('alreadyReported'); return; }
                 button.disabled = false;
                 button.textContent = needsSignIn(err) ? t('signIn') : t('errSend');
+            }
+        }
+
+        // Blocking hides everything that person posts, for this account only; the database does the hiding.
+        async function blockAuthor(button) {
+            if (!signedIn()) { openAuth('signin', { reason: t('authNeedBlock') }); return; }
+            if (!confirm(t('blockConfirm'))) return;
+            button.disabled = true;
+            try {
+                const res = await sbRequest('/rest/v1/rpc/block_author', {
+                    method: 'POST',
+                    headers: await userHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify(button.dataset.block ? { submission: button.dataset.block } : { review: button.dataset.blockReview })
+                });
+                if ((await res.json()) === 'self') { button.textContent = t('blockSelf'); return; }
+                loadReviews(state.openId);
+                loadSubmissions(state.openId);
+                loadRatingStats();
+            } catch (err) {
+                button.disabled = false;
+                button.textContent = needsSignIn(err) ? t('signIn') : t('errSend');
+            }
+        }
+
+        async function loadBlocks() {
+            const box = $('blockedInfo');
+            if (!box) return;
+            try {
+                const res = await sbRequest('/rest/v1/blocks?select=blocked_id', { headers: await userHeaders() });
+                const n = (await res.json()).length;
+                if ($('blockedInfo') !== box) return;
+                box.innerHTML = n ? `${n} <button type="button" class="link-btn" data-action="unblock-all">${t('unblockAll')}</button>` : '0';
+            } catch {
+                box.textContent = t('errSend');
+            }
+        }
+
+        async function unblockAll(button) {
+            button.disabled = true;
+            try {
+                await sbRequest(`/rest/v1/blocks?blocker_id=eq.${session.user.id}`, { method: 'DELETE', headers: await userHeaders() });
+                loadBlocks();
+                if (state.openId) { loadReviews(state.openId); loadSubmissions(state.openId); }
+                loadRatingStats();
+            } catch {
+                button.disabled = false;
+                button.textContent = t('errSend');
             }
         }
 
@@ -4690,7 +5109,7 @@
                         </fieldset>
                         ${emailFieldHTML(email)}
                         ${passwordFieldHTML('authPassword', 'new-password')}
-                        <label class="consent"><input type="checkbox" id="authConsent"><span>${t('authConsent')}</span></label>
+                        <label class="consent"><input type="checkbox" id="authConsent"><span>${t('authConsent', { terms: `<a href="${escapeHTML(asset('termos.html'))}" target="_blank" rel="noopener">${t('termsLink')}</a>` })}</span></label>
                         ${authSubmitHTML('createAccount')}
                     </form>
                     <p class="auth-switch">${t('authHaveAccount')} <button type="button" class="link-btn" data-auth-view="signin">${t('signIn')}</button></p>`,
@@ -4731,6 +5150,7 @@
                     </section>
                     <dl class="facts account-facts">
                         <div class="fact"><dt>${t('authSavedCount')}</dt><dd>${favorites.length} ${favorites.length ? `<button type="button" class="link-btn" data-action="show-saved">${t('seeAll')}</button>` : ''}</dd></div>
+                        <div class="fact"><dt>${t('blockedCount')}</dt><dd id="blockedInfo">${t('loading')}</dd></div>
                     </dl>
                     <p class="hint">${t('authSyncNote')}</p>
                     <h3 class="section-title">${t('authContrib')}</h3>
@@ -4748,7 +5168,10 @@
                     </details>`
             };
             $('authContent').innerHTML = (views[view] || views.signin)();
-            if (view === 'account') loadContributions();
+            if (view === 'account') {
+                loadContributions();
+                loadBlocks();
+            }
         }
 
         function openAuth(view, { reason = '', notice = '', after = null } = {}) {
@@ -4786,6 +5209,7 @@
             if (['signin', 'signup', 'forgot'].includes(authView) && !validEmail(email)) return fail('authErrEmail', $('authEmail'));
             if (['signin', 'signup', 'reset'].includes(authView) && password.length < 8) return fail('authErrPassword', $('authPassword'));
             if (authView === 'signup' && !$('authConsent').checked) return fail('authErrConsent', $('authConsent'));
+            if (['signup', 'account'].includes(authView) && await hasBlockedWords(name)) return fail('errBlockedName', $('authName'));
 
             const label = button.textContent;
             button.disabled = true;
@@ -5185,8 +5609,8 @@
             const directions = e.venue && !e.venueTbc
                 ? `<a class="action-btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.mapsQuery || `${e.venue}, ${e.city}, Angola`)}" target="_blank" rel="noopener">${icon('directions')}${t('directions')}</a>`
                 : '';
-            // The iPhone app cannot save downloaded files yet.
-            const calendar = inNativeApp || e.confirmed === false
+            // The iPhone app saves through Calendar (addEventToCalendar), so the button needs the native bridge there.
+            const calendar = (inNativeApp && !nativeBridge('calendar')) || e.confirmed === false
                 ? ''
                 : `<button class="action-btn" type="button" data-event-ics="${e.id}" aria-label="${escapeHTML(t('eventCalendarAria', { name: eventTitle(e) }))}">${icon('calendar')}${t('eventCalendar')}</button>`;
             return `
@@ -5359,6 +5783,22 @@
             ].map(fold).join('\r\n') + '\r\n';
         }
 
+        // In the iPhone app: the system "New Event" screen, filled in (Angola is UTC+1 all year round).
+        function addEventToCalendar(e) {
+            const native = nativeBridge('calendar');
+            if (!native) { downloadICS(e); return; }
+            const timed = e.time && eventEnd(e) === e.start;
+            const start = timed ? `${e.start}T${e.time}:00+01:00` : e.start;
+            // Without milliseconds: the iPhone's ISO 8601 reader does not accept them.
+            const end = timed ? new Date(new Date(start).getTime() + (e.hours || 3) * 3600000).toISOString().replace(/\.\d{3}Z$/, 'Z') : eventEnd(e);
+            const url = e.link || e.source.url;
+            native.postMessage({
+                title: eventTitle(e), start, end, allDay: !timed, url,
+                location: [e.venue && !e.venueTbc ? e.venue : '', e.city, 'Angola'].filter(Boolean).join(', '),
+                notes: `${e.desc[lang]}\n\n${url}`
+            });
+        }
+
         function downloadICS(e) {
             const link = document.createElement('a');
             link.href = URL.createObjectURL(new Blob([icsText(e)], { type: 'text/calendar;charset=utf-8' }));
@@ -5372,12 +5812,7 @@
         function shareEvent(e) {
             const base = inNativeApp ? PUBLIC_URL : `${location.origin}${location.pathname}`;
             const url = `${base}?page=events#evento-${e.id}`;
-            const text = `${eventTitle(e)} · ${eventDateText(e)} · ${e.city}`;
-            if (navigator.share) {
-                navigator.share({ title: eventTitle(e), text, url }).catch(() => {});
-            } else {
-                window.open(`https://wa.me/?text=${encodeURIComponent(`${text}: ${url}`)}`, '_blank', 'noopener');
-            }
+            shareLink(eventTitle(e), `${eventTitle(e)} · ${eventDateText(e)} · ${e.city}`, url);
         }
 
         /* ---------- Suggest an event ---------- */
@@ -5692,6 +6127,8 @@
 
         function renderFooter() {
             $('footerPrivacy').hidden = !CONTACT_EMAIL;
+            $('footerTerms').href = asset('termos.html');
+            $('footerPlaces').href = asset('lugares/');
             $('footerContact').hidden = !CONTACT_EMAIL;
             if (CONTACT_EMAIL) $('footerContact').href = `mailto:${CONTACT_EMAIL}`;
             $('footerFix').hidden = !canSuggestFix();
@@ -5854,7 +6291,7 @@
             if (typeChip) { setEventFilters({ type: typeChip.dataset.eventsType }, `[data-events-type="${typeChip.dataset.eventsType}"]`); return; }
             if (target.closest('[data-events-reset]')) { setEventFilters({ ...DEFAULT_EVENT_FILTERS }, '[data-events-when="all"]'); return; }
             const ics = target.closest('[data-event-ics]');
-            if (ics) { downloadICS(EVENTS.find((e) => e.id === ics.dataset.eventIcs)); return; }
+            if (ics) { addEventToCalendar(EVENTS.find((e) => e.id === ics.dataset.eventIcs)); return; }
             const shareBtn = target.closest('[data-event-share]');
             if (shareBtn) { shareEvent(EVENTS.find((e) => e.id === shareBtn.dataset.eventShare)); return; }
             const action = target.closest('[data-action]');
@@ -5865,6 +6302,27 @@
                 return;
             }
             if (action?.dataset.action === 'suggest-event') { openEventSuggest(); return; }
+            if (action?.dataset.action === 'map') {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                showMap();
+                return;
+            }
+            const mapCat = target.closest('[data-map-cat]');
+            if (mapCat) { mapCategory = mapCat.dataset.mapCat; renderMap(); return; }
+            if (action?.dataset.action === 'routes') {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                showRoutes();
+                return;
+            }
+            const routeOpen = target.closest('[data-route-open]');
+            if (routeOpen) { showRoutes({ route: routeOpen.dataset.routeOpen }); return; }
+            const routeJump = target.closest('[data-route-jump]');
+            if (routeJump) {
+                const id = routeJump.dataset.routeJump;
+                history.replaceState(null, '', `${location.pathname}?page=routes#roteiro-${id}`);
+                $(`roteiro-${id}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
             if (action?.dataset.action === 'guide') {
                 document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
                 showGuide();
@@ -5885,6 +6343,7 @@
             }
             if (action?.dataset.action === 'signout') { signOut(); return; }
             if (action?.dataset.action === 'delete-account') { deleteAccount(action); return; }
+            if (action?.dataset.action === 'unblock-all') { unblockAll(action); return; }
             if (action?.dataset.action === 'show-saved') { closeModal('authModal'); showResults({ saved: true }); return; }
             if (action?.dataset.action === 'clear') { goHome(); $('qInput').focus(); return; }
             if (action?.dataset.action === 'recommend') {
@@ -5913,6 +6372,8 @@
             if (thumb) { showPhoto(Number(thumb.dataset.photo)); return; }
             const report = e.target.closest('[data-report], [data-report-review]');
             if (report) { reportSubmission(report); return; }
+            const block = e.target.closest('[data-block], [data-block-review]');
+            if (block) { blockAuthor(block); return; }
             if (e.target.closest('[data-action="reviews"]')) { $('reviewsSection').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
             if (e.target.closest('#favBtn')) toggleFavorite();
             else if (e.target.closest('#shareBtn')) shareVenue();
@@ -6022,6 +6483,7 @@
         applyLanguage();
         updateOnline();
         loadRatingStats();
+        loadFx();
         consumeAuthRedirect().then(() => {
             if (signedIn()) accessToken().then(syncFavorites);
         });
