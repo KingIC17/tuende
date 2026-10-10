@@ -11,7 +11,7 @@ Guia de Angola: restaurantes, bares, discotecas, praias, cultura, museus, nature
 
 | Parte | Estado |
 |---|---|
-| Site (web app) | Online no GitHub Pages, 60 locais e agenda de eventos |
+| Site (web app) | Online no GitHub Pages, 72 locais, agenda de eventos e guia prático |
 | App instalável (PWA) | `manifest.json` e `sw.js` publicados; modo offline ainda não testado num browser real |
 | App iPhone (`ios/`) | Projeto Xcode criado; o código Swift passa o `swiftc -typecheck`, mas o build completo e o simulador ainda não foram testados |
 | App Android | Por fazer (depende do domínio próprio) |
@@ -45,7 +45,7 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 
 - Design "E" (outubro de 2026): letra Plus Jakarta Sans; cabeçalho numa linha (logótipo, secções, EN, Claro/Escuro, Entrar, Guardados); faixa com o padrão samakaka (losangos vermelhos e amarelos da bandeira) no topo e no fim da página, atrás da foto da Ilha e à volta das datas dos eventos; seis mosaicos coloridos de categorias (Praias, Natureza, Cultura, Restaurantes, Vida noturna, Agenda); no telemóvel, barra de separadores em baixo (Explorar, Agenda, Guia, Guardados, Conta). As cores estão nas variáveis `:root` (claro) e nos blocos de modo escuro: `--primary` é para texto e contornos, `--primary-fill` para fundos com texto branco.
 
-- Os dados dos locais e menus estão no próprio ficheiro: `const venues` (60 locais) e `const menuData`.
+- Os dados dos locais e menus estão no próprio ficheiro: `const venues` (72 locais) e `const menuData`.
 - Página inicial (por esta ordem): título e pesquisa "O que procura? / Onde?", filtros rápidos, Recomendados (com o motivo), Explorar por categoria, Coleções e Viagens de um dia a partir de Luanda (calculado pela distância). Pesquisa, filtros, categorias e coleções abrem a vista de resultados.
 - A vista de resultados fica no endereço e pode ser partilhada: `?q=praia&where=luanda`, `?filter=free`, `?category=culture`, `?collection=beaches`, `?saved=1`. Os botões voltar/avançar do browser funcionam.
 - Pesquisa sem acentos, com plurais (hotéis → hotel) e com tolerância a um erro de escrita por palavra (`tokens`, `stem`, `withinOneEdit`). Sinónimos em `SYNONYMS`.
