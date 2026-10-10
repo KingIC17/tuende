@@ -84,7 +84,7 @@ e abrir http://localhost:8000/
 
 ## App iPhone (`ios/`)
 
-- SwiftUI com um `WKWebView` que carrega `ANGOLIVE/index.html` do bundle (`file://`). A app aparece no telemóvel como "Tuende"; o projeto e a pasta no Xcode continuam a chamar-se ANGOLIVE.
+- SwiftUI com um `WKWebView` que carrega `ANGOLIVE/index.html` do bundle (`file://`). A app aparece no telemóvel e nas mensagens do sistema como "Tuende" (`PRODUCT_NAME = Tuende`, por isso a app compilada é `Tuende.app`); o projeto, o esquema (scheme) e a pasta no Xcode continuam a chamar-se ANGOLIVE.
 - Links externos (Google Maps, WhatsApp, YouTube...) abrem nas apps do sistema.
 - Dentro da app (`file://`), o aviso "instalar" não aparece e o botão Partilhar usa `PUBLIC_URL`.
 - A página pede à app duas funções nativas por `window.webkit.messageHandlers` (`AngoliveApp.swift`): `share` abre a folha de partilha do iPhone e `calendar` abre o ecrã "Novo evento" do Calendário já preenchido (a pessoa grava ou cancela; no iOS 17+ não pede autorização, no iOS 16 pede). No site, a página usa a partilha do navegador e o ficheiro .ics.
