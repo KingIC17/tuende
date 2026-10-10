@@ -192,7 +192,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Tuende;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "O ANGOLIVE usa a sua localização apenas no telemóvel para mostrar os locais mais perto de si.";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "O Tuende usa o calendário apenas para guardar os eventos da agenda que escolher.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "O Tuende usa a sua localização apenas no telemóvel para mostrar os lugares mais perto de si.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -222,7 +223,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Tuende;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "O ANGOLIVE usa a sua localização apenas no telemóvel para mostrar os locais mais perto de si.";
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "O Tuende usa o calendário apenas para guardar os eventos da agenda que escolher.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "O Tuende usa a sua localização apenas no telemóvel para mostrar os lugares mais perto de si.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
