@@ -183,13 +183,14 @@ def page(v, others, desc_en):
         data['geo'] = {'@type': 'GeoCoordinates', 'latitude': v['lat'], 'longitude': v['lng']}
     sources = v.get('verified', {}).get('sources', [])
     checked = v.get('verified', {}).get('date', '')
+    hours_note = v.get('hoursNote', {}).get('pt', '') if v.get('hours') else ''
     facts = [('Horário', ''.join(f'<span>{e(d)}</span><span>{e(h)}</span>' if d else f'<span>{e(h)}</span>' for d, h in hours_lines(v)))]
     facts.append(('Morada', e(v.get('address') or where)))
     price = price_text(v)
     note = v.get('price', {}).get('note', {}).get('pt') if v.get('price') else ''
     facts.append(('Preço', e(price) + (f'<br>{e(note)}' if note else '')))
     facts_html = '\n'.join(
-        f'            <div><dt>{label}</dt><dd>{f"<div class=\"hours\">{value}</div>" if label == "Horário" and v.get("hours") else value}</dd></div>'
+        f'            <div><dt>{label}</dt><dd>{f"<div class=\"hours\">{value}</div>" + (f"<p class=\"muted\">{e(hours_note)}</p>" if hours_note else "") if label == "Horário" and v.get("hours") else value}</dd></div>'
         for label, value in facts)
     others_html = '\n'.join(f'            <li><a href="{slug(o["name"])}.html">{e(o["name"])}</a> · {e(place_line(o))}</li>' for o in others)
     focus = f' style="object-position: {photo["focus"]}"' if photo and photo['focus'] else ''
