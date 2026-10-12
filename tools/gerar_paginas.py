@@ -110,7 +110,9 @@ def place_line(v):
 def photo_of(v):
     if v.get('photos'):
         p = v['photos'][0]
-        return {'src': p['url'], 'credit': f"Foto: <a href=\"{e(p['page'])}\">{e(p['author'])}</a> · {e(p['license'])} · Wikimedia Commons", 'focus': p.get('focus', '')}
+        label = 'Foto ilustrativa' if p.get('illustrative') else 'Foto'
+        caption = f"{e(p['caption']['pt'])} · " if p.get('illustrative') and p.get('caption') else ''
+        return {'src': p['url'], 'credit': f"{label}: {caption}<a href=\"{e(p['page'])}\">{e(p['author'])}</a> · {e(p['license'])} · Wikimedia Commons", 'focus': p.get('focus', '')}
     if v.get('image'):
         return {'src': v['image'], 'credit': 'Foto ilustrativa (Unsplash)', 'focus': ''}
     return None
