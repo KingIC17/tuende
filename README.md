@@ -147,7 +147,7 @@ Não adicionar o domínio no GitHub antes de o comprar e configurar o DNS: o end
    - As estrelas inventadas foram removidas (outubro de 2026). Agora só aparecem estrelas calculadas a partir de comentários reais.
    - Os telefones foram removidos até serem confirmados (campo `phone` vazio); os botões Ligar e WhatsApp só aparecem quando há número.
    - Algumas descrições ainda não foram confirmadas com os locais.
-   - Alguns locais ainda usam fotos ilustrativas (Unsplash), marcadas como tal; os outros têm fotos reais do Wikimedia Commons.
+   - Só se usam fotos reais do próprio lugar (Wikimedia Commons, com autor e licença); os lugares sem foto real ficam sem foto. Os ficheiros `photos/unsplash-*` antigos já não são usados.
    - Locais acrescentados a 6 de outubro de 2026 (ids 34 a 61): transportes, museus, centros comerciais, praças, bares, discotecas, câmbio, ginásios e piscina. Fontes: sites oficiais, Expansão, Novo Jornal, ANGOP, Ver Angola, Wikipedia e OpenStreetMap. Onde nenhuma fonte publica o preço ou o horário, a app mostra "por confirmar". Tarifas atualizadas: táxi coletivo 300 Kz e autocarro urbano 200 Kz (julho de 2025), comboio suburbano 300 Kz (maio de 2026).
    - Por confirmar com os próprios locais: preços dos bares, discotecas e ginásios; horário e acesso do público à Piscina do Alvalade (não encontrámos piscinas públicas com preço publicado em Luanda); horários de alguns centros comerciais.
 7. **Supabase**: ligado. Antes de abrir ao público, configurar um SMTP próprio (o envio de emails incluído no Supabase tem um limite muito baixo por hora) e traduzir os modelos de email para português.
