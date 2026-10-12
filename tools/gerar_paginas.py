@@ -322,7 +322,7 @@ def main():
     (out / 'index.html').write_text(index_page(venues), encoding='utf-8')
 
     today = date.today().isoformat()
-    urls = [SITE, f'{SITE}?page=events', f'{SITE}?page=guide', f'{SITE}?page=routes', f'{SITE}?page=map', f'{SITE}lugares/', f'{SITE}termos.html']
+    urls = [SITE, f'{SITE}?page=events', f'{SITE}?page=guide', f'{SITE}?page=routes', f'{SITE}?page=map', f'{SITE}?page=maravilhas', f'{SITE}lugares/', f'{SITE}termos.html']
     urls += [f'{SITE}lugares/{slug(v["name"])}.html' for v in venues]
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     sitemap += [f'  <url><loc>{html.escape(u)}</loc><lastmod>{today}</lastmod></url>' for u in urls]
