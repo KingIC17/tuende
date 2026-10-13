@@ -729,7 +729,6 @@
         .empty-block .hint { margin-top: 14px; font-weight: 400; }
         .empty-block .submit-btn { margin-top: 12px; }
 
-        .fix-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; background: none; border: none; padding: 0; min-height: 44px; color: var(--primary); font-size: 15px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 
         .site-footer { margin-top: 48px; padding: 24px 0 36px; background: var(--bg); border-top: 1px solid var(--line); }
         .footer-links { display: flex; flex-wrap: wrap; gap: 4px 18px; }
@@ -743,7 +742,6 @@
         .info-list strong { color: var(--text); }
         .form-group { margin-bottom: 14px; }
         .form-group label { display: block; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-        #fixForm { margin-top: 14px; }
 
         .rec-page { max-width: 760px; margin: 0 auto; padding-top: 12px; }
         .rec-title { font-size: 32px; line-height: 1.15; font-weight: 800; margin-top: 6px; }
@@ -1029,6 +1027,144 @@
             .fact { grid-template-columns: 1fr; gap: 2px; }
             .results-tools .field { width: 100%; }
         }
+
+        /* Kamba, the chat helper: a round button that opens into the chat. */
+        .kamba-face { display: inline-flex; flex: none; width: 32px; height: 32px; border-radius: 50%; overflow: hidden; }
+        .kamba-face svg { display: block; width: 100%; height: 100%; }
+        .kamba-btn {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 58;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 20px 5px 5px;
+            border: 1.5px solid var(--line);
+            border-radius: 999px;
+            background: var(--surface);
+            color: var(--text);
+            font-size: 15px;
+            font-weight: 800;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+        .kamba-btn .kamba-face { width: 50px; height: 50px; transform-origin: 50% 85%; animation: kamba-nod 8s ease-in-out 4s infinite; }
+        .kamba-btn:hover { transform: translateY(-2px); }
+        .kamba-btn.away { opacity: 0; transform: scale(0.5); pointer-events: none; }
+        @keyframes kamba-nod {
+            0%, 86%, 100% { transform: rotate(0); }
+            90% { transform: rotate(-9deg); }
+            94% { transform: rotate(7deg); }
+            97% { transform: rotate(-3deg); }
+        }
+
+        .kamba-teaser {
+            position: fixed;
+            right: 20px;
+            bottom: 92px;
+            z-index: 58;
+            display: flex;
+            align-items: flex-start;
+            max-width: 260px;
+            border: 1.5px solid var(--border);
+            border-radius: 18px 18px 6px 18px;
+            background: var(--surface);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.14);
+            animation: kamba-pop 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+        }
+        .kamba-teaser-text { flex: 1; padding: 12px 4px 12px 14px; border: none; background: none; color: var(--text); text-align: left; font-size: 14px; font-weight: 600; line-height: 1.4; }
+        .kamba-teaser-x { flex: none; width: 36px; height: 36px; border: none; background: none; color: var(--muted); font-size: 22px; line-height: 1; }
+        @keyframes kamba-pop { from { opacity: 0; transform: translateY(8px) scale(0.92); } }
+
+        .kamba-panel {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 90;
+            display: flex;
+            flex-direction: column;
+            width: min(400px, calc(100vw - 40px));
+            height: min(640px, calc(100vh - 40px));
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: var(--surface);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+            transform-origin: 100% 100%;
+            animation: kamba-open 0.32s cubic-bezier(0.2, 0.9, 0.3, 1.15);
+        }
+        .kamba-panel.closing { animation: kamba-close 0.2s ease-in forwards; }
+        @keyframes kamba-open { from { opacity: 0; transform: scale(0.14); border-radius: 50%; } }
+        @keyframes kamba-close { to { opacity: 0; transform: scale(0.14); border-radius: 50%; } }
+
+        .kamba-head { display: flex; align-items: center; gap: 12px; padding: 14px 12px 14px 16px; background: var(--primary-fill); color: #fff; }
+        .kamba-head .kamba-face { width: 46px; height: 46px; box-shadow: 0 0 0 2.5px #fff; }
+        .kamba-head-text { flex: 1; min-width: 0; }
+        .kamba-head h2 { font-size: 19px; font-weight: 800; line-height: 1.2; }
+        .kamba-head p { font-size: 13px; color: rgba(255, 255, 255, 0.88); }
+        .kamba-head-btn { flex: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border: none; border-radius: 50%; background: rgba(255, 255, 255, 0.16); color: #fff; font-size: 24px; line-height: 1; }
+        .kamba-head-btn:hover { background: rgba(255, 255, 255, 0.28); }
+        .kamba-head-btn .icon { width: 19px; height: 19px; }
+        .kamba-head-btn:focus-visible { outline-color: #fff; }
+        .kamba-panel .samakaka { flex: none; height: 8px; }
+
+        .kamba-log { position: relative; flex: 1; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 10px; padding: 16px 14px; background: var(--surface-2); }
+        .kamba-msg { display: flex; align-items: flex-end; gap: 8px; }
+        .kamba-msg .kamba-face { width: 30px; height: 30px; }
+        .kamba-bubble { max-width: 86%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 18px 18px 18px 6px; background: var(--surface); color: var(--text); font-size: 15px; line-height: 1.45; overflow-wrap: anywhere; }
+        .kamba-bubble p + p, .kamba-bubble p + ul, .kamba-bubble ul + p { margin-top: 8px; }
+        .kamba-bubble ul { display: grid; gap: 5px; margin-top: 6px; padding-left: 18px; }
+        .kamba-msg.me { justify-content: flex-end; }
+        .kamba-msg.me .kamba-bubble { border-color: transparent; border-radius: 18px 18px 6px 18px; background: var(--primary-fill); color: #fff; }
+
+        .kamba-cards { display: grid; gap: 8px; margin-top: 10px; }
+        .kamba-card { display: flex; align-items: center; gap: 10px; width: 100%; padding: 6px 10px 6px 6px; border: 1.5px solid var(--border); border-radius: 14px; background: var(--surface-2); color: var(--text); text-align: left; }
+        .kamba-card:hover { border-color: var(--primary); }
+        .kamba-thumb { position: relative; flex: none; display: flex; align-items: center; justify-content: center; width: 50px; height: 50px; overflow: hidden; border-radius: 10px; background: var(--primary-soft); color: var(--primary); font-size: 14px; font-weight: 800; }
+        .kamba-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .kamba-thumb.date { flex-direction: column; background: var(--accent); color: var(--accent-ink); font-size: 11px; font-weight: 700; line-height: 1.1; text-transform: uppercase; }
+        .kamba-thumb.date b { font-size: 19px; }
+        .kamba-card-text { display: grid; min-width: 0; }
+        .kamba-card-text b { font-size: 14.5px; line-height: 1.3; }
+        .kamba-card-text small { color: var(--muted); font-size: 12.5px; line-height: 1.35; }
+
+        .kamba-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+        .kamba-link { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 13px; border: 1.5px solid var(--primary); border-radius: 999px; background: none; color: var(--primary); font-size: 13.5px; font-weight: 700; text-decoration: none; }
+        .kamba-link:hover { background: var(--primary-soft); }
+        .kamba-link .icon { width: 16px; height: 16px; }
+        .kamba-chips { display: flex; flex-wrap: wrap; gap: 6px; padding-left: 38px; }
+        .kamba-chip { min-height: 36px; padding: 0 13px; border: 1.5px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); font-size: 13.5px; font-weight: 700; text-align: left; }
+        .kamba-chip:hover { border-color: var(--primary); color: var(--primary); }
+
+        .kamba-typing { display: inline-flex; gap: 4px; padding: 4px 2px; }
+        .kamba-typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: kamba-dot 1.1s ease-in-out infinite; }
+        .kamba-typing span:nth-child(2) { animation-delay: 0.15s; }
+        .kamba-typing span:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes kamba-dot { 0%, 60%, 100% { opacity: 0.35; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
+
+        .kamba-form { display: flex; gap: 8px; padding: 10px 12px 6px; border-top: 1px solid var(--line); background: var(--surface); }
+        .kamba-input { flex: 1; min-width: 0; min-height: 46px; padding: 0 16px; border: 1.5px solid var(--border); border-radius: 999px; background: var(--surface-2); color: var(--text); font-size: 16px; }
+        .kamba-input:focus { border-color: var(--primary); outline: none; }
+        .kamba-send { flex: none; display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border: none; border-radius: 50%; background: var(--primary-fill); color: #fff; }
+        .kamba-send:hover { background: var(--primary-fill-strong); }
+        .kamba-send .icon { width: 20px; height: 20px; }
+        .kamba-note { padding: 0 16px 10px; background: var(--surface); color: var(--muted); font-size: 12px; line-height: 1.4; text-align: center; }
+
+        @media (max-width: 720px) {
+            .kamba-btn { right: 14px; bottom: calc(80px + env(safe-area-inset-bottom)); padding: 4px; }
+            .kamba-btn-label { display: none; }
+            .kamba-btn .kamba-face { width: 54px; height: 54px; }
+            .kamba-teaser { right: 14px; bottom: calc(150px + env(safe-area-inset-bottom)); max-width: min(260px, calc(100vw - 28px)); }
+            .kamba-panel { inset: 0; width: 100%; height: 100%; height: 100dvh; border: none; border-radius: 0; }
+            .kamba-head { padding-top: calc(12px + env(safe-area-inset-top)); }
+            .kamba-note { padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+            body.kamba-lock { overflow: hidden; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .kamba-btn .kamba-face, .kamba-panel, .kamba-panel.closing, .kamba-teaser, .kamba-typing span { animation: none; }
+        }
     </style>
 </head>
 <body>
@@ -1258,7 +1394,6 @@
                 <a class="footer-link" id="footerPrivacy" href="privacy.html" hidden data-i18n="footerPrivacy"></a>
                 <a class="footer-link" id="footerContact" hidden data-i18n="footerContact"></a>
                 <button type="button" class="footer-link" id="footerRecommend" data-action="recommend" hidden data-i18n="footerRecommend"></button>
-                <button type="button" class="footer-link" id="footerFix" data-fix="" hidden data-i18n="footerFix"></button>
             </nav>
             <p class="footer-note" data-i18n="footerNote"></p>
         </div>
@@ -1273,6 +1408,30 @@
         <button class="tab" type="button" data-tab="account" id="tabAccount" hidden><span id="tabAccountIcon"></span><span id="tabAccountLabel"></span></button>
     </nav>
 
+    <div class="kamba-teaser" id="kambaTeaser" hidden>
+        <button type="button" class="kamba-teaser-text" id="kambaTeaserText"></button>
+        <button type="button" class="kamba-teaser-x" id="kambaTeaserClose">×</button>
+    </div>
+    <button class="kamba-btn" type="button" id="kambaBtn" aria-expanded="false" aria-controls="kambaPanel"><span class="kamba-face" data-kamba-face></span><span class="kamba-btn-label" id="kambaBtnLabel"></span></button>
+    <section class="kamba-panel" id="kambaPanel" role="dialog" aria-labelledby="kambaTitle" hidden>
+        <header class="kamba-head">
+            <span class="kamba-face" data-kamba-face></span>
+            <div class="kamba-head-text">
+                <h2 id="kambaTitle">Kamba</h2>
+                <p id="kambaTagline"></p>
+            </div>
+            <button type="button" class="kamba-head-btn" id="kambaReset"><span data-icon="refresh"></span></button>
+            <button type="button" class="kamba-head-btn" id="kambaClose">×</button>
+        </header>
+        <div class="samakaka" aria-hidden="true"></div>
+        <div class="kamba-log" id="kambaLog" role="log" aria-live="polite"></div>
+        <form class="kamba-form" id="kambaForm" novalidate>
+            <input class="kamba-input" id="kambaInput" type="text" maxlength="300" autocomplete="off" enterkeyhint="send">
+            <button type="submit" class="kamba-send" id="kambaSend"><span data-icon="send"></span></button>
+        </form>
+        <p class="kamba-note" id="kambaNote"></p>
+    </section>
+
     <div class="modal" id="venueModal" role="dialog" aria-modal="true">
         <div class="modal-panel" id="venuePanel"></div>
     </div>
@@ -1281,31 +1440,6 @@
         <div class="modal-panel info-panel">
             <button class="close-btn" type="button" data-close="infoModal" data-i18n-aria="close">×</button>
             <div id="infoContent"></div>
-        </div>
-    </div>
-
-    <div class="modal" id="fixModal" role="dialog" aria-modal="true" aria-labelledby="fixTitle">
-        <div class="modal-panel info-panel">
-            <button class="close-btn" type="button" data-close="fixModal" data-i18n-aria="close">×</button>
-            <h2 class="info-title" id="fixTitle" data-i18n="fixTitle"></h2>
-            <p class="hint" data-i18n="fixIntro"></p>
-            <p class="hint"><span data-i18n="fixNewPlace"></span> <button type="button" class="link-btn" data-action="recommend" data-i18n="recTitle"></button></p>
-            <form id="fixForm" novalidate>
-                <div class="form-group">
-                    <label for="fixPlace" data-i18n="fixPlaceLabel"></label>
-                    <select class="field" id="fixPlace"></select>
-                </div>
-                <div class="form-group">
-                    <label for="fixMessage" data-i18n="fixMessageLabel"></label>
-                    <textarea class="field" id="fixMessage" maxlength="1000" data-i18n-placeholder="fixMessagePlaceholder"></textarea>
-                </div>
-                <div class="form-group" id="fixContactGroup">
-                    <label for="fixContact" data-i18n="fixContactLabel"></label>
-                    <input class="field" id="fixContact" type="text" maxlength="120" autocomplete="email">
-                </div>
-                <div class="form-msg" id="fixMsg" role="status" aria-live="polite"></div>
-                <button class="submit-btn" type="submit" id="fixSubmit" style="width:100%" data-i18n="fixSend"></button>
-            </form>
         </div>
     </div>
 
@@ -2364,7 +2498,6 @@
                 notVerified: 'Ainda não verificado.',
                 sourcesLabel: 'Fontes',
                 approxMap: 'Localização aproximada: o Google Maps procura o lugar pelo nome.',
-                suggestFix: 'Corrigir ou acrescentar informação',
                 aboutRatings: 'Média das avaliações dos visitantes do Tuende.',
                 about: 'Sobre',
                 viewMap: 'Ver no mapa',
@@ -2525,7 +2658,7 @@
                 account: 'A minha conta',
                 accountAria: 'A minha conta ({name})',
                 createAccount: 'Criar conta',
-                authIntro: 'Com uma conta pode guardar lugares em todos os seus dispositivos, avaliar, comentar, enviar fotos e corrigir informação.',
+                authIntro: 'Com uma conta pode guardar lugares em todos os seus dispositivos, avaliar, comentar e enviar fotos.',
                 authName: 'Nome (aparece junto dos seus comentários e fotos)',
                 authEmail: 'Email',
                 authPassword: 'Palavra-passe',
@@ -2593,7 +2726,6 @@
                 authErrLink: 'O link expirou ou já foi usado. Peça um novo.',
                 authExpired: 'A sessão terminou. Entre de novo para continuar.',
                 authNeedReview: 'Entre na sua conta para avaliar, comentar e partilhar fotos e vídeos deste lugar.',
-                authNeedFix: 'Entre na sua conta para corrigir ou acrescentar informação.',
                 authNeedReport: 'Entre na sua conta para denunciar conteúdo.',
                 postingAs: 'Publica como {name}.',
                 reviewOptionalStars: 'Estrelas (opcional). Pode deixar só um comentário.',
@@ -2725,12 +2857,10 @@
                 recCtaTitle: 'Conhece um lugar que devia estar aqui?',
                 recCtaText: 'Recomende restaurantes, praias, hotéis, atrações ou serviços. Verificamos cada sugestão.',
                 footerRecommend: 'Recomendar um lugar',
-                fixNewPlace: 'Quer sugerir um lugar que ainda não está na app?',
                 footerAbout: 'Sobre o Tuende',
                 footerVerify: 'Como verificamos os lugares',
                 footerPrivacy: 'Privacidade',
                 footerContact: 'Contacto',
-                footerFix: 'Corrigir um lugar',
                 footerNote: 'Fotos: Wikimedia Commons, com autor e licença em cada foto. Só mostramos fotos reais do próprio lugar.',
                 aboutTitle: 'Sobre o Tuende',
                 aboutP1: 'O Tuende ajuda-o a escolher onde ir em Angola (restaurantes, praias, cultura, natureza, vida noturna e alojamento) e a chegar lá com confiança.',
@@ -2742,18 +2872,9 @@
                 verifyPhotos: '<strong>Fotos.</strong> As fotos reais vêm do Wikimedia Commons, com autor e licença. Confirmamos pelo GPS ou pela descrição que foram tiradas em Angola. Os lugares sem uma foto real ficam sem foto.',
                 verifyReviewsOn: '<strong>Avaliações.</strong> As avaliações, os comentários, as fotos e os vídeos dos visitantes aparecem logo que são publicados. Quem tem conta pode denunciar conteúdo impróprio; com 3 denúncias fica escondido até ser revisto.',
                 verifyReviewsOff: '<strong>Avaliações.</strong> As avaliações de visitantes ainda não estão ativas. Até lá, indicamos as opiniões publicadas no Google Maps e no TripAdvisor.',
-                verifyFix: 'Encontrou um erro? Use "Sugerir uma correção" na página do lugar. Conhece um lugar que devia estar aqui? Use "Recomendar um lugar".',
-                fixTitle: 'Corrigir um lugar',
-                fixIntro: 'Revemos todas as sugestões antes de alterar a app.',
-                fixPlaceLabel: 'Lugar',
-                fixMessageLabel: 'O que devemos saber?',
-                fixMessagePlaceholder: 'Ex.: o horário mudou, o telefone é…, fechou, a morada certa é…',
+                verifyFix: 'Conhece um lugar que devia estar aqui? Use "Recomendar um lugar".',
                 fixContactLabel: 'O seu email ou telefone (opcional, só para lhe respondermos)',
-                fixSend: 'Enviar sugestão',
-                fixThanks: 'Obrigado! Vamos rever a sua sugestão.',
                 fixEmailOpened: 'Abrimos o seu email com a sugestão. Só falta enviar.',
-                errFixMessage: 'Escreva o que devemos corrigir ou acrescentar.',
-                fixEmailSubject: 'Tuende: sugestão de correção'
             },
             en: {
                 heroTitle: 'Find where to go in Angola',
@@ -2857,7 +2978,6 @@
                 notVerified: 'Not verified yet.',
                 sourcesLabel: 'Sources',
                 approxMap: 'Approximate location: Google Maps finds the place by name.',
-                suggestFix: 'Correct or add information',
                 aboutRatings: 'Average rating from Tuende visitors.',
                 about: 'About',
                 viewMap: 'View on map',
@@ -3018,7 +3138,7 @@
                 account: 'My account',
                 accountAria: 'My account ({name})',
                 createAccount: 'Create account',
-                authIntro: 'With an account you can keep saved places on all your devices, rate, comment, share photos and correct information.',
+                authIntro: 'With an account you can keep saved places on all your devices, rate, comment and share photos.',
                 authName: 'Name (shown next to your comments and photos)',
                 authEmail: 'Email',
                 authPassword: 'Password',
@@ -3086,7 +3206,6 @@
                 authErrLink: 'The link has expired or was already used. Ask for a new one.',
                 authExpired: 'Your session ended. Sign in again to continue.',
                 authNeedReview: 'Sign in to rate, comment and share photos and videos of this place.',
-                authNeedFix: 'Sign in to correct or add information.',
                 authNeedReport: 'Sign in to report content.',
                 postingAs: 'Posting as {name}.',
                 reviewOptionalStars: 'Stars (optional). You can leave just a comment.',
@@ -3218,12 +3337,10 @@
                 recCtaTitle: 'Know a place that should be here?',
                 recCtaText: 'Recommend restaurants, beaches, hotels, attractions or services. We check every suggestion.',
                 footerRecommend: 'Recommend a place',
-                fixNewPlace: 'Want to suggest a place that is not in the app yet?',
                 footerAbout: 'About Tuende',
                 footerVerify: 'How we verify places',
                 footerPrivacy: 'Privacy',
                 footerContact: 'Contact',
-                footerFix: 'Correct a place',
                 footerNote: 'Photos: Wikimedia Commons, with author and licence on each photo. We only show real photos of the place itself.',
                 aboutTitle: 'About Tuende',
                 aboutP1: 'Tuende helps you choose where to go in Angola (restaurants, beaches, culture, nature, nightlife and places to stay) and get there with confidence.',
@@ -3235,18 +3352,9 @@
                 verifyPhotos: '<strong>Photos.</strong> Real photos come from Wikimedia Commons, with author and licence. We check from GPS data or the description that they were taken in Angola. Places without a real photo have no photo.',
                 verifyReviewsOn: '<strong>Reviews.</strong> Visitor reviews, comments, photos and videos appear as soon as they are posted. Anyone with an account can report inappropriate content; after 3 reports it is hidden until reviewed.',
                 verifyReviewsOff: '<strong>Reviews.</strong> Visitor reviews are not live yet. Until then, we link to the reviews published on Google Maps and TripAdvisor.',
-                verifyFix: 'Found a mistake? Use "Suggest a correction" on the place page. Know a place that should be here? Use "Recommend a place".',
-                fixTitle: 'Correct a place',
-                fixIntro: 'We review every suggestion before changing the app.',
-                fixPlaceLabel: 'Place',
-                fixMessageLabel: 'What should we know?',
-                fixMessagePlaceholder: 'E.g. the opening hours changed, the phone number is…, it closed, the correct address is…',
+                verifyFix: 'Know a place that should be here? Use "Recommend a place".',
                 fixContactLabel: 'Your email or phone (optional, only so we can reply)',
-                fixSend: 'Send suggestion',
-                fixThanks: 'Thank you! We will review your suggestion.',
                 fixEmailOpened: 'We opened your email app with the suggestion. You just need to send it.',
-                errFixMessage: 'Please write what we should correct or add.',
-                fixEmailSubject: 'Tuende: correction suggestion'
             },
             fr: {
                 heroTitle: 'Trouvez où aller en Angola',
@@ -3350,7 +3458,6 @@
                 notVerified: 'Pas encore vérifié.',
                 sourcesLabel: 'Sources',
                 approxMap: 'Emplacement approximatif : Google Maps trouve le lieu par son nom.',
-                suggestFix: 'Corriger ou compléter les informations',
                 aboutRatings: 'Note moyenne des visiteurs de Tuende.',
                 about: 'À propos',
                 viewMap: 'Voir sur la carte',
@@ -3511,7 +3618,7 @@
                 account: 'Mon compte',
                 accountAria: 'Mon compte ({name})',
                 createAccount: 'Créer un compte',
-                authIntro: 'Avec un compte, vous gardez vos lieux enregistrés sur tous vos appareils, et vous pouvez noter, commenter, partager des photos et corriger des informations.',
+                authIntro: 'Avec un compte, vous gardez vos lieux enregistrés sur tous vos appareils, et vous pouvez noter, commenter et partager des photos.',
                 authName: 'Nom (affiché à côté de vos commentaires et photos)',
                 authEmail: 'E-mail',
                 authPassword: 'Mot de passe',
@@ -3579,7 +3686,6 @@
                 authErrLink: 'Le lien a expiré ou a déjà été utilisé. Demandez-en un nouveau.',
                 authExpired: 'Votre session a expiré. Reconnectez-vous pour continuer.',
                 authNeedReview: 'Connectez-vous pour noter, commenter et partager des photos et vidéos de ce lieu.',
-                authNeedFix: 'Connectez-vous pour corriger ou compléter les informations.',
                 authNeedReport: 'Connectez-vous pour signaler un contenu.',
                 postingAs: 'Publication en tant que {name}.',
                 reviewOptionalStars: 'Étoiles (facultatif). Vous pouvez laisser seulement un commentaire.',
@@ -3711,12 +3817,10 @@
                 recCtaTitle: 'Vous connaissez un lieu qui devrait être ici ?',
                 recCtaText: 'Recommandez restaurants, plages, hôtels, attractions ou services. Nous vérifions chaque suggestion.',
                 footerRecommend: 'Recommander un lieu',
-                fixNewPlace: 'Vous voulez proposer un lieu qui n\'est pas encore dans l\'app ?',
                 footerAbout: 'À propos de Tuende',
                 footerVerify: 'Comment nous vérifions les lieux',
                 footerPrivacy: 'Confidentialité',
                 footerContact: 'Contact',
-                footerFix: 'Corriger un lieu',
                 footerNote: 'Photos : Wikimedia Commons, avec l\'auteur et la licence sur chaque photo. Nous ne montrons que des photos réelles du lieu lui-même.',
                 aboutTitle: 'À propos de Tuende',
                 aboutP1: 'Tuende vous aide à choisir où aller en Angola (restaurants, plages, culture, nature, vie nocturne et hébergement) et à vous y rendre en toute confiance.',
@@ -3728,18 +3832,9 @@
                 verifyPhotos: '<strong>Photos.</strong> Les photos réelles viennent de Wikimedia Commons, avec l\'auteur et la licence. Nous vérifions grâce au GPS ou à la description qu\'elles ont été prises en Angola. Les lieux sans photo réelle n\'ont pas de photo.',
                 verifyReviewsOn: '<strong>Avis.</strong> Les avis, commentaires, photos et vidéos des visiteurs apparaissent dès leur publication. Toute personne ayant un compte peut signaler un contenu inapproprié ; après 3 signalements, il est masqué jusqu\'à vérification.',
                 verifyReviewsOff: '<strong>Avis.</strong> Les avis des visiteurs ne sont pas encore actifs. En attendant, nous renvoyons vers les avis publiés sur Google Maps et TripAdvisor.',
-                verifyFix: 'Vous avez trouvé une erreur ? Utilisez « Corriger ou compléter les informations » sur la page du lieu. Vous connaissez un lieu qui devrait être ici ? Utilisez « Recommander un lieu ».',
-                fixTitle: 'Corriger un lieu',
-                fixIntro: 'Nous examinons chaque suggestion avant de modifier l\'app.',
-                fixPlaceLabel: 'Lieu',
-                fixMessageLabel: 'Que devons-nous savoir ?',
-                fixMessagePlaceholder: 'Ex. les horaires ont changé, le numéro est…, le lieu a fermé, la bonne adresse est…',
+                verifyFix: 'Vous connaissez un lieu qui devrait être ici ? Utilisez « Recommander un lieu ».',
                 fixContactLabel: 'Votre e-mail ou téléphone (facultatif, uniquement pour vous répondre)',
-                fixSend: 'Envoyer la suggestion',
-                fixThanks: 'Merci ! Nous examinerons votre suggestion.',
                 fixEmailOpened: 'Nous avons ouvert votre messagerie avec la suggestion. Il ne reste qu\'à l\'envoyer.',
-                errFixMessage: 'Veuillez écrire ce que nous devons corriger ou ajouter.',
-                fixEmailSubject: 'Tuende : suggestion de correction'
             },
             es: {
                 heroTitle: 'Encuentre adónde ir en Angola',
@@ -3843,7 +3938,6 @@
                 notVerified: 'Aún no verificado.',
                 sourcesLabel: 'Fuentes',
                 approxMap: 'Ubicación aproximada: Google Maps encuentra el lugar por su nombre.',
-                suggestFix: 'Corregir o añadir información',
                 aboutRatings: 'Valoración media de los visitantes de Tuende.',
                 about: 'Acerca de',
                 viewMap: 'Ver en el mapa',
@@ -4004,7 +4098,7 @@
                 account: 'Mi cuenta',
                 accountAria: 'Mi cuenta ({name})',
                 createAccount: 'Crear cuenta',
-                authIntro: 'Con una cuenta puede tener sus lugares guardados en todos sus dispositivos, valorar, comentar, compartir fotos y corregir información.',
+                authIntro: 'Con una cuenta puede tener sus lugares guardados en todos sus dispositivos, valorar, comentar y compartir fotos.',
                 authName: 'Nombre (aparece junto a sus comentarios y fotos)',
                 authEmail: 'Correo electrónico',
                 authPassword: 'Contraseña',
@@ -4072,7 +4166,6 @@
                 authErrLink: 'El enlace ha caducado o ya se usó. Pida uno nuevo.',
                 authExpired: 'Su sesión ha terminado. Vuelva a iniciar sesión para continuar.',
                 authNeedReview: 'Inicie sesión para valorar, comentar y compartir fotos y vídeos de este lugar.',
-                authNeedFix: 'Inicie sesión para corregir o añadir información.',
                 authNeedReport: 'Inicie sesión para denunciar contenido.',
                 postingAs: 'Publicando como {name}.',
                 reviewOptionalStars: 'Estrellas (opcional). Puede dejar solo un comentario.',
@@ -4204,12 +4297,10 @@
                 recCtaTitle: '¿Conoce un lugar que debería estar aquí?',
                 recCtaText: 'Recomiende restaurantes, playas, hoteles, atracciones o servicios. Revisamos cada sugerencia.',
                 footerRecommend: 'Recomendar un lugar',
-                fixNewPlace: '¿Quiere sugerir un lugar que aún no está en la app?',
                 footerAbout: 'Sobre Tuende',
                 footerVerify: 'Cómo verificamos los lugares',
                 footerPrivacy: 'Privacidad',
                 footerContact: 'Contacto',
-                footerFix: 'Corregir un lugar',
                 footerNote: 'Fotos: Wikimedia Commons, con el autor y la licencia en cada foto. Solo mostramos fotos reales del propio lugar.',
                 aboutTitle: 'Sobre Tuende',
                 aboutP1: 'Tuende le ayuda a elegir adónde ir en Angola (restaurantes, playas, cultura, naturaleza, vida nocturna y alojamiento) y a llegar con confianza.',
@@ -4221,18 +4312,9 @@
                 verifyPhotos: '<strong>Fotos.</strong> Las fotos reales vienen de Wikimedia Commons, con el autor y la licencia. Comprobamos por el GPS o la descripción que se hicieron en Angola. Los lugares sin una foto real no tienen foto.',
                 verifyReviewsOn: '<strong>Opiniones.</strong> Las opiniones, comentarios, fotos y vídeos de los visitantes aparecen en cuanto se publican. Cualquier persona con cuenta puede denunciar contenido inapropiado; tras 3 denuncias, se oculta hasta revisarlo.',
                 verifyReviewsOff: '<strong>Opiniones.</strong> Las opiniones de los visitantes aún no están activas. Mientras tanto, enlazamos a las opiniones publicadas en Google Maps y TripAdvisor.',
-                verifyFix: '¿Ha encontrado un error? Use «Corregir o añadir información» en la página del lugar. ¿Conoce un lugar que debería estar aquí? Use «Recomendar un lugar».',
-                fixTitle: 'Corregir un lugar',
-                fixIntro: 'Revisamos cada sugerencia antes de cambiar la app.',
-                fixPlaceLabel: 'Lugar',
-                fixMessageLabel: '¿Qué debemos saber?',
-                fixMessagePlaceholder: 'P. ej., cambió el horario, el teléfono es…, cerró, la dirección correcta es…',
+                verifyFix: '¿Conoce un lugar que debería estar aquí? Use «Recomendar un lugar».',
                 fixContactLabel: 'Su correo o teléfono (opcional, solo para responderle)',
-                fixSend: 'Enviar sugerencia',
-                fixThanks: '¡Gracias! Revisaremos su sugerencia.',
                 fixEmailOpened: 'Hemos abierto su aplicación de correo con la sugerencia. Solo tiene que enviarla.',
-                errFixMessage: 'Escriba qué debemos corregir o añadir.',
-                fixEmailSubject: 'Tuende: sugerencia de corrección'
             }
         };
 
@@ -5341,7 +5423,9 @@
             card: '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/>',
             signal: '<line x1="4" y1="20" x2="4" y2="17"/><line x1="9" y1="20" x2="9" y2="13"/><line x1="14" y1="20" x2="14" y2="9"/><line x1="19" y1="20" x2="19" y2="4"/>',
             shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
-            health: '<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>'
+            health: '<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>',
+            refresh: '<polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>',
+            send: '<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>'
         };
 
         // Keys keep the old 'angolive' prefix so saved places, settings and sign-ins carry over from before the rename.
@@ -5390,8 +5474,7 @@
         const $ = (id) => document.getElementById(id);
         const supabaseReady = () => Boolean(SUPABASE_URL && SUPABASE_KEY);
         const reviewsEnabled = supabaseReady;
-        const canSuggestFix = () => supabaseReady() || Boolean(CONTACT_EMAIL);
-        const canRecommend = canSuggestFix;
+        const canRecommend = () => supabaseReady() || Boolean(CONTACT_EMAIL);
         const SOCIAL_NETWORKS = ['Instagram', 'Facebook', 'TikTok', 'YouTube', 'LinkedIn', 'X (Twitter)'];
         const MAX_SOCIAL_LINKS = 5;
         const MAX_REC_PHOTOS = 5;
@@ -6520,7 +6603,6 @@
                         <div class="fact"><dt>${t('stillToConfirm')}</dt><dd>${t('unknownFacts')}</dd></div>
                         ${verifiedRowHTML(v)}
                     </dl>
-                    ${canSuggestFix() ? `<button class="fix-link" type="button" data-fix="${v.id}">${icon('edit')}${t('suggestFix')}</button>` : ''}
                 </section>
             `;
         }
@@ -7512,7 +7594,7 @@
             else openAuth('account', { notice: t('authWelcome') });
         }
 
-        /* ---------- About, verification and corrections ---------- */
+        /* ---------- About and verification ---------- */
 
         // Installing the website as an app (it works offline through the service worker) and, once they exist, the store apps.
         const canInstallSite = () => !inNativeApp && !isStandalone();
@@ -7558,64 +7640,8 @@
                        <li>${t('verifyPhotos')}</li>
                        <li>${reviewsEnabled() ? t('verifyReviewsOn') : t('verifyReviewsOff')}</li>
                    </ul>
-                   ${canSuggestFix() ? `<p style="margin-top:14px;">${t('verifyFix')}</p>` : ''}`;
+                   ${canRecommend() ? `<p style="margin-top:14px;">${t('verifyFix')}</p>` : ''}`;
             openModal('infoModal');
-        }
-
-        function openFix(venueId) {
-            if (supabaseReady() && !signedIn()) {
-                openAuth('signin', { reason: t('authNeedFix'), after: () => openFix(venueId) });
-                return;
-            }
-            $('fixContactGroup').hidden = signedIn();
-            $('fixPlace').innerHTML = [...venues]
-                .sort((a, b) => a.name.localeCompare(b.name, 'pt'))
-                .map((v) => `<option value="${v.id}">${escapeHTML(v.name)} (${escapeHTML(cityOf(v))})</option>`)
-                .join('');
-            $('fixForm').reset();
-            if (venues.some((v) => v.id === venueId)) $('fixPlace').value = String(venueId);
-            $('fixMsg').textContent = '';
-            $('fixMsg').classList.remove('ok');
-            openModal('fixModal');
-        }
-
-        async function submitFix(event) {
-            event.preventDefault();
-            const message = $('fixMessage').value.trim();
-            const contact = $('fixContact').value.trim();
-            const msg = $('fixMsg');
-            msg.classList.remove('ok');
-            if (!message) { msg.textContent = t('errFixMessage'); $('fixMessage').focus(); return; }
-            const venue = venues.find((v) => v.id === Number($('fixPlace').value));
-
-            if (supabaseReady()) {
-                const button = $('fixSubmit');
-                button.disabled = true;
-                button.textContent = t('sending');
-                try {
-                    await sbRequest('/rest/v1/corrections', {
-                        method: 'POST',
-                        headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
-                        body: JSON.stringify({ kind: 'fix', venue_id: venue?.id ?? null, place_name: null, message })
-                    });
-                    $('fixForm').reset();
-                    if (venue) $('fixPlace').value = String(venue.id);
-                    msg.textContent = t('fixThanks');
-                    msg.classList.add('ok');
-                } catch (err) {
-                    if (needsSignIn(err, msg)) return;
-                    msg.textContent = t('errSend');
-                } finally {
-                    button.disabled = false;
-                    button.textContent = t('fixSend');
-                }
-                return;
-            }
-
-            const body = [venue ? `${venue.name} (#${venue.id})` : '', '', message, contact ? `\n${contact}` : ''].join('\n');
-            window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(t('fixEmailSubject'))}&body=${encodeURIComponent(body)}`;
-            msg.textContent = t('fixEmailOpened');
-            msg.classList.add('ok');
         }
 
         /* ---------- Agenda ---------- */
@@ -8255,7 +8281,6 @@
             $('footerPlaces').href = asset('lugares/');
             $('footerContact').hidden = !CONTACT_EMAIL;
             if (CONTACT_EMAIL) $('footerContact').href = `mailto:${CONTACT_EMAIL}`;
-            $('footerFix').hidden = !canSuggestFix();
             $('footerRecommend').hidden = !canRecommend();
             $('navRecommend').hidden = !canRecommend();
         }
@@ -8315,6 +8340,7 @@
             applyTheme();
             render();
             renderInstallBanner();
+            renderKamba();
             if ($('notice').textContent) setNotice('');
             if (state.openId) openVenue(state.openId, true);
         }
@@ -8340,6 +8366,862 @@
 
         function updateOnline() {
             $('offlineBanner').hidden = navigator.onLine;
+        }
+
+        /* ---------- Kamba, the chat helper ---------- */
+
+        // Kamba ("friend" in Angolan Portuguese) answers on the device from Tuende's own data: places, agenda, practical guide,
+        // routes and Maravilhas. It works offline and sends nothing anywhere. With KAMBA_AI_URL set (supabase/functions/kamba),
+        // Claude also writes the reply from the same facts; if that call fails, the on-device answer is shown instead.
+        const KAMBA_AI_URL = '';
+        const KAMBA_MAX_CARDS = 4;
+        // The palanca negra gigante, Angola's national animal.
+        const KAMBA_AVATAR = '<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#CE1126"/><g stroke="#111" stroke-width="4" fill="none" stroke-linecap="round"><path d="M27 21C25 12 19 7 11 6"/><path d="M37 21C39 12 45 7 53 6"/></g><ellipse cx="19" cy="25" rx="6" ry="2.8" transform="rotate(-25 19 25)" fill="#111"/><ellipse cx="45" cy="25" rx="6" ry="2.8" transform="rotate(25 45 25)" fill="#111"/><path d="M23 21Q32 16 41 21L39 43Q36 53 32 53Q28 53 25 43Z" fill="#111"/><path d="M26.8 31.5L29.6 47M37.2 31.5L34.4 47" stroke="#fff" stroke-width="2" stroke-linecap="round"/><circle cx="27.5" cy="27.5" r="2.5" fill="#fff"/><circle cx="36.5" cy="27.5" r="2.5" fill="#fff"/><circle cx="28" cy="28" r="1.2" fill="#111"/><circle cx="37" cy="28" r="1.2" fill="#111"/></svg>';
+
+        // Kamba speaks like a friend: "tu" in Portuguese with a little Angolan slang, "tu"/"tú" in French and Spanish.
+        // Lists are alternatives: Kamba picks one at random, never the same twice in a row.
+        const KAMBA_TEXT = {
+            pt: {
+                launch: 'Pergunta ao Kamba', openAria: 'Abrir a conversa com o Kamba', closeAria: 'Fechar a conversa', resetAria: 'Começar de novo',
+                tagline: 'O teu kamba em Angola', placeholder: 'Escreve a tua pergunta', sendAria: 'Enviar', typing: 'O Kamba está a escrever',
+                note: 'Respondo só com os dados verificados da Tuende. Confirma sempre antes de ir.',
+                noteAI: 'Respondo com os dados verificados da Tuende, com a ajuda de IA (Claude). Confirma sempre antes de ir.',
+                teaser: 'Olá! Sou o Kamba. Queres uma dica para a tua viagem?', teaserClose: 'Fechar',
+                morning: 'Bom dia', afternoon: 'Boa tarde', evening: 'Boa noite',
+                intro: '{hello}! Eu sou o Kamba. Em Angola, kamba quer dizer amigo, e é isso que quero ser na tua viagem. Conheço os {n} lugares da Tuende, a agenda e o guia prático. Pergunta à vontade!',
+                hello: ['{hello}, kamba! O que vamos descobrir hoje?', '{hello}! Ya, estou aqui. Diz-me o que procuras: praias, comida, hotéis, festa, eventos…', '{hello}! Bora explorar Angola? Pergunta-me o que quiseres.'],
+                howAreYou: ['Estou bué bem, obrigado por perguntares! E tu? Diz-me o que procuras e eu ajudo.', 'Tudo fixe por aqui! Pronto para te mostrar Angola. Por onde começamos?'],
+                thanks: ['De nada, kamba! Se precisares de mais alguma coisa, estou aqui.', 'Sempre às ordens! Boa viagem.', 'Foi um prazer. Aproveita Angola!'],
+                bye: ['Até breve, kamba! Aproveita Angola.', 'Vai com calma e boa viagem! Estou aqui quando precisares.'],
+                who: 'Sou o Kamba, o assistente da Tuende. Kamba quer dizer amigo em Angola. Ajudo-te a encontrar lugares, eventos e informação prática, sempre com os dados verificados da Tuende. E não invento: quando não sei, digo.',
+                palanca: 'Sou uma palanca negra gigante! Este antílope só existe em Angola e é um símbolo nacional: até a seleção de futebol se chama Palancas Negras.',
+                joke: 'Sabes porque é que a palanca negra nunca se perde? Com umas hastes daquelas, tem sempre rede!',
+                help: 'Posso ajudar-te com:',
+                helpList: ['Lugares em todas as províncias: praias, comida, bares, hotéis, museus, natureza, compras, ginásios, transporte e câmbio', 'A agenda: o que há hoje, este fim de semana ou este mês', 'Vistos, dinheiro, internet, transporte, segurança e saúde', 'As Maravilhas de Angola, fotografia e regras para drones', 'Roteiros prontos e o mapa'],
+                notFound: ['Hmm, isso ainda não está nos meus dados, e não quero inventar. Tenta com outras palavras ou experimenta uma destas:', 'Essa escapou-me! Não encontro nada sobre isso nos dados da Tuende. Que tal perguntar assim:'],
+                cheer: ['Bora!', 'Ya, tenho isso!', 'Boa escolha!', 'Fixe!'],
+                placesWord: 'lugares', inPlace: ' em {where}', inAngola: ' em Angola', forFamily: ' para famílias', freeTag: ' com entrada gratuita', openTag: ' abertos agora',
+                places: '{cheer} {what}: encontrei {count}.',
+                found: '{cheer} Para «{q}» encontrei {count}.',
+                placesMore: 'Aqui ficam os primeiros. Vê a lista completa para o resto.',
+                placesNone: 'Para {what}, ainda não tenho nada confirmado.',
+                placesNoneAlt: 'Para {what}, ainda não tenho nada confirmado. Mas em {where} conheço estes:',
+                openNone: 'Pelo horário que tenho, nenhum destes está aberto agora. Confirma antes de ir.',
+                placeOne: '{name} fica em {where}. {highlight}',
+                droneBasics: 'Para o drone, valem as regras de Angola: autorização prévia da ANAC, no máximo 122 m de altura, sempre à vista e nunca entre as 18h00 e as 5h30.',
+                price: 'Preço: {price}.', hours: 'Horário: {hours}',
+                nearSorted: 'Do mais perto para o mais longe de ti:',
+                nearAsk: 'Para te mostrar o que está perto, preciso da tua localização. Fica só no teu dispositivo.',
+                locError: 'Não consegui a tua localização. Diz-me antes a província ou a cidade.',
+                events: '{cheer} Na agenda {when}{where}:',
+                when_today: 'hoje', when_weekend: 'este fim de semana', when_week: 'esta semana', when_month: 'este mês', when_nextmonth: 'no próximo mês', when_all: 'a seguir',
+                eventsIn: ' em {where}',
+                eventsNone: 'Não tenho eventos confirmados {when}{where}. A agenda só mostra eventos com fonte publicada, por isso não vou adivinhar.',
+                eventsNext: 'Os próximos que tenho:',
+                guideIntro: ['Boa pergunta! Do guia prático:', 'Do guia prático da Tuende:'],
+                drones: 'Drone na bagagem? Bué fixe! Mas em Angola há regras:',
+                photo: 'Para fotografia, estes são alguns dos lugares mais bonitos de Angola:', photoIn: 'Para fotografia em {where}:',
+                photoNoneIn: 'Em {where} ainda não tenho lugares para fotografar. Estes são os melhores que conheço:', photoTip: 'Dica',
+                wonders: 'As 7 Maravilhas Naturais de Angola. Cada uma é de cortar a respiração:',
+                routes: 'Tenho roteiros prontos, paragem a paragem, dia a dia:',
+                map: 'No mapa estão todos os lugares com localização exata. Bora ver?',
+                surprise: ['Que tal isto? {name}, em {where}. {highlight}', 'Já conheces {name}? Fica em {where}. {highlight}', 'Aposto que vais gostar de {name}, em {where}. {highlight}'],
+                recommend: 'Conheces um lugar que devia estar na Tuende? Conta-nos neste formulário e a equipa verifica.',
+                seeAll: 'Ver todos ({n})', guideMore: 'Ler tudo: {title}', openAgenda: 'Ver a agenda', openWonders: 'Ver as Maravilhas', openDrones: 'Regras para drones',
+                openPhoto: 'Lugares para fotografar', openSpot: 'Dicas de fotografia', openRoutes: 'Ver os roteiros', openMap: 'Abrir o mapa', recommendBtn: 'Sugerir um lugar',
+                locateBtn: 'Usar a minha localização', directions: 'Como chegar',
+                chipCat: '{cat} em {where}', chipEvents: 'Eventos em {where}',
+                chipsStart: ['O que fazer em Luanda?', 'Preciso de visto?', 'Eventos este fim de semana', 'Praias em Benguela', 'Onde posso voar com drone?', 'Surpreende-me']
+            },
+            en: {
+                launch: 'Ask Kamba', openAria: 'Open the chat with Kamba', closeAria: 'Close the chat', resetAria: 'Start over',
+                tagline: 'Your kamba (friend) in Angola', placeholder: 'Type your question', sendAria: 'Send', typing: 'Kamba is typing',
+                note: 'I only answer from Tuende’s checked data. Always check before you go.',
+                noteAI: 'I answer from Tuende’s checked data, with help from AI (Claude). Always check before you go.',
+                teaser: 'Hi! I’m Kamba. Want a tip for your trip?', teaserClose: 'Close',
+                morning: 'Good morning', afternoon: 'Good afternoon', evening: 'Good evening',
+                intro: '{hello}! I’m Kamba. In Angola, kamba means friend, and that’s what I want to be on your trip. I know Tuende’s {n} places, the events and the practical guide. Ask me anything!',
+                hello: ['{hello}, kamba! What shall we discover today?', '{hello}! I’m here. Tell me what you’re after: beaches, food, hotels, nightlife, events…', '{hello}! Ready to explore Angola? Ask me anything.'],
+                howAreYou: ['I’m great, thanks for asking! How about you? Tell me what you’re looking for and I’ll help.', 'All good here! Ready to show you Angola. Where shall we start?'],
+                thanks: ['You’re welcome, kamba! If you need anything else, I’m here.', 'Any time! Have a great trip.', 'My pleasure. Enjoy Angola!'],
+                bye: ['See you soon, kamba! Enjoy Angola.', 'Take care and have a good trip! I’m here whenever you need me.'],
+                who: 'I’m Kamba, Tuende’s assistant. Kamba means friend in Angola. I help you find places, events and practical information, always from Tuende’s checked data. And I don’t make things up: when I don’t know, I say so.',
+                palanca: 'I’m a giant sable antelope, the palanca negra gigante! It lives only in Angola and is a national symbol: even the national football team is called the Palancas Negras.',
+                joke: 'Why does the giant sable never get lost? With horns like those, it always has signal!',
+                help: 'I can help you with:',
+                helpList: ['Places in every province: beaches, food, bars, hotels, museums, nature, shopping, gyms, transport and money exchange', 'The agenda: what’s on today, this weekend or this month', 'Visas, money, internet, getting around, safety and health', 'The Wonders of Angola, photography and drone rules', 'Ready-made routes and the map'],
+                notFound: ['Hmm, that’s not in my data yet, and I don’t want to make things up. Try other words, or one of these:', 'That one got past me! I can’t find anything about it in Tuende’s data. Try asking like this:'],
+                cheer: ['Here we go!', 'Got it!', 'Good choice!', 'Nice!'],
+                placesWord: 'places', inPlace: ' in {where}', inAngola: ' in Angola', forFamily: ' for families', freeTag: ' with free entry', openTag: ' open now',
+                places: '{cheer} {what}: I found {count}.',
+                found: '{cheer} For “{q}” I found {count}.',
+                placesMore: 'Here are the first few. See the full list for the rest.',
+                placesNone: 'For {what}, I have nothing confirmed yet.',
+                placesNoneAlt: 'For {what}, I have nothing confirmed yet. But in {where} I know these:',
+                openNone: 'Going by the hours I have, none of these is open right now. Check before you go.',
+                placeOne: '{name} is in {where}. {highlight}',
+                droneBasics: 'For your drone, Angola’s rules apply: prior ANAC authorisation, no higher than 122 m, always in sight and never between 6 pm and 5:30 am.',
+                price: 'Price: {price}.', hours: 'Hours: {hours}',
+                nearSorted: 'From nearest to furthest:',
+                nearAsk: 'To show you what is nearby, I need your location. It stays on your device.',
+                locError: 'I couldn’t get your location. Tell me the province or city instead.',
+                events: '{cheer} What’s on {when}{where}:',
+                when_today: 'today', when_weekend: 'this weekend', when_week: 'this week', when_month: 'this month', when_nextmonth: 'next month', when_all: 'next',
+                eventsIn: ' in {where}',
+                eventsNone: 'I have no confirmed events {when}{where}. The agenda only lists events with a published source, so I won’t guess.',
+                eventsNext: 'The next ones I have:',
+                guideIntro: ['Good question! From the practical guide:', 'From Tuende’s practical guide:'],
+                drones: 'Bringing a drone? Great! But Angola has rules:',
+                photo: 'For photography, these are some of Angola’s most beautiful places:', photoIn: 'For photography in {where}:',
+                photoNoneIn: 'I don’t have photo spots in {where} yet. These are the best ones I know:', photoTip: 'Tip',
+                wonders: 'The 7 Natural Wonders of Angola. Every one of them will take your breath away:',
+                routes: 'I have ready-made routes, stop by stop, day by day:',
+                map: 'The map shows every place with an exact location. Shall we look?',
+                surprise: ['How about this? {name}, in {where}. {highlight}', 'Do you know {name}? It’s in {where}. {highlight}', 'I bet you’ll like {name}, in {where}. {highlight}'],
+                recommend: 'Know a place that should be on Tuende? Tell us with this form and the team will check it.',
+                seeAll: 'See all ({n})', guideMore: 'Read all: {title}', openAgenda: 'See the agenda', openWonders: 'See the Wonders', openDrones: 'Drone rules',
+                openPhoto: 'Photo spots', openSpot: 'Photo tips', openRoutes: 'See the routes', openMap: 'Open the map', recommendBtn: 'Suggest a place',
+                locateBtn: 'Use my location', directions: 'Directions',
+                chipCat: '{cat} in {where}', chipEvents: 'Events in {where}',
+                chipsStart: ['What to do in Luanda?', 'Do I need a visa?', 'Events this weekend', 'Beaches in Benguela', 'Where can I fly a drone?', 'Surprise me']
+            },
+            fr: {
+                launch: 'Demande à Kamba', openAria: 'Ouvrir la discussion avec Kamba', closeAria: 'Fermer la discussion', resetAria: 'Recommencer',
+                tagline: 'Ton kamba (ami) en Angola', placeholder: 'Écris ta question', sendAria: 'Envoyer', typing: 'Kamba écrit',
+                note: 'Je réponds uniquement avec les données vérifiées de Tuende. Vérifie toujours avant d’y aller.',
+                noteAI: 'Je réponds avec les données vérifiées de Tuende, avec l’aide d’une IA (Claude). Vérifie toujours avant d’y aller.',
+                teaser: 'Salut ! Moi, c’est Kamba. Un conseil pour ton voyage ?', teaserClose: 'Fermer',
+                morning: 'Bonjour', afternoon: 'Bonjour', evening: 'Bonsoir',
+                intro: '{hello} ! Moi, c’est Kamba. En Angola, kamba veut dire ami, et c’est ce que je veux être pendant ton voyage. Je connais les {n} lieux de Tuende, l’agenda et le guide pratique. Demande-moi ce que tu veux !',
+                hello: ['{hello}, kamba ! Qu’est-ce qu’on découvre aujourd’hui ?', '{hello} ! Je suis là. Dis-moi ce que tu cherches : plages, restaurants, hôtels, sorties, événements…', '{hello} ! On explore l’Angola ? Pose-moi tes questions.'],
+                howAreYou: ['Je vais très bien, merci ! Et toi ? Dis-moi ce que tu cherches et je t’aide.', 'Tout va bien ici ! On commence par où ?'],
+                thanks: ['De rien, kamba ! Si tu as besoin d’autre chose, je suis là.', 'Avec plaisir ! Bon voyage.', 'Tout le plaisir est pour moi. Profite bien de l’Angola !'],
+                bye: ['À bientôt, kamba ! Profite bien de l’Angola.', 'Prends soin de toi et bon voyage ! Je suis là quand tu veux.'],
+                who: 'Je suis Kamba, l’assistant de Tuende. Kamba veut dire ami en Angola. Je t’aide à trouver des lieux, des événements et des infos pratiques, toujours avec les données vérifiées de Tuende. Et je n’invente rien : quand je ne sais pas, je le dis.',
+                palanca: 'Je suis un hippotrague noir géant, la palanca negra gigante ! Cette antilope ne vit qu’en Angola et c’est un symbole national : même l’équipe nationale de football s’appelle les Palancas Negras.',
+                joke: 'Pourquoi l’hippotrague noir géant ne se perd jamais ? Avec des cornes pareilles, il capte toujours le réseau !',
+                help: 'Je peux t’aider avec :',
+                helpList: ['Des lieux dans toutes les provinces : plages, restaurants, bars, hôtels, musées, nature, shopping, salles de sport, transports et bureaux de change', 'L’agenda : ce qui se passe aujourd’hui, ce week-end ou ce mois-ci', 'Visas, argent, internet, transports, sécurité et santé', 'Les merveilles de l’Angola, la photo et les règles pour les drones', 'Des itinéraires prêts et la carte'],
+                notFound: ['Hmm, ce n’est pas encore dans mes données, et je ne veux rien inventer. Essaie d’autres mots, ou l’une de ces questions :', 'Celle-là m’a échappé ! Je ne trouve rien à ce sujet dans les données de Tuende. Essaie plutôt :'],
+                cheer: ['C’est parti !', 'J’ai ce qu’il te faut !', 'Bon choix !', 'Super !'],
+                placesWord: 'lieux', inPlace: ' à {where}', inAngola: ' en Angola', forFamily: ' pour les familles', freeTag: ' en entrée libre', openTag: ' ouverts maintenant',
+                places: '{cheer} {what} : {count} au total.',
+                found: '{cheer} Pour « {q} », j’ai trouvé {count}.',
+                placesMore: 'Voici les premiers. Ouvre la liste complète pour voir les autres.',
+                placesNone: 'Pour {what}, je n’ai encore rien de confirmé.',
+                placesNoneAlt: 'Pour {what}, je n’ai encore rien de confirmé. Mais à {where}, je connais ceux-ci :',
+                openNone: 'Selon les horaires que j’ai, aucun n’est ouvert maintenant. Vérifie avant d’y aller.',
+                placeOne: '{name} se trouve à {where}. {highlight}',
+                droneBasics: 'Pour ton drone, les règles de l’Angola s’appliquent : autorisation préalable de l’ANAC, 122 m maximum, toujours en vue et jamais entre 18 h et 5 h 30.',
+                price: 'Prix : {price}.', hours: 'Horaires : {hours}',
+                nearSorted: 'Du plus proche au plus loin :',
+                nearAsk: 'Pour te montrer ce qui est proche, j’ai besoin de ta position. Elle reste sur ton appareil.',
+                locError: 'Je n’ai pas pu obtenir ta position. Dis-moi plutôt la province ou la ville.',
+                events: '{cheer} À l’agenda {when}{where} :',
+                when_today: 'aujourd’hui', when_weekend: 'ce week-end', when_week: 'cette semaine', when_month: 'ce mois-ci', when_nextmonth: 'le mois prochain', when_all: 'prochainement',
+                eventsIn: ' à {where}',
+                eventsNone: 'Je n’ai aucun événement confirmé {when}{where}. L’agenda ne montre que des événements avec une source publiée, alors je ne vais pas deviner.',
+                eventsNext: 'Les prochains que j’ai :',
+                guideIntro: ['Bonne question ! Dans le guide pratique :', 'Selon le guide pratique de Tuende :'],
+                drones: 'Un drone dans tes bagages ? Super ! Mais en Angola, il y a des règles :',
+                photo: 'Pour la photo, voici quelques-uns des plus beaux lieux de l’Angola :', photoIn: 'Pour la photo à {where} :',
+                photoNoneIn: 'Je n’ai pas encore de spots photo à {where}. Voici les meilleurs que je connais :', photoTip: 'Conseil',
+                wonders: 'Les 7 merveilles naturelles de l’Angola. Chacune va te couper le souffle :',
+                routes: 'J’ai des itinéraires prêts, étape par étape, jour par jour :',
+                map: 'La carte montre tous les lieux à la position exacte. On regarde ?',
+                surprise: ['Et ça, ça te dit ? {name}, à {where}. {highlight}', 'Tu connais {name} ? C’est à {where}. {highlight}', 'Je parie que {name}, à {where}, va te plaire. {highlight}'],
+                recommend: 'Tu connais un lieu qui devrait être sur Tuende ? Dis-le-nous avec ce formulaire et l’équipe le vérifiera.',
+                seeAll: 'Tout voir ({n})', guideMore: 'Tout lire : {title}', openAgenda: 'Voir l’agenda', openWonders: 'Voir les merveilles', openDrones: 'Règles pour drones',
+                openPhoto: 'Spots photo', openSpot: 'Conseils photo', openRoutes: 'Voir les itinéraires', openMap: 'Ouvrir la carte', recommendBtn: 'Proposer un lieu',
+                locateBtn: 'Utiliser ma position', directions: 'Itinéraire',
+                chipCat: '{cat} à {where}', chipEvents: 'Événements à {where}',
+                chipsStart: ['Que faire à Luanda ?', 'Ai-je besoin d’un visa ?', 'Événements ce week-end', 'Plages à Benguela', 'Où faire voler un drone ?', 'Surprends-moi']
+            },
+            es: {
+                launch: 'Pregunta a Kamba', openAria: 'Abrir el chat con Kamba', closeAria: 'Cerrar el chat', resetAria: 'Empezar de nuevo',
+                tagline: 'Tu kamba (amigo) en Angola', placeholder: 'Escribe tu pregunta', sendAria: 'Enviar', typing: 'Kamba está escribiendo',
+                note: 'Solo respondo con los datos verificados de Tuende. Confírmalo siempre antes de ir.',
+                noteAI: 'Respondo con los datos verificados de Tuende, con ayuda de IA (Claude). Confírmalo siempre antes de ir.',
+                teaser: '¡Hola! Soy Kamba. ¿Quieres un consejo para tu viaje?', teaserClose: 'Cerrar',
+                morning: 'Buenos días', afternoon: 'Buenas tardes', evening: 'Buenas noches',
+                intro: '¡{hello}! Soy Kamba. En Angola, kamba significa amigo, y eso quiero ser en tu viaje. Conozco los {n} lugares de Tuende, la agenda y la guía práctica. ¡Pregúntame lo que quieras!',
+                hello: ['¡{hello}, kamba! ¿Qué descubrimos hoy?', '¡{hello}! Aquí estoy. Dime qué buscas: playas, comida, hoteles, fiesta, eventos…', '¡{hello}! ¿Exploramos Angola? Pregúntame lo que quieras.'],
+                howAreYou: ['¡Estoy genial, gracias por preguntar! ¿Y tú? Dime qué buscas y te ayudo.', '¡Todo bien por aquí! ¿Por dónde empezamos?'],
+                thanks: ['¡De nada, kamba! Si necesitas algo más, aquí estoy.', '¡Cuando quieras! Buen viaje.', 'Un placer. ¡Disfruta de Angola!'],
+                bye: ['¡Hasta pronto, kamba! Disfruta de Angola.', '¡Cuídate y buen viaje! Aquí estoy cuando me necesites.'],
+                who: 'Soy Kamba, el asistente de Tuende. Kamba significa amigo en Angola. Te ayudo a encontrar lugares, eventos e información práctica, siempre con los datos verificados de Tuende. Y no me invento nada: cuando no lo sé, lo digo.',
+                palanca: '¡Soy un antílope sable gigante, la palanca negra gigante! Solo vive en Angola y es un símbolo nacional: hasta la selección de fútbol se llama Palancas Negras.',
+                joke: '¿Por qué el antílope sable gigante nunca se pierde? ¡Con esos cuernos siempre tiene cobertura!',
+                help: 'Puedo ayudarte con:',
+                helpList: ['Lugares en todas las provincias: playas, comida, bares, hoteles, museos, naturaleza, compras, gimnasios, transporte y cambio de moneda', 'La agenda: qué hay hoy, este fin de semana o este mes', 'Visados, dinero, internet, transporte, seguridad y salud', 'Las Maravillas de Angola, fotografía y normas para drones', 'Rutas listas y el mapa'],
+                notFound: ['Mmm, eso aún no está en mis datos, y no quiero inventar. Prueba con otras palabras o con una de estas:', '¡Esa se me escapó! No encuentro nada sobre eso en los datos de Tuende. Prueba a preguntar así:'],
+                cheer: ['¡Vamos!', '¡Lo tengo!', '¡Buena elección!', '¡Genial!'],
+                placesWord: 'lugares', inPlace: ' en {where}', inAngola: ' en Angola', forFamily: ' para familias', freeTag: ' con entrada gratuita', openTag: ' abiertos ahora',
+                places: '{cheer} {what}: encontré {count}.',
+                found: '{cheer} Para «{q}» encontré {count}.',
+                placesMore: 'Aquí tienes los primeros. Abre la lista completa para ver el resto.',
+                placesNone: 'Para {what}, aún no tengo nada confirmado.',
+                placesNoneAlt: 'Para {what}, aún no tengo nada confirmado. Pero en {where} conozco estos:',
+                openNone: 'Según los horarios que tengo, ninguno está abierto ahora. Confírmalo antes de ir.',
+                placeOne: '{name} está en {where}. {highlight}',
+                droneBasics: 'Para tu dron, se aplican las normas de Angola: autorización previa de la ANAC, 122 m como máximo, siempre a la vista y nunca entre las 18:00 y las 5:30.',
+                price: 'Precio: {price}.', hours: 'Horario: {hours}',
+                nearSorted: 'Del más cercano al más lejano:',
+                nearAsk: 'Para mostrarte lo que está cerca, necesito tu ubicación. Se queda en tu dispositivo.',
+                locError: 'No pude obtener tu ubicación. Dime mejor la provincia o la ciudad.',
+                events: '{cheer} En la agenda {when}{where}:',
+                when_today: 'hoy', when_weekend: 'este fin de semana', when_week: 'esta semana', when_month: 'este mes', when_nextmonth: 'el próximo mes', when_all: 'próximamente',
+                eventsIn: ' en {where}',
+                eventsNone: 'No tengo eventos confirmados {when}{where}. La agenda solo muestra eventos con una fuente publicada, así que no voy a adivinar.',
+                eventsNext: 'Los próximos que tengo:',
+                guideIntro: ['¡Buena pregunta! De la guía práctica:', 'Según la guía práctica de Tuende:'],
+                drones: '¿Llevas un dron? ¡Genial! Pero en Angola hay normas:',
+                photo: 'Para fotografía, estos son algunos de los lugares más bonitos de Angola:', photoIn: 'Para fotografía en {where}:',
+                photoNoneIn: 'Aún no tengo lugares para fotografiar en {where}. Estos son los mejores que conozco:', photoTip: 'Consejo',
+                wonders: 'Las 7 Maravillas Naturales de Angola. Cada una te dejará sin aliento:',
+                routes: 'Tengo rutas listas, parada a parada, día a día:',
+                map: 'El mapa muestra todos los lugares con ubicación exacta. ¿Lo vemos?',
+                surprise: ['¿Qué tal esto? {name}, en {where}. {highlight}', '¿Conoces {name}? Está en {where}. {highlight}', 'Apuesto a que te gustará {name}, en {where}. {highlight}'],
+                recommend: '¿Conoces un lugar que debería estar en Tuende? Cuéntanoslo con este formulario y el equipo lo comprobará.',
+                seeAll: 'Ver todos ({n})', guideMore: 'Leer todo: {title}', openAgenda: 'Ver la agenda', openWonders: 'Ver las Maravillas', openDrones: 'Normas para drones',
+                openPhoto: 'Lugares para fotografiar', openSpot: 'Consejos de fotografía', openRoutes: 'Ver las rutas', openMap: 'Abrir el mapa', recommendBtn: 'Sugerir un lugar',
+                locateBtn: 'Usar mi ubicación', directions: 'Cómo llegar',
+                chipCat: '{cat} en {where}', chipEvents: 'Eventos en {where}',
+                chipsStart: ['¿Qué hacer en Luanda?', '¿Necesito visado?', 'Eventos este fin de semana', 'Playas en Benguela', '¿Dónde puedo volar un dron?', 'Sorpréndeme']
+            }
+        };
+
+        // Words people use, in the four languages, without accents. A trailing * matches the start of a word.
+        const KAMBA_GUIDE_WORDS = {
+            emergencia: ['emergencia*', 'emergency', 'emergencies', 'urgence*', 'urgencia*', 'policia', 'police', 'ambulancia', 'ambulance', 'bombeiro*', 'pompier*', 'bombero*', 'socorro', '111', '112', '113'],
+            vistos: ['visto', 'vistos', 'visa', 'visas', 'visado', 'visados', 'evisa', 'passaporte*', 'passport*', 'passeport*', 'pasaporte*', 'fronteira*', 'border', 'frontiere*', 'frontera*'],
+            dinheiro: ['dinheiro', 'money', 'argent', 'dinero', 'kwanza', 'kwanzas', 'multicaixa', 'card', 'cards', 'bancaire', 'tarjeta', 'atm', 'cash', 'pagar', 'pagamento*', 'pay', 'payment*', 'paiement*', 'pago', 'moeda', 'currency', 'monnaie', 'moneda', 'dolar*', 'dollar*', 'euro', 'euros', 'cambio', 'exchange'],
+            rede: ['internet', 'wifi', 'esim', 'unitel', 'africell', 'movicel', 'telemovel', 'celular', 'rede', 'roaming', 'chip', '4g', '5g'],
+            transportes: ['transporte*', 'transport*', 'deslocar', 'deplacer', 'moverse', 'taxi', 'taxis', 'yango', 'candongueiro*', 'autocarro*', 'bus', 'onibus', 'comboio*', 'train', 'trains', 'tren', 'conduzir', 'drive', 'driving', 'conduire', 'conducir', 'alugar', 'aluguer', 'rent', 'rental', 'louer', 'alquilar'],
+            seguranca: ['seguranca', 'seguro', 'segura', 'perigo*', 'safe', 'safety', 'dangerous', 'danger', 'securite', 'dangereu*', 'seguridad', 'peligro*', 'crime', 'roubo*', 'assalto*', 'robbery', 'theft'],
+            saude: ['saude', 'health', 'sante', 'salud', 'vacina*', 'vaccin*', 'vacuna*', 'malaria', 'paludisme', 'paludismo', 'febre', 'fever', 'fievre', 'fiebre', 'hospita*', 'hopita*', 'clinica*', 'clinic*', 'medico*', 'doctor', 'medecin', 'farmacia*', 'pharmac*']
+        };
+        const KAMBA_WORDS = {
+            drone: ['drone', 'drones', 'dron', 'drons', 'anac'],
+            photo: ['foto', 'fotos', 'photo', 'photos', 'fotograf*', 'photograph*', 'instagram', 'selfie*'],
+            wonders: ['maravilh*', 'wonder*', 'merveill*', 'maravill*'],
+            routes: ['roteiro*', 'itinera*', 'route', 'routes', 'ruta', 'rutas', 'circuito*', 'circuit*'],
+            map: ['mapa', 'map', 'maps', 'carte'],
+            surprise: ['surpreend*', 'surprise*', 'surprend*', 'sorprend*', 'aleatori*', 'random', 'inspira*'],
+            events: ['evento*', 'event*', 'evenement*', 'agenda', 'concert*', 'espetacul*', 'espectacul*', 'spectacle*', 'festival*', 'feira*', 'foire*', 'feria*', 'teatro', 'theatre', 'theater', 'cinema', 'cine', 'exposic*', 'exhibition*', 'exposition*'],
+            near: ['perto', 'near', 'nearby', 'proche', 'cerca'],
+            open: ['aberto', 'abertos', 'aberta', 'abertas', 'open', 'ouvert', 'ouverts', 'ouverte', 'abierto', 'abiertos', 'abierta'],
+            family: ['familia*', 'family', 'families', 'famille*', 'crianca*', 'kid', 'kids', 'children', 'child', 'enfant*', 'nino', 'ninos', 'nina', 'ninas'],
+            free: ['gratis', 'gratuit*', 'free']
+        };
+        const KAMBA_WHEN = [
+            ['today', / (hoje|today|tonight|esta noite|aujourd hui|ce soir|hoy|esta noche) /],
+            ['weekend', / (fim de semana|fds|weekend|week end|fin de semana|sabado|domingo|saturday|sunday|samedi|dimanche) /],
+            ['nextmonth', / (proximo mes|mes que vem|next month|mois prochain) /],
+            ['month', / (este mes|this month|ce mois|ce mois ci) /],
+            ['week', / (esta semana|this week|cette semaine) /]
+        ];
+        // Provinces, then cities and areas: [words, province(s), area to narrow to].
+        const KAMBA_WHERE = [
+            ['icolo e bengo', 'Icolo e Bengo'], ['icolo', 'Icolo e Bengo'], ['moxico leste', 'Moxico Leste'], ['lunda norte', 'Lunda Norte'], ['lunda sul', 'Lunda Sul'],
+            ['cuanza norte', 'Cuanza Norte'], ['kwanza norte', 'Cuanza Norte'], ['cuanza sul', 'Cuanza Sul'], ['kwanza sul', 'Cuanza Sul'], ['cuando cubango', ['Cuando', 'Cubango']],
+            ['luanda', 'Luanda'], ['bengo', 'Bengo'], ['benguela', 'Benguela'], ['huila', 'Huíla'], ['namibe', 'Namibe'], ['huambo', 'Huambo'], ['malanje', 'Malanje'], ['malange', 'Malanje'],
+            ['cabinda', 'Cabinda'], ['zaire', 'Zaire'], ['uige', 'Uíge'], ['bie', 'Bié'], ['moxico', 'Moxico'], ['cunene', 'Cunene'], ['cuando', 'Cuando'], ['cubango', 'Cubango'],
+            ['lubango', 'Huíla', 'lubango'], ['lobito', 'Benguela', 'lobito'], ['catumbela', 'Benguela', 'catumbela'], ['baia farta', 'Benguela', 'baia farta'],
+            ['mocamedes', 'Namibe', 'mocamedes'], ['tombwa', 'Namibe', 'tombwa'], ['tombua', 'Namibe', 'tombwa'], ['ondjiva', 'Cunene', 'ondjiva'], ['menongue', 'Cubango', 'menongue'],
+            ['saurimo', 'Lunda Sul', 'saurimo'], ['dundo', 'Lunda Norte', 'dundo'], ['sumbe', 'Cuanza Sul', 'sumbe'], ['porto amboim', 'Cuanza Sul', 'porto amboim'],
+            ['ndalatando', 'Cuanza Norte', 'dalatando'], ['n dalatando', 'Cuanza Norte', 'dalatando'], ['kuito', 'Bié', 'cuito'], ['cuito', 'Bié', 'cuito'], ['luena', 'Moxico', 'luena'],
+            ['mbanza kongo', 'Zaire', 'mbanza'], ['soyo', 'Zaire', 'soyo'], ['caxito', 'Bengo', 'caxito'], ['mussulo', 'Luanda', 'mussulo'], ['talatona', 'Luanda', 'talatona']
+        ];
+        // More words for each category, on top of the ones the search already knows.
+        const KAMBA_CAT_WORDS = {
+            restaurant: 'comer almocar jantar petiscar marisco peixe grelhado churrasco churrascaria pizza pizzaria hamburguer cafe brunch eat eating food seafood breakfast manger bouffe comida restaurantes',
+            bar: 'beber copo copos cerveja drink drinks cocktail cocktails bares',
+            nightclub: 'festa festas sair noturna noturno nocturna nocturne kizomba semba kuduro dancar clubbing nightlife sortir boite fiesta salir',
+            beach: 'praia praias surf nadar banho swim swimming baignade',
+            accommodation: 'hotel hoteis dormir ficar hospedar alojamento pousada hostel lodge resort guesthouse sleep stay hebergement alojamiento',
+            museum: 'museu museus',
+            culture: 'monumento monumentos historia fortaleza igreja catedral memorial patrimonio heritage',
+            nature: 'natureza parque park cascata cascatas queda quedas cachoeira waterfall waterfalls montanha serra lagoa lago deserto safari animais wildlife fauna miradouro viewpoint paisagem',
+            shopping: 'compras shopping mercado market loja lojas artesanato souvenir souvenirs boutique tienda',
+            plaza: 'praca largo marginal passeio passear walk',
+            sport: 'ginasio gym piscina desporto treinar treino fitness',
+            transport: 'aeroporto airport aeroport aeropuerto taxi autocarro comboio ferry barco yango',
+            services: 'cambio trocar exchange'
+        };
+        const KAMBA_CAT_SKIP = new Set(['centro', 'centre', 'como', 'cmo', 'around', 'place']);
+        const KAMBA_FILLER = new Set(('onde ou donde where qual quais quel quelle quels quelles cual cuales which what whats que quoi qu est ce '
+            + 'o a um uma uns umas melhor melhores best meilleur meilleurs meilleure meilleures mejor mejores bom boa bons boas good bon bonne bons bueno buena buenos buenas nice '
+            + 'recomenda recomendas recomendam recomendar recomendacao recomendacoes recommend recommendation recommendations recommande recommander recomiendas recomendacion '
+            + 'quero queria queremos want wanna would like veux voudrais aimerais quiero quisiera gostaria ir go going aller vamos visitar visit visiter ver see voir mostra mostrar show me montre muestra muestrame '
+            + 'diz dizer tell dis dime sabe sabes know conheces conhece connais conoces ha existe existem tem tens temos have has there is are any some algum alguma alguns algumas quelque quelques algun alguna algunos algunas '
+            + 'mi my eu i je yo tu you te para pra for pour lugar lugares place places sitio sitios endroit endroits spot spots coisa coisas thing things '
+            + 'fazer do does did faire hacer posso podemos pode can could peux pouvons puedo puede preciso precisas need needs besoin necesito necesitas '
+            + 'en dans no na nos nas angola angolano angolana kamba favor please por s il plait aqui here ici ahi agora now maintenant ahora ainda still '
+            + 'vida hoje today tonight fim semana week weekend end mes month mois semaine prochain proximo next este esta isto this ce cette ci sabado domingo saturday sunday samedi dimanche hoy fin '
+            + 'fica ficam fico esta estao located situe se trouve encuentra como around chegar llegar arriver reach is it be am was get got anything something on of off up out tudo all tout todo todos muito much many bue pouco quanto how comment tanto mais more plus mas '
+            + 'se si if e and et y ou or o com with avec con sem without sans sin um ao aos pelo pela when quando quand cuando dia dias day days jour jours').split(' '));
+
+        const KAMBA_SMALL_TALK = [
+            [/ (obrigad[oa]|obg|valeu|brigad[oa]|thanks|thank you|thx|merci|gracias) /, 'thanks'],
+            [/ (adeus|tchau|xau|ate logo|ate breve|ate ja|bye|goodbye|see you|au revoir|a bientot|adios|hasta luego|hasta pronto) /, 'bye'],
+            [/ (tudo bem|tudo fixe|como estas|como esta|como vai|tas bem|ta se bem|how are you|how s it going|comment vas tu|comment ca va|ca va|que tal) /, 'howAreYou'],
+            [/ (ajuda|help|aide|ayuda|o que sabes|o que podes|what can you|que sais tu|que peux tu|que puedes) /, 'help']
+        ];
+
+        const kambaState = { open: false, started: false, busy: false, history: [], pending: '' };
+        const kambaLast = {};
+        const kambaMobile = () => matchMedia('(max-width: 720px)').matches;
+        const kambaWords = (text) => normalize(text).replace(/['’]/g, ' ').split(/[^a-z0-9]+/).filter(Boolean);
+        const kambaKeyHit = (word, key) => (key.endsWith('*') ? word.startsWith(key.slice(0, -1)) : word === key);
+
+        function kambaPick(key) {
+            const value = KAMBA_TEXT[lang][key] ?? KAMBA_TEXT.en[key];
+            if (!Array.isArray(value)) return value;
+            const options = value.length > 1 ? value.filter((v) => v !== kambaLast[`${lang}:${key}`]) : value;
+            const choice = options[Math.floor(Math.random() * options.length)];
+            kambaLast[`${lang}:${key}`] = choice;
+            return choice;
+        }
+        // kambaText gives plain text; kambaHTML escapes Kamba's line and expects the {values} already as HTML.
+        const kambaText = (key, vars = {}) => kambaPick(key).replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
+        const kambaHTML = (key, vars = {}) => escapeHTML(kambaPick(key)).replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
+        const kambaUpper = (text) => text.charAt(0).toUpperCase() + text.slice(1);
+        const kambaLower = (text) => text.charAt(0).toLowerCase() + text.slice(1);
+
+        function kambaHello() {
+            const { minutes } = luandaNow();
+            return kambaText(minutes < 12 * 60 ? 'morning' : minutes < 19 * 60 ? 'afternoon' : 'evening');
+        }
+
+        let kambaCatIndex = null;
+        function kambaCategories() {
+            if (kambaCatIndex) return kambaCatIndex;
+            kambaCatIndex = Object.fromEntries(Object.entries(CATEGORY).map(([type, c]) => [type, [...new Set(
+                tokens(`${c.keywords} ${LANGS.map((l) => c[l].join(' ')).join(' ')} ${KAMBA_CAT_WORDS[type] || ''}`)
+            )].filter((tk) => tk.length >= 3 && !KAMBA_CAT_SKIP.has(tk))]));
+            return kambaCatIndex;
+        }
+        const kambaCatHit = (word, list) => list.some((tk) => tk === word || (word.length >= 4 && tk.startsWith(word)) || (word.length >= 5 && withinOneEdit(word, tk)));
+
+        // Reads a question: where, what kind of place, which guide topic, and the words left over (a place name, perhaps).
+        function kambaRead(raw) {
+            let text = ` ${kambaWords(raw).join(' ')} `;
+            const greeting = /^ (ola|oi|ole|hello|hi|hey|hiya|bom dia|boa tarde|boa noite|good morning|good afternoon|good evening|bonjour|bonsoir|salut|coucou|hola|buenos dias|buenas tardes|buenas noches|buenas|e ai|mambo)( kamba)? /;
+            const greeted = greeting.test(text);
+            text = ` ${text.replace(greeting, ' ').trim()} `;
+            const empty = !text.trim();
+            const full = text;
+            const where = [];
+            let area = '';
+            for (const [alias, prov, part] of KAMBA_WHERE) {
+                if (!text.includes(` ${alias} `)) continue;
+                (Array.isArray(prov) ? prov : [prov]).forEach((p) => { if (!where.includes(p)) where.push(p); });
+                if (part && !area) area = part;
+                text = text.replace(` ${alias} `, ' ');
+            }
+            const words = text.trim().split(' ').filter(Boolean);
+            const used = new Set();
+            const has = (keys) => {
+                const hits = words.filter((w) => keys.some((k) => kambaKeyHit(w, k)));
+                hits.forEach((w) => used.add(w));
+                return hits.length > 0;
+            };
+            const topics = Object.keys(KAMBA_GUIDE_WORDS).filter((id) => has(KAMBA_GUIDE_WORDS[id]));
+            const flags = Object.fromEntries(Object.keys(KAMBA_WORDS).map((k) => [k, has(KAMBA_WORDS[k])]));
+            const when = KAMBA_WHEN.find(([, re]) => re.test(text))?.[0] || '';
+            const counts = {};
+            const catWords = new Set();
+            for (const w of words) {
+                const s = stem(w);
+                if (KAMBA_FILLER.has(w) || KAMBA_FILLER.has(s) || STOPWORDS.has(w)) continue;
+                for (const [type, list] of Object.entries(kambaCategories())) {
+                    if (kambaCatHit(s, list) || kambaCatHit(w, list)) { counts[type] = (counts[type] || 0) + 1; catWords.add(w); }
+                }
+            }
+            const category = Object.keys(counts).sort((a, b) => counts[b] - counts[a])[0] || '';
+            const rest = words.filter((w) => !used.has(w) && !catWords.has(w) && !KAMBA_FILLER.has(w) && !KAMBA_FILLER.has(stem(w)) && !STOPWORDS.has(w) && !/^\d+$/.test(w) && w.length > 2);
+            return { text, full, greeted, empty, where, area, topics, flags, when, category, rest, asksWhere: /^ (onde|where|ou|donde) | (onde|where|ou|donde) /.test(text) };
+        }
+
+        function kambaRank(list) {
+            const rec = (v) => (RECOMMENDED.includes(v.id) ? RECOMMENDED.indexOf(v.id) : 99);
+            const score = (v) => (v.photos?.length ? 2 : 0) + (v.exact ? 1 : 0) - (v.verified?.stale ? 3 : 0);
+            return [...list].sort((a, b) => rec(a) - rec(b) || score(b) - score(a) || (statsOf(b)?.avg || 0) - (statsOf(a)?.avg || 0) || a.name.localeCompare(b.name, 'pt'));
+        }
+
+        function kambaPlaceCard(v) {
+            const src = thumbSrc(v);
+            const km = state.userPos ? distanceText(v) : '';
+            return `<button class="kamba-card" type="button" data-open="${v.id}">
+                <span class="kamba-thumb" aria-hidden="true">${escapeHTML(initials(v.name))}${src ? `<img src="${escapeHTML(src)}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}</span>
+                <span class="kamba-card-text"><b>${escapeHTML(v.name)}</b><small>${escapeHTML([catLabel(v.type), placeLine(v), km].filter(Boolean).join(' · '))}</small></span>
+            </button>`;
+        }
+
+        function kambaEventCard(e) {
+            return `<button class="kamba-card" type="button" data-event-open="${escapeHTML(e.id)}">
+                <span class="kamba-thumb date" aria-hidden="true"><b>${Number(e.next.slice(8))}</b>${escapeHTML(fmtDay(e.next, { month: 'short' }).replace('.', ''))}</span>
+                <span class="kamba-card-text"><b>${escapeHTML(eventTitle(e))}</b><small>${escapeHTML(`${eventDateText(e)} · ${e.city}`)}</small></span>
+            </button>`;
+        }
+
+        function kambaRouteCard(r) {
+            return `<button class="kamba-card" type="button" data-kamba-go="routes:${escapeHTML(r.id)}">
+                <span class="kamba-thumb" aria-hidden="true">${icon('compass')}</span>
+                <span class="kamba-card-text"><b>${escapeHTML(r.title[lang])}</b><small>${escapeHTML(`${routeDays(r)} · ${r.area}`)}</small></span>
+            </button>`;
+        }
+
+        const kambaGoBtn = (go, label) => `<button class="kamba-link" type="button" data-kamba-go="${escapeHTML(go)}">${escapeHTML(label)}</button>`;
+        const kambaList = (items) => `<ul>${items.map((it) => `<li>${it.lead ? `<b>${escapeHTML(it.lead[lang])}:</b> ` : ''}${escapeHTML(it[lang])}</li>`).join('')}</ul>`;
+        const kambaItemFact = (it) => `${it.lead ? `${it.lead[lang]}: ` : ''}${it[lang]}`;
+
+        function kambaPlaceFact(v) {
+            const hours = v.hours ? statusText(openStatus(v)) : v.hoursText?.[lang] || '';
+            return [v.name, catLabel(v.type), placeLine(v), highlightOf(v), descOf(v).slice(0, 400), hours, v.price ? priceText(v) : ''].filter(Boolean).join(' | ');
+        }
+
+        function kambaEventFact(e) {
+            return [eventTitle(e), eventDateText(e), e.city, eventVenueText(e), eventPriceText(e), e.confirmed === false ? t('eventTbc') : ''].filter(Boolean).join(' | ');
+        }
+
+        // Builds Kamba's answer on the device: text, place/event cards, buttons, follow-up questions and the facts used.
+        function kambaReply(raw) {
+            const q = kambaRead(raw);
+            const out = { parts: [], cards: [], buttons: [], chips: [], facts: [] };
+            const say = (key, vars) => out.parts.push(`<p>${kambaHTML(key, vars)}</p>`);
+            const cheer = () => escapeHTML(kambaPick('cheer'));
+            const places = (list) => {
+                out.cards.push(...list.slice(0, KAMBA_MAX_CARDS).map(kambaPlaceCard));
+                out.facts.push(...list.slice(0, 8).map(kambaPlaceFact));
+            };
+            const prov = q.where.length === 1 ? q.where[0] : '';
+
+            if (q.empty) {
+                say('hello', { hello: escapeHTML(kambaHello()) });
+                out.chips.push(...KAMBA_TEXT[lang].chipsStart);
+                return out;
+            }
+            if (/ (quem (es|e)( tu| voce)?|who are you|what are you|qui es tu|tu es qui|quien eres|que eres|o que e (o )?kamba|what is kamba|qu est ce que kamba) |(significa|quer dizer|mean|means|veut dire|signifie) kamba |kamba (significa|quer dizer|mean|means|veut dire|signifie) /.test(q.text)) {
+                say('who');
+                return out;
+            }
+            if (/ (avatar|es uma palanca|e uma palanca|are you an? (antelope|palanca)|es tu une? (antilope|palanca)|eres un (antilope|palanca)) /.test(q.text) || / (porque|why|pourquoi|por que) .*(palanca|antilope|antelope) /.test(q.text)) {
+                say('palanca');
+                return out;
+            }
+            if (/ (piada|anedota|joke|blague|chiste) /.test(q.text)) {
+                say('joke');
+                return out;
+            }
+            if (/ (sugerir (um )?lugar|adicionar (um )?lugar|acrescentar (um )?lugar|falta (um|o|a) |missing|add a place|suggest a place|ajouter un lieu|proposer un lieu|anadir un lugar|sugerir un lugar) /.test(q.text)) {
+                say('recommend');
+                out.buttons.push(kambaGoBtn('recommend', kambaText('recommendBtn')));
+                return out;
+            }
+
+            const bare = !q.category && !q.where.length && !q.topics.length && !q.when && !Object.values(q.flags).some(Boolean);
+            const small = bare && KAMBA_SMALL_TALK.find(([re]) => re.test(q.text))?.[1];
+            if (small) {
+                say(small);
+                if (small === 'help') {
+                    out.parts.push(`<ul>${KAMBA_TEXT[lang].helpList.map((item) => `<li>${escapeHTML(item)}</li>`).join('')}</ul>`);
+                    out.chips.push(...KAMBA_TEXT[lang].chipsStart);
+                }
+                return out;
+            }
+
+            // A place asked for by name. A full name always wins, even one made of everyday words ("Shopping Fortaleza").
+            // "Restaurants on the Ilha de Luanda" still lists restaurants: only the words outside the name can ask for another kind of place.
+            const exactName = venues.filter((v) => q.full.includes(` ${kambaWords(v.name).join(' ')} `)).sort((a, b) => b.name.length - a.name.length)[0];
+            const otherKind = exactName && kambaRead(q.full.replace(` ${kambaWords(exactName.name).join(' ')} `, ' ')).category;
+            const exactFits = Boolean(exactName) && (!otherKind || otherKind === exactName.type);
+            if (q.rest.length || exactFits) {
+                // Words that are in no place name at all ("fly", "get to") are left out of the name match.
+                // Typos are only forgiven in long words: "volar" (to fly) must not become "Dólar".
+                const inName = (w, v) => alternatives(stem(w)).some((alt) => index().name.get(v.id).some((tk) => tk.startsWith(alt) || (alt.length >= 7 && withinOneEdit(alt, tk))));
+                const nameWords = q.rest.filter((w) => venues.some((v) => inName(w, v)));
+                const restText = nameWords.join(' ');
+                const nameHit = (v) => nameWords.length > 0 && nameWords.every((w) => inName(w, v));
+                const inProv = venues.filter((v) => !q.where.length || q.where.includes(cityOf(v)));
+                let named = inProv.filter(nameHit);
+                if (!named.length && q.where.length) named = venues.filter(nameHit);
+                // "Lua" is the start of "Luanda" too: when whole words narrow it down, keep those.
+                const whole = named.filter((v) => nameWords.every((w) => alternatives(stem(w)).some((alt) => index().name.get(v.id).includes(alt))));
+                if (named.length > 3 && whole.length) named = whole;
+                named = named.sort((a, b) => (b.type === q.category) - (a.type === q.category) || queryScore(b, restText) - queryScore(a, restText));
+                if (exactFits) named = [exactName, ...named.filter((v) => v.id !== exactName.id)].slice(0, 3);
+                // "Restaurants on the Ilha" asks for restaurants, not for the Ilha itself.
+                if (named.length && named.length <= 3 && (exactFits || !q.category || named.some((v) => v.type === q.category))) {
+                    const v = named[0];
+                    const spot = PHOTO_SPOTS.find((s) => s.id === v.id);
+                    say('placeOne', { name: `<b>${escapeHTML(v.name)}</b>`, where: escapeHTML(placeLine(v)), highlight: escapeHTML(highlightOf(v)) });
+                    const hours = v.hours ? statusText(openStatus(v)) : v.hoursText?.[lang] ? kambaText('hours', { hours: v.hoursText[lang] }) : '';
+                    const lines = [hours, v.price ? kambaText('price', { price: priceText(v) }) : ''].filter(Boolean);
+                    if (lines.length) out.parts.push(`<p>${lines.map(escapeHTML).join('<br>')}</p>`);
+                    const airport = q.flags.drone && nearestAirport(v);
+                    const extra = [spot && q.flags.photo ? escapeHTML(spot.tip[lang]) : '', q.flags.drone ? kambaHTML('droneBasics') : '',
+                        q.flags.drone && spot?.zone ? t(`droneZone_${spot.zone}`) : '',
+                        airport ? t(v.exact ? 'droneAirport' : 'droneAirportNear', { km: airport.km, name: escapeHTML(airport.name) }) : ''].filter(Boolean);
+                    if (extra.length) out.parts.push(`<p>${extra.join('<br>')}</p>`);
+                    places(named);
+                    out.buttons.push(`<a class="kamba-link" href="${escapeHTML(mapsURL(v, 'directions'))}" target="_blank" rel="noopener">${icon('directions')}${escapeHTML(kambaText('directions'))}</a>`);
+                    if (spot) out.buttons.push(kambaGoBtn(`wonders:local-${v.id}`, kambaText('openSpot')));
+                    if (q.flags.drone) out.buttons.push(kambaGoBtn('wonders:drones', kambaText('openDrones')));
+                    const sameKind = venues.filter((x) => x.type === v.type && cityOf(x) === cityOf(v) && x.id !== v.id);
+                    if (sameKind.length) out.chips.push(kambaText('chipCat', { cat: catLabel(v.type, true), where: cityOf(v) }));
+                    return out;
+                }
+            }
+
+            const guideTopics = q.topics.slice(0, 2);
+            guideTopics.forEach((id, i) => {
+                const g = GUIDE.find((x) => x.id === id);
+                const items = g.items.slice(0, id === 'vistos' ? 4 : 3);
+                if (i === 0) say('guideIntro');
+                out.parts.push(`<p><b>${escapeHTML(g.title[lang])}</b></p>${kambaList(items)}`);
+                out.buttons.push(kambaGoBtn(`guide:${id}`, kambaText('guideMore', { title: g.title[lang] })));
+                out.facts.push(...g.items.map((it) => `${g.title[lang]}: ${kambaItemFact(it)}`));
+            });
+
+            if (q.flags.drone) {
+                say('drones');
+                out.parts.push(kambaList(DRONE_RULES.slice(0, 5)));
+                out.facts.push(...DRONE_RULES.map((it) => `Drones: ${kambaItemFact(it)}`));
+                out.buttons.push(kambaGoBtn('wonders:drones', kambaText('openDrones')), kambaGoBtn('wonders:fotografar', kambaText('openPhoto')));
+            }
+
+            if (q.flags.photo || (q.flags.drone && q.where.length)) {
+                const all = kambaRank(PHOTO_SPOTS.map((s) => venues.find((v) => v.id === s.id)).filter(Boolean));
+                const local = all.filter((v) => q.where.includes(cityOf(v)));
+                if (q.where.length && !local.length) say('photoNoneIn', { where: escapeHTML(q.where.join(', ')) });
+                else if (q.flags.photo) say(q.where.length ? 'photoIn' : 'photo', { where: escapeHTML(q.where.join(', ')) });
+                const spots = local.length ? local : all;
+                places(spots);
+                if (q.flags.photo) {
+                    const tip = PHOTO_TIPS[Math.floor(Math.random() * PHOTO_TIPS.length)];
+                    out.parts.push(`<p><b>${kambaHTML('photoTip')}:</b> ${escapeHTML(tip[lang])}</p>`);
+                    out.facts.push(...PHOTO_TIPS.map((it) => `Photo: ${kambaItemFact(it)}`));
+                    if (!q.flags.drone) out.buttons.push(kambaGoBtn('wonders:fotografar', kambaText('openPhoto')));
+                }
+            }
+
+            if (q.flags.wonders) {
+                say('wonders');
+                const list = SEVEN_WONDERS.map((id) => venues.find((v) => v.id === id)).filter(Boolean);
+                out.cards.push(...list.map(kambaPlaceCard));
+                out.facts.push(...list.map(kambaPlaceFact));
+                out.buttons.push(kambaGoBtn('wonders:sete', kambaText('openWonders')));
+            }
+
+            if (q.flags.routes) {
+                const local = ITINERARIES.filter((r) => q.where.includes(r.area));
+                say('routes');
+                out.cards.push(...(local.length ? local : ITINERARIES).map(kambaRouteCard));
+                out.facts.push(...ITINERARIES.map((r) => `${r.title[lang]} | ${routeDays(r)} | ${r.area} | ${r.intro[lang]}`));
+                out.buttons.push(kambaGoBtn('routes', kambaText('openRoutes')));
+            }
+
+            if (q.flags.map) {
+                say('map');
+                out.buttons.push(kambaGoBtn('map', kambaText('openMap')));
+            }
+
+            const wantsEvents = q.flags.events || (q.when && (!q.category || q.category === 'nightclub') && !guideTopics.length);
+            if (wantsEvents) {
+                const when = q.when || 'all';
+                const whenText = kambaText(`when_${when}`);
+                const whereText = prov ? kambaText('eventsIn', { where: prov }) : '';
+                const list = upcomingEvents({ when, where: prov });
+                if (list.length) {
+                    say('events', { cheer: cheer(), when: escapeHTML(whenText), where: escapeHTML(whereText) });
+                    out.cards.push(...list.slice(0, KAMBA_MAX_CARDS).map(kambaEventCard));
+                    out.facts.push(...list.slice(0, 8).map(kambaEventFact));
+                } else {
+                    say('eventsNone', { when: escapeHTML(whenText), where: escapeHTML(whereText) });
+                    const next = upcomingEvents({ where: prov }).length ? upcomingEvents({ where: prov }) : upcomingEvents();
+                    if (next.length) {
+                        say('eventsNext');
+                        out.cards.push(...next.slice(0, 3).map(kambaEventCard));
+                        out.facts.push(...next.slice(0, 3).map(kambaEventFact));
+                    }
+                }
+                out.buttons.push(kambaGoBtn(`events:${when}`, kambaText('openAgenda')));
+            }
+
+            if (q.flags.surprise) {
+                const pool = venues.filter((v) => v.photos?.length && !v.verified?.stale);
+                const v = pool[Math.floor(Math.random() * pool.length)];
+                say('surprise', { name: `<b>${escapeHTML(v.name)}</b>`, where: escapeHTML(placeLine(v)), highlight: escapeHTML(highlightOf(v)) });
+                places([v]);
+            }
+
+            // Places by province, kind, family, free, open now or distance.
+            const handled = out.parts.length > 0;
+            const listAsked = q.category || q.where.length || q.flags.family || q.flags.free || q.flags.open || q.flags.near;
+            const alsoList = handled && q.category && (q.asksWhere || ['transport', 'services'].includes(q.category)) && !wantsEvents && !q.flags.wonders;
+            if ((!handled && (listAsked || q.rest.length)) || alsoList) {
+                if (q.flags.near && !state.userPos) {
+                    kambaState.pending = raw;
+                    say('nearAsk');
+                    out.buttons.push(kambaGoBtn('locate', kambaText('locateBtn')));
+                    return out;
+                }
+                const base = venues.filter((v) => (!q.where.length || q.where.includes(cityOf(v)))
+                    && (!q.category || v.type === q.category) && (!q.flags.family || v.family) && (!q.flags.free || v.price?.free));
+                let list = base;
+                let whereName = q.where.join(', ');
+                if (q.area) {
+                    const inArea = list.filter((v) => normalize(`${v.location} ${v.address || ''} ${v.name}`).includes(q.area));
+                    if (inArea.length) {
+                        list = inArea;
+                        whereName = inArea.map(areaOf).filter((a) => normalize(a).includes(q.area)).sort((a, b) => a.length - b.length)[0] || whereName;
+                    }
+                }
+                let searched = false;
+                if (q.rest.length) {
+                    const hits = list.filter((v) => matchesQuery(v, q.rest.join(' ')));
+                    if (hits.length) { list = hits; searched = true; }
+                    else if (!q.category && !q.where.length && !q.flags.family && !q.flags.free) list = [];
+                }
+                if (q.flags.open) list = list.filter((v) => openStatus(v)?.open);
+                list = q.flags.near ? [...list].sort((a, b) => distanceKm(a) - distanceKm(b)) : kambaRank(list);
+                const catPart = q.category ? kambaLower(catLabel(q.category, true)) : kambaText('placesWord');
+                const what = catPart + (q.where.length ? kambaText('inPlace', { where: whereName }) : q.category ? kambaText('inAngola') : '')
+                    + (q.flags.family ? kambaText('forFamily') : '') + (q.flags.free ? kambaText('freeTag') : '') + (q.flags.open ? kambaText('openTag') : '');
+                if (list.length) {
+                    if (searched && !q.category && !q.where.length) say('found', { cheer: cheer(), q: escapeHTML(q.rest.join(' ')), count: escapeHTML(placesCount(list.length)) });
+                    else say('places', { cheer: cheer(), what: escapeHTML(kambaUpper(what)), count: escapeHTML(placesCount(list.length)) });
+                    if (q.flags.near) say('nearSorted');
+                    places(list);
+                    if (list.length > KAMBA_MAX_CARDS) {
+                        const quick = q.flags.family ? 'family' : q.flags.free ? 'free' : q.flags.open ? 'open' : q.flags.near ? 'near' : null;
+                        const filters = { category: q.category || null, where: prov, quick, q: searched ? q.rest.join(' ') : q.area || '' };
+                        out.buttons.push(kambaGoBtn(`results:${JSON.stringify(filters)}`, kambaText('seeAll', { n: list.length })));
+                    }
+                } else if (q.flags.open && base.length) {
+                    say('openNone');
+                } else if (prov && q.category) {
+                    const alt = kambaRank(venues.filter((v) => cityOf(v) === prov));
+                    say('placesNoneAlt', { what: escapeHTML(what), where: escapeHTML(prov) });
+                    places(alt);
+                } else if (q.category || q.where.length) {
+                    say('placesNone', { what: escapeHTML(what) });
+                }
+                if (prov) {
+                    const kinds = Object.entries(venues.filter((v) => cityOf(v) === prov).reduce((acc, v) => ({ ...acc, [v.type]: (acc[v.type] || 0) + 1 }), {}))
+                        .filter(([type]) => type !== q.category).sort((a, b) => b[1] - a[1]).slice(0, 2);
+                    out.chips.push(...kinds.map(([type]) => kambaText('chipCat', { cat: catLabel(type, true), where: prov })));
+                    if (upcomingEvents({ where: prov }).length && !wantsEvents) out.chips.push(kambaText('chipEvents', { where: prov }));
+                }
+            }
+
+            if (out.parts.length) return out;
+
+            if (q.greeted) {
+                say('hello', { hello: escapeHTML(kambaHello()) });
+                out.chips.push(...KAMBA_TEXT[lang].chipsStart);
+                return out;
+            }
+            say('notFound');
+            out.chips.push(...[...KAMBA_TEXT[lang].chipsStart].sort(() => Math.random() - 0.5).slice(0, 4));
+            return out;
+        }
+
+        /* Chat window */
+
+        function kambaScroll(el) {
+            const log = $('kambaLog');
+            const top = el.offsetTop - 12;
+            log.scrollTo({ top: el.offsetHeight > log.clientHeight - 24 ? top : log.scrollHeight, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+        }
+
+        function kambaAdd(html, who = 'bot') {
+            const msg = document.createElement('div');
+            msg.className = `kamba-msg ${who === 'bot' ? 'bot' : 'me'}`;
+            msg.innerHTML = who === 'bot'
+                ? `<span class="kamba-face" aria-hidden="true">${KAMBA_AVATAR}</span><div class="kamba-bubble">${html}</div>`
+                : `<div class="kamba-bubble">${html}</div>`;
+            $('kambaLog').append(msg);
+            return msg;
+        }
+
+        function kambaShow(out, html) {
+            const extra = (out.cards.length ? `<div class="kamba-cards">${out.cards.join('')}</div>` : '')
+                + (out.buttons.length ? `<div class="kamba-actions">${out.buttons.join('')}</div>` : '');
+            const msg = kambaAdd(html + extra);
+            if (out.chips.length) {
+                const chips = document.createElement('div');
+                chips.className = 'kamba-chips';
+                chips.innerHTML = [...new Set(out.chips)].map((c) => `<button type="button" class="kamba-chip" data-kamba-ask="${escapeHTML(c)}">${escapeHTML(c)}</button>`).join('');
+                $('kambaLog').append(chips);
+            }
+            kambaScroll(msg);
+        }
+
+        // Claude's reply as safe HTML: escaped, with paragraphs and **bold** kept.
+        function kambaFormat(reply) {
+            return reply.split(/\n{2,}/).map((p) => `<p>${escapeHTML(p.trim()).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>')}</p>`).join('');
+        }
+
+        async function kambaAskAI(raw, out) {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 20000);
+            try {
+                const res = await fetch(KAMBA_AI_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY },
+                    body: JSON.stringify({ lang, today: luandaToday(), messages: [...kambaState.history.slice(-6), { role: 'user', content: raw }], context: out.facts.join('\n').slice(0, 6000) }),
+                    signal: controller.signal
+                });
+                if (!res.ok) return '';
+                const data = await res.json();
+                return typeof data.reply === 'string' ? data.reply.trim().slice(0, 2000) : '';
+            } catch {
+                return '';
+            } finally {
+                clearTimeout(timer);
+            }
+        }
+
+        async function kambaSend(raw, { echo = true } = {}) {
+            const text = String(raw).trim().slice(0, 300);
+            if (!text || kambaState.busy) return;
+            kambaState.busy = true;
+            if (echo) kambaScroll(kambaAdd(escapeHTML(text), 'me'));
+            const typing = kambaAdd(`<span class="kamba-typing" role="img" aria-label="${escapeHTML(kambaText('typing'))}"><span></span><span></span><span></span></span>`);
+            kambaScroll(typing);
+            const out = kambaReply(text);
+            let html = out.parts.join('');
+            let reply = '';
+            if (KAMBA_AI_URL && navigator.onLine) reply = await kambaAskAI(text, out);
+            else await new Promise((done) => setTimeout(done, 450 + Math.random() * 450));
+            if (reply) html = kambaFormat(reply);
+            typing.remove();
+            kambaShow(out, html);
+            const plain = document.createElement('div');
+            plain.innerHTML = html;
+            kambaState.history.push({ role: 'user', content: text }, { role: 'assistant', content: plain.textContent.trim().slice(0, 1500) });
+            kambaState.busy = false;
+        }
+
+        function kambaIntro() {
+            $('kambaLog').innerHTML = '';
+            kambaState.history = [];
+            kambaShow({ cards: [], buttons: [], chips: KAMBA_TEXT[lang].chipsStart }, `<p>${kambaHTML('intro', { hello: escapeHTML(kambaHello()), n: venues.length })}</p>`);
+        }
+
+        function openKamba() {
+            if (kambaState.open) return;
+            kambaState.open = true;
+            hideKambaTeaser();
+            const panel = $('kambaPanel');
+            panel.classList.remove('closing');
+            panel.hidden = false;
+            $('kambaBtn').classList.add('away');
+            $('kambaBtn').setAttribute('aria-expanded', 'true');
+            if (kambaMobile()) document.body.classList.add('kamba-lock');
+            if (!kambaState.started) { kambaState.started = true; kambaIntro(); }
+            (matchMedia('(pointer: coarse)').matches ? $('kambaClose') : $('kambaInput')).focus({ preventScroll: true });
+        }
+
+        function closeKamba() {
+            if (!kambaState.open) return;
+            kambaState.open = false;
+            const panel = $('kambaPanel');
+            const done = () => { if (!kambaState.open) { panel.hidden = true; panel.classList.remove('closing'); } };
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches) done();
+            else { panel.classList.add('closing'); panel.addEventListener('animationend', done, { once: true }); }
+            $('kambaBtn').classList.remove('away');
+            $('kambaBtn').setAttribute('aria-expanded', 'false');
+            document.body.classList.remove('kamba-lock');
+            $('kambaBtn').focus({ preventScroll: true });
+        }
+
+        function hideKambaTeaser() {
+            $('kambaTeaser').hidden = true;
+        }
+
+        function kambaGo(go) {
+            const i = go.indexOf(':');
+            const kind = i < 0 ? go : go.slice(0, i);
+            const arg = i < 0 ? '' : go.slice(i + 1);
+            if (kind === 'locate') { kambaLocate(); return; }
+            if (kambaMobile()) closeKamba();
+            if (kind === 'guide') showGuide({ section: arg });
+            else if (kind === 'wonders') showWonders({ section: arg });
+            else if (kind === 'events') showEvents({ filters: { when: arg || 'all' } });
+            else if (kind === 'routes') showRoutes({ route: arg });
+            else if (kind === 'results') showResults(JSON.parse(arg));
+            else if (kind === 'map') showMap();
+            else if (kind === 'recommend') showRecommend();
+        }
+
+        function kambaLocate() {
+            const fail = () => kambaShow({ cards: [], buttons: [], chips: [] }, `<p>${kambaHTML('locError')}</p>`);
+            if (!navigator.geolocation) { fail(); return; }
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    state.userPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                    render();
+                    if (kambaState.pending) kambaSend(kambaState.pending, { echo: false });
+                    kambaState.pending = '';
+                },
+                fail,
+                { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 }
+            );
+        }
+
+        function renderKamba() {
+            document.querySelectorAll('[data-kamba-face]').forEach((el) => { el.innerHTML = KAMBA_AVATAR; });
+            $('kambaBtnLabel').textContent = kambaText('launch');
+            $('kambaBtn').setAttribute('aria-label', kambaText('openAria'));
+            $('kambaTagline').textContent = kambaText('tagline');
+            $('kambaClose').setAttribute('aria-label', kambaText('closeAria'));
+            $('kambaReset').setAttribute('aria-label', kambaText('resetAria'));
+            $('kambaReset').title = kambaText('resetAria');
+            $('kambaInput').placeholder = kambaText('placeholder');
+            $('kambaInput').setAttribute('aria-label', kambaText('placeholder'));
+            $('kambaSend').setAttribute('aria-label', kambaText('sendAria'));
+            $('kambaNote').textContent = kambaText(KAMBA_AI_URL ? 'noteAI' : 'note');
+            $('kambaTeaserText').textContent = kambaText('teaser');
+            $('kambaTeaserClose').setAttribute('aria-label', kambaText('teaserClose'));
+        }
+
+        $('kambaBtn').addEventListener('click', openKamba);
+        $('kambaClose').addEventListener('click', closeKamba);
+        $('kambaReset').addEventListener('click', () => { if (!kambaState.busy) kambaIntro(); });
+        $('kambaTeaserText').addEventListener('click', openKamba);
+        $('kambaTeaserClose').addEventListener('click', hideKambaTeaser);
+        $('kambaForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (kambaState.busy) return;
+            const value = $('kambaInput').value;
+            $('kambaInput').value = '';
+            kambaSend(value);
+        });
+        $('kambaLog').addEventListener('click', (e) => {
+            const ask = e.target.closest('[data-kamba-ask]');
+            if (ask) { kambaSend(ask.dataset.kambaAsk); return; }
+            const go = e.target.closest('[data-kamba-go]');
+            if (go) { kambaGo(go.dataset.kambaGo); return; }
+            // The agenda opens behind the chat; on a phone the chat covers the page, so step aside.
+            if (e.target.closest('[data-event-open]') && kambaMobile()) closeKamba();
+        });
+        // Capture phase: runs before the handler that closes the language menu and open windows.
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && kambaState.open && !document.querySelector('.modal.open') && $('langMenu').hidden) closeKamba();
+        }, true);
+
+        // Kamba says hello once per visitor, a few seconds after the first visit.
+        if (!store.get('kambaTeaserSeen', false)) {
+            setTimeout(() => {
+                if (kambaState.started) return;
+                $('kambaTeaser').hidden = false;
+                store.set('kambaTeaserSeen', true);
+                setTimeout(hideKambaTeaser, 12000);
+            }, 6000);
         }
 
         /* ---------- Wiring ---------- */
@@ -8416,8 +9298,6 @@
                 });
                 return;
             }
-            const fix = target.closest('[data-fix]');
-            if (fix) { openFix(Number(fix.dataset.fix)); return; }
             const eventOpen = target.closest('[data-event-open]');
             if (eventOpen) { showEvents(); focusEvent(eventOpen.dataset.eventOpen); return; }
             const whenChip = target.closest('[data-events-when]');
@@ -8545,7 +9425,6 @@
             else if (e.target.id === 'mediaForm') submitMedia(e);
         });
 
-        $('fixForm').addEventListener('submit', submitFix);
         $('eventForm').addEventListener('submit', submitEventSuggestion);
         $('eventsWhere').addEventListener('change', (e) => setEventFilters({ where: e.target.value }, '#eventsWhere'));
 

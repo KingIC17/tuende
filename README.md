@@ -11,7 +11,7 @@ Guia de Angola: restaurantes, bares, discotecas, praias, cultura, museus, nature
 
 | Parte | Estado |
 |---|---|
-| Site (web app) | Online no GitHub Pages, 178 locais nas 21 províncias, agenda de eventos, guia prático e página Maravilhas; em português, inglês, francês e espanhol |
+| Site (web app) | Online no GitHub Pages, 178 locais nas 21 províncias, agenda de eventos, guia prático, página Maravilhas e o assistente Kamba; em português, inglês, francês e espanhol |
 | App instalável (PWA) | `manifest.json` e `sw.js` publicados; modo offline ainda não testado num browser real |
 | App iPhone (`ios/`) | Projeto Xcode criado; o código Swift passa o `swiftc -typecheck`, mas o build completo e o simulador ainda não foram testados |
 | App Android | Por fazer (depende do domínio próprio) |
@@ -34,6 +34,7 @@ icon-192.png, icon-512.png, apple-touch-icon.png
 privacy.html             Política de privacidade PT/EN (por publicar: falta o email)
 supabase/setup.sql       Base de dados dos comentários, fotos e vídeos dos visitantes
 supabase/emails/         Emails de confirmação de conta e de nova palavra-passe (PT/EN, marca Tuende), prontos a colar no Supabase
+supabase/functions/kamba/ Função opcional para o Kamba responder com IA (Claude); ainda não está ligada (passos no início do ficheiro)
 ios/                     Projeto Xcode (SwiftUI + WKWebView)
   ANGOLIVE.xcodeproj
   ANGOLIVE/AngoliveApp.swift
@@ -59,6 +60,7 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 - Página "Roteiros" (`?page=routes`, links diretos `?page=routes#roteiro-<id>`): sugestões de 1 a 3 dias feitas só com lugares da app, em `const ITINERARIES` (dias com `stops` = ids dos lugares, `note` opcional com factos dos próprios lugares ou da fonte em `source`). Mostra a distância em linha reta entre paragens com coordenadas confirmadas. Também aparece na página inicial (secção "Roteiros").
 - Página "Mapa dos lugares" (`?page=map`): os lugares com `exact: true` num mapa Leaflet 1.9.4 (carregado do unpkg com verificação de integridade, só quando se abre o mapa) com o fundo do OpenStreetMap, filtro por categoria e "Ver lugar" em cada ponto. Link "Ver no mapa" na secção "Explorar por categoria" e no rodapé.
 - Página "Maravilhas de Angola" (`?page=maravilhas`, links diretos `?page=maravilhas#maravilha-<secção>` e `#maravilha-local-<id>`), para fotografia e drones: as 7 Maravilhas Naturais (`SEVEN_WONDERS`, eleitas em 2014), mais lugares para fotografar (`PHOTO_SPOTS`, com uma dica por lugar e `zone` park/church/city quando a ANAC pede autorização própria), as regras de drones do comunicado da ANAC de janeiro de 2022 (`DRONE_RULES`) e dicas de fotografia com fontes (`PHOTO_TIPS`). Cada lugar mostra a hora do nascer e do pôr do sol de hoje (calculada, hora de Angola) e avisa quando fica a menos de 10 km de um aeroporto da lista `AIRPORTS`.
+- Kamba ("amigo" em Angola), o assistente de conversa: botão redondo com a palanca negra gigante no canto inferior direito (por cima da barra de separadores no telemóvel), que abre a conversa (ecrã inteiro no telemóvel). Responde no próprio dispositivo, sem internet e sem enviar nada, só com os dados da Tuende: lugares por nome, província, cidade, categoria, famílias, grátis, abertos agora e perto de mim; agenda (hoje, fim de semana, semana, mês); guia prático (vistos, dinheiro, internet, transportes, segurança, saúde, emergência); drones e fotografia; Maravilhas; roteiros; mapa; "surpreende-me". Mostra cartões que abrem o lugar ou o evento, botões para as páginas e perguntas sugeridas. Personalidade: trata por tu, um pouco de calão angolano em português (bué, ya, bora, fixe), nunca inventa e diz quando não sabe. Textos em `KAMBA_TEXT` (PT/EN/FR/ES), palavras reconhecidas em `KAMBA_GUIDE_WORDS`, `KAMBA_WORDS`, `KAMBA_WHERE` e `KAMBA_CAT_WORDS`, avatar em `KAMBA_AVATAR` (SVG). Diz olá uma vez por visitante, 6 segundos depois de abrir o site. Com `KAMBA_AI_URL` preenchido, o Claude escreve a resposta a partir dos mesmos dados (função em `supabase/functions/kamba`); se falhar, mostra a resposta do dispositivo.
 - Idiomas: português, inglês, francês e espanhol (`LANGS`). Cada texto da interface está em `I18N.pt/en/fr/es`; as descrições dos lugares em `DESC_EN`, `DESC_FR` e `DESC_ES`; os textos curtos dos lugares, eventos, guia e roteiros têm `pt`, `en`, `fr` e `es` no próprio objeto. Ao acrescentar um texto novo, escreva as quatro línguas (sem `fr`/`es`, a app mostra o inglês).
 - "Onde?" lista as 21 províncias (`CITIES`); a primeira parte de `location` é a província. Os links antigos `?where=lubango`, `dundo` e `mbanza-kongo` continuam a funcionar (`OLD_WHERE`).
 - Dólares e euros: ao lado dos preços em Kwanza aparece "≈ X USD · Y EUR", com a taxa de referência (média) do Banco Nacional de Angola, lida no serviço público do BNA no máximo uma vez por dia (`loadFx`, guardada no dispositivo). Se o serviço falhar, usa a última taxa conhecida.
@@ -97,7 +99,7 @@ e abrir http://localhost:8000/
 
 ## Contas, comentários, fotos e vídeos dos visitantes (Supabase)
 
-Com o Supabase ligado aparece o botão "Entrar" no topo. Com conta, as pessoas guardam lugares em todos os dispositivos, avaliam (estrelas opcionais), comentam, enviam fotos e vídeos, corrigem ou acrescentam informação e denunciam conteúdo. Sem conta, continuam a ver tudo e a guardar lugares no próprio dispositivo. Em "A minha conta" veem o estado do que enviaram, mudam o nome público, terminam a sessão ou apagam a conta (obrigatório para a App Store).
+Com o Supabase ligado aparece o botão "Entrar" no topo. Com conta, as pessoas guardam lugares em todos os dispositivos, avaliam (estrelas opcionais), comentam, enviam fotos e vídeos e denunciam conteúdo. Sem conta, continuam a ver tudo e a guardar lugares no próprio dispositivo. Em "A minha conta" veem o estado do que enviaram, mudam o nome público, terminam a sessão ou apagam a conta (obrigatório para a App Store).
 
 1. Criar uma conta gratuita em https://supabase.com e um projeto novo.
 2. Em **SQL Editor**, colar e correr `supabase/setup.sql`.
@@ -120,7 +122,7 @@ As fotos são comprimidas na app (máx. 1600 px, JPEG) antes de enviar. Os víde
 
 - `CONTACT_EMAIL`: enquanto estiver vazio, ficam escondidos Contacto, Privacidade e o envio de correções por email.
 - `SUPABASE_URL` / `SUPABASE_KEY`: enquanto estiverem vazios, ficam escondidos o formulário de avaliações, as estrelas, a ordenação "Melhor avaliação" e a partilha de fotos e vídeos; a secção "Opiniões" mostra só as ligações para o Google Maps e o TripAdvisor.
-- "Recomendar um lugar" (`?page=recommend`, tabela `recommendations`) e "Corrigir um lugar" (tabela `corrections`) enviam para o Supabase, ou por email se só houver `CONTACT_EMAIL`. Sem nenhum dos dois, as ligações ficam escondidas e a página de recomendação mostra o envio desligado com um aviso.
+- "Recomendar um lugar" (`?page=recommend`, tabela `recommendations`) envia para o Supabase, ou por email se só houver `CONTACT_EMAIL`. Sem nenhum dos dois, as ligações ficam escondidas e a página de recomendação mostra o envio desligado com um aviso. "Corrigir um lugar" foi retirado a 13 de outubro de 2026 a pedido do dono; as correções enviadas antes continuam na tabela `corrections` e aparecem em "A minha conta".
 
 ## Domínio tuende.app
 
