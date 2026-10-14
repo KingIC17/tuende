@@ -47,6 +47,22 @@
         section[lang="en"] { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line); }
         footer { margin-top: 40px; padding-top: 18px; padding-bottom: 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
         @media (max-width: 600px) { h1 { font-size: 27px; } dl > div { grid-template-columns: 1fr; gap: 2px; } }
+
+        .guides { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding: 0; list-style: none; }
+        .guides a { display: inline-block; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--text); text-decoration: none; font-size: 15px; font-weight: 600; }
+        .items { list-style: none; padding: 0; margin-top: 12px; display: grid; gap: 12px; }
+        .item { display: grid; grid-template-columns: 96px 1fr; gap: 14px; padding: 12px; border: 1px solid var(--line); border-radius: 14px; }
+        .item.text-only { grid-template-columns: 1fr; }
+        .item img { width: 96px; height: 96px; object-fit: cover; border-radius: 10px; background: var(--surface); }
+        .item h3 { font-size: 18px; line-height: 1.3; }
+        .item h3 a { color: var(--text); }
+        .item .meta, .item .credit { color: var(--muted); font-size: 14px; margin-top: 2px; }
+        .item .credit a { color: inherit; }
+        .item p { margin-top: 6px; }
+        .item .links { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 15px; }
+        .item .links a { color: var(--primary); font-weight: 600; }
+        .item ul { margin-top: 6px; padding-left: 18px; color: var(--muted); font-size: 15px; }
+        @media (max-width: 600px) { .item { grid-template-columns: 72px 1fr; } .item img { width: 72px; height: 72px; } }
     </style>
 </head>
 <body>
@@ -58,6 +74,27 @@
     <main>
         <h1 style="margin-top:24px">Todos os lugares</h1>
         <p class="lead">178 lugares em Angola, cada um com fontes e data de verificação.</p>
+        <h2>Guias</h2>
+        <ul class="guides">
+            <li><a href="../agenda/">Agenda de eventos</a></li>
+            <li><a href="o-que-fazer-em-luanda.html">O que fazer em Luanda</a></li>
+            <li><a href="restaurantes-bares-e-discotecas-em-luanda.html">Restaurantes, bares e discotecas em Luanda</a></li>
+            <li><a href="centros-comerciais-em-luanda.html">Centros comerciais em Luanda</a></li>
+            <li><a href="desporto-e-ginasios-em-luanda.html">Desporto e ginásios em Luanda</a></li>
+            <li><a href="o-que-fazer-em-benguela.html">O que fazer em Benguela e no Lobito</a></li>
+            <li><a href="o-que-fazer-no-lubango-e-na-huila.html">O que fazer no Lubango e na Huíla</a></li>
+            <li><a href="o-que-fazer-no-huambo.html">O que fazer no Huambo</a></li>
+            <li><a href="o-que-fazer-em-cabinda.html">O que fazer em Cabinda</a></li>
+            <li><a href="o-que-fazer-no-namibe.html">O que fazer no Namibe (Moçâmedes)</a></li>
+            <li><a href="o-que-fazer-em-malanje.html">O que fazer em Malanje</a></li>
+            <li><a href="praias-de-angola.html">Praias de Angola</a></li>
+            <li><a href="parques-nacionais-de-angola.html">Parques nacionais de Angola</a></li>
+            <li><a href="natureza-em-angola.html">Natureza e paisagens de Angola</a></li>
+            <li><a href="museus-de-angola.html">Museus de Angola</a></li>
+            <li><a href="hoteis-em-angola.html">Hotéis e alojamento em Angola</a></li>
+            <li><a href="transportes-em-angola.html">Transportes em Angola: aeroportos, comboios e autocarros</a></li>
+            <li><a href="casas-de-cambio-em-angola.html">Casas de câmbio em Angola</a></li>
+        </ul>
         <h2>Luanda</h2>
         <ul class="links">
             <li><a href="autocarros-urbanos-tcul.html">Autocarros urbanos (TCUL)</a> · Transporte</li>
