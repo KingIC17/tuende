@@ -4,7 +4,7 @@ Antes chamado ANGOLIVE (mudou de nome a 6 de outubro de 2026).
 
 Guia de Angola: restaurantes, bares, discotecas, praias, cultura, museus, natureza, alojamento, compras, praças, ginásios e piscinas, transportes e câmbio, com preços em Kwanza, agenda de eventos e contas de utilizador.
 
-- Site: https://kingic17.github.io/tuende/ (o endereço antigo kingic17.github.io/ANGOLIVE/ redireciona para aqui)
+- Site: https://tuende.app/ (desde 14 de outubro de 2026; kingic17.github.io/tuende/ e o antigo kingic17.github.io/ANGOLIVE/ redirecionam para aqui)
 - Objetivo: publicar como site, na Google Play (Android) e na App Store (iPhone).
 
 ## Estado atual (6 de outubro de 2026)
@@ -77,7 +77,7 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 - Português por defeito, com botão para Inglês. Os textos estão em `I18N`; as traduções das descrições estão em `DESC_EN` e `MENU_DESC_EN`.
 - Perfil, favoritos, comentários, idioma e tema ficam no `localStorage` do dispositivo. Não há servidor.
 - "Perto de mim" usa `navigator.geolocation` apenas no dispositivo.
-- Links diretos para um local: `https://kingic17.github.io/tuende/#local-<id>`.
+- Links diretos para um local: `https://tuende.app/#local-<id>`.
 - Pedido do dono: sem emojis no design; os ícones são SVG inline (`ICONS`).
 
 Para correr localmente:
@@ -104,7 +104,7 @@ Com o Supabase ligado aparece o botão "Entrar" no topo. Com conta, as pessoas g
 1. Criar uma conta gratuita em https://supabase.com e um projeto novo.
 2. Em **SQL Editor**, colar e correr `supabase/setup.sql`.
 3. Em **Authentication > Sign In / Providers > Email**: manter "Confirm email" ligado e pôr o comprimento mínimo da palavra-passe em 8.
-4. Em **Authentication > URL Configuration**: Site URL = `https://kingic17.github.io/tuende/` (ou o domínio próprio) e juntar `https://kingic17.github.io/tuende/**` em "Redirect URLs" (os links de ativação e de recuperação voltam para a app).
+4. Em **Authentication > URL Configuration**: Site URL = `https://tuende.app/` e juntar `https://tuende.app/**` (manter também `https://kingic17.github.io/tuende/**`) em "Redirect URLs" (os links de ativação e de recuperação voltam para a app).
 5. Recomendado antes de abrir ao público: em **Authentication > Emails > SMTP Settings**, ligar um serviço de email próprio (ex.: Resend, Brevo), com remetente "Tuende" num endereço do domínio próprio; o envio de emails incluído no Supabase tem um limite muito baixo por hora. Só com SMTP próprio o Supabase deixa mudar os emails: depois, em **Authentication > Emails > Templates**, colar `supabase/emails/confirm-signup.html` em "Confirm sign up" (assunto: "Tuende: confirme o seu email / confirm your email") e `supabase/emails/reset-password.html` em "Reset password" (assunto: "Tuende: nova palavra-passe / new password").
 6. Em **Project Settings > API**, copiar o Project URL e a chave pública (publishable/anon) para `SUPABASE_URL` e `SUPABASE_KEY` em `index.html` (e na cópia em `ios/ANGOLIVE/`). Esta chave é pública por natureza; a segurança vem das regras RLS do `setup.sql`. Nunca usar a chave `service_role` na app.
 6b. Fotos de perfil: ao criar conta escolhe-se uma das máscaras; em "A minha conta" também se pode carregar uma foto (fica em `submissions/<conta>/avatar-....jpg`). O valor fica em `user_metadata.avatar`; a base de dados só aceita uma máscara da app ou uma foto da pasta da própria conta e copia-o para `author_avatar` em cada envio. Ao mudar o nome ou a foto, `sync_my_profile()` atualiza o que a pessoa já publicou (`supabase/2026-10-08-avatares.sql`, já corrido).
@@ -126,15 +126,11 @@ As fotos são comprimidas na app (máx. 1600 px, JPEG) antes de enviar. Os víde
 
 ## Domínio tuende.app
 
-Não adicionar o domínio no GitHub antes de o comprar e configurar o DNS: o endereço kingic17.github.io passaria a redirecionar para um domínio que ainda não funciona.
+Comprado na Wix a 14 de outubro de 2026 (conta tuende.ao@gmail.com; registador Tucows; renova a 14 de outubro de 2027, cerca de 22,90 USD/ano). O DNS gere-se na Wix (**Domains > tuende.app > Manage DNS records**):
+- 4 registos `A` para `tuende.app`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` (GitHub Pages)
+- 1 registo `CNAME` para `www` → `kingic17.github.io` (www.tuende.app redireciona para tuende.app)
 
-1. Comprar `tuende.app` (ex.: Cloudflare, Porkbun). Os domínios `.app` só funcionam com HTTPS, que o GitHub Pages dá de graça.
-2. No DNS do domínio, criar:
-   - 4 registos `A` para `@`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   - 1 registo `CNAME` para `www` → `kingic17.github.io`
-3. No GitHub: **Settings > Pages > Custom domain** → `tuende.app` → Save. Depois de verificado, ativar **Enforce HTTPS**.
-4. Recomendado: verificar o domínio na conta GitHub (**Settings > Pages > Verified domains**) para ninguém o poder usar noutro repositório.
-5. Atualizar `PUBLIC_URL` em `index.html` (e na cópia em `ios/`) para `https://tuende.app/`, as etiquetas `og:url` e `og:image`, o `canonical` de `angolive-complete.html` e os endereços no Supabase (Site URL e Redirect URLs).
+No GitHub (**Settings > Pages**): Custom domain `tuende.app` (ficheiro `CNAME` no repositório), DNS verificado e **Enforce HTTPS** ligado (certificado Let's Encrypt renovado pelo GitHub). `PUBLIC_URL`, `og:url`, `og:image`, o `canonical` de `angolive-complete.html` e o `SITE` de `tools/gerar_paginas.py` apontam para `https://tuende.app/`.
 
 ## O que falta fazer
 
