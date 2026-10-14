@@ -20,7 +20,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 WEB = ROOT / 'web'
-SITE = 'https://kingic17.github.io/tuende/'
+SITE = 'https://tuende.app/'
 
 CATEGORY = {
     'restaurant': ('Restaurante', 'Restaurant', 'Restaurant'),
