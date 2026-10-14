@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Tuende - Descubra onde ir em Angola</title>
     <meta name="description" content="Encontre restaurantes, praias, hotéis, vida noturna e experiências em Angola, perto de si. Com preços em Kwanza e indicações para chegar.">
+    <link rel="canonical" href="https://tuende.app/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Tuende">
     <meta property="og:title" content="Tuende - Descubra onde ir em Angola">
@@ -23,6 +24,7 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="icon-192.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Tuende", "url": "https://tuende.app/", "inLanguage": ["pt", "en", "fr", "es"], "description": "Guia de Angola: restaurantes, praias, cultura, natureza, vida noturna, alojamento e agenda de eventos, com preços em Kwanza."}</script>
     <style>
         @font-face {
             font-family: 'Plus Jakarta Sans';
@@ -6795,6 +6797,8 @@
             $('routesView').hidden = state.view !== 'routes';
             $('mapView').hidden = state.view !== 'map';
             $('wondersView').hidden = state.view !== 'wonders';
+            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle' }[state.view];
+            document.title = viewTitle ? `${t(viewTitle)} | Tuende` : `Tuende - ${t('heroTitle')}`;
             if (state.view === 'home') renderHome();
             else if (state.view === 'results') renderResults();
             else if (state.view === 'events') renderEvents();
