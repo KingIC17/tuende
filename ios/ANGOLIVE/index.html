@@ -5929,6 +5929,8 @@
         };
 
         const PUBLIC_URL = 'https://tuende.app/';
+        // Cloudflare Web Analytics (no cookies, no individual tracking). The token is public; only visits on the live site are counted.
+        const ANALYTICS_TOKEN = 'bfad71e37fa648dea81087839c77618f';
         // Public contact address. While empty, the contact link, the privacy link and the e-mail fallback stay hidden.
         const CONTACT_EMAIL = '';
         // Store pages of the phone apps: leave empty until each app is published; the install guide shows them when set.
@@ -10020,6 +10022,14 @@
             if (signedIn()) accessToken().then(syncFavorites);
         });
         applyURL();
+
+        if (ANALYTICS_TOKEN && location.hostname === new URL(PUBLIC_URL).hostname) {
+            const beacon = document.createElement('script');
+            beacon.defer = true;
+            beacon.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+            beacon.dataset.cfBeacon = JSON.stringify({ token: ANALYTICS_TOKEN, spa: true });
+            document.body.appendChild(beacon);
+        }
 
         if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
             navigator.serviceWorker.register('sw.js')
