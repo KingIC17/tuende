@@ -11,7 +11,7 @@ Guia de Angola: restaurantes, bares, discotecas, praias, cultura, museus, nature
 
 | Parte | Estado |
 |---|---|
-| Site (web app) | Online no GitHub Pages, 178 locais nas 21 províncias, agenda de eventos, guia prático, página Maravilhas e o assistente Kamba; em português, inglês, francês e espanhol |
+| Site (web app) | Online no GitHub Pages, 183 locais nas 21 províncias, agenda de eventos, guia prático, página Maravilhas e o assistente Kamba; em português, inglês, francês e espanhol |
 | App instalável (PWA) | `manifest.json` e `sw.js` publicados; modo offline ainda não testado num browser real |
 | App iPhone (`ios/`) | Projeto Xcode criado; o código Swift passa o `swiftc -typecheck`, mas o build completo e o simulador ainda não foram testados |
 | App Android | Por fazer (depende do domínio próprio) |
@@ -46,7 +46,7 @@ ios/                     Projeto Xcode (SwiftUI + WKWebView)
 
 - Design "E" (outubro de 2026): letra Plus Jakarta Sans; cabeçalho numa linha (logótipo, secções, EN, Claro/Escuro, Entrar, Guardados); faixa com o padrão samakaka (losangos vermelhos e amarelos da bandeira) no topo e no fim da página, atrás da foto da Ilha e à volta das datas dos eventos; seis mosaicos coloridos de categorias (Praias, Natureza, Cultura, Restaurantes, Vida noturna, Agenda); no telemóvel, barra de separadores em baixo (Explorar, Agenda, Guia, Guardados, Conta). As cores estão nas variáveis `:root` (claro) e nos blocos de modo escuro: `--primary` é para texto e contornos, `--primary-fill` para fundos com texto branco.
 
-- Os dados dos locais e menus estão no próprio ficheiro: `const venues` (178 locais) e `const menuData`.
+- Os dados dos locais e menus estão no próprio ficheiro: `const venues` (183 locais) e `const menuData`.
 - Página inicial (por esta ordem): título e pesquisa "O que procura? / Onde?", filtros rápidos, Recomendados (com o motivo), Explorar por categoria, Coleções e Viagens de um dia a partir de Luanda (calculado pela distância). Pesquisa, filtros, categorias e coleções abrem a vista de resultados.
 - A vista de resultados fica no endereço e pode ser partilhada: `?q=praia&where=luanda`, `?filter=free`, `?category=culture`, `?collection=beaches`, `?saved=1`. Os botões voltar/avançar do browser funcionam.
 - Pesquisa sem acentos, com plurais (hotéis → hotel) e com tolerância a um erro de escrita por palavra (`tokens`, `stem`, `withinOneEdit`). Sinónimos em `SYNONYMS`.
@@ -126,10 +126,14 @@ As fotos são comprimidas na app (máx. 1600 px, JPEG) antes de enviar. Os víde
 
 ## Domínio tuende.app
 
-Comprado na Wix a 14 de outubro de 2026 (conta tuende.ao@gmail.com; registador Tucows; renova a 14 de outubro de 2027, cerca de 22,90 USD/ano). O DNS gere-se na Wix (**Domains > tuende.app > Manage DNS records**):
+Comprado na Wix a 14 de outubro de 2026 (conta tuende.ao@gmail.com; registador Tucows; renova a 14 de outubro de 2027, cerca de 22,90 USD/ano). O domínio continua registado e pago na Wix.
+
+Desde 15 de outubro de 2026 o DNS gere-se no **Cloudflare** (plano gratuito, conta tuende.ao@gmail.com, **tuende.app > DNS > Records**). Na Wix (**Domains > tuende.app > Manage DNS records > Nameservers**) estão os nameservers do Cloudflare: `grannbo.ns.cloudflare.com` e `leonidas.ns.cloudflare.com`. Mudou-se porque a Wix não deixava gravar os registos `MX` do email ("technical issue on our end"). Para voltar atrás: **Reset to Wix** na mesma secção (a Wix volta a gerir o DNS com os registos que lá ficaram, sem os `MX`). Registos no Cloudflare, todos em "DNS only" (nuvem cinzenta; não ligar o proxy, o site e o certificado HTTPS são do GitHub):
 - 4 registos `A` para `tuende.app`: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` (GitHub Pages)
 - 1 registo `CNAME` para `www` → `kingic17.github.io` (www.tuende.app redireciona para tuende.app)
 - 1 registo `TXT` `_github-pages-challenge-KingIC17` (verificação do domínio na conta GitHub, **Settings > Pages > Verified domains**: tuende.app verificado). Não apagar.
+- 2 registos `TXT` em `tuende.app`: `google-site-verification=...` (Google Search Console; não apagar) e `v=spf1 include:spf.improvmx.com ~all` (SPF do email)
+- 2 registos `MX` em `tuende.app`: `mx1.improvmx.com` (prioridade 10) e `mx2.improvmx.com` (prioridade 20): o email `contacto@tuende.app` é reencaminhado pelo ImprovMX (conta tuende.ao@gmail.com) para tuende.ao@gmail.com
 
 A Wix mostra o aviso "Your domain is set to point away from Wix": é normal, o site está no GitHub. Não carregar em "Try Again".
 
