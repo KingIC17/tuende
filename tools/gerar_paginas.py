@@ -14,7 +14,6 @@ página principal; cada página tem um botão para abrir o lugar na app.
 import html
 import json
 import re
-import shutil
 import unicodedata
 from datetime import date
 from pathlib import Path
@@ -709,9 +708,12 @@ def main():
     if dupes:
         raise SystemExit(f'Nomes que dão o mesmo endereço: {sorted(dupes)}')
     out = WEB / 'lugares'
-    if out.exists():
-        shutil.rmtree(out)
-    out.mkdir()
+    # Apaga só as páginas geradas que já não existem (lugar removido ou renomeado); ficheiros com outros nomes ficam.
+    keep = {f'{slug(v["name"])}.html' for v in venues} | {f'{t["slug"]}.html' for t in TOPICS} | {'index.html'}
+    out.mkdir(exist_ok=True)
+    for old in out.iterdir():
+        if re.fullmatch(r'[a-z0-9-]+\.html', old.name) and old.name not in keep:
+            old.unlink()
     for v in venues:
         city = v['location'].split(' - ')[0]
         others = [o for o in venues if o['id'] != v['id'] and o['location'].split(' - ')[0] == city][:8]
