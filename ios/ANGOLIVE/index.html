@@ -845,6 +845,33 @@
         .guide-sources { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
         .guide-sources a { color: var(--primary); font-weight: 600; }
         .guide-card.sos { border-color: var(--primary); }
+        .fx-pick { padding: 0; background: none; border: 0; text-align: left; }
+        .fx-main { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+        .fx-main .fx-pick { display: grid; align-content: start; gap: 2px; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); }
+        .fx-main .fx-pick:hover { border-color: var(--primary); }
+        .fx-code { font-size: 13px; font-weight: 800; letter-spacing: 0.04em; color: var(--primary); }
+        .fx-name { font-size: 14px; color: var(--muted); }
+        .fx-main b { margin-top: 4px; font-size: 24px; font-weight: 800; white-space: nowrap; }
+        .fx-convert { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 12px; margin-top: 14px; }
+        .fx-convert label { display: grid; gap: 6px; min-width: 0; }
+        .fx-convert .fx-wide { grid-column: 1 / -1; }
+        .fx-hint { margin-top: 10px; }
+        .fx-list { list-style: none; margin-top: 8px; }
+        .fx-list li + li { border-top: 1px solid var(--line); }
+        .fx-list .fx-pick { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 10px 0; }
+        .fx-list .fx-name { font-size: 15px; color: var(--text); }
+        .fx-list .fx-pick:hover .fx-name { color: var(--primary); }
+        .fx-rate { text-align: right; }
+        .fx-rate b { display: block; font-size: 15px; white-space: nowrap; }
+        .fx-rate small { display: block; font-size: 13px; color: var(--muted); white-space: nowrap; }
+        .card-grid > .fx-banner { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 14px; background: var(--surface-2); font-size: 15px; }
+        .fx-banner .icon { width: 22px; height: 22px; color: var(--primary); flex: none; }
+        .fx-banner span { flex: 1 1 220px; }
+        @media (max-width: 600px) {
+            .fx-main { grid-template-columns: 1fr; gap: 8px; }
+            .fx-main .fx-pick { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 12px 14px; }
+            .fx-main b { margin-top: 0; font-size: 19px; }
+        }
         .info-panel .section-title { margin-top: 18px; }
         .hours-note { margin-top: 8px; }
         .install-steps { list-style: decimal; padding-left: 20px; }
@@ -1382,6 +1409,14 @@
             <p class="hint" id="wondersChecked"></p>
             <div id="wondersBody"></div>
         </section>
+
+        <section id="fxView" class="guide-page" hidden aria-labelledby="fxTitle">
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <h1 class="rec-title" id="fxTitle" data-i18n="fxTitle">Câmbio do dia</h1>
+            <p class="rec-intro" data-i18n="fxIntro">Quanto vale o kwanza hoje: as taxas de referência oficiais do Banco Nacional de Angola (BNA) para o dólar, o euro, o yuan e outras moedas, com um conversor.</p>
+            <p class="hint" id="fxStatus" aria-live="polite"></p>
+            <div id="fxBody"></div>
+        </section>
     </main>
 
     <footer class="site-footer">
@@ -1390,6 +1425,7 @@
                 <button type="button" class="footer-link" id="footerInstall" data-info="install" hidden data-i18n="installTitle">Descarregar a app</button>
                 <button type="button" class="footer-link" data-action="events" data-i18n="agenda">Agenda</button>
                 <button type="button" class="footer-link" data-action="guide" data-i18n="guideTitle">Guia prático</button>
+                <button type="button" class="footer-link" data-action="fx" data-i18n="fxTitle">Câmbio do dia</button>
                 <button type="button" class="footer-link" data-action="routes" data-i18n="routesTitle">Roteiros</button>
                 <button type="button" class="footer-link" data-action="wonders" data-i18n="wondersTitle">Maravilhas de Angola</button>
                 <button type="button" class="footer-link" data-action="map" data-i18n="mapTitle">Mapa dos lugares</button>
@@ -2513,6 +2549,24 @@
                 mapLabel: 'Mapa',
                 priceLabel: 'Preço',
                 fxNote: 'câmbio de referência do BNA de {date}',
+                fxTitle: 'Câmbio do dia',
+                fxTile: 'Câmbio do dia',
+                fxIntro: 'Quanto vale o kwanza hoje: as taxas de referência oficiais do Banco Nacional de Angola (BNA) para o dólar, o euro, o yuan e outras moedas, com um conversor.',
+                fxDate: 'Taxas de referência do BNA de {date}.',
+                fxLoading: 'A atualizar as taxas do BNA...',
+                fxOffline: 'Não foi possível ligar ao BNA. Taxas guardadas de {date}.',
+                fxConverter: 'Conversor',
+                fxAmount: 'Valor',
+                fxCurrency: 'Moeda',
+                fxInKwanza: 'Em kwanzas (Kz)',
+                fxConvHint: 'Escreva num dos campos; o outro é calculado com a taxa de referência.',
+                fxAllTitle: 'Todas as moedas',
+                fxSource: 'Banco Nacional de Angola (taxa de referência, câmbio médio)',
+                fxTipsTitle: 'Antes de trocar',
+                fxWhereLead: 'Onde trocar',
+                fxWhereText: 'Em bancos ou casas de câmbio.',
+                fxSeePlaces: 'Ver as {n} casas de câmbio na Tuende',
+                fxOpen: 'Ver o câmbio do dia',
                 contactLabel: 'Contacto',
                 toConfirm: 'Por confirmar',
                 stillToConfirm: 'Por confirmar',
@@ -2993,6 +3047,24 @@
                 mapLabel: 'Map',
                 priceLabel: 'Price',
                 fxNote: 'BNA reference rate of {date}',
+                fxTitle: 'Exchange rates today',
+                fxTile: 'Exchange rates',
+                fxIntro: 'What the kwanza is worth today: the official reference rates of the Banco Nacional de Angola (BNA) for the dollar, the euro, the yuan and other currencies, with a converter.',
+                fxDate: 'BNA reference rates of {date}.',
+                fxLoading: 'Updating the BNA rates...',
+                fxOffline: 'Could not reach the BNA. Saved rates of {date}.',
+                fxConverter: 'Converter',
+                fxAmount: 'Amount',
+                fxCurrency: 'Currency',
+                fxInKwanza: 'In kwanzas (Kz)',
+                fxConvHint: 'Type in either box; the other is worked out with the reference rate.',
+                fxAllTitle: 'All currencies',
+                fxSource: 'Banco Nacional de Angola (reference rate, mid rate)',
+                fxTipsTitle: 'Before you change money',
+                fxWhereLead: 'Where to change money',
+                fxWhereText: 'At banks or exchange bureaus.',
+                fxSeePlaces: 'See the {n} exchange bureaus on Tuende',
+                fxOpen: 'See today\'s exchange rates',
                 contactLabel: 'Contact',
                 toConfirm: 'To be confirmed',
                 stillToConfirm: 'To be confirmed',
@@ -3473,6 +3545,24 @@
                 mapLabel: 'Carte',
                 priceLabel: 'Prix',
                 fxNote: 'Taux de référence de la BNA du {date}',
+                fxTitle: 'Taux de change du jour',
+                fxTile: 'Taux de change',
+                fxIntro: 'Ce que vaut le kwanza aujourd\'hui : les taux de référence officiels de la Banco Nacional de Angola (BNA) pour le dollar, l\'euro, le yuan et d\'autres devises, avec un convertisseur.',
+                fxDate: 'Taux de référence de la BNA du {date}.',
+                fxLoading: 'Mise à jour des taux de la BNA...',
+                fxOffline: 'Impossible de joindre la BNA. Taux enregistrés du {date}.',
+                fxConverter: 'Convertisseur',
+                fxAmount: 'Montant',
+                fxCurrency: 'Devise',
+                fxInKwanza: 'En kwanzas (Kz)',
+                fxConvHint: 'Saisissez un montant dans l\'un des champs ; l\'autre est calculé avec le taux de référence.',
+                fxAllTitle: 'Toutes les devises',
+                fxSource: 'Banco Nacional de Angola (taux de référence, cours moyen)',
+                fxTipsTitle: 'Avant de changer',
+                fxWhereLead: 'Où changer',
+                fxWhereText: 'Dans les banques ou les bureaux de change.',
+                fxSeePlaces: 'Voir les {n} bureaux de change sur Tuende',
+                fxOpen: 'Voir le taux de change du jour',
                 contactLabel: 'Contact',
                 toConfirm: 'À confirmer',
                 stillToConfirm: 'À confirmer',
@@ -3953,6 +4043,24 @@
                 mapLabel: 'Mapa',
                 priceLabel: 'Precio',
                 fxNote: 'Tipo de cambio de referencia del BNA del {date}',
+                fxTitle: 'Tipo de cambio del día',
+                fxTile: 'Tipo de cambio',
+                fxIntro: 'Cuánto vale el kwanza hoy: los tipos de referencia oficiales del Banco Nacional de Angola (BNA) para el dólar, el euro, el yuan y otras monedas, con un conversor.',
+                fxDate: 'Tipos de referencia del BNA del {date}.',
+                fxLoading: 'Actualizando los tipos del BNA...',
+                fxOffline: 'No se pudo conectar con el BNA. Tipos guardados del {date}.',
+                fxConverter: 'Conversor',
+                fxAmount: 'Importe',
+                fxCurrency: 'Moneda',
+                fxInKwanza: 'En kwanzas (Kz)',
+                fxConvHint: 'Escriba en cualquiera de los campos; el otro se calcula con el tipo de referencia.',
+                fxAllTitle: 'Todas las monedas',
+                fxSource: 'Banco Nacional de Angola (tipo de referencia, cambio medio)',
+                fxTipsTitle: 'Antes de cambiar',
+                fxWhereLead: 'Dónde cambiar',
+                fxWhereText: 'En bancos o casas de cambio.',
+                fxSeePlaces: 'Ver las {n} casas de cambio en Tuende',
+                fxOpen: 'Ver el tipo de cambio del día',
                 contactLabel: 'Contacto',
                 toConfirm: 'Por confirmar',
                 stillToConfirm: 'Por confirmar',
@@ -5966,7 +6074,7 @@
                     { lead: { pt: 'Cartões estrangeiros', en: 'Foreign cards', fr: 'Cartes étrangères', es: 'Tarjetas extranjeras' }, pt: 'As caixas Multicaixa permitem levantar dinheiro com cartões da rede Visa. Antes de viajar, pergunte ao seu banco se o cartão funciona em Angola.', en: 'Multicaixa cash machines accept cards on the Visa network. Before you travel, ask your bank whether your card works in Angola.', fr: 'Les distributeurs Multicaixa acceptent les cartes du réseau Visa. Avant de partir, demandez à votre banque si votre carte fonctionne en Angola.', es: 'Los cajeros Multicaixa aceptan tarjetas de la red Visa. Antes de viajar, pregunte a su banco si su tarjeta funciona en Angola.' },
                     { lead: { pt: 'Mastercard e outros cartões', en: 'Mastercard and other cards', fr: 'Mastercard et autres cartes', es: 'Mastercard y otras tarjetas' }, tbc: true, pt: 'Não encontrámos uma fonte oficial sobre levantamentos com estes cartões. Confirme com o seu banco.', en: 'We found no official source on withdrawals with these cards. Check with your bank.', fr: 'Nous n\'avons trouvé aucune source officielle sur les retraits avec ces cartes. Renseignez-vous auprès de votre banque.', es: 'No encontramos una fuente oficial sobre retiradas con estas tarjetas. Consúltelo con su banco.' },
                     { lead: { pt: 'Nas caixas', en: 'At cash machines', fr: 'Aux distributeurs', es: 'En los cajeros' }, pt: 'Tenha cuidado ao levantar dinheiro: há casos de pessoas seguidas e assaltadas depois de usar a caixa.', en: 'Take care when withdrawing cash: people have been followed and robbed after using a cash machine.', fr: 'Soyez prudent en retirant de l\'argent : des personnes ont été suivies et volées après être passées au distributeur.', es: 'Tenga cuidado al sacar dinero: ha habido personas seguidas y asaltadas después de usar un cajero.' },
-                    { lead: { pt: 'Câmbio', en: 'Exchange', fr: 'Change', es: 'Cambio' }, pt: 'Troque dinheiro em bancos ou em casas de câmbio. Há algumas na Tuende.', en: 'Change money at banks or exchange bureaus. Tuende lists some.', fr: 'Changez de l\'argent dans les banques ou les bureaux de change. Tuende en indique quelques-uns.', es: 'Cambie dinero en bancos o casas de cambio. Tuende muestra algunas.', category: 'services' },
+                    { lead: { pt: 'Câmbio', en: 'Exchange', fr: 'Change', es: 'Cambio' }, pt: 'A Tuende mostra o câmbio do dia do Banco Nacional de Angola, com um conversor. Troque dinheiro em bancos ou em casas de câmbio e confirme antes o valor final.', en: 'Tuende shows the Banco Nacional de Angola rate of the day, with a converter. Change money at banks or exchange bureaus and check the final amount first.', fr: 'Tuende affiche le taux du jour de la Banco Nacional de Angola, avec un convertisseur. Changez de l\'argent dans les banques ou les bureaux de change et vérifiez d\'abord le montant final.', es: 'Tuende muestra el tipo de cambio del día del Banco Nacional de Angola, con un conversor. Cambie dinero en bancos o casas de cambio y confirme antes el importe final.', fx: true, category: 'services' },
                     { lead: { pt: 'Entrar e sair com dinheiro', en: 'Bringing money in and out', fr: 'Entrer et sortir avec de l\'argent', es: 'Entrar y salir con dinero' }, pt: 'Quem entra com 10 mil dólares ou mais (somando kwanzas e moeda estrangeira) tem de declarar na alfândega e guardar o duplicado. À saída, quem não vive em Angola pode levar a moeda estrangeira com que entrou, mostrando esse duplicado (Aviso n.º 6/22 do BNA).', en: 'If you arrive with 10,000 US dollars or more (kwanzas and foreign currency added together), you must declare it at customs and keep the copy. When leaving, non-residents can take out the foreign currency they brought in by showing that copy (BNA Notice 6/22).', fr: 'Si vous arrivez avec 10 000 dollars américains ou plus (kwanzas et devises additionnés), vous devez les déclarer à la douane et garder la copie. À la sortie, les non-résidents peuvent emporter les devises apportées en présentant cette copie (Avis 6/22 de la BNA).', es: 'Si llega con 10 000 dólares estadounidenses o más (sumando kwanzas y divisas), debe declararlo en la aduana y guardar la copia. Al salir, los no residentes pueden llevarse las divisas que trajeron mostrando esa copia (Aviso 6/22 del BNA).' }
                 ],
                 sources: [PT_ADVICE, UK_ADVICE, { label: 'Aviso n.º 6/22 do BNA (lex.ao)', url: 'https://lex.ao/docs/banco-nacional-de-angola/2022/aviso-n-o-6-22-de-03-de-marco/' }, { label: 'Ver Angola (março de 2022)', url: 'https://www.verangola.net/va/pt/032022/BancaSeguros/29826/BNA-vai-autorizar-residentes-cambiais-a-sair-do-pa%C3%ADs-com-moeda-nacional-ou-estrangeira-at%C3%A9-10-mil-d%C3%B3lares.htm' }]
@@ -6198,24 +6306,41 @@
             return [kzAmount(p.from, p.to), unit].filter(Boolean).join(' ');
         }
 
-        /* ---------- Dollars and euros (official BNA reference rate) ---------- */
+        /* ---------- Exchange rates (official BNA reference rate) ---------- */
 
-        // Rate checked on 10 October 2026; the app refreshes it from the BNA at most once a day.
-        let fx = store.get('angoliveFx', null) || { date: '2026-10-09', usd: 913, eur: 1048.8286 };
+        // Currencies on the "Câmbio do dia" page, in this order; the first three are also shown large.
+        const FX_CODES = ['usd', 'eur', 'cny', 'gbp', 'zar', 'brl', 'nad', 'chf', 'jpy', 'cad', 'aud', 'aed', 'sar', 'inr', 'cdf', 'xaf', 'ngn', 'mzn', 'cve', 'rub', 'krw', 'sek', 'nok', 'dkk'];
+        const FX_MAIN = 3;
+        const FX_MAX_AGE = 3 * 60 * 60 * 1000;
+        // Rates the BNA published on 16 October 2026 (checked on the 18th), shown until the app reaches the BNA.
+        const FX_FALLBACK = { date: '2026-10-16', rates: { usd: 913, eur: 1027.125, cny: 136.72372, gbp: 1218.14543, zar: 55.5647, brl: 180.01853, nad: 55.58464, chf: 1108.54784, jpy: 5.78068, cad: 644.81955, aud: 635.52833, aed: 248.57065, sar: 243.29798, inr: 9.61559, cdf: 0.39565, xaf: 1.56611, ngn: 0.68579, mzn: 14.35697, cve: 9.33739, rub: 11.03657, krw: 0.68551, sek: 92.22502, nok: 96.73557, dkk: 137.4379 } };
+        let fx = store.get('tuendeFx', null);
+        if (!(fx?.rates?.usd > 0 && fx.rates.eur > 0 && fx.date >= FX_FALLBACK.date)) fx = FX_FALLBACK;
+        let fxLoading = null;
+        let fxFailed = false;
 
-        async function loadFx() {
-            if (fx.checked === new Date().toISOString().slice(0, 10)) return;
-            try {
-                const rate = async (code) => {
-                    const res = await fetch(`https://www.bna.ao/service/rest/taxas/get/taxa/referencia?moeda=${code}&tipocambio=m`);
-                    const row = (await res.json())?.genericResponse?.[0];
-                    if (!res.ok || !(row?.taxa > 0) || !/^\d{4}-\d{2}-\d{2}$/.test(row.data)) throw new Error('fx');
-                    return row;
-                };
-                const [usd, eur] = await Promise.all([rate('usd'), rate('eur')]);
-                fx = { date: usd.data, usd: usd.taxa, eur: eur.taxa, checked: new Date().toISOString().slice(0, 10) };
-                store.set('angoliveFx', fx);
-            } catch {}
+        // The BNA publishes one reference rate per working day; the app asks again at most every 3 hours.
+        function loadFx() {
+            if (Date.now() - (fx.checkedAt || 0) < FX_MAX_AGE) return Promise.resolve(false);
+            fxLoading ||= (async () => {
+                const rows = await Promise.all(FX_CODES.map(async (code) => {
+                    try {
+                        const res = await fetch(`https://www.bna.ao/service/rest/taxas/get/taxa/referencia?moeda=${code}&tipocambio=m`);
+                        const row = (await res.json())?.genericResponse?.[0];
+                        return res.ok && row?.taxa > 0 && /^\d{4}-\d{2}-\d{2}$/.test(row.data) ? { code, rate: row.taxa, date: row.data } : null;
+                    } catch {
+                        return null;
+                    }
+                }));
+                const date = rows.find((r) => r?.code === 'usd')?.date;
+                const rates = Object.fromEntries(rows.filter((r) => r && r.date === date).map((r) => [r.code, r.rate]));
+                fxFailed = !(rates.usd && rates.eur) || date < fx.date;
+                if (fxFailed) return false;
+                fx = { date, rates, checkedAt: Date.now() };
+                store.set('tuendeFx', fx);
+                return true;
+            })().finally(() => { fxLoading = null; });
+            return fxLoading;
         }
 
         function foreign(value, rate) {
@@ -6229,10 +6354,109 @@
             const p = v.price;
             if (!p || p.free || p.text || !p.from) return '';
             const range = (rate) => (p.to ? `${foreign(p.from, rate)}–${foreign(p.to, rate)}` : foreign(p.from, rate));
-            return `≈ ${range(fx.usd)} USD · ${range(fx.eur)} EUR`;
+            return `≈ ${range(fx.rates.usd)} USD · ${range(fx.rates.eur)} EUR`;
         }
 
         const fxNote = () => t('fxNote', { date: formatDate(fx.date) });
+        const fxCode = (code) => code.toUpperCase();
+        const fxNumber = (n, digits = 2) => n.toLocaleString(locale(), { minimumFractionDigits: digits, maximumFractionDigits: digits });
+        const fxAmountText = (n) => n.toLocaleString(locale(), { maximumFractionDigits: n < 1 ? 4 : 2 });
+        const fxTileText = () => `1 USD = ${fx.rates.usd.toLocaleString(locale(), { maximumFractionDigits: 0 })} Kz`;
+
+        function fxName(code) {
+            try {
+                const name = new Intl.DisplayNames([locale()], { type: 'currency' }).of(fxCode(code));
+                return name.charAt(0).toUpperCase() + name.slice(1);
+            } catch {
+                return fxCode(code);
+            }
+        }
+
+        // Accepts "1500", "1 500", "1.500,50" or "1,500.50", trying the language's own format first.
+        function parseAmount(text) {
+            const s = String(text).replace(/[\s  ']/g, '');
+            const [group, dec] = lang === 'en' ? [',', '.'] : ['.', ','];
+            for (const [g, d] of [[group, dec], [dec, group]]) {
+                if (new RegExp(`^\\d{1,3}(\\${g}\\d{3})*(\\${d}\\d+)?$|^\\d+(\\${d}\\d+)?$`).test(s)) return Number(s.split(g).join('').replace(d, '.'));
+            }
+            return NaN;
+        }
+
+        /* ---------- "Câmbio do dia" page ---------- */
+
+        const FX_TIPS = [
+            { lead: { pt: 'Taxa de referência', en: 'Reference rate', fr: 'Taux de référence', es: 'Tipo de referencia' }, pt: 'É a taxa oficial que o BNA publica em cada dia útil (câmbio médio). Serve de guia: não é o valor exato que vai receber.', en: 'The official rate the BNA publishes every working day (mid rate). It is a guide, not the exact amount you will get.', fr: 'Le taux officiel que la BNA publie chaque jour ouvrable (cours moyen). C\'est un repère, pas le montant exact que vous recevrez.', es: 'Es el tipo oficial que el BNA publica cada día hábil (cambio medio). Sirve de guía: no es el importe exacto que recibirá.' },
+            { lead: { pt: 'Bancos e casas de câmbio', en: 'Banks and exchange bureaus', fr: 'Banques et bureaux de change', es: 'Bancos y casas de cambio' }, pt: 'Cada um tem as suas taxas de compra e de venda, um pouco diferentes da de referência, e pode cobrar comissão. Pergunte quanto vai receber antes de trocar e guarde o recibo.', en: 'Each has its own buying and selling rates, slightly different from the reference rate, and may charge a fee. Ask how much you will get before you change and keep the receipt.', fr: 'Chacun applique ses propres taux d\'achat et de vente, un peu différents du taux de référence, et peut prendre une commission. Demandez combien vous recevrez avant de changer et gardez le reçu.', es: 'Cada uno tiene sus propios tipos de compra y de venta, algo distintos del de referencia, y puede cobrar comisión. Pregunte cuánto recibirá antes de cambiar y guarde el recibo.' },
+            { lead: { pt: 'Fim de semana', en: 'Weekends', fr: 'Week-end', es: 'Fin de semana' }, pt: 'O BNA publica as taxas nos dias úteis. Ao sábado e ao domingo continua a valer a de sexta-feira.', en: 'The BNA publishes rates on working days. On Saturday and Sunday, Friday\'s rate still applies.', fr: 'La BNA publie ses taux les jours ouvrables. Le samedi et le dimanche, le taux du vendredi reste valable.', es: 'El BNA publica los tipos en días hábiles. El sábado y el domingo sigue valiendo el del viernes.' }
+        ];
+        let fxPick = 'usd';
+        let fxInput = { side: 'foreign', value: 100 };
+
+        function fxStatusText() {
+            if (fxLoading) return t('fxLoading');
+            return t(fxFailed ? 'fxOffline' : 'fxDate', { date: formatDate(fx.date) });
+        }
+
+        function renderFx() {
+            const focused = document.activeElement?.closest?.('#fxBody') ? document.activeElement.id : '';
+            $('fxStatus').textContent = fxStatusText();
+            const codes = FX_CODES.filter((c) => fx.rates[c] > 0);
+            if (!codes.includes(fxPick)) fxPick = 'usd';
+            // Currencies worth less than 1 Kz are shown per 100 units.
+            const unit = (c) => (fx.rates[c] < 1 ? 100 : 1);
+            const main = codes.slice(0, FX_MAIN).map((c) => `
+                <button class="fx-pick" type="button" data-fx-pick="${c}">
+                    <span class="fx-code">${fxCode(c)}</span>
+                    <span class="fx-name">${escapeHTML(fxName(c))}</span>
+                    <b>${fxNumber(fx.rates[c])} Kz</b>
+                </button>`).join('');
+            const list = codes.map((c) => `
+                <li><button class="fx-pick" type="button" data-fx-pick="${c}">
+                    <span class="fx-code">${fxCode(c)}</span>
+                    <span class="fx-name">${escapeHTML(fxName(c))}</span>
+                    <span class="fx-rate"><b>${unit(c)} ${fxCode(c)} = ${fxNumber(fx.rates[c] * unit(c))} Kz</b><small>${fxNumber(1000, 0)} Kz = ${fxNumber(1000 / fx.rates[c])} ${fxCode(c)}</small></span>
+                </button></li>`).join('');
+            const shops = venues.filter((v) => v.type === 'services').length;
+            const tips = FX_TIPS.map((item) => `<li><b>${escapeHTML(item.lead[lang])}</b><span>${escapeHTML(item[lang])}</span></li>`).join('')
+                + `<li><b>${t('fxWhereLead')}</b><span>${t('fxWhereText')}</span><span class="guide-links"><button class="link-btn" type="button" data-category="services">${t('fxSeePlaces', { n: shops })}</button></span></li>`;
+            $('fxBody').innerHTML = `
+                <div class="fx-main">${main}</div>
+                <section class="guide-card" id="fx-conversor" aria-labelledby="fxConvTitle">
+                    <h2 id="fxConvTitle">${icon('exchange')}${t('fxConverter')}</h2>
+                    <div class="fx-convert">
+                        <label><span class="field-label">${t('fxAmount')}</span><input class="field" id="fxForeign" type="text" inputmode="decimal" autocomplete="off"></label>
+                        <label><span class="field-label">${t('fxCurrency')}</span><select class="field" id="fxCurrency">${codes.map((c) => `<option value="${c}"${c === fxPick ? ' selected' : ''}>${fxCode(c)} · ${escapeHTML(fxName(c))}</option>`).join('')}</select></label>
+                        <label class="fx-wide"><span class="field-label">${t('fxInKwanza')}</span><input class="field" id="fxKwanza" type="text" inputmode="decimal" autocomplete="off"></label>
+                    </div>
+                    <p class="hint fx-hint">${t('fxConvHint')}</p>
+                </section>
+                <section class="guide-card" id="fx-moedas" aria-labelledby="fxAllTitle">
+                    <h2 id="fxAllTitle">${icon('card')}${t('fxAllTitle')}</h2>
+                    <ul class="fx-list">${list}</ul>
+                    <p class="guide-sources">${t('sourcesLabel')}: <a href="https://www.bna.ao/" target="_blank" rel="noopener">${t('fxSource')}</a></p>
+                </section>
+                <section class="guide-card" id="fx-dicas" aria-labelledby="fxTipsTitle">
+                    <h2 id="fxTipsTitle">${icon('info')}${t('fxTipsTitle')}</h2>
+                    <ul class="guide-list">${tips}</ul>
+                </section>`;
+            fillFxConverter(true);
+            const el = focused && $(focused);
+            if (el) {
+                el.focus();
+                if (el.type === 'text') el.setSelectionRange(el.value.length, el.value.length);
+            }
+        }
+
+        // Writes the converted amount in the box the person is not typing in.
+        function fillFxConverter(both = false) {
+            const rate = fx.rates[fxPick];
+            const typed = $(fxInput.side === 'foreign' ? 'fxForeign' : 'fxKwanza');
+            const other = $(fxInput.side === 'foreign' ? 'fxKwanza' : 'fxForeign');
+            if (!typed || !rate) return;
+            const ok = Number.isFinite(fxInput.value);
+            if (both) typed.value = ok ? fxAmountText(fxInput.value) : '';
+            other.value = ok ? fxAmountText(fxInput.side === 'foreign' ? fxInput.value * rate : fxInput.value / rate) : '';
+        }
 
         function priceValue(v) {
             if (!v.price) return Infinity;
@@ -6684,6 +6908,15 @@
             else window.scrollTo({ top: 0 });
         }
 
+        function showFx({ push = true } = {}) {
+            state.view = 'fx';
+            if (push) history.pushState(null, '', `${location.pathname}?page=cambio`);
+            const loading = loadFx();
+            render();
+            window.scrollTo({ top: 0 });
+            if (fxLoading) loading.then(() => { if (state.view === 'fx') renderFx(); });
+        }
+
         function goHome({ push = true } = {}) {
             state.view = 'home';
             state.filters = { ...DEFAULT_FILTERS };
@@ -6700,6 +6933,7 @@
                 if (state.view !== 'recommend') showRecommend({ push: false });
             } else if (params.get('page') === 'events') showEvents({ push: false, filters: eventFiltersFromQuery(params) });
             else if (params.get('page') === 'map') { if (state.view !== 'map') showMap({ push: false }); }
+            else if (params.get('page') === 'cambio') { if (state.view !== 'fx') showFx({ push: false }); }
             else if (params.get('page') === 'routes') {
                 const route = location.hash.match(/^#roteiro-([a-z-]+)$/)?.[1] || '';
                 if (state.view !== 'routes' || route) showRoutes({ push: false, route: ITINERARIES.some((r) => r.id === route) ? route : '' });
@@ -6789,6 +7023,8 @@
 
         function categoryTilesHTML() {
             return `<div class="tile-grid">${Object.entries(CATEGORY).map(([key, c]) => {
+                // Exchange bureaus give way to the rates page, which links to them.
+                if (key === 'services') return `<button class="tile" type="button" data-action="fx">${icon(c.icon)}<span class="tile-label">${t('fxTile')}</span><span class="tile-count" id="fxTileRate">${fxTileText()}</span></button>`;
                 const count = venues.filter((v) => v.type === key).length;
                 return `<button class="tile" type="button" data-category="${key}">${icon(c.icon)}<span class="tile-label">${c[lang][0]}</span><span class="tile-count">${placesCount(count)}</span></button>`;
             }).join('')}</div>`;
@@ -6925,6 +7161,9 @@
             if (list.length) {
                 $('resultsList').className = 'card-grid';
                 $('resultsList').innerHTML = list.map((v) => cardHTML(v)).join('');
+                if (list.every((v) => v.type === 'services')) {
+                    $('resultsList').insertAdjacentHTML('afterbegin', `<div class="fx-banner">${icon('exchange')}<span><b>${t('fxTitle')}:</b> 1 USD = ${fxNumber(fx.rates.usd)} Kz · 1 EUR = ${fxNumber(fx.rates.eur)} Kz</span><button class="link-btn" type="button" data-action="fx">${t('fxOpen')}</button></div>`);
+                }
             } else {
                 $('resultsList').className = '';
                 $('resultsList').innerHTML = emptyHTML();
@@ -6976,7 +7215,7 @@
             renderQuickFilters();
             renderSavedButton();
             renderTabbar();
-            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders'].includes(state.view);
+            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx'].includes(state.view);
             $('homeView').hidden = state.view !== 'home';
             $('resultsView').hidden = state.view !== 'results';
             $('recommendView').hidden = state.view !== 'recommend';
@@ -6985,7 +7224,8 @@
             $('routesView').hidden = state.view !== 'routes';
             $('mapView').hidden = state.view !== 'map';
             $('wondersView').hidden = state.view !== 'wonders';
-            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle' }[state.view];
+            $('fxView').hidden = state.view !== 'fx';
+            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle' }[state.view];
             document.title = viewTitle ? `${t(viewTitle)} | Tuende` : `Tuende - ${t('heroTitle')}`;
             if (state.view === 'home') renderHome();
             else if (state.view === 'results') renderResults();
@@ -6994,6 +7234,7 @@
             else if (state.view === 'routes') renderRoutes();
             else if (state.view === 'map') renderMap();
             else if (state.view === 'wonders') renderWonders();
+            else if (state.view === 'fx') renderFx();
         }
 
         /* ---------- Practical guide ---------- */
@@ -7001,6 +7242,7 @@
         function guideItemHTML(item) {
             const place = item.place && venues.find((v) => v.id === item.place);
             const links = [
+                item.fx ? `<button class="link-btn" type="button" data-action="fx">${t('fxOpen')}</button>` : '',
                 place ? `<button class="link-btn" type="button" data-open="${place.id}">${t('guideSeePlace', { name: escapeHTML(place.name) })}</button>` : '',
                 item.category ? `<button class="link-btn" type="button" data-category="${item.category}">${t('guideSeeCategory', { name: catLabel(item.category, true) })}</button>` : '',
                 item.link ? `<a class="link-btn" href="${escapeHTML(item.link)}" target="_blank" rel="noopener">${escapeHTML(new URL(item.link).hostname.replace(/^www\./, ''))}${icon('external')}</a>` : ''
@@ -9104,7 +9346,7 @@
                 surprise: ['Que tal isto? {name}, em {where}. {highlight}', 'Já conheces {name}? Fica em {where}. {highlight}', 'Aposto que vais gostar de {name}, em {where}. {highlight}'],
                 recommend: 'Conheces um lugar que devia estar na Tuende? Conta-nos neste formulário e a equipa verifica.',
                 seeAll: 'Ver todos ({n})', guideMore: 'Ler tudo: {title}', openAgenda: 'Ver a agenda', openWonders: 'Ver as Maravilhas', openDrones: 'Regras para drones',
-                openPhoto: 'Lugares para fotografar', openSpot: 'Dicas de fotografia', openRoutes: 'Ver os roteiros', openMap: 'Abrir o mapa', recommendBtn: 'Sugerir um lugar',
+                openPhoto: 'Lugares para fotografar', openSpot: 'Dicas de fotografia', openRoutes: 'Ver os roteiros', openMap: 'Abrir o mapa', openFx: 'Ver o câmbio do dia', fxToday: 'Câmbio de referência do BNA de {date}: {rates}. Nos bancos e casas de câmbio o valor final é um pouco diferente.', recommendBtn: 'Sugerir um lugar',
                 locateBtn: 'Usar a minha localização', directions: 'Como chegar',
                 chipCat: '{cat} em {where}', chipEvents: 'Eventos em {where}',
                 chipsStart: ['O que fazer em Luanda?', 'Preciso de visto?', 'Eventos este fim de semana', 'Praias em Benguela', 'Onde posso voar com drone?', 'Surpreende-me']
@@ -9156,7 +9398,7 @@
                 surprise: ['How about this? {name}, in {where}. {highlight}', 'Do you know {name}? It’s in {where}. {highlight}', 'I bet you’ll like {name}, in {where}. {highlight}'],
                 recommend: 'Know a place that should be on Tuende? Tell us with this form and the team will check it.',
                 seeAll: 'See all ({n})', guideMore: 'Read all: {title}', openAgenda: 'See the agenda', openWonders: 'See the Wonders', openDrones: 'Drone rules',
-                openPhoto: 'Photo spots', openSpot: 'Photo tips', openRoutes: 'See the routes', openMap: 'Open the map', recommendBtn: 'Suggest a place',
+                openPhoto: 'Photo spots', openSpot: 'Photo tips', openRoutes: 'See the routes', openMap: 'Open the map', openFx: 'See today\'s exchange rates', fxToday: 'BNA reference rate of {date}: {rates}. Banks and exchange bureaus give a slightly different final amount.', recommendBtn: 'Suggest a place',
                 locateBtn: 'Use my location', directions: 'Directions',
                 chipCat: '{cat} in {where}', chipEvents: 'Events in {where}',
                 chipsStart: ['What to do in Luanda?', 'Do I need a visa?', 'Events this weekend', 'Beaches in Benguela', 'Where can I fly a drone?', 'Surprise me']
@@ -9208,7 +9450,7 @@
                 surprise: ['Et ça, ça te dit ? {name}, à {where}. {highlight}', 'Tu connais {name} ? C’est à {where}. {highlight}', 'Je parie que {name}, à {where}, va te plaire. {highlight}'],
                 recommend: 'Tu connais un lieu qui devrait être sur Tuende ? Dis-le-nous avec ce formulaire et l’équipe le vérifiera.',
                 seeAll: 'Tout voir ({n})', guideMore: 'Tout lire : {title}', openAgenda: 'Voir l’agenda', openWonders: 'Voir les merveilles', openDrones: 'Règles pour drones',
-                openPhoto: 'Spots photo', openSpot: 'Conseils photo', openRoutes: 'Voir les itinéraires', openMap: 'Ouvrir la carte', recommendBtn: 'Proposer un lieu',
+                openPhoto: 'Spots photo', openSpot: 'Conseils photo', openRoutes: 'Voir les itinéraires', openMap: 'Ouvrir la carte', openFx: 'Voir le taux de change du jour', fxToday: 'Taux de référence de la BNA du {date} : {rates}. Dans les banques et bureaux de change, le montant final est un peu différent.', recommendBtn: 'Proposer un lieu',
                 locateBtn: 'Utiliser ma position', directions: 'Itinéraire',
                 chipCat: '{cat} à {where}', chipEvents: 'Événements à {where}',
                 chipsStart: ['Que faire à Luanda ?', 'Ai-je besoin d’un visa ?', 'Événements ce week-end', 'Plages à Benguela', 'Où faire voler un drone ?', 'Surprends-moi']
@@ -9260,7 +9502,7 @@
                 surprise: ['¿Qué tal esto? {name}, en {where}. {highlight}', '¿Conoces {name}? Está en {where}. {highlight}', 'Apuesto a que te gustará {name}, en {where}. {highlight}'],
                 recommend: '¿Conoces un lugar que debería estar en Tuende? Cuéntanoslo con este formulario y el equipo lo comprobará.',
                 seeAll: 'Ver todos ({n})', guideMore: 'Leer todo: {title}', openAgenda: 'Ver la agenda', openWonders: 'Ver las Maravillas', openDrones: 'Normas para drones',
-                openPhoto: 'Lugares para fotografiar', openSpot: 'Consejos de fotografía', openRoutes: 'Ver las rutas', openMap: 'Abrir el mapa', recommendBtn: 'Sugerir un lugar',
+                openPhoto: 'Lugares para fotografiar', openSpot: 'Consejos de fotografía', openRoutes: 'Ver las rutas', openMap: 'Abrir el mapa', openFx: 'Ver el tipo de cambio del día', fxToday: 'Tipo de referencia del BNA del {date}: {rates}. En bancos y casas de cambio el importe final es algo distinto.', recommendBtn: 'Sugerir un lugar',
                 locateBtn: 'Usar mi ubicación', directions: 'Cómo llegar',
                 chipCat: '{cat} en {where}', chipEvents: 'Eventos en {where}',
                 chipsStart: ['¿Qué hacer en Luanda?', '¿Necesito visado?', 'Eventos este fin de semana', 'Playas en Benguela', '¿Dónde puedo volar un dron?', 'Sorpréndeme']
@@ -9633,6 +9875,14 @@
                 places([v]);
             }
 
+            // Exchange questions also get the BNA rate of the day and a link to the rates page.
+            if (q.category === 'services') {
+                const main = FX_CODES.slice(0, FX_MAIN).filter((c) => fx.rates[c]);
+                say('fxToday', { date: escapeHTML(formatDate(fx.date)), rates: main.map((c) => `1 ${fxCode(c)} = ${fxNumber(fx.rates[c])} Kz`).join(', ') });
+                out.facts.push(`Câmbio de referência do BNA de ${fx.date}: ${FX_CODES.filter((c) => fx.rates[c]).map((c) => `1 ${fxCode(c)} = ${fx.rates[c]} Kz`).join(', ')}`);
+                out.buttons.push(kambaGoBtn('fx', kambaText('openFx')));
+            }
+
             // Places by province, kind, family, free, open now or distance.
             const handled = out.parts.length > 0;
             const listAsked = q.category || q.where.length || q.flags.family || q.flags.free || q.flags.open || q.flags.near;
@@ -9831,6 +10081,7 @@
             else if (kind === 'routes') showRoutes({ route: arg });
             else if (kind === 'results') showResults(JSON.parse(arg));
             else if (kind === 'map') showMap();
+            else if (kind === 'fx') showFx();
             else if (kind === 'recommend') showRecommend();
         }
 
@@ -10014,6 +10265,19 @@
                 $(`roteiro-${id}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
                 return;
             }
+            if (action?.dataset.action === 'fx') {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                showFx();
+                return;
+            }
+            const fxPickBtn = target.closest('[data-fx-pick]');
+            if (fxPickBtn) {
+                fxPick = fxPickBtn.dataset.fxPick;
+                $('fxCurrency').value = fxPick;
+                fillFxConverter();
+                $('fx-conversor').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                return;
+            }
             if (action?.dataset.action === 'wonders') {
                 document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
                 showWonders();
@@ -10102,6 +10366,16 @@
         });
 
         $('eventForm').addEventListener('submit', submitEventSuggestion);
+        $('fxBody').addEventListener('input', (e) => {
+            if (e.target.id !== 'fxForeign' && e.target.id !== 'fxKwanza') return;
+            fxInput = { side: e.target.id === 'fxForeign' ? 'foreign' : 'kwanza', value: parseAmount(e.target.value) };
+            fillFxConverter();
+        });
+        $('fxBody').addEventListener('change', (e) => {
+            if (e.target.id !== 'fxCurrency') return;
+            fxPick = e.target.value;
+            fillFxConverter();
+        });
         $('eventsWhere').addEventListener('change', (e) => setEventFilters({ where: e.target.value }, '#eventsWhere'));
 
         $('recForm').addEventListener('submit', submitRecommend);
@@ -10201,6 +10475,7 @@
         // Earlier versions kept a profile (with email) and device-only reviews; neither is used any more.
         store.remove('angoliveUser');
         store.remove('reviews');
+        store.remove('angoliveFx');
 
         document.querySelectorAll('[data-icon]').forEach((el) => { el.innerHTML = icon(el.dataset.icon); });
         const storedTheme = store.get('angoliveTheme', null);
@@ -10209,7 +10484,10 @@
         updateOnline();
         renderInstallLinks();
         loadRatingStats();
-        loadFx();
+        loadFx().then((changed) => {
+            if (state.view === 'fx') renderFx();
+            else if (changed && $('fxTileRate')) $('fxTileRate').textContent = fxTileText();
+        });
         consumeAuthRedirect().then(() => {
             if (signedIn()) accessToken().then(syncFavorites);
         });
