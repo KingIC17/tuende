@@ -259,6 +259,10 @@
 
         .chips { display: flex; gap: 8px; margin: 14px 0 0; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
         .chips::-webkit-scrollbar { display: none; }
+        /* Space for content the script adds after the first paint, so nothing jumps while the page loads. */
+        #quickFilters:empty { min-height: 46px; }
+        #homeView:empty { min-height: 100vh; }
+        #themeIcon:empty, #accountIcon:empty { display: inline-flex; width: 20px; height: 20px; }
 
         .chip {
             flex: 0 0 auto;
@@ -1181,23 +1185,23 @@
                 </svg>
                 <span class="brand-name">Tuende</span>
             </a>
-            <nav class="top-nav" data-i18n-aria="navMain">
-                <button type="button" data-action="home" data-i18n="navExplore"></button>
-                <button type="button" data-action="events" data-i18n="agenda"></button>
-                <button type="button" data-action="guide" data-i18n="guideNav"></button>
-                <button type="button" data-action="routes" data-i18n="routesNav"></button>
-                <button type="button" data-action="map" data-i18n="mapNav"></button>
-                <button type="button" id="navRecommend" data-action="recommend" hidden data-i18n="recTitle"></button>
+            <nav class="top-nav" data-i18n-aria="navMain" aria-label="Navegação principal">
+                <button type="button" data-action="home" data-i18n="navExplore">Explorar</button>
+                <button type="button" data-action="events" data-i18n="agenda">Agenda</button>
+                <button type="button" data-action="guide" data-i18n="guideNav">Guia</button>
+                <button type="button" data-action="routes" data-i18n="routesNav">Roteiros</button>
+                <button type="button" data-action="map" data-i18n="mapNav">Mapa</button>
+                <button type="button" id="navRecommend" data-action="recommend" hidden data-i18n="recTitle">Recomendar um lugar</button>
             </nav>
             <div class="topbar-actions">
                 <div class="lang-wrap">
-                    <button class="top-btn" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu"><span data-icon="globe"></span><span id="langLabel">PT</span></button>
+                    <button class="top-btn" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu"><span data-icon="globe"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><span id="langLabel">PT</span></button>
                     <div class="lang-menu" id="langMenu" hidden></div>
                 </div>
-                <button class="top-btn" id="installTopBtn" type="button" data-info="install" data-i18n-aria="installTitle" hidden><span data-icon="download"></span><span class="desktop-only" data-i18n="installTitle"></span></button>
+                <button class="top-btn" id="installTopBtn" type="button" data-info="install" data-i18n-aria="installTitle" hidden aria-label="Descarregar a app"><span data-icon="download"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><span class="desktop-only" data-i18n="installTitle">Descarregar a app</span></button>
                 <button class="top-btn" id="themeBtn" type="button"><span id="themeIcon"></span><span id="themeLabel"></span></button>
                 <button class="top-btn desktop-only" id="accountBtn" type="button" hidden><span id="accountIcon"></span><span id="accountLabel"></span></button>
-                <button class="top-btn solid desktop-only" id="savedBtn" type="button"><span data-icon="heart"></span><span data-i18n="savedBtn"></span><span class="count-pill" id="savedCount" hidden>0</span></button>
+                <button class="top-btn solid desktop-only" id="savedBtn" type="button"><span data-icon="heart"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><span data-i18n="savedBtn">Guardados</span><span class="count-pill" id="savedCount" hidden>0</span></button>
             </div>
         </div>
     </header>
@@ -1205,18 +1209,18 @@
     <section class="hero" id="hero">
         <div class="container hero-grid">
             <div class="hero-main">
-            <h1 data-i18n="heroTitle"></h1>
-            <p class="hero-sub" data-i18n="heroSub"></p>
+            <h1 data-i18n="heroTitle">Descubra onde ir em Angola</h1>
+            <p class="hero-sub" data-i18n="heroSub">Encontre restaurantes, praias, hotéis, vida noturna e experiências perto de si.</p>
             <form class="search-card" id="searchForm" role="search">
                 <label class="search-field">
-                    <span class="field-label" data-i18n="whatLabel"></span>
-                    <span class="input-wrap"><span data-icon="search"></span><input class="field" id="qInput" type="search" autocomplete="off" data-i18n-placeholder="whatPlaceholder"></span>
+                    <span class="field-label" data-i18n="whatLabel">O que procura?</span>
+                    <span class="input-wrap"><span data-icon="search"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span><input class="field" id="qInput" type="search" autocomplete="off" data-i18n-placeholder="whatPlaceholder" placeholder="restaurante, praia, música…"></span>
                 </label>
                 <label class="search-field">
-                    <span class="field-label" data-i18n="whereLabel"></span>
+                    <span class="field-label" data-i18n="whereLabel">Onde?</span>
                     <select class="field" id="whereSelect"></select>
                 </label>
-                <button class="submit-btn" type="submit" data-i18n="explore"></button>
+                <button class="submit-btn" type="submit" data-i18n="explore">Explorar lugares</button>
             </form>
             <div class="chips" id="quickFilters" role="group"></div>
             <div class="notice" id="notice" role="status" aria-live="polite"></div>
@@ -1230,151 +1234,151 @@
     </section>
 
     <main class="container">
-        <div class="banner" id="offlineBanner" hidden><p data-i18n="offline"></p></div>
+        <div class="banner" id="offlineBanner" hidden><p data-i18n="offline">Sem internet. Está a ver a versão guardada da app.</p></div>
         <div class="banner" id="installBanner" hidden></div>
         <div id="homeView"></div>
         <section id="resultsView" hidden aria-labelledby="resultsTitle">
             <div class="results-head">
-                <button class="back-btn" type="button" data-action="home"><span data-icon="back"></span><span data-i18n="backHome"></span></button>
+                <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
                 <h2 id="resultsTitle"></h2>
                 <p class="results-sub" id="resultsSub"></p>
                 <div class="results-tools" id="resultsTools">
                     <span class="results-count" id="resultsCount" aria-live="polite"></span>
-                    <select class="field" id="sortSelect" data-i18n-aria="sortLabel"></select>
+                    <select class="field" id="sortSelect" data-i18n-aria="sortLabel" aria-label="Ordenar"></select>
                 </div>
             </div>
             <div class="card-grid" id="resultsList"></div>
         </section>
 
         <section id="recommendView" class="rec-page" hidden aria-labelledby="recTitle">
-            <button class="back-btn" type="button" data-action="home"><span data-icon="back"></span><span data-i18n="backHome"></span></button>
-            <h1 class="rec-title" id="recTitle" data-i18n="recTitle"></h1>
-            <p class="rec-intro" data-i18n="recIntro"></p>
-            <p class="hint" data-i18n="recOwnerNote"></p>
-            <div class="banner" id="recUnavailable" hidden><p data-i18n="recUnavailable"></p></div>
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <h1 class="rec-title" id="recTitle" data-i18n="recTitle">Recomendar um lugar</h1>
+            <p class="rec-intro" data-i18n="recIntro">Conhece um restaurante, bar, praia, hotel, atração ou serviço que devia estar no Tuende? Diga-nos. Verificamos cada recomendação antes de a publicar.</p>
+            <p class="hint" data-i18n="recOwnerNote">É o dono ou trabalha lá? Também pode recomendar o seu próprio negócio. É gratuito.</p>
+            <div class="banner" id="recUnavailable" hidden><p data-i18n="recUnavailable">O envio de recomendações ainda não está ativo. Volte em breve.</p></div>
             <form class="rec-form" id="recForm" novalidate>
                 <fieldset class="rec-group">
-                    <legend data-i18n="recAboutPlace"></legend>
+                    <legend data-i18n="recAboutPlace">Sobre o lugar</legend>
                     <div class="rec-grid">
-                        <div class="form-group"><label for="recName"><span data-i18n="recName"></span> *</label><input class="field" id="recName" type="text" maxlength="120"></div>
-                        <div class="form-group"><label for="recCategory"><span data-i18n="recCategory"></span> *</label><select class="field" id="recCategory"></select></div>
-                        <div class="form-group"><label for="recCity"><span data-i18n="recCity"></span> *</label><select class="field" id="recCity"></select></div>
-                        <div class="form-group" id="recCityOtherGroup" hidden><label for="recCityOther" data-i18n="recCityOtherLabel"></label><input class="field" id="recCityOther" type="text" maxlength="80"></div>
-                        <div class="form-group rec-wide"><label for="recAddress" data-i18n="recAddress"></label><input class="field" id="recAddress" type="text" maxlength="200"></div>
+                        <div class="form-group"><label for="recName"><span data-i18n="recName">Nome do lugar</span> *</label><input class="field" id="recName" type="text" maxlength="120"></div>
+                        <div class="form-group"><label for="recCategory"><span data-i18n="recCategory">Categoria</span> *</label><select class="field" id="recCategory"></select></div>
+                        <div class="form-group"><label for="recCity"><span data-i18n="recCity">Cidade</span> *</label><select class="field" id="recCity"></select></div>
+                        <div class="form-group" id="recCityOtherGroup" hidden><label for="recCityOther" data-i18n="recCityOtherLabel">Qual cidade ou localidade?</label><input class="field" id="recCityOther" type="text" maxlength="80"></div>
+                        <div class="form-group rec-wide"><label for="recAddress" data-i18n="recAddress">Morada ou zona</label><input class="field" id="recAddress" type="text" maxlength="200"></div>
                     </div>
                 </fieldset>
                 <fieldset class="rec-group">
-                    <legend data-i18n="recContacts"></legend>
+                    <legend data-i18n="recContacts">Contactos do lugar (se souber)</legend>
                     <div class="rec-grid">
-                        <div class="form-group"><label for="recPhone" data-i18n="recPhone"></label><input class="field" id="recPhone" type="tel" maxlength="40" autocomplete="off"></div>
-                        <div class="form-group"><label for="recEmail" data-i18n="recEmail"></label><input class="field" id="recEmail" type="email" maxlength="120" autocomplete="off"></div>
-                        <div class="form-group"><label for="recWebsite" data-i18n="recWebsite"></label><input class="field" id="recWebsite" type="url" inputmode="url" maxlength="300" placeholder="https://"></div>
-                        <div class="form-group"><label for="recPress" data-i18n="recPress"></label><input class="field" id="recPress" type="url" inputmode="url" maxlength="300" placeholder="https://"><span class="hint" data-i18n="recPressHint"></span></div>
+                        <div class="form-group"><label for="recPhone" data-i18n="recPhone">Telefone ou WhatsApp</label><input class="field" id="recPhone" type="tel" maxlength="40" autocomplete="off"></div>
+                        <div class="form-group"><label for="recEmail" data-i18n="recEmail">Email do lugar</label><input class="field" id="recEmail" type="email" maxlength="120" autocomplete="off"></div>
+                        <div class="form-group"><label for="recWebsite" data-i18n="recWebsite">Website</label><input class="field" id="recWebsite" type="url" inputmode="url" maxlength="300" placeholder="https://"></div>
+                        <div class="form-group"><label for="recPress" data-i18n="recPress">Artigo ou notícia sobre o lugar</label><input class="field" id="recPress" type="url" inputmode="url" maxlength="300" placeholder="https://"><span class="hint" data-i18n="recPressHint">Ajuda-nos a confirmar que o lugar existe.</span></div>
                     </div>
                 </fieldset>
                 <fieldset class="rec-group">
-                    <legend data-i18n="recSocial"></legend>
+                    <legend data-i18n="recSocial">Redes sociais</legend>
                     <div id="recSocialRows"></div>
-                    <button class="link-btn" type="button" id="recSocialAdd"><span data-icon="plus"></span><span data-i18n="recSocialAdd"></span></button>
-                    <p class="field-label rec-sub" data-i18n="recOtherLink"></p>
+                    <button class="link-btn" type="button" id="recSocialAdd"><span data-icon="plus"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span data-i18n="recSocialAdd">Adicionar outra rede</span></button>
+                    <p class="field-label rec-sub" data-i18n="recOtherLink">Outro link</p>
                     <div class="social-row other-row">
-                        <input class="field" id="recOtherName" type="text" maxlength="60" data-i18n-placeholder="recOtherName" data-i18n-aria="recOtherName">
-                        <input class="field" id="recOtherUrl" type="url" inputmode="url" maxlength="300" placeholder="https://" data-i18n-aria="recOtherUrl">
+                        <input class="field" id="recOtherName" type="text" maxlength="60" data-i18n-placeholder="recOtherName" data-i18n-aria="recOtherName" placeholder="Nome do link (ex.: Menu)" aria-label="Nome do link (ex.: Menu)">
+                        <input class="field" id="recOtherUrl" type="url" inputmode="url" maxlength="300" placeholder="https://" data-i18n-aria="recOtherUrl" aria-label="Link">
                     </div>
                 </fieldset>
                 <fieldset class="rec-group">
-                    <legend data-i18n="recPhotos"></legend>
-                    <p class="hint rec-photos-hint" data-i18n="recPhotosHint"></p>
+                    <legend data-i18n="recPhotos">Fotos do lugar</legend>
+                    <p class="hint rec-photos-hint" data-i18n="recPhotosHint">Opcional. Até 5 fotos, tiradas por si. Ajudam-nos a verificar e a mostrar o lugar.</p>
                     <div id="recPhotoUpload">
                         <label class="photo-picker" id="recPhotoPicker">
-                            <span data-icon="camera"></span><span data-i18n="recPhotosAdd"></span>
+                            <span data-icon="camera"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span><span data-i18n="recPhotosAdd">Escolher fotos</span>
                             <input id="recPhotoInput" type="file" accept="image/*" multiple>
                         </label>
                         <span class="hint rec-photo-count" id="recPhotoCount" aria-live="polite"></span>
                         <div class="rec-photos" id="recPhotoList"></div>
                         <div class="form-msg" id="recPhotoMsg" role="status" aria-live="polite"></div>
-                        <label class="consent" id="recPhotoRightsLabel" hidden><input type="checkbox" id="recPhotoRights"><span data-i18n="recPhotoRights"></span></label>
+                        <label class="consent" id="recPhotoRightsLabel" hidden><input type="checkbox" id="recPhotoRights"><span data-i18n="recPhotoRights">Confirmo que tirei estas fotos ou tenho autorização para as partilhar, e que o Tuende as pode publicar com a recomendação.</span></label>
                     </div>
-                    <p class="hint" id="recPhotosEmail" hidden data-i18n="recPhotosEmail"></p>
+                    <p class="hint" id="recPhotosEmail" hidden data-i18n="recPhotosEmail">Para enviar fotos, anexe-as ao email que se vai abrir quando enviar a recomendação.</p>
                 </fieldset>
                 <fieldset class="rec-group">
-                    <legend data-i18n="recAboutYou"></legend>
-                    <div class="form-group"><label for="recReason" data-i18n="recReason"></label><textarea class="field" id="recReason" maxlength="500" data-i18n-placeholder="recReasonPlaceholder"></textarea></div>
+                    <legend data-i18n="recAboutYou">Sobre a sua recomendação</legend>
+                    <div class="form-group"><label for="recReason" data-i18n="recReason">Porque recomenda este lugar?</label><textarea class="field" id="recReason" maxlength="500" data-i18n-placeholder="recReasonPlaceholder" placeholder="Ex.: o melhor peixe grelhado da Ilha, bom para famílias…"></textarea></div>
                     <div class="media-kind rec-relation" role="radiogroup">
-                        <label><input type="radio" name="recRelation" value="visitor" checked><span data-i18n="recRelVisitor"></span></label>
-                        <label><input type="radio" name="recRelation" value="owner"><span data-i18n="recRelOwner"></span></label>
+                        <label><input type="radio" name="recRelation" value="visitor" checked><span data-i18n="recRelVisitor">Sou cliente ou visitante</span></label>
+                        <label><input type="radio" name="recRelation" value="owner"><span data-i18n="recRelOwner">Sou o dono ou trabalho lá</span></label>
                     </div>
-                    <div class="form-group"><label for="recContact" data-i18n="recContact"></label><input class="field" id="recContact" type="text" maxlength="120" autocomplete="email"></div>
-                    <label class="consent"><input type="checkbox" id="recConsent"><span data-i18n="recConsent"></span></label>
+                    <div class="form-group"><label for="recContact" data-i18n="recContact">O seu email ou telefone (opcional, só para lhe respondermos)</label><input class="field" id="recContact" type="text" maxlength="120" autocomplete="email"></div>
+                    <label class="consent"><input type="checkbox" id="recConsent"><span data-i18n="recConsent">Confirmo que a informação é verdadeira e que o Tuende pode contactar o lugar para a confirmar.</span></label>
                 </fieldset>
                 <div class="form-msg" id="recMsg" role="alert"></div>
-                <button class="submit-btn" type="submit" id="recSubmit" data-i18n="recSubmit"></button>
+                <button class="submit-btn" type="submit" id="recSubmit" data-i18n="recSubmit">Enviar recomendação</button>
             </form>
             <div class="rec-success" id="recSuccess" hidden>
-                <h2 data-i18n="recThanksTitle"></h2>
+                <h2 data-i18n="recThanksTitle">Obrigado pela recomendação!</h2>
                 <p id="recThanksText"></p>
                 <div class="banner-actions">
-                    <button class="submit-btn" type="button" id="recAnother" data-i18n="recAnother"></button>
-                    <button class="submit-btn secondary" type="button" data-action="home" data-i18n="backHome"></button>
+                    <button class="submit-btn" type="button" id="recAnother" data-i18n="recAnother">Recomendar outro lugar</button>
+                    <button class="submit-btn secondary" type="button" data-action="home" data-i18n="backHome">Voltar ao início</button>
                 </div>
             </div>
         </section>
 
         <section id="eventsView" class="events-page" hidden aria-labelledby="eventsTitle">
-            <button class="back-btn" type="button" data-action="home"><span data-icon="back"></span><span data-i18n="backHome"></span></button>
-            <h1 class="rec-title" id="eventsTitle" data-i18n="eventsTitle"></h1>
-            <p class="rec-intro" data-i18n="eventsIntro"></p>
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <h1 class="rec-title" id="eventsTitle" data-i18n="eventsTitle">Agenda: o que fazer em Angola</h1>
+            <p class="rec-intro" data-i18n="eventsIntro">Concertos, festivais, dança, cinema, feiras e desporto. Só mostramos eventos com fonte publicada; confirme sempre com a organização antes de ir.</p>
             <div class="events-filters">
                 <div>
-                    <span class="field-label" id="eventsWhenLabel" data-i18n="eventsWhen"></span>
+                    <span class="field-label" id="eventsWhenLabel" data-i18n="eventsWhen">Quando?</span>
                     <div class="chips" id="eventsWhen" role="group" aria-labelledby="eventsWhenLabel"></div>
                 </div>
                 <div>
-                    <span class="field-label" id="eventsTypeLabel" data-i18n="eventsType"></span>
+                    <span class="field-label" id="eventsTypeLabel" data-i18n="eventsType">Tipo de evento</span>
                     <div class="chips" id="eventsType" role="group" aria-labelledby="eventsTypeLabel"></div>
                 </div>
                 <label id="eventsWhereWrap">
-                    <span class="field-label" data-i18n="whereLabel"></span>
+                    <span class="field-label" data-i18n="whereLabel">Onde?</span>
                     <select class="field" id="eventsWhere"></select>
                 </label>
             </div>
             <p class="events-count" id="eventsCount" aria-live="polite"></p>
             <div id="eventsList"></div>
-            <p class="hint events-note" data-i18n="eventsNote"></p>
+            <p class="hint events-note" data-i18n="eventsNote">Os eventos saem da agenda depois do último dia. Datas, locais e preços podem mudar: confirme na página oficial ou na fonte.</p>
             <section class="home-cta" id="eventsCta" hidden aria-labelledby="eventsCtaTitle">
-                <div><h2 id="eventsCtaTitle" data-i18n="eventsCtaTitle"></h2><p data-i18n="eventsCtaText"></p></div>
-                <button class="submit-btn" type="button" data-action="suggest-event" data-i18n="eventSuggest"></button>
+                <div><h2 id="eventsCtaTitle" data-i18n="eventsCtaTitle">Conhece um evento que devia estar aqui?</h2><p data-i18n="eventsCtaText">Envie-nos os detalhes. Confirmamos numa fonte antes de publicar.</p></div>
+                <button class="submit-btn" type="button" data-action="suggest-event" data-i18n="eventSuggest">Sugerir um evento</button>
             </section>
         </section>
 
         <section id="guideView" class="guide-page" hidden aria-labelledby="guideTitle">
-            <button class="back-btn" type="button" data-action="home"><span data-icon="back"></span><span data-i18n="backHome"></span></button>
-            <h1 class="rec-title" id="guideTitle" data-i18n="guideTitle"></h1>
-            <p class="rec-intro" data-i18n="guideIntro"></p>
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <h1 class="rec-title" id="guideTitle" data-i18n="guideTitle">Guia prático</h1>
+            <p class="rec-intro" data-i18n="guideIntro">O essencial antes de ir: números de emergência, vistos, dinheiro, rede móvel, transportes, segurança e saúde. As regras mudam; confirme sempre nas fontes de cada secção.</p>
             <p class="hint" id="guideChecked"></p>
             <div id="guideBody"></div>
         </section>
 
         <section id="mapView" class="map-page" hidden aria-labelledby="mapTitle">
-            <button class="back-btn" type="button" data-action="home"><span data-icon="back"></span><span data-i18n="backHome"></span></button>
-            <h1 class="rec-title" id="mapTitle" data-i18n="mapTitle"></h1>
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <h1 class="rec-title" id="mapTitle" data-i18n="mapTitle">Mapa dos lugares</h1>
             <p class="rec-intro" id="mapIntro"></p>
-            <div class="chips map-filter" id="mapFilter" role="group" data-i18n-aria="mapFilter"></div>
-            <div class="map-box" id="mapBox"><p class="hint" id="mapStatus" data-i18n="loading"></p></div>
-            <p class="hint events-note" data-i18n="mapNote"></p>
+            <div class="chips map-filter" id="mapFilter" role="group" data-i18n-aria="mapFilter" aria-label="Filtrar o mapa por categoria"></div>
+            <div class="map-box" id="mapBox"><p class="hint" id="mapStatus" data-i18n="loading">A carregar...</p></div>
+            <p class="hint events-note" data-i18n="mapNote">Os lugares sem localização confirmada (por exemplo, táxis e alguns restaurantes) não aparecem no mapa, mas podem ser encontrados na pesquisa. Mapa: OpenStreetMap.</p>
         </section>
 
         <section id="routesView" class="guide-page" hidden aria-labelledby="routesTitle">
-            <button class="back-btn" type="button" data-action="home"><span data-icon="back"></span><span data-i18n="backHome"></span></button>
-            <h1 class="rec-title" id="routesTitle" data-i18n="routesTitle"></h1>
-            <p class="rec-intro" data-i18n="routesIntro"></p>
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <h1 class="rec-title" id="routesTitle" data-i18n="routesTitle">Roteiros</h1>
+            <p class="rec-intro" data-i18n="routesIntro">Sugestões de 1 a 3 dias com lugares do Tuende. Toque num lugar para ver horário, preço e como chegar.</p>
             <div id="routesBody"></div>
         </section>
 
         <section id="wondersView" class="guide-page" hidden aria-labelledby="wondersTitle">
-            <button class="back-btn" type="button" data-action="home"><span data-icon="back"></span><span data-i18n="backHome"></span></button>
-            <h1 class="rec-title" id="wondersTitle" data-i18n="wondersTitle"></h1>
-            <p class="rec-intro" data-i18n="wondersIntro"></p>
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <h1 class="rec-title" id="wondersTitle" data-i18n="wondersTitle">Maravilhas de Angola</h1>
+            <p class="rec-intro" data-i18n="wondersIntro">Para quem gosta de fotografia e de drones: as 7 Maravilhas Naturais de Angola, mais lugares para fotografar em todas as províncias, as regras para voar e a hora do sol em cada lugar.</p>
             <p class="hint" id="wondersChecked"></p>
             <div id="wondersBody"></div>
         </section>
@@ -1383,30 +1387,30 @@
     <footer class="site-footer">
         <div class="container">
             <nav class="footer-links" aria-label="Tuende">
-                <button type="button" class="footer-link" id="footerInstall" data-info="install" hidden data-i18n="installTitle"></button>
-                <button type="button" class="footer-link" data-action="events" data-i18n="agenda"></button>
-                <button type="button" class="footer-link" data-action="guide" data-i18n="guideTitle"></button>
-                <button type="button" class="footer-link" data-action="routes" data-i18n="routesTitle"></button>
-                <button type="button" class="footer-link" data-action="wonders" data-i18n="wondersTitle"></button>
-                <button type="button" class="footer-link" data-action="map" data-i18n="mapTitle"></button>
-                <button type="button" class="footer-link" data-info="about" data-i18n="footerAbout"></button>
-                <button type="button" class="footer-link" data-info="verify" data-i18n="footerVerify"></button>
-                <a class="footer-link" id="footerPlaces" href="lugares/" data-i18n="footerPlaces"></a>
-                <a class="footer-link" id="footerTerms" href="termos.html" data-i18n="footerTerms"></a>
-                <a class="footer-link" id="footerPrivacy" href="privacy.html" hidden data-i18n="footerPrivacy"></a>
-                <a class="footer-link" id="footerContact" hidden data-i18n="footerContact"></a>
-                <button type="button" class="footer-link" id="footerRecommend" data-action="recommend" hidden data-i18n="footerRecommend"></button>
+                <button type="button" class="footer-link" id="footerInstall" data-info="install" hidden data-i18n="installTitle">Descarregar a app</button>
+                <button type="button" class="footer-link" data-action="events" data-i18n="agenda">Agenda</button>
+                <button type="button" class="footer-link" data-action="guide" data-i18n="guideTitle">Guia prático</button>
+                <button type="button" class="footer-link" data-action="routes" data-i18n="routesTitle">Roteiros</button>
+                <button type="button" class="footer-link" data-action="wonders" data-i18n="wondersTitle">Maravilhas de Angola</button>
+                <button type="button" class="footer-link" data-action="map" data-i18n="mapTitle">Mapa dos lugares</button>
+                <button type="button" class="footer-link" data-info="about" data-i18n="footerAbout">Sobre o Tuende</button>
+                <button type="button" class="footer-link" data-info="verify" data-i18n="footerVerify">Como verificamos os lugares</button>
+                <a class="footer-link" id="footerPlaces" href="lugares/" data-i18n="footerPlaces">Todos os lugares</a>
+                <a class="footer-link" id="footerTerms" href="termos.html" data-i18n="footerTerms">Termos de utilização</a>
+                <a class="footer-link" id="footerPrivacy" href="privacy.html" hidden data-i18n="footerPrivacy">Privacidade</a>
+                <a class="footer-link" id="footerContact" hidden data-i18n="footerContact">Contacto</a>
+                <button type="button" class="footer-link" id="footerRecommend" data-action="recommend" hidden data-i18n="footerRecommend">Recomendar um lugar</button>
             </nav>
-            <p class="footer-note" data-i18n="footerNote"></p>
+            <p class="footer-note" data-i18n="footerNote">Fotos: Wikimedia Commons, com autor e licença em cada foto. Só mostramos fotos reais do próprio lugar.</p>
         </div>
     </footer>
     <div class="samakaka samakaka-strip" aria-hidden="true"></div>
 
-    <nav class="tabbar" id="tabbar" data-i18n-aria="navMain">
-        <button class="tab" type="button" data-tab="home" data-action="home"><span data-icon="compass"></span><span data-i18n="navExplore"></span></button>
-        <button class="tab" type="button" data-tab="events" data-action="events"><span data-icon="calendar"></span><span data-i18n="agenda"></span></button>
-        <button class="tab" type="button" data-tab="guide" data-action="guide"><span data-icon="info"></span><span data-i18n="guideNav"></span></button>
-        <button class="tab" type="button" data-tab="saved" data-action="show-saved"><span data-icon="heart"></span><span data-i18n="savedBtn"></span></button>
+    <nav class="tabbar" id="tabbar" data-i18n-aria="navMain" aria-label="Navegação principal">
+        <button class="tab" type="button" data-tab="home" data-action="home"><span data-icon="compass"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span><span data-i18n="navExplore">Explorar</span></button>
+        <button class="tab" type="button" data-tab="events" data-action="events"><span data-icon="calendar"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span data-i18n="agenda">Agenda</span></button>
+        <button class="tab" type="button" data-tab="guide" data-action="guide"><span data-icon="info"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span><span data-i18n="guideNav">Guia</span></button>
+        <button class="tab" type="button" data-tab="saved" data-action="show-saved"><span data-icon="heart"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><span data-i18n="savedBtn">Guardados</span></button>
         <button class="tab" type="button" data-tab="account" id="tabAccount" hidden><span id="tabAccountIcon"></span><span id="tabAccountLabel"></span></button>
     </nav>
 
@@ -1414,7 +1418,7 @@
         <button type="button" class="kamba-teaser-text" id="kambaTeaserText"></button>
         <button type="button" class="kamba-teaser-x" id="kambaTeaserClose">×</button>
     </div>
-    <button class="kamba-btn" type="button" id="kambaBtn" aria-expanded="false" aria-controls="kambaPanel"><span class="kamba-face" data-kamba-face></span><span class="kamba-btn-label" id="kambaBtnLabel"></span></button>
+    <button class="kamba-btn" type="button" id="kambaBtn" aria-expanded="false" aria-controls="kambaPanel"><span class="kamba-face" data-kamba-face></span><span class="kamba-btn-label" id="kambaBtnLabel">Pergunta ao Kamba</span></button>
     <section class="kamba-panel" id="kambaPanel" role="dialog" aria-labelledby="kambaTitle" hidden>
         <header class="kamba-head">
             <span class="kamba-face" data-kamba-face></span>
@@ -1422,14 +1426,14 @@
                 <h2 id="kambaTitle">Kamba</h2>
                 <p id="kambaTagline"></p>
             </div>
-            <button type="button" class="kamba-head-btn" id="kambaReset"><span data-icon="refresh"></span></button>
+            <button type="button" class="kamba-head-btn" id="kambaReset"><span data-icon="refresh"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></span></button>
             <button type="button" class="kamba-head-btn" id="kambaClose">×</button>
         </header>
         <div class="samakaka" aria-hidden="true"></div>
         <div class="kamba-log" id="kambaLog" role="log" aria-live="polite"></div>
         <form class="kamba-form" id="kambaForm" novalidate>
             <input class="kamba-input" id="kambaInput" type="text" maxlength="300" autocomplete="off" enterkeyhint="send">
-            <button type="submit" class="kamba-send" id="kambaSend"><span data-icon="send"></span></button>
+            <button type="submit" class="kamba-send" id="kambaSend"><span data-icon="send"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span></button>
         </form>
         <p class="kamba-note" id="kambaNote"></p>
     </section>
@@ -1440,37 +1444,37 @@
 
     <div class="modal" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
         <div class="modal-panel info-panel">
-            <button class="close-btn" type="button" data-close="infoModal" data-i18n-aria="close">×</button>
+            <button class="close-btn" type="button" data-close="infoModal" data-i18n-aria="close" aria-label="Fechar">×</button>
             <div id="infoContent"></div>
         </div>
     </div>
 
     <div class="modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
         <div class="modal-panel info-panel">
-            <button class="close-btn" type="button" data-close="authModal" data-i18n-aria="close">×</button>
+            <button class="close-btn" type="button" data-close="authModal" data-i18n-aria="close" aria-label="Fechar">×</button>
             <div id="authContent"></div>
         </div>
     </div>
 
     <div class="modal" id="eventModal" role="dialog" aria-modal="true" aria-labelledby="eventSugTitle">
         <div class="modal-panel info-panel">
-            <button class="close-btn" type="button" data-close="eventModal" data-i18n-aria="close">×</button>
-            <h2 class="info-title" id="eventSugTitle" data-i18n="eventSuggest"></h2>
-            <p class="hint" data-i18n="evIntro"></p>
+            <button class="close-btn" type="button" data-close="eventModal" data-i18n-aria="close" aria-label="Fechar">×</button>
+            <h2 class="info-title" id="eventSugTitle" data-i18n="eventSuggest">Sugerir um evento</h2>
+            <p class="hint" data-i18n="evIntro">Diga-nos o essencial. Um link para o anúncio oficial ajuda-nos a confirmar mais depressa.</p>
             <form id="eventForm" novalidate>
-                <div class="form-group"><label for="evName"><span data-i18n="evName"></span> *</label><input class="field" id="evName" type="text" maxlength="120"></div>
+                <div class="form-group"><label for="evName"><span data-i18n="evName">Nome do evento</span> *</label><input class="field" id="evName" type="text" maxlength="120"></div>
                 <div class="rec-grid">
-                    <div class="form-group"><label for="evStart"><span data-i18n="evStart"></span> *</label><input class="field" id="evStart" type="date"></div>
-                    <div class="form-group"><label for="evEnd" data-i18n="evEnd"></label><input class="field" id="evEnd" type="date"></div>
-                    <div class="form-group"><label for="evCity"><span data-i18n="recCity"></span> *</label><input class="field" id="evCity" type="text" maxlength="80" list="evCities"></div>
-                    <div class="form-group"><label for="evVenue" data-i18n="evVenue"></label><input class="field" id="evVenue" type="text" maxlength="160"></div>
+                    <div class="form-group"><label for="evStart"><span data-i18n="evStart">Data de início</span> *</label><input class="field" id="evStart" type="date"></div>
+                    <div class="form-group"><label for="evEnd" data-i18n="evEnd">Data de fim (se durar vários dias)</label><input class="field" id="evEnd" type="date"></div>
+                    <div class="form-group"><label for="evCity"><span data-i18n="recCity">Cidade</span> *</label><input class="field" id="evCity" type="text" maxlength="80" list="evCities"></div>
+                    <div class="form-group"><label for="evVenue" data-i18n="evVenue">Local</label><input class="field" id="evVenue" type="text" maxlength="160"></div>
                 </div>
                 <datalist id="evCities"></datalist>
-                <div class="form-group"><label for="evLink" data-i18n="evLink"></label><input class="field" id="evLink" type="url" inputmode="url" maxlength="300" placeholder="https://"><span class="hint" data-i18n="evLinkHint"></span></div>
-                <div class="form-group"><label for="evDetails" data-i18n="evDetails"></label><textarea class="field" id="evDetails" maxlength="800" data-i18n-placeholder="evDetailsPlaceholder"></textarea></div>
-                <div class="form-group"><label for="evContact" data-i18n="fixContactLabel"></label><input class="field" id="evContact" type="text" maxlength="120" autocomplete="email"></div>
+                <div class="form-group"><label for="evLink" data-i18n="evLink">Link do anúncio ou dos bilhetes</label><input class="field" id="evLink" type="url" inputmode="url" maxlength="300" placeholder="https://"><span class="hint" data-i18n="evLinkHint">Ex.: Instagram, Facebook ou página de bilhetes.</span></div>
+                <div class="form-group"><label for="evDetails" data-i18n="evDetails">Detalhes</label><textarea class="field" id="evDetails" maxlength="800" data-i18n-placeholder="evDetailsPlaceholder" placeholder="Horário, preço, artistas..."></textarea></div>
+                <div class="form-group"><label for="evContact" data-i18n="fixContactLabel">O seu email ou telefone (opcional, só para lhe respondermos)</label><input class="field" id="evContact" type="text" maxlength="120" autocomplete="email"></div>
                 <div class="form-msg" id="evMsg" role="status" aria-live="polite"></div>
-                <button class="submit-btn" type="submit" id="evSubmit" style="width:100%" data-i18n="evSend"></button>
+                <button class="submit-btn" type="submit" id="evSubmit" style="width:100%" data-i18n="evSend">Enviar sugestão</button>
             </form>
         </div>
     </div>
@@ -2417,6 +2421,8 @@
             "Gelada": "Bien fría"
         };
 
+        // The Portuguese texts, the icons and the Kamba button label are also written into the HTML above by
+        // tools/preencher_textos.py, so the first paint is already final (no layout shift). Re-run it after changing them.
         const I18N = {
             pt: {
                 heroTitle: 'Descubra onde ir em Angola',
