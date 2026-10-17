@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Gera uma página por lugar (web/lugares/<nome>.html), os guias por tema (web/lugares/<guia>.html), a agenda
-(web/agenda/index.html), a lista de lugares, o sitemap.xml e o robots.txt.
+(web/agenda/index.html), o câmbio do dia (web/cambio/index.html), a lista de lugares, o sitemap.xml e o robots.txt.
 
-Os dados vêm de web/index.html (const venues, DESC_EN e EVENTS), por isso basta voltar a correr este script
-depois de mudar ou acrescentar lugares ou eventos:
+Os dados vêm de web/index.html (const venues, DESC_EN, EVENTS, FX_CODES e FX_FALLBACK), por isso basta voltar a
+correr este script depois de mudar ou acrescentar lugares ou eventos:
 
     python3 tools/gerar_paginas.py
 
@@ -14,7 +14,11 @@ página principal; cada página tem um botão para abrir o lugar na app.
 import html
 import json
 import re
+import subprocess
 import unicodedata
+import urllib.error
+import urllib.request
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from pathlib import Path
 
@@ -196,6 +200,8 @@ def page(v, others, desc_en):
         for label, value in facts)
     others_html = '\n'.join(f'            <li><a href="{slug(o["name"])}.html">{e(o["name"])}</a> · {e(place_line(o))}</li>' for o in others)
     focus = f' style="object-position: {photo["focus"]}"' if photo and photo['focus'] else ''
+    rates_note = ('\n        <p class="muted">Antes de trocar, veja o <a href="../cambio/">câmbio do dia</a> (taxas de referência do Banco Nacional de Angola).</p>'
+                  if v['type'] == 'services' else '')
     figure = f'''        <figure>
             <img src="../{e(photo['src'])}" alt="{e(name)}" width="960" height="540"{focus}>
             <figcaption>{photo['credit']}</figcaption>
@@ -234,7 +240,7 @@ def page(v, others, desc_en):
         <p class="kicker">{e(cat_pt)} · {e(where)}</p>
         <h1>{e(name)}</h1>
         {f'<p class="lead">{e(highlight)}</p>' if highlight else ''}
-        <p>{e(v['description'])}</p>
+        <p>{e(v['description'])}</p>{rates_note}
         <div class="actions">
             <a class="btn solid" href="../#local-{v['id']}">Ver no Tuende</a>
             <a class="btn" href="{e(maps_url(v))}">Como chegar</a>
@@ -339,12 +345,14 @@ TOPICS = [
      'pick': lambda v: v['type'] == 'transport', 'what': 'aeroportos, estações, terminais de autocarros e outros transportes em Angola',
      'what_en': 'airports, railway stations, bus terminals and other transport in Angola'},
     {'slug': 'casas-de-cambio-em-angola', 'title': 'Casas de câmbio em Angola', 'en': 'Currency exchange in Angola', 'group': 'province',
-     'pick': lambda v: v['type'] == 'services', 'what': 'casas de câmbio em Angola', 'what_en': 'currency exchange offices in Angola'},
+     'pick': lambda v: v['type'] == 'services', 'what': 'casas de câmbio em Angola', 'what_en': 'currency exchange offices in Angola',
+     'cta': ('../cambio/', 'Câmbio do dia (BNA)')},
 ]
 
 
 def guides_html(current='', prefix=''):
-    links = [('agenda', f'{prefix}../agenda/', 'Agenda de eventos')] + [(t['slug'], f'{prefix}{t["slug"]}.html', t['title']) for t in TOPICS]
+    # Todas estas páginas ficam um nível abaixo da raiz (lugares/, agenda/, cambio/).
+    links = [('agenda', '../agenda/', 'Agenda de eventos'), ('cambio', '../cambio/', 'Câmbio do dia')] + [(t['slug'], f'{prefix}{t["slug"]}.html', t['title']) for t in TOPICS]
     items = '\n'.join(f'            <li><a href="{href}">{e(label)}</a></li>' for key, href, label in links if key != current)
     return f'        <ul class="guides">\n{items}\n        </ul>'
 
@@ -420,7 +428,8 @@ def topic_page(topic, items):
         <p class="lead">{n} {e(topic['what'])}.</p>
         <p class="muted">Na página de cada lugar: horário, preço em Kwanza (quando conhecido), como chegar, as fontes e a data de verificação. Horários e preços mudam: confirme antes de ir.</p>
         <div class="actions">
-            <a class="btn solid" href="../?page=map">Ver no mapa</a>
+            {f'<a class="btn solid" href="{topic["cta"][0]}">{e(topic["cta"][1])}</a>' if topic.get('cta') else ''}
+            <a class="btn{'' if topic.get('cta') else ' solid'}" href="../?page=map">Ver no mapa</a>
             <a class="btn" href="../agenda/">Agenda de eventos</a>
         </div>
 {body}
@@ -656,6 +665,240 @@ def agenda_page(events, today):
 '''
 
 
+# Página "Câmbio do dia" (web/cambio/index.html), para quem procura "câmbio do dólar hoje" no Google. As taxas de
+# referência do BNA ficam escritas no HTML e o navegador volta a lê-las no BNA a cada visita. As moedas e as taxas
+# de reserva vêm de index.html (FX_CODES e FX_FALLBACK); ao gerar, o script tenta primeiro as taxas do dia no BNA.
+BNA_RATE = 'https://www.bna.ao/service/rest/taxas/get/taxa/referencia?moeda={}&tipocambio=m'
+FX_NAMES = {
+    'usd': 'Dólar dos Estados Unidos', 'eur': 'Euro', 'cny': 'Yuan chinês (renminbi)', 'gbp': 'Libra esterlina', 'zar': 'Rand sul-africano',
+    'brl': 'Real brasileiro', 'nad': 'Dólar namibiano', 'chf': 'Franco suíço', 'jpy': 'Iene japonês', 'cad': 'Dólar canadiano',
+    'aud': 'Dólar australiano', 'aed': 'Dirham dos Emirados Árabes Unidos', 'sar': 'Rial saudita', 'inr': 'Rupia indiana',
+    'cdf': 'Franco congolês', 'xaf': 'Franco CFA (BEAC)', 'ngn': 'Naira nigeriana', 'mzn': 'Metical moçambicano',
+    'cve': 'Escudo cabo-verdiano', 'rub': 'Rublo russo', 'krw': 'Won sul-coreano', 'sek': 'Coroa sueca', 'nok': 'Coroa norueguesa',
+    'dkk': 'Coroa dinamarquesa',
+}
+FX_TIPS = [
+    ('Taxa de referência', 'É a taxa oficial que o BNA publica em cada dia útil (câmbio médio). Serve de guia: não é o valor exato que vai receber.'),
+    ('Bancos e casas de câmbio', 'Cada um tem as suas taxas de compra e de venda, um pouco diferentes da de referência, e pode cobrar comissão. Pergunte quanto vai receber antes de trocar e guarde o recibo.'),
+    ('Fim de semana', 'O BNA publica as taxas nos dias úteis. Ao sábado e ao domingo continua a valer a de sexta-feira.'),
+]
+FX_STYLE = """
+        .fx-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+        .fx-card { display: grid; align-content: start; gap: 2px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+        .fx-code { font-size: 13px; font-weight: 800; letter-spacing: 0.04em; color: var(--primary); }
+        .fx-name { font-size: 14px; color: var(--muted); }
+        .fx-card b { margin-top: 4px; font-size: 22px; white-space: nowrap; }
+        .fx-convert { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 12px; margin-top: 12px; }
+        .fx-convert label { display: grid; gap: 6px; min-width: 0; font-size: 15px; font-weight: 700; }
+        .fx-convert .fx-wide { grid-column: 1 / -1; }
+        .fx-convert input, .fx-convert select { width: 100%; min-height: 48px; padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--text); font: inherit; font-weight: 400; }
+        .fx-list { list-style: none; padding: 0; margin-top: 8px; }
+        .fx-list li { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 10px 0; }
+        .fx-list li + li { border-top: 1px solid var(--line); }
+        .fx-list .fx-name { font-size: 15px; color: var(--text); }
+        .fx-rate { text-align: right; }
+        .fx-rate b { display: block; font-size: 15px; white-space: nowrap; }
+        .fx-rate small { display: block; font-size: 13px; color: var(--muted); white-space: nowrap; }
+        @media (max-width: 600px) { .fx-cards { grid-template-columns: 1fr; gap: 8px; } .fx-card { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; } .fx-card b { margin-top: 0; font-size: 19px; } }
+"""
+FX_SCRIPT = r"""
+        // Volta a ler as taxas do dia no BNA e atualiza os números escritos na página; o conversor só existe com JavaScript.
+        const FX = __FX__;
+        const fmt = (n) => n.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const amount = (n) => n.toLocaleString('pt-PT', { maximumFractionDigits: n < 1 ? 4 : 2 });
+        const dayText = (iso) => new Date(`${iso}T12:00:00Z`).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+        const valor = document.getElementById('fx-valor');
+        const kwanzas = document.getElementById('fx-kz');
+        const moeda = document.getElementById('fx-moeda');
+        let rates = FX.rates;
+        let side = 'valor';
+        // Aceita "1500", "1 500", "1.500,50" ou "1,500.50".
+        function parse(text) {
+            const s = String(text).replace(/[\s  ']/g, '');
+            for (const [g, d] of [['.', ','], [',', '.']]) {
+                if (new RegExp(`^\\d{1,3}(\\${g}\\d{3})*(\\${d}\\d+)?$|^\\d+(\\${d}\\d+)?$`).test(s)) return Number(s.split(g).join('').replace(d, '.'));
+            }
+            return NaN;
+        }
+        function convert() {
+            const rate = rates[moeda.value];
+            const from = side === 'valor' ? valor : kwanzas;
+            const to = side === 'valor' ? kwanzas : valor;
+            const n = parse(from.value);
+            to.value = rate && Number.isFinite(n) ? amount(side === 'valor' ? n * rate : n / rate) : '';
+        }
+        valor.addEventListener('input', () => { side = 'valor'; convert(); });
+        kwanzas.addEventListener('input', () => { side = 'kz'; convert(); });
+        moeda.addEventListener('change', convert);
+        document.getElementById('conversor').hidden = false;
+        convert();
+        Promise.all(FX.codes.map((code) => fetch(`https://www.bna.ao/service/rest/taxas/get/taxa/referencia?moeda=${code}&tipocambio=m`)
+            .then((res) => res.json())
+            .then((json) => ({ code, row: json?.genericResponse?.[0] }))
+            .catch(() => ({ code }))))
+            .then((rows) => {
+                const day = rows.find((r) => r.code === 'usd')?.row?.data;
+                const fresh = {};
+                rows.forEach(({ code, row }) => { if (row?.taxa > 0 && row.data === day) fresh[code] = row.taxa; });
+                if (!fresh.usd || !fresh.eur || !(day >= FX.date)) throw new Error('bna');
+                rates = { ...rates, ...fresh };
+                document.querySelectorAll('[data-kz]').forEach((el) => { const r = rates[el.dataset.kz]; if (r) el.textContent = fmt(r * Number(el.dataset.unit || 1)); });
+                document.querySelectorAll('[data-inv]').forEach((el) => { const r = rates[el.dataset.inv]; if (r) el.textContent = fmt(1000 / r); });
+                document.querySelectorAll('[data-date]').forEach((el) => { el.textContent = dayText(day); });
+                convert();
+            })
+            .catch(() => { document.getElementById('fx-falha').hidden = false; });
+"""
+
+
+def pt_number(x, digits=2):
+    whole, _, frac = f'{x:.{digits}f}'.partition('.')
+    if len(whole) > 4:
+        whole = f'{int(whole):,}'.replace(',', ' ')
+    return whole + (f',{frac}' if frac else '')
+
+
+def load_fx():
+    source = (WEB / 'index.html').read_text(encoding='utf-8')
+
+    def literal(name, opener):
+        start = source.index(opener, source.index(f'const {name} = '))
+        return js_value(source[start:source.index(';\n', start)])
+    codes, fallback = literal('FX_CODES', '['), literal('FX_FALLBACK', '{')
+
+    # O Python do python.org às vezes não tem os certificados do sistema; o curl do macOS tem.
+    def download(link):
+        try:
+            with urllib.request.urlopen(link, timeout=20) as res:
+                return res.read()
+        except urllib.error.URLError:
+            return subprocess.run(['curl', '-sf', '--max-time', '20', link], capture_output=True, check=True).stdout
+
+    def fetch(code):
+        try:
+            row = json.loads(download(BNA_RATE.format(code)))['genericResponse'][0]
+            return code, float(row['taxa']), row['data']
+        except Exception:
+            return code, None, None
+    with ThreadPoolExecutor(6) as pool:
+        rows = list(pool.map(fetch, codes))
+    day = next((d for c, r, d in rows if c == 'usd'), None)
+    rates = {c: r for c, r, d in rows if r and d == day}
+    if day and rates.get('usd') and rates.get('eur') and day >= fallback['date']:
+        return codes, {'date': day, 'rates': rates}, True
+    return codes, fallback, False
+
+
+def cambio_page(codes, fx, venues):
+    rates, day = fx['rates'], fx['date']
+    codes = [c for c in codes if rates.get(c)]
+    unit = {c: 100 if rates[c] < 1 else 1 for c in codes}
+    url = f'{SITE}cambio/'
+    when = pt_date(day)
+
+    def kz_span(c):
+        return f'<span data-kz="{c}" data-unit="{unit[c]}">{pt_number(rates[c] * unit[c])}</span>'
+    cards = '\n'.join(f'            <div class="fx-card"><span class="fx-code">{c.upper()}</span><span class="fx-name">{e(FX_NAMES.get(c, c.upper()))}</span><b>{kz_span(c)} Kz</b></div>'
+                      for c in codes[:3])
+    rows = '\n'.join(f'            <li><span class="fx-code">{c.upper()}</span><span class="fx-name">{e(FX_NAMES.get(c, c.upper()))}</span>'
+                     f'<span class="fx-rate"><b>{unit[c]} {c.upper()} = {kz_span(c)} Kz</b><small>1000 Kz = <span data-inv="{c}">{pt_number(1000 / rates[c])}</span> {c.upper()}</small></span></li>'
+                     for c in codes)
+    options = ''.join(f'<option value="{c}">{c.upper()} · {e(FX_NAMES.get(c, c.upper()))}</option>' for c in codes)
+    tips = '\n'.join(f'            <div><dt>{e(lead)}</dt><dd>{e(text)}</dd></div>' for lead, text in FX_TIPS)
+    shops = '\n'.join(f'            <li><a href="../lugares/{slug(v["name"])}.html">{e(v["name"])}</a> · {e(place_line(v))}</li>'
+                      for v in sorted((v for v in venues if v['type'] == 'services'), key=lambda v: (province(v) != 'Luanda', province(v), v['name'])))
+    usd, eur, cny = (f'<b>{kz_span(c)} kwanzas</b>' if c in rates else 'por confirmar' for c in ('usd', 'eur', 'cny'))
+    description = (f'Câmbio do kwanza hoje, segundo o Banco Nacional de Angola: dólar, euro, yuan e mais {len(codes) - 3} moedas, '
+                   'com conversor. As taxas são lidas no BNA sempre que abre a página.')
+    data = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': 'Câmbio do dia em Angola', 'url': url, 'description': description,
+            'inLanguage': 'pt', 'dateModified': day, 'isPartOf': {'@type': 'WebSite', 'name': 'Tuende', 'url': SITE},
+            'mainEntity': [{'@type': 'ExchangeRateSpecification', 'currency': c.upper(),
+                            'currentExchangeRate': {'@type': 'UnitPriceSpecification', 'price': rates[c], 'priceCurrency': 'AOA'}} for c in codes]}
+    script = FX_SCRIPT.replace('__FX__', json.dumps({'date': day, 'codes': codes, 'rates': {c: rates[c] for c in codes}}))
+    return f'''<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Câmbio do dia: kwanza, dólar, euro e yuan | Tuende</title>
+    <meta name="description" content="{e(description)}">
+    <link rel="canonical" href="{url}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tuende">
+    <meta property="og:locale" content="pt_PT">
+    <meta property="og:title" content="Câmbio do dia em Angola">
+    <meta property="og:description" content="{e(description)}">
+    <meta property="og:url" content="{url}">
+    <meta property="og:image" content="{SITE}og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#CE1126">
+    <link rel="icon" type="image/png" href="../icon-192.png">
+    <script type="application/ld+json">{json.dumps(data, ensure_ascii=False).replace("</", "<\\/")}</script>
+    <style>{STYLE}{EXTRA_STYLE}{FX_STYLE}    </style>
+</head>
+<body>
+    <div class="strip" aria-hidden="true"></div>
+    <header>
+        <a class="brand" href="../">Tuende</a>
+        <a class="btn solid" href="../?page=cambio">Abrir na app</a>
+    </header>
+    <main>
+        <p class="crumbs"><a href="../">Tuende</a> › Câmbio do dia</p>
+        <h1 style="margin-top:12px">Câmbio do dia: quanto vale o kwanza hoje</h1>
+        <p class="lead">1 dólar americano vale {usd}, 1 euro vale {eur} e 1 yuan chinês vale {cny}, segundo a taxa de referência do Banco Nacional de Angola (BNA) de <span data-date>{e(when)}</span>.</p>
+        <p class="muted">A página lê as taxas mais recentes no BNA sempre que é aberta.<span id="fx-falha" hidden> Agora não foi possível ligar ao BNA: estas são as taxas de <span data-date>{e(when)}</span>.</span></p>
+        <div class="fx-cards">
+{cards}
+        </div>
+
+        <section id="conversor" hidden>
+            <h2>Conversor</h2>
+            <div class="fx-convert">
+                <label>Valor<input id="fx-valor" type="text" inputmode="decimal" autocomplete="off" value="100"></label>
+                <label>Moeda<select id="fx-moeda">{options}</select></label>
+                <label class="fx-wide">Em kwanzas (Kz)<input id="fx-kz" type="text" inputmode="decimal" autocomplete="off"></label>
+            </div>
+            <p class="muted">Escreva num dos campos; o outro é calculado com a taxa de referência.</p>
+        </section>
+
+        <h2>Todas as moedas</h2>
+        <ul class="fx-list">
+{rows}
+        </ul>
+        <p class="sources">Fonte: <a href="https://www.bna.ao/">Banco Nacional de Angola</a> (taxa de referência, câmbio médio).</p>
+
+        <h2>Antes de trocar</h2>
+        <dl>
+{tips}
+        </dl>
+
+        <h2>Onde trocar</h2>
+        <p>Em bancos ou casas de câmbio. Estas são as que o Tuende conhece, com morada e como chegar:</p>
+        <ul class="links">
+{shops}
+        </ul>
+        <div class="actions">
+            <a class="btn solid" href="../?page=cambio">Abrir o conversor na app</a>
+            <a class="btn" href="../lugares/casas-de-cambio-em-angola.html">Casas de câmbio em Angola</a>
+        </div>
+
+        <h2>Guias</h2>
+{guides_html('cambio', '../lugares/')}
+
+        <section lang="en">
+            <h2>Kwanza exchange rate today</h2>
+            <p>The official reference rates of the Banco Nacional de Angola (BNA) for the kwanza against the US dollar, the euro, the Chinese yuan and {len(codes) - 3} other currencies. This page reads the latest rates from the BNA each time it opens. Banks and exchange bureaus apply their own buying and selling rates. The converter is also in the <a href="../?page=cambio">Tuende app</a>, in Portuguese, English, French and Spanish.</p>
+        </section>
+    </main>
+    <footer>
+        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../termos.html">Termos de utilização</a></p>
+    </footer>
+    <script>{script}    </script>
+</body>
+</html>
+'''
+
+
 def index_page(venues):
     by_city = {}
     for v in venues:
@@ -727,10 +970,13 @@ def main():
     (WEB / 'agenda').mkdir(exist_ok=True)
     events = load_events()
     (WEB / 'agenda' / 'index.html').write_text(agenda_page(events, date.today().isoformat()), encoding='utf-8')
+    (WEB / 'cambio').mkdir(exist_ok=True)
+    codes, fx, live = load_fx()
+    (WEB / 'cambio' / 'index.html').write_text(cambio_page(codes, fx, venues), encoding='utf-8')
 
     today = date.today().isoformat()
     # Só endereços próprios: as secções da app (?page=...) apontam para a página principal (canonical).
-    urls = [SITE, f'{SITE}agenda/', f'{SITE}lugares/'] + [f'{SITE}lugares/{t["slug"]}.html' for t in TOPICS] + [f'{SITE}termos.html']
+    urls = [SITE, f'{SITE}agenda/', f'{SITE}cambio/', f'{SITE}lugares/'] + [f'{SITE}lugares/{t["slug"]}.html' for t in TOPICS] + [f'{SITE}termos.html']
     urls += [f'{SITE}lugares/{slug(v["name"])}.html' for v in venues]
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     sitemap += [f'  <url><loc>{html.escape(u)}</loc><lastmod>{today}</lastmod></url>' for u in urls]
@@ -738,6 +984,7 @@ def main():
     (WEB / 'sitemap.xml').write_text('\n'.join(sitemap) + '\n', encoding='utf-8')
     (WEB / 'robots.txt').write_text(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}sitemap.xml\n', encoding='utf-8')
     print(f'{len(venues)} páginas de lugares, {len(TOPICS)} guias (lugares/<guia>.html), lugares/index.html, agenda/index.html, '
+          f'cambio/index.html (taxas do BNA de {fx["date"]}{"" if live else ", de reserva: o BNA não respondeu"}), '
           f'sitemap.xml ({len(urls)} endereços) e robots.txt')
 
 
