@@ -352,7 +352,7 @@ TOPICS = [
 
 def guides_html(current='', prefix=''):
     # Todas estas páginas ficam um nível abaixo da raiz (lugares/, agenda/, cambio/).
-    links = [('agenda', '../agenda/', 'Agenda de eventos'), ('cambio', '../cambio/', 'Câmbio do dia')] + [(t['slug'], f'{prefix}{t["slug"]}.html', t['title']) for t in TOPICS]
+    links = [('agenda', '../agenda/', 'Agenda de eventos'), ('cambio', '../cambio/', 'Câmbio do dia'), ('rotas', '../rotas/', 'Como viajar entre cidades')] + [(t['slug'], f'{prefix}{t["slug"]}.html', t['title']) for t in TOPICS]
     items = '\n'.join(f'            <li><a href="{href}">{e(label)}</a></li>' for key, href, label in links if key != current)
     return f'        <ul class="guides">\n{items}\n        </ul>'
 
@@ -898,6 +898,245 @@ def cambio_page(codes, fx, venues):
 </html>
 '''
 
+# Rotas entre cidades (web/rotas/<id>.html e web/rotas/index.html): autocarro, avião, comboio, barco e carro, a partir
+# de const TRAVEL_ROUTES em index.html. Só preços publicados (com fonte e data); o resto fica "por confirmar".
+MODE = {'bus': ('Autocarro', 'Bus'), 'plane': ('Avião', 'Plane'), 'train': ('Comboio', 'Train'), 'boat': ('Barco', 'Boat'), 'car': ('Carro', 'Car')}
+ARTICLE = {'Lobito': 'o', 'Luena': 'o', 'Huambo': 'o', 'Lubango': 'o', 'Soyo': 'o', 'Dundo': 'o', 'Namibe': 'o', 'Cuíto': 'o'}
+ROUTES_STYLE = """
+        .options { list-style: none; padding: 0; margin-top: 12px; display: grid; gap: 12px; }
+        .option { padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; }
+        .option h3 { font-size: 18px; } .option .mode { color: var(--primary); font-weight: 800; }
+        .option dl { margin-top: 8px; border: 0; } .option dl > div { padding: 4px 0; grid-template-columns: 110px 1fr; } .option dl > div + div { border-top: 0; }
+        .option .src { font-size: 14px; color: var(--muted); margin-top: 6px; } .option .src a { color: inherit; }
+        .routes { list-style: none; padding: 0; margin-top: 12px; display: grid; gap: 10px; }
+        .routes a { display: block; padding: 12px 16px; border: 1px solid var(--line); border-radius: 14px; color: var(--text); text-decoration: none; }
+        .routes b { display: block; font-size: 18px; } .routes span { color: var(--muted); font-size: 15px; }
+"""
+
+
+def de(city):
+    return {'o': 'do'}.get(ARTICLE.get(city), 'de') + ' ' + city
+
+
+def a(city):
+    return {'o': 'ao'}.get(ARTICLE.get(city), 'a') + ' ' + city
+
+
+def load_routes():
+    source = (WEB / 'index.html').read_text(encoding='utf-8')
+
+    def literal(name, opener):
+        start = source.index(opener, source.index(f'const {name} = '))
+        return source[start:source.index(';\n', start)]
+    consts = {name: js_value(literal(name, '{')) for name in ('ROUTE_SOURCES', 'TAAG_NOTE', 'GAMEK', 'AIAAN', 'MACON_NOTE')}
+    text = literal('TRAVEL_ROUTES', '[')
+    text = re.sub(r'ROUTE_SOURCES\.(\w+)', lambda m: json.dumps(consts['ROUTE_SOURCES'][m.group(1)], ensure_ascii=False), text)
+    for name in ('TAAG_NOTE', 'GAMEK', 'AIAAN', 'MACON_NOTE'):
+        text = re.sub(rf'\b{name}\b', lambda m: json.dumps(consts[m.group(0)], ensure_ascii=False), text)
+    return js_value(text)
+
+
+def route_title(r, lang='pt'):
+    if lang == 'en':
+        return f'How to get from {r["from"]} to {r["to"]}'
+    return f'Como ir {de(r["from"])} {a(r["to"])}'
+
+
+def hours_text(h, lang='pt'):
+    whole = int(h)
+    minutes = round((h - whole) * 60 / 10) * 10
+    if minutes == 60:
+        whole, minutes = whole + 1, 0
+    return f'{whole}h{minutes:02d}' if minutes else f'{whole}h'
+
+
+def route_summary(r, lang='pt'):
+    parts = []
+    for mode in ('bus', 'plane', 'train', 'boat'):
+        opts = [o for o in r['options'] if o['mode'] == mode]
+        if not opts:
+            continue
+        prices = [o['price']['from'] for o in opts if o.get('price', {}).get('from') and not o['price'].get('text')]
+        texts = [o['price']['text']['en' if lang == 'en' else 'pt'] for o in opts if o.get('price', {}).get('text')]
+        label = MODE[mode][1 if lang == 'en' else 0].lower()
+        if lang == 'en':
+            parts.append(f'by {label} from {kz(min(prices))} Kz' if prices else (f'by {label} ({texts[0]})' if texts else f'by {label}'))
+        else:
+            parts.append(f'de {label} desde {kz(min(prices))} Kz' if prices else (f'de {label} ({texts[0]})' if texts else f'de {label}'))
+    car = next((o for o in r['options'] if o['mode'] == 'car' and o.get('km')), None)
+    if car:
+        parts.append(f'by car: {car["km"]} km, about {hours_text(car["hours"])} without stops' if lang == 'en'
+                     else f'de carro: {car["km"]} km, cerca de {hours_text(car["hours"])} sem paragens')
+    if not parts:
+        return ''
+    text = ', '.join(parts[:-1]) + (' or ' if lang == 'en' else ' ou ') + parts[-1] if len(parts) > 1 else parts[0]
+    return text[0].upper() + text[1:] + '.'
+
+
+def place_link(venues, vid):
+    v = next((x for x in venues if x['id'] == vid), None)
+    return f'<a href="../lugares/{slug(v["name"])}.html">{e(v["name"])}</a>' if v else ''
+
+
+def option_html(o, venues):
+    who = o.get('who', '')
+    head = f'<span class="mode">{MODE[o["mode"]][0]}</span>' + (f' · {e(who)}' if who else '')
+    rows = []
+    if o.get('where'):
+        rows.append(('Partida', e(o['where']['pt']) + (f' ({place_link(venues, o["place"])})' if o.get('place') and o['mode'] != 'bus' else '')))
+    if o.get('arrive'):
+        rows.append(('Chegada', place_link(venues, o['arrive'])))
+    if o['mode'] == 'car' and o.get('km'):
+        rows.append(('Distância', f'{o["km"]} km, cerca de {hours_text(o["hours"])} sem paragens'))
+    price = o.get('price')
+    if price:
+        rows.append(('Preço', e(price['text']['pt']) if price.get('text') else f'desde {kz(price["from"])} Kz'))
+    elif o['mode'] != 'car':
+        rows.append(('Preço', 'por confirmar'))
+    if o.get('place') and o['mode'] == 'bus':
+        rows.append(('No Tuende', place_link(venues, o['place'])))
+    note = f'<p>{e(o["note"]["pt"])}</p>' if o.get('note') else ''
+    src = f'<p class="src">Fonte: <a href="{e(o["source"]["url"])}">{e(o["source"]["label"])}</a></p>' if o.get('source') else ''
+    dl = ''.join(f'<div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows)
+    return f'            <li class="option"><h3>{head}</h3>{f"<dl>{dl}</dl>" if dl else ""}{note}{src}</li>'
+
+
+def routes_list_html(routes, current=''):
+    return '\n'.join(f'            <li><a href="{r["id"]}.html"><b>{e(route_title(r))}</b><span>{e(route_summary(r))}</span></a></li>'
+                     for r in routes if r['id'] != current)
+
+
+def modes_title(r):
+    names = [MODE[m][0].lower() for m in ('bus', 'plane', 'train', 'boat', 'car') if any(o['mode'] == m and (m != 'car' or o.get('km')) for o in r['options'])]
+    return ', '.join(names[:-1]) + ' e ' + names[-1] if len(names) > 1 else names[0]
+
+
+def route_page(r, routes, venues):
+    title = route_title(r)
+    url = f'{SITE}rotas/{r["id"]}.html'
+    summary = route_summary(r)
+    also = f' {r["alsoTitle"]}' if r.get('alsoTitle') else ''
+    description = f'{title}{also}: {summary} Preços com fonte e data, e onde se apanha cada transporte.'
+    options = '\n'.join(option_html(o, venues) for o in r['options'])
+    topic = next((t for t in TOPICS if t['slug'] == r.get('topic')), None)
+    extra = [place_link(venues, vid) for vid in r.get('places', [])]
+    see = ([f'<a href="../lugares/{topic["slug"]}.html">{e(topic["title"])}</a>'] if topic else []) + [x for x in extra if x]
+    en_opts = ''.join(f'<li>{MODE[o["mode"]][1]}{" (" + e(o["who"]) + ")" if o.get("who") else ""}: {str(o["km"]) + " km, about " + hours_text(o["hours"]) + " without stops. " if o.get("km") else ""}{e(o["note"]["en"]) if o.get("note") else ""}'
+                      f'{" From " + kz(o["price"]["from"]) + " Kz." if o.get("price") and not o["price"].get("text") else (" " + e(o["price"]["text"]["en"]) + "." if o.get("price") else "")}</li>'
+                      for o in r['options'])
+    data = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': title, 'url': url, 'description': description, 'inLanguage': 'pt',
+            'dateModified': r['checked'], 'isPartOf': {'@type': 'WebSite', 'name': 'Tuende', 'url': SITE}}
+    return f'''<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{e(title)}: {e(modes_title(r))} | Tuende</title>
+    <meta name="description" content="{e(description)}">
+    <link rel="canonical" href="{url}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tuende">
+    <meta property="og:locale" content="pt_PT">
+    <meta property="og:title" content="{e(title)}">
+    <meta property="og:description" content="{e(summary)}">
+    <meta property="og:url" content="{url}">
+    <meta property="og:image" content="{SITE}og-image.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="theme-color" content="#CE1126">
+    <link rel="icon" type="image/png" href="../icon-192.png">
+    <script type="application/ld+json">{json.dumps(data, ensure_ascii=False).replace("</", "<\\/")}</script>
+    <style>{STYLE}{EXTRA_STYLE}{ROUTES_STYLE}    </style>
+</head>
+<body>
+    <div class="strip" aria-hidden="true"></div>
+    <header>
+        <a class="brand" href="../">Tuende</a>
+        <a class="btn solid" href="../">Abrir a app</a>
+    </header>
+    <main>
+        <p class="crumbs"><a href="../">Tuende</a> › <a href="./">Rotas</a> › {e(r["from"])}–{e(r["to"])}</p>
+        <h1 style="margin-top:12px">{e(title)}{e(also)}</h1>
+        <p class="lead">{e(summary)}</p>
+        <p class="muted">Preços e horários verificados a {e(pt_date(r["checked"]))}. Mudam com frequência: confirme com a empresa antes de viajar.</p>
+
+        <h2>As opções</h2>
+        <ul class="options">
+{options}
+        </ul>
+        {f'<h2>No destino</h2>{chr(10)}        <ul class="links">{"".join(f"<li>{x}</li>" for x in see)}</ul>' if see else ''}
+
+        <h2>Outras rotas</h2>
+        <ul class="routes">
+{routes_list_html(routes, r["id"])}
+        </ul>
+
+        <section lang="en">
+            <h2>{e(route_title(r, "en"))}</h2>
+            <p>{e(route_summary(r, "en"))} Fares and timetables checked on {e(r["checked"])}; they change often, so confirm with the operator before you travel.</p>
+            <ul class="links">{en_opts}</ul>
+        </section>
+    </main>
+    <footer>
+        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../termos.html">Termos de utilização</a></p>
+    </footer>
+</body>
+</html>
+'''
+
+
+def routes_index_page(routes):
+    url = f'{SITE}rotas/'
+    description = (f'{len(routes)} rotas entre cidades de Angola, de autocarro, avião, comboio, barco e carro: Luanda–Benguela, '
+                   'Luanda–Lubango, Luanda–Huambo, Luanda–Malanje, Luanda–Cabinda e mais. Preços com fonte e data.')
+    return f'''<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Como viajar entre cidades em Angola | Tuende</title>
+    <meta name="description" content="{e(description)}">
+    <link rel="canonical" href="{url}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tuende">
+    <meta property="og:title" content="Como viajar entre cidades em Angola">
+    <meta property="og:description" content="{e(description)}">
+    <meta property="og:url" content="{url}">
+    <meta property="og:image" content="{SITE}og-image.jpg">
+    <meta name="theme-color" content="#CE1126">
+    <link rel="icon" type="image/png" href="../icon-192.png">
+    <style>{STYLE}{EXTRA_STYLE}{ROUTES_STYLE}    </style>
+</head>
+<body>
+    <div class="strip" aria-hidden="true"></div>
+    <header>
+        <a class="brand" href="../">Tuende</a>
+        <a class="btn solid" href="../">Abrir a app</a>
+    </header>
+    <main>
+        <p class="crumbs"><a href="../">Tuende</a> › Rotas</p>
+        <h1 style="margin-top:12px">Como viajar entre cidades em Angola</h1>
+        <p class="lead">De autocarro, avião, comboio, barco ou carro: as opções para cada viagem, com preços publicados e a fonte de cada um.</p>
+        <p class="muted">Os voos domésticos saem do Aeroporto Dr. António Agostinho Neto, a 40 km do centro de Luanda; há comboio da estação do Bungo para o aeroporto. As distâncias de carro são estimativas sem paragens: evite conduzir à noite fora das cidades.</p>
+        <ul class="routes">
+{routes_list_html(routes)}
+        </ul>
+
+        <h2>Guias</h2>
+{guides_html('rotas', '../lugares/')}
+
+        <section lang="en">
+            <h2>Travelling between cities in Angola</h2>
+            <p>Bus, plane, train, boat and car options for {len(routes)} routes, with published fares and their sources. The <a href="../">Tuende app</a> is available in Portuguese, English, French and Spanish.</p>
+        </section>
+    </main>
+    <footer>
+        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../termos.html">Termos de utilização</a></p>
+    </footer>
+</body>
+</html>
+'''
+
+
 
 def index_page(venues):
     by_city = {}
@@ -970,13 +1209,23 @@ def main():
     (WEB / 'agenda').mkdir(exist_ok=True)
     events = load_events()
     (WEB / 'agenda' / 'index.html').write_text(agenda_page(events, date.today().isoformat()), encoding='utf-8')
+    routes = load_routes()
+    rdir = WEB / 'rotas'
+    rdir.mkdir(exist_ok=True)
+    keep_routes = {f'{r["id"]}.html' for r in routes} | {'index.html'}
+    for old in rdir.iterdir():
+        if re.fullmatch(r'[a-z0-9-]+\.html', old.name) and old.name not in keep_routes:
+            old.unlink()
+    for r in routes:
+        (rdir / f'{r["id"]}.html').write_text(route_page(r, routes, venues), encoding='utf-8')
+    (rdir / 'index.html').write_text(routes_index_page(routes), encoding='utf-8')
     (WEB / 'cambio').mkdir(exist_ok=True)
     codes, fx, live = load_fx()
     (WEB / 'cambio' / 'index.html').write_text(cambio_page(codes, fx, venues), encoding='utf-8')
 
     today = date.today().isoformat()
     # Só endereços próprios: as secções da app (?page=...) apontam para a página principal (canonical).
-    urls = [SITE, f'{SITE}agenda/', f'{SITE}cambio/', f'{SITE}lugares/'] + [f'{SITE}lugares/{t["slug"]}.html' for t in TOPICS] + [f'{SITE}termos.html']
+    urls = [SITE, f'{SITE}agenda/', f'{SITE}cambio/', f'{SITE}rotas/'] + [f'{SITE}rotas/{r["id"]}.html' for r in routes] + [f'{SITE}lugares/'] + [f'{SITE}lugares/{t["slug"]}.html' for t in TOPICS] + [f'{SITE}termos.html']
     urls += [f'{SITE}lugares/{slug(v["name"])}.html' for v in venues]
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     sitemap += [f'  <url><loc>{html.escape(u)}</loc><lastmod>{today}</lastmod></url>' for u in urls]
@@ -984,7 +1233,7 @@ def main():
     (WEB / 'sitemap.xml').write_text('\n'.join(sitemap) + '\n', encoding='utf-8')
     (WEB / 'robots.txt').write_text(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}sitemap.xml\n', encoding='utf-8')
     print(f'{len(venues)} páginas de lugares, {len(TOPICS)} guias (lugares/<guia>.html), lugares/index.html, agenda/index.html, '
-          f'cambio/index.html (taxas do BNA de {fx["date"]}{"" if live else ", de reserva: o BNA não respondeu"}), '
+          f'{len(routes)} rotas (rotas/), cambio/index.html (taxas do BNA de {fx["date"]}{"" if live else ", de reserva: o BNA não respondeu"}), '
           f'sitemap.xml ({len(urls)} endereços) e robots.txt')
 
 
