@@ -2607,6 +2607,7 @@
                 fxWhereText: 'Em bancos ou casas de câmbio.',
                 fxSeePlaces: 'Ver as {n} casas de câmbio na Tuende',
                 fxOpen: 'Ver o câmbio do dia',
+                routesBetween: 'Como ir de cidade em cidade',
                 contactLabel: 'Contacto',
                 toConfirm: 'Por confirmar',
                 stillToConfirm: 'Por confirmar',
@@ -3105,6 +3106,7 @@
                 fxWhereText: 'At banks or exchange bureaus.',
                 fxSeePlaces: 'See the {n} exchange bureaus on Tuende',
                 fxOpen: 'See today\'s exchange rates',
+                routesBetween: 'Getting between cities',
                 contactLabel: 'Contact',
                 toConfirm: 'To be confirmed',
                 stillToConfirm: 'To be confirmed',
@@ -3603,6 +3605,7 @@
                 fxWhereText: 'Dans les banques ou les bureaux de change.',
                 fxSeePlaces: 'Voir les {n} bureaux de change sur Tuende',
                 fxOpen: 'Voir le taux de change du jour',
+                routesBetween: 'Aller d\'une ville à l\'autre',
                 contactLabel: 'Contact',
                 toConfirm: 'À confirmer',
                 stillToConfirm: 'À confirmer',
@@ -4101,6 +4104,7 @@
                 fxWhereText: 'En bancos o casas de cambio.',
                 fxSeePlaces: 'Ver las {n} casas de cambio en Tuende',
                 fxOpen: 'Ver el tipo de cambio del día',
+                routesBetween: 'Cómo ir de ciudad en ciudad',
                 contactLabel: 'Contacto',
                 toConfirm: 'Por confirmar',
                 stillToConfirm: 'Por confirmar',
@@ -5950,6 +5954,119 @@
         const WHEN_LABELS = { all: 'whenAll', today: 'whenToday', weekend: 'whenWeekend', week: 'whenWeek', nextweek: 'whenNextWeek', month: 'whenMonth', nextmonth: 'whenNextMonth' };
         const DEFAULT_EVENT_FILTERS = { when: 'all', type: '', where: '' };
 
+        // Como ir de cidade em cidade: autocarro, avião, comboio, barco e carro, só com preços publicados (com fonte e data).
+        // As distâncias de carro são estimativas do OpenStreetMap (OSRM), sem paragens. As páginas rotas/<id>.html saem daqui.
+        const ROUTE_SOURCES = {
+            realExpress: { label: 'Real Express (preços no site, 18 de outubro de 2026)', url: 'https://www.realexpress.ao/public/' },
+            macon: { label: 'Macon (pontos de venda)', url: 'https://macontransp.com/en/points-of-sale/' },
+            taag: { label: 'Wikipedia: destinos da TAAG', url: 'https://en.wikipedia.org/wiki/List_of_TAAG_Angola_Airlines_destinations' },
+            taagCabinda: { label: 'NewsAvia (8 de setembro de 2026)', url: 'https://newsavia.com/taag-corta-intermediacao-na-venda-de-bilhetes-para-os-voos-luanda-cabinda-luanda/' },
+            secil: { label: 'Novo Jornal (outubro de 2026)', url: 'https://novojornal.co.ao/sociedade/detalhe/ligacao-maritima-cabinda-luanda-retomada-esta-sexta-feira-com-nova-embarcacao-de-passageiros-apos-cinco-meses-de-paralizacao-75044.html' },
+            cfb: { label: 'Ver Angola / ANGOP (junho de 2026)', url: 'https://www.verangola.net/va/pt/062026/Transportes/49321/Comboio-entre-Lobito-e-Luena-volta-a-circular.htm' },
+            cfl: { label: 'Wikipedia: Caminho de Ferro de Luanda', url: 'https://en.wikipedia.org/wiki/Luanda_Railway' },
+            cfm: { label: 'Wikipedia: Caminho de Ferro de Moçâmedes', url: 'https://en.wikipedia.org/wiki/Mo%C3%A7%C3%A2medes_Railway' },
+            osrm: { label: 'OpenStreetMap (OSRM)', url: 'https://www.openstreetmap.org/directions' },
+            cabinda: { label: 'Wikipedia: província de Cabinda', url: 'https://pt.wikipedia.org/wiki/Cabinda_(prov%C3%ADncia)' }
+        };
+        const TAAG_NOTE = { pt: 'Horários e preços no site, na app ou nas lojas da TAAG; o preço muda com a data.', en: 'Times and fares on the TAAG website, app or shops; fares change with the date.', fr: 'Horaires et tarifs sur le site, l\'app ou dans les agences TAAG ; le prix varie selon la date.', es: 'Horarios y precios en la web, la app o las tiendas de TAAG; el precio cambia según la fecha.' };
+        const GAMEK = { pt: 'Terminal do Gamek (Av. 21 de Janeiro), Luanda', en: 'Gamek terminal (Av. 21 de Janeiro), Luanda', fr: 'Terminal du Gamek (Av. 21 de Janeiro), Luanda', es: 'Terminal del Gamek (Av. 21 de Janeiro), Luanda' };
+        const AIAAN = { pt: 'Aeroporto Dr. António Agostinho Neto (a 40 km do centro de Luanda)', en: 'Dr. António Agostinho Neto Airport (40 km from central Luanda)', fr: 'Aéroport Dr. António Agostinho Neto (à 40 km du centre de Luanda)', es: 'Aeropuerto Dr. António Agostinho Neto (a 40 km del centro de Luanda)' };
+        const MACON_NOTE = { pt: 'Preço por confirmar: compre na app da Macon ou nos balcões.', en: 'Fare to be confirmed: buy in the Macon app or at its counters.', fr: 'Tarif à confirmer : achetez dans l\'app Macon ou aux guichets.', es: 'Precio por confirmar: compre en la app de Macon o en sus taquillas.' };
+        const TRAVEL_ROUTES = [
+            {
+                id: 'luanda-benguela', from: 'Luanda', to: 'Benguela', also: 'Lobito', alsoTitle: 'e ao Lobito', topic: 'o-que-fazer-em-benguela', checked: '2026-10-18',
+                options: [
+                    { mode: 'bus', who: 'Real Express', where: GAMEK, price: { from: 11000 }, place: 38, source: ROUTE_SOURCES.realExpress },
+                    { mode: 'bus', who: 'Macon', note: MACON_NOTE, source: ROUTE_SOURCES.macon },
+                    { mode: 'plane', who: 'TAAG', where: AIAAN, arrive: 94, note: TAAG_NOTE, source: ROUTE_SOURCES.taag },
+                    { mode: 'car', km: 535, hours: 8.3, note: { pt: 'Até ao Lobito: 511 km.', en: 'To Lobito: 511 km.', fr: 'Jusqu\'à Lobito : 511 km.', es: 'Hasta Lobito: 511 km.' }, source: ROUTE_SOURCES.osrm }
+                ]
+            },
+            {
+                id: 'luanda-lubango', from: 'Luanda', to: 'Lubango', topic: 'o-que-fazer-no-lubango-e-na-huila', checked: '2026-10-18',
+                options: [
+                    { mode: 'bus', who: 'Real Express', where: GAMEK, price: { from: 17000 }, note: { pt: 'Chega ao Tchioco, no Lubango.', en: 'Arrives at Tchioco, in Lubango.', fr: 'Arrivée à Tchioco, à Lubango.', es: 'Llega a Tchioco, en Lubango.' }, place: 38, source: ROUTE_SOURCES.realExpress },
+                    { mode: 'plane', who: 'TAAG', where: AIAAN, arrive: 95, note: TAAG_NOTE, source: ROUTE_SOURCES.taag },
+                    { mode: 'car', km: 892, hours: 13.8, source: ROUTE_SOURCES.osrm }
+                ]
+            },
+            {
+                id: 'luanda-huambo', from: 'Luanda', to: 'Huambo', topic: 'o-que-fazer-no-huambo', checked: '2026-10-18',
+                options: [
+                    { mode: 'bus', who: 'Real Express', where: GAMEK, price: { from: 11000 }, place: 38, source: ROUTE_SOURCES.realExpress },
+                    { mode: 'bus', who: 'Macon', arrive: 136, note: MACON_NOTE, source: ROUTE_SOURCES.macon },
+                    { mode: 'plane', who: 'TAAG', where: AIAAN, arrive: 96, note: TAAG_NOTE, source: ROUTE_SOURCES.taag },
+                    { mode: 'car', km: 601, hours: 9.6, source: ROUTE_SOURCES.osrm }
+                ]
+            },
+            {
+                id: 'luanda-malanje', from: 'Luanda', to: 'Malanje', also: 'Kalandula', alsoTitle: 'e às Quedas de Kalandula', topic: 'o-que-fazer-em-malanje', checked: '2026-10-18',
+                options: [
+                    { mode: 'bus', who: 'Real Express', where: { pt: 'Gamek (Nosso Centro), Luanda', en: 'Gamek (Nosso Centro), Luanda', fr: 'Gamek (Nosso Centro), Luanda', es: 'Gamek (Nosso Centro), Luanda' }, price: { from: 7000 }, place: 38, source: ROUTE_SOURCES.realExpress },
+                    { mode: 'train', who: 'Caminho de Ferro de Luanda', where: { pt: 'Linha de Luanda a Malanje', en: 'Luanda to Malanje line', fr: 'Ligne de Luanda à Malanje', es: 'Línea de Luanda a Malanje' }, arrive: 134, note: { pt: 'A linha voltou a circular a 30 de julho de 2026, depois de um descarrilamento. Preço e horário por confirmar com o CFL.', en: 'The line reopened on 30 July 2026 after a derailment. Fare and timetable to be confirmed with CFL.', fr: 'La ligne a rouvert le 30 juillet 2026 après un déraillement. Tarif et horaires à confirmer auprès du CFL.', es: 'La línea volvió a funcionar el 30 de julio de 2026 tras un descarrilamiento. Precio y horario por confirmar con el CFL.' }, source: ROUTE_SOURCES.cfl },
+                    { mode: 'car', km: 382, hours: 4.8, note: { pt: 'Até às Quedas de Kalandula: 377 km de Luanda, ou 76 km (cerca de 1h20) a partir de Malanje.', en: 'To the Kalandula Falls: 377 km from Luanda, or 76 km (about 1h20) from Malanje.', fr: 'Jusqu\'aux chutes de Kalandula : 377 km depuis Luanda, ou 76 km (environ 1 h 20) depuis Malanje.', es: 'Hasta las cataratas de Kalandula: 377 km desde Luanda, o 76 km (alrededor de 1 h 20) desde Malanje.' }, source: ROUTE_SOURCES.osrm }
+                ],
+                places: [26, 154]
+            },
+            {
+                id: 'luanda-cabinda', from: 'Luanda', to: 'Cabinda', topic: 'o-que-fazer-em-cabinda', checked: '2026-10-18',
+                options: [
+                    { mode: 'plane', who: 'TAAG', where: AIAAN, arrive: 98, price: { from: 29717, text: { pt: '29 717 Kz ida e volta, em económica', en: '29,717 Kz return, economy', fr: '29 717 Kz aller-retour, en économique', es: '29 717 Kz ida y vuelta, en económica' } }, note: { pt: 'Preço subsidiado. Desde 15 de setembro de 2026 só se compra nos canais da TAAG: site, app, call center e lojas nos aeroportos de Luanda e Cabinda.', en: 'Subsidised fare. Since 15 September 2026 it is sold only through TAAG: website, app, call centre and the shops at Luanda and Cabinda airports.', fr: 'Tarif subventionné. Depuis le 15 septembre 2026, il n\'est vendu que par TAAG : site, app, centre d\'appels et agences des aéroports de Luanda et Cabinda.', es: 'Precio subvencionado. Desde el 15 de septiembre de 2026 solo se vende en los canales de TAAG: web, app, centro de llamadas y tiendas de los aeropuertos de Luanda y Cabinda.' }, source: ROUTE_SOURCES.taagCabinda },
+                    { mode: 'boat', who: 'Secil Marítima', where: { pt: 'Terminal marítimo de Luanda (rota Luanda–Soyo–Cabinda)', en: 'Luanda sea terminal (Luanda–Soyo–Cabinda route)', fr: 'Terminal maritime de Luanda (ligne Luanda–Soyo–Cabinda)', es: 'Terminal marítima de Luanda (ruta Luanda–Soyo–Cabinda)' }, note: { pt: 'Em outubro de 2026 chegou um barco novo para esta rota, o Tchiowa, para 430 passageiros. Confirme se está a navegar, o preço e o horário nos terminais da Secil Marítima.', en: 'A new boat for this route, the Tchiowa (430 passengers), arrived in October 2026. Check that it is sailing, the fare and the timetable at the Secil Marítima terminals.', fr: 'Un nouveau bateau pour cette ligne, le Tchiowa (430 passagers), est arrivé en octobre 2026. Vérifiez qu\'il navigue, le tarif et les horaires aux terminaux de la Secil Marítima.', es: 'En octubre de 2026 llegó un barco nuevo para esta ruta, el Tchiowa, para 430 pasajeros. Confirme que está navegando, el precio y el horario en las terminales de Secil Marítima.' }, source: ROUTE_SOURCES.secil },
+                    { mode: 'car', note: { pt: 'Não recomendado: Cabinda está separada do resto de Angola pela República Democrática do Congo, e a estrada obriga a entrar na RDC.', en: 'Not recommended: Cabinda is separated from the rest of Angola by the Democratic Republic of the Congo, and the road goes through the DRC.', fr: 'Déconseillé : Cabinda est séparée du reste de l\'Angola par la République démocratique du Congo, et la route traverse la RDC.', es: 'No recomendado: Cabinda está separada del resto de Angola por la República Democrática del Congo, y la carretera atraviesa la RDC.' }, source: ROUTE_SOURCES.cabinda }
+                ]
+            },
+            {
+                id: 'luanda-namibe', from: 'Luanda', to: 'Moçâmedes', also: 'Namibe', alsoTitle: '(Namibe)', topic: 'o-que-fazer-no-namibe', checked: '2026-10-18',
+                options: [
+                    { mode: 'plane', who: 'TAAG', where: AIAAN, arrive: 97, note: TAAG_NOTE, source: ROUTE_SOURCES.taag },
+                    { mode: 'bus', who: 'Macon', arrive: 135, note: MACON_NOTE, source: ROUTE_SOURCES.macon },
+                    { mode: 'car', km: 935, hours: 15.6, note: { pt: 'Uma opção é ir de carro ou autocarro até ao Lubango e seguir pela Serra da Leba (182 km).', en: 'One option is to go by car or bus to Lubango and continue down the Serra da Leba (182 km).', fr: 'Une option : aller en voiture ou en bus jusqu\'à Lubango, puis descendre la Serra da Leba (182 km).', es: 'Una opción es ir en coche o autobús hasta Lubango y seguir por la Serra da Leba (182 km).' }, source: ROUTE_SOURCES.osrm }
+                ]
+            },
+            {
+                id: 'luanda-soyo', from: 'Luanda', to: 'Soyo', checked: '2026-10-18',
+                options: [
+                    { mode: 'plane', who: 'TAAG', where: AIAAN, arrive: 99, note: TAAG_NOTE, source: ROUTE_SOURCES.taag },
+                    { mode: 'boat', who: 'Secil Marítima', where: { pt: 'Terminal marítimo de Luanda (rota Luanda–Soyo–Cabinda)', en: 'Luanda sea terminal (Luanda–Soyo–Cabinda route)', fr: 'Terminal maritime de Luanda (ligne Luanda–Soyo–Cabinda)', es: 'Terminal marítima de Luanda (ruta Luanda–Soyo–Cabinda)' }, note: { pt: 'Barco novo Tchiowa desde outubro de 2026. Confirme se está a navegar, o preço e o horário nos terminais da Secil Marítima.', en: 'New boat, the Tchiowa, since October 2026. Check that it is sailing, the fare and the timetable at the Secil Marítima terminals.', fr: 'Nouveau bateau, le Tchiowa, depuis octobre 2026. Vérifiez qu\'il navigue, le tarif et les horaires aux terminaux de la Secil Marítima.', es: 'Barco nuevo Tchiowa desde octubre de 2026. Confirme que está navegando, el precio y el horario en las terminales de Secil Marítima.' }, source: ROUTE_SOURCES.secil },
+                    { mode: 'car', km: 400, hours: 6.2, source: ROUTE_SOURCES.osrm }
+                ],
+                places: [194]
+            },
+            {
+                id: 'luanda-saurimo', from: 'Luanda', to: 'Saurimo', checked: '2026-10-18',
+                options: [
+                    { mode: 'bus', who: 'Real Express', where: { pt: 'Gamek (Nosso Centro), Luanda', en: 'Gamek (Nosso Centro), Luanda', fr: 'Gamek (Nosso Centro), Luanda', es: 'Gamek (Nosso Centro), Luanda' }, price: { from: 18000 }, place: 38, source: ROUTE_SOURCES.realExpress },
+                    { mode: 'plane', who: 'TAAG', where: AIAAN, arrive: 101, note: TAAG_NOTE, source: ROUTE_SOURCES.taag },
+                    { mode: 'car', km: 945, hours: 13.4, source: ROUTE_SOURCES.osrm }
+                ],
+                places: [159]
+            },
+            {
+                id: 'luanda-dundo', from: 'Luanda', to: 'Dundo', checked: '2026-10-18',
+                options: [
+                    { mode: 'bus', who: 'Real Express', where: { pt: 'Gamek (Nosso Centro), Luanda', en: 'Gamek (Nosso Centro), Luanda', fr: 'Gamek (Nosso Centro), Luanda', es: 'Gamek (Nosso Centro), Luanda' }, price: { from: 22000 }, place: 38, source: ROUTE_SOURCES.realExpress },
+                    { mode: 'plane', who: 'TAAG', where: AIAAN, arrive: 100, note: TAAG_NOTE, source: ROUTE_SOURCES.taag },
+                    { mode: 'car', km: 1113, hours: 17.8, source: ROUTE_SOURCES.osrm }
+                ]
+            },
+            {
+                id: 'lubango-namibe', from: 'Lubango', to: 'Moçâmedes', also: 'Namibe', alsoTitle: '(Namibe)', topic: 'o-que-fazer-no-namibe', checked: '2026-10-18',
+                options: [
+                    { mode: 'car', km: 182, hours: 2.4, note: { pt: 'A estrada desce a Serra da Leba, uma das paisagens mais fotografadas de Angola.', en: 'The road goes down the Serra da Leba, one of the most photographed landscapes in Angola.', fr: 'La route descend la Serra da Leba, l\'un des paysages les plus photographiés d\'Angola.', es: 'La carretera baja por la Serra da Leba, uno de los paisajes más fotografiados de Angola.' }, source: ROUTE_SOURCES.osrm },
+                    { mode: 'train', who: 'Caminho de Ferro de Moçâmedes', where: { pt: 'Linha de Moçâmedes ao Lubango e a Menongue', en: 'Moçâmedes to Lubango and Menongue line', fr: 'Ligne de Moçâmedes à Lubango et Menongue', es: 'Línea de Moçâmedes a Lubango y Menongue' }, arrive: 132, note: { pt: 'Preço e horário por confirmar com o CFM.', en: 'Fare and timetable to be confirmed with CFM.', fr: 'Tarif et horaires à confirmer auprès du CFM.', es: 'Precio y horario por confirmar con el CFM.' }, source: ROUTE_SOURCES.cfm }
+                ],
+                places: [11]
+            },
+            {
+                id: 'lobito-luena', from: 'Lobito', to: 'Luena', also: 'Huambo, Cuíto', alsoTitle: 'pelo Huambo e pelo Cuíto', checked: '2026-10-18',
+                options: [
+                    { mode: 'train', who: 'Caminho de Ferro de Benguela (expresso)', where: { pt: 'Estação do Lobito; também para no Huambo e no Cuíto', en: 'Lobito station; also stops at Huambo and Cuíto', fr: 'Gare de Lobito ; arrêts aussi à Huambo et Cuíto', es: 'Estación de Lobito; también para en Huambo y Cuíto' }, place: 120, price: { from: 15350 }, note: { pt: 'Sai do Lobito à segunda-feira às 07h45 e chega ao Luena na terça às 09h28; o regresso sai às 08h30 e chega ao Lobito na quinta às 10h00. Bilhetes também nas estações do Huambo e do Cuíto.', en: 'Leaves Lobito on Monday at 07:45 and reaches Luena on Tuesday at 09:28; the return leaves at 08:30 and reaches Lobito on Thursday at 10:00. Tickets also at Huambo and Cuíto stations.', fr: 'Départ de Lobito le lundi à 7 h 45, arrivée à Luena le mardi à 9 h 28 ; le retour part à 8 h 30 et arrive à Lobito le jeudi à 10 h. Billets aussi aux gares de Huambo et Cuíto.', es: 'Sale de Lobito el lunes a las 07:45 y llega a Luena el martes a las 09:28; el regreso sale a las 08:30 y llega a Lobito el jueves a las 10:00. Billetes también en las estaciones de Huambo y Cuíto.' }, source: ROUTE_SOURCES.cfb }
+                ],
+                places: [133]
+            }
+        ];
+
         // Roteiros: only places already in the app; each note repeats facts from those places or the cited source.
         const ITINERARIES = [
             {
@@ -6140,7 +6257,7 @@
                     { lead: { pt: 'Táxi', en: 'Taxi', fr: 'Taxi', es: 'Taxi' }, pt: 'Num táxi normal, confirme que o taxímetro está ligado ou peça o preço antes de partir.', en: 'In a regular taxi, check the meter is on or ask for the price before you set off.', fr: 'Dans un taxi classique, vérifiez que le compteur est allumé ou demandez le prix avant de partir.', es: 'En un taxi normal, compruebe que el taxímetro está encendido o pregunte el precio antes de salir.' },
                     { lead: { pt: 'Candongueiros', en: 'Candongueiros', fr: 'Candongueiros', es: 'Candongueiros' }, pt: 'Os táxis coletivos azuis e brancos fazem percursos fixos por 300 Kz. São o transporte mais usado em Luanda, mas os conselhos de viagem de Portugal e do Reino Unido recomendam aos visitantes que os evitem.', en: 'The blue and white shared minibuses run fixed routes for 300 Kz. They are Luanda\'s most used transport, but Portuguese and UK travel advice tells visitors to avoid them.', fr: 'Les minibus collectifs bleu et blanc suivent des trajets fixes pour 300 Kz. C\'est le transport le plus utilisé à Luanda, mais les conseils aux voyageurs du Portugal et du Royaume-Uni recommandent aux visiteurs de les éviter.', es: 'Los minibuses colectivos azules y blancos hacen rutas fijas por 300 Kz. Son el transporte más usado en Luanda, pero los consejos de viaje de Portugal y del Reino Unido recomiendan a los visitantes evitarlos.', place: 36 },
                     { lead: { pt: 'Autocarro e comboio', en: 'Bus and train', fr: 'Bus et train', es: 'Autobús y tren' }, pt: 'Autocarro urbano TCUL: 200 Kz. Comboio suburbano Bungo–Viana: 300 Kz.', en: 'TCUL city bus: 200 Kz. Bungo–Viana suburban train: 300 Kz.', fr: 'Bus urbain TCUL : 200 Kz. Train de banlieue Bungo–Viana : 300 Kz.', es: 'Autobús urbano TCUL: 200 Kz. Tren de cercanías Bungo–Viana: 300 Kz.', place: 37 },
-                    { lead: { pt: 'Entre províncias', en: 'Between provinces', fr: 'Entre provinces', es: 'Entre provincias' }, pt: 'Há autocarros de longa distância, como a Real Express. Se conduzir, evite a estrada à noite fora das cidades e conte com estradas piores na época das chuvas (outubro a abril).', en: 'There are long-distance coaches such as Real Express. If you drive, avoid the road at night outside the cities and expect worse roads in the rainy season (October to April).', fr: 'Il existe des autocars longue distance comme Real Express. Si vous conduisez, évitez la route la nuit hors des villes et attendez-vous à des routes en plus mauvais état à la saison des pluies (d\'octobre à avril).', es: 'Hay autocares de largo recorrido como Real Express. Si conduce, evite la carretera de noche fuera de las ciudades y cuente con peores carreteras en la época de lluvias (de octubre a abril).', place: 38 }
+                    { lead: { pt: 'Entre províncias', en: 'Between provinces', fr: 'Entre provinces', es: 'Entre provincias' }, pt: 'Há autocarros de longa distância, como a Real Express. Se conduzir, evite a estrada à noite fora das cidades e conte com estradas piores na época das chuvas (outubro a abril).', en: 'There are long-distance coaches such as Real Express. If you drive, avoid the road at night outside the cities and expect worse roads in the rainy season (October to April).', fr: 'Il existe des autocars longue distance comme Real Express. Si vous conduisez, évitez la route la nuit hors des villes et attendez-vous à des routes en plus mauvais état à la saison des pluies (d\'octobre à avril).', es: 'Hay autocares de largo recorrido como Real Express. Si conduce, evite la carretera de noche fuera de las ciudades y cuente con peores carreteras en la época de lluvias (de octubre a abril).', place: 38 , routes: true }
                 ],
                 sources: [PT_ADVICE, UK_ADVICE, { label: 'Expansão (AIAAN, 2026)', url: 'https://expansao.co.ao/angola/detalhe/royal-air-maroc-turkish-airlines-e-asky-mudam-se-para-o-aiaan-a-2-de-fevereiro-69530.html' }, { label: 'ANGOP (comboio para o aeroporto)', url: 'https://angop.ao/en/noticias/economia/comboio-expresso-inicia-circulacao-bungo-novo-aeroporto' }, { label: 'Expansão (julho de 2025)', url: 'https://expansao.co.ao/angola/detalhe/taxi-passa-a-custar-300-kz-e-bilhete-de-autocarro-sobe-para-200-kz-a-partir-desta-segunda-feira-66233.html' }]
             },
@@ -7283,6 +7400,7 @@
             const place = item.place && venues.find((v) => v.id === item.place);
             const links = [
                 item.fx ? `<button class="link-btn" type="button" data-action="fx">${t('fxOpen')}</button>` : '',
+                item.routes ? `<a class="link-btn" href="${escapeHTML(asset('rotas/'))}" target="_blank" rel="noopener">${t('routesBetween')}${icon('external')}</a>` : '',
                 place ? `<button class="link-btn" type="button" data-open="${place.id}">${t('guideSeePlace', { name: escapeHTML(place.name) })}</button>` : '',
                 item.category ? `<button class="link-btn" type="button" data-category="${item.category}">${t('guideSeeCategory', { name: catLabel(item.category, true) })}</button>` : '',
                 item.link ? `<a class="link-btn" href="${escapeHTML(item.link)}" target="_blank" rel="noopener">${escapeHTML(new URL(item.link).hostname.replace(/^www\./, ''))}${icon('external')}</a>` : ''
@@ -9386,7 +9504,7 @@
                 surprise: ['Que tal isto? {name}, em {where}. {highlight}', 'Já conheces {name}? Fica em {where}. {highlight}', 'Aposto que vais gostar de {name}, em {where}. {highlight}'],
                 recommend: 'Conheces um lugar que devia estar na Tuende? Conta-nos neste formulário e a equipa verifica.',
                 seeAll: 'Ver todos ({n})', guideMore: 'Ler tudo: {title}', openAgenda: 'Ver a agenda', openWonders: 'Ver as Maravilhas', openDrones: 'Regras para drones',
-                openPhoto: 'Lugares para fotografar', openSpot: 'Dicas de fotografia', openRoutes: 'Ver os roteiros', openMap: 'Abrir o mapa', openFx: 'Ver o câmbio do dia', fxToday: 'Câmbio de referência do BNA de {date}: {rates}. Nos bancos e casas de câmbio o valor final é um pouco diferente.', recommendBtn: 'Sugerir um lugar',
+                openPhoto: 'Lugares para fotografar', openSpot: 'Dicas de fotografia', openRoutes: 'Ver os roteiros', openMap: 'Abrir o mapa', openFx: 'Ver o câmbio do dia', routeIntro: 'Para ir {route}: {summary} Os preços mudam; confirma antes de viajar.', routeModes: { bus: 'de autocarro', plane: 'de avião', train: 'de comboio', boat: 'de barco', car: 'de carro' }, routeFrom: 'desde {price}', routeCar: '{km} km, cerca de {hours} sem paragens', routeOr: 'ou', openRoute: 'Ver todas as opções', fxToday: 'Câmbio de referência do BNA de {date}: {rates}. Nos bancos e casas de câmbio o valor final é um pouco diferente.', recommendBtn: 'Sugerir um lugar',
                 locateBtn: 'Usar a minha localização', directions: 'Como chegar',
                 chipCat: '{cat} em {where}', chipEvents: 'Eventos em {where}',
                 chipsStart: ['O que fazer em Luanda?', 'Preciso de visto?', 'Eventos este fim de semana', 'Praias em Benguela', 'Onde posso voar com drone?', 'Surpreende-me']
@@ -9438,7 +9556,7 @@
                 surprise: ['How about this? {name}, in {where}. {highlight}', 'Do you know {name}? It’s in {where}. {highlight}', 'I bet you’ll like {name}, in {where}. {highlight}'],
                 recommend: 'Know a place that should be on Tuende? Tell us with this form and the team will check it.',
                 seeAll: 'See all ({n})', guideMore: 'Read all: {title}', openAgenda: 'See the agenda', openWonders: 'See the Wonders', openDrones: 'Drone rules',
-                openPhoto: 'Photo spots', openSpot: 'Photo tips', openRoutes: 'See the routes', openMap: 'Open the map', openFx: 'See today\'s exchange rates', fxToday: 'BNA reference rate of {date}: {rates}. Banks and exchange bureaus give a slightly different final amount.', recommendBtn: 'Suggest a place',
+                openPhoto: 'Photo spots', openSpot: 'Photo tips', openRoutes: 'See the routes', openMap: 'Open the map', openFx: 'See today\'s exchange rates', routeIntro: 'To get {route}: {summary} Fares change, so check before you travel.', routeModes: { bus: 'by bus', plane: 'by plane', train: 'by train', boat: 'by boat', car: 'by car' }, routeFrom: 'from {price}', routeCar: '{km} km, about {hours} without stops', routeOr: 'or', openRoute: 'See all the options', fxToday: 'BNA reference rate of {date}: {rates}. Banks and exchange bureaus give a slightly different final amount.', recommendBtn: 'Suggest a place',
                 locateBtn: 'Use my location', directions: 'Directions',
                 chipCat: '{cat} in {where}', chipEvents: 'Events in {where}',
                 chipsStart: ['What to do in Luanda?', 'Do I need a visa?', 'Events this weekend', 'Beaches in Benguela', 'Where can I fly a drone?', 'Surprise me']
@@ -9490,7 +9608,7 @@
                 surprise: ['Et ça, ça te dit ? {name}, à {where}. {highlight}', 'Tu connais {name} ? C’est à {where}. {highlight}', 'Je parie que {name}, à {where}, va te plaire. {highlight}'],
                 recommend: 'Tu connais un lieu qui devrait être sur Tuende ? Dis-le-nous avec ce formulaire et l’équipe le vérifiera.',
                 seeAll: 'Tout voir ({n})', guideMore: 'Tout lire : {title}', openAgenda: 'Voir l’agenda', openWonders: 'Voir les merveilles', openDrones: 'Règles pour drones',
-                openPhoto: 'Spots photo', openSpot: 'Conseils photo', openRoutes: 'Voir les itinéraires', openMap: 'Ouvrir la carte', openFx: 'Voir le taux de change du jour', fxToday: 'Taux de référence de la BNA du {date} : {rates}. Dans les banques et bureaux de change, le montant final est un peu différent.', recommendBtn: 'Proposer un lieu',
+                openPhoto: 'Spots photo', openSpot: 'Conseils photo', openRoutes: 'Voir les itinéraires', openMap: 'Ouvrir la carte', openFx: 'Voir le taux de change du jour', routeIntro: 'Pour aller {route} : {summary} Les prix changent ; vérifie avant de partir.', routeModes: { bus: 'en bus', plane: 'en avion', train: 'en train', boat: 'en bateau', car: 'en voiture' }, routeFrom: 'à partir de {price}', routeCar: '{km} km, environ {hours} sans arrêt', routeOr: 'ou', openRoute: 'Voir toutes les options', fxToday: 'Taux de référence de la BNA du {date} : {rates}. Dans les banques et bureaux de change, le montant final est un peu différent.', recommendBtn: 'Proposer un lieu',
                 locateBtn: 'Utiliser ma position', directions: 'Itinéraire',
                 chipCat: '{cat} à {where}', chipEvents: 'Événements à {where}',
                 chipsStart: ['Que faire à Luanda ?', 'Ai-je besoin d’un visa ?', 'Événements ce week-end', 'Plages à Benguela', 'Où faire voler un drone ?', 'Surprends-moi']
@@ -9542,7 +9660,7 @@
                 surprise: ['¿Qué tal esto? {name}, en {where}. {highlight}', '¿Conoces {name}? Está en {where}. {highlight}', 'Apuesto a que te gustará {name}, en {where}. {highlight}'],
                 recommend: '¿Conoces un lugar que debería estar en Tuende? Cuéntanoslo con este formulario y el equipo lo comprobará.',
                 seeAll: 'Ver todos ({n})', guideMore: 'Leer todo: {title}', openAgenda: 'Ver la agenda', openWonders: 'Ver las Maravillas', openDrones: 'Normas para drones',
-                openPhoto: 'Lugares para fotografiar', openSpot: 'Consejos de fotografía', openRoutes: 'Ver las rutas', openMap: 'Abrir el mapa', openFx: 'Ver el tipo de cambio del día', fxToday: 'Tipo de referencia del BNA del {date}: {rates}. En bancos y casas de cambio el importe final es algo distinto.', recommendBtn: 'Sugerir un lugar',
+                openPhoto: 'Lugares para fotografiar', openSpot: 'Consejos de fotografía', openRoutes: 'Ver las rutas', openMap: 'Abrir el mapa', openFx: 'Ver el tipo de cambio del día', routeIntro: 'Para ir {route}: {summary} Los precios cambian; confírmalo antes de viajar.', routeModes: { bus: 'en autobús', plane: 'en avión', train: 'en tren', boat: 'en barco', car: 'en coche' }, routeFrom: 'desde {price}', routeCar: '{km} km, unas {hours} sin paradas', routeOr: 'o', openRoute: 'Ver todas las opciones', fxToday: 'Tipo de referencia del BNA del {date}: {rates}. En bancos y casas de cambio el importe final es algo distinto.', recommendBtn: 'Sugerir un lugar',
                 locateBtn: 'Usar mi ubicación', directions: 'Cómo llegar',
                 chipCat: '{cat} en {where}', chipEvents: 'Eventos en {where}',
                 chipsStart: ['¿Qué hacer en Luanda?', '¿Necesito visado?', 'Eventos este fin de semana', 'Playas en Benguela', '¿Dónde puedo volar un dron?', 'Sorpréndeme']
@@ -9745,6 +9863,47 @@
         }
 
         // Builds Kamba's answer on the device: text, place/event cards, buttons, follow-up questions and the facts used.
+        const ROUTE_INTENT = / (como (ir|chegar|viajar)|ir (de|do|da|para|pro|ao|a)|chegar (a|ao|ate)|viajar|viagem|autocarros?|machimbombo|comboios?|voos?|aviao|barco|how (to|do i|can i|do you) (get|go|travel)|get to|travel to|bus|coach|train|flights?|ferry|boat|comment (aller|se rendre)|aller (a|de|au)|bateau|avion|como (llegar|voy)|llegar a|autobus|tren|vuelos?) /;
+        const ROUTE_ARTICLE = new Set(['Lobito', 'Luena', 'Huambo', 'Lubango', 'Soyo', 'Dundo', 'Namibe', 'Cuíto']);
+
+        // Picks the route whose destination is named in the question (and its origin, when also named).
+        function kambaRoute(text) {
+            if (!ROUTE_INTENT.test(text)) return null;
+            const named = (name) => Boolean(name) && text.includes(` ${normalize(name)} `);
+            return TRAVEL_ROUTES
+                .map((r) => ({ r, to: named(r.to), also: (r.also || '').split(', ').some(named), from: named(r.from) }))
+                .filter((x) => x.to || x.also)
+                .sort((a, b) => (b.to * 2 + b.from) - (a.to * 2 + a.from))[0]?.r || null;
+        }
+
+        function routeName(r) {
+            const de = (c) => (ROUTE_ARTICLE.has(c) ? 'do' : 'de');
+            const a = (c) => (ROUTE_ARTICLE.has(c) ? 'ao' : 'a');
+            if (lang === 'en') return `from ${r.from} to ${r.to}`;
+            if (lang === 'fr') return `de ${r.from} à ${r.to}`;
+            if (lang === 'es') return `de ${r.from} a ${r.to}`;
+            return `${de(r.from)} ${r.from} ${a(r.to)} ${r.to}`;
+        }
+
+        function routeSummaryText(r) {
+            const modes = kambaPick('routeModes');
+            const parts = ['bus', 'plane', 'train', 'boat'].filter((m) => r.options.some((o) => o.mode === m)).map((m) => {
+                const opts = r.options.filter((o) => o.mode === m);
+                const prices = opts.filter((o) => o.price?.from && !o.price.text).map((o) => o.price.from);
+                const text = opts.find((o) => o.price?.text)?.price.text;
+                if (prices.length) return `${modes[m]} ${kambaText('routeFrom', { price: `${Math.min(...prices).toLocaleString(locale())} Kz` })}`;
+                return text ? `${modes[m]} (${text[lang] || text.pt})` : modes[m];
+            });
+            const car = r.options.find((o) => o.mode === 'car' && o.km);
+            if (car) {
+                const h = Math.round(car.hours * 6) / 6;
+                const hours = `${Math.floor(h)}h${String(Math.round((h % 1) * 60)).padStart(2, '0')}`.replace(/h00$/, 'h');
+                parts.push(`${modes.car}: ${kambaText('routeCar', { km: car.km.toLocaleString(locale()), hours })}`);
+            }
+            const text = parts.length > 1 ? `${parts.slice(0, -1).join(', ')} ${kambaText('routeOr')} ${parts.at(-1)}` : parts[0] || '';
+            return text ? `${text.charAt(0).toUpperCase()}${text.slice(1)}.` : '';
+        }
+
         function kambaReply(raw) {
             const q = kambaRead(raw);
             const out = { parts: [], cards: [], buttons: [], chips: [], facts: [] };
@@ -9776,6 +9935,15 @@
             if (/ (sugerir (um )?lugar|adicionar (um )?lugar|acrescentar (um )?lugar|falta (um|o|a) |missing|add a place|suggest a place|ajouter un lieu|proposer un lieu|anadir un lugar|sugerir un lugar) /.test(q.text)) {
                 say('recommend');
                 out.buttons.push(kambaGoBtn('recommend', kambaText('recommendBtn')));
+                return out;
+            }
+
+            // Getting between cities: "como ir de Luanda a Benguela", "how do I get to Lubango", "autocarro para o Huambo".
+            const route = kambaRoute(` ${kambaWords(raw).join(' ')} `);
+            if (route) {
+                say('routeIntro', { route: escapeHTML(routeName(route)), summary: escapeHTML(routeSummaryText(route)) });
+                out.facts.push(`${routeName(route)}: ${routeSummaryText(route)}`);
+                out.buttons.push(`<a class="kamba-link" href="${escapeHTML(asset(`rotas/${route.id}.html`))}" target="_blank" rel="noopener">${escapeHTML(kambaText('openRoute'))}</a>`);
                 return out;
             }
 
