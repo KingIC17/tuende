@@ -40,6 +40,7 @@ CATEGORY = {
     'sport': ('Desporto', 'Sport', 'SportsActivityLocation'),
     'transport': ('Transporte', 'Transport', 'Place'),
     'services': ('Câmbio', 'Exchange', 'LocalBusiness'),
+    'health': ('Saúde', 'Health', 'MedicalClinic'),
 }
 DAYS = [(1, 'Segunda'), (2, 'Terça'), (3, 'Quarta'), (4, 'Quinta'), (5, 'Sexta'), (6, 'Sábado'), (0, 'Domingo')]
 MONTHS = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
@@ -172,6 +173,8 @@ STYLE = """
 def page(v, others, desc_en):
     name = v['name']
     cat_pt, cat_en, schema_type = CATEGORY[v['type']]
+    if v['type'] == 'health' and v['name'].startswith('Hospital'):
+        schema_type = 'Hospital'
     where = place_line(v)
     s = slug(name)
     url = f'{SITE}lugares/{s}.html'
@@ -263,7 +266,7 @@ def page(v, others, desc_en):
         </section>
     </main>
     <footer>
-        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="./">Todos os lugares</a> · <a href="../termos.html">Termos de utilização</a></p>
+        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="./">Todos os lugares</a> · <a href="../sobre/">Sobre o Tuende</a> · <a href="../termos.html">Termos de utilização</a></p>
     </footer>
 </body>
 </html>
@@ -293,8 +296,9 @@ PLURAL = {
     'restaurant': 'Restaurantes', 'bar': 'Bares', 'nightclub': 'Discotecas', 'beach': 'Praias', 'culture': 'Cultura e monumentos',
     'museum': 'Museus', 'nature': 'Natureza', 'accommodation': 'Alojamento', 'shopping': 'Centros comerciais', 'plaza': 'Praças e passeios',
     'sport': 'Desporto', 'transport': 'Transportes', 'services': 'Câmbio',
+    'health': 'Saúde e hospitais',
 }
-TYPE_ORDER = ['culture', 'museum', 'nature', 'beach', 'plaza', 'restaurant', 'bar', 'nightclub', 'accommodation', 'shopping', 'sport', 'services', 'transport']
+TYPE_ORDER = ['culture', 'museum', 'nature', 'beach', 'plaza', 'restaurant', 'bar', 'nightclub', 'accommodation', 'shopping', 'sport', 'services', 'health', 'transport']
 
 
 def province(v):
@@ -347,6 +351,9 @@ TOPICS = [
     {'slug': 'casas-de-cambio-em-angola', 'title': 'Casas de câmbio em Angola', 'en': 'Currency exchange in Angola', 'group': 'province',
      'pick': lambda v: v['type'] == 'services', 'what': 'casas de câmbio em Angola', 'what_en': 'currency exchange offices in Angola',
      'cta': ('../cambio/', 'Câmbio do dia (BNA)')},
+    {'slug': 'hospitais-e-clinicas-em-angola', 'title': 'Hospitais e clínicas em Angola', 'en': 'Hospitals and clinics in Angola', 'group': 'province',
+     'pick': lambda v: v['type'] == 'health', 'what': 'hospitais e clínicas em Angola, com urgência e médicos que falam inglês',
+     'what_en': 'hospitals and clinics in Angola, with emergency care and English-speaking doctors'},
 ]
 
 
@@ -443,7 +450,7 @@ def topic_page(topic, items):
         </section>
     </main>
     <footer>
-        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="./">Todos os lugares</a> · <a href="../termos.html">Termos de utilização</a></p>
+        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="./">Todos os lugares</a> · <a href="../sobre/">Sobre o Tuende</a> · <a href="../termos.html">Termos de utilização</a></p>
     </footer>
 </body>
 </html>
@@ -653,7 +660,7 @@ def agenda_page(events, today):
         </section>
     </main>
     <footer>
-        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../termos.html">Termos de utilização</a></p>
+        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../sobre/">Sobre o Tuende</a> · <a href="../termos.html">Termos de utilização</a></p>
     </footer>
     <script>
         // Esconde os eventos que já acabaram (hora de Angola), até a página ser gerada de novo.
@@ -891,7 +898,7 @@ def cambio_page(codes, fx, venues):
         </section>
     </main>
     <footer>
-        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../termos.html">Termos de utilização</a></p>
+        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../sobre/">Sobre o Tuende</a> · <a href="../termos.html">Termos de utilização</a></p>
     </footer>
     <script>{script}    </script>
 </body>
@@ -1077,7 +1084,7 @@ def route_page(r, routes, venues):
         </section>
     </main>
     <footer>
-        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../termos.html">Termos de utilização</a></p>
+        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../sobre/">Sobre o Tuende</a> · <a href="../termos.html">Termos de utilização</a></p>
     </footer>
 </body>
 </html>
@@ -1130,7 +1137,7 @@ def routes_index_page(routes):
         </section>
     </main>
     <footer>
-        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../termos.html">Termos de utilização</a></p>
+        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../sobre/">Sobre o Tuende</a> · <a href="../termos.html">Termos de utilização</a></p>
     </footer>
 </body>
 </html>
@@ -1176,11 +1183,91 @@ def index_page(venues):
 {body}
     </main>
     <footer>
-        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../termos.html">Termos de utilização</a></p>
+        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../sobre/">Sobre o Tuende</a> · <a href="../termos.html">Termos de utilização</a></p>
     </footer>
 </body>
 </html>
 '''
+
+
+# Página "Sobre o Tuende" (web/sobre/index.html): quem somos, como verificamos e o que não somos.
+def sobre_page(venues, events, routes):
+    url = f'{SITE}sobre/'
+    today = date.today().isoformat()
+    provinces = len({province(v) for v in venues})
+    upcoming = len([ev for ev in events if (ev.get('end') or ev.get('start') or '') >= today])
+    description = ('O Tuende é um guia gratuito de Angola, com a fonte de cada informação, só fotos reais e "por confirmar" '
+                   'em vez de inventar. Sem publicidade e sem lugares pagos.')
+    data = {'@context': 'https://schema.org', '@type': 'AboutPage', 'name': 'Sobre o Tuende', 'url': url, 'description': description, 'inLanguage': 'pt',
+            'isPartOf': {'@type': 'WebSite', 'name': 'Tuende', 'url': SITE},
+            'mainEntity': {'@type': 'Organization', 'name': 'Tuende', 'url': SITE, 'logo': f'{SITE}icon-512.png', 'description': description}}
+    trust = [
+        ('Uma fonte para cada lugar.', 'Cada lugar e cada evento mostra de onde vem a informação e a data em que a verificámos. Pode abrir a fonte e confirmar.'),
+        ('«Por confirmar» em vez de inventar.', 'Se não sabemos um horário, um preço ou um telefone, dizemo-lo. Os telefones só aparecem depois de confirmados.'),
+        ('Só fotos reais.', 'Fotos do próprio lugar, com o nome do autor e a licença. Sem uma foto real, o lugar fica sem foto.'),
+        ('Ninguém paga para aparecer.', 'O Tuende é gratuito, não pede registo e não tem publicidade. Hoje nenhum lugar paga para estar aqui ou para aparecer primeiro.'),
+        ('Fontes oficiais quando existem.', 'O câmbio do dia vem do Banco Nacional de Angola, os vistos do portal eVISA do SME, e a segurança e a saúde dos conselhos de viagem de Portugal e do Reino Unido.'),
+    ]
+    items = '\n'.join(f'            <li><b>{e(a)}</b> {e(b)}</li>' for a, b in trust)
+    return f"""<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre o Tuende: um guia de Angola com fontes | Tuende</title>
+    <meta name="description" content="{e(description)}">
+    <link rel="canonical" href="{url}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tuende">
+    <meta property="og:title" content="Sobre o Tuende">
+    <meta property="og:description" content="{e(description)}">
+    <meta property="og:url" content="{url}">
+    <meta property="og:image" content="{SITE}og-image.jpg">
+    <meta name="theme-color" content="#CE1126">
+    <link rel="icon" type="image/png" href="../icon-192.png">
+    <style>{STYLE}{EXTRA_STYLE}        .trust {{ margin-top: 10px; padding-left: 20px; display: grid; gap: 10px; }}
+    </style>
+    <script type="application/ld+json">{json.dumps(data, ensure_ascii=False)}</script>
+</head>
+<body>
+    <div class="strip" aria-hidden="true"></div>
+    <header>
+        <a class="brand" href="../">Tuende</a>
+        <a class="btn solid" href="../">Abrir a app</a>
+    </header>
+    <main>
+        <p class="crumbs"><a href="../">Tuende</a> › Sobre</p>
+        <h1 style="margin-top:12px">Sobre o Tuende</h1>
+        <p class="lead">O Tuende é um guia gratuito de Angola, para quem visita e para quem vive cá: onde comer, o que ver, onde dormir, como viajar entre cidades e o que está a acontecer, com a fonte de cada informação.</p>
+
+        <h2>Porque pode confiar no Tuende</h2>
+        <ul class="trust">
+{items}
+        </ul>
+
+        <h2>O que o Tuende não é</h2>
+        <p>O Tuende não é um serviço do Governo de Angola nem uma agência de viagens, e não tem acreditação oficial. Não vendemos viagens nem bilhetes: indicamos onde comprá-los. Horários e preços mudam, por isso confirme o mais importante antes de ir.</p>
+
+        <h2>Feito para quem chega e para quem cá vive</h2>
+        <p>Em português, inglês, francês e espanhol. Os preços aparecem em kwanzas, com o valor aproximado em dólares, euros e libras. O que já abriu continua disponível sem internet, e o Kamba, o assistente, responde com os dados verificados do Tuende.</p>
+
+        <h2>O Tuende hoje</h2>
+        <p>{len(venues)} lugares em {provinces} províncias, {upcoming} eventos na agenda e {len(routes)} rotas entre cidades. Veja <a href="../lugares/">todos os lugares</a>, a <a href="../agenda/">agenda</a>, o <a href="../cambio/">câmbio do dia</a> e as <a href="../rotas/">rotas entre cidades</a>.</p>
+
+        <h2>Ajude a melhorar</h2>
+        <p>Viu um erro ou conhece um lugar que devia estar aqui? Na <a href="../">app</a>, use «Recomendar um lugar». Cada sugestão é verificada antes de ser publicada.</p>
+
+        <section lang="en">
+            <h2>About Tuende</h2>
+            <p>Tuende is a free guide to Angola for visitors and locals, in Portuguese, English, French and Spanish. Every place and event shows its source and the date it was checked; when something is not confirmed we say "to be confirmed" instead of guessing; we only use real photos of each place, credited to their authors. Tuende has no advertising and no paid listings. It is not a government service or a travel agency, and it has no official accreditation.</p>
+        </section>
+    </main>
+    <footer>
+        <p><a href="../">Tuende</a> · Descubra onde ir em Angola · <a href="../lugares/">Todos os lugares</a> · <a href="../termos.html">Termos de utilização</a></p>
+    </footer>
+</body>
+</html>
+"""
 
 
 def main():
@@ -1222,10 +1309,12 @@ def main():
     (WEB / 'cambio').mkdir(exist_ok=True)
     codes, fx, live = load_fx()
     (WEB / 'cambio' / 'index.html').write_text(cambio_page(codes, fx, venues), encoding='utf-8')
+    (WEB / 'sobre').mkdir(exist_ok=True)
+    (WEB / 'sobre' / 'index.html').write_text(sobre_page(venues, events, routes), encoding='utf-8')
 
     today = date.today().isoformat()
     # Só endereços próprios: as secções da app (?page=...) apontam para a página principal (canonical).
-    urls = [SITE, f'{SITE}agenda/', f'{SITE}cambio/', f'{SITE}rotas/'] + [f'{SITE}rotas/{r["id"]}.html' for r in routes] + [f'{SITE}lugares/'] + [f'{SITE}lugares/{t["slug"]}.html' for t in TOPICS] + [f'{SITE}termos.html']
+    urls = [SITE, f'{SITE}agenda/', f'{SITE}cambio/', f'{SITE}rotas/'] + [f'{SITE}rotas/{r["id"]}.html' for r in routes] + [f'{SITE}lugares/'] + [f'{SITE}lugares/{t["slug"]}.html' for t in TOPICS] + [f'{SITE}termos.html', f'{SITE}sobre/']
     urls += [f'{SITE}lugares/{slug(v["name"])}.html' for v in venues]
     sitemap = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     sitemap += [f'  <url><loc>{html.escape(u)}</loc><lastmod>{today}</lastmod></url>' for u in urls]
