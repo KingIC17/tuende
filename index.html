@@ -10993,7 +10993,40 @@
 
         const kambaStartChips = () => [...KAMBA_TEXT[lang].chipsStart].sort(() => Math.random() - 0.5).slice(0, 8);
 
+        // Words that only one of the four languages uses. Words shared by two (de, que, para, en, no, tu...) are left out.
+        const KAMBA_LANG_WORDS = {
+            pt: new Set('os as do da dos das na nas um uma e é há tem onde quanto quantos quantas quais qual fazer preciso posso quero perto hoje amanhã amanha obrigado obrigada olá ola você voce estou são sao ao aos pelo pela não nao muito bué bue fixe já também tambem eu meu minha teu tua em com dias fim praias hotéis hoteis museus'.split(' ')),
+            en: new Set('the an is are what where how when which who in of for with near can could does i my you your want need things thing hello hi thanks thank much many best good today tonight there here this that from and or days beaches hotels museums events'.split(' ')),
+            fr: new Set('le les des du au aux est sont je vous nous il elle où quoi quel quelle quels quelles faire avec dans ce cette ces une et mais près pres besoin peux puis veux bonjour salut merci combien aujourd soir mon ma mes ton ta tes pour jours plages hôtels musées événements'.split(' ')),
+            es: new Set('el los las del al una es son están estan donde dónde qué hay cuanto cuánto cuantos cuántos cual cuál hacer necesito puedo quiero cerca hoy mañana gracias hola usted estoy muy también yo mi mis su sus con días fin playas hoteles museos'.split(' '))
+        };
+
+        // The language of the question: when it is clearly one of the other three, Kamba answers in it.
+        function kambaLang(raw) {
+            const words = String(raw).toLowerCase().split(/[^a-zà-ÿœ]+/).filter(Boolean);
+            const score = Object.fromEntries(Object.entries(KAMBA_LANG_WORDS).map(([code, set]) => [code, words.filter((w) => set.has(w)).length]));
+            if (/[ãõ]/.test(raw)) score.pt += 1;
+            if (/[ñ¿¡]/.test(raw)) score.es += 2;
+            if (/[èùœ]/.test(raw)) score.fr += 1;
+            const [best, top] = Object.entries(score).sort((a, b) => b[1] - a[1])[0];
+            const others = Object.entries(score).filter(([code]) => code !== best).map(([, n]) => n);
+            if (best === lang || !top || score[lang] >= top) return lang;
+            return top >= 2 || others.every((n) => n === 0) ? best : lang;
+        }
+
         function kambaReply(raw) {
+            const asked = kambaLang(raw);
+            if (asked === lang) return kambaReplyIn(raw);
+            const ui = lang;
+            lang = asked;
+            try {
+                return kambaReplyIn(raw);
+            } finally {
+                lang = ui;
+            }
+        }
+
+        function kambaReplyIn(raw) {
             const q = kambaRead(raw);
             const out = { parts: [], cards: [], buttons: [], chips: [], facts: [] };
             const say = (key, vars) => out.parts.push(`<p>${kambaHTML(key, vars)}</p>`);
@@ -11204,7 +11237,8 @@
                         airport ? t(v.exact ? 'droneAirport' : 'droneAirportNear', { km: airport.km, name: escapeHTML(airport.name) }) : ''].filter(Boolean);
                     if (extra.length) out.parts.push(`<p>${extra.join('<br>')}</p>`);
                     places(named);
-                    out.buttons.push(`<a class="kamba-link" href="${escapeHTML(mapsURL(v, 'directions'))}" target="_blank" rel="noopener">${icon('directions')}${escapeHTML(kambaText('directions'))}</a>`);
+                    out.buttons.push(`<a class="kamba-link" href="${escapeHTML(mapsURL(v, 'directions'))}" target="_blank" rel="noopener">${icon('directions')}${escapeHTML(kambaText('directions'))}</a>`,
+                        `<button class="kamba-link" type="button" data-plan-add="place:${v.id}">${icon('calendar')}${escapeHTML(t('planAddTitle'))}</button>`);
                     if (spot) out.buttons.push(kambaGoBtn(`wonders:local-${v.id}`, kambaText('openSpot')));
                     if (q.flags.drone) out.buttons.push(kambaGoBtn('wonders:drones', kambaText('openDrones')));
                     const sameKind = venues.filter((x) => x.type === v.type && cityOf(x) === cityOf(v) && x.id !== v.id);
