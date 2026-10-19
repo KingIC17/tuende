@@ -306,6 +306,13 @@
 
         /* Main category tiles */
         .feature-tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
+        .start-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+        .start-card { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 16px; text-align: left; background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; }
+        .start-card:hover { border-color: var(--primary); }
+        .start-card .icon { width: 26px; height: 26px; color: var(--primary); }
+        .start-card b { font-size: 17px; line-height: 1.25; }
+        .start-card span { font-size: 14px; color: var(--muted); }
+        @media (max-width: 720px) { .start-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; } .start-card { padding: 12px; } .start-card b { font-size: 15px; } .start-card span { font-size: 13px; } }
         .ftile {
             display: flex;
             flex-direction: column;
@@ -1777,7 +1784,10 @@
             {"id": 192, "type": "accommodation", "name": "Palmeiras Suite Hotel", "location": "Luanda - Talatona", "lat": -8.92, "lng": 13.19, "exact": false, "description": "Hotel de quatro estrelas em Talatona, com 91 suites, dois restaurantes de cozinha nacional e internacional, ginásio, jacuzzi, sauna, piscina exterior e piscina de borda infinita no terraço. Perto há pistas de ciclismo e de corrida.", "highlight": {"pt": "Suites em Talatona, com piscina de borda infinita no terraço.", "en": "Suites in Talatona, with a rooftop infinity pool.", "fr": "Des suites à Talatona, avec piscine à débordement sur le toit.", "es": "Suites en Talatona, con piscina infinita en la azotea."}, "verified": {"date": "2026-10-18", "sources": [{"label": "Ver Angola (janeiro de 2020)", "url": "https://www.verangola.net/va/pt/012020/sugestoes/17844/Palmeiras-Suite-Hotel-Onde-dormir.htm"}]}, "address": "Talatona, Luanda", "phone": ""},
             {"id": 193, "type": "accommodation", "name": "iu Hotel Luanda Talatona", "location": "Luanda - Talatona", "lat": -8.913355, "lng": 13.19258, "exact": true, "description": "Hotel de três estrelas na zona comercial de Talatona, com 120 quartos, perto do Shopping Avennida e do Centro de Convenções de Talatona. Pequeno-almoço em buffet, Wi-Fi grátis e salas para reuniões.", "highlight": {"pt": "Hotel de três estrelas perto do Shopping Avennida.", "en": "A three-star hotel near Shopping Avennida.", "fr": "Un hôtel trois étoiles près du Shopping Avennida.", "es": "Un hotel de tres estrellas cerca del Shopping Avennida."}, "verified": {"date": "2026-10-18", "sources": [{"label": "Ver Angola (fevereiro de 2017)", "url": "https://www.verangola.net/va/pt/022017/sugestoes/7187/Iu-Hotel-Luanda-Talatona.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/3626123761"}]}, "address": "Rua Parque Nacional da Kameia, Talatona, Luanda", "phone": ""},
             {"id": 194, "type": "accommodation", "name": "Hotel Nempanzu", "location": "Zaire - Soyo", "lat": -6.131346, "lng": 12.37098, "exact": true, "description": "Hotel no Soyo, perto do rio Zaire e a cerca de cinco minutos de carro do aeroporto. Tem 102 quartos de várias tipologias, restaurante, bar, sala de reuniões, Wi-Fi gratuito, piscina e ginásio. O pequeno-almoço em buffet está incluído no preço.", "highlight": {"pt": "Hotel com piscina no Soyo, a cinco minutos do aeroporto.", "en": "A hotel with a pool in Soyo, five minutes from the airport.", "fr": "Un hôtel avec piscine à Soyo, à cinq minutes de l'aéroport.", "es": "Un hotel con piscina en Soyo, a cinco minutos del aeropuerto."}, "verified": {"date": "2026-10-18", "sources": [{"label": "Ver Angola (junho de 2020)", "url": "https://www.verangola.net/va/pt/062020/sugestoes/20650/Hotel-Nempanzu-Onde-dormir.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/211925364"}]}, "address": "EN 100, Soyo, Zaire", "phone": ""},
-            {"id": 195, "type": "accommodation", "name": "Netu's Village", "location": "Luanda - Mussulo", "lat": -9.04, "lng": 13.06, "exact": false, "description": "Resort de bungalows na contra-costa do Mussulo, com acesso a praias quase desertas. Tem piscina, bar na praia e restaurante; os bungalows (T0, T2, T2 Plus e T3) têm casa de banho privada. Para descansar ao sol, com poucas atividades.", "highlight": {"pt": "Bungalows no Mussulo, junto a praias quase desertas.", "en": "Bungalows on Mussulo, by almost empty beaches.", "fr": "Des bungalows sur le Mussulo, près de plages presque désertes.", "es": "Bungalós en el Mussulo, junto a playas casi desiertas."}, "verified": {"date": "2026-10-18", "sources": [{"label": "Ver Angola (setembro de 2020)", "url": "https://www.verangola.net/va/pt/092020/sugestoes/21664/Netu%E2%80%99s-Village-Onde-dormir.htm"}]}, "address": "Contra-costa do Mussulo, Luanda", "phone": ""}
+            {"id": 195, "type": "accommodation", "name": "Netu's Village", "location": "Luanda - Mussulo", "lat": -9.04, "lng": 13.06, "exact": false, "description": "Resort de bungalows na contra-costa do Mussulo, com acesso a praias quase desertas. Tem piscina, bar na praia e restaurante; os bungalows (T0, T2, T2 Plus e T3) têm casa de banho privada. Para descansar ao sol, com poucas atividades.", "highlight": {"pt": "Bungalows no Mussulo, junto a praias quase desertas.", "en": "Bungalows on Mussulo, by almost empty beaches.", "fr": "Des bungalows sur le Mussulo, près de plages presque désertes.", "es": "Bungalós en el Mussulo, junto a playas casi desiertas."}, "verified": {"date": "2026-10-18", "sources": [{"label": "Ver Angola (setembro de 2020)", "url": "https://www.verangola.net/va/pt/092020/sugestoes/21664/Netu%E2%80%99s-Village-Onde-dormir.htm"}]}, "address": "Contra-costa do Mussulo, Luanda", "phone": ""},
+            {"id": 196, "type": "restaurant", "name": "Otto Luanda", "location": "Luanda - Ilha do Cabo", "lat": -8.792, "lng": 13.224, "exact": false, "description": "Restaurante italiano de cozinha de autor do chef Aldo Cavagliato, na Avenida Murtala Mohamed, na Ilha do Cabo. Na carta há lasanha, esparguete, risoto e pizzas.", "highlight": {"pt": "Cozinha italiana de autor na Ilha do Cabo.", "en": "Signature Italian cooking on Ilha do Cabo.", "fr": "Cuisine italienne d'auteur sur l'Ilha do Cabo.", "es": "Cocina italiana de autor en la Ilha do Cabo."}, "hours": {"0": [["12:00", "00:00"]], "1": [["12:00", "00:00"]], "3": [["12:00", "00:00"]], "4": [["12:00", "00:00"]], "5": [["12:00", "02:00"]], "6": [["12:00", "02:00"]]}, "hoursNote": {"pt": "Fecha à terça-feira. Horário publicado em abril de 2024.", "en": "Closed on Tuesdays. Hours published in April 2024.", "fr": "Fermé le mardi. Horaires publiés en avril 2024.", "es": "Cierra los martes. Horario publicado en abril de 2024."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Ver Angola (abril de 2024)", "url": "https://www.verangola.net/va/pt/042024/sugestoes/39593/Otto-Luanda-Onde-comer.htm"}]}, "address": "Avenida Murtala Mohamed, Ilha do Cabo, Luanda", "phone": ""},
+            {"id": 197, "type": "restaurant", "name": "Barbarico", "location": "Luanda - Maculusso", "lat": -8.819142, "lng": 13.238569, "exact": true, "description": "Restaurante de cozinha portuguesa no Maculusso, junto à Avenida Comandante Che Guevara, aberto todos os dias. Na carta há pratos como frango à guia.", "highlight": {"pt": "Cozinha portuguesa no Maculusso, todos os dias.", "en": "Portuguese food in Maculusso, every day.", "fr": "Cuisine portugaise à Maculusso, tous les jours.", "es": "Cocina portuguesa en Maculusso, todos los días."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Ver Angola (julho de 2021)", "url": "https://www.verangola.net/va/pt/072021/sugestoes/26391/Barbarico-Onde-comer.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/3374994209"}]}, "address": "Maculusso, junto à Avenida Comandante Che Guevara, Luanda", "phone": ""},
+            {"id": 198, "type": "restaurant", "name": "Restaurante DUO (Miralua Club)", "location": "Luanda - Talatona", "lat": -8.922599, "lng": 13.171942, "exact": true, "description": "Restaurante de cozinha de fusão no Miralua Club, no condomínio Dolce Vita, em Talatona, com pratos de várias cozinhas: americana, brasileira, portuguesa e outras.", "highlight": {"pt": "Cozinha de fusão no Miralua Club, em Talatona.", "en": "Fusion food at the Miralua Club in Talatona.", "fr": "Cuisine fusion au Miralua Club, à Talatona.", "es": "Cocina de fusión en el Miralua Club, en Talatona."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Ver Angola (fevereiro de 2022)", "url": "https://www.verangola.net/va/pt/022022/sugestoes/29460/Restaurante-DUO-Talatona-Onde-comer.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/12216086757"}]}, "address": "Miralua Club, Condomínio Dolce Vita, Talatona, Luanda", "phone": ""}
         ];
 
         const DESC_EN = {
@@ -1973,7 +1983,10 @@
             192: "A four-star hotel in Talatona with 91 suites, two restaurants serving Angolan and international food, a gym, jacuzzi, sauna, an outdoor pool and a rooftop infinity pool. There are cycling and running tracks nearby.",
             193: "A three-star hotel in Talatona's business district with 120 rooms, near Shopping Avennida and the Talatona Convention Centre. Buffet breakfast, free Wi-Fi and meeting rooms.",
             194: "A hotel in Soyo, near the Congo (Zaire) River and about five minutes by car from the airport. It has 102 rooms of several types, a restaurant, a bar, a meeting room, free Wi-Fi, a pool and a gym. Buffet breakfast is included.",
-            195: "A bungalow resort on the far side of the Mussulo peninsula, with access to almost empty beaches. It has a pool, a beach bar and a restaurant; the bungalows (studio to three bedrooms) have private bathrooms. A place to rest in the sun, with few activities."
+            195: "A bungalow resort on the far side of the Mussulo peninsula, with access to almost empty beaches. It has a pool, a beach bar and a restaurant; the bungalows (studio to three bedrooms) have private bathrooms. A place to rest in the sun, with few activities.",
+            196: "A signature Italian restaurant by chef Aldo Cavagliato on Avenida Murtala Mohamed, Ilha do Cabo. The menu has lasagne, spaghetti, risotto and pizzas.",
+            197: "A Portuguese restaurant in Maculusso, next to Avenida Comandante Che Guevara, open every day. The menu includes dishes such as frango à guia.",
+            198: "A fusion restaurant at the Miralua Club in the Dolce Vita condominium, Talatona, with dishes from several cuisines: American, Brazilian, Portuguese and more."
         };
 
         const DESC_FR = {
@@ -2169,7 +2182,10 @@
             192: "Un hôtel quatre étoiles à Talatona, avec 91 suites, deux restaurants de cuisine angolaise et internationale, une salle de sport, un jacuzzi, un sauna, une piscine extérieure et une piscine à débordement sur le toit. Des pistes cyclables et de course se trouvent à proximité.",
             193: "Un hôtel trois étoiles dans le quartier d'affaires de Talatona, avec 120 chambres, près du Shopping Avennida et du Centre de congrès de Talatona. Petit-déjeuner buffet, Wi-Fi gratuit et salles de réunion.",
             194: "Un hôtel à Soyo, près du fleuve Congo (Zaïre) et à environ cinq minutes en voiture de l'aéroport. Il compte 102 chambres de plusieurs types, un restaurant, un bar, une salle de réunion, le Wi-Fi gratuit, une piscine et une salle de sport. Le petit-déjeuner buffet est inclus.",
-            195: "Un resort de bungalows sur la contre-côte du Mussulo, avec accès à des plages presque désertes. Il dispose d'une piscine, d'un bar de plage et d'un restaurant ; les bungalows (du studio au trois chambres) ont une salle de bain privée. Pour se reposer au soleil, avec peu d'activités."
+            195: "Un resort de bungalows sur la contre-côte du Mussulo, avec accès à des plages presque désertes. Il dispose d'une piscine, d'un bar de plage et d'un restaurant ; les bungalows (du studio au trois chambres) ont une salle de bain privée. Pour se reposer au soleil, avec peu d'activités.",
+            196: "Un restaurant italien de cuisine d'auteur du chef Aldo Cavagliato, avenue Murtala Mohamed, sur l'Ilha do Cabo. À la carte : lasagnes, spaghettis, risotto et pizzas.",
+            197: "Un restaurant de cuisine portugaise à Maculusso, près de l'avenue Comandante Che Guevara, ouvert tous les jours. À la carte, des plats comme le frango à guia.",
+            198: "Un restaurant de cuisine fusion au Miralua Club, dans la résidence Dolce Vita à Talatona, avec des plats de plusieurs cuisines : américaine, brésilienne, portugaise et autres."
         };
 
         const DESC_ES = {
@@ -2365,7 +2381,10 @@
             192: "Un hotel de cuatro estrellas en Talatona, con 91 suites, dos restaurantes de cocina angoleña e internacional, gimnasio, jacuzzi, sauna, piscina exterior y piscina infinita en la azotea. Cerca hay pistas de ciclismo y de carrera.",
             193: "Un hotel de tres estrellas en la zona comercial de Talatona, con 120 habitaciones, cerca del Shopping Avennida y del Centro de Convenciones de Talatona. Desayuno bufé, wifi gratis y salas de reuniones.",
             194: "Un hotel en Soyo, cerca del río Congo (Zaire) y a unos cinco minutos en coche del aeropuerto. Tiene 102 habitaciones de varios tipos, restaurante, bar, sala de reuniones, wifi gratis, piscina y gimnasio. El desayuno bufé está incluido.",
-            195: "Un resort de bungalós en la contracosta del Mussulo, con acceso a playas casi desiertas. Tiene piscina, bar de playa y restaurante; los bungalós (de estudio a tres dormitorios) tienen baño privado. Para descansar al sol, con pocas actividades."
+            195: "Un resort de bungalós en la contracosta del Mussulo, con acceso a playas casi desiertas. Tiene piscina, bar de playa y restaurante; los bungalós (de estudio a tres dormitorios) tienen baño privado. Para descansar al sol, con pocas actividades.",
+            196: "Restaurante italiano de cocina de autor del chef Aldo Cavagliato, en la avenida Murtala Mohamed, en la Ilha do Cabo. En la carta hay lasaña, espaguetis, risotto y pizzas.",
+            197: "Restaurante de cocina portuguesa en Maculusso, junto a la avenida Comandante Che Guevara, abierto todos los días. En la carta hay platos como el frango à guia.",
+            198: "Restaurante de cocina de fusión en el Miralua Club, en el condominio Dolce Vita de Talatona, con platos de varias cocinas: estadounidense, brasileña, portuguesa y otras."
         };
 
         const MENU_DESC_EN = {
@@ -2608,6 +2627,15 @@
                 fxSeePlaces: 'Ver as {n} casas de câmbio na Tuende',
                 fxOpen: 'Ver o câmbio do dia',
                 routesBetween: 'Como ir de cidade em cidade',
+                startTitle: 'Por onde começar?',
+                startFirst: 'Primeira vez em Angola',
+                startFirstDesc: 'Vistos, dinheiro, cartão SIM e segurança antes de ir.',
+                startWeekend: 'Fim de semana em Luanda',
+                startWeekendDesc: 'Luanda em 2 dias, paragem a paragem.',
+                startKids: 'Com crianças',
+                startKidsDesc: 'Lugares indicados para famílias.',
+                startAdventure: 'Aventura e natureza',
+                startAdventureDesc: 'Quedas de água, serras e parques nacionais.',
                 contactLabel: 'Contacto',
                 toConfirm: 'Por confirmar',
                 stillToConfirm: 'Por confirmar',
@@ -3107,6 +3135,15 @@
                 fxSeePlaces: 'See the {n} exchange bureaus on Tuende',
                 fxOpen: 'See today\'s exchange rates',
                 routesBetween: 'Getting between cities',
+                startTitle: 'Where to start?',
+                startFirst: 'First time in Angola',
+                startFirstDesc: 'Visas, money, SIM cards and safety before you go.',
+                startWeekend: 'A weekend in Luanda',
+                startWeekendDesc: 'Luanda in 2 days, stop by stop.',
+                startKids: 'With children',
+                startKidsDesc: 'Places suited to families.',
+                startAdventure: 'Adventure and nature',
+                startAdventureDesc: 'Waterfalls, mountains and national parks.',
                 contactLabel: 'Contact',
                 toConfirm: 'To be confirmed',
                 stillToConfirm: 'To be confirmed',
@@ -3606,6 +3643,15 @@
                 fxSeePlaces: 'Voir les {n} bureaux de change sur Tuende',
                 fxOpen: 'Voir le taux de change du jour',
                 routesBetween: 'Aller d\'une ville à l\'autre',
+                startTitle: 'Par où commencer ?',
+                startFirst: 'Première fois en Angola',
+                startFirstDesc: 'Visas, argent, carte SIM et sécurité avant de partir.',
+                startWeekend: 'Un week-end à Luanda',
+                startWeekendDesc: 'Luanda en 2 jours, étape par étape.',
+                startKids: 'Avec des enfants',
+                startKidsDesc: 'Des lieux adaptés aux familles.',
+                startAdventure: 'Aventure et nature',
+                startAdventureDesc: 'Chutes d\'eau, montagnes et parcs nationaux.',
                 contactLabel: 'Contact',
                 toConfirm: 'À confirmer',
                 stillToConfirm: 'À confirmer',
@@ -4105,6 +4151,15 @@
                 fxSeePlaces: 'Ver las {n} casas de cambio en Tuende',
                 fxOpen: 'Ver el tipo de cambio del día',
                 routesBetween: 'Cómo ir de ciudad en ciudad',
+                startTitle: '¿Por dónde empezar?',
+                startFirst: 'Primera vez en Angola',
+                startFirstDesc: 'Visados, dinero, tarjeta SIM y seguridad antes de ir.',
+                startWeekend: 'Fin de semana en Luanda',
+                startWeekendDesc: 'Luanda en 2 días, parada a parada.',
+                startKids: 'Con niños',
+                startKidsDesc: 'Lugares adecuados para familias.',
+                startAdventure: 'Aventura y naturaleza',
+                startAdventureDesc: 'Cataratas, sierras y parques nacionales.',
                 contactLabel: 'Contacto',
                 toConfirm: 'Por confirmar',
                 stillToConfirm: 'Por confirmar',
@@ -6506,12 +6561,12 @@
             return amount.toLocaleString(locale(), { minimumFractionDigits: amount < 1 ? 2 : 0, maximumFractionDigits: digits });
         }
 
-        // "≈ 12 USD · 11 EUR" next to a price in Kwanza; nothing when the price is free, text-only or unknown.
+        // "≈ 12 USD · 11 EUR · 9 GBP" next to a price in Kwanza; nothing when the price is free, text-only or unknown.
         function fxText(v) {
             const p = v.price;
             if (!p || p.free || p.text || !p.from) return '';
             const range = (rate) => (p.to ? `${foreign(p.from, rate)}–${foreign(p.to, rate)}` : foreign(p.from, rate));
-            return `≈ ${range(fx.rates.usd)} USD · ${range(fx.rates.eur)} EUR`;
+            return `≈ ${range(fx.rates.usd)} USD · ${range(fx.rates.eur)} EUR${fx.rates.gbp ? ` · ${range(fx.rates.gbp)} GBP` : ''}`;
         }
 
         const fxNote = () => t('fxNote', { date: formatDate(fx.date) });
@@ -7205,8 +7260,20 @@
 
         /* ---------- Home ---------- */
 
+        // Entry points by kind of visitor; each opens something that already exists (guide, route, filter, collection).
+        function startHTML() {
+            const cards = [
+                ['passport', 'startFirst', 'data-action="guide"'],
+                ['calendar', 'startWeekend', 'data-route-open="luanda"'],
+                ['users', 'startKids', 'data-quick="family"'],
+                ['mountain', 'startAdventure', 'data-collection="nature"']
+            ];
+            return sectionHTML('secStart', t('startTitle'), '', `<div class="start-grid">${cards.map(([ic, key, attr]) =>
+                `<button class="start-card" type="button" ${attr}>${icon(ic)}<b>${t(key)}</b><span>${t(`${key}Desc`)}</span></button>`).join('')}</div>`);
+        }
+
         function renderHome() {
-            const parts = [featureTilesHTML()];
+            const parts = [featureTilesHTML(), startHTML()];
             const savedList = venues.filter((v) => favorites.includes(v.id));
             if (savedList.length) parts.push(sectionHTML('secSaved', t('savedTitle'), '', rowHTML(savedList), { saved: true }));
 
