@@ -6119,6 +6119,65 @@
                     { mode: 'train', who: 'Caminho de Ferro de Benguela (expresso)', where: { pt: 'Estação do Lobito; também para no Huambo e no Cuíto', en: 'Lobito station; also stops at Huambo and Cuíto', fr: 'Gare de Lobito ; arrêts aussi à Huambo et Cuíto', es: 'Estación de Lobito; también para en Huambo y Cuíto' }, place: 120, price: { from: 15350 }, note: { pt: 'Sai do Lobito à segunda-feira às 07h45 e chega ao Luena na terça às 09h28; o regresso sai às 08h30 e chega ao Lobito na quinta às 10h00. Bilhetes também nas estações do Huambo e do Cuíto.', en: 'Leaves Lobito on Monday at 07:45 and reaches Luena on Tuesday at 09:28; the return leaves at 08:30 and reaches Lobito on Thursday at 10:00. Tickets also at Huambo and Cuíto stations.', fr: 'Départ de Lobito le lundi à 7 h 45, arrivée à Luena le mardi à 9 h 28 ; le retour part à 8 h 30 et arrive à Lobito le jeudi à 10 h. Billets aussi aux gares de Huambo et Cuíto.', es: 'Sale de Lobito el lunes a las 07:45 y llega a Luena el martes a las 09:28; el regreso sale a las 08:30 y llega a Lobito el jueves a las 10:00. Billetes también en las estaciones de Huambo y Cuíto.' }, source: ROUTE_SOURCES.cfb }
                 ],
                 places: [133]
+            },
+            {
+                id: 'luanda-sumbe', from: 'Luanda', to: 'Sumbe', checked: '2026-10-19',
+                options: [
+                    { mode: 'bus', who: 'Macon', note: { pt: 'A Macon tem agência no Cuanza Sul. Preço por confirmar na app ou nos balcões.', en: 'Macon has an agency in Cuanza Sul. Fare to be confirmed in the app or at its counters.', fr: 'Macon a une agence au Cuanza Sul. Tarif à confirmer dans l\'app ou aux guichets.', es: 'Macon tiene agencia en Cuanza Sul. Precio por confirmar en la app o en sus taquillas.' }, source: ROUTE_SOURCES.macon },
+                    { mode: 'car', km: 327, hours: 5.0, source: ROUTE_SOURCES.osrm }
+                ]
+            },
+            {
+                id: 'luanda-uige', from: 'Luanda', to: 'Uíge', checked: '2026-10-19',
+                options: [
+                    { mode: 'bus', who: 'Macon', note: { pt: 'A Macon tem agência no Uíge. Preço por confirmar na app ou nos balcões.', en: 'Macon has an agency in Uíge. Fare to be confirmed in the app or at its counters.', fr: 'Macon a une agence à Uíge. Tarif à confirmer dans l\'app ou aux guichets.', es: 'Macon tiene agencia en Uíge. Precio por confirmar en la app o en sus taquillas.' }, source: ROUTE_SOURCES.macon },
+                    { mode: 'car', km: 343, hours: 4.3, source: ROUTE_SOURCES.osrm }
+                ]
+            },
+            {
+                id: 'luanda-mbanza-kongo', from: 'Luanda', to: 'Mbanza Kongo', checked: '2026-10-19',
+                options: [
+                    { mode: 'bus', who: 'Macon', note: { pt: 'A Macon tem agência na província do Zaire. Preço por confirmar na app ou nos balcões.', en: 'Macon has an agency in Zaire province. Fare to be confirmed in the app or at its counters.', fr: 'Macon a une agence dans la province du Zaïre. Tarif à confirmer dans l\'app ou aux guichets.', es: 'Macon tiene agencia en la provincia de Zaire. Precio por confirmar en la app o en sus taquillas.' }, source: ROUTE_SOURCES.macon },
+                    { mode: 'car', km: 466, hours: 7.8, source: ROUTE_SOURCES.osrm }
+                ]
+            },
+            {
+                id: 'luanda-kuito', from: 'Luanda', to: 'Cuíto', also: 'Kuito', checked: '2026-10-19',
+                options: [
+                    { mode: 'bus', who: 'Macon', note: { pt: 'A Macon tem agência no Cuíto. Preço por confirmar na app ou nos balcões.', en: 'Macon has an agency in Cuíto. Fare to be confirmed in the app or at its counters.', fr: 'Macon a une agence à Cuíto. Tarif à confirmer dans l\'app ou aux guichets.', es: 'Macon tiene agencia en Cuíto. Precio por confirmar en la app o en sus taquillas.' }, source: ROUTE_SOURCES.macon },
+                    { mode: 'plane', who: 'TAAG', where: AIAAN, arrive: 105, note: TAAG_NOTE, source: ROUTE_SOURCES.taag },
+                    { mode: 'car', km: 754, hours: 10.6, source: ROUTE_SOURCES.osrm }
+                ]
+            },
+            {
+                id: 'luanda-luena', from: 'Luanda', to: 'Luena', checked: '2026-10-19',
+                options: [
+                    { mode: 'plane', who: 'TAAG', where: AIAAN, arrive: 102, note: TAAG_NOTE, source: ROUTE_SOURCES.taag },
+                    { mode: 'train', who: 'Caminho de Ferro de Benguela (expresso)', where: { pt: 'Estação do Lobito (primeiro é preciso chegar ao Lobito)', en: 'Lobito station (you first need to get to Lobito)', fr: 'Gare de Lobito (il faut d\'abord rejoindre Lobito)', es: 'Estación de Lobito (primero hay que llegar a Lobito)' }, place: 120, price: { from: 15350 }, note: { pt: 'Do Lobito ao Luena: sai à segunda-feira às 07h45 e chega na terça às 09h28.', en: 'From Lobito to Luena: leaves on Monday at 07:45 and arrives on Tuesday at 09:28.', fr: 'De Lobito à Luena : départ le lundi à 7 h 45, arrivée le mardi à 9 h 28.', es: 'De Lobito a Luena: sale el lunes a las 07:45 y llega el martes a las 09:28.' }, source: ROUTE_SOURCES.cfb },
+                    { mode: 'car', km: 1145, hours: 15.9, source: ROUTE_SOURCES.osrm }
+                ]
+            },
+            {
+                id: 'luanda-cabo-ledo', from: 'Luanda', to: 'Cabo Ledo', checked: '2026-10-19',
+                options: [
+                    { mode: 'car', km: 116, hours: 2.0, note: { pt: 'Sem transporte público regular publicado. De carro próprio, alugado ou de táxi por aplicação (Yango), que mostra o preço antes de confirmar.', en: 'No published regular public transport. By your own or a hired car, or by app taxi (Yango), which shows the fare before you confirm.', fr: 'Pas de transport public régulier publié. En voiture personnelle ou de location, ou en taxi par application (Yango), qui affiche le prix avant de confirmer.', es: 'Sin transporte público regular publicado. En coche propio o de alquiler, o en taxi por aplicación (Yango), que muestra el precio antes de confirmar.' }, source: ROUTE_SOURCES.osrm }
+                ],
+                places: [25, 40]
+            },
+            {
+                id: 'benguela-huambo', from: 'Benguela', fromAlso: 'Lobito', to: 'Huambo', topic: 'o-que-fazer-no-huambo', checked: '2026-10-19',
+                options: [
+                    { mode: 'train', who: 'Caminho de Ferro de Benguela (expresso)', where: { pt: 'Estação do Lobito, à segunda-feira às 07h45', en: 'Lobito station, Monday at 07:45', fr: 'Gare de Lobito, le lundi à 7 h 45', es: 'Estación de Lobito, el lunes a las 07:45' }, place: 120, arrive: 133, note: { pt: 'O expresso Lobito–Luena para no Huambo, onde também se vendem bilhetes. Preço até ao Huambo por confirmar com o CFB.', en: 'The Lobito–Luena express stops at Huambo, where tickets are also sold. Fare to Huambo to be confirmed with CFB.', fr: 'L\'express Lobito–Luena s\'arrête à Huambo, où l\'on vend aussi des billets. Tarif jusqu\'à Huambo à confirmer auprès du CFB.', es: 'El expreso Lobito–Luena para en Huambo, donde también se venden billetes. Precio hasta Huambo por confirmar con el CFB.' }, source: ROUTE_SOURCES.cfb },
+                    { mode: 'bus', who: 'Macon', arrive: 136, note: MACON_NOTE, source: ROUTE_SOURCES.macon },
+                    { mode: 'car', km: 339, hours: 5.1, source: ROUTE_SOURCES.osrm }
+                ]
+            },
+            {
+                id: 'benguela-lubango', from: 'Benguela', to: 'Lubango', topic: 'o-que-fazer-no-lubango-e-na-huila', checked: '2026-10-19',
+                options: [
+                    { mode: 'bus', who: 'Macon', note: MACON_NOTE, source: ROUTE_SOURCES.macon },
+                    { mode: 'car', km: 357, hours: 5.6, source: ROUTE_SOURCES.osrm }
+                ]
             }
         ];
 
@@ -9931,14 +9990,14 @@
 
         // Builds Kamba's answer on the device: text, place/event cards, buttons, follow-up questions and the facts used.
         const ROUTE_INTENT = / (como (ir|chegar|viajar)|ir (de|do|da|para|pro|ao|a)|chegar (a|ao|ate)|viajar|viagem|autocarros?|machimbombo|comboios?|voos?|aviao|barco|how (to|do i|can i|do you) (get|go|travel)|get to|travel to|bus|coach|train|flights?|ferry|boat|comment (aller|se rendre)|aller (a|de|au)|bateau|avion|como (llegar|voy)|llegar a|autobus|tren|vuelos?) /;
-        const ROUTE_ARTICLE = new Set(['Lobito', 'Luena', 'Huambo', 'Lubango', 'Soyo', 'Dundo', 'Namibe', 'Cuíto']);
+        const ROUTE_ARTICLE = new Set(['Lobito', 'Luena', 'Huambo', 'Lubango', 'Soyo', 'Dundo', 'Namibe', 'Cuíto', 'Sumbe', 'Uíge']);
 
         // Picks the route whose destination is named in the question (and its origin, when also named).
         function kambaRoute(text) {
             if (!ROUTE_INTENT.test(text)) return null;
             const named = (name) => Boolean(name) && text.includes(` ${normalize(name)} `);
             return TRAVEL_ROUTES
-                .map((r) => ({ r, to: named(r.to), also: (r.also || '').split(', ').some(named), from: named(r.from) }))
+                .map((r) => ({ r, to: named(r.to), also: (r.also || '').split(', ').some(named), from: named(r.from) || named(r.fromAlso) }))
                 .filter((x) => x.to || x.also)
                 .sort((a, b) => (b.to * 2 + b.from) - (a.to * 2 + a.from))[0]?.r || null;
         }
