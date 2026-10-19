@@ -706,11 +706,6 @@
 
         .review-list:empty { display: none; }
         .review-list { margin-top: 4px; }
-        .rv-more { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 16px; font-size: 14px; color: var(--muted); }
-        .rv-more > span { flex-basis: 100%; }
-        .rv-link { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 14px; font-weight: 700; text-decoration: none; }
-        .rv-link .icon { width: 14px; height: 14px; color: var(--muted); }
-        .rv-link:hover { border-color: var(--primary); }
 
         .review-form { margin-top: 14px; background: var(--surface-2); border: none; border-radius: 16px; padding: 16px; }
         .review-form-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
@@ -2801,12 +2796,11 @@
                 menu: 'Menu e preços',
                 menuNote: 'Preços indicativos: confirme com o local.',
                 opinions: 'Opiniões',
-                opinionsLink: 'Ver opiniões no Google e TripAdvisor',
+                opinionsLink: 'Dar a sua opinião',
                 reviews: 'Avaliações e comentários',
                 reviewOne: '1 avaliação',
                 reviewMany: '{n} avaliações',
                 seeReviews: 'Ver avaliações e comentários',
-                externalReviews: 'Mais opiniões em',
                 reviewPending: 'Obrigado! O seu comentário já está publicado.',
                 reviewsError: 'Não foi possível carregar os comentários.',
                 yourReview: 'A sua avaliação',
@@ -3179,7 +3173,7 @@
                 verifyHours: '<strong>Horários e preços.</strong> Os horários só aparecem quando há uma fonte. Os preços marcados como indicativos ainda não foram confirmados com o local.',
                 verifyPhotos: '<strong>Fotos.</strong> As fotos reais vêm do Wikimedia Commons, com autor e licença. Confirmamos pelo GPS ou pela descrição que foram tiradas em Angola. Os lugares sem uma foto real ficam sem foto.',
                 verifyReviewsOn: '<strong>Avaliações.</strong> As avaliações, os comentários, as fotos e os vídeos dos visitantes aparecem logo que são publicados. Quem tem conta pode denunciar conteúdo impróprio; com 3 denúncias fica escondido até ser revisto.',
-                verifyReviewsOff: '<strong>Avaliações.</strong> As avaliações de visitantes ainda não estão ativas. Até lá, indicamos as opiniões publicadas no Google Maps e no TripAdvisor.',
+                verifyReviewsOff: '<strong>Avaliações.</strong> As avaliações de visitantes ainda não estão ativas.',
                 verifyFix: 'Conhece um lugar que devia estar aqui? Use "Recomendar um lugar".',
                 fixContactLabel: 'O seu email ou telefone (opcional, só para lhe respondermos)',
                 fixEmailOpened: 'Abrimos o seu email com a sugestão. Só falta enviar.',
@@ -3366,12 +3360,11 @@
                 menu: 'Menu and prices',
                 menuNote: 'Indicative prices: check with the venue.',
                 opinions: 'Reviews',
-                opinionsLink: 'See reviews on Google and TripAdvisor',
+                opinionsLink: 'Write a review',
                 reviews: 'Reviews and comments',
                 reviewOne: '1 review',
                 reviewMany: '{n} reviews',
                 seeReviews: 'See reviews and comments',
-                externalReviews: 'More opinions on',
                 reviewPending: 'Thank you! Your comment is now live.',
                 reviewsError: 'Could not load the comments.',
                 yourReview: 'Your review',
@@ -3744,7 +3737,7 @@
                 verifyHours: '<strong>Opening hours and prices.</strong> Opening hours are only shown when there is a source. Prices marked as indicative have not yet been confirmed with the venue.',
                 verifyPhotos: '<strong>Photos.</strong> Real photos come from Wikimedia Commons, with author and licence. We check from GPS data or the description that they were taken in Angola. Places without a real photo have no photo.',
                 verifyReviewsOn: '<strong>Reviews.</strong> Visitor reviews, comments, photos and videos appear as soon as they are posted. Anyone with an account can report inappropriate content; after 3 reports it is hidden until reviewed.',
-                verifyReviewsOff: '<strong>Reviews.</strong> Visitor reviews are not live yet. Until then, we link to the reviews published on Google Maps and TripAdvisor.',
+                verifyReviewsOff: '<strong>Reviews.</strong> Visitor reviews are not live yet.',
                 verifyFix: 'Know a place that should be here? Use "Recommend a place".',
                 fixContactLabel: 'Your email or phone (optional, only so we can reply)',
                 fixEmailOpened: 'We opened your email app with the suggestion. You just need to send it.',
@@ -3931,12 +3924,11 @@
                 menu: 'Menu et prix',
                 menuNote: 'Prix indicatifs : renseignez-vous sur place.',
                 opinions: 'Avis',
-                opinionsLink: 'Voir les avis sur Google et TripAdvisor',
+                opinionsLink: 'Donner votre avis',
                 reviews: 'Avis et commentaires',
                 reviewOne: '1 avis',
                 reviewMany: '{n} avis',
                 seeReviews: 'Voir les avis et commentaires',
-                externalReviews: 'Plus d\'avis sur',
                 reviewPending: 'Merci ! Votre commentaire est publié.',
                 reviewsError: 'Impossible de charger les commentaires.',
                 yourReview: 'Votre avis',
@@ -4309,7 +4301,7 @@
                 verifyHours: '<strong>Horaires et prix.</strong> Les horaires ne sont affichés que s\'il existe une source. Les prix indiqués comme indicatifs n\'ont pas encore été confirmés auprès du lieu.',
                 verifyPhotos: '<strong>Photos.</strong> Les photos réelles viennent de Wikimedia Commons, avec l\'auteur et la licence. Nous vérifions grâce au GPS ou à la description qu\'elles ont été prises en Angola. Les lieux sans photo réelle n\'ont pas de photo.',
                 verifyReviewsOn: '<strong>Avis.</strong> Les avis, commentaires, photos et vidéos des visiteurs apparaissent dès leur publication. Toute personne ayant un compte peut signaler un contenu inapproprié ; après 3 signalements, il est masqué jusqu\'à vérification.',
-                verifyReviewsOff: '<strong>Avis.</strong> Les avis des visiteurs ne sont pas encore actifs. En attendant, nous renvoyons vers les avis publiés sur Google Maps et TripAdvisor.',
+                verifyReviewsOff: '<strong>Avis.</strong> Les avis des visiteurs ne sont pas encore actifs.',
                 verifyFix: 'Vous connaissez un lieu qui devrait être ici ? Utilisez « Recommander un lieu ».',
                 fixContactLabel: 'Votre e-mail ou téléphone (facultatif, uniquement pour vous répondre)',
                 fixEmailOpened: 'Nous avons ouvert votre messagerie avec la suggestion. Il ne reste qu\'à l\'envoyer.',
@@ -4496,12 +4488,11 @@
                 menu: 'Carta y precios',
                 menuNote: 'Precios orientativos: confírmelos con el lugar.',
                 opinions: 'Opiniones',
-                opinionsLink: 'Ver opiniones en Google y TripAdvisor',
+                opinionsLink: 'Dar su opinión',
                 reviews: 'Opiniones y comentarios',
                 reviewOne: '1 opinión',
                 reviewMany: '{n} opiniones',
                 seeReviews: 'Ver opiniones y comentarios',
-                externalReviews: 'Más opiniones en',
                 reviewPending: '¡Gracias! Su comentario ya está publicado.',
                 reviewsError: 'No se pudieron cargar los comentarios.',
                 yourReview: 'Su opinión',
@@ -4874,7 +4865,7 @@
                 verifyHours: '<strong>Horarios y precios.</strong> Los horarios solo se muestran cuando hay una fuente. Los precios marcados como orientativos aún no se han confirmado con el lugar.',
                 verifyPhotos: '<strong>Fotos.</strong> Las fotos reales vienen de Wikimedia Commons, con el autor y la licencia. Comprobamos por el GPS o la descripción que se hicieron en Angola. Los lugares sin una foto real no tienen foto.',
                 verifyReviewsOn: '<strong>Opiniones.</strong> Las opiniones, comentarios, fotos y vídeos de los visitantes aparecen en cuanto se publican. Cualquier persona con cuenta puede denunciar contenido inapropiado; tras 3 denuncias, se oculta hasta revisarlo.',
-                verifyReviewsOff: '<strong>Opiniones.</strong> Las opiniones de los visitantes aún no están activas. Mientras tanto, enlazamos a las opiniones publicadas en Google Maps y TripAdvisor.',
+                verifyReviewsOff: '<strong>Opiniones.</strong> Las opiniones de los visitantes aún no están activas.',
                 verifyFix: '¿Conoce un lugar que debería estar aquí? Use «Recomendar un lugar».',
                 fixContactLabel: 'Su correo o teléfono (opcional, solo para responderle)',
                 fixEmailOpened: 'Hemos abierto su aplicación de correo con la sugerencia. Solo tiene que enviarla.',
@@ -8513,23 +8504,6 @@
             return `<section><h3 class="section-title">${t('menu')}</h3><p class="hint" style="margin-top:6px;">${t('menuNote')}</p><div class="panel">${groups}</div></section>`;
         }
 
-        function googleReviewsURL(v) {
-            return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${v.name}, ${v.location}, Angola`)}`;
-        }
-
-        function tripadvisorURL(v) {
-            return `https://www.tripadvisor.com/Search?q=${encodeURIComponent(`${v.name} ${cityOf(v)} Angola`)}`;
-        }
-
-        function externalReviewsHTML(v) {
-            return `
-                <div class="rv-more">
-                    <span>${t('externalReviews')}</span>
-                    <a class="rv-link" href="${googleReviewsURL(v)}" target="_blank" rel="noopener">Google Maps${icon('external')}</a>
-                    <a class="rv-link" href="${tripadvisorURL(v)}" target="_blank" rel="noopener">TripAdvisor${icon('external')}</a>
-                </div>`;
-        }
-
         function reviewItemHTML(r) {
             return `
                 <div class="review">
@@ -8550,15 +8524,9 @@
             `;
         }
 
-        // Without the shared backend there are no real visitor reviews, so only link to public ones.
+        // Without the shared backend there are no visitor reviews, so there is no reviews section.
         function reviewsHTML(v) {
-            if (!reviewsEnabled()) {
-                return `
-                    <section id="reviewsSection">
-                        <h3 class="section-title">${t('opinions')}</h3>
-                        ${externalReviewsHTML(v)}
-                    </section>`;
-            }
+            if (!reviewsEnabled()) return '';
             const form = signedIn() ? `
                         <form class="review-form" id="reviewForm" novalidate>
                             <div class="review-form-title">${t('yourReview')}</div>
@@ -8577,7 +8545,6 @@
                     <div class="avg">${avgHTML(statsOf(v))}</div>
                     <div class="review-list" id="reviewList"><p class="hint">${t('loading')}</p></div>
                     ${form}
-                    ${externalReviewsHTML(v)}
                 </section>
             `;
         }
@@ -8622,7 +8589,7 @@
                         <div class="card-type">${icon(CATEGORY[v.type].icon)}${catLabel(v.type, false)} · ${escapeHTML(placeLine(v))}</div>
                         <h2 class="modal-name" id="venueTitle">${escapeHTML(v.name)}</h2>
                         <div class="modal-sub">
-                            <button type="button" class="rating-link" data-action="reviews" aria-label="${stats ? t('seeReviews') : t('opinionsLink')}">${ratingLinkHTML(stats)}</button>
+                            ${reviewsEnabled() ? `<button type="button" class="rating-link" data-action="reviews" aria-label="${stats ? t('seeReviews') : t('opinionsLink')}">${ratingLinkHTML(stats)}</button>` : ''}
                             <span>${escapeHTML(priceText(v))}</span>
                             ${dist ? `<span>${dist}</span>` : ''}
                             ${statusHTML(v)}
@@ -11493,7 +11460,7 @@
             if (report) { reportSubmission(report); return; }
             const block = e.target.closest('[data-block], [data-block-review]');
             if (block) { blockAuthor(block); return; }
-            if (e.target.closest('[data-action="reviews"]')) { $('reviewsSection').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+            if (e.target.closest('[data-action="reviews"]')) { $('reviewsSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
             if (e.target.closest('#favBtn')) toggleFavorite();
             else if (e.target.closest('#shareBtn')) shareVenue();
         });
