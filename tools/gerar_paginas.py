@@ -901,7 +901,7 @@ def cambio_page(codes, fx, venues):
 # Rotas entre cidades (web/rotas/<id>.html e web/rotas/index.html): autocarro, avião, comboio, barco e carro, a partir
 # de const TRAVEL_ROUTES em index.html. Só preços publicados (com fonte e data); o resto fica "por confirmar".
 MODE = {'bus': ('Autocarro', 'Bus'), 'plane': ('Avião', 'Plane'), 'train': ('Comboio', 'Train'), 'boat': ('Barco', 'Boat'), 'car': ('Carro', 'Car')}
-ARTICLE = {'Lobito': 'o', 'Luena': 'o', 'Huambo': 'o', 'Lubango': 'o', 'Soyo': 'o', 'Dundo': 'o', 'Namibe': 'o', 'Cuíto': 'o'}
+ARTICLE = {'Lobito': 'o', 'Luena': 'o', 'Huambo': 'o', 'Lubango': 'o', 'Soyo': 'o', 'Dundo': 'o', 'Namibe': 'o', 'Cuíto': 'o', 'Sumbe': 'o', 'Uíge': 'o'}
 ROUTES_STYLE = """
         .options { list-style: none; padding: 0; margin-top: 12px; display: grid; gap: 12px; }
         .option { padding: 14px 16px; border: 1px solid var(--line); border-radius: 14px; }
