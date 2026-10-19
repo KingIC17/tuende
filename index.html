@@ -1181,6 +1181,7 @@
         .kamba-typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: kamba-dot 1.1s ease-in-out infinite; }
         .kamba-typing span:nth-child(2) { animation-delay: 0.15s; }
         .kamba-typing span:nth-child(3) { animation-delay: 0.3s; }
+        .kamba-trip { list-style: none; padding: 0; margin: 8px 0 12px; display: grid; gap: 8px; }
         @keyframes kamba-dot { 0%, 60%, 100% { opacity: 0.35; transform: none; } 30% { opacity: 1; transform: translateY(-3px); } }
 
         .kamba-form { display: flex; gap: 8px; padding: 10px 12px 6px; border-top: 1px solid var(--line); background: var(--surface); }
@@ -9630,10 +9631,10 @@
                 surprise: ['Que tal isto? {name}, em {where}. {highlight}', 'Já conheces {name}? Fica em {where}. {highlight}', 'Aposto que vais gostar de {name}, em {where}. {highlight}'],
                 recommend: 'Conheces um lugar que devia estar na Tuende? Conta-nos neste formulário e a equipa verifica.',
                 seeAll: 'Ver todos ({n})', guideMore: 'Ler tudo: {title}', openAgenda: 'Ver a agenda', openWonders: 'Ver as Maravilhas', openDrones: 'Regras para drones',
-                openPhoto: 'Lugares para fotografar', openSpot: 'Dicas de fotografia', openRoutes: 'Ver os roteiros', openMap: 'Abrir o mapa', openFx: 'Ver o câmbio do dia', routeIntro: 'Para ir {route}: {summary} Os preços mudam; confirma antes de viajar.', routeModes: { bus: 'de autocarro', plane: 'de avião', train: 'de comboio', boat: 'de barco', car: 'de carro' }, routeFrom: 'desde {price}', routeCar: '{km} km, cerca de {hours} sem paragens', routeOr: 'ou', openRoute: 'Ver todas as opções', fxToday: 'Câmbio de referência do BNA de {date}: {rates}. Nos bancos e casas de câmbio o valor final é um pouco diferente.', recommendBtn: 'Sugerir um lugar',
+                openPhoto: 'Lugares para fotografar', openSpot: 'Dicas de fotografia', openRoutes: 'Ver os roteiros', openMap: 'Abrir o mapa', openFx: 'Ver o câmbio do dia', routeIntro: 'Para ir {route}: {summary} Os preços mudam; confirma antes de viajar.', routeModes: { bus: 'de autocarro', plane: 'de avião', train: 'de comboio', boat: 'de barco', car: 'de carro' }, routeFrom: 'desde {price}', routeCar: '{km} km, cerca de {hours} sem paragens', routeOr: 'ou', openRoute: 'Ver todas as opções', tripIntro: 'Uma ideia para {n} dias, feita só com roteiros, lugares e preços do Tuende:', tripDay: 'Dia {n}', tripTravel: 'Viagem {route}. {summary}', tripFree: 'Dia livre: praia, compras ou um evento da agenda.', tripBack: 'No fim, regresso a Luanda {how}', tripBackMalanje: 'de autocarro ou de carro (382 km, cerca de 5 horas).', tripBackBenguela: 'de avião desde a Catumbela (TAAG) ou de autocarro.', tripBackHuila: 'de avião desde o Lubango (TAAG).', tripFamilyAll: 'Com crianças: todos os lugares deste plano estão indicados para famílias.', tripFamilySome: 'Com crianças: {n} dos {total} lugares deste plano estão indicados para famílias. Os outros: {names}.', tripBudget: 'Orçamento: {amount} dá cerca de {kz} ao câmbio do BNA de {date}, ou {perDay} por dia.', tripPrices: 'Muitos preços de hotéis e refeições ainda estão por confirmar: vê cada lugar antes de reservar.', fxToday: 'Câmbio de referência do BNA de {date}: {rates}. Nos bancos e casas de câmbio o valor final é um pouco diferente.', recommendBtn: 'Sugerir um lugar',
                 locateBtn: 'Usar a minha localização', directions: 'Como chegar',
                 chipCat: '{cat} em {where}', chipEvents: 'Eventos em {where}',
-                chipsStart: ['O que fazer em Luanda?', 'Preciso de visto?', 'Eventos este fim de semana', 'Praias em Benguela', 'Onde posso voar com drone?', 'Surpreende-me']
+                chipsStart: ['O que fazer em Luanda?', 'Preciso de visto?', 'Eventos este fim de semana', 'Praias em Benguela', 'Onde posso voar com drone?', 'Plano de 7 dias em Angola', 'Como ir de Luanda a Benguela?', 'Surpreende-me']
             },
             en: {
                 launch: 'Ask Kamba', openAria: 'Open the chat with Kamba', closeAria: 'Close the chat', resetAria: 'Start over',
@@ -9682,10 +9683,10 @@
                 surprise: ['How about this? {name}, in {where}. {highlight}', 'Do you know {name}? It’s in {where}. {highlight}', 'I bet you’ll like {name}, in {where}. {highlight}'],
                 recommend: 'Know a place that should be on Tuende? Tell us with this form and the team will check it.',
                 seeAll: 'See all ({n})', guideMore: 'Read all: {title}', openAgenda: 'See the agenda', openWonders: 'See the Wonders', openDrones: 'Drone rules',
-                openPhoto: 'Photo spots', openSpot: 'Photo tips', openRoutes: 'See the routes', openMap: 'Open the map', openFx: 'See today\'s exchange rates', routeIntro: 'To get {route}: {summary} Fares change, so check before you travel.', routeModes: { bus: 'by bus', plane: 'by plane', train: 'by train', boat: 'by boat', car: 'by car' }, routeFrom: 'from {price}', routeCar: '{km} km, about {hours} without stops', routeOr: 'or', openRoute: 'See all the options', fxToday: 'BNA reference rate of {date}: {rates}. Banks and exchange bureaus give a slightly different final amount.', recommendBtn: 'Suggest a place',
+                openPhoto: 'Photo spots', openSpot: 'Photo tips', openRoutes: 'See the routes', openMap: 'Open the map', openFx: 'See today\'s exchange rates', routeIntro: 'To get {route}: {summary} Fares change, so check before you travel.', routeModes: { bus: 'by bus', plane: 'by plane', train: 'by train', boat: 'by boat', car: 'by car' }, routeFrom: 'from {price}', routeCar: '{km} km, about {hours} without stops', routeOr: 'or', openRoute: 'See all the options', tripIntro: 'An idea for {n} days, made only from Tuende\'s routes, places and prices:', tripDay: 'Day {n}', tripTravel: 'Travel {route}. {summary}', tripFree: 'Free day: beach, shopping or an event from the agenda.', tripBack: 'At the end, back to Luanda {how}', tripBackMalanje: 'by bus or car (382 km, about 5 hours).', tripBackBenguela: 'by plane from Catumbela (TAAG) or by bus.', tripBackHuila: 'by plane from Lubango (TAAG).', tripFamilyAll: 'With children: every place in this plan is suited to families.', tripFamilySome: 'With children: {n} of the {total} places in this plan are suited to families. The others: {names}.', tripBudget: 'Budget: {amount} is about {kz} at the BNA rate of {date}, or {perDay} per day.', tripPrices: 'Many hotel and meal prices are still to be confirmed: check each place before you book.', fxToday: 'BNA reference rate of {date}: {rates}. Banks and exchange bureaus give a slightly different final amount.', recommendBtn: 'Suggest a place',
                 locateBtn: 'Use my location', directions: 'Directions',
                 chipCat: '{cat} in {where}', chipEvents: 'Events in {where}',
-                chipsStart: ['What to do in Luanda?', 'Do I need a visa?', 'Events this weekend', 'Beaches in Benguela', 'Where can I fly a drone?', 'Surprise me']
+                chipsStart: ['What to do in Luanda?', 'Do I need a visa?', 'Events this weekend', 'Beaches in Benguela', 'Where can I fly a drone?', 'A 7-day plan for Angola', 'How to get from Luanda to Benguela?', 'Surprise me']
             },
             fr: {
                 launch: 'Demande à Kamba', openAria: 'Ouvrir la discussion avec Kamba', closeAria: 'Fermer la discussion', resetAria: 'Recommencer',
@@ -9734,10 +9735,10 @@
                 surprise: ['Et ça, ça te dit ? {name}, à {where}. {highlight}', 'Tu connais {name} ? C’est à {where}. {highlight}', 'Je parie que {name}, à {where}, va te plaire. {highlight}'],
                 recommend: 'Tu connais un lieu qui devrait être sur Tuende ? Dis-le-nous avec ce formulaire et l’équipe le vérifiera.',
                 seeAll: 'Tout voir ({n})', guideMore: 'Tout lire : {title}', openAgenda: 'Voir l’agenda', openWonders: 'Voir les merveilles', openDrones: 'Règles pour drones',
-                openPhoto: 'Spots photo', openSpot: 'Conseils photo', openRoutes: 'Voir les itinéraires', openMap: 'Ouvrir la carte', openFx: 'Voir le taux de change du jour', routeIntro: 'Pour aller {route} : {summary} Les prix changent ; vérifie avant de partir.', routeModes: { bus: 'en bus', plane: 'en avion', train: 'en train', boat: 'en bateau', car: 'en voiture' }, routeFrom: 'à partir de {price}', routeCar: '{km} km, environ {hours} sans arrêt', routeOr: 'ou', openRoute: 'Voir toutes les options', fxToday: 'Taux de référence de la BNA du {date} : {rates}. Dans les banques et bureaux de change, le montant final est un peu différent.', recommendBtn: 'Proposer un lieu',
+                openPhoto: 'Spots photo', openSpot: 'Conseils photo', openRoutes: 'Voir les itinéraires', openMap: 'Ouvrir la carte', openFx: 'Voir le taux de change du jour', routeIntro: 'Pour aller {route} : {summary} Les prix changent ; vérifie avant de partir.', routeModes: { bus: 'en bus', plane: 'en avion', train: 'en train', boat: 'en bateau', car: 'en voiture' }, routeFrom: 'à partir de {price}', routeCar: '{km} km, environ {hours} sans arrêt', routeOr: 'ou', openRoute: 'Voir toutes les options', tripIntro: 'Une idée pour {n} jours, faite uniquement avec les itinéraires, lieux et prix de Tuende :', tripDay: 'Jour {n}', tripTravel: 'Trajet {route}. {summary}', tripFree: 'Journée libre : plage, shopping ou un événement de l\'agenda.', tripBack: 'À la fin, retour à Luanda {how}', tripBackMalanje: 'en bus ou en voiture (382 km, environ 5 heures).', tripBackBenguela: 'en avion depuis Catumbela (TAAG) ou en bus.', tripBackHuila: 'en avion depuis Lubango (TAAG).', tripFamilyAll: 'Avec des enfants : tous les lieux de ce plan sont adaptés aux familles.', tripFamilySome: 'Avec des enfants : {n} des {total} lieux de ce plan sont adaptés aux familles. Les autres : {names}.', tripBudget: 'Budget : {amount} font environ {kz} au taux de la BNA du {date}, soit {perDay} par jour.', tripPrices: 'Beaucoup de prix d\'hôtels et de repas sont encore à confirmer : vérifie chaque lieu avant de réserver.', fxToday: 'Taux de référence de la BNA du {date} : {rates}. Dans les banques et bureaux de change, le montant final est un peu différent.', recommendBtn: 'Proposer un lieu',
                 locateBtn: 'Utiliser ma position', directions: 'Itinéraire',
                 chipCat: '{cat} à {where}', chipEvents: 'Événements à {where}',
-                chipsStart: ['Que faire à Luanda ?', 'Ai-je besoin d’un visa ?', 'Événements ce week-end', 'Plages à Benguela', 'Où faire voler un drone ?', 'Surprends-moi']
+                chipsStart: ['Que faire à Luanda ?', 'Ai-je besoin d’un visa ?', 'Événements ce week-end', 'Plages à Benguela', 'Où faire voler un drone ?', 'Un plan de 7 jours en Angola', 'Comment aller de Luanda à Benguela ?', 'Surprends-moi']
             },
             es: {
                 launch: 'Pregunta a Kamba', openAria: 'Abrir el chat con Kamba', closeAria: 'Cerrar el chat', resetAria: 'Empezar de nuevo',
@@ -9786,10 +9787,10 @@
                 surprise: ['¿Qué tal esto? {name}, en {where}. {highlight}', '¿Conoces {name}? Está en {where}. {highlight}', 'Apuesto a que te gustará {name}, en {where}. {highlight}'],
                 recommend: '¿Conoces un lugar que debería estar en Tuende? Cuéntanoslo con este formulario y el equipo lo comprobará.',
                 seeAll: 'Ver todos ({n})', guideMore: 'Leer todo: {title}', openAgenda: 'Ver la agenda', openWonders: 'Ver las Maravillas', openDrones: 'Normas para drones',
-                openPhoto: 'Lugares para fotografiar', openSpot: 'Consejos de fotografía', openRoutes: 'Ver las rutas', openMap: 'Abrir el mapa', openFx: 'Ver el tipo de cambio del día', routeIntro: 'Para ir {route}: {summary} Los precios cambian; confírmalo antes de viajar.', routeModes: { bus: 'en autobús', plane: 'en avión', train: 'en tren', boat: 'en barco', car: 'en coche' }, routeFrom: 'desde {price}', routeCar: '{km} km, unas {hours} sin paradas', routeOr: 'o', openRoute: 'Ver todas las opciones', fxToday: 'Tipo de referencia del BNA del {date}: {rates}. En bancos y casas de cambio el importe final es algo distinto.', recommendBtn: 'Sugerir un lugar',
+                openPhoto: 'Lugares para fotografiar', openSpot: 'Consejos de fotografía', openRoutes: 'Ver las rutas', openMap: 'Abrir el mapa', openFx: 'Ver el tipo de cambio del día', routeIntro: 'Para ir {route}: {summary} Los precios cambian; confírmalo antes de viajar.', routeModes: { bus: 'en autobús', plane: 'en avión', train: 'en tren', boat: 'en barco', car: 'en coche' }, routeFrom: 'desde {price}', routeCar: '{km} km, unas {hours} sin paradas', routeOr: 'o', openRoute: 'Ver todas las opciones', tripIntro: 'Una idea para {n} días, hecha solo con rutas, lugares y precios de Tuende:', tripDay: 'Día {n}', tripTravel: 'Viaje {route}. {summary}', tripFree: 'Día libre: playa, compras o un evento de la agenda.', tripBack: 'Al final, regreso a Luanda {how}', tripBackMalanje: 'en autobús o en coche (382 km, unas 5 horas).', tripBackBenguela: 'en avión desde Catumbela (TAAG) o en autobús.', tripBackHuila: 'en avión desde Lubango (TAAG).', tripFamilyAll: 'Con niños: todos los lugares de este plan son adecuados para familias.', tripFamilySome: 'Con niños: {n} de los {total} lugares de este plan son adecuados para familias. Los demás: {names}.', tripBudget: 'Presupuesto: {amount} son unos {kz} al cambio del BNA del {date}, o {perDay} por día.', tripPrices: 'Muchos precios de hoteles y comidas aún están por confirmar: revisa cada lugar antes de reservar.', fxToday: 'Tipo de referencia del BNA del {date}: {rates}. En bancos y casas de cambio el importe final es algo distinto.', recommendBtn: 'Sugerir un lugar',
                 locateBtn: 'Usar mi ubicación', directions: 'Cómo llegar',
                 chipCat: '{cat} en {where}', chipEvents: 'Eventos en {where}',
-                chipsStart: ['¿Qué hacer en Luanda?', '¿Necesito visado?', 'Eventos este fin de semana', 'Playas en Benguela', '¿Dónde puedo volar un dron?', 'Sorpréndeme']
+                chipsStart: ['¿Qué hacer en Luanda?', '¿Necesito visado?', 'Eventos este fin de semana', 'Playas en Benguela', '¿Dónde puedo volar un dron?', 'Un plan de 7 días en Angola', '¿Cómo llegar de Luanda a Benguela?', 'Sorpréndeme']
             }
         };
 
@@ -10030,6 +10031,84 @@
             return text ? `${text.charAt(0).toUpperCase()}${text.slice(1)}.` : '';
         }
 
+        // Trip planner: "7 dias", "uma semana", "fim de semana em Luanda" give a day-by-day plan made only of the app's own
+        // Roteiros (ITINERARIES) and Rotas (TRAVEL_ROUTES); travel days use the route summaries, so no invented prices.
+        const TRIP_PLANS = { 1: ['L1'], 2: ['L'], 3: ['L', 'C'], 4: ['L', 'C', 'F'], 5: ['L', 'B'], 6: ['L', 'C', 'B'], 7: ['L', 'C', 'M', 'F'], 8: ['L', 'B', 'S2'], 9: ['L', 'B', 'S'], 10: ['L', 'C', 'B', 'S'] };
+        const TRIP_BLOCKS = { L: ['luanda'], L1: ['luanda', '', 1], C: ['litoral-sul'], B: ['benguela', 'luanda-benguela'], S: ['sul', 'benguela-lubango'], S2: ['sul', 'benguela-lubango', 2], M: ['malanje', 'luanda-malanje'] };
+        const TRIP_AREA_BLOCK = { Benguela: ['B'], 'Huíla': ['B', 'S'], Namibe: ['B', 'S'], Malanje: ['M'] };
+        const TRIP_NOT = / (evento|eventos|agenda|concertos?|festas?|visto|vistos|visa|visas|validade|events?|concerts?|visados?|evenements?) /;
+
+        function kambaTripDays(text) {
+            if (TRIP_NOT.test(text)) return 0;
+            const m = text.match(/ (\d{1,2}) (dias?|days?|jours?|noites|nights|nuits|noches) /);
+            if (m) return Math.min(Number(m[1]), 30);
+            if (/ (uma|1) semana | (a|one) week | une semaine | una semana /.test(text)) return 7;
+            if (/ (duas|2) semanas | (two|2) weeks | deux semaines | dos semanas /.test(text)) return 14;
+            const planning = / (plano|planear|planeia|roteiro|itinerario|viagem|ferias|visitar|trip|plan|itinerary|holiday|vacation|visit|voyage|sejour|vacances|viaje|vacaciones) /.test(text);
+            return planning && / (fim de semana|weekend|week end|fin de semana) /.test(text) ? 2 : 0;
+        }
+
+        // "£2000", "2 000 libras", "$1500", "500 mil kz" -> amount in kwanzas at the BNA rate.
+        function kambaBudget(raw) {
+            let text = normalize(raw);
+            for (let i = 0; i < 3; i++) text = text.replace(/(\d)[ .,](\d{3})(?!\d)/g, '$1$2');
+            const symbols = { '£': 'gbp', '$': 'usd', '€': 'eur' };
+            let m = text.match(/([£$€]) ?(\d+)/);
+            let amount; let code;
+            if (m) { amount = Number(m[2]); code = symbols[m[1]]; } else {
+                m = text.match(/(\d+) ?(mil )?(kz|kwanzas?|aoa|libras?|pounds?|gbp|livres?|dolares?|dollars?|usd|euros?|eur)\b/);
+                if (!m) return null;
+                amount = Number(m[1]) * (m[2] ? 1000 : 1);
+                code = /^(kz|kwanza|aoa)/.test(m[3]) ? 'aoa' : /^(libra|pound|gbp|livre)/.test(m[3]) ? 'gbp' : /^(dolar|dollar|usd)/.test(m[3]) ? 'usd' : 'eur';
+            }
+            const rate = code === 'aoa' ? 1 : fx.rates[code];
+            return amount > 0 && rate ? { amount, code, kz: amount * rate } : null;
+        }
+
+        function kambaTrip(days, raw, q) {
+            const region = q.where.length === 1 ? q.where[0] : '';
+            let plan;
+            if (region === 'Luanda') plan = days === 1 ? ['L1'] : days === 2 ? ['L'] : ['L', 'C'];
+            else if (TRIP_AREA_BLOCK[region]) plan = TRIP_AREA_BLOCK[region];
+            else plan = TRIP_PLANS[Math.min(days, 10)];
+            const lines = [];
+            const stops = [];
+            let area = 'Luanda';
+            for (const block of plan) {
+                if (block === 'F') { lines.push(kambaText('tripFree')); continue; }
+                const [itId, routeId, keep] = TRIP_BLOCKS[block];
+                const it = ITINERARIES.find((r) => r.id === itId);
+                const route = routeId && TRAVEL_ROUTES.find((r) => r.id === routeId);
+                if (route) lines.push(kambaText('tripTravel', { route: routeName(route), summary: routeSummaryText(route) }));
+                for (const day of it.days.slice(0, keep || it.days.length)) {
+                    const fresh = day.stops.filter((id) => !stops.includes(id));
+                    stops.push(...fresh);
+                    lines.push(`${day.title[lang]}: ${fresh.map((id) => venues.find((v) => v.id === id)?.name).filter(Boolean).join(', ')}`);
+                }
+                area = it.area;
+            }
+            while (lines.length < days) lines.push(kambaText('tripFree'));
+            const shown = lines.slice(0, days);
+            const parts = [`<p>${kambaHTML('tripIntro', { n: days })}</p>`,
+                `<ol class="kamba-trip">${shown.map((line, i) => `<li><b>${escapeHTML(kambaText('tripDay', { n: i + 1 }))}</b> · ${escapeHTML(line)}</li>`).join('')}</ol>`];
+            const back = { Malanje: 'tripBackMalanje', Benguela: 'tripBackBenguela', 'Huíla': 'tripBackHuila' }[area];
+            if (back) parts.push(`<p>${kambaHTML('tripBack', { how: escapeHTML(kambaText(back)) })}</p>`);
+            if (q.flags.family) {
+                const planned = stops.map((id) => venues.find((v) => v.id === id)).filter(Boolean);
+                const others = planned.filter((v) => !v.family).map((v) => v.name);
+                parts.push(`<p>${others.length
+                    ? kambaHTML('tripFamilySome', { n: planned.length - others.length, total: planned.length, names: escapeHTML(others.join(', ')) })
+                    : kambaHTML('tripFamilyAll')}</p>`);
+            }
+            const budget = kambaBudget(raw);
+            if (budget) {
+                const kzText = (n) => kzAmount(Math.round(n / 1000) * 1000);
+                parts.push(`<p>${kambaHTML('tripBudget', { amount: escapeHTML(`${budget.amount.toLocaleString(locale())} ${budget.code === 'aoa' ? 'Kz' : budget.code.toUpperCase()}`), kz: escapeHTML(kzText(budget.kz)), date: escapeHTML(formatDate(fx.date)), perDay: escapeHTML(kzText(budget.kz / days)) })}</p>`);
+            }
+            parts.push(`<p>${kambaHTML('tripPrices')}</p>`);
+            return { parts, facts: shown.map((line, i) => `${kambaText('tripDay', { n: i + 1 })}: ${line}`) };
+        }
+
         function kambaReply(raw) {
             const q = kambaRead(raw);
             const out = { parts: [], cards: [], buttons: [], chips: [], facts: [] };
@@ -10061,6 +10140,16 @@
             if (/ (sugerir (um )?lugar|adicionar (um )?lugar|acrescentar (um )?lugar|falta (um|o|a) |missing|add a place|suggest a place|ajouter un lieu|proposer un lieu|anadir un lugar|sugerir un lugar) /.test(q.text)) {
                 say('recommend');
                 out.buttons.push(kambaGoBtn('recommend', kambaText('recommendBtn')));
+                return out;
+            }
+
+            // A trip of N days: a plan from the Roteiros and Rotas.
+            const tripDays = kambaTripDays(` ${kambaWords(raw).join(' ')} `);
+            if (tripDays) {
+                const trip = kambaTrip(tripDays, raw, q);
+                out.parts.push(...trip.parts);
+                out.facts.push(...trip.facts);
+                out.buttons.push(kambaGoBtn('routes', kambaText('openRoutes')));
                 return out;
             }
 
