@@ -306,6 +306,46 @@
 
         /* Main category tiles */
         .feature-tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
+        .plan-new-form { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr) minmax(0, 0.7fr) auto; gap: 10px; align-items: end; margin-top: 12px; }
+        .plan-new-form label, .plan-head label, .plan-pick label { display: grid; gap: 6px; min-width: 0; font-size: 15px; font-weight: 700; }
+        .plan-ask { margin-top: 10px; }
+        .plan-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 18px; }
+        .plan-card { display: grid; gap: 4px; padding: 16px; text-align: left; background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; }
+        .plan-card:hover { border-color: var(--primary); }
+        .plan-card b { font-size: 17px; }
+        .plan-card span { font-size: 14px; color: var(--muted); }
+        .plan-head { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 10px 12px; align-items: end; margin-top: 14px; }
+        .plan-head > .link-btn { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 4px; }
+        .plan-head > .link-btn .icon { width: 16px; height: 16px; }
+        .plan-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+        .plan-actions .action-btn { min-height: 44px; padding: 0 14px; }
+        .plan-day-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+        .plan-day-head h2 { font-size: 19px; }
+        .plan-items { list-style: none; padding: 0; margin-top: 10px; }
+        .plan-item { display: grid; grid-template-columns: 100px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+        .plan-item:first-child { border-top: 0; }
+        .plan-item .link-btn { text-align: left; }
+        .plan-time { min-height: 40px; padding: 6px 8px; font-size: 15px; }
+        .plan-what small { display: block; font-size: 13px; color: var(--muted); }
+        .plan-tools { display: flex; align-items: center; gap: 4px; }
+        .plan-btn { width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; font-weight: 800; }
+        .plan-btn:disabled { opacity: 0.35; }
+        .plan-tools select { width: auto; min-height: 36px; padding: 4px 8px; font-size: 14px; }
+        .plan-add { display: grid; grid-template-columns: minmax(0, 1fr) 110px auto; gap: 8px; margin-top: 12px; }
+        .plan-hint { margin-top: 12px; }
+        .about-sub { margin: 18px 0 6px; font-size: 17px; }
+        .plan-shared-title { margin-top: 4px; }
+        .plan-pick { display: grid; gap: 12px; margin-top: 12px; }
+        .plan-pick .submit-btn, .plan-done .submit-btn { width: 100%; }
+        .plan-done { display: grid; gap: 10px; margin-top: 12px; }
+        .home-cta .cta-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+        @media (max-width: 600px) {
+            .plan-new-form, .plan-head { grid-template-columns: 1fr; }
+            .plan-item { grid-template-columns: 86px minmax(0, 1fr); }
+            .plan-tools { grid-column: 1 / -1; justify-content: flex-end; }
+            .plan-add { grid-template-columns: minmax(0, 1fr) 96px; }
+            .plan-add .submit-btn { grid-column: 1 / -1; }
+        }
         .start-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
         .start-card { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; padding: 16px; text-align: left; background: var(--surface); border: 1.5px solid var(--border); border-radius: 16px; }
         .start-card:hover { border-color: var(--primary); }
@@ -874,6 +914,8 @@
         .card-grid > .fx-banner { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 14px; background: var(--surface-2); font-size: 15px; }
         .fx-banner .icon { width: 22px; height: 22px; color: var(--primary); flex: none; }
         .fx-banner span { flex: 1 1 220px; }
+        #resultsList > .plan-banner { margin-bottom: 14px; }
+        .card-grid > .plan-banner { margin-bottom: 0; }
         @media (max-width: 600px) {
             .fx-main { grid-template-columns: 1fr; gap: 8px; }
             .fx-main .fx-pick { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 12px 14px; }
@@ -1225,6 +1267,7 @@
                 <button type="button" data-action="events" data-i18n="agenda">Agenda</button>
                 <button type="button" data-action="guide" data-i18n="guideNav">Guia</button>
                 <button type="button" data-action="routes" data-i18n="routesNav">Roteiros</button>
+                <button type="button" data-action="plan" data-i18n="planNav">Planos</button>
                 <button type="button" data-action="map" data-i18n="mapNav">Mapa</button>
                 <button type="button" id="navRecommend" data-action="recommend" hidden data-i18n="recTitle">Recomendar um lugar</button>
             </nav>
@@ -1418,6 +1461,13 @@
             <div id="wondersBody"></div>
         </section>
 
+        <section id="planView" class="guide-page" hidden aria-labelledby="planTitle">
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <h1 class="rec-title" id="planTitle" data-i18n="planTitle">Os meus planos</h1>
+            <p class="rec-intro" data-i18n="planIntro">Monte a sua viagem dia a dia com lugares, eventos e notas, às horas que escolher. Fica guardado neste dispositivo e abre sem internet.</p>
+            <div id="planBody"></div>
+        </section>
+
         <section id="fxView" class="guide-page" hidden aria-labelledby="fxTitle">
             <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
             <h1 class="rec-title" id="fxTitle" data-i18n="fxTitle">Câmbio do dia</h1>
@@ -1435,6 +1485,7 @@
                 <button type="button" class="footer-link" data-action="guide" data-i18n="guideTitle">Guia prático</button>
                 <button type="button" class="footer-link" data-action="fx" data-i18n="fxTitle">Câmbio do dia</button>
                 <button type="button" class="footer-link" data-action="routes" data-i18n="routesTitle">Roteiros</button>
+                <button type="button" class="footer-link" data-action="plan" data-i18n="planTitle">Os meus planos</button>
                 <button type="button" class="footer-link" data-action="wonders" data-i18n="wondersTitle">Maravilhas de Angola</button>
                 <button type="button" class="footer-link" data-action="map" data-i18n="mapTitle">Mapa dos lugares</button>
                 <button type="button" class="footer-link" data-info="about" data-i18n="footerAbout">Sobre o Tuende</button>
@@ -1497,6 +1548,14 @@
         <div class="modal-panel info-panel">
             <button class="close-btn" type="button" data-close="authModal" data-i18n-aria="close" aria-label="Fechar">×</button>
             <div id="authContent"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="planModal" role="dialog" aria-modal="true" aria-labelledby="planPickTitle">
+        <div class="modal-panel info-panel">
+            <button class="close-btn" type="button" data-close="planModal" data-i18n-aria="close" aria-label="Fechar">×</button>
+            <h2 class="info-title" id="planPickTitle" data-i18n="planAddTitle">Adicionar ao plano</h2>
+            <div id="planPickBody"></div>
         </div>
     </div>
 
@@ -1788,7 +1847,17 @@
             {"id": 195, "type": "accommodation", "name": "Netu's Village", "location": "Luanda - Mussulo", "lat": -9.04, "lng": 13.06, "exact": false, "description": "Resort de bungalows na contra-costa do Mussulo, com acesso a praias quase desertas. Tem piscina, bar na praia e restaurante; os bungalows (T0, T2, T2 Plus e T3) têm casa de banho privada. Para descansar ao sol, com poucas atividades.", "highlight": {"pt": "Bungalows no Mussulo, junto a praias quase desertas.", "en": "Bungalows on Mussulo, by almost empty beaches.", "fr": "Des bungalows sur le Mussulo, près de plages presque désertes.", "es": "Bungalós en el Mussulo, junto a playas casi desiertas."}, "verified": {"date": "2026-10-18", "sources": [{"label": "Ver Angola (setembro de 2020)", "url": "https://www.verangola.net/va/pt/092020/sugestoes/21664/Netu%E2%80%99s-Village-Onde-dormir.htm"}]}, "address": "Contra-costa do Mussulo, Luanda", "phone": ""},
             {"id": 196, "type": "restaurant", "name": "Otto Luanda", "location": "Luanda - Ilha do Cabo", "lat": -8.792, "lng": 13.224, "exact": false, "description": "Restaurante italiano de cozinha de autor do chef Aldo Cavagliato, na Avenida Murtala Mohamed, na Ilha do Cabo. Na carta há lasanha, esparguete, risoto e pizzas.", "highlight": {"pt": "Cozinha italiana de autor na Ilha do Cabo.", "en": "Signature Italian cooking on Ilha do Cabo.", "fr": "Cuisine italienne d'auteur sur l'Ilha do Cabo.", "es": "Cocina italiana de autor en la Ilha do Cabo."}, "hours": {"0": [["12:00", "00:00"]], "1": [["12:00", "00:00"]], "3": [["12:00", "00:00"]], "4": [["12:00", "00:00"]], "5": [["12:00", "02:00"]], "6": [["12:00", "02:00"]]}, "hoursNote": {"pt": "Fecha à terça-feira. Horário publicado em abril de 2024.", "en": "Closed on Tuesdays. Hours published in April 2024.", "fr": "Fermé le mardi. Horaires publiés en avril 2024.", "es": "Cierra los martes. Horario publicado en abril de 2024."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Ver Angola (abril de 2024)", "url": "https://www.verangola.net/va/pt/042024/sugestoes/39593/Otto-Luanda-Onde-comer.htm"}]}, "address": "Avenida Murtala Mohamed, Ilha do Cabo, Luanda", "phone": ""},
             {"id": 197, "type": "restaurant", "name": "Barbarico", "location": "Luanda - Maculusso", "lat": -8.819142, "lng": 13.238569, "exact": true, "description": "Restaurante de cozinha portuguesa no Maculusso, junto à Avenida Comandante Che Guevara, aberto todos os dias. Na carta há pratos como frango à guia.", "highlight": {"pt": "Cozinha portuguesa no Maculusso, todos os dias.", "en": "Portuguese food in Maculusso, every day.", "fr": "Cuisine portugaise à Maculusso, tous les jours.", "es": "Cocina portuguesa en Maculusso, todos los días."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Ver Angola (julho de 2021)", "url": "https://www.verangola.net/va/pt/072021/sugestoes/26391/Barbarico-Onde-comer.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/3374994209"}]}, "address": "Maculusso, junto à Avenida Comandante Che Guevara, Luanda", "phone": ""},
-            {"id": 198, "type": "restaurant", "name": "Restaurante DUO (Miralua Club)", "location": "Luanda - Talatona", "lat": -8.922599, "lng": 13.171942, "exact": true, "description": "Restaurante de cozinha de fusão no Miralua Club, no condomínio Dolce Vita, em Talatona, com pratos de várias cozinhas: americana, brasileira, portuguesa e outras.", "highlight": {"pt": "Cozinha de fusão no Miralua Club, em Talatona.", "en": "Fusion food at the Miralua Club in Talatona.", "fr": "Cuisine fusion au Miralua Club, à Talatona.", "es": "Cocina de fusión en el Miralua Club, en Talatona."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Ver Angola (fevereiro de 2022)", "url": "https://www.verangola.net/va/pt/022022/sugestoes/29460/Restaurante-DUO-Talatona-Onde-comer.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/12216086757"}]}, "address": "Miralua Club, Condomínio Dolce Vita, Talatona, Luanda", "phone": ""}
+            {"id": 198, "type": "restaurant", "name": "Restaurante DUO (Miralua Club)", "location": "Luanda - Talatona", "lat": -8.922599, "lng": 13.171942, "exact": true, "description": "Restaurante de cozinha de fusão no Miralua Club, no condomínio Dolce Vita, em Talatona, com pratos de várias cozinhas: americana, brasileira, portuguesa e outras.", "highlight": {"pt": "Cozinha de fusão no Miralua Club, em Talatona.", "en": "Fusion food at the Miralua Club in Talatona.", "fr": "Cuisine fusion au Miralua Club, à Talatona.", "es": "Cocina de fusión en el Miralua Club, en Talatona."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Ver Angola (fevereiro de 2022)", "url": "https://www.verangola.net/va/pt/022022/sugestoes/29460/Restaurante-DUO-Talatona-Onde-comer.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/12216086757"}]}, "address": "Miralua Club, Condomínio Dolce Vita, Talatona, Luanda", "phone": ""},
+            {"id": 199, "type": "health", "name": "Clínica Girassol", "location": "Luanda - Maianga", "lat": -8.83734, "lng": 13.23096, "exact": true, "description": "Clínica privada no bairro Alvalade, na Maianga, com serviço de urgência. A lista do Governo britânico indica pessoal que fala inglês.", "highlight": {"pt": "Clínica privada com urgência, no Alvalade.", "en": "Private clinic with an emergency department, in Alvalade.", "fr": "Clinique privée avec urgences, à Alvalade.", "es": "Clínica privada con urgencias, en Alvalade."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Governo britânico, lista de unidades de saúde (março de 2021)", "url": "https://www.gov.uk/government/publications/list-of-medical-facilities-and-funeral-directors-in-angola/angola-list-of-medical-facilities"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/284185200"}]}, "address": "Rua Comandante Gika, 225, Alvalade, Maianga, Luanda", "phone": ""},
+            {"id": 200, "type": "health", "name": "Clínica Sagrada Esperança (Ilha de Luanda)", "location": "Luanda - Ilha de Luanda", "lat": -8.766882, "lng": 13.25705, "exact": true, "description": "Hospital privado na Ilha de Luanda, com urgência 24 horas, todos os dias do ano. Lá dentro funciona uma clínica da International SOS, onde se fala português, inglês, francês e espanhol.", "highlight": {"pt": "Urgência 24 horas na Ilha de Luanda.", "en": "24-hour emergency care on the Ilha de Luanda.", "fr": "Urgences 24 h/24 sur l'Ilha de Luanda.", "es": "Urgencias 24 horas en la Ilha de Luanda."}, "verified": {"date": "2026-10-19", "sources": [{"label": "International SOS (2026)", "url": "https://www.internationalsos.com/locations/angola/ilha"}, {"label": "Clínica Sagrada Esperança", "url": "https://www.clinicasagradaesperanca.co.ao/"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/783118136"}]}, "address": "Avenida Murtala Mohamed, 298, Ilha de Luanda", "phone": ""},
+            {"id": 201, "type": "health", "name": "International SOS - Clínica de Talatona", "location": "Luanda - Talatona", "lat": -8.92569, "lng": 13.18484, "exact": true, "description": "Clínica privada da International SOS, atrás do Belas Shopping, com laboratório e imagiologia. Consultas de segunda a sexta, das 8h00 às 17h30, e ao sábado, das 9h00 às 12h00; urgências 24 horas. Fala-se português, inglês, francês e espanhol.", "highlight": {"pt": "Clínica internacional em Talatona, urgências 24 horas.", "en": "International clinic in Talatona, 24-hour emergencies.", "fr": "Clinique internationale à Talatona, urgences 24 h/24.", "es": "Clínica internacional en Talatona, urgencias 24 horas."}, "verified": {"date": "2026-10-19", "sources": [{"label": "International SOS (2026)", "url": "https://www.internationalsos.com/locations/angola/talatona"}, {"label": "Governo britânico, lista de unidades de saúde (março de 2021)", "url": "https://www.gov.uk/government/publications/list-of-medical-facilities-and-funeral-directors-in-angola/angola-list-of-medical-facilities"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/12250035900"}]}, "address": "Rua S10, Sector Talatona, Zona CC-B2 (atrás do Belas Shopping), Luanda", "phone": ""},
+            {"id": 202, "type": "health", "name": "International SOS - Clínica da Maianga", "location": "Luanda - Maianga", "lat": -8.8303, "lng": 13.2361, "exact": false, "description": "Clínica privada da International SOS no bairro Alvalade. Consultas de segunda a sexta, das 8h00 às 17h30, e ao sábado, das 9h00 às 12h00; ao domingo e feriados, só visitas ao domicílio e teleconsultas durante o dia. Fala-se português, inglês e francês.", "highlight": {"pt": "Clínica internacional no Alvalade, com médicos que falam inglês.", "en": "International clinic in Alvalade with English-speaking doctors.", "fr": "Clinique internationale à Alvalade, médecins anglophones.", "es": "Clínica internacional en Alvalade, con médicos que hablan inglés."}, "verified": {"date": "2026-10-19", "sources": [{"label": "International SOS (2026)", "url": "https://www.internationalsos.com/locations/angola/talatona"}]}, "address": "Rua Comandante Stona, 144, Alvalade, Maianga, Luanda", "phone": ""},
+            {"id": 203, "type": "health", "name": "Hospital Josina Machel", "location": "Luanda - Maianga", "lat": -8.823346, "lng": 13.228054, "exact": true, "description": "Hospital público no centro de Luanda, o antigo Hospital Maria Pia, um dos maiores e mais antigos do país, com banco de urgência.", "highlight": {"pt": "Grande hospital público no centro de Luanda.", "en": "Large public hospital in central Luanda.", "fr": "Grand hôpital public du centre de Luanda.", "es": "Gran hospital público en el centro de Luanda."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Ver Angola (abril de 2018)", "url": "https://www.verangola.net/va/pt/042018/Saude/11751/Médicos-privados-especialistas-em-cirurgias-cardíacas-vão-continuar-no-Hospital-Josina-Machel.htm"}, {"label": "Ver Angola (outubro de 2025)", "url": "https://www.verangola.net/va/en/102025/Health/46155/Citizen-“reborn”-after-team-at-Josina-Machel-successfully-performs-complex-surgery-on-giant-hernia.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/152307629"}]}, "address": "Avenida Revolução de Outubro, Maianga, Luanda", "phone": ""},
+            {"id": 204, "type": "health", "name": "Hospital Pediátrico David Bernardino", "location": "Luanda - Maianga", "lat": -8.82653, "lng": 13.22718, "exact": true, "description": "Hospital público para crianças, com banco de urgência pediátrica. Com a ala nova inaugurada em 2020, passou a ter 135 camas, 47 delas de cuidados intensivos.", "highlight": {"pt": "Hospital público para crianças, em Luanda.", "en": "Public children's hospital in Luanda.", "fr": "Hôpital public pour enfants à Luanda.", "es": "Hospital público infantil en Luanda."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Ver Angola (junho de 2020)", "url": "https://www.verangola.net/va/pt/062020/Saude/20642/João-Lourenço-inaugura-maior-unidade-de-cuidados-pediátricos-do-país.htm"}, {"label": "Ver Angola (janeiro de 2025)", "url": "https://www.verangola.net/va/pt/012025/Saude/42867/Sindicato-descarta-negligência-em-morte-de-menor-no-Hospital-Pediátrico-de-Luanda.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/8880939651"}]}, "address": "Avenida Revolução de Outubro, Luanda", "phone": ""},
+            {"id": 205, "type": "health", "name": "Clínica Multiperfil", "location": "Luanda - Futungo de Belas", "lat": -8.890955, "lng": 13.188276, "exact": true, "description": "Hospital público de referência, inaugurado em 2002, com banco de urgência, hemodiálise e várias especialidades. O atendimento geral funciona das 8h00 às 17h00.", "highlight": {"pt": "Hospital de referência com urgência, no Futungo.", "en": "Referral hospital with an emergency department, in Futungo.", "fr": "Hôpital de référence avec urgences, au Futungo.", "es": "Hospital de referencia con urgencias, en Futungo."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Clínica Multiperfil", "url": "https://www.multiperfil.co.ao/"}, {"label": "Decreto Presidencial n.º 114/22", "url": "https://lex.ao/docs/presidente-da-republica/2022/decreto-presidencial-n-o-114-22-de-20-de-maio/"}, {"label": "Governo britânico, lista de unidades de saúde (março de 2021)", "url": "https://www.gov.uk/government/publications/list-of-medical-facilities-and-funeral-directors-in-angola/angola-list-of-medical-facilities"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/62133014"}]}, "address": "Estrada do Futungo de Belas, Luanda", "phone": ""},
+            {"id": 206, "type": "health", "name": "Hospital Geral de Benguela", "location": "Benguela - Benguela", "lat": -12.57181, "lng": 13.40268, "exact": true, "description": "Hospital público da cidade de Benguela, com mais de 120 anos de história.", "highlight": {"pt": "Hospital público da cidade de Benguela.", "en": "Public hospital in the city of Benguela.", "fr": "Hôpital public de la ville de Benguela.", "es": "Hospital público de la ciudad de Benguela."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Ver Angola (julho de 2024)", "url": "https://www.verangola.net/va/pt/072024/Saude/40575/HGB-faz-cirurgia-de-prótese-parcial-da-anca-pela-primeira-vez-em-mais-de-120-anos-de-existência.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/234883654"}]}, "address": "Benguela", "phone": ""},
+            {"id": 207, "type": "health", "name": "Hospital Central do Lubango", "location": "Huíla - Lubango", "lat": -14.91985, "lng": 13.48016, "exact": true, "description": "Hospital público de referência da Huíla, também chamado Hospital Dr. António Agostinho Neto, com 418 camas em 2023, segundo a ANGOP.", "highlight": {"pt": "Principal hospital público do Lubango.", "en": "Lubango's main public hospital.", "fr": "Principal hôpital public de Lubango.", "es": "Principal hospital público de Lubango."}, "verified": {"date": "2026-10-19", "sources": [{"label": "ANGOP (2023)", "url": "https://angop.ao/en/noticias/politica/hcl-tem-condicoes-para-se-tornar-numa-unidade-sanitaria-com-certificacao-internacional-vice-presidente-da-republica"}, {"label": "Ver Angola (fevereiro de 2025)", "url": "https://www.verangola.net/va/pt/022025/Saude/43307/Dívida-aos-fornecedores-provoca-“pior”-escassez-de-medicamentos-dos-últimos-anos-no-Hospital-Central-do-Lubango.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/781669957"}]}, "address": "Lubango, Huíla", "phone": ""},
+            {"id": 208, "type": "health", "name": "Hospital Geral do Huambo", "location": "Huambo - Huambo", "lat": -12.7768, "lng": 15.74526, "exact": true, "description": "Hospital público da cidade do Huambo, que recebe também doentes das províncias vizinhas.", "highlight": {"pt": "Hospital público da cidade do Huambo.", "en": "Public hospital in the city of Huambo.", "fr": "Hôpital public de la ville de Huambo.", "es": "Hospital público de la ciudad de Huambo."}, "verified": {"date": "2026-10-19", "sources": [{"label": "Ver Angola (julho de 2018)", "url": "https://www.verangola.net/va/pt/072018/ConstrucaoImobiliario/12474/Obras-desbloqueadas-no-Huambo-contemplam-reabilitação-do-hospital-geral.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/14114225001"}]}, "address": "Huambo", "phone": ""}
         ];
 
         const DESC_EN = {
@@ -1987,7 +2056,17 @@
             195: "A bungalow resort on the far side of the Mussulo peninsula, with access to almost empty beaches. It has a pool, a beach bar and a restaurant; the bungalows (studio to three bedrooms) have private bathrooms. A place to rest in the sun, with few activities.",
             196: "A signature Italian restaurant by chef Aldo Cavagliato on Avenida Murtala Mohamed, Ilha do Cabo. The menu has lasagne, spaghetti, risotto and pizzas.",
             197: "A Portuguese restaurant in Maculusso, next to Avenida Comandante Che Guevara, open every day. The menu includes dishes such as frango à guia.",
-            198: "A fusion restaurant at the Miralua Club in the Dolce Vita condominium, Talatona, with dishes from several cuisines: American, Brazilian, Portuguese and more."
+            198: "A fusion restaurant at the Miralua Club in the Dolce Vita condominium, Talatona, with dishes from several cuisines: American, Brazilian, Portuguese and more.",
+            199: "Private clinic in the Alvalade neighbourhood (Maianga) with an emergency department. The UK government list says staff speak English.",
+            200: "Private hospital on the Ilha de Luanda with a 24-hour emergency service, every day of the year. An International SOS clinic works inside, with staff who speak Portuguese, English, French and Spanish.",
+            201: "International SOS private clinic behind Belas Shopping, with a laboratory and imaging. Appointments Monday to Friday 8:00 to 17:30 and Saturday 9:00 to 12:00; emergencies 24 hours. Staff speak Portuguese, English, French and Spanish.",
+            202: "International SOS private clinic in the Alvalade neighbourhood. Appointments Monday to Friday 8:00 to 17:30 and Saturday 9:00 to 12:00; on Sundays and public holidays, only home visits and teleconsultations during the day. Staff speak Portuguese, English and French.",
+            203: "Public hospital in central Luanda, the former Maria Pia Hospital, one of the largest and oldest in the country, with an emergency department.",
+            204: "Public children's hospital with a paediatric emergency department. With the new wing opened in 2020, it has 135 beds, 47 of them for intensive care.",
+            205: "Public referral hospital opened in 2002, with an emergency department, dialysis and several specialities. General reception works from 8:00 to 17:00.",
+            206: "Public hospital in the city of Benguela, with more than 120 years of history.",
+            207: "Huíla's public referral hospital, also called Dr. António Agostinho Neto Hospital, with 418 beds in 2023, according to ANGOP.",
+            208: "Public hospital in the city of Huambo, which also takes patients from neighbouring provinces."
         };
 
         const DESC_FR = {
@@ -2186,7 +2265,17 @@
             195: "Un resort de bungalows sur la contre-côte du Mussulo, avec accès à des plages presque désertes. Il dispose d'une piscine, d'un bar de plage et d'un restaurant ; les bungalows (du studio au trois chambres) ont une salle de bain privée. Pour se reposer au soleil, avec peu d'activités.",
             196: "Un restaurant italien de cuisine d'auteur du chef Aldo Cavagliato, avenue Murtala Mohamed, sur l'Ilha do Cabo. À la carte : lasagnes, spaghettis, risotto et pizzas.",
             197: "Un restaurant de cuisine portugaise à Maculusso, près de l'avenue Comandante Che Guevara, ouvert tous les jours. À la carte, des plats comme le frango à guia.",
-            198: "Un restaurant de cuisine fusion au Miralua Club, dans la résidence Dolce Vita à Talatona, avec des plats de plusieurs cuisines : américaine, brésilienne, portugaise et autres."
+            198: "Un restaurant de cuisine fusion au Miralua Club, dans la résidence Dolce Vita à Talatona, avec des plats de plusieurs cuisines : américaine, brésilienne, portugaise et autres.",
+            199: "Clinique privée dans le quartier d'Alvalade (Maianga), avec un service d'urgences. La liste du gouvernement britannique indique un personnel anglophone.",
+            200: "Hôpital privé sur l'Ilha de Luanda, avec des urgences 24 heures sur 24, tous les jours de l'année. Une clinique International SOS y fonctionne, avec un personnel qui parle portugais, anglais, français et espagnol.",
+            201: "Clinique privée International SOS derrière le Belas Shopping, avec laboratoire et imagerie. Consultations du lundi au vendredi de 8 h à 17 h 30 et le samedi de 9 h à 12 h ; urgences 24 h/24. On y parle portugais, anglais, français et espagnol.",
+            202: "Clinique privée International SOS dans le quartier d'Alvalade. Consultations du lundi au vendredi de 8 h à 17 h 30 et le samedi de 9 h à 12 h ; le dimanche et les jours fériés, seulement des visites à domicile et des téléconsultations en journée. On y parle portugais, anglais et français.",
+            203: "Hôpital public du centre de Luanda, l'ancien hôpital Maria Pia, l'un des plus grands et des plus anciens du pays, avec un service d'urgences.",
+            204: "Hôpital public pour enfants, avec des urgences pédiatriques. Avec la nouvelle aile inaugurée en 2020, il compte 135 lits, dont 47 en soins intensifs.",
+            205: "Hôpital public de référence inauguré en 2002, avec un service d'urgences, l'hémodialyse et plusieurs spécialités. L'accueil général fonctionne de 8 h à 17 h.",
+            206: "Hôpital public de la ville de Benguela, avec plus de 120 ans d'histoire.",
+            207: "Hôpital public de référence de la Huíla, aussi appelé hôpital Dr António Agostinho Neto, avec 418 lits en 2023, selon l'ANGOP.",
+            208: "Hôpital public de la ville de Huambo, qui accueille aussi des patients des provinces voisines."
         };
 
         const DESC_ES = {
@@ -2385,7 +2474,17 @@
             195: "Un resort de bungalós en la contracosta del Mussulo, con acceso a playas casi desiertas. Tiene piscina, bar de playa y restaurante; los bungalós (de estudio a tres dormitorios) tienen baño privado. Para descansar al sol, con pocas actividades.",
             196: "Restaurante italiano de cocina de autor del chef Aldo Cavagliato, en la avenida Murtala Mohamed, en la Ilha do Cabo. En la carta hay lasaña, espaguetis, risotto y pizzas.",
             197: "Restaurante de cocina portuguesa en Maculusso, junto a la avenida Comandante Che Guevara, abierto todos los días. En la carta hay platos como el frango à guia.",
-            198: "Restaurante de cocina de fusión en el Miralua Club, en el condominio Dolce Vita de Talatona, con platos de varias cocinas: estadounidense, brasileña, portuguesa y otras."
+            198: "Restaurante de cocina de fusión en el Miralua Club, en el condominio Dolce Vita de Talatona, con platos de varias cocinas: estadounidense, brasileña, portuguesa y otras.",
+            199: "Clínica privada en el barrio de Alvalade (Maianga), con servicio de urgencias. La lista del Gobierno británico indica personal que habla inglés.",
+            200: "Hospital privado en la Ilha de Luanda, con urgencias las 24 horas, todos los días del año. Dentro funciona una clínica de International SOS, donde se habla portugués, inglés, francés y español.",
+            201: "Clínica privada de International SOS detrás del Belas Shopping, con laboratorio e imagen. Consultas de lunes a viernes de 8:00 a 17:30 y el sábado de 9:00 a 12:00; urgencias las 24 horas. Se habla portugués, inglés, francés y español.",
+            202: "Clínica privada de International SOS en el barrio de Alvalade. Consultas de lunes a viernes de 8:00 a 17:30 y el sábado de 9:00 a 12:00; domingos y festivos, solo visitas a domicilio y teleconsultas durante el día. Se habla portugués, inglés y francés.",
+            203: "Hospital público en el centro de Luanda, el antiguo Hospital Maria Pia, uno de los mayores y más antiguos del país, con urgencias.",
+            204: "Hospital público infantil, con urgencias pediátricas. Con el ala nueva inaugurada en 2020, tiene 135 camas, 47 de ellas de cuidados intensivos.",
+            205: "Hospital público de referencia inaugurado en 2002, con urgencias, hemodiálisis y varias especialidades. La atención general funciona de 8:00 a 17:00.",
+            206: "Hospital público de la ciudad de Benguela, con más de 120 años de historia.",
+            207: "Hospital público de referencia de Huíla, también llamado Hospital Dr. António Agostinho Neto, con 418 camas en 2023, según ANGOP.",
+            208: "Hospital público de la ciudad de Huambo, que también recibe pacientes de las provincias vecinas."
         };
 
         const MENU_DESC_EN = {
@@ -2625,7 +2724,7 @@
                 fxTipsTitle: 'Antes de trocar',
                 fxWhereLead: 'Onde trocar',
                 fxWhereText: 'Em bancos ou casas de câmbio.',
-                fxSeePlaces: 'Ver as {n} casas de câmbio na Tuende',
+                fxSeePlaces: 'Ver as {n} casas de câmbio no Tuende',
                 fxOpen: 'Ver o câmbio do dia',
                 routesBetween: 'Como ir de cidade em cidade',
                 startTitle: 'Por onde começar?',
@@ -2637,6 +2736,50 @@
                 startKidsDesc: 'Lugares indicados para famílias.',
                 startAdventure: 'Aventura e natureza',
                 startAdventureDesc: 'Quedas de água, serras e parques nacionais.',
+                planNav: 'Planos',
+                planTitle: 'Os meus planos',
+                planIntro: 'Monte a sua viagem dia a dia com lugares, eventos e notas, às horas que escolher. Fica guardado neste dispositivo e abre sem internet.',
+                planNew: 'Novo plano',
+                planName: 'Nome do plano',
+                planNameDefault: 'A minha viagem a Angola',
+                planStart: 'Primeiro dia (opcional)',
+                planDaysLabel: 'Dias',
+                planCreate: 'Criar plano',
+                planAskKamba: 'Pedir ao Kamba um plano',
+                planEmpty: 'Ainda não tem planos. Crie um aqui ou peça ao Kamba.',
+                planDays: '{n} dias',
+                planOneDay: '1 dia',
+                planStops: '{n} paragens',
+                planBack: 'Todos os planos',
+                planDay: 'Dia {n}',
+                planAddPlaceholder: 'Lugar, evento ou nota',
+                planAddBtn: 'Adicionar',
+                planAddHint: 'Escreva o nome de um lugar ou evento do Tuende (aparecem sugestões) ou qualquer nota. Com hora, o dia fica ordenado pela hora.',
+                planDayEmpty: 'Nada planeado para este dia.',
+                planAddDay: 'Adicionar dia',
+                planRemoveDay: 'Remover dia',
+                planDelete: 'Apagar plano',
+                planDeleteConfirm: 'Apagar o plano «{name}»? Não é possível desfazer.',
+                planCalendarNeedsDate: 'Para o calendário, escolha primeiro o primeiro dia do plano.',
+                planUp: 'Subir',
+                planDown: 'Descer',
+                planRemove: 'Remover',
+                planMoveTo: 'Mudar de dia',
+                planTime: 'Hora',
+                planShared: 'Plano partilhado',
+                planSaveShared: 'Guardar nos meus planos',
+                planBadLink: 'Este link de plano não está completo.',
+                planAddTitle: 'Adicionar ao plano',
+                planPickPlan: 'Plano',
+                planPickDay: 'Dia',
+                planPickNew: '+ Novo plano',
+                planAdded: 'Adicionado a «{plan}», dia {n}.',
+                planSeePlan: 'Ver o plano',
+                planCtaTitle: 'Planeie a sua viagem',
+                planCtaText: 'Monte o seu plano dia a dia, ou peça ao Kamba uma ideia a partir dos dias e do orçamento.',
+                planFromKamba: 'Plano de {n} dias',
+                planGone: '(já não está no Tuende)',
+                planLocalNote: 'Os planos ficam só neste dispositivo. Para os ter noutro telemóvel ou mostrar a alguém, use Partilhar.',
                 contactLabel: 'Contacto',
                 toConfirm: 'Por confirmar',
                 stillToConfirm: 'Por confirmar',
@@ -3015,8 +3158,21 @@
                 footerContact: 'Contacto',
                 footerNote: 'Fotos: Wikimedia Commons, com autor e licença em cada foto. Só mostramos fotos reais do próprio lugar.',
                 aboutTitle: 'Sobre o Tuende',
-                aboutP1: 'O Tuende ajuda-o a escolher onde ir em Angola (restaurantes, praias, cultura, natureza, vida noturna e alojamento) e a chegar lá com confiança.',
-                aboutP2: 'É gratuita, não pede registo e não mostra publicidade. É um projeto em crescimento: quando uma informação ainda não foi confirmada, dizemo-lo na página do lugar.',
+                aboutP1: 'O Tuende é um guia gratuito de Angola, para quem visita e para quem vive cá: onde comer, o que ver, onde dormir, como viajar entre cidades e o que está a acontecer, com a fonte de cada informação.',
+                aboutTrustTitle: 'Porque pode confiar no Tuende',
+                aboutTrust1: '<strong>Uma fonte para cada lugar.</strong> Cada lugar e cada evento mostra de onde vem a informação e a data em que a verificámos. Pode abrir a fonte e confirmar.',
+                aboutTrust2: '<strong>«Por confirmar» em vez de inventar.</strong> Se não sabemos um horário, um preço ou um telefone, dizemo-lo. Os telefones só aparecem depois de confirmados.',
+                aboutTrust3: '<strong>Só fotos reais.</strong> Fotos do próprio lugar, com o nome do autor e a licença. Sem uma foto real, o lugar fica sem foto.',
+                aboutTrust4: '<strong>Ninguém paga para aparecer.</strong> O Tuende é gratuito, não pede registo e não tem publicidade. Hoje nenhum lugar paga para estar aqui ou para aparecer primeiro.',
+                aboutTrust5: '<strong>Fontes oficiais quando existem.</strong> O câmbio do dia vem do Banco Nacional de Angola, os vistos do portal eVISA do SME, e a segurança e a saúde dos conselhos de viagem de Portugal e do Reino Unido.',
+                aboutNotTitle: 'O que o Tuende não é',
+                aboutNot: 'O Tuende não é um serviço do Governo de Angola nem uma agência de viagens, e não tem acreditação oficial. Não vendemos viagens nem bilhetes: indicamos onde comprá-los. Horários e preços mudam, por isso confirme o mais importante antes de ir.',
+                aboutForTitle: 'Feito para quem chega e para quem cá vive',
+                aboutFor: 'Em português, inglês, francês e espanhol. Os preços aparecem em kwanzas, com o valor aproximado em dólares, euros e libras. O que já abriu continua disponível sem internet, e o Kamba, o assistente, responde com os dados verificados do Tuende.',
+                aboutNowTitle: 'O Tuende hoje',
+                aboutNow: '{places} lugares em {provinces} províncias, {events} eventos na agenda e {routes} rotas entre cidades.',
+                aboutHelpTitle: 'Ajude a melhorar',
+                aboutHelp: 'Viu um erro ou conhece um lugar que devia estar aqui? Use «Recomendar um lugar». Cada sugestão é verificada antes de ser publicada.',
                 verifyTitle: 'Como verificamos os lugares',
                 verifyExists: '<strong>Fontes públicas.</strong> Confirmamos que cada lugar existe através da Wikipedia, de guias como o Ver Angola e de outras publicações. As fontes aparecem na página de cada lugar, com a data da verificação.',
                 verifyLocation: '<strong>Localização verificada</strong> quer dizer que as coordenadas vêm da Wikipedia ou do Wikidata. <strong>Existência verificada</strong> quer dizer que o lugar existe, mas a posição no mapa é aproximada; nesse caso, "Como chegar" procura o nome no Google Maps.',
@@ -3145,6 +3301,50 @@
                 startKidsDesc: 'Places suited to families.',
                 startAdventure: 'Adventure and nature',
                 startAdventureDesc: 'Waterfalls, mountains and national parks.',
+                planNav: 'Plans',
+                planTitle: 'My plans',
+                planIntro: 'Build your trip day by day with places, events and notes, at the times you choose. It is saved on this device and opens without internet.',
+                planNew: 'New plan',
+                planName: 'Plan name',
+                planNameDefault: 'My trip to Angola',
+                planStart: 'First day (optional)',
+                planDaysLabel: 'Days',
+                planCreate: 'Create plan',
+                planAskKamba: 'Ask Kamba for a plan',
+                planEmpty: 'You have no plans yet. Create one here or ask Kamba.',
+                planDays: '{n} days',
+                planOneDay: '1 day',
+                planStops: '{n} stops',
+                planBack: 'All plans',
+                planDay: 'Day {n}',
+                planAddPlaceholder: 'Place, event or note',
+                planAddBtn: 'Add',
+                planAddHint: 'Type the name of a Tuende place or event (suggestions appear) or any note. With a time, the day is sorted by time.',
+                planDayEmpty: 'Nothing planned for this day.',
+                planAddDay: 'Add a day',
+                planRemoveDay: 'Remove day',
+                planDelete: 'Delete plan',
+                planDeleteConfirm: 'Delete the plan "{name}"? This cannot be undone.',
+                planCalendarNeedsDate: 'For the calendar, first choose the plan\'s first day.',
+                planUp: 'Move up',
+                planDown: 'Move down',
+                planRemove: 'Remove',
+                planMoveTo: 'Move to day',
+                planTime: 'Time',
+                planShared: 'Shared plan',
+                planSaveShared: 'Save to my plans',
+                planBadLink: 'This plan link is incomplete.',
+                planAddTitle: 'Add to plan',
+                planPickPlan: 'Plan',
+                planPickDay: 'Day',
+                planPickNew: '+ New plan',
+                planAdded: 'Added to "{plan}", day {n}.',
+                planSeePlan: 'See the plan',
+                planCtaTitle: 'Plan your trip',
+                planCtaText: 'Build your own day-by-day plan, or ask Kamba for an idea based on your days and budget.',
+                planFromKamba: '{n}-day plan',
+                planGone: '(no longer on Tuende)',
+                planLocalNote: 'Plans stay on this device only. To have them on another phone or show someone, use Share.',
                 contactLabel: 'Contact',
                 toConfirm: 'To be confirmed',
                 stillToConfirm: 'To be confirmed',
@@ -3523,8 +3723,21 @@
                 footerContact: 'Contact',
                 footerNote: 'Photos: Wikimedia Commons, with author and licence on each photo. We only show real photos of the place itself.',
                 aboutTitle: 'About Tuende',
-                aboutP1: 'Tuende helps you choose where to go in Angola (restaurants, beaches, culture, nature, nightlife and places to stay) and get there with confidence.',
-                aboutP2: 'It is free, needs no sign-up and shows no advertising. It is a growing project: when a piece of information has not been confirmed yet, we say so on the place page.',
+                aboutP1: 'Tuende is a free guide to Angola, for visitors and for people who live here: where to eat, what to see, where to stay, how to travel between cities and what is on, with the source of every fact.',
+                aboutTrustTitle: 'Why you can trust Tuende',
+                aboutTrust1: '<strong>A source for every place.</strong> Every place and event shows where the information comes from and the date we checked it. You can open the source and see for yourself.',
+                aboutTrust2: '<strong>"To be confirmed" instead of guessing.</strong> If we do not know opening hours, a price or a phone number, we say so. Phone numbers only appear once confirmed.',
+                aboutTrust3: '<strong>Real photos only.</strong> Photos of the place itself, with the author\'s name and licence. Without a real photo, the place has no photo.',
+                aboutTrust4: '<strong>Nobody pays to be listed.</strong> Tuende is free, needs no sign-up and has no advertising. Today no place pays to be here or to appear first.',
+                aboutTrust5: '<strong>Official sources where they exist.</strong> Exchange rates come from the Banco Nacional de Angola, visas from the SME eVISA portal, and safety and health from the Portuguese and UK travel advice.',
+                aboutNotTitle: 'What Tuende is not',
+                aboutNot: 'Tuende is not an Angolan government service or a travel agency, and it has no official accreditation. We do not sell trips or tickets: we show where to buy them. Hours and prices change, so check the important things before you go.',
+                aboutForTitle: 'Made for visitors and for locals',
+                aboutFor: 'In Portuguese, English, French and Spanish. Prices are in kwanzas, with the approximate amount in dollars, euros and pounds. What you have opened stays available offline, and Kamba, the assistant, answers with Tuende\'s verified data.',
+                aboutNowTitle: 'Tuende today',
+                aboutNow: '{places} places in {provinces} provinces, {events} events in the calendar and {routes} routes between cities.',
+                aboutHelpTitle: 'Help us improve',
+                aboutHelp: 'Spotted a mistake or know a place that should be here? Use "Recommend a place". Every suggestion is checked before it is published.',
                 verifyTitle: 'How we verify places',
                 verifyExists: '<strong>Public sources.</strong> We confirm each place exists using Wikipedia, guides such as Ver Angola and other publications. The sources are listed on each place page, with the date of verification.',
                 verifyLocation: '<strong>Location verified</strong> means the coordinates come from Wikipedia or Wikidata. <strong>Existence verified</strong> means the place exists but its map position is approximate; in that case "Directions" searches for the name in Google Maps.',
@@ -3653,6 +3866,50 @@
                 startKidsDesc: 'Des lieux adaptés aux familles.',
                 startAdventure: 'Aventure et nature',
                 startAdventureDesc: 'Chutes d\'eau, montagnes et parcs nationaux.',
+                planNav: 'Plans',
+                planTitle: 'Mes plans',
+                planIntro: 'Construisez votre voyage jour après jour avec des lieux, des événements et des notes, aux heures de votre choix. Il est enregistré sur cet appareil et s\'ouvre sans internet.',
+                planNew: 'Nouveau plan',
+                planName: 'Nom du plan',
+                planNameDefault: 'Mon voyage en Angola',
+                planStart: 'Premier jour (facultatif)',
+                planDaysLabel: 'Jours',
+                planCreate: 'Créer le plan',
+                planAskKamba: 'Demander un plan à Kamba',
+                planEmpty: 'Vous n\'avez pas encore de plan. Créez-en un ici ou demandez à Kamba.',
+                planDays: '{n} jours',
+                planOneDay: '1 jour',
+                planStops: '{n} étapes',
+                planBack: 'Tous les plans',
+                planDay: 'Jour {n}',
+                planAddPlaceholder: 'Lieu, événement ou note',
+                planAddBtn: 'Ajouter',
+                planAddHint: 'Saisissez le nom d\'un lieu ou d\'un événement Tuende (des suggestions apparaissent) ou une note. Avec une heure, la journée est triée par heure.',
+                planDayEmpty: 'Rien de prévu ce jour-là.',
+                planAddDay: 'Ajouter un jour',
+                planRemoveDay: 'Supprimer le jour',
+                planDelete: 'Supprimer le plan',
+                planDeleteConfirm: 'Supprimer le plan « {name} » ? Impossible d\'annuler.',
+                planCalendarNeedsDate: 'Pour le calendrier, choisissez d\'abord le premier jour du plan.',
+                planUp: 'Monter',
+                planDown: 'Descendre',
+                planRemove: 'Retirer',
+                planMoveTo: 'Changer de jour',
+                planTime: 'Heure',
+                planShared: 'Plan partagé',
+                planSaveShared: 'Enregistrer dans mes plans',
+                planBadLink: 'Ce lien de plan est incomplet.',
+                planAddTitle: 'Ajouter au plan',
+                planPickPlan: 'Plan',
+                planPickDay: 'Jour',
+                planPickNew: '+ Nouveau plan',
+                planAdded: 'Ajouté à « {plan} », jour {n}.',
+                planSeePlan: 'Voir le plan',
+                planCtaTitle: 'Planifiez votre voyage',
+                planCtaText: 'Construisez votre plan jour après jour, ou demandez une idée à Kamba selon vos jours et votre budget.',
+                planFromKamba: 'Plan de {n} jours',
+                planGone: '(n\'est plus sur Tuende)',
+                planLocalNote: 'Les plans restent sur cet appareil. Pour les avoir sur un autre téléphone ou les montrer, utilisez Partager.',
                 contactLabel: 'Contact',
                 toConfirm: 'À confirmer',
                 stillToConfirm: 'À confirmer',
@@ -4031,8 +4288,21 @@
                 footerContact: 'Contact',
                 footerNote: 'Photos : Wikimedia Commons, avec l\'auteur et la licence sur chaque photo. Nous ne montrons que des photos réelles du lieu lui-même.',
                 aboutTitle: 'À propos de Tuende',
-                aboutP1: 'Tuende vous aide à choisir où aller en Angola (restaurants, plages, culture, nature, vie nocturne et hébergement) et à vous y rendre en toute confiance.',
-                aboutP2: 'C\'est gratuit, sans inscription et sans publicité. C\'est un projet qui grandit : quand une information n\'a pas encore été confirmée, nous l\'indiquons sur la page du lieu.',
+                aboutP1: 'Tuende est un guide gratuit de l\'Angola, pour les visiteurs et pour ceux qui y vivent : où manger, que voir, où dormir, comment voyager entre les villes et ce qui se passe, avec la source de chaque information.',
+                aboutTrustTitle: 'Pourquoi faire confiance à Tuende',
+                aboutTrust1: '<strong>Une source pour chaque lieu.</strong> Chaque lieu et chaque événement indique d\'où vient l\'information et la date de notre vérification. Vous pouvez ouvrir la source et vérifier.',
+                aboutTrust2: '<strong>« À confirmer » plutôt qu\'inventer.</strong> Si nous ne connaissons pas un horaire, un prix ou un téléphone, nous le disons. Les téléphones n\'apparaissent qu\'une fois confirmés.',
+                aboutTrust3: '<strong>Uniquement de vraies photos.</strong> Des photos du lieu lui-même, avec le nom de l\'auteur et la licence. Sans vraie photo, le lieu reste sans photo.',
+                aboutTrust4: '<strong>Personne ne paie pour apparaître.</strong> Tuende est gratuit, sans inscription et sans publicité. Aujourd\'hui, aucun lieu ne paie pour être ici ou pour apparaître en premier.',
+                aboutTrust5: '<strong>Des sources officielles quand elles existent.</strong> Le taux de change vient de la Banco Nacional de Angola, les visas du portail eVISA du SME, et la sécurité et la santé des conseils aux voyageurs du Portugal et du Royaume-Uni.',
+                aboutNotTitle: 'Ce que Tuende n\'est pas',
+                aboutNot: 'Tuende n\'est ni un service du gouvernement angolais ni une agence de voyages, et n\'a pas d\'accréditation officielle. Nous ne vendons ni voyages ni billets : nous indiquons où les acheter. Horaires et prix changent, vérifiez donc l\'essentiel avant de partir.',
+                aboutForTitle: 'Pour ceux qui arrivent et pour ceux qui vivent ici',
+                aboutFor: 'En portugais, anglais, français et espagnol. Les prix sont en kwanzas, avec le montant approximatif en dollars, euros et livres. Ce que vous avez déjà ouvert reste disponible sans internet, et Kamba, l\'assistant, répond avec les données vérifiées de Tuende.',
+                aboutNowTitle: 'Tuende aujourd\'hui',
+                aboutNow: '{places} lieux dans {provinces} provinces, {events} événements à l\'agenda et {routes} itinéraires entre villes.',
+                aboutHelpTitle: 'Aidez-nous à nous améliorer',
+                aboutHelp: 'Vous avez vu une erreur ou connaissez un lieu qui devrait être ici ? Utilisez « Recommander un lieu ». Chaque suggestion est vérifiée avant d\'être publiée.',
                 verifyTitle: 'Comment nous vérifions les lieux',
                 verifyExists: '<strong>Sources publiques.</strong> Nous confirmons l\'existence de chaque lieu grâce à Wikipédia, à des guides comme Ver Angola et à d\'autres publications. Les sources figurent sur la page de chaque lieu, avec la date de vérification.',
                 verifyLocation: '<strong>Emplacement vérifié</strong> signifie que les coordonnées viennent de Wikipédia ou de Wikidata. <strong>Existence vérifiée</strong> signifie que le lieu existe mais que sa position sur la carte est approximative ; dans ce cas, « Itinéraire » cherche le nom dans Google Maps.',
@@ -4161,6 +4431,50 @@
                 startKidsDesc: 'Lugares adecuados para familias.',
                 startAdventure: 'Aventura y naturaleza',
                 startAdventureDesc: 'Cataratas, sierras y parques nacionales.',
+                planNav: 'Planes',
+                planTitle: 'Mis planes',
+                planIntro: 'Monte su viaje día a día con lugares, eventos y notas, a las horas que elija. Se guarda en este dispositivo y se abre sin internet.',
+                planNew: 'Nuevo plan',
+                planName: 'Nombre del plan',
+                planNameDefault: 'Mi viaje a Angola',
+                planStart: 'Primer día (opcional)',
+                planDaysLabel: 'Días',
+                planCreate: 'Crear plan',
+                planAskKamba: 'Pedir un plan a Kamba',
+                planEmpty: 'Aún no tiene planes. Cree uno aquí o pídaselo a Kamba.',
+                planDays: '{n} días',
+                planOneDay: '1 día',
+                planStops: '{n} paradas',
+                planBack: 'Todos los planes',
+                planDay: 'Día {n}',
+                planAddPlaceholder: 'Lugar, evento o nota',
+                planAddBtn: 'Añadir',
+                planAddHint: 'Escriba el nombre de un lugar o evento de Tuende (aparecen sugerencias) o cualquier nota. Con hora, el día se ordena por hora.',
+                planDayEmpty: 'Nada planeado para este día.',
+                planAddDay: 'Añadir un día',
+                planRemoveDay: 'Quitar día',
+                planDelete: 'Borrar plan',
+                planDeleteConfirm: '¿Borrar el plan «{name}»? No se puede deshacer.',
+                planCalendarNeedsDate: 'Para el calendario, elija primero el primer día del plan.',
+                planUp: 'Subir',
+                planDown: 'Bajar',
+                planRemove: 'Quitar',
+                planMoveTo: 'Cambiar de día',
+                planTime: 'Hora',
+                planShared: 'Plan compartido',
+                planSaveShared: 'Guardar en mis planes',
+                planBadLink: 'Este enlace de plan está incompleto.',
+                planAddTitle: 'Añadir al plan',
+                planPickPlan: 'Plan',
+                planPickDay: 'Día',
+                planPickNew: '+ Nuevo plan',
+                planAdded: 'Añadido a «{plan}», día {n}.',
+                planSeePlan: 'Ver el plan',
+                planCtaTitle: 'Planifique su viaje',
+                planCtaText: 'Monte su plan día a día, o pida a Kamba una idea según sus días y su presupuesto.',
+                planFromKamba: 'Plan de {n} días',
+                planGone: '(ya no está en Tuende)',
+                planLocalNote: 'Los planes quedan solo en este dispositivo. Para tenerlos en otro móvil o enseñarlos, use Compartir.',
                 contactLabel: 'Contacto',
                 toConfirm: 'Por confirmar',
                 stillToConfirm: 'Por confirmar',
@@ -4539,8 +4853,21 @@
                 footerContact: 'Contacto',
                 footerNote: 'Fotos: Wikimedia Commons, con el autor y la licencia en cada foto. Solo mostramos fotos reales del propio lugar.',
                 aboutTitle: 'Sobre Tuende',
-                aboutP1: 'Tuende le ayuda a elegir adónde ir en Angola (restaurantes, playas, cultura, naturaleza, vida nocturna y alojamiento) y a llegar con confianza.',
-                aboutP2: 'Es gratis, no requiere registro y no muestra publicidad. Es un proyecto en crecimiento: cuando un dato aún no se ha confirmado, lo indicamos en la página del lugar.',
+                aboutP1: 'Tuende es una guía gratuita de Angola, para quien la visita y para quien vive aquí: dónde comer, qué ver, dónde dormir, cómo viajar entre ciudades y qué está pasando, con la fuente de cada dato.',
+                aboutTrustTitle: 'Por qué puede confiar en Tuende',
+                aboutTrust1: '<strong>Una fuente para cada lugar.</strong> Cada lugar y cada evento muestra de dónde viene la información y la fecha en que la verificamos. Puede abrir la fuente y comprobarlo.',
+                aboutTrust2: '<strong>«Por confirmar» en vez de inventar.</strong> Si no sabemos un horario, un precio o un teléfono, lo decimos. Los teléfonos solo aparecen una vez confirmados.',
+                aboutTrust3: '<strong>Solo fotos reales.</strong> Fotos del propio lugar, con el nombre del autor y la licencia. Sin una foto real, el lugar queda sin foto.',
+                aboutTrust4: '<strong>Nadie paga por aparecer.</strong> Tuende es gratis, no pide registro y no tiene publicidad. Hoy ningún lugar paga por estar aquí o por salir primero.',
+                aboutTrust5: '<strong>Fuentes oficiales cuando existen.</strong> El tipo de cambio viene del Banco Nacional de Angola, los visados del portal eVISA del SME, y la seguridad y la salud de los consejos de viaje de Portugal y del Reino Unido.',
+                aboutNotTitle: 'Lo que Tuende no es',
+                aboutNot: 'Tuende no es un servicio del Gobierno de Angola ni una agencia de viajes, y no tiene acreditación oficial. No vendemos viajes ni entradas: indicamos dónde comprarlos. Horarios y precios cambian, así que confirme lo importante antes de ir.',
+                aboutForTitle: 'Hecho para quien llega y para quien vive aquí',
+                aboutFor: 'En portugués, inglés, francés y español. Los precios están en kwanzas, con el valor aproximado en dólares, euros y libras. Lo que ya abrió sigue disponible sin internet, y Kamba, el asistente, responde con los datos verificados de Tuende.',
+                aboutNowTitle: 'Tuende hoy',
+                aboutNow: '{places} lugares en {provinces} provincias, {events} eventos en la agenda y {routes} rutas entre ciudades.',
+                aboutHelpTitle: 'Ayude a mejorar',
+                aboutHelp: '¿Vio un error o conoce un lugar que debería estar aquí? Use «Recomendar un lugar». Cada sugerencia se verifica antes de publicarse.',
                 verifyTitle: 'Cómo verificamos los lugares',
                 verifyExists: '<strong>Fuentes públicas.</strong> Confirmamos que cada lugar existe con Wikipedia, guías como Ver Angola y otras publicaciones. Las fuentes aparecen en la página de cada lugar, con la fecha de verificación.',
                 verifyLocation: '<strong>Ubicación verificada</strong> significa que las coordenadas vienen de Wikipedia o Wikidata. <strong>Existencia verificada</strong> significa que el lugar existe pero su posición en el mapa es aproximada; en ese caso, «Cómo llegar» busca el nombre en Google Maps.',
@@ -4567,6 +4894,7 @@
             plaza: { icon: 'plaza', pt: ['Praças e passeios', 'Praça e passeio'], en: ['Squares and promenades', 'Square and promenade'], fr: ['Places et promenades', 'Place et promenade'], es: ['Plazas y paseos', 'Plaza y paseo'], keywords: 'praça largo passeio marginal square promenade walk place promenade plaza paseo' },
             sport: { icon: 'dumbbell', pt: ['Ginásios e piscinas', 'Desporto'], en: ['Gyms and pools', 'Sport'], fr: ['Salles de sport et piscines', 'Sport'], es: ['Gimnasios y piscinas', 'Deporte'], keywords: 'ginásio desporto treino gym sport fitness salle sport gimnasio deporte' },
             transport: { icon: 'bus', pt: ['Transportes', 'Transporte'], en: ['Getting around', 'Transport'], fr: ['Se déplacer', 'Transport'], es: ['Cómo moverse', 'Transporte'], keywords: 'transporte transportes deslocar transport getting around transport transporte' },
+            health: { icon: 'health', pt: ['Saúde e hospitais', 'Saúde'], en: ['Health and hospitals', 'Health'], fr: ['Santé et hôpitaux', 'Santé'], es: ['Salud y hospitales', 'Salud'], keywords: 'saúde hospital hospitais clínica clínicas urgência urgências emergência médico health hospital clinic emergency doctor santé hôpital clinique urgences médecin salud hospital clínica urgencias médico' },
             services: { icon: 'exchange', pt: ['Câmbio e serviços', 'Câmbio'], en: ['Exchange and services', 'Exchange'], fr: ['Change et services', 'Change'], es: ['Cambio y servicios', 'Cambio'], keywords: 'câmbio dinheiro trocar serviço exchange money service change argent dinero cambio' }
         };
 
@@ -6341,12 +6669,12 @@
             {
                 id: 'dinheiro', icon: 'card', title: { pt: 'Dinheiro e pagamentos', en: 'Money and payments', fr: 'Argent et paiements', es: 'Dinero y pagos' },
                 items: [
-                    { lead: { pt: 'Moeda', en: 'Currency', fr: 'Monnaie', es: 'Moneda' }, pt: 'O kwanza (Kz, código AOA). Todos os preços na Tuende estão em kwanzas. O câmbio oficial está no site do Banco Nacional de Angola.', en: 'The kwanza (Kz, code AOA). All prices on Tuende are in kwanzas. The official exchange rate is on the Banco Nacional de Angola website.', fr: 'Le kwanza (Kz, code AOA). Tous les prix sur Tuende sont en kwanzas. Le taux de change officiel est sur le site de la Banco Nacional de Angola.', es: 'El kwanza (Kz, código AOA). Todos los precios de Tuende están en kwanzas. El tipo de cambio oficial está en la web del Banco Nacional de Angola.', link: 'https://www.bna.ao/' },
+                    { lead: { pt: 'Moeda', en: 'Currency', fr: 'Monnaie', es: 'Moneda' }, pt: 'O kwanza (Kz, código AOA). Todos os preços no Tuende estão em kwanzas. O câmbio oficial está no site do Banco Nacional de Angola.', en: 'The kwanza (Kz, code AOA). All prices on Tuende are in kwanzas. The official exchange rate is on the Banco Nacional de Angola website.', fr: 'Le kwanza (Kz, code AOA). Tous les prix sur Tuende sont en kwanzas. Le taux de change officiel est sur le site de la Banco Nacional de Angola.', es: 'El kwanza (Kz, código AOA). Todos los precios de Tuende están en kwanzas. El tipo de cambio oficial está en la web del Banco Nacional de Angola.', link: 'https://www.bna.ao/' },
                     { lead: { pt: 'Multicaixa', en: 'Multicaixa', fr: 'Multicaixa', es: 'Multicaixa' }, pt: 'A rede angolana de cartões de débito, a mais usada para pagar e levantar dinheiro. Os cartões de crédito ainda são aceites sobretudo nos principais hotéis e restaurantes.', en: 'Angola\'s debit card network, the most used way to pay and withdraw cash. Credit cards are still accepted mainly in the main hotels and restaurants.', fr: 'Le réseau de cartes de débit de l\'Angola, le moyen le plus utilisé pour payer et retirer de l\'argent. Les cartes de crédit sont encore acceptées surtout dans les grands hôtels et restaurants.', es: 'La red de tarjetas de débito de Angola, la forma más usada de pagar y sacar dinero. Las tarjetas de crédito se aceptan todavía sobre todo en los principales hoteles y restaurantes.' },
                     { lead: { pt: 'Cartões estrangeiros', en: 'Foreign cards', fr: 'Cartes étrangères', es: 'Tarjetas extranjeras' }, pt: 'As caixas Multicaixa permitem levantar dinheiro com cartões da rede Visa. Antes de viajar, pergunte ao seu banco se o cartão funciona em Angola.', en: 'Multicaixa cash machines accept cards on the Visa network. Before you travel, ask your bank whether your card works in Angola.', fr: 'Les distributeurs Multicaixa acceptent les cartes du réseau Visa. Avant de partir, demandez à votre banque si votre carte fonctionne en Angola.', es: 'Los cajeros Multicaixa aceptan tarjetas de la red Visa. Antes de viajar, pregunte a su banco si su tarjeta funciona en Angola.' },
                     { lead: { pt: 'Mastercard e outros cartões', en: 'Mastercard and other cards', fr: 'Mastercard et autres cartes', es: 'Mastercard y otras tarjetas' }, tbc: true, pt: 'Não encontrámos uma fonte oficial sobre levantamentos com estes cartões. Confirme com o seu banco.', en: 'We found no official source on withdrawals with these cards. Check with your bank.', fr: 'Nous n\'avons trouvé aucune source officielle sur les retraits avec ces cartes. Renseignez-vous auprès de votre banque.', es: 'No encontramos una fuente oficial sobre retiradas con estas tarjetas. Consúltelo con su banco.' },
                     { lead: { pt: 'Nas caixas', en: 'At cash machines', fr: 'Aux distributeurs', es: 'En los cajeros' }, pt: 'Tenha cuidado ao levantar dinheiro: há casos de pessoas seguidas e assaltadas depois de usar a caixa.', en: 'Take care when withdrawing cash: people have been followed and robbed after using a cash machine.', fr: 'Soyez prudent en retirant de l\'argent : des personnes ont été suivies et volées après être passées au distributeur.', es: 'Tenga cuidado al sacar dinero: ha habido personas seguidas y asaltadas después de usar un cajero.' },
-                    { lead: { pt: 'Câmbio', en: 'Exchange', fr: 'Change', es: 'Cambio' }, pt: 'A Tuende mostra o câmbio do dia do Banco Nacional de Angola, com um conversor. Troque dinheiro em bancos ou em casas de câmbio e confirme antes o valor final.', en: 'Tuende shows the Banco Nacional de Angola rate of the day, with a converter. Change money at banks or exchange bureaus and check the final amount first.', fr: 'Tuende affiche le taux du jour de la Banco Nacional de Angola, avec un convertisseur. Changez de l\'argent dans les banques ou les bureaux de change et vérifiez d\'abord le montant final.', es: 'Tuende muestra el tipo de cambio del día del Banco Nacional de Angola, con un conversor. Cambie dinero en bancos o casas de cambio y confirme antes el importe final.', fx: true, category: 'services' },
+                    { lead: { pt: 'Câmbio', en: 'Exchange', fr: 'Change', es: 'Cambio' }, pt: 'O Tuende mostra o câmbio do dia do Banco Nacional de Angola, com um conversor. Troque dinheiro em bancos ou em casas de câmbio e confirme antes o valor final.', en: 'Tuende shows the Banco Nacional de Angola rate of the day, with a converter. Change money at banks or exchange bureaus and check the final amount first.', fr: 'Tuende affiche le taux du jour de la Banco Nacional de Angola, avec un convertisseur. Changez de l\'argent dans les banques ou les bureaux de change et vérifiez d\'abord le montant final.', es: 'Tuende muestra el tipo de cambio del día del Banco Nacional de Angola, con un conversor. Cambie dinero en bancos o casas de cambio y confirme antes el importe final.', fx: true, category: 'services' },
                     { lead: { pt: 'Entrar e sair com dinheiro', en: 'Bringing money in and out', fr: 'Entrer et sortir avec de l\'argent', es: 'Entrar y salir con dinero' }, pt: 'Quem entra com 10 mil dólares ou mais (somando kwanzas e moeda estrangeira) tem de declarar na alfândega e guardar o duplicado. À saída, quem não vive em Angola pode levar a moeda estrangeira com que entrou, mostrando esse duplicado (Aviso n.º 6/22 do BNA).', en: 'If you arrive with 10,000 US dollars or more (kwanzas and foreign currency added together), you must declare it at customs and keep the copy. When leaving, non-residents can take out the foreign currency they brought in by showing that copy (BNA Notice 6/22).', fr: 'Si vous arrivez avec 10 000 dollars américains ou plus (kwanzas et devises additionnés), vous devez les déclarer à la douane et garder la copie. À la sortie, les non-résidents peuvent emporter les devises apportées en présentant cette copie (Avis 6/22 de la BNA).', es: 'Si llega con 10 000 dólares estadounidenses o más (sumando kwanzas y divisas), debe declararlo en la aduana y guardar la copia. Al salir, los no residentes pueden llevarse las divisas que trajeron mostrando esa copia (Aviso 6/22 del BNA).' }
                 ],
                 sources: [PT_ADVICE, UK_ADVICE, { label: 'Aviso n.º 6/22 do BNA (lex.ao)', url: 'https://lex.ao/docs/banco-nacional-de-angola/2022/aviso-n-o-6-22-de-03-de-marco/' }, { label: 'Ver Angola (março de 2022)', url: 'https://www.verangola.net/va/pt/032022/BancaSeguros/29826/BNA-vai-autorizar-residentes-cambiais-a-sair-do-pa%C3%ADs-com-moeda-nacional-ou-estrangeira-at%C3%A9-10-mil-d%C3%B3lares.htm' }]
@@ -6395,10 +6723,10 @@
                     { lead: { pt: 'Malária', en: 'Malaria', fr: 'Paludisme', es: 'Malaria' }, pt: 'Existe em Angola. Fale com um médico antes de viajar sobre a prevenção (profilaxia).', en: 'It is present in Angola. Talk to a doctor before you travel about prevention (prophylaxis).', fr: 'Il est présent en Angola. Parlez à un médecin de la prévention (prophylaxie) avant de partir.', es: 'Está presente en Angola. Hable con un médico sobre la prevención (profilaxis) antes de viajar.' },
                     { lead: { pt: 'Outras doenças', en: 'Other diseases', fr: 'Autres maladies', es: 'Otras enfermedades' }, pt: 'Há hepatite A e B, e surtos de cólera e raiva são relativamente frequentes. Veja com o médico as vacinas recomendadas.', en: 'Hepatitis A and B are present, and cholera and rabies outbreaks are fairly frequent. Ask your doctor which vaccines are recommended.', fr: 'Les hépatites A et B sont présentes, et les épidémies de choléra et de rage sont assez fréquentes. Demandez à votre médecin quels vaccins sont recommandés.', es: 'Hay hepatitis A y B, y los brotes de cólera y rabia son bastante frecuentes. Pregunte a su médico qué vacunas se recomiendan.' },
                     { lead: { pt: 'Água', en: 'Water', fr: 'Eau', es: 'Agua' }, pt: 'Beba só água engarrafada ou fervida e evite gelo nas bebidas.', en: 'Drink only bottled or boiled water and avoid ice in drinks.', fr: 'Ne buvez que de l\'eau en bouteille ou bouillie et évitez les glaçons.', es: 'Beba solo agua embotellada o hervida y evite el hielo en las bebidas.' },
-                    { lead: { pt: 'Médicos', en: 'Doctors', fr: 'Médecins', es: 'Médicos' }, pt: 'Prefira clínicas privadas; é frequente pedirem uma caução em dinheiro antes do tratamento. Faça um seguro de viagem que cubra a evacuação médica.', en: 'Choose private clinics; they often ask for a cash deposit before treatment. Get travel insurance that covers medical evacuation.', fr: 'Choisissez des cliniques privées ; elles demandent souvent un dépôt en espèces avant les soins. Prenez une assurance voyage qui couvre l\'évacuation médicale.', es: 'Elija clínicas privadas; suelen pedir un depósito en efectivo antes de atender. Contrate un seguro de viaje que cubra la evacuación médica.' },
+                    { lead: { pt: 'Médicos', en: 'Doctors', fr: 'Médecins', es: 'Médicos' }, pt: 'Prefira clínicas privadas; é frequente pedirem uma caução em dinheiro antes do tratamento. Faça um seguro de viagem que cubra a evacuação médica.', category: 'health', en: 'Choose private clinics; they often ask for a cash deposit before treatment. Get travel insurance that covers medical evacuation.', fr: 'Choisissez des cliniques privées ; elles demandent souvent un dépôt en espèces avant les soins. Prenez une assurance voyage qui couvre l\'évacuation médicale.', es: 'Elija clínicas privadas; suelen pedir un depósito en efectivo antes de atender. Contrate un seguro de viaje que cubra la evacuación médica.' },
                     { lead: { pt: 'Medicamentos', en: 'Medicines', fr: 'Médicaments', es: 'Medicamentos' }, pt: 'Leve os seus medicamentos habituais. Evite farmácias não legalizadas.', en: 'Bring your usual medicines. Avoid unlicensed pharmacies.', fr: 'Emportez vos médicaments habituels. Évitez les pharmacies sans licence.', es: 'Lleve sus medicamentos habituales. Evite las farmacias sin licencia.' }
                 ],
-                sources: [PT_ADVICE]
+                sources: [PT_ADVICE, { label: 'Governo britânico: unidades de saúde (2021)', url: 'https://www.gov.uk/government/publications/list-of-medical-facilities-and-funeral-directors-in-angola/angola-list-of-medical-facilities' }, { label: 'International SOS', url: 'https://www.internationalsos.com/locations/angola/talatona' }]
             }
         ];
 
@@ -7206,6 +7534,10 @@
             } else if (params.get('page') === 'events') showEvents({ push: false, filters: eventFiltersFromQuery(params) });
             else if (params.get('page') === 'map') { if (state.view !== 'map') showMap({ push: false }); }
             else if (params.get('page') === 'cambio') { if (state.view !== 'fx') showFx({ push: false }); }
+            else if (params.get('page') === 'plano') {
+                const shared = params.get('p') ? planFromParam(params.get('p')) : null;
+                showPlan({ push: false, id: location.hash.match(/^#plano-([\w-]+)$/)?.[1] || '', shared: params.get('p') ? shared || 'bad' : null });
+            }
             else if (params.get('page') === 'routes') {
                 const route = location.hash.match(/^#roteiro-([a-z-]+)$/)?.[1] || '';
                 if (state.view !== 'routes' || route) showRoutes({ push: false, route: ITINERARIES.some((r) => r.id === route) ? route : '' });
@@ -7333,7 +7665,14 @@
         }
 
         function renderHome() {
-            const parts = [featureTilesHTML(), startHTML()];
+            const parts = [featureTilesHTML(), startHTML(), `
+                <section class="home-cta" aria-labelledby="planCtaTitle">
+                    <div><h2 id="planCtaTitle">${t('planCtaTitle')}</h2><p>${t('planCtaText')}</p></div>
+                    <div class="cta-buttons">
+                        <button class="submit-btn" type="button" data-action="plan">${icon('calendar')}${t('planNew')}</button>
+                        <button class="submit-btn secondary" type="button" data-plan-kamba>${t('planAskKamba')}</button>
+                    </div>
+                </section>`];
             const savedList = venues.filter((v) => favorites.includes(v.id));
             if (savedList.length) parts.push(sectionHTML('secSaved', t('savedTitle'), '', rowHTML(savedList), { saved: true }));
 
@@ -7453,6 +7792,11 @@
                 $('resultsList').innerHTML = emptyHTML();
                 document.querySelectorAll('#resultsList .card-row').forEach(updateRowControls);
             }
+            // Saved places and plans sit together: the Guardados tab is how phones reach "My plans".
+            if (state.filters.saved) {
+                const text = plans.length ? plans.slice(0, 2).map((p) => p.name).join(' · ') + (plans.length > 2 ? ' …' : '') : t('planCtaText');
+                $('resultsList').insertAdjacentHTML('afterbegin', `<div class="fx-banner plan-banner">${icon('calendar')}<span><b>${t('planTitle')}:</b> ${escapeHTML(text)}</span><button class="link-btn" type="button" data-action="plan">${plans.length ? t('seeAll') : t('planNew')}</button></div>`);
+            }
         }
 
         function renderQuickFilters() {
@@ -7499,7 +7843,7 @@
             renderQuickFilters();
             renderSavedButton();
             renderTabbar();
-            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx'].includes(state.view);
+            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx', 'plan'].includes(state.view);
             $('homeView').hidden = state.view !== 'home';
             $('resultsView').hidden = state.view !== 'results';
             $('recommendView').hidden = state.view !== 'recommend';
@@ -7509,7 +7853,8 @@
             $('mapView').hidden = state.view !== 'map';
             $('wondersView').hidden = state.view !== 'wonders';
             $('fxView').hidden = state.view !== 'fx';
-            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle' }[state.view];
+            $('planView').hidden = state.view !== 'plan';
+            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle' }[state.view];
             document.title = viewTitle ? `${t(viewTitle)} | Tuende` : `Tuende - ${t('heroTitle')}`;
             if (state.view === 'home') renderHome();
             else if (state.view === 'results') renderResults();
@@ -7519,6 +7864,344 @@
             else if (state.view === 'map') renderMap();
             else if (state.view === 'wonders') renderWonders();
             else if (state.view === 'fx') renderFx();
+            else if (state.view === 'plan') renderPlan();
+        }
+
+
+        /* ---------- My plans (trip planner) ---------- */
+
+        // Plans live on the device (localStorage) and travel by link (?page=plano&p=...). A plan:
+        // { id, name, start: 'YYYY-MM-DD' or '', days: [[{ kind: 'place' | 'event' | 'note', ref, time: 'HH:MM' or '' }]] }.
+        let plans = (() => { const saved = store.get('tuendePlans', []); return Array.isArray(saved) ? saved : []; })();
+        let sharedPlan = null;
+        let planPending = null;
+        const savePlans = () => store.set('tuendePlans', plans);
+        const findPlan = (id) => plans.find((p) => p.id === id);
+        const newPlanId = () => `p${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+        const planDayDate = (plan, i) => (plan.start ? addDays(plan.start, i) : '');
+        const planDayText = (iso) => new Date(`${iso}T12:00:00Z`).toLocaleDateString(locale(), { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+        const planStopsCount = (plan) => plan.days.reduce((n, day) => n + day.length, 0);
+        const planDaysText = (n) => (n === 1 ? t('planOneDay') : t('planDays', { n }));
+
+        function createPlan({ name, start = '', days = 1, content = null }) {
+            const plan = { id: newPlanId(), name: (name || t('planNameDefault')).slice(0, 80), start, days: content || Array.from({ length: Math.max(1, Math.min(days, 30)) }, () => []) };
+            plans.unshift(plan);
+            savePlans();
+            return plan;
+        }
+
+        // Timed items go first, in time order; the others keep the order the person gave them.
+        function sortPlanDay(day) {
+            const timed = day.filter((it) => it.time).sort((a, b) => a.time.localeCompare(b.time));
+            return [...timed, ...day.filter((it) => !it.time)];
+        }
+
+        function planItemParts(item) {
+            if (item.kind === 'place') {
+                const v = venues.find((x) => x.id === item.ref);
+                return v ? { html: `<button class="link-btn" type="button" data-open="${v.id}">${escapeHTML(v.name)}</button><small>${escapeHTML(placeLine(v))}</small>`, text: v.name, where: v.address || v.location }
+                    : { html: escapeHTML(t('planGone')), text: t('planGone'), where: '' };
+            }
+            if (item.kind === 'event') {
+                const e = EVENTS.find((x) => x.id === item.ref);
+                return e ? { html: `<button class="link-btn" type="button" data-plan-event="${escapeHTML(e.id)}">${escapeHTML(eventTitle(e))}</button><small>${escapeHTML(`${eventDateText(e)} · ${eventVenueText(e)}`)}</small>`, text: eventTitle(e), where: [eventVenueText(e), e.city].join(', ') }
+                    : { html: escapeHTML(t('planGone')), text: t('planGone'), where: '' };
+            }
+            return { html: escapeHTML(item.ref), text: item.ref, where: '' };
+        }
+
+        function planSuggestionsHTML() {
+            const today = luandaToday();
+            const names = [...venues.map((v) => v.name), ...EVENTS.filter((e) => eventEnd(e) >= today).map((e) => eventTitle(e))];
+            return `<datalist id="planSuggest">${[...new Set(names)].map((n) => `<option value="${escapeHTML(n)}"></option>`).join('')}</datalist>`;
+        }
+
+        function planDayHTML(plan, d, editable) {
+            const date = planDayDate(plan, d);
+            const items = plan.days[d];
+            const dayOptions = (current) => plan.days.map((_, k) => `<option value="${k}"${k === current ? ' selected' : ''}>${escapeHTML(t('planDay', { n: k + 1 }))}</option>`).join('');
+            const rows = items.map((item, i) => {
+                const parts = planItemParts(item);
+                if (!editable) return `<li class="plan-item"><span class="plan-time">${escapeHTML(item.time || '')}</span><div class="plan-what">${parts.html}</div></li>`;
+                return `<li class="plan-item">
+                    <input class="field plan-time" type="time" value="${escapeHTML(item.time || '')}" data-plan-time="${d}:${i}" aria-label="${escapeHTML(t('planTime'))}">
+                    <div class="plan-what">${parts.html}</div>
+                    <div class="plan-tools">
+                        <button class="plan-btn" type="button" data-plan-move="${d}:${i}:-1" aria-label="${escapeHTML(t('planUp'))}"${i === 0 ? ' disabled' : ''}>↑</button>
+                        <button class="plan-btn" type="button" data-plan-move="${d}:${i}:1" aria-label="${escapeHTML(t('planDown'))}"${i === items.length - 1 ? ' disabled' : ''}>↓</button>
+                        ${plan.days.length > 1 ? `<select class="field" data-plan-day="${d}:${i}" aria-label="${escapeHTML(t('planMoveTo'))}">${dayOptions(d)}</select>` : ''}
+                        <button class="plan-btn" type="button" data-plan-remove="${d}:${i}" aria-label="${escapeHTML(t('planRemove'))}">×</button>
+                    </div>
+                </li>`;
+            }).join('');
+            return `
+                <section class="guide-card plan-day" aria-labelledby="plan-day-${d}">
+                    <div class="plan-day-head">
+                        <h2 id="plan-day-${d}">${escapeHTML(t('planDay', { n: d + 1 }))}${date ? ` · ${escapeHTML(planDayText(date))}` : ''}</h2>
+                        ${editable && plan.days.length > 1 ? `<button class="link-btn" type="button" data-plan-delday="${d}">${t('planRemoveDay')}</button>` : ''}
+                    </div>
+                    ${items.length ? `<ol class="plan-items">${rows}</ol>` : `<p class="hint">${t('planDayEmpty')}</p>`}
+                    ${editable ? `
+                    <form class="plan-add" data-plan-add-form="${d}">
+                        <input class="field" type="text" list="planSuggest" maxlength="200" placeholder="${escapeHTML(t('planAddPlaceholder'))}" aria-label="${escapeHTML(t('planAddPlaceholder'))}">
+                        <input class="field plan-time" type="time" aria-label="${escapeHTML(t('planTime'))}">
+                        <button class="submit-btn secondary" type="submit">${t('planAddBtn')}</button>
+                    </form>` : ''}
+                </section>`;
+        }
+
+        function renderPlan() {
+            const body = $('planBody');
+            if (sharedPlan === 'bad') {
+                body.innerHTML = `<p class="hint">${t('planBadLink')}</p><button class="submit-btn" type="button" data-plan-list>${t('planBack')}</button>`;
+                return;
+            }
+            if (sharedPlan) {
+                body.innerHTML = `
+                    <p class="kicker">${t('planShared')}</p>
+                    <h2 class="plan-shared-title">${escapeHTML(sharedPlan.name)}</h2>
+                    <p class="hint">${escapeHTML([planDaysText(sharedPlan.days.length), sharedPlan.start ? formatDate(sharedPlan.start) : ''].filter(Boolean).join(' · '))}</p>
+                    <div class="plan-actions"><button class="submit-btn" type="button" data-plan-save-shared>${icon('plus')}${t('planSaveShared')}</button></div>
+                    ${sharedPlan.days.map((_, d) => planDayHTML(sharedPlan, d, false)).join('')}`;
+                return;
+            }
+            const plan = state.planId && findPlan(state.planId);
+            if (plan) {
+                body.innerHTML = `
+                    <div class="plan-head">
+                        <button class="link-btn" type="button" data-plan-list>${icon('back')}${t('planBack')}</button>
+                        <label>${t('planName')}<input class="field" id="planNameInput" type="text" maxlength="80" value="${escapeHTML(plan.name)}"></label>
+                        <label>${t('planStart')}<input class="field" id="planStartInput" type="date" value="${escapeHTML(plan.start)}"></label>
+                        <div class="plan-actions">
+                            <button class="action-btn" type="button" data-plan-share>${icon('share')}${t('share')}</button>
+                            ${inNativeApp ? '' : `<button class="action-btn" type="button" data-plan-ics>${icon('calendar')}${t('eventCalendar')}</button>`}
+                            <button class="action-btn" type="button" data-plan-delete>${t('planDelete')}</button>
+                        </div>
+                    </div>
+                    <p class="hint plan-hint">${t('planAddHint')}</p>
+                    <p class="hint" id="planMsg" aria-live="polite"></p>
+                    ${plan.days.map((_, d) => planDayHTML(plan, d, true)).join('')}
+                    <button class="submit-btn secondary plan-addday" type="button" data-plan-addday>${icon('plus')}${t('planAddDay')}</button>
+                    ${planSuggestionsHTML()}`;
+                return;
+            }
+            const list = plans.map((p) => `
+                <button class="plan-card" type="button" data-plan-open="${escapeHTML(p.id)}">
+                    <b>${escapeHTML(p.name)}</b>
+                    <span>${escapeHTML([planDaysText(p.days.length), t('planStops', { n: planStopsCount(p) }), p.start ? formatDate(p.start) : ''].filter(Boolean).join(' · '))}</span>
+                </button>`).join('');
+            body.innerHTML = `
+                <section class="guide-card" aria-labelledby="planNewTitle">
+                    <h2 id="planNewTitle">${icon('plus')}${t('planNew')}</h2>
+                    <form class="plan-new-form" id="planNewForm">
+                        <label>${t('planName')}<input class="field" id="planNewName" type="text" maxlength="80" placeholder="${escapeHTML(t('planNameDefault'))}"></label>
+                        <label>${t('planStart')}<input class="field" id="planNewStart" type="date"></label>
+                        <label>${t('planDaysLabel')}<input class="field" id="planNewDays" type="number" min="1" max="30" value="3" inputmode="numeric"></label>
+                        <button class="submit-btn" type="submit">${t('planCreate')}</button>
+                    </form>
+                    <button class="link-btn plan-ask" type="button" data-plan-kamba>${t('planAskKamba')}</button>
+                </section>
+                ${plans.length ? `<div class="plan-list">${list}</div>` : `<p class="hint">${t('planEmpty')}</p>`}
+                <p class="hint">${t('planLocalNote')}</p>`;
+        }
+
+        function showPlan({ push = true, id = '', shared = null } = {}) {
+            state.view = 'plan';
+            state.planId = id && findPlan(id) ? id : '';
+            sharedPlan = shared;
+            if (push) history.pushState(null, '', `${location.pathname}?page=plano${state.planId ? `#plano-${state.planId}` : ''}`);
+            render();
+            window.scrollTo({ top: 0 });
+        }
+
+        function planToParam(plan) {
+            const data = { n: plan.name, s: plan.start || '', d: plan.days.map((day) => day.map((it) => [it.kind[0], it.ref, it.time || ''])) };
+            return btoa(unescape(encodeURIComponent(JSON.stringify(data)))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        }
+
+        function planFromParam(param) {
+            try {
+                const data = JSON.parse(decodeURIComponent(escape(atob(param.replace(/-/g, '+').replace(/_/g, '/')))));
+                const kinds = { p: 'place', e: 'event', n: 'note' };
+                const days = (Array.isArray(data.d) ? data.d : []).slice(0, 30).map((day) => (Array.isArray(day) ? day : []).slice(0, 60).map(([k, ref, time]) => ({
+                    kind: kinds[k], ref: k === 'p' ? Number(ref) : String(ref ?? '').slice(0, 200), time: /^\d{2}:\d{2}$/.test(time) ? time : ''
+                })).filter((it) => it.kind && (it.kind !== 'place' || Number.isFinite(it.ref))));
+                return { id: '', name: String(data.n || t('planNameDefault')).slice(0, 80), start: /^\d{4}-\d{2}-\d{2}$/.test(data.s) ? data.s : '', days: days.length ? days : [[]] };
+            } catch {
+                return null;
+            }
+        }
+
+        function sharePlan(plan) {
+            const base = inNativeApp ? PUBLIC_URL : `${location.origin}${location.pathname}`;
+            shareLink(plan.name, `${plan.name} · ${planDaysText(plan.days.length)} · Tuende`, `${base}?page=plano&p=${planToParam(plan)}`);
+        }
+
+        // One calendar file for the whole plan: timed items last an hour (Angola time, UTC+1); the others are all-day.
+        function downloadPlanICS(plan) {
+            const esc = (x) => String(x).replace(/\\/g, '\\\\').replace(/[;,]/g, (c) => `\\${c}`).replace(/\n/g, '\\n');
+            const fold = (line) => line.match(/.{1,60}/gu).join('\r\n ');
+            const stamp = (date) => date.toISOString().replace(/[-:]/g, '').replace(/\.\d+Z$/, 'Z');
+            const events = [];
+            plan.days.forEach((day, d) => day.forEach((item, i) => {
+                const date = planDayDate(plan, d);
+                const parts = planItemParts(item);
+                const when = item.time
+                    ? [`DTSTART:${stamp(new Date(`${date}T${item.time}:00+01:00`))}`, `DTEND:${stamp(new Date(new Date(`${date}T${item.time}:00+01:00`).getTime() + 3600000))}`]
+                    : [`DTSTART;VALUE=DATE:${date.replace(/-/g, '')}`, `DTEND;VALUE=DATE:${addDays(date, 1).replace(/-/g, '')}`];
+                events.push('BEGIN:VEVENT', `UID:${plan.id}-${d}-${i}@tuende`, `DTSTAMP:${stamp(new Date())}`, ...when,
+                    `SUMMARY:${esc(parts.text)}`, ...(parts.where ? [`LOCATION:${esc(parts.where)}`] : []), `DESCRIPTION:${esc(`${plan.name} · ${t('planDay', { n: d + 1 })}`)}`, 'END:VEVENT');
+            }));
+            const text = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Tuende//Planos//PT', 'CALSCALE:GREGORIAN', ...events, 'END:VCALENDAR'].map(fold).join('\r\n') + '\r\n';
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(new Blob([text], { type: 'text/calendar;charset=utf-8' }));
+            link.download = `${placeSlug(plan.name) || 'plano'}.ics`;
+            document.body.append(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+        }
+
+        // "Add to plan" from a place or an event: choose the plan and the day.
+        function openPlanPicker(kind, ref) {
+            planPending = { kind, ref };
+            const what = kind === 'place' ? venues.find((v) => v.id === ref)?.name : eventTitle(EVENTS.find((e) => e.id === ref) || { title: { pt: '' } });
+            const options = plans.map((p) => `<option value="${escapeHTML(p.id)}">${escapeHTML(p.name)}</option>`).join('');
+            $('planPickBody').innerHTML = `
+                <p class="hint">${escapeHTML(what || '')}</p>
+                <div class="plan-pick">
+                    <label>${t('planPickPlan')}<select class="field" id="planPickPlan">${options}<option value="">${escapeHTML(t('planPickNew'))}</option></select></label>
+                    <label>${t('planPickDay')}<select class="field" id="planPickDay"></select></label>
+                    <label>${t('planTime')}<input class="field" id="planPickTime" type="time"></label>
+                    <button class="submit-btn" type="button" data-plan-pick-add>${t('planAddBtn')}</button>
+                </div>`;
+            fillPlanPickDays();
+            openModal('planModal');
+        }
+
+        function fillPlanPickDays() {
+            const plan = findPlan($('planPickPlan').value);
+            const count = plan ? plan.days.length : 3;
+            const date = (i) => (plan ? planDayDate(plan, i) : '');
+            $('planPickDay').innerHTML = Array.from({ length: count }, (_, i) => `<option value="${i}">${escapeHTML(t('planDay', { n: i + 1 }))}${date(i) ? ` · ${escapeHTML(planDayText(date(i)))}` : ''}</option>`).join('');
+        }
+
+        function addPendingToPlan() {
+            let plan = findPlan($('planPickPlan').value);
+            if (!plan) plan = createPlan({ days: 3 });
+            const d = Number($('planPickDay').value) || 0;
+            plan.days[d] = sortPlanDay([...plan.days[d], { ...planPending, time: $('planPickTime').value || '' }]);
+            savePlans();
+            $('planPickBody').innerHTML = `
+                <p class="hint ok">${escapeHTML(t('planAdded', { plan: plan.name, n: d + 1 }))}</p>
+                <div class="plan-done">
+                    <button class="submit-btn" type="button" data-plan-open="${escapeHTML(plan.id)}">${t('planSeePlan')}</button>
+                    <button class="submit-btn secondary" type="button" data-close="planModal">${t('close')}</button>
+                </div>`;
+        }
+
+        // A typed line becomes a place or an event when it matches a name exactly, otherwise a note.
+        function planItemFromText(text) {
+            const key = normalize(text.trim());
+            const v = venues.find((x) => normalize(x.name) === key);
+            if (v) return { kind: 'place', ref: v.id };
+            const e = EVENTS.find((x) => normalize(eventTitle(x)) === key || normalize(x.title.pt) === key);
+            if (e) return { kind: 'event', ref: e.id };
+            return { kind: 'note', ref: text.trim().slice(0, 200) };
+        }
+
+        function planClick(event) {
+            const el = event.target.closest('[data-plan-add], [data-plan-open], [data-plan-list], [data-plan-kamba], [data-plan-move], [data-plan-remove], [data-plan-delday], [data-plan-addday], [data-plan-share], [data-plan-ics], [data-plan-delete], [data-plan-save-shared], [data-plan-event], [data-plan-pick-add]');
+            if (!el) return;
+            const plan = state.planId && findPlan(state.planId);
+            const [d, i, dir] = (el.dataset.planMove || el.dataset.planRemove || el.dataset.planDelday || '').split(':').map(Number);
+            if (el.dataset.planAdd) {
+                const [kind, ref] = el.dataset.planAdd.split(':');
+                openPlanPicker(kind, kind === 'place' ? Number(ref) : ref);
+            } else if (el.dataset.planOpen) {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                showPlan({ id: el.dataset.planOpen });
+            } else if (el.hasAttribute('data-plan-list')) {
+                showPlan();
+            } else if (el.hasAttribute('data-plan-kamba')) {
+                if (!kambaState.open) openKamba();
+                kambaSend(kambaText('planAsk'));
+            } else if (el.hasAttribute('data-plan-pick-add')) {
+                addPendingToPlan();
+            } else if (el.dataset.planEvent) {
+                showEvents({ filters: {} });
+                focusEvent(el.dataset.planEvent);
+            } else if (el.hasAttribute('data-plan-save-shared') && sharedPlan) {
+                const saved = createPlan({ name: sharedPlan.name, start: sharedPlan.start, content: sharedPlan.days });
+                showPlan({ id: saved.id });
+            } else if (plan) {
+                if (el.dataset.planMove) {
+                    const day = plan.days[d];
+                    [day[i], day[i + dir]] = [day[i + dir], day[i]];
+                } else if (el.dataset.planRemove) {
+                    plan.days[d].splice(i, 1);
+                } else if (el.dataset.planDelday) {
+                    plan.days.splice(d, 1);
+                } else if (el.hasAttribute('data-plan-addday')) {
+                    if (plan.days.length < 30) plan.days.push([]);
+                } else if (el.hasAttribute('data-plan-share')) {
+                    sharePlan(plan);
+                    return;
+                } else if (el.hasAttribute('data-plan-ics')) {
+                    if (!plan.start) { $('planMsg').textContent = t('planCalendarNeedsDate'); $('planStartInput').focus(); return; }
+                    downloadPlanICS(plan);
+                    return;
+                } else if (el.hasAttribute('data-plan-delete')) {
+                    if (!confirm(t('planDeleteConfirm', { name: plan.name }))) return;
+                    plans = plans.filter((p) => p.id !== plan.id);
+                    savePlans();
+                    showPlan();
+                    return;
+                }
+                savePlans();
+                renderPlan();
+            }
+        }
+
+        function planChange(event) {
+            const el = event.target;
+            if (el.id === 'planPickPlan') { fillPlanPickDays(); return; }
+            const plan = state.planId && findPlan(state.planId);
+            if (!plan) return;
+            if (el.id === 'planNameInput') plan.name = el.value.trim().slice(0, 80) || t('planNameDefault');
+            else if (el.id === 'planStartInput') plan.start = /^\d{4}-\d{2}-\d{2}$/.test(el.value) ? el.value : '';
+            else if (el.dataset.planTime) {
+                const [d, i] = el.dataset.planTime.split(':').map(Number);
+                plan.days[d][i].time = el.value || '';
+                plan.days[d] = sortPlanDay(plan.days[d]);
+            } else if (el.dataset.planDay) {
+                const [d, i] = el.dataset.planDay.split(':').map(Number);
+                const [item] = plan.days[d].splice(i, 1);
+                const to = Number(el.value);
+                plan.days[to] = sortPlanDay([...plan.days[to], item]);
+            } else return;
+            savePlans();
+            if (el.id !== 'planNameInput') renderPlan();
+        }
+
+        function planSubmit(event) {
+            const form = event.target;
+            if (form.id === 'planNewForm') {
+                event.preventDefault();
+                const days = Math.max(1, Math.min(Number($('planNewDays').value) || 1, 30));
+                const plan = createPlan({ name: $('planNewName').value.trim(), start: $('planNewStart').value, days });
+                showPlan({ id: plan.id });
+            } else if (form.dataset.planAddForm !== undefined) {
+                event.preventDefault();
+                const plan = findPlan(state.planId);
+                const [text, time] = form.querySelectorAll('input');
+                if (!plan || !text.value.trim()) return;
+                const d = Number(form.dataset.planAddForm);
+                plan.days[d] = sortPlanDay([...plan.days[d], { ...planItemFromText(text.value), time: time.value || '' }]);
+                savePlans();
+                renderPlan();
+                document.querySelector(`[data-plan-add-form="${d}"] input`)?.focus();
+            }
         }
 
         /* ---------- Practical guide ---------- */
@@ -7956,6 +8639,7 @@
                         ` : ''}
                         <button class="action-btn${isFav ? ' saved' : ''}" type="button" id="favBtn" aria-pressed="${isFav}">${favButtonHTML(v.id)}</button>
                         <button class="action-btn" type="button" id="shareBtn">${icon('share')}${t('share')}</button>
+                        <button class="action-btn" type="button" data-plan-add="place:${v.id}">${icon('calendar')}${t('planAddTitle')}</button>
                     </div>
 
                     ${practicalHTML(v)}
@@ -8833,8 +9517,17 @@
                 openModal('infoModal');
                 return;
             }
+            const provinces = new Set(venues.map((v) => cityOf(v))).size;
             $('infoContent').innerHTML = kind === 'about'
-                ? `<h2 class="info-title" id="infoTitle">${t('aboutTitle')}</h2><p>${t('aboutP1')}</p><p>${t('aboutP2')}</p>`
+                ? `<h2 class="info-title" id="infoTitle">${t('aboutTitle')}</h2>
+                   <p>${t('aboutP1')}</p>
+                   <h3 class="about-sub">${t('aboutTrustTitle')}</h3>
+                   <ul class="info-list">${[1, 2, 3, 4, 5].map((n) => `<li>${t(`aboutTrust${n}`)}</li>`).join('')}</ul>
+                   <h3 class="about-sub">${t('aboutNotTitle')}</h3><p>${t('aboutNot')}</p>
+                   <h3 class="about-sub">${t('aboutForTitle')}</h3><p>${t('aboutFor')}</p>
+                   <h3 class="about-sub">${t('aboutNowTitle')}</h3>
+                   <p>${t('aboutNow', { places: venues.length, provinces, events: EVENTS.filter((e) => eventEnd(e) >= luandaToday()).length, routes: TRAVEL_ROUTES.length })}</p>
+                   ${canRecommend() ? `<h3 class="about-sub">${t('aboutHelpTitle')}</h3><p>${t('aboutHelp')}</p>` : ''}`
                 : `<h2 class="info-title" id="infoTitle">${t('verifyTitle')}</h2>
                    <ul class="info-list">
                        <li>${t('verifyExists')}</li>
@@ -8996,6 +9689,7 @@
                         <div class="event-actions">
                             ${link}${directions}${calendar}
                             <button class="action-btn" type="button" data-event-share="${e.id}">${icon('share')}${t('share')}</button>
+                            <button class="action-btn" type="button" data-plan-add="event:${e.id}">${icon('plus')}${t('planAddTitle')}</button>
                         </div>
                     </div>
                 </article>`;
@@ -9480,7 +10174,7 @@
 
         function renderFooter() {
             $('footerPrivacy').hidden = !CONTACT_EMAIL;
-            $('footerTerms').href = asset('termos.html');
+                $('footerTerms').href = asset('termos.html');
             $('footerPlaces').href = asset('lugares/');
             $('footerContact').hidden = !CONTACT_EMAIL;
             if (CONTACT_EMAIL) $('footerContact').href = `mailto:${CONTACT_EMAIL}`;
@@ -9587,21 +10281,21 @@
             pt: {
                 launch: 'Pergunta ao Kamba', openAria: 'Abrir a conversa com o Kamba', closeAria: 'Fechar a conversa', resetAria: 'Começar de novo',
                 tagline: 'O teu kamba em Angola', placeholder: 'Escreve a tua pergunta', sendAria: 'Enviar', typing: 'O Kamba está a escrever',
-                note: 'Respondo só com os dados verificados da Tuende. Confirma sempre antes de ir.',
-                noteAI: 'Respondo com os dados verificados da Tuende, com a ajuda de IA (Claude). Confirma sempre antes de ir.',
+                note: 'Respondo só com os dados verificados do Tuende. Confirma sempre antes de ir.',
+                noteAI: 'Respondo com os dados verificados do Tuende, com a ajuda de IA (Claude). Confirma sempre antes de ir.',
                 teaser: 'Olá! Sou o Kamba. Queres uma dica para a tua viagem?', teaserClose: 'Fechar',
                 morning: 'Bom dia', afternoon: 'Boa tarde', evening: 'Boa noite',
-                intro: '{hello}! Eu sou o Kamba. Em Angola, kamba quer dizer amigo, e é isso que quero ser na tua viagem. Conheço os {n} lugares da Tuende, a agenda e o guia prático. Pergunta à vontade!',
+                intro: '{hello}! Eu sou o Kamba. Em Angola, kamba quer dizer amigo, e é isso que quero ser na tua viagem. Conheço os {n} lugares do Tuende, a agenda e o guia prático. Pergunta à vontade!',
                 hello: ['{hello}, kamba! O que vamos descobrir hoje?', '{hello}! Ya, estou aqui. Diz-me o que procuras: praias, comida, hotéis, festa, eventos…', '{hello}! Bora explorar Angola? Pergunta-me o que quiseres.'],
                 howAreYou: ['Estou bué bem, obrigado por perguntares! E tu? Diz-me o que procuras e eu ajudo.', 'Tudo fixe por aqui! Pronto para te mostrar Angola. Por onde começamos?'],
                 thanks: ['De nada, kamba! Se precisares de mais alguma coisa, estou aqui.', 'Sempre às ordens! Boa viagem.', 'Foi um prazer. Aproveita Angola!'],
                 bye: ['Até breve, kamba! Aproveita Angola.', 'Vai com calma e boa viagem! Estou aqui quando precisares.'],
-                who: 'Sou o Kamba, o assistente da Tuende. Kamba quer dizer amigo em Angola. Ajudo-te a encontrar lugares, eventos e informação prática, sempre com os dados verificados da Tuende. E não invento: quando não sei, digo.',
+                who: 'Sou o Kamba, o assistente do Tuende. Kamba quer dizer amigo em Angola. Ajudo-te a encontrar lugares, eventos e informação prática, sempre com os dados verificados do Tuende. E não invento: quando não sei, digo.',
                 palanca: 'Sou uma palanca negra gigante! Este antílope só existe em Angola e é um símbolo nacional: até a seleção de futebol se chama Palancas Negras.',
                 joke: 'Sabes porque é que a palanca negra nunca se perde? Com umas hastes daquelas, tem sempre rede!',
                 help: 'Posso ajudar-te com:',
                 helpList: ['Lugares em todas as províncias: praias, comida, bares, hotéis, museus, natureza, compras, ginásios, transporte e câmbio', 'A agenda: o que há hoje, este fim de semana ou este mês', 'Vistos, dinheiro, internet, transporte, segurança e saúde', 'As Maravilhas de Angola, fotografia e regras para drones', 'Roteiros prontos e o mapa'],
-                notFound: ['Hmm, isso ainda não está nos meus dados, e não quero inventar. Tenta com outras palavras ou experimenta uma destas:', 'Essa escapou-me! Não encontro nada sobre isso nos dados da Tuende. Que tal perguntar assim:'],
+                notFound: ['Hmm, isso ainda não está nos meus dados, e não quero inventar. Tenta com outras palavras ou experimenta uma destas:', 'Essa escapou-me! Não encontro nada sobre isso nos dados do Tuende. Que tal perguntar assim:'],
                 cheer: ['Bora!', 'Ya, tenho isso!', 'Boa escolha!', 'Fixe!'],
                 placesWord: 'lugares', inPlace: ' em {where}', inAngola: ' em Angola', forFamily: ' para famílias', freeTag: ' com entrada gratuita', openTag: ' abertos agora',
                 places: '{cheer} {what}: encontrei {count}.',
@@ -9621,7 +10315,7 @@
                 eventsIn: ' em {where}',
                 eventsNone: 'Não tenho eventos confirmados {when}{where}. A agenda só mostra eventos com fonte publicada, por isso não vou adivinhar.',
                 eventsNext: 'Os próximos que tenho:',
-                guideIntro: ['Boa pergunta! Do guia prático:', 'Do guia prático da Tuende:'],
+                guideIntro: ['Boa pergunta! Do guia prático:', 'Do guia prático do Tuende:'],
                 drones: 'Drone na bagagem? Bué fixe! Mas em Angola há regras:',
                 photo: 'Para fotografia, estes são alguns dos lugares mais bonitos de Angola:', photoIn: 'Para fotografia em {where}:',
                 photoNoneIn: 'Em {where} ainda não tenho lugares para fotografar. Estes são os melhores que conheço:', photoTip: 'Dica',
@@ -9629,9 +10323,9 @@
                 routes: 'Tenho roteiros prontos, paragem a paragem, dia a dia:',
                 map: 'No mapa estão todos os lugares com localização exata. Bora ver?',
                 surprise: ['Que tal isto? {name}, em {where}. {highlight}', 'Já conheces {name}? Fica em {where}. {highlight}', 'Aposto que vais gostar de {name}, em {where}. {highlight}'],
-                recommend: 'Conheces um lugar que devia estar na Tuende? Conta-nos neste formulário e a equipa verifica.',
+                recommend: 'Conheces um lugar que devia estar no Tuende? Conta-nos neste formulário e a equipa verifica.',
                 seeAll: 'Ver todos ({n})', guideMore: 'Ler tudo: {title}', openAgenda: 'Ver a agenda', openWonders: 'Ver as Maravilhas', openDrones: 'Regras para drones',
-                openPhoto: 'Lugares para fotografar', openSpot: 'Dicas de fotografia', openRoutes: 'Ver os roteiros', openMap: 'Abrir o mapa', openFx: 'Ver o câmbio do dia', routeIntro: 'Para ir {route}: {summary} Os preços mudam; confirma antes de viajar.', routeModes: { bus: 'de autocarro', plane: 'de avião', train: 'de comboio', boat: 'de barco', car: 'de carro' }, routeFrom: 'desde {price}', routeCar: '{km} km, cerca de {hours} sem paragens', routeOr: 'ou', openRoute: 'Ver todas as opções', tripIntro: 'Uma ideia para {n} dias, feita só com roteiros, lugares e preços do Tuende:', tripDay: 'Dia {n}', tripTravel: 'Viagem {route}. {summary}', tripFree: 'Dia livre: praia, compras ou um evento da agenda.', tripBack: 'No fim, regresso a Luanda {how}', tripBackMalanje: 'de autocarro ou de carro (382 km, cerca de 5 horas).', tripBackBenguela: 'de avião desde a Catumbela (TAAG) ou de autocarro.', tripBackHuila: 'de avião desde o Lubango (TAAG).', tripFamilyAll: 'Com crianças: todos os lugares deste plano estão indicados para famílias.', tripFamilySome: 'Com crianças: {n} dos {total} lugares deste plano estão indicados para famílias. Os outros: {names}.', tripBudget: 'Orçamento: {amount} dá cerca de {kz} ao câmbio do BNA de {date}, ou {perDay} por dia.', tripPrices: 'Muitos preços de hotéis e refeições ainda estão por confirmar: vê cada lugar antes de reservar.', fxToday: 'Câmbio de referência do BNA de {date}: {rates}. Nos bancos e casas de câmbio o valor final é um pouco diferente.', recommendBtn: 'Sugerir um lugar',
+                openPhoto: 'Lugares para fotografar', openSpot: 'Dicas de fotografia', openRoutes: 'Ver os roteiros', openMap: 'Abrir o mapa', openFx: 'Ver o câmbio do dia', routeIntro: 'Para ir {route}: {summary} Os preços mudam; confirma antes de viajar.', routeModes: { bus: 'de autocarro', plane: 'de avião', train: 'de comboio', boat: 'de barco', car: 'de carro' }, routeFrom: 'desde {price}', routeCar: '{km} km, cerca de {hours} sem paragens', routeOr: 'ou', openRoute: 'Ver todas as opções', planSave: 'Guardar como o meu plano', planOwn: 'Criar o meu plano', planAsk: 'Ajuda-me a planear uma viagem', planHelp: 'Bora planear! Diz-me quantos dias tens, se vais com crianças e o orçamento (por exemplo: «7 dias com crianças, 2000 libras»). Ou monta tu o plano, dia a dia, e eu ajudo com os lugares.', planChips: ['3 dias em Luanda', '5 dias em Angola', '7 dias com crianças', '10 dias, orçamento 2000 libras'], tripIntro: 'Uma ideia para {n} dias, feita só com roteiros, lugares e preços do Tuende:', tripDay: 'Dia {n}', tripTravel: 'Viagem {route}. {summary}', tripFree: 'Dia livre: praia, compras ou um evento da agenda.', tripBack: 'No fim, regresso a Luanda {how}', tripBackMalanje: 'de autocarro ou de carro (382 km, cerca de 5 horas).', tripBackBenguela: 'de avião desde a Catumbela (TAAG) ou de autocarro.', tripBackHuila: 'de avião desde o Lubango (TAAG).', tripFamilyAll: 'Com crianças: todos os lugares deste plano estão indicados para famílias.', tripFamilySome: 'Com crianças: {n} dos {total} lugares deste plano estão indicados para famílias. Os outros: {names}.', tripBudget: 'Orçamento: {amount} dá cerca de {kz} ao câmbio do BNA de {date}, ou {perDay} por dia.', tripPrices: 'Muitos preços de hotéis e refeições ainda estão por confirmar: vê cada lugar antes de reservar.', fxToday: 'Câmbio de referência do BNA de {date}: {rates}. Nos bancos e casas de câmbio o valor final é um pouco diferente.', recommendBtn: 'Sugerir um lugar',
                 locateBtn: 'Usar a minha localização', directions: 'Como chegar',
                 chipCat: '{cat} em {where}', chipEvents: 'Eventos em {where}',
                 chipsStart: ['O que fazer em Luanda?', 'Preciso de visto?', 'Eventos este fim de semana', 'Praias em Benguela', 'Onde posso voar com drone?', 'Plano de 7 dias em Angola', 'Como ir de Luanda a Benguela?', 'Surpreende-me']
@@ -9683,7 +10377,7 @@
                 surprise: ['How about this? {name}, in {where}. {highlight}', 'Do you know {name}? It’s in {where}. {highlight}', 'I bet you’ll like {name}, in {where}. {highlight}'],
                 recommend: 'Know a place that should be on Tuende? Tell us with this form and the team will check it.',
                 seeAll: 'See all ({n})', guideMore: 'Read all: {title}', openAgenda: 'See the agenda', openWonders: 'See the Wonders', openDrones: 'Drone rules',
-                openPhoto: 'Photo spots', openSpot: 'Photo tips', openRoutes: 'See the routes', openMap: 'Open the map', openFx: 'See today\'s exchange rates', routeIntro: 'To get {route}: {summary} Fares change, so check before you travel.', routeModes: { bus: 'by bus', plane: 'by plane', train: 'by train', boat: 'by boat', car: 'by car' }, routeFrom: 'from {price}', routeCar: '{km} km, about {hours} without stops', routeOr: 'or', openRoute: 'See all the options', tripIntro: 'An idea for {n} days, made only from Tuende\'s routes, places and prices:', tripDay: 'Day {n}', tripTravel: 'Travel {route}. {summary}', tripFree: 'Free day: beach, shopping or an event from the agenda.', tripBack: 'At the end, back to Luanda {how}', tripBackMalanje: 'by bus or car (382 km, about 5 hours).', tripBackBenguela: 'by plane from Catumbela (TAAG) or by bus.', tripBackHuila: 'by plane from Lubango (TAAG).', tripFamilyAll: 'With children: every place in this plan is suited to families.', tripFamilySome: 'With children: {n} of the {total} places in this plan are suited to families. The others: {names}.', tripBudget: 'Budget: {amount} is about {kz} at the BNA rate of {date}, or {perDay} per day.', tripPrices: 'Many hotel and meal prices are still to be confirmed: check each place before you book.', fxToday: 'BNA reference rate of {date}: {rates}. Banks and exchange bureaus give a slightly different final amount.', recommendBtn: 'Suggest a place',
+                openPhoto: 'Photo spots', openSpot: 'Photo tips', openRoutes: 'See the routes', openMap: 'Open the map', openFx: 'See today\'s exchange rates', routeIntro: 'To get {route}: {summary} Fares change, so check before you travel.', routeModes: { bus: 'by bus', plane: 'by plane', train: 'by train', boat: 'by boat', car: 'by car' }, routeFrom: 'from {price}', routeCar: '{km} km, about {hours} without stops', routeOr: 'or', openRoute: 'See all the options', planSave: 'Save as my plan', planOwn: 'Build my own plan', planAsk: 'Help me plan a trip', planHelp: 'Let\'s plan! Tell me how many days you have, whether you\'re travelling with children and your budget (for example: "7 days with kids, £2,000"). Or build the plan yourself, day by day, and I\'ll help with the places.', planChips: ['3 days in Luanda', '5 days in Angola', '7 days with kids', '10 days, budget £2,000'], tripIntro: 'An idea for {n} days, made only from Tuende\'s routes, places and prices:', tripDay: 'Day {n}', tripTravel: 'Travel {route}. {summary}', tripFree: 'Free day: beach, shopping or an event from the agenda.', tripBack: 'At the end, back to Luanda {how}', tripBackMalanje: 'by bus or car (382 km, about 5 hours).', tripBackBenguela: 'by plane from Catumbela (TAAG) or by bus.', tripBackHuila: 'by plane from Lubango (TAAG).', tripFamilyAll: 'With children: every place in this plan is suited to families.', tripFamilySome: 'With children: {n} of the {total} places in this plan are suited to families. The others: {names}.', tripBudget: 'Budget: {amount} is about {kz} at the BNA rate of {date}, or {perDay} per day.', tripPrices: 'Many hotel and meal prices are still to be confirmed: check each place before you book.', fxToday: 'BNA reference rate of {date}: {rates}. Banks and exchange bureaus give a slightly different final amount.', recommendBtn: 'Suggest a place',
                 locateBtn: 'Use my location', directions: 'Directions',
                 chipCat: '{cat} in {where}', chipEvents: 'Events in {where}',
                 chipsStart: ['What to do in Luanda?', 'Do I need a visa?', 'Events this weekend', 'Beaches in Benguela', 'Where can I fly a drone?', 'A 7-day plan for Angola', 'How to get from Luanda to Benguela?', 'Surprise me']
@@ -9735,7 +10429,7 @@
                 surprise: ['Et ça, ça te dit ? {name}, à {where}. {highlight}', 'Tu connais {name} ? C’est à {where}. {highlight}', 'Je parie que {name}, à {where}, va te plaire. {highlight}'],
                 recommend: 'Tu connais un lieu qui devrait être sur Tuende ? Dis-le-nous avec ce formulaire et l’équipe le vérifiera.',
                 seeAll: 'Tout voir ({n})', guideMore: 'Tout lire : {title}', openAgenda: 'Voir l’agenda', openWonders: 'Voir les merveilles', openDrones: 'Règles pour drones',
-                openPhoto: 'Spots photo', openSpot: 'Conseils photo', openRoutes: 'Voir les itinéraires', openMap: 'Ouvrir la carte', openFx: 'Voir le taux de change du jour', routeIntro: 'Pour aller {route} : {summary} Les prix changent ; vérifie avant de partir.', routeModes: { bus: 'en bus', plane: 'en avion', train: 'en train', boat: 'en bateau', car: 'en voiture' }, routeFrom: 'à partir de {price}', routeCar: '{km} km, environ {hours} sans arrêt', routeOr: 'ou', openRoute: 'Voir toutes les options', tripIntro: 'Une idée pour {n} jours, faite uniquement avec les itinéraires, lieux et prix de Tuende :', tripDay: 'Jour {n}', tripTravel: 'Trajet {route}. {summary}', tripFree: 'Journée libre : plage, shopping ou un événement de l\'agenda.', tripBack: 'À la fin, retour à Luanda {how}', tripBackMalanje: 'en bus ou en voiture (382 km, environ 5 heures).', tripBackBenguela: 'en avion depuis Catumbela (TAAG) ou en bus.', tripBackHuila: 'en avion depuis Lubango (TAAG).', tripFamilyAll: 'Avec des enfants : tous les lieux de ce plan sont adaptés aux familles.', tripFamilySome: 'Avec des enfants : {n} des {total} lieux de ce plan sont adaptés aux familles. Les autres : {names}.', tripBudget: 'Budget : {amount} font environ {kz} au taux de la BNA du {date}, soit {perDay} par jour.', tripPrices: 'Beaucoup de prix d\'hôtels et de repas sont encore à confirmer : vérifie chaque lieu avant de réserver.', fxToday: 'Taux de référence de la BNA du {date} : {rates}. Dans les banques et bureaux de change, le montant final est un peu différent.', recommendBtn: 'Proposer un lieu',
+                openPhoto: 'Spots photo', openSpot: 'Conseils photo', openRoutes: 'Voir les itinéraires', openMap: 'Ouvrir la carte', openFx: 'Voir le taux de change du jour', routeIntro: 'Pour aller {route} : {summary} Les prix changent ; vérifie avant de partir.', routeModes: { bus: 'en bus', plane: 'en avion', train: 'en train', boat: 'en bateau', car: 'en voiture' }, routeFrom: 'à partir de {price}', routeCar: '{km} km, environ {hours} sans arrêt', routeOr: 'ou', openRoute: 'Voir toutes les options', planSave: 'Enregistrer comme mon plan', planOwn: 'Créer mon plan', planAsk: 'Aide-moi à planifier un voyage', planHelp: 'On planifie ! Dis-moi combien de jours tu as, si tu voyages avec des enfants et ton budget (par exemple : « 7 jours avec des enfants, 2000 € »). Ou construis le plan toi-même, jour après jour, et je t\'aide avec les lieux.', planChips: ['3 jours à Luanda', '5 jours en Angola', '7 jours avec des enfants', '10 jours, budget 2000 €'], tripIntro: 'Une idée pour {n} jours, faite uniquement avec les itinéraires, lieux et prix de Tuende :', tripDay: 'Jour {n}', tripTravel: 'Trajet {route}. {summary}', tripFree: 'Journée libre : plage, shopping ou un événement de l\'agenda.', tripBack: 'À la fin, retour à Luanda {how}', tripBackMalanje: 'en bus ou en voiture (382 km, environ 5 heures).', tripBackBenguela: 'en avion depuis Catumbela (TAAG) ou en bus.', tripBackHuila: 'en avion depuis Lubango (TAAG).', tripFamilyAll: 'Avec des enfants : tous les lieux de ce plan sont adaptés aux familles.', tripFamilySome: 'Avec des enfants : {n} des {total} lieux de ce plan sont adaptés aux familles. Les autres : {names}.', tripBudget: 'Budget : {amount} font environ {kz} au taux de la BNA du {date}, soit {perDay} par jour.', tripPrices: 'Beaucoup de prix d\'hôtels et de repas sont encore à confirmer : vérifie chaque lieu avant de réserver.', fxToday: 'Taux de référence de la BNA du {date} : {rates}. Dans les banques et bureaux de change, le montant final est un peu différent.', recommendBtn: 'Proposer un lieu',
                 locateBtn: 'Utiliser ma position', directions: 'Itinéraire',
                 chipCat: '{cat} à {where}', chipEvents: 'Événements à {where}',
                 chipsStart: ['Que faire à Luanda ?', 'Ai-je besoin d’un visa ?', 'Événements ce week-end', 'Plages à Benguela', 'Où faire voler un drone ?', 'Un plan de 7 jours en Angola', 'Comment aller de Luanda à Benguela ?', 'Surprends-moi']
@@ -9787,7 +10481,7 @@
                 surprise: ['¿Qué tal esto? {name}, en {where}. {highlight}', '¿Conoces {name}? Está en {where}. {highlight}', 'Apuesto a que te gustará {name}, en {where}. {highlight}'],
                 recommend: '¿Conoces un lugar que debería estar en Tuende? Cuéntanoslo con este formulario y el equipo lo comprobará.',
                 seeAll: 'Ver todos ({n})', guideMore: 'Leer todo: {title}', openAgenda: 'Ver la agenda', openWonders: 'Ver las Maravillas', openDrones: 'Normas para drones',
-                openPhoto: 'Lugares para fotografiar', openSpot: 'Consejos de fotografía', openRoutes: 'Ver las rutas', openMap: 'Abrir el mapa', openFx: 'Ver el tipo de cambio del día', routeIntro: 'Para ir {route}: {summary} Los precios cambian; confírmalo antes de viajar.', routeModes: { bus: 'en autobús', plane: 'en avión', train: 'en tren', boat: 'en barco', car: 'en coche' }, routeFrom: 'desde {price}', routeCar: '{km} km, unas {hours} sin paradas', routeOr: 'o', openRoute: 'Ver todas las opciones', tripIntro: 'Una idea para {n} días, hecha solo con rutas, lugares y precios de Tuende:', tripDay: 'Día {n}', tripTravel: 'Viaje {route}. {summary}', tripFree: 'Día libre: playa, compras o un evento de la agenda.', tripBack: 'Al final, regreso a Luanda {how}', tripBackMalanje: 'en autobús o en coche (382 km, unas 5 horas).', tripBackBenguela: 'en avión desde Catumbela (TAAG) o en autobús.', tripBackHuila: 'en avión desde Lubango (TAAG).', tripFamilyAll: 'Con niños: todos los lugares de este plan son adecuados para familias.', tripFamilySome: 'Con niños: {n} de los {total} lugares de este plan son adecuados para familias. Los demás: {names}.', tripBudget: 'Presupuesto: {amount} son unos {kz} al cambio del BNA del {date}, o {perDay} por día.', tripPrices: 'Muchos precios de hoteles y comidas aún están por confirmar: revisa cada lugar antes de reservar.', fxToday: 'Tipo de referencia del BNA del {date}: {rates}. En bancos y casas de cambio el importe final es algo distinto.', recommendBtn: 'Sugerir un lugar',
+                openPhoto: 'Lugares para fotografiar', openSpot: 'Consejos de fotografía', openRoutes: 'Ver las rutas', openMap: 'Abrir el mapa', openFx: 'Ver el tipo de cambio del día', routeIntro: 'Para ir {route}: {summary} Los precios cambian; confírmalo antes de viajar.', routeModes: { bus: 'en autobús', plane: 'en avión', train: 'en tren', boat: 'en barco', car: 'en coche' }, routeFrom: 'desde {price}', routeCar: '{km} km, unas {hours} sin paradas', routeOr: 'o', openRoute: 'Ver todas las opciones', planSave: 'Guardar como mi plan', planOwn: 'Crear mi plan', planAsk: 'Ayúdame a planear un viaje', planHelp: '¡Vamos a planear! Dime cuántos días tienes, si viajas con niños y tu presupuesto (por ejemplo: «7 días con niños, 2000 euros»). O monta tú el plan, día a día, y te ayudo con los lugares.', planChips: ['3 días en Luanda', '5 días en Angola', '7 días con niños', '10 días, presupuesto 2000 euros'], tripIntro: 'Una idea para {n} días, hecha solo con rutas, lugares y precios de Tuende:', tripDay: 'Día {n}', tripTravel: 'Viaje {route}. {summary}', tripFree: 'Día libre: playa, compras o un evento de la agenda.', tripBack: 'Al final, regreso a Luanda {how}', tripBackMalanje: 'en autobús o en coche (382 km, unas 5 horas).', tripBackBenguela: 'en avión desde Catumbela (TAAG) o en autobús.', tripBackHuila: 'en avión desde Lubango (TAAG).', tripFamilyAll: 'Con niños: todos los lugares de este plan son adecuados para familias.', tripFamilySome: 'Con niños: {n} de los {total} lugares de este plan son adecuados para familias. Los demás: {names}.', tripBudget: 'Presupuesto: {amount} son unos {kz} al cambio del BNA del {date}, o {perDay} por día.', tripPrices: 'Muchos precios de hoteles y comidas aún están por confirmar: revisa cada lugar antes de reservar.', fxToday: 'Tipo de referencia del BNA del {date}: {rates}. En bancos y casas de cambio el importe final es algo distinto.', recommendBtn: 'Sugerir un lugar',
                 locateBtn: 'Usar mi ubicación', directions: 'Cómo llegar',
                 chipCat: '{cat} en {where}', chipEvents: 'Eventos en {where}',
                 chipsStart: ['¿Qué hacer en Luanda?', '¿Necesito visado?', 'Eventos este fin de semana', 'Playas en Benguela', '¿Dónde puedo volar un dron?', 'Un plan de 7 días en Angola', '¿Cómo llegar de Luanda a Benguela?', 'Sorpréndeme']
@@ -9850,7 +10544,8 @@
             plaza: 'praca largo marginal passeio passear walk',
             sport: 'ginasio gym piscina desporto treinar treino fitness',
             transport: 'aeroporto airport aeroport aeropuerto taxi autocarro comboio ferry barco yango',
-            services: 'cambio trocar exchange'
+            services: 'cambio trocar exchange',
+            health: 'hospital hospitais clinica clinicas urgencia urgencias emergencia hopital clinique urgence urgences emergency'
         };
         const KAMBA_CAT_SKIP = new Set(['centro', 'centre', 'como', 'cmo', 'around', 'place']);
         const KAMBA_FILLER = new Set(('onde ou donde where qual quais quel quelle quels quelles cual cuales which what whats que quoi qu est ce '
@@ -10038,6 +10733,8 @@
         const TRIP_AREA_BLOCK = { Benguela: ['B'], 'Huíla': ['B', 'S'], Namibe: ['B', 'S'], Malanje: ['M'] };
         const TRIP_NOT = / (evento|eventos|agenda|concertos?|festas?|visto|vistos|visa|visas|validade|events?|concerts?|visados?|evenements?) /;
 
+        const KAMBA_PLAN_HELP = / (ajuda me a (planear|planejar|organizar|fazer)|fazer um plano|criar um plano|planear (a minha|uma|a) viagem|planejar (a minha|uma) viagem|plano de viagem|um plano|help me (plan|organi[sz]e)|plan (a|my) trip|make a plan|travel plan|trip plan|aide moi a (planifier|organiser)|planifier (un|mon) voyage|plan de voyage|ayuda ?me a (planear|planificar|organizar)|planear (un|mi) viaje|plan de viaje) /;
+
         function kambaTripDays(text) {
             if (TRIP_NOT.test(text)) return 0;
             const m = text.match(/ (\d{1,2}) (dias?|days?|jours?|noites|nights|nuits|noches) /);
@@ -10053,9 +10750,9 @@
             let text = normalize(raw);
             for (let i = 0; i < 3; i++) text = text.replace(/(\d)[ .,](\d{3})(?!\d)/g, '$1$2');
             const symbols = { '£': 'gbp', '$': 'usd', '€': 'eur' };
-            let m = text.match(/([£$€]) ?(\d+)/);
+            let m = text.match(/([£$€]) ?(\d+)/) || text.match(/(\d+) ?([£$€])/)?.slice(0, 3).reverse();
             let amount; let code;
-            if (m) { amount = Number(m[2]); code = symbols[m[1]]; } else {
+            if (m) { amount = Number(m.find((x) => /^\d+$/.test(x))); code = symbols[m.find((x) => symbols[x])]; } else {
                 m = text.match(/(\d+) ?(mil )?(kz|kwanzas?|aoa|libras?|pounds?|gbp|livres?|dolares?|dollars?|usd|euros?|eur)\b/);
                 if (!m) return null;
                 amount = Number(m[1]) * (m[2] ? 1000 : 1);
@@ -10073,16 +10770,21 @@
             else plan = TRIP_PLANS[Math.min(days, 10)];
             const lines = [];
             const stops = [];
+            const planContent = [];
             let area = 'Luanda';
             for (const block of plan) {
-                if (block === 'F') { lines.push(kambaText('tripFree')); continue; }
+                if (block === 'F') { lines.push(kambaText('tripFree')); planContent.push([{ kind: 'note', ref: kambaText('tripFree'), time: '' }]); continue; }
                 const [itId, routeId, keep] = TRIP_BLOCKS[block];
                 const it = ITINERARIES.find((r) => r.id === itId);
                 const route = routeId && TRAVEL_ROUTES.find((r) => r.id === routeId);
-                if (route) lines.push(kambaText('tripTravel', { route: routeName(route), summary: routeSummaryText(route) }));
+                if (route) {
+                    lines.push(kambaText('tripTravel', { route: routeName(route), summary: routeSummaryText(route) }));
+                    planContent.push([{ kind: 'note', ref: lines.at(-1), time: '' }]);
+                }
                 for (const day of it.days.slice(0, keep || it.days.length)) {
                     const fresh = day.stops.filter((id) => !stops.includes(id));
                     stops.push(...fresh);
+                    planContent.push(fresh.map((id) => ({ kind: 'place', ref: id, time: '' })));
                     lines.push(`${day.title[lang]}: ${fresh.map((id) => venues.find((v) => v.id === id)?.name).filter(Boolean).join(', ')}`);
                 }
                 area = it.area;
@@ -10106,7 +10808,9 @@
                 parts.push(`<p>${kambaHTML('tripBudget', { amount: escapeHTML(`${budget.amount.toLocaleString(locale())} ${budget.code === 'aoa' ? 'Kz' : budget.code.toUpperCase()}`), kz: escapeHTML(kzText(budget.kz)), date: escapeHTML(formatDate(fx.date)), perDay: escapeHTML(kzText(budget.kz / days)) })}</p>`);
             }
             parts.push(`<p>${kambaHTML('tripPrices')}</p>`);
-            return { parts, facts: shown.map((line, i) => `${kambaText('tripDay', { n: i + 1 })}: ${line}`) };
+            const planDays = planContent.slice(0, days);
+            while (planDays.length < days) planDays.push([{ kind: 'note', ref: kambaText('tripFree'), time: '' }]);
+            return { parts, facts: shown.map((line, i) => `${kambaText('tripDay', { n: i + 1 })}: ${line}`), plan: { name: t('planFromKamba', { n: days }), days: planDays } };
         }
 
         function kambaReply(raw) {
@@ -10149,7 +10853,15 @@
                 const trip = kambaTrip(tripDays, raw, q);
                 out.parts.push(...trip.parts);
                 out.facts.push(...trip.facts);
-                out.buttons.push(kambaGoBtn('routes', kambaText('openRoutes')));
+                kambaState.lastTrip = trip.plan;
+                out.buttons.push(kambaGoBtn('plan-save', kambaText('planSave')), kambaGoBtn('routes', kambaText('openRoutes')));
+                return out;
+            }
+            // "Help me plan a trip" without the number of days: ask for it, or let the person build the plan.
+            if (KAMBA_PLAN_HELP.test(` ${kambaWords(raw).join(' ')} `)) {
+                say('planHelp');
+                out.chips.push(...(KAMBA_TEXT[lang].planChips || KAMBA_TEXT.en.planChips));
+                out.buttons.push(kambaGoBtn('plan', kambaText('planOwn')));
                 return out;
             }
 
@@ -10219,7 +10931,8 @@
             const guideTopics = q.topics.slice(0, 2);
             guideTopics.forEach((id, i) => {
                 const g = GUIDE.find((x) => x.id === id);
-                const items = g.items.slice(0, id === 'vistos' ? 4 : 3);
+                // Asking for a hospital or a doctor: the advice about clinics comes before malaria and water.
+                const items = id === 'saude' && q.category === 'health' ? g.items.filter((it) => ['Médicos', 'Medicamentos'].includes(it.lead.pt)) : g.items.slice(0, id === 'vistos' ? 4 : 3);
                 if (i === 0) say('guideIntro');
                 out.parts.push(`<p><b>${escapeHTML(g.title[lang])}</b></p>${kambaList(items)}`);
                 out.buttons.push(kambaGoBtn(`guide:${id}`, kambaText('guideMore', { title: g.title[lang] })));
@@ -10309,7 +11022,7 @@
             // Places by province, kind, family, free, open now or distance.
             const handled = out.parts.length > 0;
             const listAsked = q.category || q.where.length || q.flags.family || q.flags.free || q.flags.open || q.flags.near;
-            const alsoList = handled && q.category && (q.asksWhere || ['transport', 'services'].includes(q.category)) && !wantsEvents && !q.flags.wonders;
+            const alsoList = handled && q.category && (q.asksWhere || ['transport', 'services', 'health'].includes(q.category)) && !wantsEvents && !q.flags.wonders;
             if ((!handled && (listAsked || q.rest.length)) || alsoList) {
                 if (q.flags.near && !state.userPos) {
                     kambaState.pending = raw;
@@ -10505,6 +11218,11 @@
             else if (kind === 'results') showResults(JSON.parse(arg));
             else if (kind === 'map') showMap();
             else if (kind === 'fx') showFx();
+            else if (kind === 'plan') showPlan();
+            else if (kind === 'plan-save' && kambaState.lastTrip) {
+                const plan = createPlan({ name: kambaState.lastTrip.name, content: kambaState.lastTrip.days.map((day) => day.map((it) => ({ ...it }))) });
+                showPlan({ id: plan.id });
+            }
             else if (kind === 'recommend') showRecommend();
         }
 
@@ -10688,6 +11406,11 @@
                 $(`roteiro-${id}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
                 return;
             }
+            if (action?.dataset.action === 'plan') {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                showPlan();
+                return;
+            }
             if (action?.dataset.action === 'fx') {
                 document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
                 showFx();
@@ -10789,6 +11512,10 @@
         });
 
         $('eventForm').addEventListener('submit', submitEventSuggestion);
+        document.addEventListener('click', planClick);
+        $('planBody').addEventListener('change', planChange);
+        $('planPickBody').addEventListener('change', planChange);
+        $('planBody').addEventListener('submit', planSubmit);
         $('fxBody').addEventListener('input', (e) => {
             if (e.target.id !== 'fxForeign' && e.target.id !== 'fxKwanza') return;
             fxInput = { side: e.target.id === 'fxForeign' ? 'foreign' : 'kwanza', value: parseAmount(e.target.value) };
