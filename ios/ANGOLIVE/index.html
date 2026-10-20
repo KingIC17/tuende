@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!-- Only these sources can load scripts, styles, images and data; everything else is blocked by the browser.
+         Add a source here before using a new outside service (and keep file: for the iPhone app). -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file: 'unsafe-inline' https://unpkg.com https://static.cloudflareinsights.com; style-src 'self' file: 'unsafe-inline' https://unpkg.com; img-src 'self' file: data: blob: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co https://tile.openstreetmap.org https://unpkg.com; media-src 'self' file: blob: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co; font-src 'self' file: https://tuende.app; connect-src 'self' file: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co wss://dbwymcfmputeaggeeqfo.supabase.co https://www.bna.ao https://cloudflareinsights.com; frame-src https://www.openstreetmap.org; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Tuende - Descubra onde ir em Angola</title>
     <meta name="description" content="Encontre restaurantes, praias, hotéis, vida noturna e experiências em Angola, perto de si. Com preços em Kwanza e indicações para chegar.">
     <link rel="canonical" href="https://tuende.app/">
