@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <!-- Only these sources can load scripts, styles, images and data; everything else is blocked by the browser.
          Add a source here before using a new outside service (and keep file: for the iPhone app). -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file: 'unsafe-inline' https://unpkg.com https://static.cloudflareinsights.com; style-src 'self' file: 'unsafe-inline' https://unpkg.com; img-src 'self' file: data: blob: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co https://tile.openstreetmap.org https://unpkg.com; media-src 'self' file: blob: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co; font-src 'self' file: https://tuende.app; connect-src 'self' file: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co wss://dbwymcfmputeaggeeqfo.supabase.co https://www.bna.ao https://cloudflareinsights.com; frame-src https://www.openstreetmap.org; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file: 'unsafe-inline' https://unpkg.com https://static.cloudflareinsights.com; style-src 'self' file: 'unsafe-inline' https://unpkg.com; img-src 'self' file: data: blob: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co https://tile.openstreetmap.org https://unpkg.com; media-src 'self' file: blob: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co; font-src 'self' file: https://tuende.app; connect-src 'self' file: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co wss://dbwymcfmputeaggeeqfo.supabase.co https://www.bna.ao https://cloudflareinsights.com https://tiles.openfreemap.org; frame-src https://www.openstreetmap.org; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Tuende - Descubra onde ir em Angola</title>
     <meta name="description" content="Encontre restaurantes, praias, hotéis, vida noturna e experiências em Angola, perto de si. Com preços em Kwanza e indicações para chegar.">
@@ -943,6 +943,28 @@
         .map-pop { display: grid; gap: 2px; font-family: inherit; font-size: 14px; }
         .map-pop strong { font-size: 15px; }
         .map-pop .link-btn { justify-self: start; min-height: 36px; }
+        .map-pop-photo { width: 100%; height: 104px; object-fit: cover; border-radius: 10px; margin-bottom: 6px; background: var(--surface-2); }
+        .map-box.maplibregl-map { display: block; font-family: inherit; }
+        .map-box .maplibregl-popup-content { min-width: 200px; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 14px; background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+        .map-box .maplibregl-popup-close-button { z-index: 1; top: 6px; right: 6px; width: 30px; height: 30px; border-radius: 50%; background: var(--surface); color: var(--text); font-size: 20px; line-height: 1; box-shadow: var(--shadow); }
+        .map-box .maplibregl-popup-close-button:hover { background: var(--surface-2); }
+        .map-box .maplibregl-popup-anchor-bottom .maplibregl-popup-tip, .map-box .maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip, .map-box .maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip { border-top-color: var(--border); }
+        .map-box .maplibregl-popup-anchor-top .maplibregl-popup-tip, .map-box .maplibregl-popup-anchor-top-left .maplibregl-popup-tip, .map-box .maplibregl-popup-anchor-top-right .maplibregl-popup-tip { border-bottom-color: var(--border); }
+        .map-box .maplibregl-popup-anchor-left .maplibregl-popup-tip { border-right-color: var(--border); }
+        .map-box .maplibregl-popup-anchor-right .maplibregl-popup-tip { border-left-color: var(--border); }
+        .map-box .maplibregl-ctrl-group { overflow: hidden; border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); }
+        .map-box .maplibregl-ctrl-group:not(:empty) { box-shadow: var(--shadow); }
+        .map-box .maplibregl-ctrl-group button { width: 40px; height: 40px; }
+        .map-box .maplibregl-ctrl-group button + button { border-top: 1px solid var(--line); }
+        .map-box .maplibregl-ctrl button:not(:disabled):hover { background-color: var(--surface-2); }
+        .map-box.map-dark .maplibregl-ctrl-icon { filter: invert(1); }
+        .map-box .maplibregl-ctrl.maplibregl-ctrl-attrib, .map-box .maplibregl-ctrl-attrib.maplibregl-compact { background-color: var(--surface); color: var(--muted); font-size: 11px; }
+        .map-box .maplibregl-ctrl-attrib a { color: var(--muted); }
+        .map-box.map-dark .maplibregl-ctrl-attrib-button { filter: invert(1); }
+        @media (max-width: 600px) {
+            .map-box .maplibregl-popup-content { min-width: 0; width: 220px; }
+            .map-pop-photo { height: 88px; }
+        }
         .route-meta { color: var(--primary); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
         .route-card h2 { margin-top: 2px; }
         .route-intro { color: var(--muted); margin-top: 6px; }
@@ -1460,7 +1482,7 @@
             <p class="rec-intro" id="mapIntro"></p>
             <div class="chips map-filter" id="mapFilter" role="group" data-i18n-aria="mapFilter" aria-label="Filtrar o mapa por categoria"></div>
             <div class="map-box" id="mapBox"><p class="hint" id="mapStatus" data-i18n="loading">A carregar...</p></div>
-            <p class="hint events-note" data-i18n="mapNote">Os lugares sem localização confirmada (por exemplo, táxis e alguns restaurantes) não aparecem no mapa, mas podem ser encontrados na pesquisa. Mapa: OpenStreetMap. As zonas do mapa que já viu ficam guardadas e abrem sem internet.</p>
+            <p class="hint events-note" data-i18n="mapNote">Os lugares sem localização confirmada (por exemplo, táxis e alguns restaurantes) não aparecem no mapa, mas podem ser encontrados na pesquisa. Mapa: OpenFreeMap e OpenStreetMap, com as cores do Tuende. As zonas do mapa que já viu ficam guardadas e abrem sem internet.</p>
         </section>
 
         <section id="routesView" class="guide-page" hidden aria-labelledby="routesTitle">
@@ -3108,12 +3130,17 @@
                 routesNav: 'Roteiros',
                 mapNav: 'Mapa',
                 mapTitle: 'Mapa dos lugares',
-                mapIntro: '{n} dos {total} lugares têm localização confirmada e aparecem no mapa. Toque num ponto para ver o lugar.',
+                mapIntro: '{n} dos {total} lugares têm localização confirmada e aparecem no mapa. Toque num ponto para ver o lugar; os círculos vermelhos com números juntam vários lugares (toque para aproximar).',
                 mapFilter: 'Filtrar o mapa por categoria',
                 mapAll: 'Todos',
                 mapSeeOnMap: 'Ver no mapa',
                 mapError: 'Não foi possível carregar o mapa. Verifique a internet e tente de novo.',
-                mapNote: 'Os lugares sem localização confirmada (por exemplo, táxis e alguns restaurantes) não aparecem no mapa, mas podem ser encontrados na pesquisa. Mapa: OpenStreetMap. As zonas do mapa que já viu ficam guardadas e abrem sem internet.',
+                mapZoomIn: 'Aproximar',
+                mapZoomOut: 'Afastar',
+                mapLocate: 'Mostrar onde estou',
+                mapLocateNo: 'A sua localização não está disponível',
+                mapCredits: 'Créditos do mapa',
+                mapNote: 'Os lugares sem localização confirmada (por exemplo, táxis e alguns restaurantes) não aparecem no mapa, mas podem ser encontrados na pesquisa. Mapa: OpenFreeMap e OpenStreetMap, com as cores do Tuende. As zonas do mapa que já viu ficam guardadas e abrem sem internet.',
                 routesTitle: 'Roteiros',
                 routesIntro: 'Sugestões de 1 a 3 dias com lugares do Tuende. Toque num lugar para ver horário, preço e como chegar.',
                 routesHomeSub: 'Sugestões de 1 a 3 dias, dentro e fora de Luanda.',
@@ -3676,12 +3703,17 @@
                 routesNav: 'Itineraries',
                 mapNav: 'Map',
                 mapTitle: 'Map of places',
-                mapIntro: '{n} of the {total} places have a confirmed location and appear on the map. Tap a dot to see the place.',
+                mapIntro: '{n} of the {total} places have a confirmed location and appear on the map. Tap a dot to see the place; red circles with numbers group several places (tap to zoom in).',
                 mapFilter: 'Filter the map by category',
                 mapAll: 'All',
                 mapSeeOnMap: 'See on the map',
                 mapError: 'The map could not be loaded. Check your internet connection and try again.',
-                mapNote: 'Places without a confirmed location (such as taxis and some restaurants) are not on the map but can be found with search. Map: OpenStreetMap. Map areas you have already viewed are saved and open without internet.',
+                mapZoomIn: 'Zoom in',
+                mapZoomOut: 'Zoom out',
+                mapLocate: 'Show my location',
+                mapLocateNo: 'Your location is not available',
+                mapCredits: 'Map credits',
+                mapNote: 'Places without a confirmed location (such as taxis and some restaurants) are not on the map but can be found with search. Map: OpenFreeMap and OpenStreetMap, in Tuende\'s colours. Map areas you have already viewed are saved and open without internet.',
                 routesTitle: 'Itineraries',
                 routesIntro: 'Ideas for 1 to 3 days using places on Tuende. Tap a place for opening hours, prices and directions.',
                 routesHomeSub: 'Ideas for 1 to 3 days, in and outside Luanda.',
@@ -4244,12 +4276,17 @@
                 routesNav: 'Itinéraires',
                 mapNav: 'Carte',
                 mapTitle: 'Carte des lieux',
-                mapIntro: '{n} des {total} lieux ont un emplacement confirmé et figurent sur la carte. Touchez un point pour voir le lieu.',
+                mapIntro: '{n} des {total} lieux ont un emplacement confirmé et figurent sur la carte. Touchez un point pour voir le lieu ; les cercles rouges avec un nombre regroupent plusieurs lieux (touchez pour zoomer).',
                 mapFilter: 'Filtrer la carte par catégorie',
                 mapAll: 'Tous',
                 mapSeeOnMap: 'Voir sur la carte',
                 mapError: 'Impossible de charger la carte. Vérifiez votre connexion internet et réessayez.',
-                mapNote: 'Les lieux sans emplacement confirmé (comme les taxis et certains restaurants) ne figurent pas sur la carte, mais se trouvent avec la recherche. Carte : OpenStreetMap. Les zones de la carte déjà vues sont enregistrées et s\'ouvrent sans internet.',
+                mapZoomIn: 'Zoom avant',
+                mapZoomOut: 'Zoom arrière',
+                mapLocate: 'Afficher ma position',
+                mapLocateNo: 'Votre position n\'est pas disponible',
+                mapCredits: 'Crédits de la carte',
+                mapNote: 'Les lieux sans emplacement confirmé (comme les taxis et certains restaurants) ne figurent pas sur la carte, mais se trouvent avec la recherche. Carte : OpenFreeMap et OpenStreetMap, aux couleurs de Tuende. Les zones de la carte déjà vues sont enregistrées et s\'ouvrent sans internet.',
                 routesTitle: 'Itinéraires',
                 routesIntro: 'Des idées pour 1 à 3 jours avec les lieux de Tuende. Touchez un lieu pour voir les horaires, les prix et l\'itinéraire.',
                 routesHomeSub: 'Des idées pour 1 à 3 jours, à Luanda et ailleurs.',
@@ -4812,12 +4849,17 @@
                 routesNav: 'Itinerarios',
                 mapNav: 'Mapa',
                 mapTitle: 'Mapa de lugares',
-                mapIntro: '{n} de los {total} lugares tienen la ubicación confirmada y aparecen en el mapa. Toque un punto para ver el lugar.',
+                mapIntro: '{n} de los {total} lugares tienen la ubicación confirmada y aparecen en el mapa. Toque un punto para ver el lugar; los círculos rojos con números agrupan varios lugares (toque para acercar).',
                 mapFilter: 'Filtrar el mapa por categoría',
                 mapAll: 'Todos',
                 mapSeeOnMap: 'Ver en el mapa',
                 mapError: 'No se pudo cargar el mapa. Compruebe su conexión a internet e inténtelo de nuevo.',
-                mapNote: 'Los lugares sin ubicación confirmada (como los taxis y algunos restaurantes) no están en el mapa, pero se encuentran con la búsqueda. Mapa: OpenStreetMap. Las zonas del mapa que ya vio quedan guardadas y se abren sin internet.',
+                mapZoomIn: 'Acercar',
+                mapZoomOut: 'Alejar',
+                mapLocate: 'Mostrar mi ubicación',
+                mapLocateNo: 'Su ubicación no está disponible',
+                mapCredits: 'Créditos del mapa',
+                mapNote: 'Los lugares sin ubicación confirmada (como los taxis y algunos restaurantes) no están en el mapa, pero se encuentran con la búsqueda. Mapa: OpenFreeMap y OpenStreetMap, con los colores de Tuende. Las zonas del mapa que ya vio quedan guardadas y se abren sin internet.',
                 routesTitle: 'Itinerarios',
                 routesIntro: 'Ideas para 1 a 3 días con lugares de Tuende. Toque un lugar para ver horarios, precios y cómo llegar.',
                 routesHomeSub: 'Ideas para 1 a 3 días, en Luanda y fuera de ella.',
@@ -8583,49 +8625,261 @@
                 + `<p class="hint events-note">${t('wondersSunNote')}</p>`;
         }
 
-        /* ---------- Map (Leaflet + OpenStreetMap, loaded only when the map opens) ---------- */
+        /* ---------- Map (MapLibre + OpenFreeMap in the Tuende colours; Leaflet + OpenStreetMap as the fallback) ---------- */
 
+        // MapLibre draws OpenFreeMap's vector tiles (OpenStreetMap data, no key or account) with the app's own colours.
+        // Phones without WebGL get the older Leaflet map with the standard OpenStreetMap tiles. Both load only when the map opens.
+        const MAPLIBRE = {
+            global: 'maplibregl',
+            css: { href: 'https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css', integrity: 'sha384-uTttxo/aOKbdE5RlD/SPzSDoDmNvGlUYPjONi2MN/b7c9HPSvW07OIuyP7uL6jxK' },
+            js: { src: 'https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js', integrity: 'sha384-5+cfbwT0iiub6VsQAdn6yz16nr6sDiQoHx6tm4O8OVYXHYOxcffFmCJBL0dgdvGp' }
+        };
         const LEAFLET = {
+            global: 'L',
             css: { href: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', integrity: 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=' },
             js: { src: 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', integrity: 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=' }
         };
-        let leafletReady = null;
+        const MAP_TILES = 'https://tiles.openfreemap.org/planet';
+        const MAP_GLYPHS = 'https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf';
+        const MAP_CREDITS = '<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> &copy; <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>';
+        const libReady = {};
         let placesMap = null;
+        let mapEngine = ''; // 'gl' (MapLibre) or 'leaflet'
         let mapLayer = null;
         let mapCategory = '';
+        let mapLang = '';
+        let mapDark = null;
+        let mapFitted = null;
+        const pinImages = {};
 
-        function loadLeaflet() {
-            leafletReady ??= new Promise((resolve, reject) => {
-                const css = Object.assign(document.createElement('link'), { rel: 'stylesheet', href: LEAFLET.css.href, integrity: LEAFLET.css.integrity, crossOrigin: '' });
-                const js = Object.assign(document.createElement('script'), { src: LEAFLET.js.src, integrity: LEAFLET.js.integrity, crossOrigin: '' });
-                js.onload = () => resolve(window.L);
-                js.onerror = () => { leafletReady = null; reject(new Error('leaflet')); };
+        function loadLib(lib) {
+            libReady[lib.global] ??= new Promise((resolve, reject) => {
+                const css = Object.assign(document.createElement('link'), { rel: 'stylesheet', href: lib.css.href, integrity: lib.css.integrity, crossOrigin: '' });
+                const js = Object.assign(document.createElement('script'), { src: lib.js.src, integrity: lib.js.integrity, crossOrigin: '' });
+                js.onload = () => resolve(window[lib.global]);
+                js.onerror = () => { delete libReady[lib.global]; css.remove(); js.remove(); reject(new Error(lib.global)); };
                 document.head.append(css, js);
             });
-            return leafletReady;
+            return libReady[lib.global];
+        }
+
+        function hasWebGL() {
+            try {
+                const canvas = document.createElement('canvas');
+                return Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl'));
+            } catch {
+                return false;
+            }
         }
 
         // Only places with confirmed coordinates go on the map; the others would land in the wrong spot.
         const mappable = () => venues.filter((v) => v.exact && (!mapCategory || v.type === mapCategory));
 
         function mapPopupHTML(v) {
-            return `<div class="map-pop"><strong>${escapeHTML(v.name)}</strong><span>${escapeHTML(catLabel(v.type))} · ${escapeHTML(placeLine(v))}</span><button type="button" class="link-btn" data-open="${v.id}">${t('viewPlace')}</button></div>`;
+            const photo = thumbSrc(v);
+            return `<div class="map-pop">${photo ? `<img class="map-pop-photo" src="${escapeHTML(photo)}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}<strong>${escapeHTML(v.name)}</strong><span>${escapeHTML(catLabel(v.type))} · ${escapeHTML(placeLine(v))}</span><button type="button" class="link-btn" data-open="${v.id}">${t('viewPlace')}</button></div>`;
         }
 
-        async function renderMap() {
-            const all = venues.filter((v) => v.exact);
-            $('mapIntro').textContent = t('mapIntro', { n: all.length, total: venues.length });
-            const types = Object.keys(CATEGORY).filter((k) => all.some((v) => v.type === k));
-            $('mapFilter').innerHTML = [`<button class="chip${mapCategory ? '' : ' active'}" type="button" data-map-cat="" aria-pressed="${!mapCategory}">${t('mapAll')}</button>`,
-                ...types.map((k) => `<button class="chip${mapCategory === k ? ' active' : ''}" type="button" data-map-cat="${k}" aria-pressed="${mapCategory === k}">${icon(CATEGORY[k].icon)}${escapeHTML(catLabel(k, true))}</button>`)].join('');
-            let L;
-            try {
-                L = await loadLeaflet();
-            } catch {
-                $('mapStatus').textContent = t('mapError');
+        // Pin colours follow the home page tiles: food red, nightlife black, beaches blue, nature green, culture yellow, the rest white.
+        const PIN_GROUP = { restaurant: 'food', bar: 'food', nightclub: 'night', beach: 'beach', nature: 'nature', culture: 'culture', museum: 'culture', plaza: 'culture', health: 'health' };
+        const PIN_COLORS = {
+            food: { fill: '#CE1126', ink: '#FFFFFF', ring: '#FFFFFF' },
+            night: { fill: '#111111', ink: '#FFFFFF', ring: '#FFFFFF' },
+            beach: { fill: '#1D4E89', ink: '#FFFFFF', ring: '#FFFFFF' },
+            nature: { fill: '#1E6B3A', ink: '#FFFFFF', ring: '#FFFFFF' },
+            culture: { fill: '#FFCB00', ink: '#111111', ring: '#FFFFFF' },
+            health: { fill: '#FFFFFF', ink: '#CE1126', ring: '#CE1126' },
+            other: { fill: '#FFFFFF', ink: '#161618', ring: '#161618' }
+        };
+
+        // One round pin per category with the category icon, drawn at twice the size for sharp screens.
+        function pinImage(type) {
+            const { fill, ink, ring } = PIN_COLORS[PIN_GROUP[type] || 'other'];
+            const size = 68;
+            const disc = () => {
+                const ctx = Object.assign(document.createElement('canvas'), { width: size, height: size }).getContext('2d');
+                Object.assign(ctx, { shadowColor: 'rgba(0, 0, 0, 0.3)', shadowBlur: 6, shadowOffsetY: 2, fillStyle: ring });
+                ctx.beginPath();
+                ctx.arc(size / 2, size / 2, 28, 0, Math.PI * 2);
+                ctx.fill();
+                Object.assign(ctx, { shadowColor: 'transparent', fillStyle: fill });
+                ctx.beginPath();
+                ctx.arc(size / 2, size / 2, 23, 0, Math.PI * 2);
+                ctx.fill();
+                return ctx;
+            };
+            const plain = () => disc().getImageData(0, 0, size, size);
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="${ink}" color="${ink}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${ICONS[CATEGORY[type].icon]}</svg>`;
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => {
+                    const ctx = disc();
+                    ctx.drawImage(img, 18, 18, 32, 32);
+                    try { resolve(ctx.getImageData(0, 0, size, size)); } catch { resolve(plain()); }
+                };
+                img.onerror = () => resolve(plain());
+                img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+            });
+        }
+
+        const MAP_COLORS = {
+            light: { land: '#F4F3EF', residential: '#ECEBE6', park: '#D5E8D7', wood: '#C8E0CB', sand: '#FBEDB0', water: '#B9D3EC', waterText: '#1D4E89', building: '#E2E0DA', road: '#FFFFFF', roadCase: '#D9D7D0', major: '#FFE37E', majorCase: '#E0B63A', rail: '#B4B4BC', border: '#6E6E78', province: '#B9B9C0', text: '#161618', muted: '#55555D', halo: '#FFFFFF' },
+            dark: { land: '#141417', residential: '#19191D', park: '#15261A', wood: '#142419', sand: '#2A2614', water: '#132538', waterText: '#8EB4DE', building: '#202025', road: '#34343C', roadCase: '#141417', major: '#665417', majorCase: '#3A300D', rail: '#4A4A53', border: '#9A9AA3', province: '#45454E', text: '#F2F2F4', muted: '#B4B4BC', halo: '#0E0E10' }
+        };
+
+        function placesGeoJSON() {
+            return {
+                type: 'FeatureCollection',
+                features: mappable().map((v) => ({ type: 'Feature', geometry: { type: 'Point', coordinates: [v.lng, v.lat] }, properties: { id: v.id, name: v.name, type: v.type } }))
+            };
+        }
+
+        // The map style: OpenMapTiles layers in the Tuende colours, place names in the app language, then the Tuende places on top.
+        function mapStyle(dark) {
+            const c = MAP_COLORS[dark ? 'dark' : 'light'];
+            const name = ['coalesce', ['get', `name:${lang}`], ['get', 'name']];
+            const grow = (...stops) => ['interpolate', ['exponential', 1.4], ['zoom'], ...stops];
+            const area = (id, layer, color, filter, extra = {}) => ({ id, type: 'fill', source: 'omt', 'source-layer': layer, ...(filter && { filter }), paint: { 'fill-color': color }, ...extra });
+            const road = (id, classes, color, width, minzoom) => ({
+                id, type: 'line', source: 'omt', 'source-layer': 'transportation', minzoom,
+                filter: ['all', ['match', ['get', 'class'], classes, true, false], ['!=', ['get', 'brunnel'], 'tunnel']],
+                layout: { 'line-cap': 'round', 'line-join': 'round' },
+                paint: { 'line-color': color, 'line-width': width }
+            });
+            const label = (id, layer, filter, layout, color, extra = {}) => ({
+                id, type: 'symbol', source: 'omt', 'source-layer': layer, filter, ...extra,
+                layout: { 'text-field': name, 'text-font': ['Noto Sans Regular'], 'text-max-width': 8, ...layout },
+                paint: { 'text-color': color, 'text-halo-color': c.halo, 'text-halo-width': 1.4 }
+            });
+            const place = (classes) => ['match', ['get', 'class'], classes, true, false];
+            const minor = ['minor', 'service', 'track'];
+            const middle = ['secondary', 'tertiary'];
+            const major = ['primary', 'trunk', 'motorway'];
+            return {
+                version: 8,
+                glyphs: MAP_GLYPHS,
+                sources: {
+                    omt: { type: 'vector', url: MAP_TILES, attribution: MAP_CREDITS },
+                    places: { type: 'geojson', data: placesGeoJSON(), cluster: true, clusterRadius: 44, clusterMaxZoom: 12 }
+                },
+                layers: [
+                    { id: 'land', type: 'background', paint: { 'background-color': c.land } },
+                    area('residential', 'landuse', c.residential, place(['residential', 'suburb', 'neighbourhood'])),
+                    area('wood', 'landcover', c.wood, ['==', ['get', 'class'], 'wood']),
+                    area('grass', 'landcover', c.park, place(['grass', 'wetland'])),
+                    area('park', 'park', c.park),
+                    area('sand', 'landcover', c.sand, ['==', ['get', 'class'], 'sand']),
+                    area('water', 'water', c.water, ['!=', ['get', 'brunnel'], 'tunnel']),
+                    { id: 'river', type: 'line', source: 'omt', 'source-layer': 'waterway', filter: ['==', ['get', 'class'], 'river'], paint: { 'line-color': c.water, 'line-width': grow(8, 1, 14, 4) } },
+                    area('building', 'building', c.building, null, { minzoom: 14 }),
+                    { id: 'province-border', type: 'line', source: 'omt', 'source-layer': 'boundary', minzoom: 5, filter: ['all', ['==', ['get', 'admin_level'], 4], ['!=', ['get', 'maritime'], 1]], paint: { 'line-color': c.province, 'line-width': grow(5, 0.6, 12, 1.4), 'line-dasharray': [3, 2] } },
+                    { id: 'country-border', type: 'line', source: 'omt', 'source-layer': 'boundary', filter: ['all', ['==', ['get', 'admin_level'], 2], ['!=', ['get', 'maritime'], 1]], paint: { 'line-color': c.border, 'line-width': grow(3, 0.8, 12, 2) } },
+                    road('road-minor-case', minor, c.roadCase, grow(13, 2, 18, 14), 13),
+                    road('road-middle-case', middle, c.roadCase, grow(9, 1.5, 18, 20), 9),
+                    road('road-major-case', major, c.majorCase, grow(5, 1, 18, 24), 5),
+                    road('road-minor', minor, c.road, grow(12, 0.6, 18, 12), 12),
+                    road('road-middle', middle, c.road, grow(8, 0.6, 18, 18), 8),
+                    road('road-major', major, c.major, grow(5, 0.6, 18, 22), 5),
+                    { ...road('rail', ['rail'], c.rail, 1.2, 10), paint: { 'line-color': c.rail, 'line-width': 1.2, 'line-dasharray': [3, 3] } },
+                    label('water-name', 'water_name', ['match', ['geometry-type'], ['Point', 'MultiPoint'], true, false], { 'text-font': ['Noto Sans Italic'], 'text-size': 13 }, c.waterText),
+                    label('water-name-line', 'water_name', ['match', ['geometry-type'], ['LineString', 'MultiLineString'], true, false], { 'text-font': ['Noto Sans Italic'], 'text-size': 12, 'symbol-placement': 'line' }, c.waterText),
+                    label('road-name', 'transportation_name', ['match', ['get', 'class'], [...middle, ...major], true, false], { 'text-size': 11, 'symbol-placement': 'line' }, c.muted, { minzoom: 13 }),
+                    label('country-name', 'place', place(['country']), { 'text-font': ['Noto Sans Bold'], 'text-size': 13, 'text-transform': 'uppercase', 'text-letter-spacing': 0.1 }, c.muted, { maxzoom: 7 }),
+                    label('province-name', 'place', place(['state']), { 'text-size': 11, 'text-transform': 'uppercase', 'text-letter-spacing': 0.1 }, c.muted, { minzoom: 5, maxzoom: 8 }),
+                    label('village-name', 'place', place(['village', 'suburb', 'neighbourhood', 'quarter', 'hamlet']), { 'text-size': 11 }, c.muted, { minzoom: 11 }),
+                    label('town-name', 'place', place(['town']), { 'text-size': grow(8, 11, 14, 15) }, c.text, { minzoom: 8 }),
+                    label('city-name', 'place', place(['city']), { 'text-font': ['Noto Sans Bold'], 'text-size': grow(4, 11, 12, 18) }, c.text, { minzoom: 4 }),
+                    { id: 'place-clusters', type: 'circle', source: 'places', filter: ['has', 'point_count'], paint: { 'circle-color': '#CE1126', 'circle-radius': ['step', ['get', 'point_count'], 16, 10, 20, 40, 25], 'circle-stroke-width': 3, 'circle-stroke-color': '#FFFFFF' } },
+                    { id: 'place-cluster-count', type: 'symbol', source: 'places', filter: ['has', 'point_count'], layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-font': ['Noto Sans Bold'], 'text-size': 13, 'text-allow-overlap': true }, paint: { 'text-color': '#FFFFFF' } },
+                    {
+                        id: 'place-pins', type: 'symbol', source: 'places', filter: ['!', ['has', 'point_count']],
+                        layout: { 'icon-image': ['concat', 'pin-', ['get', 'type']], 'icon-allow-overlap': true, 'text-field': ['step', ['zoom'], '', 13, ['get', 'name']], 'text-font': ['Noto Sans Bold'], 'text-size': 12, 'text-offset': [0, 1.5], 'text-anchor': 'top', 'text-optional': true, 'text-max-width': 9 },
+                        paint: { 'text-color': c.text, 'text-halo-color': c.halo, 'text-halo-width': 1.5 }
+                    }
+                ]
+            };
+        }
+
+        function placesBounds(lib) {
+            const list = mappable();
+            if (!list.length) return null;
+            return list.reduce((b, v) => b.extend([v.lng, v.lat]), new lib.LngLatBounds([list[0].lng, list[0].lat], [list[0].lng, list[0].lat]));
+        }
+
+        async function drawVectorMap(gl) {
+            const box = $('mapBox');
+            const dark = effectiveTheme() === 'dark';
+            box.classList.toggle('map-dark', dark);
+            // Place names and button labels follow the language, so a language change draws the map again.
+            if (placesMap && mapLang !== lang) { placesMap.remove(); placesMap = null; }
+            if (!placesMap) {
+                await Promise.all(Object.keys(CATEGORY).filter((k) => !pinImages[k]).map(async (k) => { pinImages[k] = await pinImage(k); }));
+                if (state.view !== 'map') return;
+                box.innerHTML = '';
+                const bounds = placesBounds(gl);
+                const map = new gl.Map({
+                    container: box,
+                    style: mapStyle(dark),
+                    ...(bounds ? { bounds, fitBoundsOptions: { padding: 32, maxZoom: 13 } } : { center: [17.5, -12.3], zoom: 4.5 }),
+                    scrollZoom: false,
+                    dragRotate: false,
+                    pitchWithRotate: false,
+                    touchPitch: false,
+                    maxPitch: 0,
+                    attributionControl: { compact: true },
+                    locale: {
+                        'NavigationControl.ZoomIn': t('mapZoomIn'),
+                        'NavigationControl.ZoomOut': t('mapZoomOut'),
+                        'GeolocateControl.FindMyLocation': t('mapLocate'),
+                        'GeolocateControl.LocationNotAvailable': t('mapLocateNo'),
+                        'AttributionControl.ToggleAttribution': t('mapCredits')
+                    }
+                });
+                placesMap = map;
+                mapLang = lang;
+                mapDark = dark;
+                mapFitted = mapCategory;
+                map.touchZoomRotate.disableRotation();
+                map.addControl(new gl.NavigationControl({ showCompass: false }), 'top-right');
+                map.addControl(new gl.GeolocateControl({ positionOptions: { enableHighAccuracy: true } }), 'top-right');
+                map.on('styleimagemissing', (e) => {
+                    const image = pinImages[e.id.replace(/^pin-/, '')];
+                    if (image && !map.hasImage(e.id)) map.addImage(e.id, image, { pixelRatio: 2 });
+                });
+                map.on('click', 'place-clusters', async (e) => {
+                    const cluster = e.features[0];
+                    const zoom = await map.getSource('places').getClusterExpansionZoom(cluster.properties.cluster_id);
+                    map.easeTo({ center: cluster.geometry.coordinates, zoom });
+                });
+                map.on('click', 'place-pins', (e) => {
+                    const pin = e.features[0];
+                    const v = venues.find((x) => x.id === pin.properties.id);
+                    if (!v) return;
+                    // On a phone the card would not fit beside the pin, so the pin moves down and the card opens above it.
+                    if (box.clientWidth < 600) map.easeTo({ center: pin.geometry.coordinates, offset: [0, Math.min(140, box.clientHeight / 4)] });
+                    new gl.Popup({ offset: 18, maxWidth: '260px', anchor: box.clientWidth < 600 ? 'bottom' : undefined }).setLngLat(pin.geometry.coordinates).setHTML(mapPopupHTML(v)).addTo(map);
+                });
+                ['place-clusters', 'place-pins'].forEach((id) => {
+                    map.on('mouseenter', id, () => { map.getCanvas().style.cursor = 'pointer'; });
+                    map.on('mouseleave', id, () => { map.getCanvas().style.cursor = ''; });
+                });
                 return;
             }
-            if (state.view !== 'map') return;
+            if (mapDark !== dark) {
+                mapDark = dark;
+                placesMap.setStyle(mapStyle(dark));
+            } else {
+                placesMap.getSource('places')?.setData(placesGeoJSON());
+            }
+            placesMap.resize();
+            if (mapFitted !== mapCategory) {
+                mapFitted = mapCategory;
+                const bounds = placesBounds(gl);
+                if (bounds) placesMap.fitBounds(bounds, { padding: 32, maxZoom: 13 });
+            }
+        }
+
+        function drawLeafletMap(L) {
             if (!placesMap) {
                 $('mapBox').innerHTML = '';
                 placesMap = L.map('mapBox', { scrollWheelZoom: false });
@@ -8642,6 +8896,34 @@
             mapLayer = L.featureGroup(markers).addTo(placesMap);
             placesMap.invalidateSize();
             if (markers.length) placesMap.fitBounds(mapLayer.getBounds(), { padding: [24, 24], maxZoom: 13 });
+        }
+
+        async function renderMap() {
+            const all = venues.filter((v) => v.exact);
+            $('mapIntro').textContent = t('mapIntro', { n: all.length, total: venues.length });
+            const types = Object.keys(CATEGORY).filter((k) => all.some((v) => v.type === k));
+            $('mapFilter').innerHTML = [`<button class="chip${mapCategory ? '' : ' active'}" type="button" data-map-cat="" aria-pressed="${!mapCategory}">${t('mapAll')}</button>`,
+                ...types.map((k) => `<button class="chip${mapCategory === k ? ' active' : ''}" type="button" data-map-cat="${k}" aria-pressed="${mapCategory === k}">${icon(CATEGORY[k].icon)}${escapeHTML(catLabel(k, true))}</button>`)].join('');
+            mapEngine ||= hasWebGL() ? 'gl' : 'leaflet';
+            let lib;
+            try {
+                lib = await loadLib(mapEngine === 'gl' ? MAPLIBRE : LEAFLET);
+            } catch {
+                if ($('mapStatus')) $('mapStatus').textContent = t('mapError');
+                return;
+            }
+            if (state.view !== 'map') return;
+            if (mapEngine === 'leaflet') { drawLeafletMap(lib); return; }
+            try {
+                await drawVectorMap(lib);
+            } catch {
+                // WebGL refused to start: use the Leaflet map instead.
+                placesMap?.remove();
+                placesMap = null;
+                mapEngine = 'leaflet';
+                $('mapBox').innerHTML = `<p class="hint" id="mapStatus">${t('loading')}</p>`;
+                renderMap();
+            }
         }
 
         /* ---------- Itineraries ---------- */
@@ -10481,6 +10763,7 @@
             $('themeIcon').innerHTML = icon(dark ? 'sun' : 'moon');
             $('themeLabel').textContent = dark ? t('light') : t('dark');
             $('themeBtn').setAttribute('aria-label', dark ? t('lightAria') : t('darkAria'));
+            if (state.view === 'map' && placesMap) renderMap();
         }
 
         function applyLanguage() {

@@ -1,7 +1,8 @@
-const SHELL_CACHE = 'tuende-shell-v7';
+const SHELL_CACHE = 'tuende-shell-v8';
 const IMAGE_CACHE = 'tuende-images-v1';
-// The map library (unpkg) and the map tiles already seen, so the map still opens without internet.
-// Only tiles the person viewed are kept (no bulk download, as OpenStreetMap asks), up to MAX_TILES.
+// The map libraries (unpkg), map fonts and the map tiles already seen (OpenFreeMap vector tiles, or OpenStreetMap
+// images on phones without WebGL), so the map still opens without internet.
+// Only tiles the person viewed are kept (no bulk download), up to MAX_TILES.
 const MAP_CACHE = 'tuende-map-v1';
 const MAX_TILES = 1200;
 const SHELL = [
@@ -56,10 +57,22 @@ async function mapCacheFirst(request) {
     if (response.ok) {
         await cache.put(request, response.clone());
         const keys = await cache.keys();
-        const tiles = keys.filter((k) => k.url.includes('tile.openstreetmap.org'));
+        const tiles = keys.filter((k) => k.url.includes('tile.openstreetmap.org') || k.url.includes('tiles.openfreemap.org/planet/'));
         if (tiles.length > MAX_TILES) await Promise.all(tiles.slice(0, tiles.length - MAX_TILES).map((k) => cache.delete(k)));
     }
     return response;
+}
+
+// The tile list (TileJSON) names this week's tile set, so it is read fresh when online and from the cache offline.
+async function mapNetworkFirst(request) {
+    const cache = await caches.open(MAP_CACHE);
+    try {
+        const response = await fetch(request);
+        if (response.ok) cache.put(request, response.clone());
+        return response;
+    } catch {
+        return (await cache.match(request)) || Response.error();
+    }
 }
 
 self.addEventListener('fetch', (event) => {
@@ -73,7 +86,9 @@ self.addEventListener('fetch', (event) => {
         event.respondWith(networkFirst(request));
     } else if (url.hostname === 'images.unsplash.com' || url.hostname.endsWith('wikimedia.org')) {
         event.respondWith(imageCacheFirst(request));
-    } else if (url.hostname === 'unpkg.com' || url.hostname === 'tile.openstreetmap.org') {
+    } else if (url.hostname === 'tiles.openfreemap.org' && url.pathname === '/planet') {
+        event.respondWith(mapNetworkFirst(request));
+    } else if (url.hostname === 'unpkg.com' || url.hostname === 'tile.openstreetmap.org' || url.hostname === 'tiles.openfreemap.org') {
         event.respondWith(mapCacheFirst(request));
     }
 });
