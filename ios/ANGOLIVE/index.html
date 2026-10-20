@@ -945,24 +945,24 @@
         .map-pop .link-btn { justify-self: start; min-height: 36px; }
         .map-pop-photo { width: 100%; height: 104px; object-fit: cover; border-radius: 10px; margin-bottom: 6px; background: var(--surface-2); }
         .map-box.maplibregl-map { display: block; font-family: inherit; }
-        .map-box .maplibregl-popup-content { min-width: 200px; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 14px; background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
-        .map-box .maplibregl-popup-close-button { z-index: 1; top: 6px; right: 6px; width: 30px; height: 30px; border-radius: 50%; background: var(--surface); color: var(--text); font-size: 20px; line-height: 1; box-shadow: var(--shadow); }
-        .map-box .maplibregl-popup-close-button:hover { background: var(--surface-2); }
-        .map-box .maplibregl-popup-anchor-bottom .maplibregl-popup-tip, .map-box .maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip, .map-box .maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip { border-top-color: var(--border); }
-        .map-box .maplibregl-popup-anchor-top .maplibregl-popup-tip, .map-box .maplibregl-popup-anchor-top-left .maplibregl-popup-tip, .map-box .maplibregl-popup-anchor-top-right .maplibregl-popup-tip { border-bottom-color: var(--border); }
-        .map-box .maplibregl-popup-anchor-left .maplibregl-popup-tip { border-right-color: var(--border); }
-        .map-box .maplibregl-popup-anchor-right .maplibregl-popup-tip { border-left-color: var(--border); }
-        .map-box .maplibregl-ctrl-group { overflow: hidden; border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); }
-        .map-box .maplibregl-ctrl-group:not(:empty) { box-shadow: var(--shadow); }
-        .map-box .maplibregl-ctrl-group button { width: 40px; height: 40px; }
-        .map-box .maplibregl-ctrl-group button + button { border-top: 1px solid var(--line); }
-        .map-box .maplibregl-ctrl button:not(:disabled):hover { background-color: var(--surface-2); }
-        .map-box.map-dark .maplibregl-ctrl-icon { filter: invert(1); }
-        .map-box .maplibregl-ctrl.maplibregl-ctrl-attrib, .map-box .maplibregl-ctrl-attrib.maplibregl-compact { background-color: var(--surface); color: var(--muted); font-size: 11px; }
-        .map-box .maplibregl-ctrl-attrib a { color: var(--muted); }
-        .map-box.map-dark .maplibregl-ctrl-attrib-button { filter: invert(1); }
+        .maplibregl-map .maplibregl-popup-content { min-width: 200px; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 14px; background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+        .maplibregl-map .maplibregl-popup-close-button { z-index: 1; top: 6px; right: 6px; width: 30px; height: 30px; border-radius: 50%; background: var(--surface); color: var(--text); font-size: 20px; line-height: 1; box-shadow: var(--shadow); }
+        .maplibregl-map .maplibregl-popup-close-button:hover { background: var(--surface-2); }
+        .maplibregl-map .maplibregl-popup-anchor-bottom .maplibregl-popup-tip, .maplibregl-map .maplibregl-popup-anchor-bottom-left .maplibregl-popup-tip, .maplibregl-map .maplibregl-popup-anchor-bottom-right .maplibregl-popup-tip { border-top-color: var(--border); }
+        .maplibregl-map .maplibregl-popup-anchor-top .maplibregl-popup-tip, .maplibregl-map .maplibregl-popup-anchor-top-left .maplibregl-popup-tip, .maplibregl-map .maplibregl-popup-anchor-top-right .maplibregl-popup-tip { border-bottom-color: var(--border); }
+        .maplibregl-map .maplibregl-popup-anchor-left .maplibregl-popup-tip { border-right-color: var(--border); }
+        .maplibregl-map .maplibregl-popup-anchor-right .maplibregl-popup-tip { border-left-color: var(--border); }
+        .maplibregl-map .maplibregl-ctrl-group { overflow: hidden; border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); }
+        .maplibregl-map .maplibregl-ctrl-group:not(:empty) { box-shadow: var(--shadow); }
+        .maplibregl-map .maplibregl-ctrl-group button { width: 40px; height: 40px; }
+        .maplibregl-map .maplibregl-ctrl-group button + button { border-top: 1px solid var(--line); }
+        .maplibregl-map .maplibregl-ctrl button:not(:disabled):hover { background-color: var(--surface-2); }
+        .map-dark .maplibregl-ctrl-icon { filter: invert(1); }
+        .maplibregl-map .maplibregl-ctrl.maplibregl-ctrl-attrib, .maplibregl-map .maplibregl-ctrl-attrib.maplibregl-compact { background-color: var(--surface); color: var(--muted); font-size: 11px; }
+        .maplibregl-map .maplibregl-ctrl-attrib a { color: var(--muted); }
+        .map-dark .maplibregl-ctrl-attrib-button { filter: invert(1); }
         @media (max-width: 600px) {
-            .map-box .maplibregl-popup-content { min-width: 0; width: 220px; }
+            .maplibregl-map .maplibregl-popup-content { min-width: 0; width: 220px; }
             .map-pop-photo { height: 88px; }
         }
         .route-meta { color: var(--primary); font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -980,6 +980,14 @@
         .route-stop { display: grid; grid-template-columns: 72px 1fr; gap: 12px; align-items: start; }
         .route-thumb { position: relative; width: 72px; height: 72px; border: none; border-radius: 12px; overflow: hidden; background: var(--primary-fill); color: #fff; font-weight: 800; padding: 0; }
         .route-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .route-stop { counter-increment: stop; }
+        .route-thumb::before { content: counter(stop); position: absolute; top: 4px; left: 4px; z-index: 1; display: grid; place-items: center; min-width: 22px; height: 22px; padding: 0 4px; border: 2px solid #FFFFFF; border-radius: 11px; background: #CE1126; color: #FFFFFF; font-size: 12px; line-height: 1; }
+        .route-map-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; min-height: 40px; }
+        .route-map-btn .icon { width: 18px; height: 18px; }
+        .route-map { position: relative; height: 300px; margin-top: 6px; overflow: hidden; border: 1.5px solid var(--border); border-radius: 14px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; }
+        .route-map.maplibregl-map, .place-map.maplibregl-map { display: block; font-family: inherit; }
+        .route-map-note { margin-top: 6px; }
+        .place-map { position: relative; overflow: hidden; border: 1.5px solid var(--border); }
         .route-name { background: none; border: none; padding: 0; text-align: left; font-size: 16px; font-weight: 800; color: var(--text); }
         .route-name:hover { color: var(--primary); }
         .route-where { font-size: 13px; color: var(--muted); margin-top: 2px; }
@@ -3140,6 +3148,13 @@
                 mapLocate: 'Mostrar onde estou',
                 mapLocateNo: 'A sua localização não está disponível',
                 mapCredits: 'Créditos do mapa',
+                mapCoopPc: 'Use Ctrl + roda do rato para aproximar o mapa',
+                mapCoopMac: 'Use ⌘ + roda do rato para aproximar o mapa',
+                mapCoopTouch: 'Use dois dedos para mover o mapa',
+                routeMapShow: 'Ver no mapa',
+                routeMapHide: 'Esconder o mapa',
+                routeMapNote: 'Os números são a ordem do dia; a linha liga as paragens em linha reta (pela estrada o caminho é outro).',
+                routeMapMissing: 'Sem localização confirmada, fora do mapa: {names}.',
                 mapNote: 'Os lugares sem localização confirmada (por exemplo, táxis e alguns restaurantes) não aparecem no mapa, mas podem ser encontrados na pesquisa. Mapa: OpenFreeMap e OpenStreetMap, com as cores do Tuende. As zonas do mapa que já viu ficam guardadas e abrem sem internet.',
                 routesTitle: 'Roteiros',
                 routesIntro: 'Sugestões de 1 a 3 dias com lugares do Tuende. Toque num lugar para ver horário, preço e como chegar.',
@@ -3713,6 +3728,13 @@
                 mapLocate: 'Show my location',
                 mapLocateNo: 'Your location is not available',
                 mapCredits: 'Map credits',
+                mapCoopPc: 'Use Ctrl + scroll to zoom the map',
+                mapCoopMac: 'Use ⌘ + scroll to zoom the map',
+                mapCoopTouch: 'Use two fingers to move the map',
+                routeMapShow: 'Show on the map',
+                routeMapHide: 'Hide the map',
+                routeMapNote: 'The numbers are the order of the day; the line joins the stops as the crow flies (the road route is different).',
+                routeMapMissing: 'Not on the map (location not confirmed): {names}.',
                 mapNote: 'Places without a confirmed location (such as taxis and some restaurants) are not on the map but can be found with search. Map: OpenFreeMap and OpenStreetMap, in Tuende\'s colours. Map areas you have already viewed are saved and open without internet.',
                 routesTitle: 'Itineraries',
                 routesIntro: 'Ideas for 1 to 3 days using places on Tuende. Tap a place for opening hours, prices and directions.',
@@ -4286,6 +4308,13 @@
                 mapLocate: 'Afficher ma position',
                 mapLocateNo: 'Votre position n\'est pas disponible',
                 mapCredits: 'Crédits de la carte',
+                mapCoopPc: 'Utilisez Ctrl + molette pour zoomer sur la carte',
+                mapCoopMac: 'Utilisez ⌘ + molette pour zoomer sur la carte',
+                mapCoopTouch: 'Utilisez deux doigts pour déplacer la carte',
+                routeMapShow: 'Voir sur la carte',
+                routeMapHide: 'Masquer la carte',
+                routeMapNote: 'Les numéros suivent l\'ordre de la journée ; la ligne relie les arrêts à vol d\'oiseau (le trajet par la route est différent).',
+                routeMapMissing: 'Hors de la carte (emplacement non confirmé) : {names}.',
                 mapNote: 'Les lieux sans emplacement confirmé (comme les taxis et certains restaurants) ne figurent pas sur la carte, mais se trouvent avec la recherche. Carte : OpenFreeMap et OpenStreetMap, aux couleurs de Tuende. Les zones de la carte déjà vues sont enregistrées et s\'ouvrent sans internet.',
                 routesTitle: 'Itinéraires',
                 routesIntro: 'Des idées pour 1 à 3 jours avec les lieux de Tuende. Touchez un lieu pour voir les horaires, les prix et l\'itinéraire.',
@@ -4859,6 +4888,13 @@
                 mapLocate: 'Mostrar mi ubicación',
                 mapLocateNo: 'Su ubicación no está disponible',
                 mapCredits: 'Créditos del mapa',
+                mapCoopPc: 'Use Ctrl + rueda del ratón para acercar el mapa',
+                mapCoopMac: 'Use ⌘ + rueda del ratón para acercar el mapa',
+                mapCoopTouch: 'Use dos dedos para mover el mapa',
+                routeMapShow: 'Ver en el mapa',
+                routeMapHide: 'Ocultar el mapa',
+                routeMapNote: 'Los números son el orden del día; la línea une las paradas en línea recta (por carretera el camino es otro).',
+                routeMapMissing: 'Fuera del mapa (ubicación sin confirmar): {names}.',
                 mapNote: 'Los lugares sin ubicación confirmada (como los taxis y algunos restaurantes) no están en el mapa, pero se encuentran con la búsqueda. Mapa: OpenFreeMap y OpenStreetMap, con los colores de Tuende. Las zonas del mapa que ya vio quedan guardadas y se abren sin internet.',
                 routesTitle: 'Itinerarios',
                 routesIntro: 'Ideas para 1 a 3 días con lugares de Tuende. Toque un lugar para ver horarios, precios y cómo llegar.',
@@ -8144,6 +8180,7 @@
         }
 
         function render() {
+            if (state.view !== 'routes') dropMiniMaps($('routesView'));
             renderQuickFilters();
             renderSavedButton();
             renderTabbar();
@@ -8663,20 +8700,24 @@
             return libReady[lib.global];
         }
 
+        let webGL = null;
         function hasWebGL() {
-            try {
-                const canvas = document.createElement('canvas');
-                return Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl'));
-            } catch {
-                return false;
+            if (webGL === null) {
+                try {
+                    const canvas = document.createElement('canvas');
+                    webGL = Boolean(canvas.getContext('webgl2') || canvas.getContext('webgl'));
+                } catch {
+                    webGL = false;
+                }
             }
+            return webGL;
         }
 
         // Only places with confirmed coordinates go on the map; the others would land in the wrong spot.
         const mappable = () => venues.filter((v) => v.exact && (!mapCategory || v.type === mapCategory));
 
-        function mapPopupHTML(v) {
-            const photo = thumbSrc(v);
+        function mapPopupHTML(v, withPhoto = true) {
+            const photo = withPhoto && thumbSrc(v);
             return `<div class="map-pop">${photo ? `<img class="map-pop-photo" src="${escapeHTML(photo)}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}<strong>${escapeHTML(v.name)}</strong><span>${escapeHTML(catLabel(v.type))} · ${escapeHTML(placeLine(v))}</span><button type="button" class="link-btn" data-open="${v.id}">${t('viewPlace')}</button></div>`;
         }
 
@@ -8734,8 +8775,8 @@
             };
         }
 
-        // The map style: OpenMapTiles layers in the Tuende colours, place names in the app language, then the Tuende places on top.
-        function mapStyle(dark) {
+        // The base map: OpenMapTiles layers in the Tuende colours, with place names in the app language.
+        function mapBaseStyle(dark) {
             const c = MAP_COLORS[dark ? 'dark' : 'light'];
             const name = ['coalesce', ['get', `name:${lang}`], ['get', 'name']];
             const grow = (...stops) => ['interpolate', ['exponential', 1.4], ['zoom'], ...stops];
@@ -8759,8 +8800,7 @@
                 version: 8,
                 glyphs: MAP_GLYPHS,
                 sources: {
-                    omt: { type: 'vector', url: MAP_TILES, attribution: MAP_CREDITS },
-                    places: { type: 'geojson', data: placesGeoJSON(), cluster: true, clusterRadius: 44, clusterMaxZoom: 12 }
+                    omt: { type: 'vector', url: MAP_TILES, attribution: MAP_CREDITS }
                 },
                 layers: [
                     { id: 'land', type: 'background', paint: { 'background-color': c.land } },
@@ -8788,16 +8828,106 @@
                     label('province-name', 'place', place(['state']), { 'text-size': 11, 'text-transform': 'uppercase', 'text-letter-spacing': 0.1 }, c.muted, { minzoom: 5, maxzoom: 8 }),
                     label('village-name', 'place', place(['village', 'suburb', 'neighbourhood', 'quarter', 'hamlet']), { 'text-size': 11 }, c.muted, { minzoom: 11 }),
                     label('town-name', 'place', place(['town']), { 'text-size': grow(8, 11, 14, 15) }, c.text, { minzoom: 8 }),
-                    label('city-name', 'place', place(['city']), { 'text-font': ['Noto Sans Bold'], 'text-size': grow(4, 11, 12, 18) }, c.text, { minzoom: 4 }),
-                    { id: 'place-clusters', type: 'circle', source: 'places', filter: ['has', 'point_count'], paint: { 'circle-color': '#CE1126', 'circle-radius': ['step', ['get', 'point_count'], 16, 10, 20, 40, 25], 'circle-stroke-width': 3, 'circle-stroke-color': '#FFFFFF' } },
-                    { id: 'place-cluster-count', type: 'symbol', source: 'places', filter: ['has', 'point_count'], layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-font': ['Noto Sans Bold'], 'text-size': 13, 'text-allow-overlap': true }, paint: { 'text-color': '#FFFFFF' } },
-                    {
-                        id: 'place-pins', type: 'symbol', source: 'places', filter: ['!', ['has', 'point_count']],
-                        layout: { 'icon-image': ['concat', 'pin-', ['get', 'type']], 'icon-allow-overlap': true, 'text-field': ['step', ['zoom'], '', 13, ['get', 'name']], 'text-font': ['Noto Sans Bold'], 'text-size': 12, 'text-offset': [0, 1.5], 'text-anchor': 'top', 'text-optional': true, 'text-max-width': 9 },
-                        paint: { 'text-color': c.text, 'text-halo-color': c.halo, 'text-halo-width': 1.5 }
-                    }
+                    label('city-name', 'place', place(['city']), { 'text-font': ['Noto Sans Bold'], 'text-size': grow(4, 11, 12, 18) }, c.text, { minzoom: 4 })
                 ]
             };
+        }
+
+        // The map page: every place with a confirmed location, grouped into numbered circles when they are close together.
+        function mapStyle(dark) {
+            const c = MAP_COLORS[dark ? 'dark' : 'light'];
+            const style = mapBaseStyle(dark);
+            style.sources.places = { type: 'geojson', data: placesGeoJSON(), cluster: true, clusterRadius: 44, clusterMaxZoom: 12 };
+            style.layers.push(
+                { id: 'place-clusters', type: 'circle', source: 'places', filter: ['has', 'point_count'], paint: { 'circle-color': '#CE1126', 'circle-radius': ['step', ['get', 'point_count'], 16, 10, 20, 40, 25], 'circle-stroke-width': 3, 'circle-stroke-color': '#FFFFFF' } },
+                { id: 'place-cluster-count', type: 'symbol', source: 'places', filter: ['has', 'point_count'], layout: { 'text-field': ['get', 'point_count_abbreviated'], 'text-font': ['Noto Sans Bold'], 'text-size': 13, 'text-allow-overlap': true }, paint: { 'text-color': '#FFFFFF' } },
+                {
+                    id: 'place-pins', type: 'symbol', source: 'places', filter: ['!', ['has', 'point_count']],
+                    layout: { 'icon-image': ['concat', 'pin-', ['get', 'type']], 'icon-allow-overlap': true, 'text-field': ['step', ['zoom'], '', 13, ['get', 'name']], 'text-font': ['Noto Sans Bold'], 'text-size': 12, 'text-offset': [0, 1.5], 'text-anchor': 'top', 'text-optional': true, 'text-max-width': 9 },
+                    paint: { 'text-color': c.text, 'text-halo-color': c.halo, 'text-halo-width': 1.5 }
+                }
+            );
+            return style;
+        }
+
+        const pointFeature = (v, props = {}) => ({ type: 'Feature', geometry: { type: 'Point', coordinates: [v.lng, v.lat] }, properties: { id: v.id, name: v.name, type: v.type, ...props } });
+
+        // Place details: the place itself (bigger pin) and the other places within 3 km.
+        function placeMapStyle(v, dark) {
+            const style = mapBaseStyle(dark);
+            const near = venues.filter((x) => x.exact && x.id !== v.id && kmBetween(v, x) < 3);
+            style.sources.places = { type: 'geojson', data: { type: 'FeatureCollection', features: [...near.map((x) => pointFeature(x)), pointFeature(v, { main: true })] } };
+            style.layers.push({
+                id: 'place-pins', type: 'symbol', source: 'places',
+                layout: { 'icon-image': ['concat', 'pin-', ['get', 'type']], 'icon-size': ['case', ['get', 'main'], 1.2, 0.8], 'icon-allow-overlap': true, 'symbol-sort-key': ['case', ['get', 'main'], 1, 0] },
+                paint: { 'icon-opacity': ['case', ['get', 'main'], 1, 0.9] }
+            });
+            return style;
+        }
+
+        // Itinerary day: numbered stops in the order of the day, joined by a dashed straight line.
+        function routeMapStyle(stops, dark) {
+            const c = MAP_COLORS[dark ? 'dark' : 'light'];
+            const style = mapBaseStyle(dark);
+            style.sources.stops = { type: 'geojson', data: { type: 'FeatureCollection', features: stops.map(({ v, n }) => pointFeature(v, { n: String(n) })) } };
+            style.sources.path = { type: 'geojson', data: { type: 'Feature', geometry: { type: 'LineString', coordinates: stops.map(({ v }) => [v.lng, v.lat]) }, properties: {} } };
+            style.layers.push(
+                { id: 'stop-path', type: 'line', source: 'path', layout: { 'line-cap': 'round', 'line-join': 'round' }, paint: { 'line-color': '#CE1126', 'line-width': 2.5, 'line-dasharray': [2, 2] } },
+                { id: 'stop-name', type: 'symbol', source: 'stops', layout: { 'text-field': ['get', 'name'], 'text-font': ['Noto Sans Bold'], 'text-size': 12, 'text-max-width': 9, 'text-variable-anchor': ['top', 'bottom', 'left', 'right'], 'text-radial-offset': 1.3, 'text-optional': true }, paint: { 'text-color': c.text, 'text-halo-color': c.halo, 'text-halo-width': 1.5 } },
+                { id: 'stop-dots', type: 'circle', source: 'stops', paint: { 'circle-color': '#CE1126', 'circle-radius': 12, 'circle-stroke-width': 2.5, 'circle-stroke-color': '#FFFFFF' } },
+                { id: 'stop-numbers', type: 'symbol', source: 'stops', layout: { 'text-field': ['get', 'n'], 'text-font': ['Noto Sans Bold'], 'text-size': 12, 'text-allow-overlap': true, 'text-ignore-placement': true }, paint: { 'text-color': '#FFFFFF' } }
+            );
+            return style;
+        }
+
+        function mapOptions(box, style, extra) {
+            return {
+                container: box,
+                style,
+                dragRotate: false,
+                pitchWithRotate: false,
+                touchPitch: false,
+                maxPitch: 0,
+                attributionControl: { compact: true },
+                locale: {
+                    'NavigationControl.ZoomIn': t('mapZoomIn'),
+                    'NavigationControl.ZoomOut': t('mapZoomOut'),
+                    'GeolocateControl.FindMyLocation': t('mapLocate'),
+                    'GeolocateControl.LocationNotAvailable': t('mapLocateNo'),
+                    'AttributionControl.ToggleAttribution': t('mapCredits'),
+                    'Popup.Close': t('close'),
+                    'CooperativeGesturesHandler.WindowsHelpText': t('mapCoopPc'),
+                    'CooperativeGesturesHandler.MacHelpText': t('mapCoopMac'),
+                    'CooperativeGesturesHandler.MobileHelpText': t('mapCoopTouch')
+                },
+                ...extra
+            };
+        }
+
+        async function loadPins() {
+            await Promise.all(Object.keys(CATEGORY).filter((k) => !pinImages[k]).map(async (k) => { pinImages[k] = await pinImage(k); }));
+        }
+
+        function addPinImages(map) {
+            map.on('styleimagemissing', (e) => {
+                const image = pinImages[e.id.replace(/^pin-/, '')];
+                if (image && !map.hasImage(e.id)) map.addImage(e.id, image, { pixelRatio: 2 });
+            });
+        }
+
+        function pointerOn(map, layers) {
+            layers.forEach((id) => {
+                map.on('mouseenter', id, () => { map.getCanvas().style.cursor = 'pointer'; });
+                map.on('mouseleave', id, () => { map.getCanvas().style.cursor = ''; });
+            });
+        }
+
+        // The card of a place. On a phone the card would not fit beside the pin, so the pin moves down and the card opens above it.
+        function openPinCard(gl, map, v, withPhoto = true) {
+            const box = map.getContainer();
+            const narrow = box.clientWidth < 600;
+            if (narrow) map.easeTo({ center: [v.lng, v.lat], offset: [0, Math.min(140, box.clientHeight / 4)] });
+            new gl.Popup({ offset: 18, maxWidth: '260px', anchor: narrow ? 'bottom' : undefined }).setLngLat([v.lng, v.lat]).setHTML(mapPopupHTML(v, withPhoto)).addTo(map);
         }
 
         function placesBounds(lib) {
@@ -8813,28 +8943,14 @@
             // Place names and button labels follow the language, so a language change draws the map again.
             if (placesMap && mapLang !== lang) { placesMap.remove(); placesMap = null; }
             if (!placesMap) {
-                await Promise.all(Object.keys(CATEGORY).filter((k) => !pinImages[k]).map(async (k) => { pinImages[k] = await pinImage(k); }));
+                await loadPins();
                 if (state.view !== 'map') return;
                 box.innerHTML = '';
                 const bounds = placesBounds(gl);
-                const map = new gl.Map({
-                    container: box,
-                    style: mapStyle(dark),
+                const map = new gl.Map(mapOptions(box, mapStyle(dark), {
                     ...(bounds ? { bounds, fitBoundsOptions: { padding: 32, maxZoom: 13 } } : { center: [17.5, -12.3], zoom: 4.5 }),
-                    scrollZoom: false,
-                    dragRotate: false,
-                    pitchWithRotate: false,
-                    touchPitch: false,
-                    maxPitch: 0,
-                    attributionControl: { compact: true },
-                    locale: {
-                        'NavigationControl.ZoomIn': t('mapZoomIn'),
-                        'NavigationControl.ZoomOut': t('mapZoomOut'),
-                        'GeolocateControl.FindMyLocation': t('mapLocate'),
-                        'GeolocateControl.LocationNotAvailable': t('mapLocateNo'),
-                        'AttributionControl.ToggleAttribution': t('mapCredits')
-                    }
-                });
+                    scrollZoom: false
+                }));
                 placesMap = map;
                 mapLang = lang;
                 mapDark = dark;
@@ -8842,27 +8958,17 @@
                 map.touchZoomRotate.disableRotation();
                 map.addControl(new gl.NavigationControl({ showCompass: false }), 'top-right');
                 map.addControl(new gl.GeolocateControl({ positionOptions: { enableHighAccuracy: true } }), 'top-right');
-                map.on('styleimagemissing', (e) => {
-                    const image = pinImages[e.id.replace(/^pin-/, '')];
-                    if (image && !map.hasImage(e.id)) map.addImage(e.id, image, { pixelRatio: 2 });
-                });
+                addPinImages(map);
                 map.on('click', 'place-clusters', async (e) => {
                     const cluster = e.features[0];
                     const zoom = await map.getSource('places').getClusterExpansionZoom(cluster.properties.cluster_id);
                     map.easeTo({ center: cluster.geometry.coordinates, zoom });
                 });
                 map.on('click', 'place-pins', (e) => {
-                    const pin = e.features[0];
-                    const v = venues.find((x) => x.id === pin.properties.id);
-                    if (!v) return;
-                    // On a phone the card would not fit beside the pin, so the pin moves down and the card opens above it.
-                    if (box.clientWidth < 600) map.easeTo({ center: pin.geometry.coordinates, offset: [0, Math.min(140, box.clientHeight / 4)] });
-                    new gl.Popup({ offset: 18, maxWidth: '260px', anchor: box.clientWidth < 600 ? 'bottom' : undefined }).setLngLat(pin.geometry.coordinates).setHTML(mapPopupHTML(v)).addTo(map);
+                    const v = venues.find((x) => x.id === e.features[0].properties.id);
+                    if (v) openPinCard(gl, map, v);
                 });
-                ['place-clusters', 'place-pins'].forEach((id) => {
-                    map.on('mouseenter', id, () => { map.getCanvas().style.cursor = 'pointer'; });
-                    map.on('mouseleave', id, () => { map.getCanvas().style.cursor = ''; });
-                });
+                pointerOn(map, ['place-clusters', 'place-pins']);
                 return;
             }
             if (mapDark !== dark) {
@@ -8926,6 +9032,103 @@
             }
         }
 
+        /* ---------- Small maps: place details and itinerary days (same style as the map page) ---------- */
+
+        // Each small map holds a WebGL context (browsers allow about 16), so maps whose box was replaced or closed are removed.
+        const miniMaps = new Map(); // map -> function that builds its style for light or dark
+        let placeMapWatch = null;
+
+        function dropMiniMaps(scope) {
+            for (const map of [...miniMaps.keys()]) {
+                const box = map.getContainer();
+                if (document.contains(box) && !scope?.contains(box)) continue;
+                map.remove();
+                miniMaps.delete(map);
+            }
+        }
+
+        async function miniMap(box, styleFor, view, layer, onPick) {
+            let gl;
+            try {
+                gl = await loadLib(MAPLIBRE);
+                await loadPins();
+            } catch {
+                box.innerHTML = `<p class="hint">${t('mapError')}</p>`;
+                return;
+            }
+            dropMiniMaps();
+            if (!document.contains(box) || box.hidden) return;
+            box.innerHTML = '';
+            const dark = effectiveTheme() === 'dark';
+            box.classList.toggle('map-dark', dark);
+            let map;
+            try {
+                map = new gl.Map(mapOptions(box, styleFor(dark), { cooperativeGestures: true, ...view(gl) }));
+            } catch {
+                box.innerHTML = `<p class="hint">${t('mapError')}</p>`;
+                return;
+            }
+            miniMaps.set(map, styleFor);
+            map.touchZoomRotate.disableRotation();
+            map.addControl(new gl.NavigationControl({ showCompass: false }), 'top-right');
+            addPinImages(map);
+            map.on('click', layer, (e) => onPick(gl, map, e.features[0].properties.id));
+            pointerOn(map, [layer]);
+        }
+
+        // Place details: the map starts when it scrolls into view, so opening a place stays quick.
+        function mountPlaceMap() {
+            placeMapWatch?.disconnect();
+            dropMiniMaps();
+            const box = document.querySelector('#venuePanel [data-place-map]');
+            const v = box && venues.find((x) => x.id === Number(box.dataset.placeMap));
+            if (!v) return;
+            placeMapWatch = new IntersectionObserver((entries) => {
+                if (!entries.some((e) => e.isIntersecting)) return;
+                placeMapWatch.disconnect();
+                miniMap(box, (dark) => placeMapStyle(v, dark), () => ({ center: [v.lng, v.lat], zoom: 14.5 }), 'place-pins', (gl, map, id) => {
+                    if (id !== v.id) openVenue(id);
+                });
+            }, { rootMargin: '200px' });
+            placeMapWatch.observe(box);
+        }
+
+        // Only one itinerary map is open at a time.
+        function toggleRouteMap(button) {
+            const [routeId, dayIndex] = button.dataset.routeMap.split(':');
+            const opening = button.getAttribute('aria-expanded') !== 'true';
+            document.querySelectorAll('[data-route-map][aria-expanded="true"]').forEach((b) => {
+                const shut = $(b.getAttribute('aria-controls'));
+                dropMiniMaps(shut);
+                shut.hidden = true;
+                shut.innerHTML = '';
+                shut.nextElementSibling.hidden = true;
+                b.setAttribute('aria-expanded', 'false');
+                b.lastElementChild.textContent = t('routeMapShow');
+            });
+            if (!opening) return;
+            const day = ITINERARIES.find((r) => r.id === routeId)?.days[Number(dayIndex)];
+            if (!day) return;
+            const stops = day.stops.map((id, k) => ({ v: venues.find((x) => x.id === id), n: k + 1 })).filter((s) => s.v?.exact);
+            const box = $(button.getAttribute('aria-controls'));
+            const missing = day.stops.map((id) => venues.find((x) => x.id === id)).filter((v) => v && !v.exact);
+            box.hidden = false;
+            box.innerHTML = `<p class="hint">${t('loading')}</p>`;
+            button.setAttribute('aria-expanded', 'true');
+            button.lastElementChild.textContent = t('routeMapHide');
+            const note = box.nextElementSibling;
+            note.hidden = false;
+            note.textContent = `${t('routeMapNote')}${missing.length ? ` ${t('routeMapMissing', { names: missing.map((v) => v.name).join(', ') })}` : ''}`;
+            miniMap(box, (dark) => routeMapStyle(stops, dark), (gl) => {
+                if (stops.length === 1) return { center: [stops[0].v.lng, stops[0].v.lat], zoom: 13 };
+                const bounds = stops.reduce((b, { v }) => b.extend([v.lng, v.lat]), new gl.LngLatBounds([stops[0].v.lng, stops[0].v.lat], [stops[0].v.lng, stops[0].v.lat]));
+                return { bounds, fitBoundsOptions: { padding: 44, maxZoom: 14 } };
+            }, 'stop-dots', (gl, map, id) => {
+                const v = venues.find((x) => x.id === id);
+                if (v) openPinCard(gl, map, v, false);
+            });
+        }
+
         /* ---------- Itineraries ---------- */
 
         const routeStops = (r) => r.days.flatMap((d) => d.stops);
@@ -8961,6 +9164,10 @@
                     ${r.days.map((d, i) => `
                         <h3 class="route-day">${r.days.length > 1 ? `${t('routeDay', { n: i + 1 })}: ` : ''}${escapeHTML(d.title[lang])}</h3>
                         <ol class="route-stops">${d.stops.map((id, k) => routeStopHTML(id, d.stops[k - 1])).join('')}</ol>
+                        ${hasWebGL() && d.stops.some((id) => venues.find((x) => x.id === id)?.exact) ? `
+                        <button class="link-btn route-map-btn" type="button" data-route-map="${r.id}:${i}" aria-expanded="false" aria-controls="roteiro-${r.id}-mapa-${i}">${icon('pin')}<span>${t('routeMapShow')}</span></button>
+                        <div class="route-map" id="roteiro-${r.id}-mapa-${i}" hidden></div>
+                        <p class="hint route-map-note" hidden></p>` : ''}
                         ${d.note ? `<p class="route-note">${escapeHTML(d.note[lang])}</p>` : ''}`).join('')}
                     ${r.source ? `<p class="guide-sources">${t('sourcesLabel')}: <a href="${escapeHTML(r.source.url)}" target="_blank" rel="noopener">${escapeHTML(r.source.label)}</a></p>` : ''}
                 </section>`).join('');
@@ -9041,7 +9248,7 @@
             const map = v.citywide
                 ? `<p class="hint">${t('citywideMap')}</p>`
                 : v.exact
-                ? `<iframe class="map-frame" src="${mapEmbedURL(v)}" title="${escapeHTML(v.name)}" loading="lazy"></iframe>
+                ? `${hasWebGL() ? `<div class="map-frame place-map" data-place-map="${v.id}"></div>` : `<iframe class="map-frame" src="${mapEmbedURL(v)}" title="${escapeHTML(v.name)}" loading="lazy"></iframe>`}
                    <p class="coords">Lat ${v.lat.toFixed(4)} · Long ${v.lng.toFixed(4)}</p>`
                 : `<p class="hint">${t('approxMap')}</p>`;
             return `
@@ -9209,6 +9416,7 @@
             $('venueModal').setAttribute('aria-labelledby', 'venueTitle');
             openModal('venueModal');
             if (keepScroll) panel.scrollTop = scroll;
+            mountPlaceMap();
             history.replaceState(null, '', `${location.pathname}${location.search}#local-${id}`);
             if (v.photos || v.image) upgradeHero(v.photos ? fullSrc(v.photos[0]) : asset(v.image));
             loadSubmissions(id);
@@ -10745,6 +10953,8 @@
             if (!document.querySelector('.modal.open')) document.body.classList.remove('no-scroll');
             if (id === 'venueModal') {
                 state.openId = null;
+                placeMapWatch?.disconnect();
+                dropMiniMaps($('venueModal'));
                 if (updateURL) history.replaceState(null, '', location.pathname + location.search);
             }
             if (lastFocus && document.contains(lastFocus)) lastFocus.focus();
@@ -10764,6 +10974,10 @@
             $('themeLabel').textContent = dark ? t('light') : t('dark');
             $('themeBtn').setAttribute('aria-label', dark ? t('lightAria') : t('darkAria'));
             if (state.view === 'map' && placesMap) renderMap();
+            for (const [map, styleFor] of miniMaps) {
+                map.getContainer().classList.toggle('map-dark', dark);
+                map.setStyle(styleFor(dark));
+            }
         }
 
         function applyLanguage() {
@@ -12279,6 +12493,8 @@
             }
             const routeOpen = target.closest('[data-route-open]');
             if (routeOpen) { showRoutes({ route: routeOpen.dataset.routeOpen }); return; }
+            const routeMapBtn = target.closest('[data-route-map]');
+            if (routeMapBtn) { toggleRouteMap(routeMapBtn); return; }
             const routeJump = target.closest('[data-route-jump]');
             if (routeJump) {
                 const id = routeJump.dataset.routeJump;
