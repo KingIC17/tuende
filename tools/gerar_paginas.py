@@ -170,7 +170,7 @@ STYLE = """
 """
 
 
-def page(v, others, desc_en):
+def page(v, others, desc_en, near=()):
     name = v['name']
     cat_pt, cat_en, schema_type = CATEGORY[v['type']]
     if v['type'] == 'health' and v['name'].startswith('Hospital'):
@@ -202,6 +202,7 @@ def page(v, others, desc_en):
         f'            <div><dt>{label}</dt><dd>{f"<div class=\"hours\">{value}</div>" + (f"<p class=\"muted\">{e(hours_note)}</p>" if hours_note else "") if label == "Horário" and v.get("hours") else value}</dd></div>'
         for label, value in facts)
     others_html = '\n'.join(f'            <li><a href="{slug(o["name"])}.html">{e(o["name"])}</a> · {e(place_line(o))}</li>' for o in others)
+    near_html = '\n'.join(f'            <li><a href="{slug(o["name"])}.html">{e(o["name"])}</a> · {e(CATEGORY[o["type"]][0])} · {f"{d:.1f}".replace(".", ",")} km</li>' for d, o in near)
     focus = f' style="object-position: {photo["focus"]}"' if photo and photo['focus'] else ''
     rates_note = ('\n        <p class="muted">Antes de trocar, veja o <a href="../cambio/">câmbio do dia</a> (taxas de referência do Banco Nacional de Angola).</p>'
                   if v['type'] == 'services' else '')
@@ -254,6 +255,8 @@ def page(v, others, desc_en):
 {facts_html}
         </dl>
         <p class="sources">Verificado a {e(pt_date(checked))}. Fontes: {', '.join(f'<a href="{e(src["url"])}">{e(src["label"])}</a>' for src in sources) or 'por confirmar'}. Confirme sempre antes de ir.</p>
+
+        {f'<h2>Perto daqui</h2>{chr(10)}        <ul class="links">{chr(10)}{near_html}{chr(10)}        </ul>{chr(10)}        <p class="muted">Distâncias em linha reta{"" if v.get("exact") else "; a posição deste lugar é aproximada"}.</p>' if near else ''}
 
         {f'<h2>Mais lugares em {e(where.split(", ")[-1])}</h2>' if others else ''}
         {f'<ul class="links">{chr(10)}{others_html}{chr(10)}        </ul>' if others else ''}
@@ -1270,6 +1273,22 @@ def sobre_page(venues, events, routes):
 """
 
 
+# "Perto daqui": the closest places in a straight line (up to 25 km), as in the app.
+def km_between(a, b):
+    from math import asin, cos, radians, sin, sqrt
+    dlat, dlng = radians(b['lat'] - a['lat']), radians(b['lng'] - a['lng'])
+    h = sin(dlat / 2) ** 2 + cos(radians(a['lat'])) * cos(radians(b['lat'])) * sin(dlng / 2) ** 2
+    return 6371 * 2 * asin(sqrt(h))
+
+
+def nearby(v, venues, limit=6, max_km=25):
+    has_point = lambda x: isinstance(x.get('lat'), (int, float)) and isinstance(x.get('lng'), (int, float)) and not x.get('citywide')
+    if not has_point(v):
+        return []
+    near = sorted(((km_between(v, o), o) for o in venues if o['id'] != v['id'] and has_point(o)), key=lambda x: x[0])
+    return [(d, o) for d, o in near if d <= max_km][:limit]
+
+
 def main():
     venues, desc_en = load()
     slugs = [slug(v['name']) for v in venues] + [t['slug'] for t in TOPICS]
@@ -1285,8 +1304,10 @@ def main():
             old.unlink()
     for v in venues:
         city = v['location'].split(' - ')[0]
-        others = [o for o in venues if o['id'] != v['id'] and o['location'].split(' - ')[0] == city][:8]
-        (out / f'{slug(v["name"])}.html').write_text(page(v, others, desc_en), encoding='utf-8')
+        near = nearby(v, venues)
+        near_ids = {o['id'] for _, o in near}
+        others = [o for o in venues if o['id'] != v['id'] and o['location'].split(' - ')[0] == city and o['id'] not in near_ids][:8]
+        (out / f'{slug(v["name"])}.html').write_text(page(v, others, desc_en, near), encoding='utf-8')
     (out / 'index.html').write_text(index_page(venues), encoding='utf-8')
     for topic in TOPICS:
         items = [v for v in venues if topic['pick'](v)]
