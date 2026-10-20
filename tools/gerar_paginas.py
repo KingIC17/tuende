@@ -170,7 +170,7 @@ STYLE = """
 """
 
 
-def page(v, others, desc_en, near=()):
+def page(v, others, desc_en, near=(), events=()):
     name = v['name']
     cat_pt, cat_en, schema_type = CATEGORY[v['type']]
     if v['type'] == 'health' and v['name'].startswith('Hospital'):
@@ -202,6 +202,14 @@ def page(v, others, desc_en, near=()):
         f'            <div><dt>{label}</dt><dd>{f"<div class=\"hours\">{value}</div>" + (f"<p class=\"muted\">{e(hours_note)}</p>" if hours_note else "") if label == "Horário" and v.get("hours") else value}</dd></div>'
         for label, value in facts)
     others_html = '\n'.join(f'            <li><a href="{slug(o["name"])}.html">{e(o["name"])}</a> · {e(place_line(o))}</li>' for o in others)
+    # Próximos eventos neste lugar; os que já acabaram saem sozinhos (script), até a página voltar a ser gerada.
+    events_html = ''
+    if events:
+        items = '\n'.join(f'            <li data-end="{e(ev.get("end") or ev["start"])}"><a href="../agenda/#{e(ev["id"])}">{e(ev["title"]["pt"])}</a> · {e(event_dates(ev["start"], ev.get("end")))}</li>' for ev in events)
+        events_html = (f'{chr(10)}        <section id="eventos-aqui">{chr(10)}        <h2>Próximos eventos aqui</h2>{chr(10)}        <ul class="links">{chr(10)}{items}{chr(10)}        </ul>{chr(10)}'
+                       '        <script>(function(){var d=new Date().toISOString().slice(0,10),s=document.getElementById("eventos-aqui");'
+                       's.querySelectorAll("[data-end]").forEach(function(li){if(li.getAttribute("data-end")<d)li.remove();});'
+                       'if(!s.querySelector("[data-end]"))s.remove();})();</script>' + chr(10) + '        </section>')
     near_html = '\n'.join(f'            <li><a href="{slug(o["name"])}.html">{e(o["name"])}</a> · {e(CATEGORY[o["type"]][0])} · {f"{d:.1f}".replace(".", ",")} km</li>' for d, o in near)
     focus = f' style="object-position: {photo["focus"]}"' if photo and photo['focus'] else ''
     rates_note = ('\n        <p class="muted">Antes de trocar, veja o <a href="../cambio/">câmbio do dia</a> (taxas de referência do Banco Nacional de Angola).</p>'
@@ -256,7 +264,7 @@ def page(v, others, desc_en, near=()):
         </dl>
         <p class="sources">Verificado a {e(pt_date(checked))}. Fontes: {', '.join(f'<a href="{e(src["url"])}">{e(src["label"])}</a>' for src in sources) or 'por confirmar'}. Confirme sempre antes de ir.</p>
 
-        {f'<h2>Perto daqui</h2>{chr(10)}        <ul class="links">{chr(10)}{near_html}{chr(10)}        </ul>{chr(10)}        <p class="muted">Distâncias em linha reta{"" if v.get("exact") else "; a posição deste lugar é aproximada"}.</p>' if near else ''}
+        {f'<h2>Perto daqui</h2>{chr(10)}        <ul class="links">{chr(10)}{near_html}{chr(10)}        </ul>{chr(10)}        <p class="muted">Distâncias em linha reta{"" if v.get("exact") else "; a posição deste lugar é aproximada"}.</p>' if near else ''}{events_html}
 
         {f'<h2>Mais lugares em {e(where.split(", ")[-1])}</h2>' if others else ''}
         {f'<ul class="links">{chr(10)}{others_html}{chr(10)}        </ul>' if others else ''}
@@ -504,6 +512,45 @@ def load_events():
     return js_value(source[start:end])
 
 
+def words(text):
+    """As palavras de um texto sem acentos nem maiúsculas, como kambaWords na app."""
+    t = unicodedata.normalize('NFD', str(text).lower())
+    t = ''.join(ch for ch in t if not '\u0300' <= ch <= '\u036f')
+    return [w for w in re.split(r'[^a-z0-9]+', re.sub(r"['’]", ' ', t)) if w]
+
+
+def load_aliases():
+    source = (WEB / 'index.html').read_text(encoding='utf-8')
+    start = source.index('const PLACE_ALIASES = {')
+    block = source[start:source.index('};', start)]
+    return {int(m.group(1)): re.findall(r"'((?:[^'\\]|\\.)*)'", m.group(2)) for m in re.finditer(r'(\d+):\s*\[([^\]]*)\]', block)}
+
+
+def event_places(events, venues, aliases):
+    """O lugar do Tuende onde é cada evento, como eventPlace na app: o nome do local contém o nome do lugar
+    (ou um nome alternativo de PLACE_ALIASES) e ganha o nome que aparece primeiro."""
+    keys = []
+    for v in venues:
+        if not v.get('exact'):
+            continue
+        for name in [v['name'], *aliases.get(v['id'], [])]:
+            k = ' ' + ' '.join(words(re.sub(r'\s*\(.*?\)\s*', ' ', name))) + ' '
+            if len(k.strip()) >= 4:
+                keys.append((k, v))
+    out = {}
+    for ev in events:
+        if not ev.get('venue') or ev.get('venueTbc'):
+            continue
+        key = ' ' + ' '.join(words(ev['venue'])) + ' '
+        hits = [(key.index(k), -len(k), i, v) for i, (k, v) in enumerate(keys) if k in key]
+        if hits:
+            out[ev['id']] = min(hits, key=lambda h: h[:3])[3]
+    return out
+
+
+EVENT_PLACE = {}  # id do evento -> lugar (preenchido em main)
+
+
 WEEKDAYS = ['segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado', 'domingo']
 EVENT_TYPE = {'music': ('Música', 'Music'), 'dance': ('Dança', 'Dance'), 'theatre': ('Teatro', 'Theatre'), 'film': ('Cinema', 'Film'),
               'fashion': ('Moda', 'Fashion'), 'fairs': ('Feiras e festas', 'Fairs and festivities'), 'sports': ('Desporto', 'Sport')}
@@ -580,6 +627,9 @@ def event_html(ev):
     if ev.get('venue') and not ev.get('venueTbc'):
         from urllib.parse import quote
         links.append(f'<a href="https://www.google.com/maps/search/?api=1&amp;query={quote(ev.get("mapsQuery") or ev["venue"] + ", " + ev["city"] + ", Angola")}">Como chegar</a>')
+    place = EVENT_PLACE.get(ev['id'])
+    if place:
+        links.append(f'<a href="../lugares/{slug(place["name"])}.html">{e(place["name"])} no Tuende</a>')
     links.append(f'<a href="../?page=events#evento-{e(ev["id"])}">Ver na app</a>')
     programme = ''.join(f'<li>{e(event_dates(p["date"], p.get("end")))}: {e(p["pt"])}</li>' for p in ev.get('programme', []))
     phones = f'<p class="meta">Informações: {e(", ".join(ev["phones"]))}</p>' if ev.get('phones') else ''
@@ -1302,12 +1352,17 @@ def main():
     for old in out.iterdir():
         if re.fullmatch(r'[a-z0-9-]+\.html', old.name) and old.name not in keep:
             old.unlink()
+    events = load_events()
+    EVENT_PLACE.update(event_places(events, venues, load_aliases()))
+    today_iso = date.today().isoformat()
     for v in venues:
         city = v['location'].split(' - ')[0]
         near = nearby(v, venues)
+        here = sorted((ev for ev in events if EVENT_PLACE.get(ev['id']) is v and ev.get('confirmed') is not False
+                       and (ev.get('end') or ev['start']) >= today_iso), key=lambda ev: ev['start'])
         near_ids = {o['id'] for _, o in near}
         others = [o for o in venues if o['id'] != v['id'] and o['location'].split(' - ')[0] == city and o['id'] not in near_ids][:8]
-        (out / f'{slug(v["name"])}.html').write_text(page(v, others, desc_en, near), encoding='utf-8')
+        (out / f'{slug(v["name"])}.html').write_text(page(v, others, desc_en, near, here), encoding='utf-8')
     (out / 'index.html').write_text(index_page(venues), encoding='utf-8')
     for topic in TOPICS:
         items = [v for v in venues if topic['pick'](v)]
@@ -1315,7 +1370,6 @@ def main():
             raise SystemExit(f'O guia {topic["slug"]} só tem {len(items)} lugares')
         (out / f'{topic["slug"]}.html').write_text(topic_page(topic, items), encoding='utf-8')
     (WEB / 'agenda').mkdir(exist_ok=True)
-    events = load_events()
     (WEB / 'agenda' / 'index.html').write_text(agenda_page(events, date.today().isoformat()), encoding='utf-8')
     routes = load_routes()
     rdir = WEB / 'rotas'
