@@ -2874,6 +2874,7 @@
                 planNav: 'Planos',
                 planTitle: 'Os meus planos',
                 nearbyTitle: 'Perto daqui',
+                placeEventsTitle: 'Próximos eventos aqui',
                 nearbyRoute: 'Caminho',
                 nearbyNote: 'Distâncias em linha reta. «Caminho» abre o percurso a partir daqui no Google Maps.',
                 nearbyApprox: 'A posição deste lugar é aproximada, por isso as distâncias também. «Caminho» abre o percurso no Google Maps.',
@@ -3460,6 +3461,7 @@
                 planNav: 'Plans',
                 planTitle: 'My plans',
                 nearbyTitle: 'Nearby',
+                placeEventsTitle: 'Upcoming events here',
                 nearbyRoute: 'Route',
                 nearbyNote: 'Straight-line distances. "Route" opens the way there from here in Google Maps.',
                 nearbyApprox: 'This place\'s position is approximate, so the distances are too. "Route" opens the way there in Google Maps.',
@@ -4046,6 +4048,7 @@
                 planNav: 'Plans',
                 planTitle: 'Mes plans',
                 nearbyTitle: 'À proximité',
+                placeEventsTitle: 'Prochains événements ici',
                 nearbyRoute: 'Trajet',
                 nearbyNote: 'Distances à vol d\'oiseau. « Trajet » ouvre le chemin depuis ici dans Google Maps.',
                 nearbyApprox: 'La position de ce lieu est approximative, les distances aussi. « Trajet » ouvre le chemin dans Google Maps.',
@@ -4632,6 +4635,7 @@
                 planNav: 'Planes',
                 planTitle: 'Mis planes',
                 nearbyTitle: 'Cerca de aquí',
+                placeEventsTitle: 'Próximos eventos aquí',
                 nearbyRoute: 'Ruta',
                 nearbyNote: 'Distancias en línea recta. «Ruta» abre el camino desde aquí en Google Maps.',
                 nearbyApprox: 'La posición de este lugar es aproximada, así que las distancias también. «Ruta» abre el camino en Google Maps.',
@@ -9455,6 +9459,17 @@
                 </section>`;
         }
 
+        // Upcoming events at this place (the event's venue matches the place, as on the agenda).
+        function placeEventsHTML(v) {
+            const list = upcomingEvents().filter((e) => eventPlace(e)?.id === v.id).slice(0, 6);
+            if (!list.length) return '';
+            return `
+                <section>
+                    <h3 class="section-title">${t('placeEventsTitle')}</h3>
+                    <div class="event-mini-grid">${list.map(eventMiniHTML).join('')}</div>
+                </section>`;
+        }
+
         function practicalHTML(v) {
             const digits = phoneDigits(v);
             const address = v.address || placeLine(v);
@@ -9608,6 +9623,8 @@
                     ${practicalHTML(v)}
 
                     ${nearbyHTML(v)}
+
+                    ${placeEventsHTML(v)}
 
                     <section>
                         <h3 class="section-title">${t('about')}</h3>
@@ -12691,7 +12708,7 @@
                 return;
             }
             const eventOpen = target.closest('[data-event-open]');
-            if (eventOpen) { showEvents(); focusEvent(eventOpen.dataset.eventOpen); return; }
+            if (eventOpen) { document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id, { updateURL: false })); showEvents(); focusEvent(eventOpen.dataset.eventOpen); return; }
             const whenChip = target.closest('[data-events-when]');
             if (whenChip) { setEventFilters({ when: whenChip.dataset.eventsWhen }, `[data-events-when="${whenChip.dataset.eventsWhen}"]`); return; }
             const typeChip = target.closest('[data-events-type]');
