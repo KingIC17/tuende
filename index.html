@@ -523,6 +523,8 @@
         .card-type .icon { width: 14px; height: 14px; }
         .card-name { font-size: 18px; font-weight: 800; line-height: 1.2; }
         .price-pill { display: inline-block; padding: 3px 10px; border-radius: 10px; background: var(--surface-2); color: var(--text); font-size: 13px; font-weight: 700; }
+        .event-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 10px; background: var(--primary-soft); color: var(--primary); font-size: 13px; font-weight: 700; }
+        .event-pill .icon { width: 14px; height: 14px; }
         .price-pill.free { background: var(--free-bg); color: var(--free-ink); }
         .price-pill.tbc { background: var(--tbc-bg); color: var(--tbc-ink); }
         .fx { font-weight: 700; color: var(--text); }
@@ -2791,6 +2793,8 @@
                 recommendedTitle: 'Recomendados pela equipa Tuende',
                 recommendedSub: 'O motivo de cada escolha está no cartão.',
                 why: 'Porquê:',
+                cardEventOn: 'Evento a decorrer',
+                cardEventNext: 'Evento a {date}',
                 categoriesTitle: 'Explorar por categoria',
                 collectionsTitle: 'Coleções',
                 collectionsSub: 'Listas prontas para decidir mais depressa.',
@@ -3379,6 +3383,8 @@
                 recommendedTitle: 'Recommended by the Tuende team',
                 recommendedSub: 'The reason for each pick is on its card.',
                 why: 'Why:',
+                cardEventOn: 'Event on now',
+                cardEventNext: 'Event on {date}',
                 categoriesTitle: 'Browse by category',
                 collectionsTitle: 'Collections',
                 collectionsSub: 'Ready-made lists to help you decide faster.',
@@ -3967,6 +3973,8 @@
                 recommendedTitle: 'Recommandés par l\'équipe Tuende',
                 recommendedSub: 'La raison de chaque choix figure sur sa fiche.',
                 why: 'Pourquoi :',
+                cardEventOn: 'Événement en cours',
+                cardEventNext: 'Événement le {date}',
                 categoriesTitle: 'Explorer par catégorie',
                 collectionsTitle: 'Sélections',
                 collectionsSub: 'Des listes toutes prêtes pour décider plus vite.',
@@ -4555,6 +4563,8 @@
                 recommendedTitle: 'Recomendados por el equipo de Tuende',
                 recommendedSub: 'El motivo de cada elección está en su tarjeta.',
                 why: 'Por qué:',
+                cardEventOn: 'Evento en curso',
+                cardEventNext: 'Evento el {date}',
                 categoriesTitle: 'Explorar por categoría',
                 collectionsTitle: 'Colecciones',
                 collectionsSub: 'Listas ya hechas para decidir más rápido.',
@@ -8016,6 +8026,7 @@
                             <span class="price-pill${!v.price ? ' tbc' : v.price.free ? ' free' : ''}">${escapeHTML(priceText(v))}</span>
                             ${options.fromLuanda ? `<span>${t('fromLuanda', { d: formatKm(kmBetween(LUANDA_CENTRE, v)) })}</span>` : dist ? `<span>${dist}</span>` : ''}
                             ${statusHTML(v)}
+                            ${eventPillHTML(v)}
                         </div>
                         ${highlight}
                         <div class="card-actions">
@@ -8025,6 +8036,19 @@
                     </div>
                 </article>
             `;
+        }
+
+        // A place with an event on now, or starting within 30 days, says so on its card.
+        function eventPillHTML(v) {
+            const next = eventsByPlace().get(v.id)?.[0];
+            if (!next) return '';
+            const today = luandaToday();
+            const soon = toISO(new Date(Date.now() + 31 * 24 * 60 * 60 * 1000));
+            if (next.start > soon) return '';
+            const text = next.start <= today
+                ? t('cardEventOn')
+                : t('cardEventNext', { date: new Date(`${next.start}T12:00:00`).toLocaleDateString(locale(), { day: 'numeric', month: 'short' }) });
+            return `<span class="event-pill">${icon('calendar')}${escapeHTML(text)}</span>`;
         }
 
         function rowHTML(list, options) {
