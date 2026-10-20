@@ -7075,7 +7075,7 @@
         // Cloudflare Web Analytics (no cookies, no individual tracking). The token is public; only visits on the live site are counted.
         const ANALYTICS_TOKEN = 'bfad71e37fa648dea81087839c77618f';
         // Public contact address. While empty, the contact link, the privacy link and the e-mail fallback stay hidden.
-        const CONTACT_EMAIL = '';
+        const CONTACT_EMAIL = 'contacto@tuende.app';
         // Store pages of the phone apps: leave empty until each app is published; the install guide shows them when set.
         const APP_STORE_URL = '';
         const PLAY_STORE_URL = '';
@@ -10423,7 +10423,8 @@
 
         function renderFooter() {
             $('footerPrivacy').hidden = !CONTACT_EMAIL;
-                $('footerTerms').href = asset('termos.html');
+            $('footerPrivacy').href = asset('privacy.html');
+            $('footerTerms').href = asset('termos.html');
             $('footerPlaces').href = asset('lugares/');
             $('footerContact').hidden = !CONTACT_EMAIL;
             if (CONTACT_EMAIL) $('footerContact').href = `mailto:${CONTACT_EMAIL}`;
