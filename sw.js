@@ -1,5 +1,9 @@
-const SHELL_CACHE = 'tuende-shell-v6';
+const SHELL_CACHE = 'tuende-shell-v7';
 const IMAGE_CACHE = 'tuende-images-v1';
+// The map library (unpkg) and the map tiles already seen, so the map still opens without internet.
+// Only tiles the person viewed are kept (no bulk download, as OpenStreetMap asks), up to MAX_TILES.
+const MAP_CACHE = 'tuende-map-v1';
+const MAX_TILES = 1200;
 const SHELL = [
     './',
     './manifest.json',
@@ -17,7 +21,7 @@ self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys()
             .then((keys) => Promise.all(keys
-                .filter((key) => key !== SHELL_CACHE && key !== IMAGE_CACHE)
+                .filter((key) => key !== SHELL_CACHE && key !== IMAGE_CACHE && key !== MAP_CACHE)
                 .map((key) => caches.delete(key))))
             .then(() => self.clients.claim())
     );
@@ -44,6 +48,20 @@ async function imageCacheFirst(request) {
     return response;
 }
 
+async function mapCacheFirst(request) {
+    const cache = await caches.open(MAP_CACHE);
+    const hit = await cache.match(request);
+    if (hit) return hit;
+    const response = await fetch(request);
+    if (response.ok) {
+        await cache.put(request, response.clone());
+        const keys = await cache.keys();
+        const tiles = keys.filter((k) => k.url.includes('tile.openstreetmap.org'));
+        if (tiles.length > MAX_TILES) await Promise.all(tiles.slice(0, tiles.length - MAX_TILES).map((k) => cache.delete(k)));
+    }
+    return response;
+}
+
 self.addEventListener('fetch', (event) => {
     const { request } = event;
     if (request.method !== 'GET') return;
@@ -55,6 +73,8 @@ self.addEventListener('fetch', (event) => {
         event.respondWith(networkFirst(request));
     } else if (url.hostname === 'images.unsplash.com' || url.hostname.endsWith('wikimedia.org')) {
         event.respondWith(imageCacheFirst(request));
+    } else if (url.hostname === 'unpkg.com' || url.hostname === 'tile.openstreetmap.org') {
+        event.respondWith(mapCacheFirst(request));
     }
 });
 
