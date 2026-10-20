@@ -949,6 +949,9 @@
         .section-map .icon { width: 16px; height: 16px; }
         .map-pop { display: grid; gap: 2px; font-family: inherit; font-size: 14px; }
         .map-pop strong { font-size: 15px; }
+        .map-pop-events { list-style: none; margin: 6px 0 2px; padding: 6px 0 0; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+        .map-pop-events .link-btn { min-height: 0; font-size: 14px; text-align: left; }
+        .map-pop-events small { display: block; color: var(--muted); font-size: 12px; }
         .map-pop .link-btn { justify-self: start; min-height: 36px; }
         .map-pop-photo { width: 100%; height: 104px; object-fit: cover; border-radius: 10px; margin-bottom: 6px; background: var(--surface-2); }
         .map-box.maplibregl-map { display: block; font-family: inherit; }
@@ -3202,6 +3205,7 @@
                 mapIntro: '{n} dos {total} lugares têm localização confirmada e aparecem no mapa. Toque num ponto para ver o lugar; os círculos vermelhos com números juntam vários lugares (toque para aproximar).',
                 mapFilter: 'Filtrar o mapa por categoria',
                 mapAll: 'Todos',
+                mapEvents: 'Com eventos',
                 mapSeeOnMap: 'Ver no mapa',
                 mapError: 'Não foi possível carregar o mapa. Verifique a internet e tente de novo.',
                 mapZoomIn: 'Aproximar',
@@ -3789,6 +3793,7 @@
                 mapIntro: '{n} of the {total} places have a confirmed location and appear on the map. Tap a dot to see the place; red circles with numbers group several places (tap to zoom in).',
                 mapFilter: 'Filter the map by category',
                 mapAll: 'All',
+                mapEvents: 'With events',
                 mapSeeOnMap: 'See on the map',
                 mapError: 'The map could not be loaded. Check your internet connection and try again.',
                 mapZoomIn: 'Zoom in',
@@ -4376,6 +4381,7 @@
                 mapIntro: '{n} des {total} lieux ont un emplacement confirmé et figurent sur la carte. Touchez un point pour voir le lieu ; les cercles rouges avec un nombre regroupent plusieurs lieux (touchez pour zoomer).',
                 mapFilter: 'Filtrer la carte par catégorie',
                 mapAll: 'Tous',
+                mapEvents: 'Avec événements',
                 mapSeeOnMap: 'Voir sur la carte',
                 mapError: 'Impossible de charger la carte. Vérifiez votre connexion internet et réessayez.',
                 mapZoomIn: 'Zoom avant',
@@ -4963,6 +4969,7 @@
                 mapIntro: '{n} de los {total} lugares tienen la ubicación confirmada y aparecen en el mapa. Toque un punto para ver el lugar; los círculos rojos con números agrupan varios lugares (toque para acercar).',
                 mapFilter: 'Filtrar el mapa por categoría',
                 mapAll: 'Todos',
+                mapEvents: 'Con eventos',
                 mapSeeOnMap: 'Ver en el mapa',
                 mapError: 'No se pudo cargar el mapa. Compruebe su conexión a internet e inténtelo de nuevo.',
                 mapZoomIn: 'Acercar',
@@ -8813,12 +8820,37 @@
             return webGL;
         }
 
+        // Upcoming events by place id (the event's venue matches the place); kept a few seconds, as the map asks for it per pin.
+        let eventsMemo = null;
+        let eventsMemoAt = 0;
+        function eventsByPlace() {
+            if (eventsMemo && Date.now() - eventsMemoAt < 5000) return eventsMemo;
+            const byPlace = new Map();
+            upcomingEvents().forEach((e) => {
+                const v = eventPlace(e);
+                if (v) byPlace.set(v.id, [...(byPlace.get(v.id) || []), e]);
+            });
+            eventsMemo = byPlace;
+            eventsMemoAt = Date.now();
+            return byPlace;
+        }
+
         // Only places with confirmed coordinates go on the map; the others would land in the wrong spot.
-        const mappable = () => venues.filter((v) => v.exact && (!mapCategory || v.type === mapCategory));
+        // "Com eventos" (mapCategory 'events') shows the places with upcoming events.
+        function mappable() {
+            if (mapCategory === 'events') {
+                const byPlace = eventsByPlace();
+                return venues.filter((v) => v.exact && byPlace.has(v.id));
+            }
+            return venues.filter((v) => v.exact && (!mapCategory || v.type === mapCategory));
+        }
 
         function mapPopupHTML(v, withPhoto = true) {
-            const photo = withPhoto && thumbSrc(v);
-            return `<div class="map-pop">${photo ? `<img class="map-pop-photo" src="${escapeHTML(photo)}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}<strong>${escapeHTML(v.name)}</strong><span>${escapeHTML(catLabel(v.type))} · ${escapeHTML(placeLine(v))}</span><button type="button" class="link-btn" data-open="${v.id}">${t('viewPlace')}</button></div>`;
+            const next = (eventsByPlace().get(v.id) || []).slice(0, 2);
+            // With events listed the card would be too tall for the map, so the photo stays out.
+            const photo = withPhoto && !next.length && thumbSrc(v);
+            const events = next.length ? `<ul class="map-pop-events">${next.map((e) => `<li><button type="button" class="link-btn" data-event-open="${escapeHTML(e.id)}">${escapeHTML(eventTitle(e))}</button><small>${escapeHTML(eventDateText(e))}</small></li>`).join('')}</ul>` : '';
+            return `<div class="map-pop">${photo ? `<img class="map-pop-photo" src="${escapeHTML(photo)}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}<strong>${escapeHTML(v.name)}</strong><span>${escapeHTML(catLabel(v.type))} · ${escapeHTML(placeLine(v))}</span>${events}<button type="button" class="link-btn" data-open="${v.id}">${t('viewPlace')}</button></div>`;
         }
 
         // Pin colours follow the home page tiles: food red, nightlife black, beaches blue, nature green, culture yellow, the rest white.
@@ -9165,6 +9197,7 @@
             $('mapIntro').textContent = t('mapIntro', { n: all.length, total: venues.length });
             const types = Object.keys(CATEGORY).filter((k) => all.some((v) => v.type === k));
             $('mapFilter').innerHTML = [`<button class="chip${mapCategory ? '' : ' active'}" type="button" data-map-cat="" aria-pressed="${!mapCategory}">${t('mapAll')}</button>`,
+                `<button class="chip${mapCategory === 'events' ? ' active' : ''}" type="button" data-map-cat="events" aria-pressed="${mapCategory === 'events'}">${icon('calendar')}${t('mapEvents')}</button>`,
                 ...types.map((k) => `<button class="chip${mapCategory === k ? ' active' : ''}" type="button" data-map-cat="${k}" aria-pressed="${mapCategory === k}">${icon(CATEGORY[k].icon)}${escapeHTML(catLabel(k, true))}</button>`)].join('');
             mapEngine ||= hasWebGL() ? 'gl' : 'leaflet';
             let lib;
