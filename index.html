@@ -992,7 +992,10 @@
         .route-map-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; min-height: 40px; }
         .route-map-btn .icon { width: 18px; height: 18px; }
         .route-map { position: relative; height: 300px; margin-top: 6px; overflow: hidden; border: 1.5px solid var(--border); border-radius: 14px; background: var(--surface-2); display: flex; align-items: center; justify-content: center; }
-        .route-map.maplibregl-map, .place-map.maplibregl-map { display: block; font-family: inherit; }
+        .route-map.maplibregl-map, .place-map.maplibregl-map, .event-map.maplibregl-map { display: block; font-family: inherit; }
+        .event-map { position: relative; height: 220px; margin-top: 8px; overflow: hidden; border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface-2); }
+        .event-place { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; }
+        .event-place .icon { width: 18px; height: 18px; color: var(--primary); }
         .route-map-note { margin-top: 6px; }
         .place-map { position: relative; overflow: hidden; border: 1.5px solid var(--border); }
         .route-name { background: none; border: none; padding: 0; text-align: left; font-size: 16px; font-weight: 800; color: var(--text); }
@@ -3157,6 +3160,9 @@
                 mapLocate: 'Mostrar onde estou',
                 mapLocateNo: 'A sua localização não está disponível',
                 mapCredits: 'Créditos do mapa',
+                nearMapText: 'Os lugares perto de si também no mapa, com a sua posição.',
+                nearMapOpen: 'Abrir no mapa',
+                eventMapPlace: 'O local no Tuende',
                 mapNearTitle: 'Perto de si',
                 mapNearFar: 'O lugar mais perto no mapa fica a {km} km.',
                 mapNearNote: 'Distâncias em linha reta a partir de onde está. A sua localização é usada só neste dispositivo e não é guardada.',
@@ -3740,6 +3746,9 @@
                 mapLocate: 'Show my location',
                 mapLocateNo: 'Your location is not available',
                 mapCredits: 'Map credits',
+                nearMapText: 'The places near you on the map too, with your position.',
+                nearMapOpen: 'Open on the map',
+                eventMapPlace: 'The venue on Tuende',
                 mapNearTitle: 'Near you',
                 mapNearFar: 'The nearest place on the map is {km} km away.',
                 mapNearNote: 'Distances as the crow flies from where you are. Your location is only used on this device and is not stored.',
@@ -4323,6 +4332,9 @@
                 mapLocate: 'Afficher ma position',
                 mapLocateNo: 'Votre position n\'est pas disponible',
                 mapCredits: 'Crédits de la carte',
+                nearMapText: 'Les lieux près de vous aussi sur la carte, avec votre position.',
+                nearMapOpen: 'Ouvrir sur la carte',
+                eventMapPlace: 'Le lieu sur Tuende',
                 mapNearTitle: 'Près de vous',
                 mapNearFar: 'Le lieu le plus proche sur la carte est à {km} km.',
                 mapNearNote: 'Distances à vol d\'oiseau depuis votre position. Votre position n\'est utilisée que sur cet appareil et n\'est pas enregistrée.',
@@ -4906,6 +4918,9 @@
                 mapLocate: 'Mostrar mi ubicación',
                 mapLocateNo: 'Su ubicación no está disponible',
                 mapCredits: 'Créditos del mapa',
+                nearMapText: 'Los lugares cerca de usted también en el mapa, con su posición.',
+                nearMapOpen: 'Abrir en el mapa',
+                eventMapPlace: 'El lugar en Tuende',
                 mapNearTitle: 'Cerca de usted',
                 mapNearFar: 'El lugar más cercano en el mapa está a {km} km.',
                 mapNearNote: 'Distancias en línea recta desde donde está. Su ubicación solo se usa en este dispositivo y no se guarda.',
@@ -8153,6 +8168,10 @@
                 $('resultsList').innerHTML = emptyHTML();
                 document.querySelectorAll('#resultsList .card-row').forEach(updateRowControls);
             }
+            // "Perto de mim": the same places on the map, with the person's position.
+            if (list.length && state.userPos && (state.filters.quick === 'near' || state.filters.where === 'near')) {
+                $('resultsList').insertAdjacentHTML('afterbegin', `<div class="fx-banner">${icon('pin')}<span>${t('nearMapText')}</span><button class="link-btn" type="button" data-action="near-map">${t('nearMapOpen')}</button></div>`);
+            }
             // Saved places and plans sit together: the Guardados tab is how phones reach "My plans".
             if (state.filters.saved) {
                 const text = plans.length ? plans.slice(0, 2).map((p) => p.name).join(' · ') + (plans.length > 2 ? ' …' : '') : t('planCtaText');
@@ -8204,6 +8223,7 @@
             dropMiniMaps();
             if (state.view !== 'routes') dropMiniMaps($('routesView'));
             if (state.view !== 'plan') dropMiniMaps($('planView'));
+            if (state.view !== 'events') dropMiniMaps($('eventsView'));
             renderQuickFilters();
             renderSavedButton();
             renderTabbar();
@@ -9103,14 +9123,16 @@
                 return;
             }
             if (state.view !== 'map') return;
-            // With "Perto de mim" on, a new category keeps the map on the person and that category's nearest places.
-            const nearMode = mapNearOn && state.userPos && placesMap;
-            if (nearMode) mapFitted = mapCategory;
-            const near = mapNearOn && state.userPos ? mapNearList() : [];
-            if (mapEngine === 'leaflet') { drawLeafletMap(lib); if (nearMode) mapFitNear(near); return; }
+            // With "Perto de mim" on, the map stays on the person and the nearest places of the chosen category.
+            const nearOn = Boolean(mapNearOn && state.userPos);
+            const hadMap = Boolean(placesMap);
+            if (nearOn && hadMap) mapFitted = mapCategory;
+            const near = nearOn ? mapNearList() : [];
+            if (mapEngine === 'leaflet') { drawLeafletMap(lib); if (nearOn) mapFitNear(near); return; }
             try {
                 await drawVectorMap(lib);
-                if (nearMode) mapFitNear(near);
+                if (nearOn && hadMap) mapFitNear(near);
+                else if (nearOn) placesMap?.once('load', () => mapFitNear(mapNearList()));
             } catch {
                 // WebGL refused to start: use the Leaflet map instead.
                 placesMap?.remove();
@@ -9234,12 +9256,14 @@
 
         // The Tuende place where an event happens: its venue name contains the place name (as the Kamba does).
         // The name that comes first wins ("Tenda Bessangana, Ilha de Luanda" is Bessangana, not the island).
+        let placeKeys = null;
         function eventPlace(e) {
             if (!e?.venue || e.venueTbc) return null;
             const key = ` ${kambaWords(e.venue).join(' ')} `;
-            return venues.filter((v) => v.exact)
+            placeKeys ??= venues.filter((v) => v.exact)
                 .map((v) => ({ v, name: ` ${kambaWords(v.name.replace(/\s*\(.*?\)\s*/g, ' ')).join(' ')} ` }))
-                .filter((o) => o.name.trim().length >= 4 && key.includes(o.name))
+                .filter((o) => o.name.trim().length >= 4);
+            return placeKeys.filter((o) => key.includes(o.name))
                 .sort((a, b) => key.indexOf(a.name) - key.indexOf(b.name) || b.name.length - a.name.length)[0]?.v || null;
         }
 
@@ -10530,6 +10554,7 @@
 
         function eventCardHTML(e) {
             const when = [eventDateText(e), e.when?.[lang]].filter(Boolean).join(' · ');
+            const place = eventPlace(e);
             const programme = e.programme?.length
                 ? `<p><b>${t('eventProgramme')}</b></p><ul>${e.programme.map((item) => `<li><b>${escapeHTML(eventDateText({ start: item.date, end: item.end }))}:</b> ${escapeHTML(item[lang])}</li>`).join('')}</ul>`
                 : '';
@@ -10568,6 +10593,8 @@
                         <details class="event-details">
                             <summary>${t('eventMore')}</summary>
                             <p>${escapeHTML(e.desc[lang])}</p>
+                            ${place ? `<p class="event-place">${icon('pin')}<b>${t('eventMapPlace')}:</b> <button class="link-btn" type="button" data-open="${place.id}">${escapeHTML(place.name)}</button></p>
+                            ${hasWebGL() ? `<div class="event-map" data-event-map="${place.id}"></div>` : ''}` : ''}
                             ${e.price?.note ? `<p>${escapeHTML(e.price.note[lang])}</p>` : ''}
                             ${programme}
                             ${e.host ? `<p><b>${t('eventHost')}:</b> ${escapeHTML(e.host)}</p>` : ''}
@@ -12619,6 +12646,13 @@
                 showMap();
                 return;
             }
+            if (action?.dataset.action === 'near-map') {
+                mapNearOn = true;
+                mapCategory = CATEGORY[state.filters.category] ? state.filters.category : '';
+                mapFitted = null;
+                showMap();
+                return;
+            }
             const mapCat = target.closest('[data-map-cat]');
             if (mapCat) { mapCategory = mapCat.dataset.mapCat; renderMap(); return; }
             if (action?.dataset.action === 'routes') {
@@ -12839,6 +12873,13 @@
         });
 
         matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => applyTheme());
+        document.addEventListener('toggle', (e) => {
+            const box = e.target.querySelector?.(':scope > [data-event-map]');
+            if (!box) return;
+            if (!e.target.open) { dropMiniMaps(box); box.innerHTML = ''; return; }
+            const v = venues.find((x) => x.id === Number(box.dataset.eventMap));
+            if (v) miniMap(box, (dark) => placeMapStyle(v, dark), () => ({ center: [v.lng, v.lat], zoom: 14.5 }), 'place-pins', (gl, map, id) => openVenue(id));
+        }, true);
         window.addEventListener('popstate', applyURL);
 
         window.addEventListener('beforeinstallprompt', (e) => {
