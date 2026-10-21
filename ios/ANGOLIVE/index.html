@@ -499,6 +499,25 @@
         }
 
         .card-media img, .modal-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        /* Places without a photo: the category colour of the home tiles and map pins, the category icon and the initials. */
+        .ph { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .ph .icon { width: 44px; height: 44px; stroke-width: 1.6; }
+        .ph b { font-size: 15px; font-weight: 800; letter-spacing: 0.08em; opacity: 0.85; }
+        .modal-hero .ph .icon { width: 60px; height: 60px; }
+        .route-thumb .ph .icon { width: 30px; height: 30px; }
+        .route-thumb .ph b { display: none; }
+        /* A faint lattice of diamonds (the samakaka motif of the header) over the category colour. */
+        :is(.card-media, .modal-hero, .route-thumb)[data-ph] {
+            --ph-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='white' stroke-opacity='0.14' stroke-width='1.5'/%3E%3C/svg%3E");
+            background-image: var(--ph-pattern), var(--ph-bg);
+            background-size: 28px 28px, auto;
+        }
+        :is(.card-media, .modal-hero, .route-thumb)[data-ph="food"] { --ph-bg: linear-gradient(135deg, #CE1126 0%, #A50E1F 100%); color: #FFFFFF; }
+        :is(.card-media, .modal-hero, .route-thumb)[data-ph="beach"] { --ph-bg: linear-gradient(135deg, #1D4E89 0%, #163C6A 100%); color: #FFFFFF; }
+        :is(.card-media, .modal-hero, .route-thumb)[data-ph="nature"] { --ph-bg: linear-gradient(135deg, #1E6B3A 0%, #15502B 100%); color: #FFFFFF; }
+        :is(.card-media, .modal-hero, .route-thumb)[data-ph="culture"] { --ph-bg: linear-gradient(135deg, #FFCB00 0%, #E8B400 100%); --ph-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23111111' stroke-opacity='0.10' stroke-width='1.5'/%3E%3C/svg%3E"); color: #111111; }
+        :is(.card-media, .modal-hero, .route-thumb)[data-ph="night"] { --ph-bg: linear-gradient(135deg, #2B2B33 0%, #111111 100%); --ph-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23FFCB00' stroke-opacity='0.22' stroke-width='1.5'/%3E%3C/svg%3E"); color: #FFFFFF; }
+        :is(.card-media, .modal-hero, .route-thumb)[data-ph="light"] { --ph-bg: linear-gradient(var(--surface-2), var(--surface-2)); --ph-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23CE1126' stroke-opacity='0.14' stroke-width='1.5'/%3E%3C/svg%3E"); color: var(--primary); box-shadow: inset 0 0 0 1.5px var(--border); }
 
         .saved-tag {
             position: absolute;
@@ -523,6 +542,8 @@
         .card-type .icon { width: 14px; height: 14px; }
         .card-name { font-size: 18px; font-weight: 800; line-height: 1.2; }
         .price-pill { display: inline-block; padding: 3px 10px; border-radius: 10px; background: var(--surface-2); color: var(--text); font-size: 13px; font-weight: 700; }
+        .event-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 10px; background: var(--primary-soft); color: var(--primary); font-size: 13px; font-weight: 700; }
+        .event-pill .icon { width: 14px; height: 14px; }
         .price-pill.free { background: var(--free-bg); color: var(--free-ink); }
         .price-pill.tbc { background: var(--tbc-bg); color: var(--tbc-ink); }
         .fx { font-weight: 700; color: var(--text); }
@@ -1071,6 +1092,7 @@
             #homeView .tile .icon { width: 22px; height: 22px; }
             #homeView .tile-label { font-size: 13px; line-height: 1.2; overflow-wrap: break-word; hyphens: auto; }
             #homeView .tile-count { font-size: 12px; }
+            #homeView .tile-grid > :last-child:nth-child(3n + 1) { grid-column: 1 / -1; }
             #homeView .collection-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; padding-bottom: 6px; scrollbar-width: none; }
             #homeView .collection-grid::-webkit-scrollbar { display: none; }
             #homeView .collection-grid > * { flex: 0 0 82%; scroll-snap-align: start; }
@@ -2791,7 +2813,10 @@
                 recommendedTitle: 'Recomendados pela equipa Tuende',
                 recommendedSub: 'O motivo de cada escolha está no cartão.',
                 why: 'Porquê:',
+                cardEventOn: 'Evento a decorrer',
+                cardEventNext: 'Evento a {date}',
                 categoriesTitle: 'Explorar por categoria',
+                moreCategoriesTitle: 'Mais categorias',
                 collectionsTitle: 'Coleções',
                 collectionsSub: 'Listas prontas para decidir mais depressa.',
                 dayTripsTitle: 'Viagens de um dia a partir de Luanda',
@@ -3379,7 +3404,10 @@
                 recommendedTitle: 'Recommended by the Tuende team',
                 recommendedSub: 'The reason for each pick is on its card.',
                 why: 'Why:',
+                cardEventOn: 'Event on now',
+                cardEventNext: 'Event on {date}',
                 categoriesTitle: 'Browse by category',
+                moreCategoriesTitle: 'More categories',
                 collectionsTitle: 'Collections',
                 collectionsSub: 'Ready-made lists to help you decide faster.',
                 dayTripsTitle: 'Day trips from Luanda',
@@ -3967,7 +3995,10 @@
                 recommendedTitle: 'Recommandés par l\'équipe Tuende',
                 recommendedSub: 'La raison de chaque choix figure sur sa fiche.',
                 why: 'Pourquoi :',
+                cardEventOn: 'Événement en cours',
+                cardEventNext: 'Événement le {date}',
                 categoriesTitle: 'Explorer par catégorie',
+                moreCategoriesTitle: 'Autres catégories',
                 collectionsTitle: 'Sélections',
                 collectionsSub: 'Des listes toutes prêtes pour décider plus vite.',
                 dayTripsTitle: 'Excursions d\'une journée depuis Luanda',
@@ -4555,7 +4586,10 @@
                 recommendedTitle: 'Recomendados por el equipo de Tuende',
                 recommendedSub: 'El motivo de cada elección está en su tarjeta.',
                 why: 'Por qué:',
+                cardEventOn: 'Evento en curso',
+                cardEventNext: 'Evento el {date}',
                 categoriesTitle: 'Explorar por categoría',
+                moreCategoriesTitle: 'Más categorías',
                 collectionsTitle: 'Colecciones',
                 collectionsSub: 'Listas ya hechas para decidir más rápido.',
                 dayTripsTitle: 'Excursiones de un día desde Luanda',
@@ -7505,6 +7539,10 @@
 
         // Small linking words ("de", "das", "às"...) are skipped, so "Casa das Artes" gives "CA", not "CD".
         const INITIALS_SKIP = new Set(['a', 'o', 'as', 'os', 'à', 'às', 'ao', 'aos', 'da', 'das', 'de', 'do', 'dos', 'e', 'em', 'na', 'nas', 'no', 'nos']);
+        // Placeholder colour group: as the map pins, with health and the practical categories on a light background.
+        const phGroup = (v) => (v.type === 'health' ? 'light' : PIN_GROUP[v.type] || 'light');
+        const placeholderHTML = (v) => `<span class="ph" aria-hidden="true">${icon(CATEGORY[v.type].icon)}<b>${escapeHTML(initials(v.name))}</b></span>`;
+
         function initials(name) {
             const words = name.split(/\s+/).filter((w) => /^[A-Za-zÀ-ÿ]/.test(w));
             const main = words.filter((w) => !INITIALS_SKIP.has(w.toLowerCase()));
@@ -7732,8 +7770,8 @@
         function heroHTML(v) {
             const photos = v.photos || [];
             const hero = `
-                <div class="modal-hero">
-                    <span>${escapeHTML(initials(v.name))}</span>
+                <div class="modal-hero" data-ph="${phGroup(v)}">
+                    ${placeholderHTML(v)}
                     ${thumbSrc(v) ? `<img id="heroImg" src="${escapeHTML(thumbSrc(v))}" alt="${escapeHTML(v.name)}"${focusAttr(photos[0])} crossorigin="anonymous" onerror="this.remove()">` : ''}
                     ${(!photos.length && v.image) || photos[0]?.illustrative ? `<span class="photo-badge" id="heroBadge">${t('illustrative')}</span>` : ''}
                 </div>`;
@@ -8003,8 +8041,8 @@
                 : `<p class="card-highlight">${escapeHTML(highlightOf(v))}</p>`;
             return `
                 <article class="card">
-                    <button class="card-media" type="button" data-open="${v.id}" aria-label="${t('viewPlace')}: ${escapeHTML(v.name)}">
-                        <span aria-hidden="true">${escapeHTML(initials(v.name))}</span>
+                    <button class="card-media" type="button" data-open="${v.id}" data-ph="${phGroup(v)}" aria-label="${t('viewPlace')}: ${escapeHTML(v.name)}">
+                        ${placeholderHTML(v)}
                         ${thumbSrc(v) ? `<img src="${escapeHTML(thumbSrc(v))}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}
                         ${saved ? `<span class="saved-tag">${icon('heart')}${t('saved')}</span>` : ''}
                     </button>
@@ -8016,6 +8054,7 @@
                             <span class="price-pill${!v.price ? ' tbc' : v.price.free ? ' free' : ''}">${escapeHTML(priceText(v))}</span>
                             ${options.fromLuanda ? `<span>${t('fromLuanda', { d: formatKm(kmBetween(LUANDA_CENTRE, v)) })}</span>` : dist ? `<span>${dist}</span>` : ''}
                             ${statusHTML(v)}
+                            ${eventPillHTML(v)}
                         </div>
                         ${highlight}
                         <div class="card-actions">
@@ -8025,6 +8064,19 @@
                     </div>
                 </article>
             `;
+        }
+
+        // A place with an event on now, or starting within 30 days, says so on its card.
+        function eventPillHTML(v) {
+            const next = eventsByPlace().get(v.id)?.[0];
+            if (!next) return '';
+            const today = luandaToday();
+            const soon = toISO(new Date(Date.now() + 31 * 24 * 60 * 60 * 1000));
+            if (next.start > soon) return '';
+            const text = next.start <= today
+                ? t('cardEventOn')
+                : t('cardEventNext', { date: new Date(`${next.start}T12:00:00`).toLocaleDateString(locale(), { day: 'numeric', month: 'short' }) });
+            return `<span class="event-pill">${icon('calendar')}${escapeHTML(text)}</span>`;
         }
 
         function rowHTML(list, options) {
@@ -8060,8 +8112,8 @@
             `;
         }
 
-        function categoryTilesHTML() {
-            return `<div class="tile-grid">${Object.entries(CATEGORY).map(([key, c]) => {
+        function categoryTilesHTML(skip = []) {
+            return `<div class="tile-grid">${Object.entries(CATEGORY).filter(([key]) => !skip.includes(key)).map(([key, c]) => {
                 // Exchange bureaus give way to the rates page, which links to them.
                 if (key === 'services') return `<button class="tile" type="button" data-action="fx">${icon(c.icon)}<span class="tile-label">${t('fxTile')}</span><span class="tile-count" id="fxTileRate">${fxTileText()}</span></button>`;
                 const count = venues.filter((v) => v.type === key).length;
@@ -8135,7 +8187,7 @@
                     <div><h2 id="wondersCtaTitle">${t('wondersCtaTitle')}</h2><p>${t('wondersCtaText')}</p></div>
                     <button class="submit-btn" type="button" data-action="wonders">${icon('camera')}${t('wondersOpen')}</button>
                 </section>`);
-            parts.push(sectionHTML('secCategories', t('categoriesTitle'), '', categoryTilesHTML())
+            parts.push(sectionHTML('secCategories', t('moreCategoriesTitle'), '', categoryTilesHTML(['beach', 'nature', 'culture', 'restaurant']))
                 .replace('<h2 id="secCategories">', `<button class="link-btn section-map" type="button" data-action="map">${icon('pin')}${t('mapSeeOnMap')}</button><h2 id="secCategories">`));
 
             const collections = Object.entries(COLLECTIONS).map(([key, c]) => {
@@ -8152,7 +8204,7 @@
             parts.push(sectionHTML('secRoutes', t('routesTitle'), t('routesHomeSub'), routesHomeHTML()));
 
             const dayTrips = venues
-                .filter((v) => v.exact && kmBetween(LUANDA_CENTRE, v) >= 25 && kmBetween(LUANDA_CENTRE, v) <= 160)
+                .filter((v) => v.exact && ['beach', 'nature', 'culture', 'museum', 'plaza'].includes(v.type) && kmBetween(LUANDA_CENTRE, v) >= 25 && kmBetween(LUANDA_CENTRE, v) <= 160)
                 .sort((a, b) => kmBetween(LUANDA_CENTRE, a) - kmBetween(LUANDA_CENTRE, b));
             if (dayTrips.length) parts.push(sectionHTML('secDayTrips', t('dayTripsTitle'), t('dayTripsSub'), rowHTML(dayTrips, { fromLuanda: true })));
 
@@ -8720,8 +8772,8 @@
             const drone = [spot.zone ? t(`droneZone_${spot.zone}`) : '', near].filter(Boolean);
             return `
                 <li class="route-stop" id="maravilha-local-${v.id}">
-                    <button class="route-thumb" type="button" data-open="${v.id}" aria-label="${t('viewPlace')}: ${escapeHTML(v.name)}">
-                        <span aria-hidden="true">${escapeHTML(initials(v.name))}</span>
+                    <button class="route-thumb" type="button" data-open="${v.id}" data-ph="${phGroup(v)}" aria-label="${t('viewPlace')}: ${escapeHTML(v.name)}">
+                        ${placeholderHTML(v)}
                         ${thumbSrc(v) ? `<img src="${escapeHTML(thumbSrc(v))}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}
                     </button>
                     <div>
@@ -9394,8 +9446,8 @@
             const km = before?.exact && v.exact ? Math.round(kmBetween(before, v)) : null;
             return `
                 <li class="route-stop">
-                    <button class="route-thumb" type="button" data-open="${v.id}" aria-label="${t('viewPlace')}: ${escapeHTML(v.name)}">
-                        <span aria-hidden="true">${escapeHTML(initials(v.name))}</span>
+                    <button class="route-thumb" type="button" data-open="${v.id}" data-ph="${phGroup(v)}" aria-label="${t('viewPlace')}: ${escapeHTML(v.name)}">
+                        ${placeholderHTML(v)}
                         ${thumbSrc(v) ? `<img src="${escapeHTML(thumbSrc(v))}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}
                     </button>
                     <div>
