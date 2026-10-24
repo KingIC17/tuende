@@ -1330,6 +1330,81 @@
         @media (prefers-reduced-motion: reduce) {
             .kamba-btn .kamba-face, .kamba-panel, .kamba-panel.closing, .kamba-teaser, .kamba-typing span { animation: none; }
         }
+        /* Passport, quiz and rhythms */
+        .play-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+        .play-card { border-style: solid; background: linear-gradient(135deg, var(--primary-soft), transparent 70%), var(--surface); }
+        .play-card .icon { width: 30px; height: 30px; }
+        .stamp-note { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: -4px 0 4px; padding: 10px 12px; border-radius: 12px; background: var(--free-bg); color: var(--free-ink); font-weight: 600; font-size: 14px; }
+        .stamp-note[hidden] { display: none; }
+        .stamp-note .link-btn { font-size: 14px; }
+        .badge-new { display: inline-flex; align-items: center; gap: 6px; width: 100%; }
+        .badge-new .icon { width: 18px; height: 18px; }
+        .passport-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 16px 0 12px; }
+        .passport-stat { padding: 14px; border-radius: 14px; background: var(--surface-2); }
+        .passport-stat b { display: block; font-size: 30px; line-height: 1.1; color: var(--primary); }
+        .passport-stat span { font-size: 14px; color: var(--muted); font-weight: 600; }
+        .passport-empty { display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 12px; border: 1.5px dashed var(--border); color: var(--muted); }
+        .passport-empty .icon { width: 26px; height: 26px; flex: none; color: var(--primary); }
+        .passport-actions { margin: 12px 0 4px; }
+        .passport-clear { margin-top: 24px; text-align: center; }
+        .stamp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 12px; }
+        .stamp { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 12px; border: 1.5px dashed var(--border); border-radius: 14px; background: var(--surface); text-align: left; }
+        .stamp .icon { width: 18px; height: 18px; color: var(--muted); }
+        .stamp b { font-size: 15px; line-height: 1.25; }
+        .stamp span { font-size: 13px; color: var(--muted); }
+        .stamp.on { border-style: solid; border-color: var(--primary); background: var(--primary-soft); }
+        .stamp.on .icon { color: var(--primary); }
+        .stamp:hover { border-color: var(--primary); }
+        .badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; margin-top: 12px; }
+        .badge { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border-radius: 14px; border: 1.5px solid var(--border); background: var(--surface); }
+        .badge > .icon { width: 30px; height: 30px; flex: none; padding: 5px; border-radius: 50%; background: var(--surface-2); color: var(--muted); }
+        .badge > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+        .badge b { font-size: 15px; }
+        .badge span, .badge small { font-size: 13px; color: var(--muted); }
+        .badge.on { border-color: var(--accent); }
+        .badge.on > .icon { background: var(--accent); color: var(--accent-ink); }
+        .bar { display: block; height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; margin-top: 4px; }
+        .bar i { display: block; height: 100%; background: var(--primary-fill); border-radius: 6px; }
+        .badge.on .bar i { background: var(--ok); }
+        .quiz-card { margin-top: 16px; padding: 18px; border-radius: 16px; border: 1.5px solid var(--border); background: var(--surface); box-shadow: var(--shadow); }
+        .quiz-start { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+        .quiz-top { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; font-weight: 700; color: var(--muted); }
+        .quiz-bar { margin: 8px 0 14px; }
+        .quiz-photo { margin: 0 0 12px; }
+        .quiz-photo img { display: block; width: 100%; max-height: 340px; object-fit: cover; border-radius: 12px; background: var(--surface-2); }
+        .quiz-photo figcaption { margin-top: 4px; font-size: 12px; color: var(--muted); }
+        .quiz-question { font-size: 21px; line-height: 1.3; margin: 0; }
+        .quiz-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+        .quiz-option { padding: 14px; border-radius: 12px; border: 1.5px solid var(--border); background: var(--surface); text-align: left; font-weight: 700; font-size: 16px; color: var(--text); }
+        .quiz-option:hover:not(:disabled) { border-color: var(--primary); }
+        .quiz-option:disabled { cursor: default; }
+        .quiz-option.right { border-color: var(--ok); background: var(--free-bg); color: var(--free-ink); }
+        .quiz-option.wrong { border-color: var(--primary); background: var(--primary-soft); }
+        .quiz-feedback { margin-top: 14px; padding: 12px 14px; border-radius: 12px; background: var(--surface-2); }
+        .quiz-feedback.right b { color: var(--ok); }
+        .quiz-feedback.wrong b { color: var(--primary); }
+        .quiz-feedback + .cta-buttons { margin-top: 12px; }
+        .quiz-score { margin: 0; font-size: 44px; font-weight: 900; color: var(--primary); }
+        .quiz-level { margin: 4px 0 14px; font-size: 17px; font-weight: 600; }
+        .rhythm-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+        .rhythm-card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px; border-radius: 16px; border: 1.5px solid var(--border); background: var(--surface); }
+        .rhythm-card h3 { margin: 0; font-size: 21px; }
+        .rhythm-card p { margin: 0; font-size: 14px; }
+        .rhythm-card .rhythm-note { padding: 8px 10px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 13px; }
+        .rhythm-card .submit-btn { margin-top: auto; }
+        .rhythm-sources { font-size: 12px !important; color: var(--muted); }
+        :is(#passportView, #quizView, .rhythm-card, .map-off) .submit-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        :is(#passportView, #quizView, .rhythm-card, .map-off) .submit-btn .icon { width: 18px; height: 18px; flex: none; }
+        :is(#passportView, #quizView) .cta-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+        .event-badge.soon { background: var(--accent); color: var(--accent-ink); }
+        .map-frame.map-off { display: flex; align-items: center; justify-content: center; background: var(--surface-2); }
+        @media (max-width: 860px) { .rhythm-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 560px) {
+            .play-grid { grid-template-columns: 1fr; }
+            .quiz-options { grid-template-columns: 1fr; }
+            .passport-stat b { font-size: 24px; }
+            .stamp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
     </style>
 </head>
 <body>
@@ -1497,6 +1572,10 @@
                     <span class="field-label" id="eventsTypeLabel" data-i18n="eventsType">Tipo de evento</span>
                     <div class="chips" id="eventsType" role="group" aria-labelledby="eventsTypeLabel"></div>
                 </div>
+                <div id="eventsRhythmWrap">
+                    <span class="field-label" id="eventsRhythmLabel" data-i18n="eventsRhythm">Ritmo</span>
+                    <div class="chips" id="eventsRhythm" role="group" aria-labelledby="eventsRhythmLabel"></div>
+                </div>
                 <label id="eventsWhereWrap">
                     <span class="field-label" data-i18n="whereLabel">Onde?</span>
                     <select class="field" id="eventsWhere"></select>
@@ -1559,6 +1638,20 @@
             <p class="hint" id="fxStatus" aria-live="polite"></p>
             <div id="fxBody"></div>
         </section>
+
+        <section id="passportView" class="guide-page" hidden aria-labelledby="passportTitle">
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <h1 class="rec-title" id="passportTitle" data-i18n="passportTitle">O meu passaporte</h1>
+            <p class="rec-intro" data-i18n="passportIntro">Marque os lugares onde já esteve e ganhe um carimbo por cada uma das 21 províncias de Angola. Fica guardado neste dispositivo.</p>
+            <div id="passportBody"></div>
+        </section>
+
+        <section id="quizView" class="guide-page" hidden aria-labelledby="quizTitle">
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <h1 class="rec-title" id="quizTitle" data-i18n="quizTitle">Quanto conhece Angola?</h1>
+            <p class="rec-intro" data-i18n="quizIntro">10 perguntas feitas com os lugares verificados do Tuende: províncias, fotos, as 7 Maravilhas e o câmbio do dia. No fim, desafie os amigos.</p>
+            <div id="quizBody" aria-live="polite"></div>
+        </section>
     </main>
 
     <footer class="site-footer">
@@ -1571,6 +1664,9 @@
                 <button type="button" class="footer-link" data-action="routes" data-i18n="routesTitle">Roteiros</button>
                 <button type="button" class="footer-link" data-action="plan" data-i18n="planTitle">Os meus planos</button>
                 <button type="button" class="footer-link" data-action="wonders" data-i18n="wondersTitle">Maravilhas de Angola</button>
+                <button type="button" class="footer-link" data-action="passport" data-i18n="passportTitle">O meu passaporte</button>
+                <button type="button" class="footer-link" data-action="quiz" data-i18n="quizTitle">Quanto conhece Angola?</button>
+                <button type="button" class="footer-link" id="footerSaveData" data-action="save-data" aria-pressed="false"></button>
                 <button type="button" class="footer-link" data-action="map" data-i18n="mapTitle">Mapa dos lugares</button>
                 <button type="button" class="footer-link" data-info="about" data-i18n="footerAbout">Sobre o Tuende</button>
                 <button type="button" class="footer-link" data-info="verify" data-i18n="footerVerify">Como verificamos os lugares</button>
@@ -2841,6 +2937,94 @@
                 emptyFilter: 'Não encontrámos lugares para esta pesquisa.',
                 cheapNote: 'Só lugares com preço conhecido, do mais barato para o mais caro',
                 cheapNone: 'Ainda não temos preços para estes lugares',
+                passportTitle: 'O meu passaporte',
+                passportIntro: 'Marque os lugares onde já esteve e ganhe um carimbo por cada uma das 21 províncias de Angola. Fica guardado neste dispositivo.',
+                beenHere: 'Já fui',
+                beenHereDone: 'Carimbado',
+                stampNote: 'No seu passaporte: {places}, em {provinces} de {total} províncias.',
+                badgeNew: 'Nova conquista: {name}!',
+                passportOpen: 'Ver passaporte',
+                passportPlaces: 'Lugares',
+                passportProvinces: 'Províncias',
+                passportBadges: 'Conquistas',
+                passportStampsTitle: 'Carimbos das 21 províncias',
+                passportStampsSub: 'Toque numa província para ver os lugares do Tuende lá.',
+                provinceCount: '{k} de {n}',
+                passportBadgesTitle: 'Conquistas',
+                passportBeen: 'Onde já foi',
+                passportNext: 'Próximo carimbo',
+                passportNextSub: 'Um lugar em cada província que ainda não carimbou.',
+                passportEmpty: 'Ainda sem carimbos. Abra um lugar onde já esteve e toque em «Já fui».',
+                passportShare: 'Partilhar o meu passaporte',
+                passportShareText: 'Já fui a {places} em {provinces} das 21 províncias de Angola. E tu?',
+                passportClear: 'Apagar os carimbos',
+                passportClearAsk: 'Apagar todos os carimbos deste dispositivo?',
+                passportCardDesc: 'Marque onde já esteve e ganhe carimbos das 21 províncias.',
+                passportCardProgress: '{provinces} de 21 províncias carimbadas. Continue!',
+                badgeFirst: 'Primeiro carimbo',
+                badgeFirstDesc: 'O primeiro lugar no passaporte',
+                badgeBeach: 'Sol e mar',
+                badgeBeachDesc: '5 praias',
+                badgeNature: 'Natureza viva',
+                badgeNatureDesc: '5 lugares de natureza',
+                badgeCulture: 'Cultura e história',
+                badgeCultureDesc: '5 monumentos, museus ou praças',
+                badgeFood: 'Bom garfo',
+                badgeFoodDesc: '5 restaurantes',
+                badgeNight: 'Noite angolana',
+                badgeNightDesc: '3 bares ou discotecas',
+                badgeWonders: 'As 7 Maravilhas',
+                badgeWondersDesc: 'As 7 Maravilhas Naturais de Angola',
+                badgeProv5: 'Em viagem',
+                badgeProv5Desc: '5 províncias',
+                badgeProv11: 'Meia Angola',
+                badgeProv11Desc: '11 províncias',
+                badgeProv21: 'De Cabinda ao Cunene',
+                badgeProv21Desc: 'As 21 províncias',
+                playTitle: 'Jogue e explore',
+                quizTitle: 'Quanto conhece Angola?',
+                quizIntro: '10 perguntas feitas com os lugares verificados do Tuende: províncias, fotos, as 7 Maravilhas e o câmbio do dia. No fim, desafie os amigos.',
+                quizCardDesc: '10 perguntas sobre províncias, fotos e as 7 Maravilhas.',
+                quizStart: 'Começar',
+                quizBest: 'O seu melhor resultado: {n} de 10',
+                quizProgress: 'Pergunta {i} de {n}',
+                quizScore: '{n} certas',
+                quizWhereIs: 'Em que província fica {name}?',
+                quizWhichPlace: 'Que lugar é este?',
+                quizWhichWonder: 'Qual destes lugares é uma das 7 Maravilhas Naturais de Angola?',
+                quizFx: 'Pela taxa de referência do BNA de {date}, quanto vale 1 dólar americano?',
+                quizRight: 'Certo!',
+                quizWrong: 'Não é bem assim.',
+                quizAnswerProvince: '{name} fica na província de {province}.',
+                quizAnswerPlace: 'É {name}, em {location}.',
+                quizAnswerWonder: '{name} é uma das 7 Maravilhas Naturais de Angola.',
+                quizAnswerFx: '1 USD = {rate} Kz (taxa do BNA de {date}).',
+                quizNext: 'Seguinte',
+                quizSeeResult: 'Ver resultado',
+                quizResult: '{n} de 10',
+                quizLevel0: 'Angola ainda tem muito para lhe mostrar. Jogue outra vez ou explore os lugares abaixo.',
+                quizLevel1: 'Bom começo! Já conhece um bom bocado de Angola.',
+                quizLevel2: 'Muito bem! Conhece Angola de norte a sul.',
+                quizLevel3: 'Perfeito! Conhece Angola de Cabinda ao Cunene.',
+                quizShare: 'Desafiar amigos',
+                quizShareText: 'Acertei {n} de 10 no quiz «Quanto conhece Angola?» do Tuende. Consegues fazer melhor?',
+                quizAgain: 'Jogar outra vez',
+                quizExplore: 'Os lugares deste quiz',
+                rhythmsTitle: 'Ritmos de Angola',
+                rhythmsSub: 'Os estilos que nasceram aqui e onde os ouvir ao vivo.',
+                rhythmSembaText: 'Música e dança de Angola, popular desde os anos 1950 e antecessora direta da kizomba. O nome vem de masemba, a umbigada em kimbundu. É património cultural imaterial nacional desde 2023.',
+                rhythmSembaUnesco: 'A UNESCO analisa a candidatura do semba a Património Cultural Imaterial da Humanidade entre 30 de novembro e 5 de dezembro de 2026.',
+                rhythmKizombaText: 'Nasceu em Angola entre o fim dos anos 1970 e os anos 80, ao abrandar o semba e juntar-lhe o zouk das Antilhas. Kizomba quer dizer «festa» em kimbundu; Eduardo Paim é conhecido como o seu pai.',
+                rhythmKuduroText: 'Batida eletrónica rápida nascida em Luanda no fim dos anos 1980. Tony Amado diz que criou a dança inspirado em Van Damme no filme Kickboxer (1989). Hoje dança-se de Luanda a Lisboa.',
+                rhythmSee: 'Na agenda: {count}',
+                rhythmNone: 'Sem eventos na agenda por agora',
+                rhythmSources: 'Fontes',
+                eventsRhythm: 'Ritmo',
+                eventInDays: 'Faltam {n} dias',
+                saveDataOn: 'Poupar dados: ligado',
+                saveDataOff: 'Poupar dados: desligado',
+                saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
+                mapLoad: 'Mostrar mapa',
                 emptySaved: 'Ainda não guardou nenhum lugar. Abra um lugar e toque em Guardar.',
                 emptyTry: 'Experimente uma categoria ou uma das sugestões abaixo.',
                 clearSearch: 'Limpar pesquisa',
@@ -3434,6 +3618,94 @@
                 emptyFilter: 'We found no places for this search.',
                 cheapNote: 'Only places with a known price, cheapest first',
                 cheapNone: 'We don\'t have prices for these places yet',
+                passportTitle: 'My passport',
+                passportIntro: 'Mark the places you have been to and collect a stamp for each of Angola\'s 21 provinces. It is saved on this device.',
+                beenHere: 'Been here',
+                beenHereDone: 'Stamped',
+                stampNote: 'In your passport: {places} in {provinces} of {total} provinces.',
+                badgeNew: 'New badge: {name}!',
+                passportOpen: 'See passport',
+                passportPlaces: 'Places',
+                passportProvinces: 'Provinces',
+                passportBadges: 'Badges',
+                passportStampsTitle: 'Stamps from the 21 provinces',
+                passportStampsSub: 'Tap a province to see its places on Tuende.',
+                provinceCount: '{k} of {n}',
+                passportBadgesTitle: 'Badges',
+                passportBeen: 'Where you have been',
+                passportNext: 'Next stamp',
+                passportNextSub: 'One place in each province you have not stamped yet.',
+                passportEmpty: 'No stamps yet. Open a place you have been to and tap "Been here".',
+                passportShare: 'Share my passport',
+                passportShareText: 'I have been to {places} in {provinces} of Angola\'s 21 provinces. How about you?',
+                passportClear: 'Clear the stamps',
+                passportClearAsk: 'Clear all the stamps on this device?',
+                passportCardDesc: 'Mark where you have been and collect stamps from the 21 provinces.',
+                passportCardProgress: '{provinces} of 21 provinces stamped. Keep going!',
+                badgeFirst: 'First stamp',
+                badgeFirstDesc: 'The first place in your passport',
+                badgeBeach: 'Sun and sea',
+                badgeBeachDesc: '5 beaches',
+                badgeNature: 'Wild Angola',
+                badgeNatureDesc: '5 nature spots',
+                badgeCulture: 'Culture and history',
+                badgeCultureDesc: '5 landmarks, museums or squares',
+                badgeFood: 'Foodie',
+                badgeFoodDesc: '5 restaurants',
+                badgeNight: 'Angolan nights',
+                badgeNightDesc: '3 bars or clubs',
+                badgeWonders: 'The 7 Wonders',
+                badgeWondersDesc: 'The 7 Natural Wonders of Angola',
+                badgeProv5: 'On the road',
+                badgeProv5Desc: '5 provinces',
+                badgeProv11: 'Half of Angola',
+                badgeProv11Desc: '11 provinces',
+                badgeProv21: 'From Cabinda to Cunene',
+                badgeProv21Desc: 'All 21 provinces',
+                playTitle: 'Play and explore',
+                quizTitle: 'How well do you know Angola?',
+                quizIntro: '10 questions built from Tuende\'s verified places: provinces, photos, the 7 Wonders and today\'s exchange rate. At the end, challenge your friends.',
+                quizCardDesc: '10 questions on provinces, photos and the 7 Wonders.',
+                quizStart: 'Start',
+                quizBest: 'Your best score: {n} out of 10',
+                quizProgress: 'Question {i} of {n}',
+                quizScore: '{n} right',
+                quizWhereIs: 'Which province is {name} in?',
+                quizWhichPlace: 'Which place is this?',
+                quizWhichWonder: 'Which of these places is one of the 7 Natural Wonders of Angola?',
+                quizFx: 'At the BNA reference rate of {date}, how much is 1 US dollar worth?',
+                quizRight: 'Right!',
+                quizWrong: 'Not quite.',
+                quizAnswerProvince: '{name} is in {province} province.',
+                quizAnswerPlace: 'It is {name}, in {location}.',
+                quizAnswerWonder: '{name} is one of the 7 Natural Wonders of Angola.',
+                quizAnswerFx: '1 USD = {rate} Kz (BNA rate of {date}).',
+                quizNext: 'Next',
+                quizSeeResult: 'See result',
+                quizResult: '{n} out of 10',
+                quizLevel0: 'Angola still has a lot to show you. Play again or explore the places below.',
+                quizLevel1: 'Good start! You already know a fair bit of Angola.',
+                quizLevel2: 'Great! You know Angola from north to south.',
+                quizLevel3: 'Perfect! You know Angola from Cabinda to Cunene.',
+                quizShare: 'Challenge friends',
+                quizShareText: 'I got {n} out of 10 in Tuende\'s "How well do you know Angola?" quiz. Can you beat it?',
+                quizAgain: 'Play again',
+                quizExplore: 'The places in this quiz',
+                rhythmsTitle: 'Rhythms of Angola',
+                rhythmsSub: 'The styles born here and where to hear them live.',
+                rhythmSembaText: 'Angolan music and dance, popular since the 1950s and the direct forerunner of kizomba. The name comes from masemba, the navel bump in Kimbundu. It has been national intangible cultural heritage since 2023.',
+                rhythmSembaUnesco: 'UNESCO examines the bid to list semba as Intangible Cultural Heritage of Humanity from 30 November to 5 December 2026.',
+                rhythmKizombaText: 'Born in Angola between the late 1970s and the 1980s, by slowing semba down and mixing in Antillean zouk. Kizomba means "party" in Kimbundu; Eduardo Paim is known as its father.',
+                rhythmKuduroText: 'Fast electronic beat born in Luanda in the late 1980s. Tony Amado says he created the dance inspired by Van Damme in the film Kickboxer (1989). Today it is danced from Luanda to Lisbon.',
+                rhythmSee: 'On the agenda: {count}',
+                rhythmNone: 'No events on the agenda for now',
+                rhythmSources: 'Sources',
+                eventsRhythm: 'Music style',
+                eventInDays: 'In {n} days',
+                saveDataOn: 'Data saver: on',
+                saveDataOff: 'Data saver: off',
+                saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
+                mapLoad: 'Show map',
                 emptySaved: 'You have not saved any places yet. Open a place and tap Save.',
                 emptyTry: 'Try a category or one of the suggestions below.',
                 clearSearch: 'Clear search',
@@ -4027,6 +4299,94 @@
                 emptyFilter: 'Aucun lieu trouvé pour cette recherche.',
                 cheapNote: 'Seulement les lieux au prix connu, du moins cher au plus cher',
                 cheapNone: 'Nous n\'avons pas encore les prix de ces lieux',
+                passportTitle: 'Mon passeport',
+                passportIntro: 'Marquez les lieux déjà visités et gagnez un tampon pour chacune des 21 provinces de l\'Angola. C\'est enregistré sur cet appareil.',
+                beenHere: 'Déjà visité',
+                beenHereDone: 'Tamponné',
+                stampNote: 'Dans votre passeport : {places} dans {provinces} des {total} provinces.',
+                badgeNew: 'Nouveau badge : {name} !',
+                passportOpen: 'Voir le passeport',
+                passportPlaces: 'Lieux',
+                passportProvinces: 'Provinces',
+                passportBadges: 'Badges',
+                passportStampsTitle: 'Les tampons des 21 provinces',
+                passportStampsSub: 'Touchez une province pour voir ses lieux sur Tuende.',
+                provinceCount: '{k} sur {n}',
+                passportBadgesTitle: 'Badges',
+                passportBeen: 'Lieux visités',
+                passportNext: 'Prochain tampon',
+                passportNextSub: 'Un lieu dans chaque province pas encore tamponnée.',
+                passportEmpty: 'Pas encore de tampon. Ouvrez un lieu déjà visité et touchez « Déjà visité ».',
+                passportShare: 'Partager mon passeport',
+                passportShareText: 'J\'ai visité {places} dans {provinces} des 21 provinces de l\'Angola. Et toi ?',
+                passportClear: 'Effacer les tampons',
+                passportClearAsk: 'Effacer tous les tampons de cet appareil ?',
+                passportCardDesc: 'Marquez vos visites et gagnez les tampons des 21 provinces.',
+                passportCardProgress: '{provinces} provinces sur 21 tamponnées. Continuez !',
+                badgeFirst: 'Premier tampon',
+                badgeFirstDesc: 'Le premier lieu du passeport',
+                badgeBeach: 'Soleil et mer',
+                badgeBeachDesc: '5 plages',
+                badgeNature: 'Nature sauvage',
+                badgeNatureDesc: '5 sites naturels',
+                badgeCulture: 'Culture et histoire',
+                badgeCultureDesc: '5 monuments, musées ou places',
+                badgeFood: 'Bonne fourchette',
+                badgeFoodDesc: '5 restaurants',
+                badgeNight: 'Nuits angolaises',
+                badgeNightDesc: '3 bars ou boîtes',
+                badgeWonders: 'Les 7 Merveilles',
+                badgeWondersDesc: 'Les 7 Merveilles naturelles de l\'Angola',
+                badgeProv5: 'En route',
+                badgeProv5Desc: '5 provinces',
+                badgeProv11: 'La moitié de l\'Angola',
+                badgeProv11Desc: '11 provinces',
+                badgeProv21: 'De Cabinda au Cunene',
+                badgeProv21Desc: 'Les 21 provinces',
+                playTitle: 'Jouez et explorez',
+                quizTitle: 'Connaissez-vous bien l\'Angola ?',
+                quizIntro: '10 questions tirées des lieux vérifiés de Tuende : provinces, photos, les 7 Merveilles et le change du jour. À la fin, défiez vos amis.',
+                quizCardDesc: '10 questions sur les provinces, les photos et les 7 Merveilles.',
+                quizStart: 'Commencer',
+                quizBest: 'Votre meilleur score : {n} sur 10',
+                quizProgress: 'Question {i} sur {n}',
+                quizScore: '{n} bonnes réponses',
+                quizWhereIs: 'Dans quelle province se trouve {name} ?',
+                quizWhichPlace: 'Quel est ce lieu ?',
+                quizWhichWonder: 'Lequel de ces lieux est l\'une des 7 Merveilles naturelles de l\'Angola ?',
+                quizFx: 'Au taux de référence de la BNA du {date}, combien vaut 1 dollar américain ?',
+                quizRight: 'Bonne réponse !',
+                quizWrong: 'Pas tout à fait.',
+                quizAnswerProvince: '{name} se trouve dans la province de {province}.',
+                quizAnswerPlace: 'C\'est {name}, à {location}.',
+                quizAnswerWonder: '{name} est l\'une des 7 Merveilles naturelles de l\'Angola.',
+                quizAnswerFx: '1 USD = {rate} Kz (taux de la BNA du {date}).',
+                quizNext: 'Suivante',
+                quizSeeResult: 'Voir le résultat',
+                quizResult: '{n} sur 10',
+                quizLevel0: 'L\'Angola a encore beaucoup à vous montrer. Rejouez ou explorez les lieux ci-dessous.',
+                quizLevel1: 'Bon début ! Vous connaissez déjà pas mal l\'Angola.',
+                quizLevel2: 'Très bien ! Vous connaissez l\'Angola du nord au sud.',
+                quizLevel3: 'Parfait ! Vous connaissez l\'Angola de Cabinda au Cunene.',
+                quizShare: 'Défier des amis',
+                quizShareText: 'J\'ai eu {n} sur 10 au quiz « Connaissez-vous bien l\'Angola ? » de Tuende. Tu fais mieux ?',
+                quizAgain: 'Rejouer',
+                quizExplore: 'Les lieux de ce quiz',
+                rhythmsTitle: 'Rythmes de l\'Angola',
+                rhythmsSub: 'Les styles nés ici et où les écouter en live.',
+                rhythmSembaText: 'Musique et danse d\'Angola, populaire depuis les années 1950 et ancêtre directe de la kizomba. Le nom vient de masemba, le « coup de nombril » en kimbundu. Patrimoine culturel immatériel national depuis 2023.',
+                rhythmSembaUnesco: 'L\'UNESCO examine la candidature du semba au patrimoine culturel immatériel de l\'humanité du 30 novembre au 5 décembre 2026.',
+                rhythmKizombaText: 'Née en Angola entre la fin des années 1970 et les années 80, en ralentissant le semba et en y mêlant le zouk antillais. Kizomba veut dire « fête » en kimbundu ; Eduardo Paim en est considéré comme le père.',
+                rhythmKuduroText: 'Rythme électronique rapide né à Luanda à la fin des années 1980. Tony Amado dit avoir créé la danse en s\'inspirant de Van Damme dans le film Kickboxer (1989). Aujourd\'hui, on le danse de Luanda à Lisbonne.',
+                rhythmSee: 'À l\'agenda : {count}',
+                rhythmNone: 'Pas d\'événement à l\'agenda pour l\'instant',
+                rhythmSources: 'Sources',
+                eventsRhythm: 'Style de musique',
+                eventInDays: 'Dans {n} jours',
+                saveDataOn: 'Économie de données : activée',
+                saveDataOff: 'Économie de données : désactivée',
+                saveDataNote: 'Pas de photos dans les listes ni de cartes automatiques, pour consommer moins de données mobiles.',
+                mapLoad: 'Afficher la carte',
                 emptySaved: 'Vous n\'avez encore enregistré aucun lieu. Ouvrez un lieu et touchez Enregistrer.',
                 emptyTry: 'Essayez une catégorie ou l\'une des suggestions ci-dessous.',
                 clearSearch: 'Effacer la recherche',
@@ -4620,6 +4980,94 @@
                 emptyFilter: 'No encontramos lugares para esta búsqueda.',
                 cheapNote: 'Solo lugares con precio conocido, del más barato al más caro',
                 cheapNone: 'Aún no tenemos precios para estos lugares',
+                passportTitle: 'Mi pasaporte',
+                passportIntro: 'Marque los lugares donde ya estuvo y gane un sello por cada una de las 21 provincias de Angola. Se guarda en este dispositivo.',
+                beenHere: 'Ya fui',
+                beenHereDone: 'Sellado',
+                stampNote: 'En su pasaporte: {places} en {provinces} de {total} provincias.',
+                badgeNew: '¡Nuevo logro: {name}!',
+                passportOpen: 'Ver pasaporte',
+                passportPlaces: 'Lugares',
+                passportProvinces: 'Provincias',
+                passportBadges: 'Logros',
+                passportStampsTitle: 'Sellos de las 21 provincias',
+                passportStampsSub: 'Toque una provincia para ver sus lugares en Tuende.',
+                provinceCount: '{k} de {n}',
+                passportBadgesTitle: 'Logros',
+                passportBeen: 'Donde ya estuvo',
+                passportNext: 'Próximo sello',
+                passportNextSub: 'Un lugar en cada provincia que aún no selló.',
+                passportEmpty: 'Aún no hay sellos. Abra un lugar donde ya estuvo y toque «Ya fui».',
+                passportShare: 'Compartir mi pasaporte',
+                passportShareText: 'Ya visité {places} en {provinces} de las 21 provincias de Angola. ¿Y tú?',
+                passportClear: 'Borrar los sellos',
+                passportClearAsk: '¿Borrar todos los sellos de este dispositivo?',
+                passportCardDesc: 'Marque dónde estuvo y gane los sellos de las 21 provincias.',
+                passportCardProgress: '{provinces} de 21 provincias selladas. ¡Siga!',
+                badgeFirst: 'Primer sello',
+                badgeFirstDesc: 'El primer lugar del pasaporte',
+                badgeBeach: 'Sol y mar',
+                badgeBeachDesc: '5 playas',
+                badgeNature: 'Naturaleza viva',
+                badgeNatureDesc: '5 lugares de naturaleza',
+                badgeCulture: 'Cultura e historia',
+                badgeCultureDesc: '5 monumentos, museos o plazas',
+                badgeFood: 'Buen diente',
+                badgeFoodDesc: '5 restaurantes',
+                badgeNight: 'Noches angoleñas',
+                badgeNightDesc: '3 bares o discotecas',
+                badgeWonders: 'Las 7 Maravillas',
+                badgeWondersDesc: 'Las 7 Maravillas Naturales de Angola',
+                badgeProv5: 'De viaje',
+                badgeProv5Desc: '5 provincias',
+                badgeProv11: 'Media Angola',
+                badgeProv11Desc: '11 provincias',
+                badgeProv21: 'De Cabinda a Cunene',
+                badgeProv21Desc: 'Las 21 provincias',
+                playTitle: 'Juegue y explore',
+                quizTitle: '¿Cuánto conoce Angola?',
+                quizIntro: '10 preguntas hechas con los lugares verificados de Tuende: provincias, fotos, las 7 Maravillas y el cambio del día. Al final, rete a sus amigos.',
+                quizCardDesc: '10 preguntas sobre provincias, fotos y las 7 Maravillas.',
+                quizStart: 'Empezar',
+                quizBest: 'Su mejor resultado: {n} de 10',
+                quizProgress: 'Pregunta {i} de {n}',
+                quizScore: '{n} aciertos',
+                quizWhereIs: '¿En qué provincia está {name}?',
+                quizWhichPlace: '¿Qué lugar es este?',
+                quizWhichWonder: '¿Cuál de estos lugares es una de las 7 Maravillas Naturales de Angola?',
+                quizFx: 'Según el tipo de referencia del BNA del {date}, ¿cuánto vale 1 dólar estadounidense?',
+                quizRight: '¡Correcto!',
+                quizWrong: 'No exactamente.',
+                quizAnswerProvince: '{name} está en la provincia de {province}.',
+                quizAnswerPlace: 'Es {name}, en {location}.',
+                quizAnswerWonder: '{name} es una de las 7 Maravillas Naturales de Angola.',
+                quizAnswerFx: '1 USD = {rate} Kz (tipo del BNA del {date}).',
+                quizNext: 'Siguiente',
+                quizSeeResult: 'Ver resultado',
+                quizResult: '{n} de 10',
+                quizLevel0: 'Angola aún tiene mucho que mostrarle. Juegue otra vez o explore los lugares de abajo.',
+                quizLevel1: '¡Buen comienzo! Ya conoce bastante de Angola.',
+                quizLevel2: '¡Muy bien! Conoce Angola de norte a sur.',
+                quizLevel3: '¡Perfecto! Conoce Angola de Cabinda a Cunene.',
+                quizShare: 'Retar a amigos',
+                quizShareText: 'Acerté {n} de 10 en el quiz «¿Cuánto conoce Angola?» de Tuende. ¿Puedes superarlo?',
+                quizAgain: 'Jugar otra vez',
+                quizExplore: 'Los lugares de este quiz',
+                rhythmsTitle: 'Ritmos de Angola',
+                rhythmsSub: 'Los estilos que nacieron aquí y dónde escucharlos en vivo.',
+                rhythmSembaText: 'Música y baile de Angola, popular desde los años 1950 y antecesora directa de la kizomba. El nombre viene de masemba, el golpe de ombligo en kimbundu. Es patrimonio cultural inmaterial nacional desde 2023.',
+                rhythmSembaUnesco: 'La UNESCO examina la candidatura del semba a Patrimonio Cultural Inmaterial de la Humanidad del 30 de noviembre al 5 de diciembre de 2026.',
+                rhythmKizombaText: 'Nació en Angola entre finales de los años 1970 y los 80, al ralentizar el semba y mezclarlo con el zouk de las Antillas. Kizomba significa «fiesta» en kimbundu; a Eduardo Paim se le conoce como su padre.',
+                rhythmKuduroText: 'Ritmo electrónico rápido nacido en Luanda a finales de los años 1980. Tony Amado dice que creó el baile inspirado en Van Damme en la película Kickboxer (1989). Hoy se baila de Luanda a Lisboa.',
+                rhythmSee: 'En la agenda: {count}',
+                rhythmNone: 'Sin eventos en la agenda por ahora',
+                rhythmSources: 'Fuentes',
+                eventsRhythm: 'Ritmo',
+                eventInDays: 'Faltan {n} días',
+                saveDataOn: 'Ahorro de datos: activado',
+                saveDataOff: 'Ahorro de datos: desactivado',
+                saveDataNote: 'Sin fotos en las listas ni mapas automáticos, para gastar menos datos móviles.',
+                mapLoad: 'Mostrar mapa',
                 emptySaved: 'Aún no ha guardado ningún lugar. Abra un lugar y toque Guardar.',
                 emptyTry: 'Pruebe una categoría o una de las sugerencias de abajo.',
                 clearSearch: 'Borrar la búsqueda',
@@ -6813,7 +7261,17 @@
         ];
 
         const WHEN_LABELS = { all: 'whenAll', today: 'whenToday', weekend: 'whenWeekend', week: 'whenWeek', nextweek: 'whenNextWeek', month: 'whenMonth', nextmonth: 'whenNextMonth' };
-        const DEFAULT_EVENT_FILTERS = { when: 'all', type: '', where: '' };
+        const DEFAULT_EVENT_FILTERS = { when: 'all', type: '', where: '', rhythm: '' };
+        // Music styles people look for, found in the event's title, tags and description.
+        const RHYTHMS = {
+            semba: { name: 'Semba', words: ['semba'] },
+            kizomba: { name: 'Kizomba', words: ['kizomba'] },
+            kuduro: { name: 'Kuduro', words: ['kuduro'] },
+            zouk: { name: 'Zouk', words: ['zouk'] },
+            house: { name: 'House', words: ['house music', 'afro house', 'afrohouse', 'amapiano'] },
+            jazz: { name: 'Jazz', words: ['jazz'] },
+            gospel: { name: 'Gospel', words: ['gospel'] }
+        };
 
         // Como ir de cidade em cidade: autocarro, avião, comboio, barco e carro, só com preços publicados (com fonte e data).
         // As distâncias de carro são estimativas do OpenStreetMap (OSRM), sem paragens. As páginas rotas/<id>.html saem daqui.
@@ -7273,6 +7731,7 @@
             download: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
             info: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
             passport: '<rect x="4" y="2" width="16" height="20" rx="2"/><circle cx="12" cy="10" r="3"/><line x1="8" y1="17" x2="16" y2="17"/>',
+            check: '<polyline points="20 6 9 17 4 12"/>',
             card: '<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/>',
             signal: '<line x1="4" y1="20" x2="4" y2="17"/><line x1="9" y1="20" x2="9" y2="13"/><line x1="14" y1="20" x2="14" y2="9"/><line x1="19" y1="20" x2="19" y2="4"/>',
             shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
@@ -7618,7 +8077,8 @@
             return edits + (a.length - i) + (b.length - j) <= 1;
         }
 
-        const tokenMatches = (word, list) => list.some((tk) => tk.startsWith(word) || (word.length >= 5 && withinOneEdit(word, tk)));
+        // Words of up to 3 letters must match a whole word, so "bar" finds bars but not "Barra do Cuanza".
+        const tokenMatches = (word, list) => list.some((tk) => (word.length <= 3 ? tk === word : tk.startsWith(word)) || (word.length >= 5 && withinOneEdit(word, tk)));
 
         let searchIndex = null;
         function index() {
@@ -7762,6 +8222,17 @@
         }
 
         const fullSrc = (photo) => asset(photo.url.replace('/1280px-', '/960px-'));
+
+        // Data saver: no photos in lists and no maps until asked for. Follows the browser's "save data" setting until the
+        // visitor chooses (footer button), because mobile data in Angola is expensive.
+        let saveData = store.get('tuendeSaveData', null);
+        const saveDataOn = () => (typeof saveData === 'boolean' ? saveData : Boolean(navigator.connection?.saveData));
+        function toggleSaveData() {
+            saveData = !saveDataOn();
+            store.set('tuendeSaveData', saveData);
+            renderFooter();
+            render();
+        }
 
         // A photo can name the part to keep when it is cropped (CSS object-position), e.g. a statue at the top of the frame.
         const photoFocus = (photo) => (/^\d{1,3}% \d{1,3}%$/.test(photo?.focus || '') ? photo.focus : '');
@@ -8020,6 +8491,20 @@
             if (fxLoading) loading.then(() => { if (state.view === 'fx') renderFx(); });
         }
 
+        function showPassport({ push = true } = {}) {
+            state.view = 'passport';
+            if (push) history.pushState(null, '', `${location.pathname}?page=passaporte`);
+            render();
+            window.scrollTo({ top: 0 });
+        }
+
+        function showQuiz({ push = true } = {}) {
+            state.view = 'quiz';
+            if (push) history.pushState(null, '', `${location.pathname}?page=quiz`);
+            render();
+            window.scrollTo({ top: 0 });
+        }
+
         function goHome({ push = true } = {}) {
             state.view = 'home';
             state.filters = { ...DEFAULT_FILTERS };
@@ -8037,6 +8522,8 @@
             } else if (params.get('page') === 'events') showEvents({ push: false, filters: eventFiltersFromQuery(params) });
             else if (params.get('page') === 'map') { if (state.view !== 'map') showMap({ push: false }); }
             else if (params.get('page') === 'cambio') { if (state.view !== 'fx') showFx({ push: false }); }
+            else if (params.get('page') === 'passaporte') { if (state.view !== 'passport') showPassport({ push: false }); }
+            else if (params.get('page') === 'quiz') { if (state.view !== 'quiz') showQuiz({ push: false }); }
             else if (params.get('page') === 'plano') {
                 const shared = params.get('p') ? planFromParam(params.get('p')) : null;
                 showPlan({ push: false, id: location.hash.match(/^#plano-([\w-]+)$/)?.[1] || '', shared: params.get('p') ? shared || 'bad' : null });
@@ -8073,7 +8560,7 @@
                 <article class="card">
                     <button class="card-media" type="button" data-open="${v.id}" data-ph="${phGroup(v)}" aria-label="${t('viewPlace')}: ${escapeHTML(v.name)}">
                         ${placeholderHTML(v)}
-                        ${thumbSrc(v) ? `<img src="${escapeHTML(thumbSrc(v))}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}
+                        ${thumbSrc(v) && !saveDataOn() ? `<img src="${escapeHTML(thumbSrc(v))}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}
                         ${saved ? `<span class="saved-tag">${icon('heart')}${t('saved')}</span>` : ''}
                     </button>
                     <div class="card-body">
@@ -8210,13 +8697,14 @@
                         <div class="event-mini-grid">${nextEvents.map(eventMiniHTML).join('')}</div>
                     </section>`);
             }
+            parts.push(playHTML(), rhythmsHTML());
             parts.push(`
                 <section class="home-cta guide-cta" aria-labelledby="guideCtaTitle">
                     <div><h2 id="guideCtaTitle">${t('guideCtaTitle')}</h2><p>${t('guideCtaText')}</p></div>
                     <button class="submit-btn" type="button" data-action="guide">${t('guideOpen')}</button>
                 </section>`);
             parts.push(`
-                <section class="home-cta wonders-cta" aria-labelledby="wondersCtaTitle" style="--cta-photo: url('${escapeHTML(asset(venues.find((v) => v.id === 26)?.photos?.[0]?.url || ''))}')">
+                <section class="home-cta wonders-cta" aria-labelledby="wondersCtaTitle"${saveDataOn() ? '' : ` style="--cta-photo: url('${escapeHTML(asset(venues.find((v) => v.id === 26)?.photos?.[0]?.url || ''))}')"`}>
                     <div><h2 id="wondersCtaTitle">${t('wondersCtaTitle')}</h2><p>${t('wondersCtaText')}</p></div>
                     <button class="submit-btn" type="button" data-action="wonders">${icon('camera')}${t('wondersOpen')}</button>
                 </section>`);
@@ -8228,7 +8716,7 @@
                 const cover = venues.find((v) => v.id === c.cover);
                 return `
                     <button class="collection" type="button" data-collection="${key}">
-                        ${cover?.photos ? `<img src="${escapeHTML(asset(cover.photos[0].thumb))}" alt="" crossorigin="anonymous" loading="lazy">` : ''}
+                        ${cover?.photos && !saveDataOn() ? `<img src="${escapeHTML(asset(cover.photos[0].thumb))}" alt="" crossorigin="anonymous" loading="lazy">` : ''}
                         <span class="collection-title">${t(c.title)}</span>
                         <span class="collection-desc">${t(c.desc)} · ${placesCount(count)}</span>
                     </button>`;
@@ -8258,6 +8746,304 @@
 
             $('homeView').innerHTML = parts.join('');
             document.querySelectorAll('#homeView .card-row').forEach(updateRowControls);
+        }
+
+
+        /* ---------- Passport: places the visitor has been to, stamped by province (this device only) ---------- */
+
+        // Practical places (transport, exchange, health) do not get a stamp.
+        const STAMP_TYPES = new Set(['beach', 'nature', 'culture', 'museum', 'plaza', 'restaurant', 'bar', 'nightclub', 'accommodation', 'shopping', 'sport']);
+        const canStamp = (v) => STAMP_TYPES.has(v.type) && !v.citywide;
+        let visited = (() => {
+            const saved = store.get('tuendeVisited', []);
+            return Array.isArray(saved) ? saved.filter((id) => venues.some((v) => v.id === id && canStamp(v))) : [];
+        })();
+        const saveVisited = () => store.set('tuendeVisited', visited);
+        const PROVINCES = [...new Set(venues.map(cityOf))].sort((a, b) => a.localeCompare(b, 'pt'));
+        const visitedPlaces = () => venues.filter((v) => visited.includes(v.id));
+        const provinceTotal = (vs) => new Set(vs.map(cityOf)).size;
+        const BADGES = [
+            { id: 'First', icon: 'passport', need: 1, count: (vs) => vs.length },
+            { id: 'Beach', icon: 'beach', need: 5, count: (vs) => vs.filter((v) => v.type === 'beach').length },
+            { id: 'Nature', icon: 'mountain', need: 5, count: (vs) => vs.filter((v) => v.type === 'nature').length },
+            { id: 'Culture', icon: 'landmark', need: 5, count: (vs) => vs.filter((v) => ['culture', 'museum', 'plaza'].includes(v.type)).length },
+            { id: 'Food', icon: 'restaurant', need: 5, count: (vs) => vs.filter((v) => v.type === 'restaurant').length },
+            { id: 'Night', icon: 'moon', need: 3, count: (vs) => vs.filter((v) => ['bar', 'nightclub'].includes(v.type)).length },
+            { id: 'Wonders', icon: 'camera', need: SEVEN_WONDERS.length, count: (vs) => vs.filter((v) => SEVEN_WONDERS.includes(v.id)).length },
+            { id: 'Prov5', icon: 'compass', need: 5, count: provinceTotal },
+            { id: 'Prov11', icon: 'globe', need: 11, count: provinceTotal },
+            { id: 'Prov21', icon: 'trophy', need: 21, count: provinceTotal }
+        ];
+        const earnedBadges = (vs) => BADGES.filter((b) => b.count(vs) >= b.need);
+
+        function visitButtonHTML(id) {
+            const on = visited.includes(id);
+            return `${icon(on ? 'check' : 'passport')}<span>${on ? t('beenHereDone') : t('beenHere')}</span>`;
+        }
+
+        function stampNoteHTML(newBadges = []) {
+            const vs = visitedPlaces();
+            const news = newBadges.map((b) => `<b class="badge-new">${icon(b.icon)}${escapeHTML(t('badgeNew', { name: t(`badge${b.id}`) }))}</b>`).join('');
+            return `${news}<span>${escapeHTML(t('stampNote', { places: placesCount(vs.length), provinces: provinceTotal(vs), total: PROVINCES.length }))}</span> <button class="link-btn" type="button" data-action="passport">${t('passportOpen')}</button>`;
+        }
+
+        function toggleVisited() {
+            const id = state.openId;
+            const v = venues.find((x) => x.id === id);
+            if (!v || !canStamp(v)) return;
+            const before = earnedBadges(visitedPlaces()).map((b) => b.id);
+            visited = visited.includes(id) ? visited.filter((x) => x !== id) : [...visited, id];
+            saveVisited();
+            const on = visited.includes(id);
+            const btn = $('visitBtn');
+            btn.classList.toggle('saved', on);
+            btn.setAttribute('aria-pressed', on);
+            btn.innerHTML = visitButtonHTML(id);
+            const note = $('stampNote');
+            note.hidden = !on;
+            note.innerHTML = stampNoteHTML(on ? earnedBadges(visitedPlaces()).filter((b) => !before.includes(b.id)) : []);
+        }
+
+        function renderPassport() {
+            const vs = visitedPlaces();
+            const stamped = [...new Set(vs.map(cityOf))];
+            const earned = earnedBadges(vs);
+            const stats = [[vs.length, 'passportPlaces'], [`${stamped.length}/${PROVINCES.length}`, 'passportProvinces'], [`${earned.length}/${BADGES.length}`, 'passportBadges']];
+            const stamps = PROVINCES.map((p) => {
+                const total = venues.filter((v) => cityOf(v) === p && canStamp(v)).length;
+                const been = vs.filter((v) => cityOf(v) === p).length;
+                return `<button type="button" class="stamp${been ? ' on' : ''}" data-stamp-province="${escapeHTML(p)}">${icon(been ? 'check' : 'pin')}<b>${escapeHTML(p)}</b><span>${t('provinceCount', { k: been, n: total })}</span></button>`;
+            }).join('');
+            const badges = BADGES.map((b) => {
+                const k = Math.min(b.count(vs), b.need);
+                return `
+                    <div class="badge${k >= b.need ? ' on' : ''}">
+                        ${icon(b.icon)}
+                        <div><b>${t(`badge${b.id}`)}</b><span>${t(`badge${b.id}Desc`)}</span>
+                        <span class="bar" aria-hidden="true"><i style="width:${Math.round((k / b.need) * 100)}%"></i></span><small>${k}/${b.need}</small></div>
+                    </div>`;
+            }).join('');
+            // One sight per province not stamped yet; photos and the 7 Wonders first.
+            const next = new Map();
+            venues.filter((v) => canStamp(v) && !stamped.includes(cityOf(v)) && ['beach', 'nature', 'culture', 'museum', 'plaza'].includes(v.type))
+                .sort((a, b) => Boolean(b.photos) - Boolean(a.photos) || SEVEN_WONDERS.includes(b.id) - SEVEN_WONDERS.includes(a.id))
+                .forEach((v) => { if (!next.has(cityOf(v))) next.set(cityOf(v), v); });
+            $('passportBody').innerHTML = `
+                <div class="passport-stats">${stats.map(([n, key]) => `<div class="passport-stat"><b>${escapeHTML(String(n))}</b><span>${t(key)}</span></div>`).join('')}</div>
+                ${vs.length ? '' : `<p class="passport-empty">${icon('passport')}<span>${t('passportEmpty')}</span></p>`}
+                <div class="cta-buttons passport-actions">
+                    ${vs.length ? `<button class="submit-btn" type="button" data-passport-share>${icon('share')}${t('passportShare')}</button>` : ''}
+                    <button class="submit-btn secondary" type="button" data-action="quiz">${icon('star')}${t('quizTitle')}</button>
+                </div>
+                ${sectionHTML('secStamps', t('passportStampsTitle'), t('passportStampsSub'), `<div class="stamp-grid">${stamps}</div>`)}
+                ${sectionHTML('secBadges', t('passportBadgesTitle'), '', `<div class="badge-grid">${badges}</div>`)}
+                ${vs.length ? sectionHTML('secBeen', t('passportBeen'), '', rowHTML(vs)) : ''}
+                ${next.size ? sectionHTML('secNextStamp', t('passportNext'), t('passportNextSub'), rowHTML([...next.values()].slice(0, 10))) : ''}
+                ${vs.length ? `<p class="passport-clear"><button class="link-btn" type="button" data-passport-clear>${t('passportClear')}</button></p>` : ''}`;
+            document.querySelectorAll('#passportView .card-row').forEach(updateRowControls);
+        }
+
+        function sharePassport() {
+            const vs = visitedPlaces();
+            const base = inNativeApp ? PUBLIC_URL : new URL('./', location.href).href;
+            shareLink(t('passportTitle'), t('passportShareText', { places: placesCount(vs.length), provinces: provinceTotal(vs) }), `${base}?page=passaporte`);
+        }
+
+        function clearPassport() {
+            if (!window.confirm(t('passportClearAsk'))) return;
+            visited = [];
+            saveVisited();
+            renderPassport();
+        }
+
+        /* ---------- Quiz: 10 questions made from the places and data in the app ---------- */
+
+        let quiz = null;
+        const QUIZ_LENGTH = 10;
+        const QUIZ_SIGHTS = ['beach', 'nature', 'culture', 'museum', 'plaza'];
+        const shuffle = (list) => {
+            const a = [...list];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        };
+
+        function quizQuestions() {
+            const used = new Set();
+            const take = (list) => { const v = list.find((x) => !used.has(x.id)); if (v) used.add(v.id); return v; };
+            const sights = shuffle(venues.filter((v) => QUIZ_SIGHTS.includes(v.type) && !v.citywide));
+            const qs = [];
+            // Which province: the place's name must not give it away (e.g. "Praia do Girassol (Cabinda)").
+            const provinceQ = () => {
+                const v = take(sights.filter((x) => !normalize(x.name).includes(normalize(cityOf(x)))));
+                if (!v) return null;
+                const wrong = shuffle(PROVINCES.filter((p) => p !== cityOf(v))).slice(0, 3);
+                return { kind: 'province', v, options: shuffle([cityOf(v), ...wrong]), answer: cityOf(v) };
+            };
+            const photoQ = () => {
+                const v = take(sights.filter((x) => x.photos && !x.photos[0].illustrative));
+                if (!v) return null;
+                const same = shuffle(venues.filter((x) => x.id !== v.id && x.type === v.type && x.name !== v.name)).slice(0, 3).map((x) => x.name);
+                if (same.length < 3) return null;
+                return { kind: 'photo', v, options: shuffle([v.name, ...same]), answer: v.name };
+            };
+            const wonderQ = () => {
+                const v = take(shuffle(venues.filter((x) => SEVEN_WONDERS.includes(x.id))));
+                if (!v) return null;
+                const others = shuffle(venues.filter((x) => ['nature', 'beach'].includes(x.type) && !SEVEN_WONDERS.includes(x.id))).slice(0, 3).map((x) => x.name);
+                return { kind: 'wonder', v, options: shuffle([v.name, ...others]), answer: v.name };
+            };
+            const fxQ = () => {
+                const rate = fx?.rates?.usd;
+                if (!(rate > 0)) return null;
+                const round = (n) => Math.round(n / 10) * 10;
+                const options = [...new Set([1, 0.55, 0.75, 1.35].map((m) => round(rate * m)))];
+                if (options.length < 4) return null;
+                const text = (n) => `${n.toLocaleString(locale())} Kz`;
+                return { kind: 'fx', rate, date: fx.date, options: shuffle(options.map(text)), answer: text(round(rate)) };
+            };
+            const plan = shuffle(['province', 'province', 'province', 'province', 'photo', 'photo', 'photo', 'wonder', 'fx', 'province']);
+            const makers = { province: provinceQ, photo: photoQ, wonder: wonderQ, fx: fxQ };
+            for (const kind of plan) qs.push(makers[kind]() || provinceQ());
+            return qs.filter(Boolean).slice(0, QUIZ_LENGTH);
+        }
+
+        function startQuiz() {
+            quiz = { questions: quizQuestions(), i: 0, score: 0, picked: null };
+            renderQuiz();
+            $('quizBody').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function quizPrompt(q) {
+            if (q.kind === 'province') return t('quizWhereIs', { name: q.v.name });
+            if (q.kind === 'photo') return t('quizWhichPlace');
+            if (q.kind === 'wonder') return t('quizWhichWonder');
+            return t('quizFx', { date: formatDate(q.date) });
+        }
+
+        function quizAnswerText(q) {
+            if (q.kind === 'province') return t('quizAnswerProvince', { name: q.v.name, province: cityOf(q.v) });
+            if (q.kind === 'photo') return t('quizAnswerPlace', { name: q.v.name, location: placeLine(q.v) });
+            if (q.kind === 'wonder') return t('quizAnswerWonder', { name: q.v.name });
+            return t('quizAnswerFx', { rate: fxNumber(q.rate), date: formatDate(q.date) });
+        }
+
+        function renderQuiz() {
+            const body = $('quizBody');
+            if (!quiz) {
+                const best = store.get('tuendeQuizBest', null);
+                body.innerHTML = `
+                    <div class="quiz-card quiz-start">
+                        <button class="submit-btn" type="button" data-quiz-start>${icon('play')}${t('quizStart')}</button>
+                        ${Number.isFinite(best) ? `<p class="hint">${t('quizBest', { n: best })}</p>` : ''}
+                    </div>`;
+                return;
+            }
+            if (quiz.i >= quiz.questions.length) {
+                const n = quiz.score;
+                const level = n === quiz.questions.length ? 3 : n >= 7 ? 2 : n >= 4 ? 1 : 0;
+                const best = store.get('tuendeQuizBest', null);
+                if (!Number.isFinite(best) || n > best) store.set('tuendeQuizBest', n);
+                const places = [...new Map(quiz.questions.filter((q) => q.v).map((q) => [q.v.id, q.v])).values()];
+                body.innerHTML = `
+                    <div class="quiz-card quiz-end">
+                        <p class="quiz-score">${t('quizResult', { n })}</p>
+                        <p class="quiz-level">${t(`quizLevel${level}`)}</p>
+                        <div class="cta-buttons">
+                            <button class="submit-btn" type="button" data-quiz-share>${icon('share')}${t('quizShare')}</button>
+                            <button class="submit-btn secondary" type="button" data-quiz-start>${icon('refresh')}${t('quizAgain')}</button>
+                            <button class="submit-btn secondary" type="button" data-action="passport">${icon('passport')}${t('passportTitle')}</button>
+                        </div>
+                    </div>
+                    ${places.length ? sectionHTML('secQuizPlaces', t('quizExplore'), '', rowHTML(places)) : ''}`;
+                document.querySelectorAll('#quizView .card-row').forEach(updateRowControls);
+                return;
+            }
+            const q = quiz.questions[quiz.i];
+            const answered = quiz.picked !== null;
+            const photo = q.kind === 'photo' || (q.kind === 'province' && q.v.photos && !saveDataOn()) ? q.v.photos?.[0] : null;
+            const options = q.options.map((o, i) => {
+                const cls = !answered ? '' : o === q.answer ? ' right' : i === quiz.picked ? ' wrong' : '';
+                return `<button type="button" class="quiz-option${cls}" data-quiz-answer="${i}" ${answered ? 'disabled' : ''}>${escapeHTML(o)}</button>`;
+            }).join('');
+            const right = answered && q.options[quiz.picked] === q.answer;
+            body.innerHTML = `
+                <div class="quiz-card">
+                    <div class="quiz-top"><span>${t('quizProgress', { i: quiz.i + 1, n: quiz.questions.length })}</span><span>${t('quizScore', { n: quiz.score })}</span></div>
+                    <span class="bar quiz-bar" aria-hidden="true"><i style="width:${Math.round((quiz.i / quiz.questions.length) * 100)}%"></i></span>
+                    ${photo ? `<figure class="quiz-photo"><img src="${escapeHTML(q.kind === 'photo' && !saveDataOn() ? fullSrc(photo) : asset(photo.thumb))}" alt="${q.kind === 'photo' ? escapeHTML(t('quizWhichPlace')) : escapeHTML(q.v.name)}"${focusAttr(photo)} crossorigin="anonymous"><figcaption>${creditHTML(photo)}</figcaption></figure>` : ''}
+                    <h2 class="quiz-question">${escapeHTML(quizPrompt(q))}</h2>
+                    <div class="quiz-options">${options}</div>
+                    ${answered ? `
+                        <div class="quiz-feedback ${right ? 'right' : 'wrong'}">
+                            <b>${right ? t('quizRight') : t('quizWrong')}</b> <span>${escapeHTML(quizAnswerText(q))}</span>
+                        </div>
+                        <div class="cta-buttons">
+                            <button class="submit-btn" type="button" data-quiz-next>${quiz.i + 1 < quiz.questions.length ? t('quizNext') : t('quizSeeResult')}${icon('next')}</button>
+                            ${q.v ? `<button class="submit-btn secondary" type="button" data-open="${q.v.id}">${t('viewPlace')}</button>` : `<button class="submit-btn secondary" type="button" data-action="fx">${t('fxTitle')}</button>`}
+                        </div>` : ''}
+                </div>`;
+        }
+
+        function answerQuiz(i) {
+            if (!quiz || quiz.picked !== null) return;
+            quiz.picked = i;
+            const q = quiz.questions[quiz.i];
+            if (q.options[i] === q.answer) quiz.score++;
+            renderQuiz();
+            document.querySelector('#quizBody [data-quiz-next]')?.focus({ preventScroll: true });
+        }
+
+        function nextQuiz() {
+            if (!quiz) return;
+            quiz.i++;
+            quiz.picked = null;
+            renderQuiz();
+            $('quizBody').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function shareQuiz() {
+            const base = inNativeApp ? PUBLIC_URL : new URL('./', location.href).href;
+            shareLink(t('quizTitle'), t('quizShareText', { n: quiz?.score ?? 0 }), `${base}?page=quiz`);
+        }
+
+        /* ---------- Home: play (passport and quiz) and the rhythms of Angola ---------- */
+
+        function playHTML() {
+            const vs = visitedPlaces();
+            const best = store.get('tuendeQuizBest', null);
+            const cards = [
+                ['passport', 'passportTitle', vs.length ? t('passportCardProgress', { provinces: provinceTotal(vs) }) : t('passportCardDesc'), 'data-action="passport"'],
+                ['star', 'quizTitle', Number.isFinite(best) ? t('quizBest', { n: best }) : t('quizCardDesc'), 'data-action="quiz"']
+            ];
+            return sectionHTML('secPlay', t('playTitle'), '', `<div class="play-grid">${cards.map(([ic, key, desc, attr]) =>
+                `<button class="start-card play-card" type="button" ${attr}>${icon(ic)}<b>${t(key)}</b><span>${escapeHTML(desc)}</span></button>`).join('')}</div>`);
+        }
+
+        const RHYTHM_CARDS = [
+            { id: 'semba', text: 'rhythmSembaText', note: 'rhythmSembaUnesco', noteUntil: '2026-12-05',
+              sources: [['Wikipédia', 'https://pt.wikipedia.org/wiki/Semba'], ['Ver Angola', 'https://www.verangola.net/va/pt/102026/Cultura/50500/Semba-entre-as-candidaturas-a-Patrim%C3%B3nio-Imaterial-da-UNESCO.htm']] },
+            { id: 'kizomba', text: 'rhythmKizombaText', sources: [['Wikipedia', 'https://en.wikipedia.org/wiki/Kizomba']] },
+            { id: 'kuduro', text: 'rhythmKuduroText', sources: [['Wikipedia', 'https://en.wikipedia.org/wiki/Kuduro']] }
+        ];
+
+        function rhythmsHTML() {
+            const upcoming = upcomingEvents();
+            const today = luandaToday();
+            const cards = RHYTHM_CARDS.map((r) => {
+                const n = upcoming.filter((e) => eventRhythms(e).includes(r.id)).length;
+                return `
+                    <article class="rhythm-card">
+                        <h3>${escapeHTML(RHYTHMS[r.id].name)}</h3>
+                        <p>${t(r.text)}</p>
+                        ${r.note && today <= r.noteUntil ? `<p class="rhythm-note">${t(r.note)}</p>` : ''}
+                        ${n ? `<button class="submit-btn secondary" type="button" data-rhythm="${r.id}">${icon('calendar')}${t('rhythmSee', { count: eventsCount(n) })}</button>` : `<p class="hint">${t('rhythmNone')}</p>`}
+                        <p class="rhythm-sources">${t('rhythmSources')}: ${r.sources.map(([name, url]) => `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(name)}</a>`).join(', ')}</p>
+                    </article>`;
+            }).join('');
+            return sectionHTML('secRhythms', t('rhythmsTitle'), t('rhythmsSub'), `<div class="rhythm-grid">${cards}</div>`);
         }
 
         /* ---------- Results ---------- */
@@ -8372,7 +9158,7 @@
             renderQuickFilters();
             renderSavedButton();
             renderTabbar();
-            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx', 'plan'].includes(state.view);
+            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx', 'plan', 'passport', 'quiz'].includes(state.view);
             $('homeView').hidden = state.view !== 'home';
             $('resultsView').hidden = state.view !== 'results';
             $('recommendView').hidden = state.view !== 'recommend';
@@ -8383,7 +9169,9 @@
             $('wondersView').hidden = state.view !== 'wonders';
             $('fxView').hidden = state.view !== 'fx';
             $('planView').hidden = state.view !== 'plan';
-            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle' }[state.view];
+            $('passportView').hidden = state.view !== 'passport';
+            $('quizView').hidden = state.view !== 'quiz';
+            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle', passport: 'passportTitle', quiz: 'quizTitle' }[state.view];
             document.title = viewTitle ? `${t(viewTitle)} | Tuende` : `Tuende - ${t('heroTitle')}`;
             if (state.view === 'home') renderHome();
             else if (state.view === 'results') renderResults();
@@ -8394,6 +9182,8 @@
             else if (state.view === 'wonders') renderWonders();
             else if (state.view === 'fx') renderFx();
             else if (state.view === 'plan') renderPlan();
+            else if (state.view === 'passport') renderPassport();
+            else if (state.view === 'quiz') renderQuiz();
         }
 
 
@@ -9365,6 +10155,12 @@
             const box = document.querySelector('#venuePanel [data-place-map]');
             const v = box && venues.find((x) => x.id === Number(box.dataset.placeMap));
             if (!v) return;
+            if (saveDataOn() && !box.dataset.allowed) {
+                box.classList.add('map-off');
+                box.innerHTML = `<button class="submit-btn secondary" type="button" data-map-load>${icon('pin')}${t('mapLoad')}</button>`;
+                return;
+            }
+            box.classList.remove('map-off');
             placeMapWatch = new IntersectionObserver((entries) => {
                 if (!entries.some((e) => e.isIntersecting)) return;
                 placeMapWatch.disconnect();
@@ -9737,7 +10533,9 @@
                         <button class="action-btn${isFav ? ' saved' : ''}" type="button" id="favBtn" aria-pressed="${isFav}">${favButtonHTML(v.id)}</button>
                         <button class="action-btn" type="button" id="shareBtn">${icon('share')}${t('share')}</button>
                         <button class="action-btn" type="button" data-plan-add="place:${v.id}">${icon('calendar')}${t('planAddTitle')}</button>
+                        ${canStamp(v) ? `<button class="action-btn${visited.includes(v.id) ? ' saved' : ''}" type="button" id="visitBtn" aria-pressed="${visited.includes(v.id)}">${visitButtonHTML(v.id)}</button>` : ''}
                     </div>
+                    ${canStamp(v) ? `<p class="stamp-note" id="stampNote" aria-live="polite" ${visited.includes(v.id) ? '' : 'hidden'}>${stampNoteHTML()}</p>` : ''}
 
                     ${practicalHTML(v)}
 
@@ -9767,7 +10565,7 @@
             if (keepScroll) panel.scrollTop = scroll;
             mountPlaceMap();
             history.replaceState(null, '', `${location.pathname}${location.search}#local-${id}`);
-            if (v.photos || v.image) upgradeHero(v.photos ? fullSrc(v.photos[0]) : asset(v.image));
+            if ((v.photos || v.image) && !saveDataOn()) upgradeHero(v.photos ? fullSrc(v.photos[0]) : asset(v.image));
             loadSubmissions(id);
             loadReviews(id);
         }
@@ -10729,6 +11527,10 @@
             else if (e.start <= today && end > today) badges.push(['live', t('eventOngoing', { date: fmtDay(end, { day: 'numeric', month: 'long' }) })]);
             else if (e.start <= today && end === today) badges.push(['live', t('eventToday')]);
             else if (e.start === addDays(today, 1)) badges.push(['', t('eventTomorrow')]);
+            else {
+                const days = Math.round((isoDay(e.next || e.start) - isoDay(today)) / 86400000);
+                if (e.start > today && days >= 2 && days <= 14) badges.push(['soon', t('eventInDays', { n: days })]);
+            }
             if (e.price?.free) badges.push(['', t('free')]);
             return badges.map(([cls, text]) => `<span class="event-badge ${cls}">${escapeHTML(text)}</span>`).join('');
         }
@@ -10766,7 +11568,7 @@
                 <article class="event-card" id="evento-${e.id}" aria-labelledby="evt-${e.id}">
                     ${e.photo ? `
                         <figure class="event-photo">
-                            <img src="${escapeHTML(fullSrc(e.photo))}" alt="${escapeHTML(e.photo.caption[lang])}" loading="lazy" crossorigin="anonymous" onerror="this.closest('figure').remove()">
+                            <img src="${escapeHTML(saveDataOn() ? asset(e.photo.thumb) : fullSrc(e.photo))}" alt="${escapeHTML(e.photo.caption[lang])}" loading="lazy" crossorigin="anonymous" onerror="this.closest('figure').remove()">
                             <figcaption>${t('venuePhoto', { place: escapeHTML(e.photo.caption[lang]) })} · ${creditHTML(e.photo)}</figcaption>
                         </figure>` : ''}
                     ${dateBlockHTML(e)}
@@ -10825,7 +11627,15 @@
                 return `<button type="button" class="chip${active ? ' active' : ''}" data-events-when="${key}" aria-pressed="${active}">${t(label)}</button>`;
             }).join('');
 
-            const scoped = upcomingEvents({ when: f.when, where: f.where });
+            const inRange = upcomingEvents({ when: f.when, where: f.where });
+            const rhythms = Object.keys(RHYTHMS).filter((key) => upcoming.some((e) => eventRhythms(e).includes(key)));
+            $('eventsRhythmWrap').hidden = !rhythms.length;
+            $('eventsRhythm').innerHTML = [['', t('typeAll'), inRange.length], ...rhythms.map((key) => [key, RHYTHMS[key].name, inRange.filter((e) => eventRhythms(e).includes(key)).length])]
+                .map(([key, label, n]) => {
+                    const active = f.rhythm === key;
+                    return `<button type="button" class="chip${active ? ' active' : ''}" data-events-rhythm="${key}" aria-pressed="${active}">${escapeHTML(label)} <span class="chip-count">(${n})</span></button>`;
+                }).join('');
+            const scoped = f.rhythm ? inRange.filter((e) => eventRhythms(e).includes(f.rhythm)) : inRange;
             const types = Object.keys(EVENT_TYPES).filter((type) => upcoming.some((e) => e.type === type));
             $('eventsType').innerHTML = [['', t('typeAll'), scoped.length], ...types.map((type) => [type, eventTypeLabel(type), scoped.filter((e) => e.type === type).length])]
                 .map(([key, label, n]) => {
@@ -10860,11 +11670,21 @@
             }).join('');
         }
 
+        const rhythmCache = new Map();
+        function eventRhythms(e) {
+            if (!rhythmCache.has(e.id)) {
+                const text = ` ${normalize([e.title.pt, e.title.en, ...(e.tags?.pt || []), e.desc?.pt || ''].join(' ')).replace(/[^a-z0-9]+/g, ' ')} `;
+                rhythmCache.set(e.id, Object.keys(RHYTHMS).filter((key) => RHYTHMS[key].words.some((w) => text.includes(w))));
+            }
+            return rhythmCache.get(e.id);
+        }
+
         function eventsQuery() {
             const params = new URLSearchParams({ page: 'events' });
             if (state.events.when !== 'all') params.set('when', state.events.when);
             if (state.events.type) params.set('type', state.events.type);
             if (state.events.where) params.set('where', state.events.where);
+            if (state.events.rhythm) params.set('ritmo', state.events.rhythm);
             return params.toString();
         }
 
@@ -10874,7 +11694,8 @@
             return {
                 when: Object.hasOwn(WHEN_LABELS, when ?? '') ? when : 'all',
                 type: Object.hasOwn(EVENT_TYPES, type ?? '') ? type : '',
-                where: (params.get('where') || '').slice(0, 60)
+                where: (params.get('where') || '').slice(0, 60),
+                rhythm: Object.hasOwn(RHYTHMS, params.get('ritmo') ?? '') ? params.get('ritmo') : ''
             };
         }
 
@@ -11286,6 +12107,10 @@
             if (CONTACT_EMAIL) $('footerContact').href = `mailto:${CONTACT_EMAIL}`;
             $('footerRecommend').hidden = !canRecommend();
             $('navRecommend').hidden = !canRecommend();
+            const saver = $('footerSaveData');
+            saver.textContent = t(saveDataOn() ? 'saveDataOn' : 'saveDataOff');
+            saver.title = t('saveDataNote');
+            saver.setAttribute('aria-pressed', saveDataOn());
         }
 
         /* ---------- Modals ---------- */
@@ -12833,12 +13658,32 @@
             const typeChip = target.closest('[data-events-type]');
             if (typeChip) { setEventFilters({ type: typeChip.dataset.eventsType }, `[data-events-type="${typeChip.dataset.eventsType}"]`); return; }
             if (target.closest('[data-events-reset]')) { setEventFilters({ ...DEFAULT_EVENT_FILTERS }, '[data-events-when="all"]'); return; }
+            const rhythmChip = target.closest('[data-events-rhythm]');
+            if (rhythmChip) { setEventFilters({ rhythm: rhythmChip.dataset.eventsRhythm }, `[data-events-rhythm="${rhythmChip.dataset.eventsRhythm}"]`); return; }
+            const rhythmOpen = target.closest('[data-rhythm]');
+            if (rhythmOpen) { showEvents({ filters: { rhythm: rhythmOpen.dataset.rhythm } }); return; }
+            const stampProvince = target.closest('[data-stamp-province]');
+            if (stampProvince) { showResults({ where: stampProvince.dataset.stampProvince }); return; }
+            if (target.closest('[data-passport-share]')) { sharePassport(); return; }
+            if (target.closest('[data-passport-clear]')) { clearPassport(); return; }
+            if (target.closest('[data-quiz-start]')) { startQuiz(); return; }
+            const quizAnswer = target.closest('[data-quiz-answer]');
+            if (quizAnswer) { answerQuiz(Number(quizAnswer.dataset.quizAnswer)); return; }
+            if (target.closest('[data-quiz-next]')) { nextQuiz(); return; }
+            if (target.closest('[data-quiz-share]')) { shareQuiz(); return; }
             const ics = target.closest('[data-event-ics]');
             if (ics) { addEventToCalendar(EVENTS.find((e) => e.id === ics.dataset.eventIcs)); return; }
             const shareBtn = target.closest('[data-event-share]');
             if (shareBtn) { shareEvent(EVENTS.find((e) => e.id === shareBtn.dataset.eventShare)); return; }
             const action = target.closest('[data-action]');
             if (action?.dataset.action === 'home') { goHome(); return; }
+            if (action?.dataset.action === 'passport' || action?.dataset.action === 'quiz') {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                if (action.dataset.action === 'passport') showPassport();
+                else showQuiz();
+                return;
+            }
+            if (action?.dataset.action === 'save-data') { toggleSaveData(); return; }
             if (action?.dataset.action === 'events') {
                 document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
                 showEvents();
@@ -12967,8 +13812,17 @@
             const block = e.target.closest('[data-block], [data-block-review]');
             if (block) { blockAuthor(block); return; }
             if (e.target.closest('[data-action="reviews"]')) { $('reviewsSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+            const mapLoad = e.target.closest('[data-map-load]');
+            if (mapLoad) {
+                const box = mapLoad.closest('[data-place-map]');
+                box.dataset.allowed = '1';
+                box.innerHTML = '';
+                mountPlaceMap();
+                return;
+            }
             if (e.target.closest('#favBtn')) toggleFavorite();
             else if (e.target.closest('#shareBtn')) shareVenue();
+            else if (e.target.closest('#visitBtn')) toggleVisited();
         });
 
         $('venuePanel').addEventListener('change', (e) => {
