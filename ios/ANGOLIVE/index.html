@@ -2839,6 +2839,8 @@
                 placesCount: '{n} lugares',
                 placesCountOne: '1 lugar',
                 emptyFilter: 'Não encontrámos lugares para esta pesquisa.',
+                cheapNote: 'Só lugares com preço conhecido, do mais barato para o mais caro',
+                cheapNone: 'Ainda não temos preços para estes lugares',
                 emptySaved: 'Ainda não guardou nenhum lugar. Abra um lugar e toque em Guardar.',
                 emptyTry: 'Experimente uma categoria ou uma das sugestões abaixo.',
                 clearSearch: 'Limpar pesquisa',
@@ -3430,6 +3432,8 @@
                 placesCount: '{n} places',
                 placesCountOne: '1 place',
                 emptyFilter: 'We found no places for this search.',
+                cheapNote: 'Only places with a known price, cheapest first',
+                cheapNone: 'We don\'t have prices for these places yet',
                 emptySaved: 'You have not saved any places yet. Open a place and tap Save.',
                 emptyTry: 'Try a category or one of the suggestions below.',
                 clearSearch: 'Clear search',
@@ -4021,6 +4025,8 @@
                 placesCount: '{n} lieux',
                 placesCountOne: '1 lieu',
                 emptyFilter: 'Aucun lieu trouvé pour cette recherche.',
+                cheapNote: 'Seulement les lieux au prix connu, du moins cher au plus cher',
+                cheapNone: 'Nous n\'avons pas encore les prix de ces lieux',
                 emptySaved: 'Vous n\'avez encore enregistré aucun lieu. Ouvrez un lieu et touchez Enregistrer.',
                 emptyTry: 'Essayez une catégorie ou l\'une des suggestions ci-dessous.',
                 clearSearch: 'Effacer la recherche',
@@ -4612,6 +4618,8 @@
                 placesCount: '{n} lugares',
                 placesCountOne: '1 lugar',
                 emptyFilter: 'No encontramos lugares para esta búsqueda.',
+                cheapNote: 'Solo lugares con precio conocido, del más barato al más caro',
+                cheapNone: 'Aún no tenemos precios para estos lugares',
                 emptySaved: 'Aún no ha guardado ningún lugar. Abra un lugar y toque Guardar.',
                 emptyTry: 'Pruebe una categoría o una de las sugerencias de abajo.',
                 clearSearch: 'Borrar la búsqueda',
@@ -7632,6 +7640,16 @@
 
         const alternatives = (word) => [word, ...(SYNONYMS[word] || [])];
 
+        // "Barato", "cheap", "pas cher"...: these words ask for a price, not for text in the place.
+        const CHEAP_RE = / (((mais|mas|plus|more) )?(baratos?|baratas?|baratinh[oa]s?|economic[oa]s?|economiques?|cheap|cheaper|cheapest|budget|low ?cost|affordable|inexpensive|bon marche)|(pas|moins) cher(e|s|es)?)(?= )/g;
+        function cheapQuery(q) {
+            const text = ` ${normalize(q).replace(/[^a-z0-9]+/g, ' ')} `;
+            const rest = text.replace(CHEAP_RE, ' ');
+            return { cheap: rest !== text, q: rest !== text ? rest.trim() : q };
+        }
+        // Comparable price: free, or a number in Kwanza (a price given only in words cannot be sorted).
+        const pricedForSort = (v) => Boolean(v.price && (v.price.free || (Number.isFinite(v.price.from) && !v.price.text)));
+
         function matchesQuery(v, q) {
             const words = tokens(q);
             return words.every((w) => alternatives(w).some((alt) => tokenMatches(alt, index().all.get(v.id))));
@@ -7893,16 +7911,27 @@
             return c.ids ? c.ids.includes(v.id) : c.match(v);
         }
 
+        let cheapNote = '';
         function filteredVenues() {
             const f = state.filters;
-            const list = venues.filter((v) =>
+            const { cheap, q } = cheapQuery(f.q);
+            let list = venues.filter((v) =>
                 (!f.saved || favorites.includes(v.id)) &&
                 (!f.category || v.type === f.category) &&
                 (!f.collection || collectionMatch(f.collection, v)) &&
                 (!f.quick || QUICK[f.quick].match(v)) &&
                 (!f.where || f.where === 'near' || cityOf(v) === f.where) &&
-                matchesQuery(v, f.q)
+                matchesQuery(v, q)
             );
+            // Cheap search: only places that are what was asked for (a hotel's room price says nothing about a cheap meal),
+            // and of those the ones with a known price. If none has one yet, show them all and say so.
+            if (cheap && q) {
+                const asked = list.filter((v) => queryScore(v, q) >= 2);
+                if (asked.length) list = asked;
+            }
+            const priced = cheap ? list.filter(pricedForSort) : [];
+            cheapNote = !cheap || !list.length ? '' : priced.length ? 'cheapNote' : 'cheapNone';
+            if (priced.length) list = priced;
             const useDistance = state.userPos && (state.sort === 'distance' || (state.sort === 'relevance' && (f.where === 'near' || f.quick === 'near')));
             const byRating = (a, b) => (statsOf(b)?.avg || 0) - (statsOf(a)?.avg || 0) || (statsOf(b)?.count || 0) - (statsOf(a)?.count || 0);
             const recRank = (v) => {
@@ -7911,9 +7940,10 @@
                 return i === -1 ? 99 : i;
             };
             const sorters = {
-                relevance: (a, b) => queryScore(b, f.q) - queryScore(a, f.q) || recRank(a) - recRank(b) || byRating(a, b) || a.name.localeCompare(b.name, 'pt'),
+                relevance: (a, b) => queryScore(b, q) - queryScore(a, q) || recRank(a) - recRank(b) || byRating(a, b) || a.name.localeCompare(b.name, 'pt'),
                 rating: (a, b) => byRating(a, b) || a.name.localeCompare(b.name, 'pt'),
-                price: (a, b) => priceValue(a) - priceValue(b) || a.name.localeCompare(b.name, 'pt'),
+                // With a search, places that are what was asked for (by name or category) come before other text matches.
+                price: (a, b) => (q && (queryScore(a, q) < 2) - (queryScore(b, q) < 2)) || priceValue(a) - priceValue(b) || a.name.localeCompare(b.name, 'pt'),
                 name: (a, b) => a.name.localeCompare(b.name, 'pt'),
                 distance: (a, b) => distanceKm(a) - distanceKm(b)
             };
@@ -7929,7 +7959,7 @@
         function showResults(filters, { push = true, scroll = true } = {}) {
             state.filters = { ...DEFAULT_FILTERS, ...filters };
             state.view = 'results';
-            state.sort = 'relevance';
+            state.sort = cheapQuery(state.filters.q).cheap ? 'price' : 'relevance';
             renderSortOptions();
             syncSearchForm();
             if (push) history.pushState(null, '', `${location.pathname}?${filtersToQuery(state.filters)}`);
@@ -8251,6 +8281,7 @@
             if (f.quick && QUICK[f.quick].note) parts.push(t(QUICK[f.quick].note));
             if (f.q && (f.category || f.collection || f.quick)) parts.push(t('resultsFor', { q: f.q }));
             if (f.where && f.where !== 'near' && resultsTitle() !== t('inCity', { city: f.where })) parts.push(t('inCity', { city: f.where }));
+            if (cheapNote) parts.push(t(cheapNote));
             return parts.join(' · ');
         }
 
