@@ -42,6 +42,45 @@ CATEGORY = {
     'services': ('Câmbio', 'Exchange', 'LocalBusiness'),
     'health': ('Saúde', 'Health', 'MedicalClinic'),
 }
+# Places without a photo get a banner in the category colour with the category icon, as in the app (placeholderHTML).
+PH_GROUP = {'restaurant': 'food', 'bar': 'food', 'nightclub': 'night', 'beach': 'beach', 'nature': 'nature',
+            'culture': 'culture', 'museum': 'culture', 'plaza': 'culture'}
+PH_STYLE = """
+    <style>
+        .ph { display: flex; align-items: center; justify-content: center; margin-top: 14px; aspect-ratio: 16 / 7; border-radius: 16px; background-size: 28px 28px, auto; }
+        .ph svg { width: 56px; height: 56px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+        .ph-food { color: #FFFFFF; background-image: var(--dw), linear-gradient(135deg, #CE1126, #A50E1F); }
+        .ph-beach { color: #FFFFFF; background-image: var(--dw), linear-gradient(135deg, #1D4E89, #163C6A); }
+        .ph-nature { color: #FFFFFF; background-image: var(--dw), linear-gradient(135deg, #1E6B3A, #15502B); }
+        .ph-culture { color: #111111; background-image: var(--dd), linear-gradient(135deg, #FFCB00, #E8B400); }
+        .ph-night { color: #FFFFFF; background-image: var(--dy), linear-gradient(135deg, #2B2B33, #111111); }
+        .ph-light { color: var(--primary); background-image: var(--dr), linear-gradient(var(--surface), var(--surface)); box-shadow: inset 0 0 0 1.5px var(--line); }
+        .ph { --dw: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='white' stroke-opacity='0.14' stroke-width='1.5'/%3E%3C/svg%3E");
+              --dd: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23111111' stroke-opacity='0.10' stroke-width='1.5'/%3E%3C/svg%3E");
+              --dy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23FFCB00' stroke-opacity='0.22' stroke-width='1.5'/%3E%3C/svg%3E");
+              --dr: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23CE1126' stroke-opacity='0.14' stroke-width='1.5'/%3E%3C/svg%3E"); }
+    </style>"""
+APP_ICONS = {}  # type -> SVG inner markup, read from index.html (ICONS and CATEGORY) in main
+
+
+def load_icons():
+    source = (WEB / 'index.html').read_text(encoding='utf-8')
+    def literal(name):
+        start = source.index('{', source.index(f'const {name} = {{'))
+        return js_value(source[start:source.index('\n        };', start) + len('\n        }')])
+    icons, categories = literal('ICONS'), literal('CATEGORY')
+    return {k: icons[c['icon']] for k, c in categories.items() if c.get('icon') in icons}
+
+
+def adds_to(lead, text):
+    """True when the lead line says something the description does not already say (fewer than 60% of its words repeated)."""
+    lw = {w for w in words(lead) if len(w) > 3}
+    if not lw:
+        return False
+    tw = set(words(text))
+    return len(lw & tw) / len(lw) < 0.6
+
+
 DAYS = [(1, 'Segunda'), (2, 'Terça'), (3, 'Quarta'), (4, 'Quinta'), (5, 'Sexta'), (6, 'Sábado'), (0, 'Domingo')]
 MONTHS = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro']
 
@@ -218,6 +257,9 @@ def page(v, others, desc_en, near=(), events=()):
             <img src="../{e(photo['src'])}" alt="{e(name)}" width="960" height="540"{focus}>
             <figcaption>{photo['credit']}</figcaption>
         </figure>''' if photo else ''
+    if not photo and APP_ICONS.get(v['type']):
+        group = PH_GROUP.get(v['type'], 'light')
+        figure = f'        <div class="ph ph-{group}" aria-hidden="true"><svg viewBox="0 0 24 24">{APP_ICONS[v["type"]]}</svg></div>'
     return f'''<!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -238,7 +280,7 @@ def page(v, others, desc_en, near=(), events=()):
     <meta name="theme-color" content="#CE1126">
     <link rel="icon" type="image/png" href="../icon-192.png">
     <script type="application/ld+json">{json.dumps(data, ensure_ascii=False).replace("</", "<\\/")}</script>
-    <style>{STYLE}    </style>
+    <style>{STYLE}    </style>{PH_STYLE if not photo and APP_ICONS.get(v['type']) else ''}
 </head>
 <body>
     <div class="strip" aria-hidden="true"></div>
@@ -251,7 +293,7 @@ def page(v, others, desc_en, near=(), events=()):
 {figure}
         <p class="kicker">{e(cat_pt)} · {e(where)}</p>
         <h1>{e(name)}</h1>
-        {f'<p class="lead">{e(highlight)}</p>' if highlight else ''}
+        {f'<p class="lead">{e(highlight)}</p>' if highlight and adds_to(highlight, v['description']) else ''}
         <p>{e(v['description'])}</p>{rates_note}
         <div class="actions">
             <a class="btn solid" href="../#local-{v['id']}">Ver no Tuende</a>
@@ -1341,6 +1383,7 @@ def nearby(v, venues, limit=6, max_km=25):
 
 def main():
     venues, desc_en = load()
+    APP_ICONS.update(load_icons())
     slugs = [slug(v['name']) for v in venues] + [t['slug'] for t in TOPICS]
     dupes = {s for s in slugs if slugs.count(s) > 1}
     if dupes:
