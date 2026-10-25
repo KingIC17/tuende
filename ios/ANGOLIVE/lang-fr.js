@@ -148,6 +148,8 @@ window.TUENDE_LANGS.fr = {
                 saveDataOff: 'Économie de données : désactivée',
                 saveDataNote: 'Pas de photos dans les listes ni de cartes automatiques, pour consommer moins de données mobiles.',
                 mapLoad: 'Afficher la carte',
+                menuOpen: 'Tout voir',
+                menuItems: '{n} articles',
                 sgLabel: 'Suggestions',
                 sgPlaces: 'Lieux',
                 sgExplore: 'Explorer',

@@ -148,6 +148,8 @@ window.TUENDE_LANGS.es = {
                 saveDataOff: 'Ahorro de datos: desactivado',
                 saveDataNote: 'Sin fotos en las listas ni mapas automáticos, para gastar menos datos móviles.',
                 mapLoad: 'Mostrar mapa',
+                menuOpen: 'Ver todo',
+                menuItems: '{n} artículos',
                 sgLabel: 'Sugerencias',
                 sgPlaces: 'Lugares',
                 sgExplore: 'Explorar',
