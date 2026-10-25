@@ -130,13 +130,31 @@ def menus():
     return _MENUS
 
 
+# The menu opens from one row (as in the app); search engines still read the list inside <details>.
+MENU_STYLE = """
+    <style>
+        details.menu-drop { margin-top: 12px; border: 1.5px solid var(--line); border-radius: 14px; }
+        details.menu-drop > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 12px 14px; cursor: pointer; list-style: none; font-weight: 700; }
+        details.menu-drop > summary::-webkit-details-marker { display: none; }
+        details.menu-drop > summary::after { content: ""; flex: none; width: 9px; height: 9px; border-right: 2.5px solid var(--primary); border-bottom: 2.5px solid var(--primary); transform: rotate(45deg); margin: -4px 4px 0 0; transition: transform 0.2s ease; }
+        details.menu-drop[open] > summary::after { transform: rotate(-135deg); margin-top: 4px; }
+        details.menu-drop > summary small { display: block; color: var(--muted); font-size: 14px; font-weight: 400; }
+        details.menu-drop .menu-drop-body { padding: 0 14px 14px; border-top: 1px solid var(--line); }
+    </style>"""
+
+
 def menu_html(menu):
     items = '\n'.join(f'            <li>{e(n)} · {kz(price)} Kz{f" ({e(note)})" if note else ""}</li>' for n, price, _sub, note in menu['items'])
     return (f'\n\n        <h2>Pratos e preços</h2>\n'
+            f'        <details class="menu-drop">\n'
+            f'        <summary><span>Ver os {len(menu["items"])} pratos e preços<small>A maioria entre {kz(menu["min"])} e {kz(menu["max"])} Kz</small></span></summary>\n'
+            f'        <div class="menu-drop-body">\n'
             f'        <p class="muted">A maioria dos pratos custa entre {kz(menu["min"])} e {kz(menu["max"])} Kz, segundo a ementa que o restaurante publica no menus.ao '
             f'(consultada a {e(pt_date(menu["checked"]))}). Os preços podem mudar.</p>\n'
             f'        <ul class="links">\n{items}\n        </ul>\n'
-            f'        <p class="muted"><a href="https://www.menus.ao/{e(menu["slug"])}/menu">Ver a ementa completa no menus.ao ({menu["total"]} pratos e bebidas)</a></p>')
+            f'        <p class="muted"><a href="https://www.menus.ao/{e(menu["slug"])}/menu">Ver a ementa completa no menus.ao ({menu["total"]} pratos e bebidas)</a></p>\n'
+            f'        </div>\n'
+            f'        </details>')
 
 
 def kz(value):
@@ -307,7 +325,7 @@ def page(v, others, desc_en, near=(), events=()):
     <meta name="theme-color" content="#CE1126">
     <link rel="icon" type="image/png" href="../icon-192.png">
     <script type="application/ld+json">{json.dumps(data, ensure_ascii=False).replace("</", "<\\/")}</script>
-    <style>{STYLE}    </style>{PH_STYLE if not photo and APP_ICONS.get(v['type']) else ''}
+    <style>{STYLE}    </style>{PH_STYLE if not photo and APP_ICONS.get(v['type']) else ''}{MENU_STYLE if menu else ''}
 </head>
 <body>
     <div class="strip" aria-hidden="true"></div>
