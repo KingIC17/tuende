@@ -1,0 +1,4 @@
+Contact: mailto:contacto@tuende.app
+Expires: 2027-10-25T00:00:00Z
+Preferred-Languages: pt, en, fr, es
+Canonical: https://tuende.app/.well-known/security.txt
