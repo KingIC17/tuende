@@ -1396,6 +1396,8 @@
         :is(#passportView, #quizView, .map-off) .submit-btn .icon { width: 18px; height: 18px; flex: none; }
         :is(#passportView, #quizView) .cta-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
         .event-badge.soon { background: var(--accent); color: var(--accent-ink); }
+        .zone-chips { margin-top: 10px; }
+        .results-tools #priceSelect { width: auto; }
         .group-prices { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--free-bg); color: var(--free-ink); font-size: 14px; }
         .group-prices b { display: inline-flex; align-items: center; gap: 6px; }
         .group-prices .icon { width: 16px; height: 16px; }
@@ -1486,8 +1488,10 @@
                 <p class="results-sub" id="resultsSub"></p>
                 <div class="results-tools" id="resultsTools">
                     <span class="results-count" id="resultsCount" aria-live="polite"></span>
+                    <select class="field" id="priceSelect" data-i18n-aria="priceLabel2" aria-label="Preço" hidden></select>
                     <select class="field" id="sortSelect" data-i18n-aria="sortLabel" aria-label="Ordenar"></select>
                 </div>
+                <div class="chips zone-chips" id="zoneChips" role="group" data-i18n-aria="zoneLabel" aria-label="Zona" hidden></div>
             </div>
             <div class="card-grid" id="resultsList"></div>
         </section>
@@ -3046,6 +3050,29 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                zoneAll: 'Todas as zonas',
+                zoneLabel: 'Zona',
+                inZone: 'Zona: {zone}',
+                priceLabel2: 'Preço',
+                priceAny: 'Qualquer preço',
+                priceFreeOnly: 'Só grátis',
+                priceUpTo: 'Até {price}',
+                landmarkLabel: 'Referência',
+                landmarkDist: '{place}, a {d}',
+                landmarkNext: 'Ao lado: {place}',
+                mapSaved: 'Guardados',
+                newTitle: 'Novos no Tuende',
+                newSub: 'Os últimos lugares que verificámos e juntámos ao guia.',
+                colPoolTitle: 'Hotéis com piscina',
+                colPoolDesc: 'Em Luanda e nas províncias',
+                colSeaTitle: 'Vista de mar',
+                colSeaDesc: 'Hotéis e restaurantes à beira-mar',
+                colSunsetTitle: 'Para ver o pôr do sol',
+                colSunsetDesc: 'Miradouros, esplanadas e lounges',
+                colTerraceTitle: 'Esplanadas e terraços',
+                colTerraceDesc: 'Para comer e beber ao ar livre',
+                colPharmacyTitle: 'Farmácias 24 horas',
+                colPharmacyDesc: 'Abertas a qualquer hora, segundo as próprias farmácias',
                 open24: 'Aberto 24 horas',
                 groupTitle: 'Em grupo fica mais barato',
                 groupOne: '1 pessoa: {kz}',
@@ -3750,6 +3777,29 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                zoneAll: 'All areas',
+                zoneLabel: 'Area',
+                inZone: 'Area: {zone}',
+                priceLabel2: 'Price',
+                priceAny: 'Any price',
+                priceFreeOnly: 'Free only',
+                priceUpTo: 'Up to {price}',
+                landmarkLabel: 'Landmark',
+                landmarkDist: '{place}, {d} away',
+                landmarkNext: 'Next door: {place}',
+                mapSaved: 'Saved',
+                newTitle: 'New on Tuende',
+                newSub: 'The latest places we checked and added to the guide.',
+                colPoolTitle: 'Hotels with a pool',
+                colPoolDesc: 'In Luanda and the provinces',
+                colSeaTitle: 'Sea views',
+                colSeaDesc: 'Seaside hotels and restaurants',
+                colSunsetTitle: 'Sunset spots',
+                colSunsetDesc: 'Viewpoints, terraces and lounges',
+                colTerraceTitle: 'Terraces',
+                colTerraceDesc: 'Eat and drink outdoors',
+                colPharmacyTitle: '24-hour pharmacies',
+                colPharmacyDesc: 'Open at any hour, according to the pharmacies',
                 open24: 'Open 24 hours',
                 groupTitle: 'Cheaper as a group',
                 groupOne: '1 person: {kz}',
@@ -4454,6 +4504,29 @@
                 saveDataOff: 'Économie de données : désactivée',
                 saveDataNote: 'Pas de photos dans les listes ni de cartes automatiques, pour consommer moins de données mobiles.',
                 mapLoad: 'Afficher la carte',
+                zoneAll: 'Tous les quartiers',
+                zoneLabel: 'Quartier',
+                inZone: 'Quartier : {zone}',
+                priceLabel2: 'Prix',
+                priceAny: 'Tous les prix',
+                priceFreeOnly: 'Gratuit seulement',
+                priceUpTo: 'Jusqu\'à {price}',
+                landmarkLabel: 'Repère',
+                landmarkDist: '{place}, à {d}',
+                landmarkNext: 'Juste à côté : {place}',
+                mapSaved: 'Enregistrés',
+                newTitle: 'Nouveau sur Tuende',
+                newSub: 'Les derniers lieux vérifiés et ajoutés au guide.',
+                colPoolTitle: 'Hôtels avec piscine',
+                colPoolDesc: 'À Luanda et dans les provinces',
+                colSeaTitle: 'Vue sur la mer',
+                colSeaDesc: 'Hôtels et restaurants en bord de mer',
+                colSunsetTitle: 'Pour le coucher de soleil',
+                colSunsetDesc: 'Belvédères, terrasses et lounges',
+                colTerraceTitle: 'Terrasses',
+                colTerraceDesc: 'Manger et boire en plein air',
+                colPharmacyTitle: 'Pharmacies 24 h/24',
+                colPharmacyDesc: 'Ouvertes à toute heure, selon les pharmacies',
                 open24: 'Ouvert 24 h/24',
                 groupTitle: 'Moins cher en groupe',
                 groupOne: '1 personne : {kz}',
@@ -5158,6 +5231,29 @@
                 saveDataOff: 'Ahorro de datos: desactivado',
                 saveDataNote: 'Sin fotos en las listas ni mapas automáticos, para gastar menos datos móviles.',
                 mapLoad: 'Mostrar mapa',
+                zoneAll: 'Todas las zonas',
+                zoneLabel: 'Zona',
+                inZone: 'Zona: {zone}',
+                priceLabel2: 'Precio',
+                priceAny: 'Cualquier precio',
+                priceFreeOnly: 'Solo gratis',
+                priceUpTo: 'Hasta {price}',
+                landmarkLabel: 'Referencia',
+                landmarkDist: '{place}, a {d}',
+                landmarkNext: 'Al lado: {place}',
+                mapSaved: 'Guardados',
+                newTitle: 'Nuevo en Tuende',
+                newSub: 'Los últimos lugares que verificamos y añadimos a la guía.',
+                colPoolTitle: 'Hoteles con piscina',
+                colPoolDesc: 'En Luanda y en las provincias',
+                colSeaTitle: 'Vista al mar',
+                colSeaDesc: 'Hoteles y restaurantes junto al mar',
+                colSunsetTitle: 'Para ver la puesta de sol',
+                colSunsetDesc: 'Miradores, terrazas y lounges',
+                colTerraceTitle: 'Terrazas',
+                colTerraceDesc: 'Comer y beber al aire libre',
+                colPharmacyTitle: 'Farmacias 24 horas',
+                colPharmacyDesc: 'Abiertas a cualquier hora, según las propias farmacias',
                 open24: 'Abierto 24 horas',
                 groupTitle: 'Más barato en grupo',
                 groupOne: '1 persona: {kz}',
@@ -5749,7 +5845,13 @@
             wonders: { ids: [28, 13, 84, 85, 15, 26, 86], cover: 28, title: 'colWondersTitle', desc: 'colWondersDesc' },
             nature: { ids: [26, 11, 28, 27, 7, 29, 15], cover: 26, title: 'colNatureTitle', desc: 'colNatureDesc' },
             free: { match: (v) => v.family && v.price?.free, cover: 7, title: 'colFreeTitle', desc: 'colFreeDesc' },
-            transport: { ids: [34, 35, 36, 37, 38, 39, 40], cover: 35, title: 'colTransportTitle', desc: 'colTransportDesc' }
+            transport: { ids: [34, 35, 36, 37, 38, 39, 40], cover: 35, title: 'colTransportTitle', desc: 'colTransportDesc' },
+            // Themed lists: each place's own description says it (checked one by one).
+            sunset: { ids: [7, 184, 1, 117, 188, 213], cover: 7, title: 'colSunsetTitle', desc: 'colSunsetDesc' },
+            sea: { ids: [10, 31, 114, 115, 226], cover: 31, title: 'colSeaTitle', desc: 'colSeaDesc' },
+            terrace: { ids: [31, 10, 54, 111, 114, 119, 150, 188], cover: 54, title: 'colTerraceTitle', desc: 'colTerraceDesc' },
+            pool: { ids: [6, 186, 190, 188, 189, 191, 192, 226, 116, 12, 152, 154, 156, 162, 167, 149, 194, 195], cover: 186, title: 'colPoolTitle', desc: 'colPoolDesc' },
+            pharmacy24: { match: (v) => Boolean(v.open24), cover: 228, title: 'colPharmacyTitle', desc: 'colPharmacyDesc' }
         };
 
         const EVENT_TYPES = {
@@ -8088,7 +8190,10 @@
         let ratingStats = {};
         let lastFocus = null;
 
-        const DEFAULT_FILTERS = { q: '', where: '', quick: null, category: null, collection: null, saved: false };
+        const DEFAULT_FILTERS = { q: '', where: '', quick: null, category: null, collection: null, saved: false, area: '', price: '' };
+        // Price filter: free places, or up to a value in Kz (per person, per night or per ticket, as each place gives it).
+        const PRICE_STEPS = ['free', '10000', '50000', '150000'];
+        const priceOk = (v, step) => (step === 'free' ? Boolean(v.price?.free) : pricedForSort(v) && priceValue(v) <= Number(step));
         const state = { view: 'home', filters: { ...DEFAULT_FILTERS }, events: { ...DEFAULT_EVENT_FILTERS }, sort: 'relevance', rating: 0, openId: null, userPos: null };
 
         const $ = (id) => document.getElementById(id);
@@ -8394,7 +8499,8 @@
                 ...LANGS.map((l) => v.highlight?.[l] || ''),
                 CATEGORY[v.type].keywords, ...LANGS.map((l) => CATEGORY[v.type][l].join(' ')),
                 v.family ? 'família famílias crianças family families kids' : '',
-                v.price?.free ? 'grátis gratuito gratuita entrada free' : ''
+                v.price?.free ? 'grátis gratuito gratuita entrada free' : '',
+                ...Object.values(menuData[v.id] || {}).flat().map((d) => (d && typeof d === 'object' ? `${d.name || ''} ${d.desc || ''}` : ''))
             ].join(' ');
             searchIndex = {
                 all: new Map(venues.map((v) => [v.id, tokens(fullText(v))])),
@@ -8668,6 +8774,8 @@
             if (f.category) params.set('category', f.category);
             if (f.collection) params.set('collection', f.collection);
             if (f.saved) params.set('saved', '1');
+            if (f.area) params.set('zona', f.area);
+            if (f.price) params.set('preco', f.price);
             return params.toString();
         }
 
@@ -8681,7 +8789,9 @@
                 quick: has(QUICK, params.get('filter')) ? params.get('filter') : null,
                 category: has(CATEGORY, params.get('category')) ? params.get('category') : null,
                 collection: has(COLLECTIONS, params.get('collection')) ? params.get('collection') : null,
-                saved: params.get('saved') === '1'
+                saved: params.get('saved') === '1',
+                area: (params.get('zona') || '').slice(0, 60),
+                price: PRICE_STEPS.includes(params.get('preco')) ? params.get('preco') : ''
             };
         }
 
@@ -8691,8 +8801,7 @@
         }
 
         let cheapNote = '';
-        function filteredVenues() {
-            const f = state.filters;
+        function filteredVenues(f = state.filters) {
             const { cheap, q } = cheapQuery(f.q);
             let list = venues.filter((v) =>
                 (!f.saved || favorites.includes(v.id)) &&
@@ -8700,6 +8809,8 @@
                 (!f.collection || collectionMatch(f.collection, v)) &&
                 (!f.quick || QUICK[f.quick].match(v)) &&
                 (!f.where || f.where === 'near' || cityOf(v) === f.where) &&
+                (!f.area || areaOf(v) === f.area) &&
+                (!f.price || priceOk(v, f.price)) &&
                 matchesQuery(v, q)
             );
             // Cheap search: only places that are what was asked for (a hotel's room price says nothing about a cheap meal),
@@ -8990,6 +9101,8 @@
             if (savedList.length) parts.push(sectionHTML('secSaved', t('savedTitle'), '', rowHTML(savedList), { saved: true }));
 
             parts.push(sectionHTML('secRecommended', t('recommendedTitle'), t('recommendedSub'), rowHTML(recommendedList(), { reason: true })));
+            // Place ids grow as places are added, so the highest ids are the newest in the guide.
+            parts.push(sectionHTML('secNew', t('newTitle'), t('newSub'), rowHTML([...venues].sort((a, b) => b.id - a.id).slice(0, 10))));
 
             // Events already under way for a week or more go after the ones about to start, so the list changes from day to day.
             const today = luandaToday();
@@ -9372,6 +9485,8 @@
             if (f.quick && QUICK[f.quick].note) parts.push(t(QUICK[f.quick].note));
             if (f.q && (f.category || f.collection || f.quick)) parts.push(t('resultsFor', { q: f.q }));
             if (f.where && f.where !== 'near' && resultsTitle() !== t('inCity', { city: f.where })) parts.push(t('inCity', { city: f.where }));
+            if (f.area) parts.push(t('inZone', { zone: f.area }));
+            if (f.price) parts.push(priceStepText(f.price));
             if (cheapNote) parts.push(t(cheapNote));
             return parts.join(' · ');
         }
@@ -9387,7 +9502,37 @@
                 ${sectionHTML('secEmptyRecommended', t('recommendedTitle'), '', rowHTML(recommendedList(), { reason: true }))}`;
         }
 
+        const priceStepText = (step) => (step === 'free' ? t('priceFreeOnly') : t('priceUpTo', { price: t('kzThousand', { a: kz(Number(step)) }) }));
+
+        // Zones (bairros) and price come from the list as it would be without them, so the choices never lead to an empty page.
+        function renderResultsRefiners() {
+            const f = state.filters;
+            const base = filteredVenues({ ...f, area: '', price: '' });
+            const oneProvince = f.where && f.where !== 'near';
+            const zones = {};
+            if (oneProvince) base.forEach((v) => { const a = areaOf(v); if (a && !v.citywide) zones[a] = (zones[a] || 0) + 1; });
+            const zoneList = Object.entries(zones).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'pt')).slice(0, 14);
+            $('zoneChips').hidden = zoneList.length < 2;
+            $('zoneChips').innerHTML = zoneList.length < 2 ? '' : [['', t('zoneAll'), base.length], ...zoneList.map(([a, n]) => [a, a, n])].map(([key, label, n]) => {
+                const active = f.area === key;
+                return `<button type="button" class="chip${active ? ' active' : ''}" data-zone="${escapeHTML(key)}" aria-pressed="${active}">${escapeHTML(label)} <span class="chip-count">(${n})</span></button>`;
+            }).join('');
+            const steps = PRICE_STEPS.filter((step) => base.some((v) => priceOk(v, step)));
+            const priced = base.filter((v) => v.price?.free || pricedForSort(v)).length;
+            $('priceSelect').hidden = priced < 3 && !f.price;
+            $('priceSelect').innerHTML = [['', t('priceAny')], ...steps.map((step) => [step, priceStepText(step)])]
+                .map(([key, label]) => `<option value="${key}">${escapeHTML(label)}</option>`).join('');
+            $('priceSelect').value = steps.includes(f.price) ? f.price : '';
+        }
+
+        function updateResults(changes) {
+            state.filters = { ...state.filters, ...changes };
+            history.replaceState(null, '', `${location.pathname}?${filtersToQuery(state.filters)}`);
+            renderResults();
+        }
+
         function renderResults() {
+            renderResultsRefiners();
             const list = filteredVenues();
             $('resultsTitle').textContent = resultsTitle();
             $('resultsSub').textContent = resultsSub();
@@ -10023,6 +10168,7 @@
                 const byPlace = eventsByPlace();
                 return venues.filter((v) => v.exact && byPlace.has(v.id));
             }
+            if (mapCategory === 'saved') return venues.filter((v) => v.exact && favorites.includes(v.id));
             return venues.filter((v) => v.exact && (!mapCategory || v.type === mapCategory));
         }
 
@@ -10377,7 +10523,10 @@
             const all = venues.filter((v) => v.exact);
             $('mapIntro').textContent = t('mapIntro', { n: all.length, total: venues.length });
             const types = Object.keys(CATEGORY).filter((k) => all.some((v) => v.type === k));
+            const savedOnMap = all.filter((v) => favorites.includes(v.id)).length;
+            if (mapCategory === 'saved' && !savedOnMap) mapCategory = '';
             $('mapFilter').innerHTML = [`<button class="chip${mapCategory ? '' : ' active'}" type="button" data-map-cat="" aria-pressed="${!mapCategory}">${t('mapAll')}</button>`,
+                ...(savedOnMap ? [`<button class="chip${mapCategory === 'saved' ? ' active' : ''}" type="button" data-map-cat="saved" aria-pressed="${mapCategory === 'saved'}">${icon('heart')}${t('mapSaved')} <span class="chip-count">${savedOnMap}</span></button>`] : []),
                 `<button class="chip${mapCategory === 'events' ? ' active' : ''}" type="button" data-map-cat="events" aria-pressed="${mapCategory === 'events'}">${icon('calendar')}${t('mapEvents')} <span class="chip-count">${[...eventsByPlace().keys()].filter((id) => venues.find((v) => v.id === id)?.exact).length}</span></button>`,
                 ...types.map((k) => `<button class="chip${mapCategory === k ? ' active' : ''}" type="button" data-map-cat="${k}" aria-pressed="${mapCategory === k}">${icon(CATEGORY[k].icon)}${escapeHTML(catLabel(k, true))}</button>`)].join('');
             mapEngine ||= hasWebGL() ? 'gl' : 'leaflet';
@@ -10706,6 +10855,22 @@
             return `<div class="fact"><dt>${t('officialClassLabel')}</dt><dd>${escapeHTML(text)} <a class="text-link" href="${escapeHTML(o.source.url)}" target="_blank" rel="noopener">${escapeHTML(o.source.label)}</a></dd></div>`;
         }
 
+        // Addresses in Angola are often vague: name the nearest well-known place, as people give directions.
+        const LANDMARK_TYPES = ['plaza', 'culture', 'museum', 'shopping'];
+        function landmarkRowHTML(v) {
+            if (!v.exact || v.citywide) return '';
+            let best = null;
+            for (const x of venues) {
+                if (x.id === v.id || !x.exact || !LANDMARK_TYPES.includes(x.type)) continue;
+                const d = kmBetween(v, x);
+                if (d <= 1.5 && (!best || d < best.d)) best = { x, d };
+            }
+            if (!best) return '';
+            const place = `<button class="link-btn" type="button" data-open="${best.x.id}">${escapeHTML(best.x.name)}</button>`;
+            const text = best.d < 0.08 ? t('landmarkNext', { place }) : t('landmarkDist', { d: best.d < 1 ? `${Math.max(100, Math.round((best.d * 1000) / 50) * 50)} m` : `${formatKm(best.d)} km`, place });
+            return `<div class="fact"><dt>${t('landmarkLabel')}</dt><dd>${text}</dd></div>`;
+        }
+
         function practicalHTML(v) {
             const digits = phoneDigits(v);
             const address = v.address || placeLine(v);
@@ -10721,6 +10886,7 @@
                     <dl class="facts">
                         <div class="fact"><dt>${t('hoursLabel')}</dt><dd>${hoursHTML(v)}</dd></div>
                         <div class="fact"><dt>${t('addressLabel')}</dt><dd>${escapeHTML(address)}</dd></div>
+                        ${landmarkRowHTML(v)}
                         <div class="fact"><dt>${t('mapLabel')}</dt><dd>${map}${v.citywide ? '' : `<a class="text-link" href="${mapsURL(v, 'search')}" target="_blank" rel="noopener">${icon('pin')}${t('viewMap')}</a>`}</dd></div>
                         <div class="fact"><dt>${t('priceLabel')}</dt><dd>${escapeHTML(priceText(v))}${fxText(v) ? `<br><span class="fx">${escapeHTML(fxText(v))}</span> <span class="price-note">(${escapeHTML(fxNote())})</span>` : ''}${v.price?.estimate ? `<br>${t('priceEstimate')}` : ''}${v.price?.note ? `<br><span class="price-note">${escapeHTML(v.price.note[lang] || v.price.note.pt)}</span>` : ''}</dd></div>
                         ${officialRowHTML(v)}
@@ -13947,6 +14113,8 @@
             showResults({ q: $('qInput').value.trim().slice(0, 80), where: $('whereSelect').value });
         });
 
+        $('priceSelect').addEventListener('change', (e) => updateResults({ price: e.target.value }));
+
         $('sortSelect').addEventListener('change', (e) => {
             state.sort = e.target.value;
             if (state.sort === 'distance' && !state.userPos) locate();
@@ -14023,6 +14191,8 @@
             if (target.closest('[data-events-reset]')) { setEventFilters({ ...DEFAULT_EVENT_FILTERS }, '[data-events-when="all"]'); return; }
             const rhythmChip = target.closest('[data-events-rhythm]');
             if (rhythmChip) { setEventFilters({ rhythm: rhythmChip.dataset.eventsRhythm }, `[data-events-rhythm="${rhythmChip.dataset.eventsRhythm}"]`); return; }
+            const zoneChip = target.closest('[data-zone]');
+            if (zoneChip) { updateResults({ area: zoneChip.dataset.zone }); return; }
             const stampProvince = target.closest('[data-stamp-province]');
             if (stampProvince) { showResults({ where: stampProvince.dataset.stampProvince }); return; }
             if (target.closest('[data-passport-share]')) { sharePassport(); return; }
