@@ -1657,6 +1657,68 @@
         @media (max-width: 380px) {
             #installTopBtn { display: none !important; }
         }
+
+        /* ---------- City switcher ---------- */
+        .city-pill { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; margin-bottom: 8px; padding: 0 12px 0 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--text); font-size: 14px; font-weight: 800; }
+        .city-pill .icon { width: 16px; height: 16px; color: var(--primary); }
+        .city-pill .icon:last-child { width: 14px; height: 14px; color: var(--muted); transform: rotate(90deg); }
+        .pick-row .pick-count { flex: none; font-size: 13px; color: var(--muted); }
+        .pick-row.on { background: var(--primary-soft); }
+
+        /* ---------- Profile, inbox and authors ---------- */
+        .top-btn { position: relative; }
+        .badge-dot { position: absolute; top: 6px; right: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary-fill); box-shadow: 0 0 0 2px var(--surface); }
+        .profile-head { display: flex; align-items: center; gap: 16px; margin-top: 8px; }
+        .profile-head .avatar.lg { width: 76px; height: 76px; font-size: 32px; }
+        .profile-head .avatar.lg .icon { width: 34px; height: 34px; }
+        .profile-name { font-size: 26px; font-weight: 800; line-height: 1.2; }
+        .profile-head .link-btn { min-height: 36px; padding: 0; }
+        .profile-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(58px, 1fr)); gap: 6px; margin-top: 18px; }
+        .profile-stat { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 12px 2px; border-radius: 14px; background: var(--surface-2); text-align: center; min-width: 0; }
+        .profile-stat b { font-size: 19px; font-weight: 800; }
+        .profile-stat span { max-width: 100%; font-size: 11.5px; color: var(--muted); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .profile-helped { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 10px 14px; border-radius: 12px; background: var(--free-bg); color: var(--free-ink); font-weight: 700; font-size: 14.5px; }
+        .profile-helped .icon { width: 18px; height: 18px; }
+        .profile-guest { margin-top: 14px; }
+        .profile-tabs { margin-top: 20px; }
+        .profile-pane { margin-top: 14px; }
+        .notif { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 8px; border: none; border-radius: 14px; background: none; color: var(--text); text-align: left; font-size: 15px; }
+        .notif + .notif { margin-top: 2px; }
+        .notif:hover:not(:disabled) { background: var(--surface-2); }
+        .notif.unread { background: var(--primary-soft); }
+        .notif-icon { flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); }
+        .notif-icon .icon { width: 18px; height: 18px; }
+        .notif-main { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
+        .notif-main small { color: var(--muted); font-size: 13px; }
+        .draft-card { display: flex; align-items: center; gap: 12px; width: 100%; margin-bottom: 12px; padding: 14px; border: 1.5px dashed var(--border); border-radius: 16px; background: var(--surface); color: var(--text); text-align: left; }
+        .draft-card .icon { flex: none; width: 22px; height: 22px; color: var(--primary); }
+        .draft-card span { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+        .draft-card small { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .draft-card b { color: var(--primary); }
+        .draft-note { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 12px; border-radius: 12px; background: var(--surface-2); font-size: 14px; font-weight: 600; }
+        .draft-note .link-btn { min-height: 32px; font-size: 14px; }
+        .post-status { position: absolute; top: 8px; left: 8px; padding: 2px 8px; border-radius: 999px; background: var(--primary-fill); color: #FFFFFF; font-size: 12px; font-weight: 700; }
+        .post-head .post-who { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; padding: 0; border: none; background: none; color: inherit; text-align: left; }
+        .post-head .post-who > div { min-width: 0; }
+        .follow-btn { flex: none; min-height: 34px; padding: 0 14px; border: 1.5px solid var(--primary); border-radius: 999px; background: var(--primary-fill); color: #FFFFFF; font-size: 13.5px; font-weight: 800; }
+        .follow-btn.on { background: transparent; color: var(--primary); }
+        .post-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .post-tag { min-height: 30px; padding: 0 10px; border: none; border-radius: 999px; background: var(--primary-soft); color: var(--primary); font-size: 13px; font-weight: 700; }
+        .compose-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag-chip { position: relative; }
+        .tag-chip input { position: absolute; opacity: 0; pointer-events: none; }
+        .tag-chip span { display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px; border: 1.5px solid var(--border); border-radius: 999px; font-size: 14px; font-weight: 700; cursor: pointer; }
+        .tag-chip input:checked + span { border-color: var(--primary-fill); background: var(--primary-fill); color: #FFFFFF; }
+        .tag-chip input:focus-visible + span { outline: 2px solid var(--primary); outline-offset: 2px; }
+        .chip-sep { flex: none; width: 1px; margin: 8px 2px; background: var(--line); }
+        .author-panel { max-width: 640px; padding: 28px 18px 22px; }
+        .author-head { display: flex; align-items: center; gap: 14px; padding-right: 48px; }
+        .author-head h2 { font-size: 22px; font-weight: 800; }
+        .author-head p { color: var(--muted); font-size: 14px; }
+        .author-head .follow-btn { margin-left: auto; }
+        .place-list { display: grid; gap: 2px; }
+        .post-card { position: relative; }
+        .post-status { z-index: 1; }
     </style>
 </head>
 <body>
@@ -1689,7 +1751,7 @@
                 <button class="top-btn" id="installTopBtn" type="button" data-info="install" data-i18n-aria="installTitle" hidden aria-label="Descarregar a app"><span data-icon="download"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><span class="desktop-only" data-i18n="installTitle">Descarregar a app</span></button>
                 <button class="top-btn" id="themeBtn" type="button"><span id="themeIcon"></span><span id="themeLabel"></span></button>
                 <button class="top-btn desktop-only" id="plusTopBtn" type="button" data-action="plus"><span data-icon="plus"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span data-i18n="addNav">Adicionar</span></button>
-                <button class="top-btn" id="accountBtn" type="button" hidden><span id="accountIcon"></span><span id="accountLabel"></span></button>
+                <button class="top-btn" id="accountBtn" type="button" hidden><span id="accountIcon"></span><span id="accountLabel"></span><span class="badge-dot" id="inboxDot" hidden></span></button>
                 <button class="top-btn solid desktop-only" id="savedBtn" type="button"><span data-icon="heart"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><span data-i18n="savedBtn">Guardados</span><span class="count-pill" id="savedCount" hidden>0</span></button>
             </div>
         </div>
@@ -1698,6 +1760,7 @@
     <section class="hero" id="hero">
         <div class="container hero-grid">
             <div class="hero-main">
+            <button class="city-pill" type="button" id="cityPill" data-action="city" data-i18n-aria="cityTitle" aria-label="Onde está?"></button>
             <h1 data-i18n="heroTitle">Descubra onde ir em Angola</h1>
             <p class="hero-sub" data-i18n="heroSub">Encontre restaurantes, praias, hotéis, vida noturna e experiências perto de si.</p>
             <form class="search-card" id="searchForm" role="search">
@@ -1917,6 +1980,11 @@
             <div id="quizBody" aria-live="polite"></div>
         </section>
 
+        <section id="profileView" class="guide-page" hidden aria-labelledby="profileTitle">
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <div id="profileBody"></div>
+        </section>
+
         <section id="feedView" class="guide-page" hidden aria-labelledby="feedTitle">
             <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
             <div class="feed-head">
@@ -1950,6 +2018,7 @@
                     <button type="button" class="footer-link" data-action="fx" data-i18n="fxTitle">Câmbio do dia</button>
                     <button type="button" class="footer-link" data-action="plan" data-i18n="planTitle">Os meus planos</button>
                     <button type="button" class="footer-link" data-action="passport" data-i18n="passportTitle">O meu passaporte</button>
+                    <button type="button" class="footer-link" data-action="profile" data-i18n="profileTitle">O meu perfil</button>
                     <button type="button" class="footer-link" data-action="quiz" data-i18n="quizTitle">Quanto conhece Angola?</button>
                 </nav>
                 <nav class="footer-col" aria-labelledby="footAbout">
@@ -2006,6 +2075,10 @@
 
     <div class="modal" id="venueModal" role="dialog" aria-modal="true">
         <div class="modal-panel" id="venuePanel"></div>
+    </div>
+
+    <div class="modal" id="authorModal" role="dialog" aria-modal="true" aria-labelledby="authorName">
+        <div class="modal-panel info-panel author-panel" id="authorPanel"></div>
     </div>
 
     <div class="modal" id="postModal" role="dialog" aria-modal="true" aria-label="Momento">
@@ -2380,7 +2453,12 @@
             {"id": 228, "type": "health", "name": "Farmácia Maianga (MonizSilva)", "location": "Luanda - Maianga", "lat": -8.8236203, "lng": 13.2303773, "exact": true, "description": "Farmácia da rede MonizSilva na Rua N'Kwame N'Krumah, na Maianga. Segundo a própria rede, está aberta 24 horas, todos os dias. Confirme antes de ir de madrugada.", "highlight": {"pt": "Farmácia aberta 24 horas, todos os dias, na Maianga.", "en": "Pharmacy open 24 hours a day, every day, in Maianga.", "fr": "Pharmacie ouverte 24 h/24, tous les jours, à Maianga.", "es": "Farmacia abierta las 24 horas, todos los días, en Maianga."}, "verified": {"date": "2026-10-25", "sources": [{"label": "MonizSilva (página da Farmácia Maianga)", "url": "https://monizsilva.co.ao/farmacias/maianga"}, {"label": "MonizSilva (mapa das farmácias)", "url": "https://www.google.com/maps/d/viewer?mid=16qkq8AiVjK465Y8gn0VCz0DcASc"}]}, "address": "Rua N'Kwame N'Krumah, 38/40, Maianga, Luanda", "phone": "", "open24": true, "hoursText": {"pt": "Todos os dias, 24 horas (segundo a própria farmácia).", "en": "Every day, 24 hours (according to the pharmacy itself).", "fr": "Tous les jours, 24 h/24 (selon la pharmacie elle-même).", "es": "Todos los días, 24 horas (según la propia farmacia)."}},
             {"id": 229, "type": "health", "name": "Farmácia SGMED Maculusso", "location": "Luanda - Maculusso", "lat": -8.8236328, "lng": 13.2358982, "exact": false, "description": "Farmácia da rede SGMED na Rua Comandante Kwenha, n.º 47, no Maculusso. Segundo a própria rede, está aberta 24 horas, todos os dias. O ponto no mapa é o da rua, não o do número.", "highlight": {"pt": "Farmácia aberta 24 horas, todos os dias, no Maculusso.", "en": "Pharmacy open 24 hours a day, every day, in Maculusso.", "fr": "Pharmacie ouverte 24 h/24, tous les jours, à Maculusso.", "es": "Farmacia abierta las 24 horas, todos los días, en Maculusso."}, "verified": {"date": "2026-10-25", "sources": [{"label": "SGMED (contactos e horários)", "url": "https://sgmed.co.ao/contactos/"}, {"label": "OpenStreetMap (Rua Comandante Kwenha)", "url": "https://www.openstreetmap.org/way/37010136"}]}, "address": "Rua Comandante Kwenha, 47, Maculusso, Luanda", "phone": "", "open24": true, "hoursText": {"pt": "Todos os dias, 24 horas (segundo a própria farmácia).", "en": "Every day, 24 hours (according to the pharmacy itself).", "fr": "Tous les jours, 24 h/24 (selon la pharmacie elle-même).", "es": "Todos los días, 24 horas (según la propia farmacia)."}},
             {"id": 230, "type": "health", "name": "Farmácia SGMED Morro Bento", "location": "Luanda - Morro Bento", "lat": -8.8965557, "lng": 13.2009237, "exact": false, "description": "Farmácia da rede SGMED na rua principal do IMETRO, no Morro Bento. Segundo a própria rede, está aberta 24 horas, todos os dias. O ponto no mapa é o da rua.", "highlight": {"pt": "Farmácia aberta 24 horas, todos os dias, no Morro Bento.", "en": "Pharmacy open 24 hours a day, every day, in Morro Bento.", "fr": "Pharmacie ouverte 24 h/24, tous les jours, à Morro Bento.", "es": "Farmacia abierta las 24 horas, todos los días, en Morro Bento."}, "verified": {"date": "2026-10-25", "sources": [{"label": "SGMED (contactos e horários)", "url": "https://sgmed.co.ao/contactos/"}, {"label": "OpenStreetMap (Rua do IMETRO)", "url": "https://www.openstreetmap.org/way/59914159"}]}, "address": "Rua Principal do IMETRO, Morro Bento, Luanda", "phone": "", "open24": true, "hoursText": {"pt": "Todos os dias, 24 horas (segundo a própria farmácia).", "en": "Every day, 24 hours (according to the pharmacy itself).", "fr": "Tous les jours, 24 h/24 (selon la pharmacie elle-même).", "es": "Todos los días, 24 horas (según la propia farmacia)."}},
-            {"id": 231, "type": "health", "name": "Farmácia SGMED Camama", "location": "Luanda - Camama", "lat": -8.8891094, "lng": 13.2586323, "exact": true, "description": "Farmácia da rede SGMED no posto de abastecimento da TotalEnergies do Camama. Segundo a própria rede, está aberta 24 horas, todos os dias.", "highlight": {"pt": "Farmácia aberta 24 horas, todos os dias, no Camama.", "en": "Pharmacy open 24 hours a day, every day, in Camama.", "fr": "Pharmacie ouverte 24 h/24, tous les jours, à Camama.", "es": "Farmacia abierta las 24 horas, todos los días, en Camama."}, "verified": {"date": "2026-10-25", "sources": [{"label": "SGMED (contactos e horários)", "url": "https://sgmed.co.ao/contactos/"}, {"label": "OpenStreetMap (TotalEnergies P.A. Camama)", "url": "https://www.openstreetmap.org/way/700121193"}]}, "address": "Estrada do Camama, posto de abastecimento da TotalEnergies, Luanda", "phone": "", "open24": true, "hoursText": {"pt": "Todos os dias, 24 horas (segundo a própria farmácia).", "en": "Every day, 24 hours (according to the pharmacy itself).", "fr": "Tous les jours, 24 h/24 (selon la pharmacie elle-même).", "es": "Todos los días, 24 horas (según la propia farmacia)."}}
+            {"id": 231, "type": "health", "name": "Farmácia SGMED Camama", "location": "Luanda - Camama", "lat": -8.8891094, "lng": 13.2586323, "exact": true, "description": "Farmácia da rede SGMED no posto de abastecimento da TotalEnergies do Camama. Segundo a própria rede, está aberta 24 horas, todos os dias.", "highlight": {"pt": "Farmácia aberta 24 horas, todos os dias, no Camama.", "en": "Pharmacy open 24 hours a day, every day, in Camama.", "fr": "Pharmacie ouverte 24 h/24, tous les jours, à Camama.", "es": "Farmacia abierta las 24 horas, todos los días, en Camama."}, "verified": {"date": "2026-10-25", "sources": [{"label": "SGMED (contactos e horários)", "url": "https://sgmed.co.ao/contactos/"}, {"label": "OpenStreetMap (TotalEnergies P.A. Camama)", "url": "https://www.openstreetmap.org/way/700121193"}]}, "address": "Estrada do Camama, posto de abastecimento da TotalEnergies, Luanda", "phone": "", "open24": true, "hoursText": {"pt": "Todos os dias, 24 horas (segundo a própria farmácia).", "en": "Every day, 24 hours (according to the pharmacy itself).", "fr": "Tous les jours, 24 h/24 (selon la pharmacie elle-même).", "es": "Todos los días, 24 horas (según la propia farmacia)."}},
+            {"id": 232, "type": "restaurant", "name": "O Almeida", "location": "Luanda - Via Expressa", "lat": -8.977134, "lng": 13.173935, "exact": true, "description": "Restaurante na Via Expressa (antigo Sem Dem), em Luanda, com grelhados, bifes, peixe, marisco, bacalhau, risotos e pizzas. Na ementa há pratos angolanos como calulu de peixe seco e fresco, mufete de chopa na brasa e cabidela de galinha. Horário por confirmar.", "highlight": {"pt": "Grelhados, marisco e pratos angolanos na Via Expressa.", "en": "Grills, seafood and Angolan dishes on the Via Expressa.", "fr": "Grillades, fruits de mer et plats angolais sur la Via Expressa.", "es": "Parrilla, marisco y platos angoleños en la Via Expressa."}, "verified": {"date": "2026-10-25", "sources": [{"label": "menus.ao (ementa e mapa, outubro de 2026)", "url": "https://www.menus.ao/o-almeida/menu"}]}, "address": "Via Expressa (antigo Sem Dem), Luanda", "phone": ""},
+            {"id": 233, "type": "bar", "name": "Bar da Amizade", "location": "Luanda - Futungo de Belas", "lat": -8.9139837, "lng": 13.1620031, "exact": false, "description": "Bar e restaurante em Futungo de Belas, com petiscos, snacks, pizzas, prato do dia e pratos de carne e de peixe. Na ementa há pratos angolanos como moamba de galinha rija e calulu de carne seca. Segundo a ementa, aos preços acresce 7% de IVA. A posição no mapa é aproximada; horário por confirmar.", "highlight": {"pt": "Bar com petiscos e pratos angolanos em Futungo de Belas.", "en": "A bar with snacks and Angolan dishes in Futungo de Belas.", "fr": "Un bar avec en-cas et plats angolais à Futungo de Belas.", "es": "Un bar con tapas y platos angoleños en Futungo de Belas."}, "verified": {"date": "2026-10-25", "sources": [{"label": "menus.ao (ementa e morada, outubro de 2026)", "url": "https://www.menus.ao/bar-da-amizade/menu"}, {"label": "OpenStreetMap (2018)", "url": "https://www.openstreetmap.org/way/420463490"}]}, "address": "Rua dos Camarotes, n.º 33, Futungo de Belas II, Luanda", "phone": ""},
+            {"id": 234, "type": "restaurant", "name": "Restaurante Tia Maria", "location": "Luanda - Coqueiros", "lat": -8.8141093, "lng": 13.2270486, "exact": false, "description": "Restaurante de cozinha portuguesa nos Coqueiros, junto ao Estádio dos Coqueiros e ao Clube de Ténis de Luanda. Tem decoração rústica, em madeira, carnes, peixe, marisco e uma carta de vinhos variada, e também serve funge. A posição no mapa é aproximada; horário por confirmar.", "highlight": {"pt": "Cozinha portuguesa e funge junto ao Estádio dos Coqueiros.", "en": "Portuguese cooking and funge by the Coqueiros stadium.", "fr": "Cuisine portugaise et funge près du stade dos Coqueiros.", "es": "Cocina portuguesa y funge junto al estadio dos Coqueiros."}, "verified": {"date": "2026-10-25", "sources": [{"label": "Ver Angola (abril de 2021)", "url": "https://www.verangola.net/va/pt/042021/sugestoes/25248/Restaurante-Tia-Maria-Onde-comer.htm"}, {"label": "menus.ao (ementa e morada, outubro de 2026)", "url": "https://www.menus.ao/tia-maria/menu"}]}, "address": "Rua Francisco das Necessidades Castelo Branco, Coqueiros, Luanda", "phone": ""},
+            {"id": 235, "type": "restaurant", "name": "PontoVIP", "location": "Luanda - Talatona", "lat": -8.920401, "lng": 13.19533, "exact": true, "description": "Snack-bar e cafetaria no Condomínio Palanca Negra, em Talatona, com petiscos, sanduíches, hambúrgueres, sopas, saladas e refeições, entre elas mufete de carapau. No mesmo espaço há barbearia e salão de unhas. Horário por confirmar.", "highlight": {"pt": "Petiscos e refeições, com mufete de carapau, em Talatona.", "en": "Snacks and meals, including carapau mufete, in Talatona.", "fr": "En-cas et repas, dont le mufete de carapau, à Talatona.", "es": "Tapas y comidas, con mufete de carapau, en Talatona."}, "verified": {"date": "2026-10-25", "sources": [{"label": "menus.ao (ementa e mapa, outubro de 2026)", "url": "https://www.menus.ao/pontovip/menu"}, {"label": "OpenStreetMap (Condomínio Palanca Negra)", "url": "https://www.openstreetmap.org/way/284197118"}]}, "address": "Condomínio Palanca Negra, casa 42, Talatona, Luanda", "phone": ""},
+            {"id": 236, "type": "culture", "name": "Cine N'Gola", "location": "Luanda - Congolenses", "lat": -8.8339609, "lng": 13.2637263, "exact": true, "description": "Cinema inaugurado em 1960 no bairro dos Congolenses, em Luanda, que durante décadas recebeu filmes e espetáculos musicais. Foi recuperado com o apoio da Agência Nacional das Indústrias Culturais e Criativas e reaberto pelo Ministro da Cultura em outubro de 2026. Programação, horário e preços por confirmar.", "highlight": {"pt": "Cinema de 1960 nos Congolenses, reaberto em outubro de 2026.", "en": "A 1960 cinema in Congolenses, reopened in October 2026.", "fr": "Un cinéma de 1960 aux Congolenses, rouvert en octobre 2026.", "es": "Un cine de 1960 en los Congolenses, reabierto en octubre de 2026."}, "verified": {"date": "2026-10-25", "sources": [{"label": "Ver Angola (13 de outubro de 2026)", "url": "https://www.verangola.net/va/pt/102026/Cultura/50386/Cine-N%E2%80%99Gola-reabre-ao-p%C3%BAblico.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/way/227092131"}]}, "address": "Largo Demóstenes de Almeida, junto ao Mercado dos Congolenses, Luanda", "phone": ""}
         ];
 
         const DESC_EN = {
@@ -2612,7 +2690,12 @@
             228: "A MonizSilva pharmacy on Rua N'Kwame N'Krumah, in Maianga. The chain says it is open 24 hours a day, every day. Check before going in the middle of the night.",
             229: "An SGMED pharmacy at Rua Comandante Kwenha 47, in Maculusso. The chain says it is open 24 hours a day, every day. The map point is the street, not the exact number.",
             230: "An SGMED pharmacy on the main IMETRO road, in Morro Bento. The chain says it is open 24 hours a day, every day. The map point is the street.",
-            231: "An SGMED pharmacy at the TotalEnergies petrol station in Camama. The chain says it is open 24 hours a day, every day."
+            231: "An SGMED pharmacy at the TotalEnergies petrol station in Camama. The chain says it is open 24 hours a day, every day.",
+            232: "A restaurant on the Via Expressa (formerly Sem Dem) in Luanda, with grills, steaks, fish, seafood, salt cod, risottos and pizzas. The menu includes Angolan dishes such as calulu with dried and fresh fish, grilled chopa mufete and chicken cabidela. Opening hours to be confirmed.",
+            233: "A bar and restaurant in Futungo de Belas with snacks, pizzas, a dish of the day and meat and fish dishes. The menu includes Angolan dishes such as moamba with free-range chicken and calulu with dried meat. According to the menu, 7% VAT is added to the prices. The map position is approximate; opening hours to be confirmed.",
+            234: "A Portuguese restaurant in Coqueiros, next to the Coqueiros stadium and the Luanda Tennis Club. It has rustic wooden decor, meat, fish, seafood and a varied wine list, and also serves funge. The map position is approximate; opening hours to be confirmed.",
+            235: "A snack bar and café in the Palanca Negra condominium in Talatona, with snacks, sandwiches, burgers, soups, salads and meals, including carapau (horse mackerel) mufete. The same place has a barber and a nail salon. Opening hours to be confirmed.",
+            236: "A cinema opened in 1960 in Luanda's Congolenses neighbourhood, which for decades hosted films and music shows. It was restored with support from the National Agency for Cultural and Creative Industries and reopened by the Minister of Culture in October 2026. Programme, hours and prices to be confirmed."
         };
 
         const DESC_FR = {
@@ -2844,7 +2927,12 @@
             228: "Pharmacie du réseau MonizSilva, rue N'Kwame N'Krumah, à Maianga. Selon le réseau, elle est ouverte 24 h/24, tous les jours. Vérifiez avant d'y aller en pleine nuit.",
             229: "Pharmacie du réseau SGMED au 47, rue Comandante Kwenha, à Maculusso. Selon le réseau, elle est ouverte 24 h/24, tous les jours. Le point sur la carte est celui de la rue, pas du numéro.",
             230: "Pharmacie du réseau SGMED sur la rue principale de l'IMETRO, à Morro Bento. Selon le réseau, elle est ouverte 24 h/24, tous les jours. Le point sur la carte est celui de la rue.",
-            231: "Pharmacie du réseau SGMED dans la station-service TotalEnergies de Camama. Selon le réseau, elle est ouverte 24 h/24, tous les jours."
+            231: "Pharmacie du réseau SGMED dans la station-service TotalEnergies de Camama. Selon le réseau, elle est ouverte 24 h/24, tous les jours.",
+            232: "Un restaurant sur la Via Expressa (ancien Sem Dem), à Luanda, avec grillades, steaks, poisson, fruits de mer, morue, risottos et pizzas. La carte propose des plats angolais comme le calulu de poisson séché et frais, le mufete de chopa grillé et la cabidela de poulet. Horaires à confirmer.",
+            233: "Un bar-restaurant à Futungo de Belas, avec en-cas, pizzas, plat du jour et plats de viande et de poisson. La carte propose des plats angolais comme la moamba de poulet fermier et le calulu de viande séchée. Selon la carte, 7 % de TVA s'ajoutent aux prix. La position sur la carte est approximative ; horaires à confirmer.",
+            234: "Un restaurant de cuisine portugaise à Coqueiros, à côté du stade dos Coqueiros et du Club de tennis de Luanda. Décor rustique en bois, viandes, poisson, fruits de mer et une carte des vins variée ; on y sert aussi du funge. La position sur la carte est approximative ; horaires à confirmer.",
+            235: "Un snack-bar et café dans la résidence Palanca Negra, à Talatona, avec en-cas, sandwichs, burgers, soupes, salades et repas, dont le mufete de carapau (chinchard). Le même lieu abrite un barbier et un salon de manucure. Horaires à confirmer.",
+            236: "Un cinéma inauguré en 1960 dans le quartier des Congolenses, à Luanda, qui a accueilli pendant des décennies films et spectacles musicaux. Il a été restauré avec l'appui de l'Agence nationale des industries culturelles et créatives et rouvert par le ministre de la Culture en octobre 2026. Programmation, horaires et prix à confirmer."
         };
 
         const DESC_ES = {
@@ -3076,7 +3164,12 @@
             228: "Farmacia de la red MonizSilva en la calle N'Kwame N'Krumah, en Maianga. Según la propia red, abre las 24 horas, todos los días. Confírmelo antes de ir de madrugada.",
             229: "Farmacia de la red SGMED en la calle Comandante Kwenha, n.º 47, en Maculusso. Según la propia red, abre las 24 horas, todos los días. El punto del mapa es el de la calle, no el del número.",
             230: "Farmacia de la red SGMED en la calle principal del IMETRO, en Morro Bento. Según la propia red, abre las 24 horas, todos los días. El punto del mapa es el de la calle.",
-            231: "Farmacia de la red SGMED en la gasolinera TotalEnergies de Camama. Según la propia red, abre las 24 horas, todos los días."
+            231: "Farmacia de la red SGMED en la gasolinera TotalEnergies de Camama. Según la propia red, abre las 24 horas, todos los días.",
+            232: "Un restaurante en la Via Expressa (antiguo Sem Dem), en Luanda, con parrilla, filetes, pescado, marisco, bacalao, risottos y pizzas. En la carta hay platos angoleños como calulu de pescado seco y fresco, mufete de chopa a la brasa y cabidela de pollo. Horario por confirmar.",
+            233: "Un bar restaurante en Futungo de Belas, con tapas, pizzas, plato del día y platos de carne y pescado. En la carta hay platos angoleños como moamba de gallina de corral y calulu de carne seca. Según la carta, a los precios se suma un 7 % de IVA. La posición en el mapa es aproximada; horario por confirmar.",
+            234: "Un restaurante de cocina portuguesa en Coqueiros, junto al estadio dos Coqueiros y al Club de Tenis de Luanda. Tiene decoración rústica de madera, carnes, pescado, marisco y una carta de vinos variada, y también sirve funge. La posición en el mapa es aproximada; horario por confirmar.",
+            235: "Un snack bar y cafetería en el condominio Palanca Negra, en Talatona, con tapas, sándwiches, hamburguesas, sopas, ensaladas y comidas, entre ellas mufete de carapau (jurel). En el mismo espacio hay barbería y salón de uñas. Horario por confirmar.",
+            236: "Un cine inaugurado en 1960 en el barrio de los Congolenses, en Luanda, que durante décadas acogió películas y espectáculos musicales. Fue recuperado con el apoyo de la Agencia Nacional de las Industrias Culturales y Creativas y reabierto por el ministro de Cultura en octubre de 2026. Programación, horario y precios por confirmar."
         };
 
         const MENU_DESC_EN = {
@@ -3357,6 +3450,46 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                profileTitle: 'O meu perfil',
+                profileGuest: 'Visitante',
+                profileGuestNote: 'Inicie sessão para publicar momentos, seguir pessoas e receber notificações. Os lugares vistos e o passaporte ficam neste dispositivo.',
+                profileSettings: 'Definições da conta',
+                profilePlaces: 'Lugares',
+                profileFollowers: 'Seguidores',
+                profileFollowingN: 'A seguir',
+                profileHelped: 'As suas avaliações ajudaram {n} pessoas.',
+                profileHelpedOne: 'As suas avaliações ajudaram 1 pessoa.',
+                profileTabInbox: 'Notificações',
+                profileTabPosts: 'Os meus momentos',
+                profileTabRecent: 'Vistos recentemente',
+                recentEmpty: 'Os lugares que abrir aparecem aqui.',
+                recentClear: 'Limpar a lista',
+                inboxEmpty: 'Ainda não há notificações. Quando alguém comentar, gostar ou seguir os seus momentos, aparece aqui.',
+                inboxComment: '{name} comentou: «{text}»',
+                inboxLike: '{n} pessoas gostaram de «{text}»',
+                inboxLikeOne: '1 pessoa gostou de «{text}»',
+                inboxFollow: '{name} começou a seguir os seus momentos',
+                myPostsEmpty: 'Ainda não publicou nenhum momento.',
+                postHidden: 'Escondido',
+                feedFollow: 'Seguir',
+                feedFollowingBtn: 'A seguir',
+                feedFollowingTab: 'Seguindo',
+                feedFollowingEmpty: 'Ainda não segue ninguém. Abra um momento e toque em «Seguir» para ver aqui o que essa pessoa publica.',
+                feedTagEmpty: 'Ainda não há momentos com esta etiqueta.',
+                authorPosts: '{n} momentos · {f} seguidores',
+                feedTags: 'Etiquetas (até 3)',
+                feedErrTags: 'Escolha no máximo 3 etiquetas.',
+                draftRestored: 'Rascunho recuperado.',
+                draftDiscard: 'Descartar',
+                draftCard: 'Rascunho por publicar',
+                draftContinue: 'Continuar',
+                cityTitle: 'Onde está?',
+                cityAll: 'Todo o país',
+                cityUseLocation: 'Usar a minha localização',
+                recommendedTitleCity: 'Recomendados em {city}',
+                eventsHomeTitleCity: 'Próximos eventos em {city}',
+                dayTripsTitleCity: 'Viagens de um dia a partir de {city}',
+                fromCity: 'a {d} km de {city}',
                 feedTitle: 'Momentos',
                 feedSub: 'Lugares onde as pessoas estiveram, contados por elas.',
                 feedPostShort: 'Publicar',
@@ -4197,6 +4330,46 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                profileTitle: 'My profile',
+                profileGuest: 'Visitor',
+                profileGuestNote: 'Sign in to post moments, follow people and get notifications. Recently viewed places and your passport stay on this device.',
+                profileSettings: 'Account settings',
+                profilePlaces: 'Places',
+                profileFollowers: 'Followers',
+                profileFollowingN: 'Following',
+                profileHelped: 'Your reviews helped {n} people.',
+                profileHelpedOne: 'Your reviews helped 1 person.',
+                profileTabInbox: 'Notifications',
+                profileTabPosts: 'My moments',
+                profileTabRecent: 'Recently viewed',
+                recentEmpty: 'Places you open will appear here.',
+                recentClear: 'Clear the list',
+                inboxEmpty: 'No notifications yet. When someone comments on, likes or follows your moments, it shows up here.',
+                inboxComment: '{name} commented: "{text}"',
+                inboxLike: '{n} people liked "{text}"',
+                inboxLikeOne: '1 person liked "{text}"',
+                inboxFollow: '{name} started following your moments',
+                myPostsEmpty: 'You haven\'t posted any moments yet.',
+                postHidden: 'Hidden',
+                feedFollow: 'Follow',
+                feedFollowingBtn: 'Following',
+                feedFollowingTab: 'Following',
+                feedFollowingEmpty: 'You are not following anyone yet. Open a moment and tap "Follow" to see that person\'s posts here.',
+                feedTagEmpty: 'No moments with this tag yet.',
+                authorPosts: '{n} moments · {f} followers',
+                feedTags: 'Tags (up to 3)',
+                feedErrTags: 'Choose up to 3 tags.',
+                draftRestored: 'Draft restored.',
+                draftDiscard: 'Discard',
+                draftCard: 'Unposted draft',
+                draftContinue: 'Continue',
+                cityTitle: 'Where are you?',
+                cityAll: 'All of Angola',
+                cityUseLocation: 'Use my location',
+                recommendedTitleCity: 'Recommended in {city}',
+                eventsHomeTitleCity: 'Coming up in {city}',
+                dayTripsTitleCity: 'Day trips from {city}',
+                fromCity: '{d} km from {city}',
                 feedTitle: 'Moments',
                 feedSub: 'Places people have been to, in their own words.',
                 feedPostShort: 'Post',
@@ -5037,6 +5210,46 @@
                 saveDataOff: 'Économie de données : désactivée',
                 saveDataNote: 'Pas de photos dans les listes ni de cartes automatiques, pour consommer moins de données mobiles.',
                 mapLoad: 'Afficher la carte',
+                profileTitle: 'Mon profil',
+                profileGuest: 'Visiteur',
+                profileGuestNote: 'Connectez-vous pour publier des moments, suivre des personnes et recevoir des notifications. Les lieux vus et le passeport restent sur cet appareil.',
+                profileSettings: 'Paramètres du compte',
+                profilePlaces: 'Lieux',
+                profileFollowers: 'Abonnés',
+                profileFollowingN: 'Abonnements',
+                profileHelped: 'Vos avis ont aidé {n} personnes.',
+                profileHelpedOne: 'Vos avis ont aidé 1 personne.',
+                profileTabInbox: 'Notifications',
+                profileTabPosts: 'Mes moments',
+                profileTabRecent: 'Vus récemment',
+                recentEmpty: 'Les lieux que vous ouvrez apparaîtront ici.',
+                recentClear: 'Effacer la liste',
+                inboxEmpty: 'Pas encore de notifications. Quand quelqu\'un commente, aime ou suit vos moments, cela apparaît ici.',
+                inboxComment: '{name} a commenté : « {text} »',
+                inboxLike: '{n} personnes ont aimé « {text} »',
+                inboxLikeOne: '1 personne a aimé « {text} »',
+                inboxFollow: '{name} suit maintenant vos moments',
+                myPostsEmpty: 'Vous n\'avez encore publié aucun moment.',
+                postHidden: 'Masqué',
+                feedFollow: 'Suivre',
+                feedFollowingBtn: 'Abonné',
+                feedFollowingTab: 'Abonnements',
+                feedFollowingEmpty: 'Vous ne suivez encore personne. Ouvrez un moment et touchez « Suivre » pour voir ici ce que cette personne publie.',
+                feedTagEmpty: 'Pas encore de moments avec cette étiquette.',
+                authorPosts: '{n} moments · {f} abonnés',
+                feedTags: 'Étiquettes (3 au maximum)',
+                feedErrTags: 'Choisissez 3 étiquettes au maximum.',
+                draftRestored: 'Brouillon récupéré.',
+                draftDiscard: 'Supprimer',
+                draftCard: 'Brouillon non publié',
+                draftContinue: 'Continuer',
+                cityTitle: 'Où êtes-vous ?',
+                cityAll: 'Tout l\'Angola',
+                cityUseLocation: 'Utiliser ma position',
+                recommendedTitleCity: 'Recommandés à {city}',
+                eventsHomeTitleCity: 'Prochains événements à {city}',
+                dayTripsTitleCity: 'Excursions d\'une journée depuis {city}',
+                fromCity: 'à {d} km de {city}',
                 feedTitle: 'Moments',
                 feedSub: 'Les lieux où les gens sont allés, racontés par eux.',
                 feedPostShort: 'Publier',
@@ -5877,6 +6090,46 @@
                 saveDataOff: 'Ahorro de datos: desactivado',
                 saveDataNote: 'Sin fotos en las listas ni mapas automáticos, para gastar menos datos móviles.',
                 mapLoad: 'Mostrar mapa',
+                profileTitle: 'Mi perfil',
+                profileGuest: 'Visitante',
+                profileGuestNote: 'Inicia sesión para publicar momentos, seguir a personas y recibir notificaciones. Los lugares vistos y el pasaporte se quedan en este dispositivo.',
+                profileSettings: 'Ajustes de la cuenta',
+                profilePlaces: 'Lugares',
+                profileFollowers: 'Seguidores',
+                profileFollowingN: 'Siguiendo',
+                profileHelped: 'Tus opiniones ayudaron a {n} personas.',
+                profileHelpedOne: 'Tus opiniones ayudaron a 1 persona.',
+                profileTabInbox: 'Notificaciones',
+                profileTabPosts: 'Mis momentos',
+                profileTabRecent: 'Vistos recientemente',
+                recentEmpty: 'Los lugares que abras aparecerán aquí.',
+                recentClear: 'Borrar la lista',
+                inboxEmpty: 'Aún no hay notificaciones. Cuando alguien comente, le guste o siga tus momentos, aparecerá aquí.',
+                inboxComment: '{name} comentó: «{text}»',
+                inboxLike: 'A {n} personas les gustó «{text}»',
+                inboxLikeOne: 'A 1 persona le gustó «{text}»',
+                inboxFollow: '{name} empezó a seguir tus momentos',
+                myPostsEmpty: 'Aún no has publicado ningún momento.',
+                postHidden: 'Oculto',
+                feedFollow: 'Seguir',
+                feedFollowingBtn: 'Siguiendo',
+                feedFollowingTab: 'Siguiendo',
+                feedFollowingEmpty: 'Aún no sigues a nadie. Abre un momento y toca «Seguir» para ver aquí lo que publica esa persona.',
+                feedTagEmpty: 'Aún no hay momentos con esta etiqueta.',
+                authorPosts: '{n} momentos · {f} seguidores',
+                feedTags: 'Etiquetas (hasta 3)',
+                feedErrTags: 'Elige como máximo 3 etiquetas.',
+                draftRestored: 'Borrador recuperado.',
+                draftDiscard: 'Descartar',
+                draftCard: 'Borrador sin publicar',
+                draftContinue: 'Continuar',
+                cityTitle: '¿Dónde estás?',
+                cityAll: 'Todo el país',
+                cityUseLocation: 'Usar mi ubicación',
+                recommendedTitleCity: 'Recomendados en {city}',
+                eventsHomeTitleCity: 'Próximos eventos en {city}',
+                dayTripsTitleCity: 'Excursiones de un día desde {city}',
+                fromCity: 'a {d} km de {city}',
                 feedTitle: 'Momentos',
                 feedSub: 'Lugares donde la gente ha estado, contados por ella.',
                 feedPostShort: 'Publicar',
@@ -6599,8 +6852,8 @@
 
         // Dish prices from the menus restaurants publish themselves on menus.ao (a Delta Cafés service), checked on the date given.
         // Only places that are the same as a Tuende place get MENUS_AO; DISHES lists every restaurant there that serves each dish.
-        const MENUS_AO = {"209": {"slug": "clube-s", "label": "Clube S", "checked": "2026-10-25", "total": 12, "min": 2900, "max": 12600, "items": [["Bife à RBS", 10000, "Snacks", ""], ["Creme de Legumes", 2900, "Entradas Quentes", ""], ["Bife à Mário a Saber a peixe", 7000, "peixes", ""], ["Bacalhau à Clube S", 12200, "Mar", ""], ["Pica Pau (Lombo)", 5200, "Couvert", ""], ["Grelhada Mista (2 pax)", 12600, "Snacks", ""], ["Hamburguer Grelhado à Clube S", 4700, "Snacks", ""], ["Thai de Camarão com Ananas", 12200, "Snacks", ""], ["Tagliatelle de Cogumelos", 7000, "Snacks", ""]]}, "4": {"slug": "lookal-mar", "label": "Lookal Mar", "checked": "2026-10-25", "total": 131, "min": 7800, "max": 68000, "items": [["Bife com molho de Mostarda à Maneira Antiga", 27000, "carnes", ""], ["Menu 1", 16000, "entradas", ""], ["Caranguejo Do Alaska", 380000, "mariscos", "Preço Por KG"], ["Bitoque de Lagosta", 36000, "peixes", ""], ["Arroz de Línguas de Bacalhau", 62000, "Peixe", ""], ["Creme de Marisco", 6900, "sopas", ""], ["Bife do Lombo à Lookal Mar", 27000, "carnes", ""], ["Camarão à Guilho", 18000, "entradas", ""], ["Ameijoas à Bulhão Pato", 194120, "mariscos", "Preço Por KG"], ["Sardinhas", 41180, "peixes", ""], ["Sopa de Marisco", 78000, "sopas", ""], ["Bife Do Lombo à Portuguêsa", 27000, "carnes", ""]]}, "5": {"slug": "lookal-beach-club", "label": "Lookal Beach Club", "checked": "2026-10-25", "total": 195, "min": 7400, "max": 28000, "items": [["Kizaca Lookal Beach", 3500, "Acompanhamentos", ""], ["Carpaccio de Atum", 15800, "Entradas Sushi", ""], ["Atum", 9800, "Temaki", ""], ["Camarão (3 peças)", 12200, "Tempura", ""], ["Ebi Maki (6 peças)", 10200, "Sushi", ""], ["Atum Picante (4 peças)", 9800, "Uramaki", ""], ["Atum (2 peças)", 6800, "Neguiri", ""], ["Atum Picante (2 peças)", 8200, "Gunkan", ""], ["15 Peças", 24200, "Sashimi", ""], ["15 Peças Só Sushi", 22100, "Combinados", ""], ["Atum Frito (6 peças)", 10200, "Hot", ""], ["Arroz de Sushi", 2500, "Extras", ""]]}, "221": {"slug": "bar-terrace-skyna", "label": "Bar Terrace SKYNA", "checked": "2026-10-25", "total": 97, "min": 5500, "max": 11000, "items": [["Asinhas De Frango", 3500, "para picar", ""], ["Polvo à Lagareiro", 8200, "peixes e carnes", ""], ["Bife à Portuguesa", 12000, "Carne", ""], ["Filete De Peixe", 7500, "Peixe", ""], ["Four Seasons Large", 11000, "pizzas", ""], ["Salada Caesar", 7500, "saladas e entradas", ""], ["Hambúrguer de Frango SKYNA", 7500, "sandwiches", ""], ["Chicken Burger SKYNA", 7500, "sandwiches ing", ""], ["Creme De Tomate", 3300, "sopas e massas", ""], ["Sopa De Legumes", 3300, "soups e pastas", ""], ["Asinhas De Frango Panadas", 3500, "para picar", ""], ["Strogonoff de Novilho", 8500, "peixes e carnes", ""]]}, "196": {"slug": "otto-luanda", "label": "Otto - Luanda", "checked": "2026-10-25", "total": 77, "min": 14500, "max": 32500, "items": [["Calulu", 15000, "Peixe", ""], ["Mufete de peixe", 38000, "Peixe", "Preço por kg"], ["Moamba de galinha", 15000, "CARNE", ""], ["Pizza 8", 17500, "Pizze", ""], ["Bruschetta Italiana", 9500, "entradas antipasto", ""], ["Tagliere grande di Formaggi e Salumi tipici italiani", 38000, "Entradas", ""], ["Peito alto", 16000, "pratos nacionais", ""], ["Carne seca com muteta", 17000, "CARNE", ""], ["Risotto al lime com fetta di salmone allo champagne", 25500, "Risottos", ""], ["Linguine Nero con frutti de Mare", 65000, "O mar - Il Mare", ""], ["Gnocchi quattro formaggi", 23500, "A Terra - La Terra", ""], ["Risotto aí funghi com medaglioni di vitello al miele", 28500, "O Risoto - Il Riso", ""]]}};
-        const DISHES = [{"id": "moamba", "name": {"pt": "Moamba de galinha", "en": "Moamba de galinha (chicken moamba)", "fr": "Moamba de galinha (poulet à la moamba)", "es": "Moamba de galinha (pollo a la moamba)"}, "desc": {"pt": "Galinha cozinhada com pasta de dendém (óleo de palma), quiabo e alho, servida com funge ou arroz. É muitas vezes apontada, com o funge, como o prato nacional de Angola.", "en": "Chicken cooked with palm-nut paste, okra and garlic, served with funge or rice. Together with funge, it is often called Angola's national dish.", "fr": "Poulet cuit avec de la pâte de noix de palme, du gombo et de l'ail, servi avec du funge ou du riz. Avec le funge, on le présente souvent comme le plat national de l'Angola.", "es": "Pollo cocinado con pasta de nuez de palma, quimbombó y ajo, servido con funge o arroz. Junto con el funge, a menudo se considera el plato nacional de Angola."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "bar-da-amizade", "label": "Bar da Amizade", "city": "Luanda", "venue": null, "item": "Moamba de galinha rija", "kz": 2700, "note": ""}, {"slug": "solar-pinguim-restaurante-e-pastelaria-lda", "label": "Solar Pinguim Restaurante e Pastelaria, Lda.", "city": "Uíge", "venue": null, "item": "Muamba de Galinha ( por encomenda)", "kz": 5000, "note": ""}, {"slug": "otto-luanda", "label": "Otto - Luanda", "city": "Luanda", "venue": 196, "item": "Moamba de galinha", "kz": 15000, "note": ""}, {"slug": "seven-restaurante", "label": "Seven Restaurante", "city": "Luanda", "venue": null, "item": "Muamba de Galinha", "kz": 36900, "note": "Prato para 4 Pessoas - Encomendar 1 Dia de Antecedência"}], "count": 4}, {"id": "funge", "name": {"pt": "Funge", "en": "Funge", "fr": "Funge", "es": "Funge"}, "desc": {"pt": "Papa espessa de farinha de mandioca; no sul faz-se mais de milho e chama-se pirão. Acompanha peixe, carne, galinha ou feijão.", "en": "A thick porridge of cassava flour; in the south it is more often made of maize and called pirão. It goes with fish, meat, chicken or beans.", "fr": "Bouillie épaisse de farine de manioc ; dans le sud, on la fait plutôt au maïs et on l'appelle pirão. Elle accompagne poisson, viande, poulet ou haricots.", "es": "Gacha espesa de harina de mandioca; en el sur se hace más de maíz y se llama pirão. Acompaña pescado, carne, pollo o frijoles."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}, {"label": "Wikipédia (Culinária de Angola)", "url": "https://pt.wikipedia.org/wiki/Culin%C3%A1ria_de_Angola"}], "where": [{"slug": "resort-paraiso-do-25", "label": "Resort Paraíso do 25", "city": "Luanda", "venue": null, "item": "Funge Bombó | Milho", "kz": 1000, "note": ""}, {"slug": "tia-maria", "label": "TIA MARIA", "city": "Luanda", "venue": null, "item": "FUNGE", "kz": 2000, "note": ""}], "count": 2}, {"id": "calulu", "name": {"pt": "Calulu", "en": "Calulu", "fr": "Calulu", "es": "Calulu"}, "desc": {"pt": "Peixe seco (ou fresco) cozinhado com legumes como quiabo, batata-doce e folhas de gimboa, servido com arroz, funge, feijão de óleo de palma e farofa.", "en": "Dried (or fresh) fish cooked with vegetables such as okra, sweet potato and gimboa leaves, served with rice, funge, palm-oil beans and farofa.", "fr": "Poisson séché (ou frais) cuit avec des légumes comme le gombo, la patate douce et les feuilles de gimboa, servi avec riz, funge, haricots à l'huile de palme et farofa.", "es": "Pescado seco (o fresco) cocinado con verduras como quimbombó, boniato y hojas de gimboa, servido con arroz, funge, frijoles con aceite de palma y farofa."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "bar-da-amizade", "label": "Bar da Amizade", "city": "Luanda", "venue": null, "item": "Calulu de Carne Seca", "kz": 5000, "note": ""}, {"slug": "o-almeida", "label": "O Almeida", "city": "Luanda", "venue": null, "item": "CALULU de PEIXES SECO e FRESCO", "kz": 5500, "note": ""}, {"slug": "otto-luanda", "label": "Otto - Luanda", "city": "Luanda", "venue": 196, "item": "Calulu", "kz": 15000, "note": ""}, {"slug": "seven-restaurante", "label": "Seven Restaurante", "city": "Luanda", "venue": null, "item": "Calulu de Carne", "kz": 36900, "note": "Prato para 4 Pessoas - Encomendar 1 Dia de Antecedência"}], "count": 4}, {"id": "mufete", "name": {"pt": "Mufete", "en": "Mufete", "fr": "Mufete", "es": "Mufete"}, "desc": {"pt": "Peixe grelhado, muitas vezes cacusso (tilápia de rio), com molho de cebola, vinagre e especiarias, servido com feijão de óleo de palma e mandioca cozida, arroz, batata-doce ou farofa.", "en": "Grilled fish, often cacusso (river tilapia), with an onion, vinegar and spice sauce, served with palm-oil beans and boiled cassava, rice, sweet potato or farofa.", "fr": "Poisson grillé, souvent du cacusso (tilapia de rivière), avec une sauce à l'oignon, au vinaigre et aux épices, servi avec des haricots à l'huile de palme et du manioc bouilli, du riz, de la patate douce ou de la farofa.", "es": "Pescado a la parrilla, a menudo cacusso (tilapia de río), con salsa de cebolla, vinagre y especias, servido con frijoles con aceite de palma y mandioca cocida, arroz, boniato o farofa."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "o-almeida", "label": "O Almeida", "city": "Luanda", "venue": null, "item": "MUFETE de CHOPA na BRASA", "kz": 4800, "note": ""}, {"slug": "pontovip", "label": "PontoVIP", "city": "Luanda", "venue": null, "item": "1. Mufete de Carapau", "kz": 5000, "note": ""}, {"slug": "resort-paraiso-do-25", "label": "Resort Paraíso do 25", "city": "Luanda", "venue": null, "item": "Mufete de carapau", "kz": 5500, "note": ""}, {"slug": "restaurante-grelhadinho", "label": "Restaurante Grelhadinho", "city": "Luanda", "venue": null, "item": "Mufete", "kz": 7000, "note": ""}, {"slug": "seven-restaurante", "label": "Seven Restaurante", "city": "Luanda", "venue": null, "item": "Mufete", "kz": 36900, "note": "Prato para 4 Pessoas - Encomendar 1 Dia de Antecedência"}, {"slug": "otto-luanda", "label": "Otto - Luanda", "city": "Luanda", "venue": 196, "item": "Mufete de peixe", "kz": 38000, "note": "Preço por kg"}], "count": 6}, {"id": "cabidela", "name": {"pt": "Cabidela", "en": "Cabidela", "fr": "Cabidela", "es": "Cabidela"}, "desc": {"pt": "Galinha (ou outra carne) cozinhada no próprio sangue, com vinagre, tomate, cebola e alho, servida com arroz e funge.", "en": "Chicken (or other meat) cooked in its own blood with vinegar, tomato, onion and garlic, served with rice and funge.", "fr": "Poulet (ou autre viande) cuit dans son sang avec du vinaigre, de la tomate, de l'oignon et de l'ail, servi avec du riz et du funge.", "es": "Pollo (u otra carne) cocinado en su propia sangre con vinagre, tomate, cebolla y ajo, servido con arroz y funge."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "o-almeida", "label": "O Almeida", "city": "Luanda", "venue": null, "item": "CABIDELA de GALINHA", "kz": 6500, "note": ""}], "count": 1}, {"id": "kizaca", "name": {"pt": "Kizaca", "en": "Kizaca", "fr": "Kizaca", "es": "Kizaca"}, "desc": {"pt": "Folhas de mandioca cozidas, parecidas com espinafres, muitas vezes com ginguba (amendoim). Com peixe, serve-se com arroz e funge.", "en": "Cooked cassava leaves, similar to spinach, often with peanuts (ginguba). With fish, it is served with rice and funge.", "fr": "Feuilles de manioc cuites, proches des épinards, souvent avec de l'arachide (ginguba). Avec du poisson, on la sert avec du riz et du funge.", "es": "Hojas de mandioca cocidas, parecidas a las espinacas, a menudo con cacahuete (ginguba). Con pescado, se sirve con arroz y funge."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "lookal-beach-club", "label": "Lookal Beach Club", "city": "Luanda", "venue": 5, "item": "Kizaca Lookal Beach", "kz": 3500, "note": ""}], "count": 1}, {"id": "ginguba", "name": {"pt": "Moamba de ginguba", "en": "Moamba de ginguba (peanut moamba)", "fr": "Moamba de ginguba (moamba à l'arachide)", "es": "Moamba de ginguba (moamba de cacahuete)"}, "desc": {"pt": "A moamba feita com molho de ginguba (amendoim) em vez de pasta de dendém.", "en": "Moamba made with a peanut (ginguba) sauce instead of palm-nut paste.", "fr": "La moamba préparée avec une sauce à l'arachide (ginguba) au lieu de la pâte de noix de palme.", "es": "La moamba hecha con salsa de cacahuete (ginguba) en lugar de pasta de nuez de palma."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}, {"id": "catatos", "name": {"pt": "Catatos", "en": "Catatos", "fr": "Catatos", "es": "Catatos"}, "desc": {"pt": "Lagartas fritas com alho, servidas com arroz. Uma especialidade do Uíge.", "en": "Caterpillars fried with garlic, served with rice. A speciality of Uíge.", "fr": "Chenilles frites à l'ail, servies avec du riz. Une spécialité de l'Uíge.", "es": "Orugas fritas con ajo, servidas con arroz. Una especialidad de Uíge."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}, {"id": "kissangua", "name": {"pt": "Kissângua", "en": "Kissângua", "fr": "Kissângua", "es": "Kissângua"}, "desc": {"pt": "Bebida tradicional sem álcool do sul de Angola, feita de farinha de milho (ou de mandioca), água e açúcar.", "en": "A traditional non-alcoholic drink from southern Angola, made of maize (or cassava) flour, water and sugar.", "fr": "Boisson traditionnelle sans alcool du sud de l'Angola, à base de farine de maïs (ou de manioc), d'eau et de sucre.", "es": "Bebida tradicional sin alcohol del sur de Angola, hecha de harina de maíz (o de mandioca), agua y azúcar."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}, {"label": "Wikipédia (Culinária de Angola)", "url": "https://pt.wikipedia.org/wiki/Culin%C3%A1ria_de_Angola"}], "where": [], "count": 0}, {"id": "cocada", "name": {"pt": "Cocada amarela", "en": "Cocada amarela (yellow coconut pudding)", "fr": "Cocada amarela (flan jaune à la noix de coco)", "es": "Cocada amarela (dulce amarillo de coco)"}, "desc": {"pt": "Doce de coco ralado, açúcar, gemas de ovo e canela.", "en": "A pudding of grated coconut, sugar, egg yolks and cinnamon.", "fr": "Un dessert de noix de coco râpée, de sucre, de jaunes d'œuf et de cannelle.", "es": "Un dulce de coco rallado, azúcar, yemas de huevo y canela."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}, {"id": "mucua", "name": {"pt": "Múcua", "en": "Múcua (baobab fruit)", "fr": "Múcua (fruit du baobab)", "es": "Múcua (fruto del baobab)"}, "desc": {"pt": "O fruto seco do imbondeiro (embondeiro), muitas vezes feito em gelado.", "en": "The dried fruit of the baobab tree, often made into ice cream.", "fr": "Le fruit séché du baobab, souvent transformé en glace.", "es": "El fruto seco del baobab, a menudo convertido en helado."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}];
+        const MENUS_AO = {"209": {"slug": "clube-s", "label": "Clube S", "checked": "2026-10-25", "total": 12, "min": 2900, "max": 12600, "items": [["Bife à RBS", 10000, "Snacks", ""], ["Creme de Legumes", 2900, "Entradas Quentes", ""], ["Bife à Mário a Saber a peixe", 7000, "peixes", ""], ["Bacalhau à Clube S", 12200, "Mar", ""], ["Grelhada Mista (2 pax)", 12600, "Snacks", ""], ["Hamburguer Grelhado à Clube S", 4700, "Snacks", ""], ["Thai de Camarão com Ananas", 12200, "Snacks", ""], ["Tagliatelle de Cogumelos", 7000, "Snacks", ""]]}, "232": {"slug": "o-almeida", "label": "O Almeida", "checked": "2026-10-25", "total": 72, "min": 3800, "max": 11800, "items": [["CABIDELA de GALINHA", 6500, "sugestoes do dia", ""], ["CALULU de PEIXES SECO e FRESCO", 5500, "sugestoes do dia", ""], ["MUFETE de CHOPA na BRASA", 4800, "sugestoes do dia", ""], ["À Braga", 11500, "e os bacalhaus", ""], ["Gambas ao Alho", 9200, "entradas", ""], ["Cabeça de Garoupa na Brasa", 4600, "grelhados", ""], ["Caril de Gambas", 9200, "mariscos", ""], ["Spaghti e Gambas", 9600, "massas", ""], ["BIFE da VAZIA à PORTUGUÊSA", 7800, "os nossos bifes", ""], ["Filetes de Polvo c/ arroz do mesmo", 5200, "os peixes", ""], ["BIFINHOS de ATUM e CANIVETES SALTEADOS", 5400, "Peixe", ""], ["Alheira", 4800, "pizzas", ""]]}, "233": {"slug": "bar-da-amizade", "label": "Bar da Amizade", "checked": "2026-10-25", "total": 104, "min": 1900, "max": 9000, "items": [["Calulu de Carne Seca", 5000, "prato do dia", ""], ["Moamba de galinha rija", 2700, "pratos de carne", ""], ["Kit big", 2650, "entradas", ""], ["Gambas", 7500, "Entradas Quentes", ""], ["Hambúrguer c/queijo", 2000, "hamburguer", ""], ["Hamburguer de Queijo", 1500, "menu snack bar da amizade", ""], ["Asinhas de frango", 5000, "petiscos", ""], ["Camarão ao alho", 7000, "Entradas", ""], ["D´Amizade (Grande)", 13000, "pizzas", ""], ["Pizza cazione", 2700, "Pizzas Pequenas", ""], ["Pizza de Camarão", 5500, "Pequenas 24cm", ""], ["Pizza de Camarão", 9000, "Pizzas Grandes", ""]]}, "234": {"slug": "tia-maria", "label": "Tia Maria", "checked": "2026-10-25", "total": 83, "min": 9500, "max": 48000, "items": [["Funge", 2000, "GUARNIÇÕES", ""], ["Bacalhau com todos", 35000, "carta restaurante", ""], ["Bife com molho de cogumelos", 24000, "Carne", ""], ["Azeitonas", 1500, "ENTRADAS", ""], ["Arroz de bacalhau 2 pax", 48000, "PEIXE", ""], ["Bife á portuguesa", 23000, "CARNE", ""], ["Arroz de lagosta 2 pax", 60000, "MARISCOS", ""], ["Bife 3 pimentas", 23000, "carta restaurante", ""], ["Bacalhau á braga", 32000, "ENTRADAS", ""], ["Bacalhau grelhado", 32000, "PEIXE", ""], ["Bife grelhado", 22000, "CARNE", ""], ["Arroz de marisco 2 pax", 55000, "MARISCOS", ""]]}, "4": {"slug": "lookal-mar", "label": "Lookal Mar", "checked": "2026-10-25", "total": 131, "min": 7800, "max": 68000, "items": [["Bife com molho de Mostarda à Maneira Antiga", 27000, "carnes", ""], ["Menu 1", 16000, "entradas", ""], ["Caranguejo Do Alaska", 380000, "mariscos", "Preço Por KG"], ["Bitoque de Lagosta", 36000, "peixes", ""], ["Arroz de Línguas de Bacalhau", 62000, "Peixe", ""], ["Creme de Marisco", 6900, "sopas", ""], ["Bife do Lombo à Lookal Mar", 27000, "carnes", ""], ["Camarão à Guilho", 18000, "entradas", ""], ["Ameijoas à Bulhão Pato", 194120, "mariscos", "Preço Por KG"], ["Sardinhas", 41180, "peixes", ""], ["Sopa de Marisco", 78000, "sopas", ""], ["Bife Do Lombo à Portuguêsa", 27000, "carnes", ""]]}, "5": {"slug": "lookal-beach-club", "label": "Lookal Beach Club", "checked": "2026-10-25", "total": 195, "min": 9200, "max": 32000, "items": [["Kizaca Lookal Beach", 3500, "Acompanhamentos", ""], ["Carpaccio de Atum", 15800, "Entradas Sushi", ""], ["Atum", 9800, "Temaki", ""], ["Camarão (3 peças)", 12200, "Tempura", ""], ["Ebi Maki (6 peças)", 10200, "Sushi", ""], ["Atum Picante (4 peças)", 9800, "Uramaki", ""], ["Atum (2 peças)", 6800, "Neguiri", ""], ["Atum Picante (2 peças)", 8200, "Gunkan", ""], ["15 Peças", 24200, "Sashimi", ""], ["15 Peças Só Sushi", 22100, "Combinados", ""], ["Atum Frito (6 peças)", 10200, "Hot", ""], ["Hambúrguer Lookal", 18800, "Snacks", ""]]}, "221": {"slug": "bar-terrace-skyna", "label": "Bar Terrace SKYNA", "checked": "2026-10-25", "total": 97, "min": 5500, "max": 11000, "items": [["Asinhas De Frango", 3500, "para picar", ""], ["Polvo à Lagareiro", 8200, "peixes e carnes", ""], ["Bife à Portuguesa", 12000, "Carne", ""], ["Filete De Peixe", 7500, "Peixe", ""], ["Four Seasons Large", 11000, "pizzas", ""], ["Salada Caesar", 7500, "saladas e entradas", ""], ["Hambúrguer de Frango SKYNA", 7500, "sandwiches", ""], ["Chicken Burger SKYNA", 7500, "sandwiches ing", ""], ["Creme De Tomate", 3300, "sopas e massas", ""], ["Sopa De Legumes", 3300, "soups e pastas", ""], ["Asinhas De Frango Panadas", 3500, "para picar", ""], ["Strogonoff de Novilho", 8500, "peixes e carnes", ""]]}, "235": {"slug": "pontovip", "label": "PontoVIP", "checked": "2026-10-25", "total": 52, "min": 500, "max": 7000, "items": [["Mufete de Carapau", 5000, "PEIXES E MARISCOS", ""], ["Asinha/Coxinha de Frango (Molho barbecue)", 5000, "PETISCOS & SNACK'S", ""], ["Meio Franguité", 5500, "Carnes grelhadas", ""], ["Espetinho de Frango", 2500, "Espetinhos", ""], ["Bitoque", 5500, "PRATOS CARNE", ""], ["Salada Simples Vip", 3800, "Saladas", ""], ["Cachorro Quente", 2000, "Sanduíches VIP", ""], ["Hamburguer VIP", 3000, "Hamburguer VIP", ""], ["Sopa de Feijão", 2500, "Sopas", ""], ["Caldinho 200 ml", 800, "Caldinhos", ""], ["Choco Frito", 7000, "PETISCOS & SNACK'S", "Dose de Choco Frito"], ["Franguité Completo", 10000, "Carnes grelhadas", ""]]}, "196": {"slug": "otto-luanda", "label": "Otto - Luanda", "checked": "2026-10-25", "total": 77, "min": 14500, "max": 32500, "items": [["Calulu", 15000, "Peixe", ""], ["Mufete de peixe", 38000, "Peixe", "Preço por kg"], ["Moamba de galinha", 15000, "CARNE", ""], ["Pizza 8", 17500, "Pizze", ""], ["Bruschetta Italiana", 9500, "entradas antipasto", ""], ["Tagliere grande di Formaggi e Salumi tipici italiani", 38000, "Entradas", ""], ["Peito alto", 16000, "pratos nacionais", ""], ["Carne seca com muteta", 17000, "CARNE", ""], ["Risotto al lime com fetta di salmone allo champagne", 25500, "Risottos", ""], ["Linguine Nero con frutti de Mare", 65000, "O mar - Il Mare", ""], ["Gnocchi quattro formaggi", 23500, "A Terra - La Terra", ""], ["Risotto aí funghi com medaglioni di vitello al miele", 28500, "O Risoto - Il Riso", ""]]}};
+        const DISHES = [{"id": "moamba", "name": {"pt": "Moamba de galinha", "en": "Moamba de galinha (chicken moamba)", "fr": "Moamba de galinha (poulet à la moamba)", "es": "Moamba de galinha (pollo a la moamba)"}, "desc": {"pt": "Galinha cozinhada com pasta de dendém (óleo de palma), quiabo e alho, servida com funge ou arroz. É muitas vezes apontada, com o funge, como o prato nacional de Angola.", "en": "Chicken cooked with palm-nut paste, okra and garlic, served with funge or rice. Together with funge, it is often called Angola's national dish.", "fr": "Poulet cuit avec de la pâte de noix de palme, du gombo et de l'ail, servi avec du funge ou du riz. Avec le funge, on le présente souvent comme le plat national de l'Angola.", "es": "Pollo cocinado con pasta de nuez de palma, quimbombó y ajo, servido con funge o arroz. Junto con el funge, a menudo se considera el plato nacional de Angola."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "bar-da-amizade", "label": "Bar da Amizade", "city": "Luanda", "venue": 233, "item": "Moamba de galinha rija", "kz": 2700, "note": ""}, {"slug": "solar-pinguim-restaurante-e-pastelaria-lda", "label": "Solar Pinguim Restaurante e Pastelaria, Lda.", "city": "Uíge", "venue": null, "item": "Muamba de Galinha ( por encomenda)", "kz": 5000, "note": ""}, {"slug": "otto-luanda", "label": "Otto - Luanda", "city": "Luanda", "venue": 196, "item": "Moamba de galinha", "kz": 15000, "note": ""}, {"slug": "seven-restaurante", "label": "Seven Restaurante", "city": "Luanda", "venue": null, "item": "Muamba de Galinha", "kz": 36900, "note": "Prato para 4 Pessoas - Encomendar 1 Dia de Antecedência"}], "count": 4}, {"id": "funge", "name": {"pt": "Funge", "en": "Funge", "fr": "Funge", "es": "Funge"}, "desc": {"pt": "Papa espessa de farinha de mandioca; no sul faz-se mais de milho e chama-se pirão. Acompanha peixe, carne, galinha ou feijão.", "en": "A thick porridge of cassava flour; in the south it is more often made of maize and called pirão. It goes with fish, meat, chicken or beans.", "fr": "Bouillie épaisse de farine de manioc ; dans le sud, on la fait plutôt au maïs et on l'appelle pirão. Elle accompagne poisson, viande, poulet ou haricots.", "es": "Gacha espesa de harina de mandioca; en el sur se hace más de maíz y se llama pirão. Acompaña pescado, carne, pollo o frijoles."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}, {"label": "Wikipédia (Culinária de Angola)", "url": "https://pt.wikipedia.org/wiki/Culin%C3%A1ria_de_Angola"}], "where": [{"slug": "resort-paraiso-do-25", "label": "Resort Paraíso do 25", "city": "Luanda", "venue": null, "item": "Funge Bombó | Milho", "kz": 1000, "note": ""}, {"slug": "tia-maria", "label": "Tia Maria", "city": "Luanda", "venue": 234, "item": "Funge", "kz": 2000, "note": ""}], "count": 2}, {"id": "calulu", "name": {"pt": "Calulu", "en": "Calulu", "fr": "Calulu", "es": "Calulu"}, "desc": {"pt": "Peixe seco (ou fresco) cozinhado com legumes como quiabo, batata-doce e folhas de gimboa, servido com arroz, funge, feijão de óleo de palma e farofa.", "en": "Dried (or fresh) fish cooked with vegetables such as okra, sweet potato and gimboa leaves, served with rice, funge, palm-oil beans and farofa.", "fr": "Poisson séché (ou frais) cuit avec des légumes comme le gombo, la patate douce et les feuilles de gimboa, servi avec riz, funge, haricots à l'huile de palme et farofa.", "es": "Pescado seco (o fresco) cocinado con verduras como quimbombó, boniato y hojas de gimboa, servido con arroz, funge, frijoles con aceite de palma y farofa."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "bar-da-amizade", "label": "Bar da Amizade", "city": "Luanda", "venue": 233, "item": "Calulu de Carne Seca", "kz": 5000, "note": ""}, {"slug": "o-almeida", "label": "O Almeida", "city": "Luanda", "venue": 232, "item": "CALULU de PEIXES SECO e FRESCO", "kz": 5500, "note": ""}, {"slug": "otto-luanda", "label": "Otto - Luanda", "city": "Luanda", "venue": 196, "item": "Calulu", "kz": 15000, "note": ""}, {"slug": "seven-restaurante", "label": "Seven Restaurante", "city": "Luanda", "venue": null, "item": "Calulu de Carne", "kz": 36900, "note": "Prato para 4 Pessoas - Encomendar 1 Dia de Antecedência"}], "count": 4}, {"id": "mufete", "name": {"pt": "Mufete", "en": "Mufete", "fr": "Mufete", "es": "Mufete"}, "desc": {"pt": "Peixe grelhado, muitas vezes cacusso (tilápia de rio), com molho de cebola, vinagre e especiarias, servido com feijão de óleo de palma e mandioca cozida, arroz, batata-doce ou farofa.", "en": "Grilled fish, often cacusso (river tilapia), with an onion, vinegar and spice sauce, served with palm-oil beans and boiled cassava, rice, sweet potato or farofa.", "fr": "Poisson grillé, souvent du cacusso (tilapia de rivière), avec une sauce à l'oignon, au vinaigre et aux épices, servi avec des haricots à l'huile de palme et du manioc bouilli, du riz, de la patate douce ou de la farofa.", "es": "Pescado a la parrilla, a menudo cacusso (tilapia de río), con salsa de cebolla, vinagre y especias, servido con frijoles con aceite de palma y mandioca cocida, arroz, boniato o farofa."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "o-almeida", "label": "O Almeida", "city": "Luanda", "venue": 232, "item": "MUFETE de CHOPA na BRASA", "kz": 4800, "note": ""}, {"slug": "pontovip", "label": "PontoVIP", "city": "Luanda", "venue": 235, "item": "Mufete de Carapau", "kz": 5000, "note": ""}, {"slug": "resort-paraiso-do-25", "label": "Resort Paraíso do 25", "city": "Luanda", "venue": null, "item": "Mufete de carapau", "kz": 5500, "note": ""}, {"slug": "restaurante-grelhadinho", "label": "Restaurante Grelhadinho", "city": "Luanda", "venue": null, "item": "Mufete", "kz": 7000, "note": ""}, {"slug": "seven-restaurante", "label": "Seven Restaurante", "city": "Luanda", "venue": null, "item": "Mufete", "kz": 36900, "note": "Prato para 4 Pessoas - Encomendar 1 Dia de Antecedência"}, {"slug": "otto-luanda", "label": "Otto - Luanda", "city": "Luanda", "venue": 196, "item": "Mufete de peixe", "kz": 38000, "note": "Preço por kg"}], "count": 6}, {"id": "cabidela", "name": {"pt": "Cabidela", "en": "Cabidela", "fr": "Cabidela", "es": "Cabidela"}, "desc": {"pt": "Galinha (ou outra carne) cozinhada no próprio sangue, com vinagre, tomate, cebola e alho, servida com arroz e funge.", "en": "Chicken (or other meat) cooked in its own blood with vinegar, tomato, onion and garlic, served with rice and funge.", "fr": "Poulet (ou autre viande) cuit dans son sang avec du vinaigre, de la tomate, de l'oignon et de l'ail, servi avec du riz et du funge.", "es": "Pollo (u otra carne) cocinado en su propia sangre con vinagre, tomate, cebolla y ajo, servido con arroz y funge."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "o-almeida", "label": "O Almeida", "city": "Luanda", "venue": 232, "item": "CABIDELA de GALINHA", "kz": 6500, "note": ""}], "count": 1}, {"id": "kizaca", "name": {"pt": "Kizaca", "en": "Kizaca", "fr": "Kizaca", "es": "Kizaca"}, "desc": {"pt": "Folhas de mandioca cozidas, parecidas com espinafres, muitas vezes com ginguba (amendoim). Com peixe, serve-se com arroz e funge.", "en": "Cooked cassava leaves, similar to spinach, often with peanuts (ginguba). With fish, it is served with rice and funge.", "fr": "Feuilles de manioc cuites, proches des épinards, souvent avec de l'arachide (ginguba). Avec du poisson, on la sert avec du riz et du funge.", "es": "Hojas de mandioca cocidas, parecidas a las espinacas, a menudo con cacahuete (ginguba). Con pescado, se sirve con arroz y funge."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "lookal-beach-club", "label": "Lookal Beach Club", "city": "Luanda", "venue": 5, "item": "Kizaca Lookal Beach", "kz": 3500, "note": ""}], "count": 1}, {"id": "ginguba", "name": {"pt": "Moamba de ginguba", "en": "Moamba de ginguba (peanut moamba)", "fr": "Moamba de ginguba (moamba à l'arachide)", "es": "Moamba de ginguba (moamba de cacahuete)"}, "desc": {"pt": "A moamba feita com molho de ginguba (amendoim) em vez de pasta de dendém.", "en": "Moamba made with a peanut (ginguba) sauce instead of palm-nut paste.", "fr": "La moamba préparée avec une sauce à l'arachide (ginguba) au lieu de la pâte de noix de palme.", "es": "La moamba hecha con salsa de cacahuete (ginguba) en lugar de pasta de nuez de palma."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}, {"id": "catatos", "name": {"pt": "Catatos", "en": "Catatos", "fr": "Catatos", "es": "Catatos"}, "desc": {"pt": "Lagartas fritas com alho, servidas com arroz. Uma especialidade do Uíge.", "en": "Caterpillars fried with garlic, served with rice. A speciality of Uíge.", "fr": "Chenilles frites à l'ail, servies avec du riz. Une spécialité de l'Uíge.", "es": "Orugas fritas con ajo, servidas con arroz. Una especialidad de Uíge."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}, {"id": "kissangua", "name": {"pt": "Kissângua", "en": "Kissângua", "fr": "Kissângua", "es": "Kissângua"}, "desc": {"pt": "Bebida tradicional sem álcool do sul de Angola, feita de farinha de milho (ou de mandioca), água e açúcar.", "en": "A traditional non-alcoholic drink from southern Angola, made of maize (or cassava) flour, water and sugar.", "fr": "Boisson traditionnelle sans alcool du sud de l'Angola, à base de farine de maïs (ou de manioc), d'eau et de sucre.", "es": "Bebida tradicional sin alcohol del sur de Angola, hecha de harina de maíz (o de mandioca), agua y azúcar."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}, {"label": "Wikipédia (Culinária de Angola)", "url": "https://pt.wikipedia.org/wiki/Culin%C3%A1ria_de_Angola"}], "where": [], "count": 0}, {"id": "cocada", "name": {"pt": "Cocada amarela", "en": "Cocada amarela (yellow coconut pudding)", "fr": "Cocada amarela (flan jaune à la noix de coco)", "es": "Cocada amarela (dulce amarillo de coco)"}, "desc": {"pt": "Doce de coco ralado, açúcar, gemas de ovo e canela.", "en": "A pudding of grated coconut, sugar, egg yolks and cinnamon.", "fr": "Un dessert de noix de coco râpée, de sucre, de jaunes d'œuf et de cannelle.", "es": "Un dulce de coco rallado, azúcar, yemas de huevo y canela."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}, {"id": "mucua", "name": {"pt": "Múcua", "en": "Múcua (baobab fruit)", "fr": "Múcua (fruit du baobab)", "es": "Múcua (fruto del baobab)"}, "desc": {"pt": "O fruto seco do imbondeiro (embondeiro), muitas vezes feito em gelado.", "en": "The dried fruit of the baobab tree, often made into ice cream.", "fr": "Le fruit séché du baobab, souvent transformé en glace.", "es": "El fruto seco del baobab, a menudo convertido en helado."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}];
         const DISHES_CHECKED = '2026-10-25';
 
         const COLLECTIONS = {
@@ -8954,6 +9207,10 @@
         let lang = LANGS.includes(store.get('angoliveLang', null)) ? store.get('angoliveLang', null) : 'pt';
         // Skip saved places that have since been removed from the guide.
         let favorites = store.get('favorites', []).filter((id) => venues.some((v) => v.id === id));
+        // Places opened lately, newest first (this device only).
+        let recentViewed = (() => { const saved = store.get('tuendeRecent', []); return Array.isArray(saved) ? saved.filter((id) => venues.some((v) => v.id === id)) : []; })();
+        // The province the visitor picked at the top of the home page ('' = all of Angola).
+        let homeCity = (() => { const saved = store.get('tuendeCity', ''); return CITIES.includes(saved) ? saved : ''; })();
         let installPrompt = null;
         let ratingStats = {};
         let lastFocus = null;
@@ -9822,6 +10079,7 @@
             else if (params.get('page') === 'quiz') { if (state.view !== 'quiz') showQuiz({ push: false }); }
             else if (params.get('page') === 'pratos') { if (state.view !== 'dishes') showDishes({ push: false }); }
             else if (params.get('page') === 'momentos') { if (state.view !== 'feed') showFeed({ push: false }); }
+            else if (params.get('page') === 'perfil') { if (state.view !== 'profile') showProfile({ push: false }); }
             else if (params.get('page') === 'plano') {
                 const shared = params.get('p') ? planFromParam(params.get('p')) : null;
                 showPlan({ push: false, id: location.hash.match(/^#plano-([\w-]+)$/)?.[1] || '', shared: params.get('p') ? shared || 'bad' : null });
@@ -9872,7 +10130,7 @@
                             ${stats?.spendCount >= 3 ? `<span class="spend-pill">${escapeHTML(t('spendCard', { kz: kzFull(stats.spend) }))}</span>` : ''}
                             <span class="price-pill${!v.price ? ' tbc' : v.price.free ? ' free' : ''}">${escapeHTML(priceText(v))}</span>
                             ${OFFICIAL_CLASS[v.id] ? `<span class="official-pill">${icon('star')}${t('officialStars', { n: OFFICIAL_CLASS[v.id].stars })}</span>` : ''}
-                            ${options.fromLuanda ? `<span>${t('fromLuanda', { d: formatKm(kmBetween(LUANDA_CENTRE, v)) })}</span>` : dist ? `<span>${dist}</span>` : ''}
+                            ${options.fromLuanda ? `<span>${t('fromLuanda', { d: formatKm(kmBetween(LUANDA_CENTRE, v)) })}</span>` : options.fromCity ? `<span>${t('fromCity', { d: formatKm(kmBetween(options.fromCity.point, v)), city: escapeHTML(options.fromCity.name) })}</span>` : dist ? `<span>${dist}</span>` : ''}
                             ${statusHTML(v)}
                             ${eventPillHTML(v)}
                         </div>
@@ -9972,12 +10230,14 @@
             // Events already under way for a week or more go after the ones about to start, so the list changes from day to day.
             const today = luandaToday();
             const longOn = (e) => e.start < today && (Date.parse(e.end || e.start) - Date.parse(e.start)) >= 7 * 86400000;
-            const nextEvents = [...upcomingEvents()].sort((a, b) => longOn(a) - longOn(b)).slice(0, 3);
+            const cityEvents = homeCity ? upcomingEvents().filter((e) => e.city === homeCity) : [];
+            const nextEvents = [...(cityEvents.length ? cityEvents : upcomingEvents())].sort((a, b) => longOn(a) - longOn(b)).slice(0, 3);
+            if (!state.filters.where && $('whereSelect').value !== 'near') $('whereSelect').value = homeCity;
             if (nextEvents.length) {
                 parts.push(`
                     <section class="home-section" aria-labelledby="secEvents">
                         <div class="section-head">
-                            <h2 id="secEvents">${t('eventsHomeTitle')}</h2>
+                            <h2 id="secEvents">${cityEvents.length ? t('eventsHomeTitleCity', { city: escapeHTML(homeCity) }) : t('eventsHomeTitle')}</h2>
                             <button class="link-btn" type="button" data-action="events">${t('eventsSeeAll')}</button>
                         </div>
                         <p class="section-sub">${t('eventsHomeSub')}</p>
@@ -9985,7 +10245,10 @@
                     </section>`);
             }
 
-            parts.push(sectionHTML('secRecommended', t('recommendedTitle'), t('recommendedSub'), rowHTML(recommendedList(), { reason: true })));
+            const cityRec = cityRecommended();
+            parts.push(cityRec.length
+                ? sectionHTML('secRecommended', t('recommendedTitleCity', { city: escapeHTML(homeCity) }), '', rowHTML(cityRec, { reason: true }))
+                : sectionHTML('secRecommended', t('recommendedTitle'), t('recommendedSub'), rowHTML(recommendedList(), { reason: true })));
             if (visitorPhotos.length) {
                 parts.push(sectionHTML('secPhotos', t('photosTitle'), t('photosSub'), `<div class="photo-feed">${visitorPhotos.map((ph) => {
                     const v = venues.find((x) => x.id === ph.venue_id);
@@ -10008,12 +10271,21 @@
 
             parts.push(exploreHTML());
 
+            // Day trips start from Luanda, or from the middle of the chosen province.
+            const centre = homeCity && homeCity !== 'Luanda' ? cityCentre(homeCity) : null;
+            const from = centre || LUANDA_CENTRE;
             const dayTrips = venues
-                .filter((v) => v.exact && ['beach', 'nature', 'culture', 'museum', 'plaza'].includes(v.type) && kmBetween(LUANDA_CENTRE, v) >= 25 && kmBetween(LUANDA_CENTRE, v) <= 160)
-                .sort((a, b) => kmBetween(LUANDA_CENTRE, a) - kmBetween(LUANDA_CENTRE, b));
-            if (dayTrips.length) parts.push(sectionHTML('secDayTrips', t('dayTripsTitle'), t('dayTripsSub'), rowHTML(dayTrips, { fromLuanda: true })));
+                .filter((v) => v.exact && ['beach', 'nature', 'culture', 'museum', 'plaza'].includes(v.type) && kmBetween(from, v) >= 25 && kmBetween(from, v) <= 160)
+                .sort((a, b) => kmBetween(from, a) - kmBetween(from, b));
+            if (dayTrips.length) {
+                parts.push(centre
+                    ? sectionHTML('secDayTrips', t('dayTripsTitleCity', { city: escapeHTML(homeCity) }), t('dayTripsSub'), rowHTML(dayTrips, { fromCity: { point: centre, name: homeCity } }))
+                    : sectionHTML('secDayTrips', t('dayTripsTitle'), t('dayTripsSub'), rowHTML(dayTrips, { fromLuanda: true })));
+            }
             // Place ids grow as places are added, so the highest ids are the newest in the guide.
-            parts.push(sectionHTML('secNew', t('newTitle'), t('newSub'), rowHTML([...venues].filter(canStamp).sort((a, b) => b.id - a.id).slice(0, 10))));
+            const newest = [...venues].filter(canStamp).sort((a, b) => b.id - a.id);
+            const newestCity = homeCity ? newest.filter((v) => cityOf(v) === homeCity) : [];
+            parts.push(sectionHTML('secNew', t('newTitle'), t('newSub'), rowHTML((newestCity.length >= 3 ? newestCity : newest).slice(0, 10))));
 
             $('homeView').innerHTML = parts.join('');
             document.querySelectorAll('#homeView .card-row').forEach(updateRowControls);
@@ -10498,7 +10770,8 @@
             renderQuickFilters();
             renderSavedButton();
             renderTabbar();
-            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx', 'plan', 'passport', 'quiz', 'dishes', 'feed'].includes(state.view);
+            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx', 'plan', 'passport', 'quiz', 'dishes', 'feed', 'profile'].includes(state.view);
+            renderCityPill();
             $('homeView').hidden = state.view !== 'home';
             $('resultsView').hidden = state.view !== 'results';
             $('recommendView').hidden = state.view !== 'recommend';
@@ -10513,7 +10786,8 @@
             $('quizView').hidden = state.view !== 'quiz';
             $('dishesView').hidden = state.view !== 'dishes';
             $('feedView').hidden = state.view !== 'feed';
-            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle', passport: 'passportTitle', quiz: 'quizTitle', dishes: 'dishesTitle', feed: 'feedTitle' }[state.view];
+            $('profileView').hidden = state.view !== 'profile';
+            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle', passport: 'passportTitle', quiz: 'quizTitle', dishes: 'dishesTitle', feed: 'feedTitle', profile: 'profileTitle' }[state.view];
             document.title = viewTitle ? `${t(viewTitle)} | Tuende` : `Tuende - ${t('heroTitle')}`;
             if (state.view === 'home') renderHome();
             else if (state.view === 'results') renderResults();
@@ -10528,6 +10802,7 @@
             else if (state.view === 'quiz') renderQuiz();
             else if (state.view === 'dishes') renderDishes();
             else if (state.view === 'feed') renderFeed();
+            else if (state.view === 'profile') renderProfile();
         }
 
 
@@ -11818,7 +12093,7 @@
                     <div><div class="menu-item-name">${escapeHTML(name)}</div>${sub || note ? `<div class="menu-item-desc">${escapeHTML([sub, note].filter(Boolean).join(' · '))}</div>` : ''}</div>
                     <div class="menu-item-price">${escapeHTML(kzFull(price))}</div>
                 </div>`).join('');
-            return `<section><h3 class="section-title">${t('menuAoTitle')}${m.label && normalize(m.label).replace(/[^a-z0-9]/g, '') !== normalize(v.name).replace(/[^a-z0-9]/g, '') ? ` <span class="dish-city">· ${escapeHTML(m.label)}</span>` : ''}</h3>
+            return `<section><h3 class="section-title">${t('menuAoTitle')}${m.label && !normalize(v.name).replace(/[^a-z0-9]/g, '').includes(normalize(m.label).replace(/[^a-z0-9]/g, '')) ? ` <span class="dish-city">· ${escapeHTML(m.label)}</span>` : ''}</h3>
                 <p class="hint" style="margin-top:6px;">${t('menuAoRange', { a: kzFull(m.min), b: kzFull(m.max) })}. ${t('menuAoNote', { date: formatDate(m.checked) })} ${t('dishNamesNote')}</p>
                 <div class="panel">${rows}</div>
                 <p><a class="text-link" href="https://www.menus.ao/${escapeHTML(m.slug)}/menu" target="_blank" rel="noopener">${icon('external')}${t('menuAoFull', { n: m.total })}</a></p></section>`;
@@ -12057,6 +12332,8 @@
             loadSubmissions(id);
             loadReviews(id);
             loadPlacePosts(id);
+            recentViewed = [id, ...recentViewed.filter((x) => x !== id)].slice(0, 20);
+            store.set('tuendeRecent', recentViewed);
         }
 
         // The detailed fields only go out when the database has them.
@@ -12406,10 +12683,39 @@
         // feedReady: null until checked; false while the database update has not run (the page says "soon"); true once it has.
         let feedReady = null;
         let feedCheck = null;
-        const feed = { posts: [], extra: new Map(), counts: {}, mine: new Set(), reactions: {}, sort: 'recent', loading: false, loaded: false, error: false };
+        // mode: recent, near (recent posts sorted by distance) or following; tag: one of POST_TAGS or ''.
+        // v2: the database has tags and following (the full 2026-10-25-momentos.sql); false after a 400 on the tags column.
+        const feed = { posts: [], extra: new Map(), counts: {}, mine: new Set(), reactions: {}, authors: {}, mode: 'recent', tag: '', key: '', v2: true, loading: false, loaded: false, error: false };
+        const POST_TAGS = {
+            comida: { pt: 'Comida', en: 'Food', fr: 'Cuisine', es: 'Comida' },
+            praia: { pt: 'Praia', en: 'Beach', fr: 'Plage', es: 'Playa' },
+            natureza: { pt: 'Natureza', en: 'Nature', fr: 'Nature', es: 'Naturaleza' },
+            cultura: { pt: 'Cultura', en: 'Culture', fr: 'Culture', es: 'Cultura' },
+            noite: { pt: 'Noite', en: 'Nightlife', fr: 'Sorties', es: 'Noche' },
+            eventos: { pt: 'Eventos', en: 'Events', fr: 'Événements', es: 'Eventos' },
+            familia: { pt: 'Família', en: 'Family', fr: 'Famille', es: 'Familia' },
+            barato: { pt: 'Barato', en: 'Cheap', fr: 'Pas cher', es: 'Barato' },
+            vista: { pt: 'Vista', en: 'View', fr: 'Vue', es: 'Vistas' },
+            passeio: { pt: 'Passeio', en: 'Day out', fr: 'Balade', es: 'Paseo' }
+        };
+        const tagText = (key) => POST_TAGS[key]?.[lang] || key;
         let openPostId = null;
         const MAX_POST_PHOTOS = 6;
-        const POST_COLS = 'id,author,author_avatar,venue_id,place_name,lat,lng,body,photos,created_at,status';
+        const POST_COLS_V1 = 'id,author,author_avatar,venue_id,place_name,lat,lng,body,photos,created_at,status';
+        const postCols = () => (feed.v2 ? `${POST_COLS_V1},tags` : POST_COLS_V1);
+
+        // Posts from the table, without the tags if the database has the first version of the update.
+        async function fetchPosts(query, headers) {
+            headers ||= await readHeaders();
+            try {
+                return await (await sbRequest(`/rest/v1/posts?select=${postCols()}&${query}`, { headers })).json();
+            } catch (err) {
+                if (err.status !== 400 || !feed.v2) throw err;
+                feed.v2 = false;
+                return (await sbRequest(`/rest/v1/posts?select=${POST_COLS_V1}&${query.replace(/&?tags=[^&]*/, '')}`, { headers })).json();
+            }
+        }
+        const rpc = async (name, body = {}, user = true) => (await sbRequest(`/rest/v1/rpc/${name}`, { method: 'POST', headers: user ? await userHeaders({ 'Content-Type': 'application/json' }) : sbHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify(body) })).json();
         const postById = (id) => feed.posts.find((p) => p.id === id) || feed.extra.get(id);
         const isPostPhoto = (url) => typeof url === 'string' && url.startsWith(photoBase()) && /^[0-9a-f-]{36}\/post-\d+-[a-z0-9]+\.jpg$/.test(url.slice(photoBase().length));
         const postPhotos = (p) => (p.photos || []).filter(isPostPhoto);
@@ -12443,18 +12749,28 @@
             return feedCheck;
         }
 
+        const feedKey = () => `${feed.mode === 'following' ? 'following' : 'all'}:${feed.tag}`;
+
         async function loadFeed({ force = false } = {}) {
-            if (!supabaseReady() || feed.loading || (feed.loaded && !force)) return;
+            const key = feedKey();
+            if (!supabaseReady() || feed.loading || (feed.loaded && feed.key === key && !force)) return;
             feed.loading = true;
             feed.error = false;
             try {
-                const rows = await (await sbRequest(`/rest/v1/posts?select=${POST_COLS}&order=created_at.desc&limit=60`, { headers: await readHeaders() })).json();
+                let rows;
+                if (feed.mode === 'following') {
+                    rows = (await rpc('following_posts')).filter((p) => !feed.tag || (p.tags || []).includes(feed.tag));
+                } else {
+                    rows = await fetchPosts(`order=created_at.desc&limit=60${feed.tag && feed.v2 ? `&tags=cs.%7B${feed.tag}%7D` : ''}`);
+                }
                 feedReady = true;
                 feed.posts = rows.filter((p) => p.status === 'approved');
                 feed.loaded = true;
+                feed.key = key;
                 await Promise.all([loadPostCounts(feed.posts.map((p) => p.id)), loadMyFeedState()]);
             } catch (err) {
-                if (err.status === 404) feedReady = false;
+                if (err.status === 404 && feed.mode === 'following') { feed.v2 = false; feed.mode = 'recent'; }
+                else if (err.status === 404) feedReady = false;
                 else feed.error = true;
             } finally {
                 feed.loading = false;
@@ -12523,9 +12839,12 @@
                 body.innerHTML = `<div class="feed-empty">${icon('image')}<p>${t('feedSoon')}</p></div>`;
                 return;
             }
-            chips.innerHTML = [['recent', 'feedRecent', 'clock'], ['near', 'feedNear', 'locate']].map(([key, label, ic]) =>
-                `<button type="button" class="chip${feed.sort === key ? ' active' : ''}" data-feed-sort="${key}" aria-pressed="${feed.sort === key}">${icon(ic)}${t(label)}</button>`).join('');
-            if (!feed.loaded) {
+            const modes = [['recent', 'feedRecent', 'clock'], ['near', 'feedNear', 'locate'], ...(signedIn() && feed.v2 ? [['following', 'feedFollowingTab', 'users']] : [])];
+            chips.innerHTML = modes.map(([key, label, ic]) =>
+                `<button type="button" class="chip${feed.mode === key ? ' active' : ''}" data-feed-mode="${key}" aria-pressed="${feed.mode === key}">${icon(ic)}${t(label)}</button>`).join('')
+                + (feed.v2 ? `<span class="chip-sep" aria-hidden="true"></span>${Object.keys(POST_TAGS).map((key) =>
+                    `<button type="button" class="chip${feed.tag === key ? ' active' : ''}" data-feed-tag="${key}" aria-pressed="${feed.tag === key}">#${escapeHTML(tagText(key))}</button>`).join('')}` : '');
+            if (!feed.loaded || feed.key !== feedKey()) {
                 if (feed.error) {
                     body.innerHTML = `<div class="feed-empty"><p>${t('feedError')}</p><button class="submit-btn secondary" type="button" data-feed-retry>${t('feedRetry')}</button></div>`;
                     return;
@@ -12536,11 +12855,13 @@
                 return;
             }
             let list = feed.posts.slice();
-            if (feed.sort === 'near' && state.userPos) {
+            if (feed.mode === 'near' && state.userPos) {
                 list = list.map((p) => ({ p, km: postPoint(p) ? kmBetween(state.userPos, postPoint(p)) : Infinity })).sort((a, b) => a.km - b.km).map((o) => o.p);
             }
             if (!list.length) {
-                body.innerHTML = `<div class="feed-empty">${icon('image')}<p>${t('feedEmpty')}</p><button class="submit-btn" type="button" data-plus="post">${t('feedPostTitle')}</button></div>`;
+                body.innerHTML = feed.mode === 'following'
+                    ? `<div class="feed-empty">${icon('users')}<p>${t('feedFollowingEmpty')}</p></div>`
+                    : `<div class="feed-empty">${icon('image')}<p>${t(feed.tag ? 'feedTagEmpty' : 'feedEmpty')}</p><button class="submit-btn" type="button" data-plus="post">${t('feedPostTitle')}</button></div>`;
                 return;
             }
             // Cards go left to right, row by row, like a magazine.
@@ -12581,12 +12902,16 @@
             const r = feed.reactions[p.id] || 0;
             return `
                 <button class="close-btn" type="button" data-close="postModal" aria-label="${t('close')}">×</button>
-                <header class="post-head">${avatarHTML(p.author_avatar, p.author)}<div><b>${escapeHTML(p.author)}</b><span>${escapeHTML(relDate(p.created_at))}</span></div></header>
+                <header class="post-head">
+                    <button type="button" class="post-who" ${feed.v2 ? `data-author-open="${escapeHTML(p.id)}"` : 'disabled'}>${avatarHTML(p.author_avatar, p.author)}<div><b>${escapeHTML(p.author)}</b><span>${escapeHTML(relDate(p.created_at))}</span></div></button>
+                    ${feed.v2 && !mine ? followButtonHTML(p.id) : ''}
+                </header>
                 ${photos.length ? `
                     <div class="post-photos" id="postPhotos">${photos.map((url, i) => `<img src="${escapeHTML(url)}" alt="${escapeHTML(t('feedPhotoN', { n: i + 1, total: photos.length }))}"${i ? ' loading="lazy"' : ''}>`).join('')}</div>
                     ${photos.length > 1 ? `<div class="post-dots" id="postDots" aria-hidden="true">${photos.map((_, i) => `<span${i ? '' : ' class="on"'}></span>`).join('')}</div>` : ''}` : ''}
                 <div class="post-body">
                     <p class="post-text">${escapeHTML(p.body)}</p>
+                    ${(p.tags || []).length ? `<div class="post-tags">${p.tags.filter((k) => POST_TAGS[k]).map((k) => `<button type="button" class="post-tag" data-feed-tag="${k}">#${escapeHTML(tagText(k))}</button>`).join('')}</div>` : ''}
                     ${postPlaceHTML(p)}
                     <div class="post-bar">
                         <button type="button" class="react-btn${r === 1 ? ' on' : ''}" data-react="1" aria-pressed="${r === 1}" aria-label="${t('feedLike')}">${icon('thumbUp')}<span>${c.likes || 0}</span></button>
@@ -12616,7 +12941,7 @@
                 panel.innerHTML = `<button class="close-btn" type="button" data-close="postModal" aria-label="${t('close')}">×</button><div class="post-body"><p class="hint">${t('loading')}</p></div>`;
                 openModal('postModal');
                 try {
-                    const rows = await (await sbRequest(`/rest/v1/posts?select=${POST_COLS}&id=eq.${id}`, { headers: await readHeaders() })).json();
+                    const rows = await fetchPosts(`id=eq.${id}`);
                     p = rows.find((r) => r.status === 'approved');
                     if (p) {
                         feed.extra.set(id, p);
@@ -12635,6 +12960,7 @@
             else openModal('postModal');
             $('postModal').setAttribute('aria-label', `${t('feedTitle')}: ${p.author}`);
             if (!location.hash.startsWith(`#momento-${id}`)) history.replaceState(null, '', `${location.pathname}${location.search}#momento-${id}`);
+            if (feed.v2 && !feed.mine.has(id)) loadAuthor(id);
             const strip = $('postPhotos');
             if (strip && $('postDots')) {
                 strip.addEventListener('scroll', () => {
@@ -12841,7 +13167,7 @@
         async function loadPlacePosts(venueId) {
             if (!supabaseReady() || feedReady === false) return;
             try {
-                const rows = (await (await sbRequest(`/rest/v1/posts?select=${POST_COLS}&venue_id=eq.${venueId}&order=created_at.desc&limit=12`, { headers: await readHeaders() })).json()).filter((p) => p.status === 'approved');
+                const rows = (await fetchPosts(`venue_id=eq.${venueId}&order=created_at.desc&limit=12`)).filter((p) => p.status === 'approved');
                 feedReady = true;
                 rows.forEach((p) => { if (!postById(p.id)) feed.extra.set(p.id, p); });
                 const box = $('placePosts');
@@ -12865,16 +13191,20 @@
 
         /* ---------- Writing a moment ---------- */
 
-        let compose = { venue: null, placeName: '', lat: null, lng: null, files: [], text: '', consent: false };
+        const blankCompose = () => ({ venue: null, placeName: '', lat: null, lng: null, files: [], text: '', tags: [], consent: false, ready: false, restored: false });
+        let compose = blankCompose();
 
         async function openCompose(venueId = null) {
             if (!signedIn()) { openAuth('signin', { reason: t('feedNeedSignIn'), after: () => openCompose(venueId) }); return; }
             compose.files.forEach((f) => URL.revokeObjectURL(f.url));
-            compose = { venue: venueId, placeName: '', lat: null, lng: null, files: [], text: '', consent: false };
+            compose = blankCompose();
             $('composeBody').innerHTML = `<p class="hint">${t('loading')}</p>`;
             openModal('composeModal');
             await checkFeed();
             if (feedReady !== true) { $('composeBody').innerHTML = `<p>${feedReady === false ? t('feedSoon') : t('feedError')}</p>`; return; }
+            await loadDraft();
+            if (venueId && !compose.venue && !compose.placeName) compose.venue = venueId;
+            compose.ready = true;
             renderCompose();
         }
 
@@ -12892,12 +13222,14 @@
             compose.text = $('composeText').value;
             compose.placeName = $('composePlaceName')?.value ?? compose.placeName;
             compose.consent = $('composeConsent')?.checked || false;
+            compose.tags = [...document.querySelectorAll('#composeForm input[name="composeTag"]:checked')].map((x) => x.value);
         }
 
         function renderCompose() {
             const v = compose.venue ? venues.find((x) => x.id === compose.venue) : null;
             $('composeBody').innerHTML = `
                 <form class="compose-form" id="composeForm" novalidate>
+                    ${compose.restored ? `<div class="draft-note"><span>${t('draftRestored')}</span><button type="button" class="link-btn" data-draft-discard>${t('draftDiscard')}</button></div>` : ''}
                     <div class="compose-photos" id="composePhotos">${composePhotosHTML()}</div>
                     <textarea class="field compose-text" id="composeText" maxlength="2000" placeholder="${t('feedTextPh')}" aria-label="${t('feedTextPh')}">${escapeHTML(compose.text)}</textarea>
                     <div class="compose-place">
@@ -12909,6 +13241,11 @@
                                <button type="button" class="link-btn" data-compose-locate>${icon('locate')}${compose.lat !== null ? t('feedLocationSet') : t('feedUseLocation')}</button>
                                ${compose.lat !== null ? `<p class="hint">${t('feedLocationNote')}</p>` : ''}`}
                     </div>
+                    ${feed.v2 ? `
+                        <div class="compose-place">
+                            <span class="field-label">${t('feedTags')}</span>
+                            <div class="compose-tags">${Object.keys(POST_TAGS).map((key) => `<label class="tag-chip"><input type="checkbox" name="composeTag" value="${key}" ${compose.tags.includes(key) ? 'checked' : ''}><span>#${escapeHTML(tagText(key))}</span></label>`).join('')}</div>
+                        </div>` : ''}
                     <label class="consent" id="composeConsentWrap" ${compose.files.length ? '' : 'hidden'}><input type="checkbox" id="composeConsent" ${compose.consent ? 'checked' : ''}><span>${t('feedConsent')}</span></label>
                     <div class="form-msg" id="composeMsg" role="status" aria-live="polite"></div>
                     <button class="submit-btn" type="submit" id="composeSubmit">${t('feedPublish')}</button>
@@ -12946,6 +13283,8 @@
             if (!text) { msg.textContent = t('feedErrText'); $('composeText').focus(); return; }
             if (!compose.venue && placeName.length < 2) { msg.textContent = t('feedErrPlace'); $('composePlaceName')?.focus(); return; }
             if (compose.files.length && !$('composeConsent').checked) { msg.textContent = t('feedErrConsent'); return; }
+            const tags = [...document.querySelectorAll('#composeForm input[name="composeTag"]:checked')].map((x) => x.value);
+            if (tags.length > 3) { msg.textContent = t('feedErrTags'); return; }
             button.disabled = true;
             button.textContent = t('sending');
             msg.textContent = '';
@@ -12960,12 +13299,14 @@
                     await sbRequest(`/storage/v1/object/submissions/${path}`, { method: 'POST', headers: await userHeaders({ 'Content-Type': 'image/jpeg', 'x-upsert': 'false' }), body: blob });
                     uploaded.push(path);
                 }
-                const row = { body: text, photos: uploaded.map((path) => photoBase() + path), ...(compose.venue ? { venue_id: compose.venue } : { place_name: placeName, lat: compose.lat, lng: compose.lng }) };
+                const row = { body: text, photos: uploaded.map((path) => photoBase() + path), ...(feed.v2 && tags.length ? { tags } : {}), ...(compose.venue ? { venue_id: compose.venue } : { place_name: placeName, lat: compose.lat, lng: compose.lng }) };
                 const res = await sbRequest('/rest/v1/posts', { method: 'POST', headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=representation' }), body: JSON.stringify(row) });
                 const [post] = await res.json();
                 uploaded.length = 0;
                 compose.files.forEach((f) => URL.revokeObjectURL(f.url));
-                compose = { venue: null, placeName: '', lat: null, lng: null, files: [], text: '', consent: false };
+                compose = blankCompose();
+                clearDraft();
+                profile.loadedAt = 0;
                 feedReady = true;
                 feed.posts.unshift(post);
                 feed.mine.add(post.id);
@@ -12985,6 +13326,316 @@
                     button.disabled = false;
                     button.textContent = t('feedPublish');
                 }
+            }
+        }
+
+
+        /* ---------- Following people and their profile ---------- */
+
+        // feed.authors[postId] = { author, author_avatar, posts, followers, following, is_me } (from author_profile).
+        async function loadAuthor(postId) {
+            try {
+                const [info] = await rpc('author_profile', { post: postId }, signedIn());
+                if (!info) return;
+                feed.authors[postId] = info;
+                refreshFollowButtons(postId);
+            } catch {}
+        }
+
+        function followButtonHTML(postId) {
+            const info = feed.authors[postId];
+            if (info?.is_me) return '';
+            const on = Boolean(info?.following);
+            return `<button type="button" class="follow-btn${on ? ' on' : ''}" data-follow="${escapeHTML(postId)}" aria-pressed="${on}">${t(on ? 'feedFollowingBtn' : 'feedFollow')}</button>`;
+        }
+
+        function refreshFollowButtons(postId) {
+            const info = feed.authors[postId];
+            document.querySelectorAll(`[data-follow="${CSS.escape(postId)}"]`).forEach((b) => {
+                if (info?.is_me) { b.remove(); return; }
+                b.classList.toggle('on', Boolean(info?.following));
+                b.setAttribute('aria-pressed', String(Boolean(info?.following)));
+                b.textContent = t(info?.following ? 'feedFollowingBtn' : 'feedFollow');
+            });
+            const count = $('authorCount');
+            if (count && count.dataset.post === postId) count.textContent = t('authorPosts', { n: info.posts, f: info.followers });
+        }
+
+        async function toggleFollow(button) {
+            if (!signedIn()) { openAuth('signin', { reason: t('feedNeedSignIn') }); return; }
+            const postId = button.dataset.follow;
+            const info = feed.authors[postId] || {};
+            const next = !info.following;
+            button.disabled = true;
+            try {
+                const answer = await rpc('follow_author', { post: postId, follow: next });
+                if (answer === 'self') { info.is_me = true; }
+                else if (answer !== 'not_found') {
+                    info.followers = Math.max(0, (info.followers || 0) + (next === Boolean(info.following) ? 0 : next ? 1 : -1));
+                    info.following = next;
+                }
+                feed.authors[postId] = info;
+                refreshFollowButtons(postId);
+                if (feed.mode === 'following') feed.loaded = false;
+                profile.loadedAt = 0;
+            } catch (err) {
+                needsSignIn(err);
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        // The author's page: name, counts, follow and their moments (opened from a post).
+        async function openAuthor(postId) {
+            // The author's window sits under the post window, so close the post first.
+            if ($('postModal').classList.contains('open')) closeModal('postModal');
+            const panel = $('authorPanel');
+            panel.innerHTML = `<button class="close-btn" type="button" data-close="authorModal" aria-label="${t('close')}">×</button><p class="hint">${t('loading')}</p>`;
+            openModal('authorModal');
+            try {
+                const [[info], rows] = await Promise.all([rpc('author_profile', { post: postId }, signedIn()), rpc('author_posts', { post: postId }, signedIn())]);
+                if (!info) { panel.innerHTML = `<button class="close-btn" type="button" data-close="authorModal" aria-label="${t('close')}">×</button><p>${t('feedGone')}</p>`; return; }
+                feed.authors[postId] = info;
+                rows.forEach((p) => { if (!postById(p.id)) feed.extra.set(p.id, p); });
+                await loadPostCounts(rows.map((p) => p.id).filter((id) => !feed.counts[id]));
+                const n = innerWidth >= 721 ? 3 : 2;
+                const cols = Array.from({ length: n }, () => []);
+                rows.forEach((p, i) => cols[i % n].push(postCardHTML(p)));
+                panel.innerHTML = `
+                    <button class="close-btn" type="button" data-close="authorModal" aria-label="${t('close')}">×</button>
+                    <div class="author-head">
+                        ${avatarHTML(info.author_avatar, info.author, 'lg')}
+                        <div><h2 id="authorName">${escapeHTML(info.author)}</h2><p id="authorCount" data-post="${escapeHTML(postId)}">${t('authorPosts', { n: info.posts, f: info.followers })}</p></div>
+                        ${followButtonHTML(postId)}
+                    </div>
+                    <div class="feed-grid" style="--cols:${n}">${cols.map((c) => `<div class="feed-col">${c.join('')}</div>`).join('')}</div>`;
+            } catch {
+                panel.innerHTML = `<button class="close-btn" type="button" data-close="authorModal" aria-label="${t('close')}">×</button><p>${t('feedError')}</p>`;
+            }
+        }
+
+        function setFeedMode(mode) {
+            if (mode === 'following' && !signedIn()) { openAuth('signin', { reason: t('feedNeedSignIn') }); return; }
+            feed.mode = mode;
+            if (mode === 'near' && !state.userPos) locate();
+            renderFeed();
+        }
+
+        /* ---------- Drafts: an unfinished moment stays on this device (text in localStorage, photos in IndexedDB) ---------- */
+
+        const DRAFT_KEY = 'tuendeDraft';
+        function idbStore(mode, run) {
+            return new Promise((resolve, reject) => {
+                const open = indexedDB.open('tuende', 1);
+                open.onupgradeneeded = () => open.result.createObjectStore('kv');
+                open.onerror = () => reject(open.error);
+                open.onsuccess = () => {
+                    const tx = open.result.transaction('kv', mode);
+                    const req = run(tx.objectStore('kv'));
+                    tx.oncomplete = () => { open.result.close(); resolve(req?.result); };
+                    tx.onerror = () => { open.result.close(); reject(tx.error); };
+                };
+            });
+        }
+
+        function saveDraft() {
+            if (!compose.ready) return;
+            saveComposeDraft();
+            if (!compose.text.trim() && !compose.files.length) { clearDraft(); return; }
+            store.set(DRAFT_KEY, { text: compose.text, venue: compose.venue, placeName: compose.placeName, lat: compose.lat, lng: compose.lng, tags: compose.tags, photos: compose.files.length, at: Date.now() });
+            idbStore('readwrite', (s) => s.put(compose.files.map((f) => f.file), 'draftPhotos')).catch(() => {});
+            compose.ready = false;
+            profile.loadedAt = 0;
+            if (state.view === 'profile') renderProfile();
+        }
+
+        function clearDraft() {
+            store.remove(DRAFT_KEY);
+            idbStore('readwrite', (s) => s.delete('draftPhotos')).catch(() => {});
+        }
+
+        async function loadDraft() {
+            const d = store.get(DRAFT_KEY, null);
+            if (!d) return;
+            let files = [];
+            try { files = (await idbStore('readonly', (s) => s.get('draftPhotos'))) || []; } catch {}
+            compose = {
+                ...blankCompose(),
+                text: d.text || '', placeName: d.placeName || '', lat: d.lat ?? null, lng: d.lng ?? null,
+                venue: venues.some((v) => v.id === d.venue) ? d.venue : null,
+                tags: Array.isArray(d.tags) ? d.tags.filter((k) => POST_TAGS[k]) : [],
+                files: files.filter((f) => f instanceof Blob).slice(0, MAX_POST_PHOTOS).map((file) => ({ file, url: URL.createObjectURL(file) })),
+                restored: true
+            };
+        }
+
+        /* ---------- City switcher ---------- */
+
+        function renderCityPill() {
+            $('cityPill').innerHTML = `${icon('pin')}<span>${escapeHTML(homeCity || t('cityAll'))}</span>${icon('next')}`;
+        }
+
+        // The middle of a province: the average of its places with an exact position.
+        function cityCentre(city) {
+            const vs = venues.filter((v) => v.exact && cityOf(v) === city);
+            if (!vs.length) return null;
+            return { lat: vs.reduce((s, v) => s + v.lat, 0) / vs.length, lng: vs.reduce((s, v) => s + v.lng, 0) / vs.length };
+        }
+
+        // Recommended places in the chosen province: the team's picks first, then places with photos and reviews.
+        function cityRecommended() {
+            if (!homeCity) return [];
+            const score = (v) => (RECOMMENDED.includes(v.id) ? 100 : 0) + (v.photos ? 10 : 0) + (statsOf(v)?.count || 0) + (v.exact ? 1 : 0);
+            const list = venues.filter((v) => cityOf(v) === homeCity && canStamp(v) && highlightOf(v)).sort((a, b) => score(b) - score(a)).slice(0, 8);
+            return list.length >= 3 ? list : [];
+        }
+
+        function setHomeCity(city) {
+            homeCity = CITIES.includes(city) ? city : '';
+            store.set('tuendeCity', homeCity);
+            if (!state.filters.where) $('whereSelect').value = homeCity;
+            closeModal('pickModal');
+            render();
+        }
+
+        function pickCity(value) {
+            if (value !== '@') { setHomeCity(value); return; }
+            if (!navigator.geolocation) { $('pickList').insertAdjacentHTML('afterbegin', `<p class="form-msg">${t('locError')}</p>`); return; }
+            navigator.geolocation.getCurrentPosition((pos) => {
+                state.userPos = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                const nearest = venues.filter((v) => v.exact).map((v) => ({ v, km: kmBetween(state.userPos, v) })).sort((a, b) => a.km - b.km)[0];
+                setHomeCity(nearest && nearest.km < 300 ? cityOf(nearest.v) : '');
+            }, () => $('pickList').insertAdjacentHTML('afterbegin', `<p class="form-msg">${t('locError')}</p>`), { enableHighAccuracy: false, timeout: 15000, maximumAge: 300000 });
+        }
+
+        /* ---------- Profile page: counts, inbox, my moments, recently viewed, passport ---------- */
+
+        let profile = { stats: null, inbox: [], mine: [], loadedAt: 0, tab: '' };
+        const inboxSeenKey = () => `tuendeInboxSeen:${session?.user?.id || ''}`;
+
+        function showProfile({ push = true } = {}) {
+            state.view = 'profile';
+            if (push) history.pushState(null, '', `${location.pathname}?page=perfil`);
+            render();
+            window.scrollTo({ top: 0 });
+        }
+
+        // Notifications for the red dot on the account icon (likes, comments, new followers).
+        let inboxCheckedAt = 0;
+        async function checkInbox(force = false) {
+            if (!signedIn() || feedReady === false || !feed.v2) return;
+            if (!force && Date.now() - inboxCheckedAt < 5 * 60 * 1000) return;
+            inboxCheckedAt = Date.now();
+            try {
+                profile.inbox = await rpc('my_notifications');
+                updateInboxDot();
+                if (state.view === 'profile' && profile.tab === 'inbox') renderProfile();
+            } catch (err) {
+                if (err.status === 404) feed.v2 = false;
+            }
+        }
+
+        function updateInboxDot() {
+            const seen = Number(store.get(inboxSeenKey(), 0)) || 0;
+            $('inboxDot').hidden = !profile.inbox.some((n) => Date.parse(n.created_at) > seen);
+        }
+
+        async function loadProfile() {
+            if (!signedIn() || feedReady === false || Date.now() - profile.loadedAt < 60 * 1000) return;
+            profile.loadedAt = Date.now();
+            try {
+                const headers = await userHeaders();
+                const [stats, inbox, mine] = await Promise.all([
+                    feed.v2 ? rpc('my_stats').catch(() => []) : [],
+                    feed.v2 ? rpc('my_notifications').catch(() => []) : [],
+                    fetchPosts(`user_id=eq.${session.user.id}&order=created_at.desc&limit=60`, headers)
+                ]);
+                feedReady = true;
+                profile.stats = stats[0] || null;
+                profile.inbox = inbox;
+                profile.mine = mine;
+                mine.forEach((p) => { feed.mine.add(p.id); if (!postById(p.id)) feed.extra.set(p.id, p); });
+                await loadPostCounts(mine.map((p) => p.id).filter((id) => !feed.counts[id]));
+                updateInboxDot();
+            } catch (err) {
+                if (err.status === 404) feedReady = false;
+            }
+            if (state.view === 'profile') renderProfile();
+        }
+
+        function notifHTML(n, seen) {
+            const name = escapeHTML(n.actor || t('profileGuest'));
+            const text = n.kind === 'comment' ? t('inboxComment', { name, text: escapeHTML(n.snippet || '') })
+                : n.kind === 'like' ? t(n.n === 1 ? 'inboxLikeOne' : 'inboxLike', { n: n.n, text: escapeHTML(n.snippet || '') })
+                : t('inboxFollow', { name });
+            const attrs = n.kind === 'follow' ? (n.post_id ? `data-author-open="${escapeHTML(n.post_id)}"` : 'disabled') : `data-post-open="${escapeHTML(n.post_id)}"`;
+            return `<button type="button" class="notif${Date.parse(n.created_at) > seen ? ' unread' : ''}" ${attrs}>
+                ${n.kind === 'like' ? `<span class="notif-icon">${icon('thumbUp')}</span>` : avatarHTML(n.actor_avatar, n.actor)}
+                <span class="notif-main"><span>${text}</span><small>${escapeHTML(relDate(n.created_at))}</small></span></button>`;
+        }
+
+        const placeListHTML = (list) => `<div class="place-list">${list.map((v) => pickRowHTML(v).replace('data-pick=', 'data-open=')).join('')}</div>`;
+
+        function renderProfile() {
+            const body = $('profileBody');
+            const vs = visitedPlaces();
+            const me = signedIn();
+            const social = me && feedReady !== false;
+            if (social) loadProfile();
+            const s = profile.stats;
+            const tabs = [
+                ...(social && feed.v2 ? [['inbox', 'profileTabInbox']] : []),
+                ...(social ? [['posts', 'profileTabPosts']] : []),
+                ['recent', 'profileTabRecent'],
+                ['passport', 'passportTitle']
+            ];
+            if (!tabs.some(([k]) => k === profile.tab)) profile.tab = tabs[0][0];
+            const seen = Number(store.get(inboxSeenKey(), 0)) || 0;
+            const unread = profile.inbox.filter((n) => Date.parse(n.created_at) > seen).length;
+            const stats = [
+                [vs.length, 'profilePlaces'], [`${provinceTotal(vs)}/${PROVINCES.length}`, 'passportProvinces'],
+                ...(s ? [[s.n_posts, 'feedTitle'], [s.n_followers, 'profileFollowers'], [s.n_following, 'profileFollowingN']] : [])
+            ];
+            let pane = '';
+            if (profile.tab === 'inbox') {
+                pane = profile.inbox.length ? profile.inbox.map((n) => notifHTML(n, seen)).join('') : `<p class="hint">${t('inboxEmpty')}</p>`;
+            } else if (profile.tab === 'posts') {
+                const draft = store.get(DRAFT_KEY, null);
+                const draftCard = draft ? `<button type="button" class="draft-card" data-plus="post">${icon('edit')}<span><b>${t('draftCard')}</b><small>${escapeHTML((draft.text || '').slice(0, 80))}</small></span>${t('draftContinue')}</button>` : '';
+                const n = innerWidth >= 721 ? 3 : 2;
+                const cols = Array.from({ length: n }, () => []);
+                profile.mine.forEach((p, i) => cols[i % n].push(postCardHTML(p).replace('<span class="post-card-media', p.status === 'approved' ? '<span class="post-card-media' : `<span class="post-status">${t('postHidden')}</span><span class="post-card-media`)));
+                pane = draftCard + (profile.mine.length
+                    ? `<div class="feed-grid" style="--cols:${n}">${cols.map((c) => `<div class="feed-col">${c.join('')}</div>`).join('')}</div>`
+                    : `<div class="feed-empty">${icon('image')}<p>${t('myPostsEmpty')}</p><button class="submit-btn" type="button" data-plus="post">${t('feedPostTitle')}</button></div>`);
+            } else if (profile.tab === 'recent') {
+                const list = recentViewed.map((id) => venues.find((v) => v.id === id)).filter(Boolean);
+                pane = list.length ? `${placeListHTML(list)}<button type="button" class="link-btn" data-recent-clear>${t('recentClear')}</button>` : `<p class="hint">${t('recentEmpty')}</p>`;
+            } else {
+                const list = visitedPlaces().slice().reverse().slice(0, 8);
+                pane = `${list.length ? placeListHTML(list) : `<p class="hint">${t('passportIntro')}</p>`}
+                    <div class="banner-actions" style="margin-top:12px">
+                        <button class="submit-btn" type="button" data-action="passport">${icon('passport')} ${t('passportTitle')}</button>
+                        <button class="submit-btn secondary" type="button" data-action="show-saved">${icon('heart')} ${t('savedBtn')} (${favorites.length})</button>
+                    </div>`;
+            }
+            body.innerHTML = `
+                <div class="profile-head">
+                    ${me ? avatarHTML(myAvatar(), accountName(), 'lg') : `<span class="avatar avatar-initial lg" aria-hidden="true">${icon('user')}</span>`}
+                    <div>
+                        <h1 class="profile-name" id="profileTitle">${escapeHTML(me ? accountName() : t('profileGuest'))}</h1>
+                        ${me ? `<button class="link-btn" type="button" data-auth-open="account">${t('profileSettings')}</button>` : ''}
+                    </div>
+                </div>
+                ${me ? '' : `<div class="signin-prompt profile-guest"><p>${t('profileGuestNote')}</p><button class="submit-btn" type="button" data-auth-open="signin">${t('signIn')}</button></div>`}
+                <div class="profile-stats">${stats.map(([n, label]) => `<div class="profile-stat"><b>${escapeHTML(String(n))}</b><span>${t(label)}</span></div>`).join('')}</div>
+                ${s?.n_helpful ? `<p class="profile-helped">${icon('heart')}${t(s.n_helpful === 1 ? 'profileHelpedOne' : 'profileHelped', { n: s.n_helpful })}</p>` : ''}
+                <div class="chips profile-tabs" role="tablist">${tabs.map(([key, label]) => `<button type="button" class="chip${profile.tab === key ? ' active' : ''}" role="tab" aria-selected="${profile.tab === key}" data-profile-tab="${key}">${t(label)}${key === 'inbox' && unread ? ` (${unread})` : ''}</button>`).join('')}</div>
+                <div class="profile-pane" role="tabpanel">${pane}</div>`;
+            // Opening the inbox marks everything as seen (the highlight stays until the next visit).
+            if (profile.tab === 'inbox' && profile.inbox.length) {
+                store.set(inboxSeenKey(), Math.max(...profile.inbox.map((n) => Date.parse(n.created_at))));
+                $('inboxDot').hidden = true;
             }
         }
 
@@ -13059,7 +13710,7 @@
 
         function openPicker(mode) {
             pickMode = mode;
-            $('pickTitle').textContent = t(mode === 'visited' ? 'beenHere' : mode === 'review' ? 'plusReview' : 'pickTitle');
+            $('pickTitle').textContent = t(mode === 'visited' ? 'beenHere' : mode === 'review' ? 'plusReview' : mode === 'city' ? 'cityTitle' : 'pickTitle');
             $('pickSearch').value = '';
             renderPicker();
             openModal('pickModal');
@@ -13067,6 +13718,15 @@
 
         function renderPicker() {
             const q = normalize($('pickSearch').value.trim());
+            if (pickMode === 'city') {
+                const counts = {};
+                venues.forEach((v) => { counts[cityOf(v)] = (counts[cityOf(v)] || 0) + 1; });
+                const row = (value, label, extra) => `<button type="button" class="pick-row${homeCity === value ? ' on' : ''}" data-pick-city="${escapeHTML(value)}"><span class="pick-thumb">${icon(value === '@' ? 'locate' : 'pin')}</span><span><b>${escapeHTML(label)}</b></span>${extra || ''}</button>`;
+                const list = CITIES.filter((c) => !q || normalize(c).includes(q));
+                $('pickList').innerHTML = (q ? '' : row('@', t('cityUseLocation')) + row('', t('cityAll'), `<span class="pick-count">${placesCount(venues.length)}</span>`))
+                    + list.map((c) => row(c, c, `<span class="pick-count">${placesCount(counts[c] || 0)}</span>`)).join('');
+                return;
+            }
             const pool = pickPool();
             const done = (v) => (pickMode === 'visited' && visited.includes(v.id) ? `<span class="pick-done" aria-label="${t('beenHereDone')}">${icon('check')}</span>` : '');
             let html = '';
@@ -13078,8 +13738,9 @@
                 const near = state.userPos ? pool.filter((v) => Number.isFinite(v.lat) && !mine.includes(v)).map((v) => ({ v, km: kmBetween(state.userPos, v) })).sort((a, b) => a.km - b.km).slice(0, 10).map((o) => o.v) : [];
                 const popular = near.length ? [] : pool.filter((v) => !mine.includes(v) && statsOf(v)).sort((a, b) => statsOf(b).count - statsOf(a).count).slice(0, 10);
                 const fill = near.length || popular.length ? [] : pool.filter((v) => !mine.includes(v) && thumbSrc(v)).slice(0, 10);
+                const recent = recentViewed.map((id) => pool.find((v) => v.id === id)).filter((v) => v && !mine.includes(v)).slice(0, 6);
                 const group = (title, list) => (list.length ? `<p class="pick-head">${t(title)}</p>${list.map((v) => pickRowHTML(v, done(v))).join('')}` : '');
-                html = group('pickYours', mine) + group('pickNear', near) + group('pickPopular', popular.length ? popular : fill);
+                html = group('pickYours', mine) + group('profileTabRecent', recent) + group('pickNear', near.filter((v) => !recent.includes(v))) + group('pickPopular', popular.length ? popular : fill);
             }
             $('pickList').innerHTML = html;
         }
@@ -13367,6 +14028,8 @@
             if (state.openId) openVenue(state.openId, true);
             if (feed.loaded) await loadMyFeedState();
             if (openPostId) openPost(openPostId);
+            profile.loadedAt = 0;
+            checkInbox(true);
             if (next) next();
         }
 
@@ -13488,7 +14151,11 @@
             saveSession(null);
             feed.mine = new Set();
             feed.reactions = {};
+            feed.authors = {};
             myReviewed = null;
+            profile = { stats: null, inbox: [], mine: [], loadedAt: 0, tab: '' };
+            $('inboxDot').hidden = true;
+            if (state.view === 'profile' || (feed.mode === 'following' && state.view === 'feed')) { feed.mode = 'recent'; feed.loaded = false; }
             if (openPostId) openPost(openPostId);
             render();
             if (state.openId) openVenue(state.openId, true);
@@ -14391,6 +15058,7 @@
         function closeModal(id, { updateURL = true } = {}) {
             $(id).classList.remove('open');
             if (!document.querySelector('.modal.open')) document.body.classList.remove('no-scroll');
+            if (id === 'composeModal') saveDraft();
             if (id === 'postModal') {
                 openPostId = null;
                 if (updateURL && location.hash.startsWith('#momento-')) history.replaceState(null, '', `${location.pathname}${location.search}${state.openId ? `#local-${state.openId}` : ''}`);
@@ -15861,7 +16529,7 @@
         });
 
         $('savedBtn').addEventListener('click', () => showResults({ saved: true }));
-        $('accountBtn').addEventListener('click', () => openAuth());
+        $('accountBtn').addEventListener('click', () => (signedIn() ? showProfile() : openAuth()));
         $('authContent').addEventListener('submit', submitAuth);
         $('authContent').addEventListener('change', (e) => {
             if (e.target.name === 'accountAvatar') saveAvatar(e.target.value);
@@ -15948,18 +16616,34 @@
             if (plusBtn) { runPlus(plusBtn.dataset.plus); return; }
             const postOpen = target.closest('[data-post-open]');
             if (postOpen) { openPost(postOpen.dataset.postOpen); return; }
-            const feedSort = target.closest('[data-feed-sort]');
-            if (feedSort) {
-                feed.sort = feedSort.dataset.feedSort;
-                if (feed.sort === 'near' && !state.userPos) locate();
-                renderFeed();
+            const feedMode = target.closest('[data-feed-mode]');
+            if (feedMode) { setFeedMode(feedMode.dataset.feedMode); return; }
+            const feedTag = target.closest('[data-feed-tag]');
+            if (feedTag) {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                feed.tag = feed.tag === feedTag.dataset.feedTag && state.view === 'feed' ? '' : feedTag.dataset.feedTag;
+                if (state.view !== 'feed') showFeed();
+                else renderFeed();
                 return;
             }
+            const authorOpen = target.closest('[data-author-open]');
+            if (authorOpen) { openAuthor(authorOpen.dataset.authorOpen); return; }
+            const followBtn = target.closest('[data-follow]');
+            if (followBtn) { toggleFollow(followBtn); return; }
+            const profileTab = target.closest('[data-profile-tab]');
+            if (profileTab) { profile.tab = profileTab.dataset.profileTab; renderProfile(); return; }
+            if (target.closest('[data-recent-clear]')) { recentViewed = []; store.set('tuendeRecent', []); renderProfile(); return; }
             if (target.closest('[data-feed-retry]')) { feed.error = false; loadFeed(); renderFeed(); return; }
             const toReview = target.closest('[data-to-review]');
             if (toReview) { closeModal('plusModal'); reviewPlace(Number(toReview.dataset.toReview)); return; }
             const action = target.closest('[data-action]');
             if (action?.dataset.action === 'plus') { openPlus(); return; }
+            if (action?.dataset.action === 'city') { openPicker('city'); return; }
+            if (action?.dataset.action === 'profile') {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                showProfile();
+                return;
+            }
             if (action?.dataset.action === 'feed') {
                 document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
                 showFeed();
@@ -16094,6 +16778,8 @@
         });
 
         $('brandLink').addEventListener('click', (e) => { e.preventDefault(); goHome(); });
+        document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') checkInbox(); });
+        setTimeout(() => checkInbox(), 4000);
 
         $('postPanel').addEventListener('click', (e) => {
             const react = e.target.closest('[data-react]');
@@ -16127,6 +16813,13 @@
             if (e.target.closest('[data-compose-place]')) { saveComposeDraft(); openPicker('post'); return; }
             const locateBtn = e.target.closest('[data-compose-locate]');
             if (locateBtn) { composeLocate(locateBtn); return; }
+            if (e.target.closest('[data-draft-discard]')) {
+                clearDraft();
+                compose.files.forEach((f) => URL.revokeObjectURL(f.url));
+                compose = { ...blankCompose(), ready: true };
+                renderCompose();
+                return;
+            }
             const remove = e.target.closest('[data-compose-remove]');
             if (remove) {
                 const [f] = compose.files.splice(Number(remove.dataset.composeRemove), 1);
@@ -16145,6 +16838,8 @@
 
         $('pickSearch').addEventListener('input', renderPicker);
         $('pickList').addEventListener('click', (e) => {
+            const city = e.target.closest('[data-pick-city]');
+            if (city) { pickCity(city.dataset.pickCity); return; }
             const row = e.target.closest('[data-pick]');
             if (row) pickPlace(Number(row.dataset.pick));
         });
