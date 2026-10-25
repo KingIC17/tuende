@@ -339,11 +339,18 @@
         .plan-tools select { width: auto; min-height: 36px; padding: 4px 8px; font-size: 14px; }
         .plan-add { display: grid; grid-template-columns: minmax(0, 1fr) 110px auto; gap: 8px; margin-top: 12px; }
         .plan-hint { margin-top: 12px; }
-        .nearby-list { list-style: none; padding: 0; margin: 10px 0 8px; display: grid; gap: 8px; }
-        .nearby-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 12px; }
-        .nearby-list li .link-btn { font-weight: 700; text-align: left; }
-        .nearby-list li span { flex: 1 1 140px; font-size: 14px; color: var(--muted); }
-        .nearby-list li .text-link { font-size: 14px; }
+        .near-row { display: grid; grid-auto-flow: column; grid-auto-columns: 148px; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 12px -20px 8px; padding: 0 20px 4px; scroll-padding: 0 20px; scrollbar-width: none; }
+        .near-row::-webkit-scrollbar { display: none; }
+        .near-card { position: relative; display: flex; flex-direction: column; min-width: 0; scroll-snap-align: start; }
+        .near-media { position: relative; display: flex; align-items: center; justify-content: center; height: 104px; padding: 0; border: none; border-radius: 14px; overflow: hidden; background: var(--surface-2); }
+        .near-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .near-media .ph .icon { width: 30px; height: 30px; }
+        .near-media .ph b { display: none; }
+        .near-km { position: absolute; left: 8px; bottom: 8px; z-index: 1; padding: 2px 8px; border-radius: 999px; background: rgba(0, 0, 0, 0.6); color: #FFFFFF; font-size: 12px; font-weight: 700; }
+        .near-go { position: absolute; top: 6px; right: 6px; z-index: 2; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: rgba(255, 255, 255, 0.94); color: #CE1126; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18); }
+        .near-go .icon { width: 16px; height: 16px; }
+        .near-name { margin-top: 8px; padding: 0; border: none; background: none; color: var(--text); font-size: 14.5px; font-weight: 800; line-height: 1.25; text-align: left; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .near-type { margin-top: 2px; font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .about-sub { margin: 18px 0 6px; font-size: 17px; }
         .plan-shared-title { margin-top: 4px; }
         .plan-pick { display: grid; gap: 12px; margin-top: 12px; }
@@ -402,9 +409,9 @@
             font-size: 15px;
             font-weight: 700;
             min-height: 44px;
-            text-decoration: underline;
-            text-underline-offset: 3px;
+            text-decoration: none;
         }
+        .link-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
 
         .card-row {
             display: grid;
@@ -507,17 +514,17 @@
         .route-thumb .ph .icon { width: 30px; height: 30px; }
         .route-thumb .ph b { display: none; }
         /* A faint lattice of diamonds (the samakaka motif of the header) over the category colour. */
-        :is(.card-media, .modal-hero, .route-thumb)[data-ph] {
+        :is(.card-media, .modal-hero, .route-thumb, .near-media, .pick-thumb, .post-place-thumb, .text-only)[data-ph] {
             --ph-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='white' stroke-opacity='0.14' stroke-width='1.5'/%3E%3C/svg%3E");
             background-image: var(--ph-pattern), var(--ph-bg);
             background-size: 28px 28px, auto;
         }
-        :is(.card-media, .modal-hero, .route-thumb)[data-ph="food"] { --ph-bg: linear-gradient(135deg, #CE1126 0%, #A50E1F 100%); color: #FFFFFF; }
-        :is(.card-media, .modal-hero, .route-thumb)[data-ph="beach"] { --ph-bg: linear-gradient(135deg, #1D4E89 0%, #163C6A 100%); color: #FFFFFF; }
-        :is(.card-media, .modal-hero, .route-thumb)[data-ph="nature"] { --ph-bg: linear-gradient(135deg, #1E6B3A 0%, #15502B 100%); color: #FFFFFF; }
-        :is(.card-media, .modal-hero, .route-thumb)[data-ph="culture"] { --ph-bg: linear-gradient(135deg, #FFCB00 0%, #E8B400 100%); --ph-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23111111' stroke-opacity='0.10' stroke-width='1.5'/%3E%3C/svg%3E"); color: #111111; }
-        :is(.card-media, .modal-hero, .route-thumb)[data-ph="night"] { --ph-bg: linear-gradient(135deg, #2B2B33 0%, #111111 100%); --ph-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23FFCB00' stroke-opacity='0.22' stroke-width='1.5'/%3E%3C/svg%3E"); color: #FFFFFF; }
-        :is(.card-media, .modal-hero, .route-thumb)[data-ph="light"] { --ph-bg: linear-gradient(var(--surface-2), var(--surface-2)); --ph-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23CE1126' stroke-opacity='0.14' stroke-width='1.5'/%3E%3C/svg%3E"); color: var(--primary); box-shadow: inset 0 0 0 1.5px var(--border); }
+        :is(.card-media, .modal-hero, .route-thumb, .near-media, .pick-thumb, .post-place-thumb, .text-only)[data-ph="food"] { --ph-bg: linear-gradient(135deg, #CE1126 0%, #A50E1F 100%); color: #FFFFFF; }
+        :is(.card-media, .modal-hero, .route-thumb, .near-media, .pick-thumb, .post-place-thumb, .text-only)[data-ph="beach"] { --ph-bg: linear-gradient(135deg, #1D4E89 0%, #163C6A 100%); color: #FFFFFF; }
+        :is(.card-media, .modal-hero, .route-thumb, .near-media, .pick-thumb, .post-place-thumb, .text-only)[data-ph="nature"] { --ph-bg: linear-gradient(135deg, #1E6B3A 0%, #15502B 100%); color: #FFFFFF; }
+        :is(.card-media, .modal-hero, .route-thumb, .near-media, .pick-thumb, .post-place-thumb, .text-only)[data-ph="culture"] { --ph-bg: linear-gradient(135deg, #FFCB00 0%, #E8B400 100%); --ph-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23111111' stroke-opacity='0.10' stroke-width='1.5'/%3E%3C/svg%3E"); color: #111111; }
+        :is(.card-media, .modal-hero, .route-thumb, .near-media, .pick-thumb, .post-place-thumb, .text-only)[data-ph="night"] { --ph-bg: linear-gradient(135deg, #2B2B33 0%, #111111 100%); --ph-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23FFCB00' stroke-opacity='0.22' stroke-width='1.5'/%3E%3C/svg%3E"); color: #FFFFFF; }
+        :is(.card-media, .modal-hero, .route-thumb, .near-media, .pick-thumb, .post-place-thumb, .text-only)[data-ph="light"] { --ph-bg: linear-gradient(var(--surface-2), var(--surface-2)); --ph-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23CE1126' stroke-opacity='0.14' stroke-width='1.5'/%3E%3C/svg%3E"); color: var(--primary); box-shadow: inset 0 0 0 1.5px var(--border); }
 
         .saved-tag {
             position: absolute;
@@ -674,15 +681,30 @@
             color: var(--primary);
             font-size: 15px;
             font-weight: 700;
-            text-decoration: underline;
-            text-underline-offset: 3px;
+            text-decoration: none;
         }
+        .rating-link:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-        .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .section-title { font-size: 18px; font-weight: 800; color: var(--primary); }
+        /* Place actions: one big "directions" button, then small icon tiles. */
+        .actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(68px, 1fr)); gap: 8px; }
+        .actions .action-btn.wide { grid-column: 1 / -1; border-radius: 14px; }
+        .actions .action-btn:not(.wide) { flex-direction: column; gap: 4px; min-height: 66px; padding: 8px 4px; border: none; border-radius: 14px; background: var(--surface-2); color: var(--text); font-size: 12.5px; line-height: 1.2; text-align: center; }
+        .actions .action-btn:not(.wide) .icon { width: 22px; height: 22px; color: var(--primary); }
+        .actions .action-btn:not(.wide):hover { background: var(--primary-soft); }
+        .actions .action-btn.saved:not(.wide) { background: var(--primary-soft); color: var(--primary); }
+        .section-title { font-size: 19px; font-weight: 800; color: var(--text); letter-spacing: -0.01em; }
         .section-content { font-size: 16px; color: var(--muted); margin-top: 6px; }
 
-        .facts { margin-top: 10px; border: 1.5px solid var(--border); border-radius: 14px; overflow: hidden; }
+        .facts { margin-top: 10px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+        .facts-foot { display: flex; gap: 8px; align-items: flex-start; margin-top: 10px; font-size: 13.5px; color: var(--muted); }
+        .facts-foot .icon { flex: none; width: 16px; height: 16px; margin-top: 2px; }
+        .facts-foot.warn { color: var(--primary); font-weight: 600; }
+        details.facts-foot { display: block; }
+        .verified-foot summary { display: inline-flex; align-items: center; gap: 8px; min-height: 36px; cursor: pointer; list-style: none; }
+        .verified-foot summary::-webkit-details-marker { display: none; }
+        .verified-foot summary .icon { color: var(--ok); margin: 0; }
+        .verified-foot p { margin: 2px 0 0 24px; }
+        .verified-foot a { color: var(--primary); font-weight: 600; }
         .fact { display: grid; grid-template-columns: 120px 1fr; gap: 12px; padding: 12px 14px; font-size: 15px; }
         .fact + .fact { border-top: 1px solid var(--border); }
         .fact dt { font-weight: 700; }
@@ -693,7 +715,9 @@
         .week li.today { color: var(--text); font-weight: 700; }
 
         .map-frame { display: block; width: 100%; height: 200px; border: 0; border-radius: 12px; margin-top: 8px; background: var(--surface-2); }
-        .text-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; color: var(--primary); font-weight: 700; min-height: 44px; }
+        .text-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; color: var(--primary); font-weight: 700; min-height: 44px; text-decoration: none; }
+        .text-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+        .fact dd .price-note { font-size: 13px; }
         .coords { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 13px; color: var(--muted); }
 
         .highlight-box { background: var(--primary-soft); border-radius: 12px; padding: 12px 14px; font-weight: 600; margin-top: 8px; }
@@ -777,7 +801,8 @@
         .review-date { color: var(--muted); font-size: 13px; }
         .review-main .stars { font-size: 15px; }
         .review-text { font-size: 15px; margin-top: 2px; white-space: pre-wrap; overflow-wrap: anywhere; }
-        .report-btn { background: none; border: none; color: var(--muted); font-size: 13px; font-weight: 600; min-height: 36px; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+        .report-btn { background: none; border: none; color: var(--muted); font-size: 13px; font-weight: 600; min-height: 36px; padding: 0; text-decoration: none; }
+        .report-btn:hover { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
         .report-btn:hover { color: var(--primary); }
         .post-actions { display: flex; flex-wrap: wrap; gap: 0 16px; }
 
@@ -1474,6 +1499,164 @@
             .passport-stat b { font-size: 24px; }
             .stamp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
+
+        /* ---------- Smooth motion: sheets slide up on phones, windows fade in on computers ---------- */
+        @keyframes fade-in { from { opacity: 0; } }
+        @keyframes panel-in { from { opacity: 0; transform: translateY(14px) scale(0.985); } }
+        @keyframes sheet-up { from { transform: translateY(48px); opacity: 0.5; } }
+        @keyframes shimmer { to { background-position: -200% 0; } }
+        @media (prefers-reduced-motion: no-preference) {
+            .modal.open { animation: fade-in 0.2s ease; }
+            .modal.open .modal-panel { animation: panel-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1); }
+            .card-media img { transition: transform 0.5s ease; }
+            .tab, .chip, .action-btn, .near-media, .post-card { transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease; }
+            .near-card:active .near-media, .post-card:active { transform: scale(0.98); }
+        }
+        @media (prefers-reduced-motion: no-preference) and (max-width: 720px) {
+            .modal.open .modal-panel { animation-name: sheet-up; }
+        }
+        @media (hover: hover) {
+            .card:hover .card-media img { transform: scale(1.04); }
+        }
+
+        /* ---------- "+" button and sheet ---------- */
+        .top-btn .icon { flex: none; }
+        .tab-plus { justify-content: center; }
+        .tab-plus-btn { display: grid; place-items: center; width: 52px; height: 36px; border-radius: 12px; background: var(--primary-fill); color: #FFFFFF; box-shadow: 0 4px 14px rgba(206, 17, 38, 0.35); }
+        .tab-plus-btn .icon { width: 24px; height: 24px; stroke-width: 2.6; }
+        .tab-plus:active .tab-plus-btn { transform: scale(0.94); }
+        .plus-panel { max-width: 520px; }
+        .plus-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
+        .plus-tile { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; min-height: 108px; padding: 16px; border: none; border-radius: 18px; text-align: left; color: #111111; overflow: hidden; }
+        .plus-tile .icon { width: 26px; height: 26px; }
+        .plus-tile b { display: block; font-size: 18px; font-weight: 800; }
+        .plus-tile small { display: block; margin-top: 2px; font-size: 13px; opacity: 0.8; }
+        .plus-tile.wide { grid-column: 1 / -1; flex-direction: row; align-items: center; min-height: 84px; }
+        .plus-tile.green { background: linear-gradient(135deg, #D9F5C8 0%, #B8EAA0 100%); }
+        .plus-tile.yellow { background: linear-gradient(135deg, #FFF3B0 0%, #FFE066 100%); }
+        .plus-tile.red { background: linear-gradient(135deg, #E8273D 0%, #A50E1F 100%); color: #FFFFFF; }
+        .plus-tile.red small { opacity: 0.9; }
+        .plus-tile.light { background: var(--surface-2); color: var(--text); }
+        .plus-tile.light .icon { color: var(--primary); }
+        .plus-tile::after { content: ''; position: absolute; right: -18px; bottom: -18px; width: 72px; height: 72px; border-radius: 50%; background: rgba(255, 255, 255, 0.22); }
+        .plus-event { display: inline-flex; align-items: center; gap: 6px; margin: 8px auto 0; }
+        .plus-sub { margin-top: 18px; }
+        .to-review { display: grid; gap: 8px; margin-top: 10px; }
+        .to-review-row { display: flex; align-items: center; gap: 12px; }
+        .to-review-row .pick-row { flex: 1; min-width: 0; }
+        .to-review-row .action-btn { min-height: 38px; padding: 0 14px; border-radius: 999px; font-size: 14px; }
+
+        /* Place picker */
+        .pick-panel { max-width: 520px; }
+        .pick-search { position: sticky; top: -28px; z-index: 1; padding: 4px 0 8px; background: var(--surface); }
+        .pick-head { margin: 14px 0 4px; font-size: 13px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .pick-row { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 60px; padding: 6px 4px; border: none; border-radius: 12px; background: none; color: var(--text); text-align: left; }
+        .pick-row:hover { background: var(--surface-2); }
+        .pick-row > span:not(.pick-thumb):not(.pick-done) { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+        .pick-row b { font-size: 15px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pick-row small { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pick-thumb { position: relative; flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 12px; overflow: hidden; background: var(--surface-2); color: var(--primary); }
+        .pick-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .pick-thumb .icon { width: 22px; height: 22px; }
+        .pick-done { color: var(--ok); }
+
+        /* ---------- Momentos (feed) ---------- */
+        .feed-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+        .feed-new { display: inline-flex; align-items: center; gap: 8px; border-radius: 999px; }
+        .feed-grid { display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 10px; margin-top: 16px; align-items: start; }
+        .feed-col { display: grid; gap: 10px; min-width: 0; }
+        .post-card { display: flex; flex-direction: column; min-width: 0; border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+        .post-card-open { display: flex; flex-direction: column; padding: 0; border: none; background: none; color: inherit; text-align: left; }
+        .post-card-media { position: relative; display: block; width: 100%; background: var(--surface-2); }
+        .post-card-media img { display: block; width: 100%; height: auto; min-height: 140px; max-height: 340px; object-fit: cover; }
+        .post-card-media.text-only { display: flex; flex-direction: column; justify-content: center; min-height: 170px; padding: 18px 14px 44px; background-image: var(--ph-pattern), var(--ph-bg); background-size: 28px 28px, auto; }
+        .post-quote { font-size: 16px; font-weight: 800; line-height: 1.35; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; }
+        .post-pin { position: absolute; left: 8px; right: 8px; bottom: 8px; display: inline-flex; align-items: center; gap: 4px; max-width: max-content; padding: 3px 9px 3px 6px; border-radius: 999px; background: rgba(0, 0, 0, 0.6); color: #FFFFFF; font-size: 12px; font-weight: 700; }
+        .post-pin > span:first-of-type { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .post-pin .icon { flex: none; width: 13px; height: 13px; }
+        .post-pin-km { flex: none; opacity: 0.85; font-weight: 600; }
+        .post-count { position: absolute; top: 8px; right: 8px; padding: 2px 8px; border-radius: 999px; background: rgba(0, 0, 0, 0.55); color: #FFFFFF; font-size: 12px; font-weight: 700; }
+        .post-card-text { padding: 10px 12px 0; font-size: 14.5px; font-weight: 700; line-height: 1.35; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .post-card-foot { display: flex; align-items: center; gap: 6px; padding: 8px 12px 12px; font-size: 12.5px; color: var(--muted); }
+        .post-author { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .post-likes { display: inline-flex; align-items: center; gap: 3px; }
+        .post-likes .icon { width: 14px; height: 14px; }
+        .post-likes.on { color: var(--primary); }
+        .post-skel { height: 220px; border-radius: 16px; background: linear-gradient(90deg, var(--surface-2) 25%, var(--line) 50%, var(--surface-2) 75%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+        .feed-col:nth-child(even) .post-skel:first-child { height: 160px; }
+        .feed-empty { display: grid; justify-items: center; gap: 12px; margin-top: 24px; padding: 40px 20px; border-radius: 20px; background: var(--surface-2); text-align: center; color: var(--muted); }
+        .feed-empty .icon { width: 40px; height: 40px; color: var(--primary); }
+        .feed-empty p { max-width: 420px; font-size: 16px; }
+
+        /* A moment, opened */
+        .post-panel { max-width: 560px; }
+        .post-head { display: flex; align-items: center; gap: 10px; padding: 16px 64px 12px 18px; }
+        .post-head b { display: block; font-size: 15px; }
+        .post-head span { font-size: 13px; color: var(--muted); }
+        .post-photos { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; background: #111111; }
+        .post-photos::-webkit-scrollbar { display: none; }
+        .post-photos img { flex: 0 0 100%; width: 100%; height: min(62vh, 520px); object-fit: cover; scroll-snap-align: center; }
+        .post-dots { display: flex; justify-content: center; gap: 5px; padding: 8px 0 0; }
+        .post-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+        .post-dots span.on { background: var(--primary); }
+        .post-body { padding: 14px 18px 22px; display: grid; gap: 14px; }
+        .post-text { font-size: 16px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+        .post-place { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px; border: none; border-radius: 14px; background: var(--surface-2); color: var(--text); text-align: left; text-decoration: none; }
+        .post-place > .icon { flex: none; width: 18px; height: 18px; color: var(--muted); }
+        .post-place-thumb { position: relative; flex: none; display: grid; place-items: center; width: 52px; height: 52px; border-radius: 12px; overflow: hidden; background: var(--surface); color: var(--primary); }
+        .post-place-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .post-place-thumb .icon { width: 22px; height: 22px; }
+        .post-place-main { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+        .post-place-main b { font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .post-place-main small { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .post-place-rate { flex: none; padding: 2px 8px; border-radius: 8px; background: var(--accent); color: var(--accent-ink); font-size: 13px; font-weight: 800; }
+        .post-bar { display: flex; gap: 8px; padding: 4px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+        .react-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1; min-height: 44px; border: none; border-radius: 12px; background: none; color: var(--muted); font-size: 15px; font-weight: 700; }
+        .react-btn .icon { width: 20px; height: 20px; }
+        .react-btn:hover { background: var(--surface-2); color: var(--text); }
+        .react-btn.on { color: var(--primary); }
+        .react-btn.on .icon { fill: var(--primary-soft); }
+        .comment { display: flex; gap: 10px; padding: 8px 0; }
+        .comment .avatar.sm { width: 30px; height: 30px; font-size: 13px; }
+        .comment-main { flex: 1; min-width: 0; font-size: 15px; overflow-wrap: anywhere; }
+        .comment-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0 14px; font-size: 13px; color: var(--muted); }
+        .comment-form { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+        .comment-form .avatar.sm { width: 30px; height: 30px; }
+        .comment-form .field { min-height: 44px; border-radius: 999px; padding: 8px 16px; }
+        .comment-send { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border: none; border-radius: 50%; background: var(--primary-fill); color: #FFFFFF; }
+        .comment-send .icon { width: 18px; height: 18px; }
+        .comment-send:disabled { opacity: 0.5; }
+
+        /* Writing a moment */
+        .compose-panel { max-width: 560px; }
+        .compose-form { display: grid; gap: 12px; }
+        .compose-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+        .compose-thumb, .compose-add { position: relative; aspect-ratio: 1; border-radius: 14px; overflow: hidden; }
+        .compose-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .compose-remove { position: absolute; top: 4px; right: 4px; width: 28px; height: 28px; border: none; border-radius: 50%; background: rgba(0, 0, 0, 0.6); color: #FFFFFF; font-size: 18px; line-height: 1; }
+        .compose-add { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: 1.5px dashed var(--border); background: var(--surface-2); color: var(--primary); font-size: 13px; font-weight: 700; cursor: pointer; }
+        .compose-add .icon { width: 26px; height: 26px; }
+        .compose-text { min-height: 120px; }
+        .compose-place { display: grid; gap: 8px; }
+        .pick-btn { display: flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 14px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); font-size: 15px; font-weight: 700; text-align: left; }
+        .pick-btn .icon { color: var(--primary); }
+        .compose-chosen { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: var(--primary-soft); }
+        .compose-chosen > .icon { flex: none; color: var(--primary); }
+        .compose-chosen > span { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+        .compose-chosen small { color: var(--muted); }
+        .compose-place .link-btn { display: inline-flex; align-items: center; gap: 6px; justify-self: start; }
+
+        @media (max-width: 720px) {
+            #accountLabel { display: none; }
+            .topbar-actions { gap: 4px; }
+            .topbar-actions .top-btn { padding: 0 9px; }
+            .topbar-inner { column-gap: 8px; }
+            .feed-head .rec-intro { display: none; }
+            .post-photos img { height: min(56vh, 460px); }
+        }
+        @media (max-width: 380px) {
+            #installTopBtn { display: none !important; }
+        }
     </style>
 </head>
 <body>
@@ -1491,6 +1674,7 @@
             <nav class="top-nav" data-i18n-aria="navMain" aria-label="Navegação principal">
                 <button type="button" data-action="home" data-i18n="navExplore">Explorar</button>
                 <button type="button" data-action="events" data-i18n="agenda">Agenda</button>
+                <button type="button" data-action="feed" data-i18n="feedTitle">Momentos</button>
                 <button type="button" data-action="guide" data-i18n="guideNav">Guia</button>
                 <button type="button" data-action="routes" data-i18n="routesNav">Roteiros</button>
                 <button type="button" data-action="plan" data-i18n="planNav">Planos</button>
@@ -1504,7 +1688,8 @@
                 </div>
                 <button class="top-btn" id="installTopBtn" type="button" data-info="install" data-i18n-aria="installTitle" hidden aria-label="Descarregar a app"><span data-icon="download"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><span class="desktop-only" data-i18n="installTitle">Descarregar a app</span></button>
                 <button class="top-btn" id="themeBtn" type="button"><span id="themeIcon"></span><span id="themeLabel"></span></button>
-                <button class="top-btn desktop-only" id="accountBtn" type="button" hidden><span id="accountIcon"></span><span id="accountLabel"></span></button>
+                <button class="top-btn desktop-only" id="plusTopBtn" type="button" data-action="plus"><span data-icon="plus"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span data-i18n="addNav">Adicionar</span></button>
+                <button class="top-btn" id="accountBtn" type="button" hidden><span id="accountIcon"></span><span id="accountLabel"></span></button>
                 <button class="top-btn solid desktop-only" id="savedBtn" type="button"><span data-icon="heart"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><span data-i18n="savedBtn">Guardados</span><span class="count-pill" id="savedCount" hidden>0</span></button>
             </div>
         </div>
@@ -1731,6 +1916,19 @@
             <p class="rec-intro" data-i18n="quizIntro">10 perguntas feitas com os lugares verificados do Tuende: províncias, fotos, as 7 Maravilhas e o câmbio do dia. No fim, desafie os amigos.</p>
             <div id="quizBody" aria-live="polite"></div>
         </section>
+
+        <section id="feedView" class="guide-page" hidden aria-labelledby="feedTitle">
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <div class="feed-head">
+                <div>
+                    <h1 class="rec-title" id="feedTitle" data-i18n="feedTitle">Momentos</h1>
+                    <p class="rec-intro" data-i18n="feedSub">Lugares onde as pessoas estiveram, contados por elas.</p>
+                </div>
+                <button class="submit-btn feed-new" type="button" data-plus="post"><span data-icon="plus"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span data-i18n="feedPostShort">Publicar</span></button>
+            </div>
+            <div class="chips" id="feedChips"></div>
+            <div id="feedBody" aria-live="polite"></div>
+        </section>
     </main>
 
     <footer class="site-footer">
@@ -1739,6 +1937,7 @@
                 <nav class="footer-col" aria-labelledby="footExplore">
                     <h2 class="footer-head" id="footExplore" data-i18n="footerExplore">Explorar</h2>
                     <button type="button" class="footer-link" data-action="events" data-i18n="agenda">Agenda</button>
+                    <button type="button" class="footer-link" data-action="feed" data-i18n="feedTitle">Momentos</button>
                     <button type="button" class="footer-link" data-action="map" data-i18n="mapTitle">Mapa dos lugares</button>
                     <button type="button" class="footer-link" data-action="routes" data-i18n="routesTitle">Roteiros</button>
                     <button type="button" class="footer-link" data-action="wonders" data-i18n="wondersTitle">Maravilhas de Angola</button>
@@ -1776,9 +1975,9 @@
     <nav class="tabbar" id="tabbar" data-i18n-aria="navMain" aria-label="Navegação principal">
         <button class="tab" type="button" data-tab="home" data-action="home"><span data-icon="compass"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span><span data-i18n="navExplore">Explorar</span></button>
         <button class="tab" type="button" data-tab="events" data-action="events"><span data-icon="calendar"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span data-i18n="agenda">Agenda</span></button>
-        <button class="tab" type="button" data-tab="guide" data-action="guide"><span data-icon="info"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span><span data-i18n="guideNav">Guia</span></button>
+        <button class="tab tab-plus" type="button" data-action="plus" data-i18n-aria="addNav" aria-label="Adicionar"><span class="tab-plus-btn"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></button>
+        <button class="tab" type="button" data-tab="feed" data-action="feed"><span data-icon="image"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span><span data-i18n="feedTitle">Momentos</span></button>
         <button class="tab" type="button" data-tab="saved" data-action="show-saved"><span data-icon="heart"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><span data-i18n="savedBtn">Guardados</span></button>
-        <button class="tab" type="button" data-tab="account" id="tabAccount" hidden><span id="tabAccountIcon"></span><span id="tabAccountLabel"></span></button>
     </nav>
 
     <div class="kamba-teaser" id="kambaTeaser" hidden>
@@ -1807,6 +2006,35 @@
 
     <div class="modal" id="venueModal" role="dialog" aria-modal="true">
         <div class="modal-panel" id="venuePanel"></div>
+    </div>
+
+    <div class="modal" id="postModal" role="dialog" aria-modal="true" aria-label="Momento">
+        <div class="modal-panel post-panel" id="postPanel"></div>
+    </div>
+
+    <div class="modal" id="plusModal" role="dialog" aria-modal="true" aria-labelledby="plusTitle">
+        <div class="modal-panel info-panel plus-panel">
+            <button class="close-btn" type="button" data-close="plusModal" data-i18n-aria="close" aria-label="Fechar">×</button>
+            <h2 class="info-title" id="plusTitle" data-i18n="plusTitle">O que quer partilhar?</h2>
+            <div id="plusBody"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="composeModal" role="dialog" aria-modal="true" aria-labelledby="composeTitle">
+        <div class="modal-panel info-panel compose-panel">
+            <button class="close-btn" type="button" data-close="composeModal" data-i18n-aria="close" aria-label="Fechar">×</button>
+            <h2 class="info-title" id="composeTitle" data-i18n="feedPostTitle">Publicar um momento</h2>
+            <div id="composeBody"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="pickModal" role="dialog" aria-modal="true" aria-labelledby="pickTitle">
+        <div class="modal-panel info-panel pick-panel">
+            <button class="close-btn" type="button" data-close="pickModal" data-i18n-aria="close" aria-label="Fechar">×</button>
+            <h2 class="info-title" id="pickTitle" data-i18n="pickTitle">Escolher um lugar</h2>
+            <div class="pick-search"><input class="field" id="pickSearch" type="search" autocomplete="off" data-i18n-placeholder="pickSearch" placeholder="Procurar pelo nome" data-i18n-aria="pickSearch" aria-label="Procurar pelo nome"></div>
+            <div id="pickList"></div>
+        </div>
     </div>
 
     <div class="modal" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="infoTitle">
@@ -3129,6 +3357,67 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                feedTitle: 'Momentos',
+                feedSub: 'Lugares onde as pessoas estiveram, contados por elas.',
+                feedPostShort: 'Publicar',
+                feedPostTitle: 'Publicar um momento',
+                feedRecent: 'Recentes',
+                feedNear: 'Perto de mim',
+                feedSoon: 'Os Momentos estão quase prontos: em breve vai poder contar onde esteve, com fotos e o lugar.',
+                feedEmpty: 'Ainda não há momentos. Seja a primeira pessoa a contar onde esteve.',
+                feedError: 'Não foi possível carregar. Verifique a internet.',
+                feedRetry: 'Tentar de novo',
+                feedOpen: 'Abrir o momento de {name}',
+                feedPhotoN: 'Foto {n} de {total}',
+                feedComments: 'Comentários',
+                feedCommentPh: 'Escreva um comentário',
+                feedNoComments: 'Ainda sem comentários.',
+                feedLike: 'Gosto',
+                feedDislike: 'Não gosto',
+                feedDelete: 'Apagar',
+                feedDeleteConfirm: 'Apagar este momento? Não dá para desfazer.',
+                feedDeleteCommentConfirm: 'Apagar este comentário?',
+                feedNeedSignIn: 'Inicie sessão para publicar, comentar ou reagir.',
+                feedGone: 'Este momento já não está disponível.',
+                feedPlaceFree: 'Lugar indicado por quem publicou',
+                feedHereTitle: 'Momentos aqui',
+                feedTextPh: 'Conte como foi: o que comeu, o que viu, uma dica para quem vai.',
+                feedAddPhotos: 'Fotos',
+                feedRemovePhoto: 'Tirar a foto',
+                feedPlace: 'Onde foi?',
+                feedPickPlace: 'Escolher um lugar do Tuende',
+                feedOtherPlace: 'Ou escreva o nome do lugar',
+                feedChange: 'Mudar',
+                feedUseLocation: 'Juntar a minha localização',
+                feedLocationSet: 'Localização junta (tirar)',
+                feedLocationNote: 'A localização fica pública. Use-a só em lugares públicos, nunca em casa.',
+                feedOutsideAngola: 'A sua localização não parece estar em Angola.',
+                feedConsent: 'As fotos são minhas e quem aparece nelas concorda em ser publicado.',
+                feedPublish: 'Publicar',
+                feedErrText: 'Escreva algumas palavras sobre o momento.',
+                feedErrPlace: 'Escolha um lugar ou escreva o nome.',
+                feedErrConsent: 'Confirme que pode publicar as fotos.',
+                feedErrPhotos: 'No máximo 6 fotos por momento.',
+                addNav: 'Adicionar',
+                plusTitle: 'O que quer partilhar?',
+                plusVisitedSub: 'Carimbe um lugar no seu passaporte',
+                plusReview: 'Avaliar',
+                plusReviewSub: 'Ajude outros a escolher',
+                plusPostSub: 'Fotos e dicas de onde esteve',
+                plusPlaceSub: 'Falta um lugar no Tuende? Diga-nos',
+                toReviewTitle: 'Por avaliar',
+                toReviewSub: 'Lugares onde já foi ou que guardou.',
+                pickTitle: 'Escolher um lugar',
+                pickSearch: 'Procurar pelo nome',
+                pickYours: 'Os seus lugares',
+                pickNear: 'Perto de si',
+                pickPopular: 'Sugestões',
+                pickNone: 'Nenhum lugar com esse nome.',
+                planShort: 'Planear',
+                unknownFactsContact: 'Contacto, estacionamento, acessibilidade e formas de pagamento.',
+                nearbyNote2: 'Distâncias em linha reta. A seta abre o caminho no Google Maps.',
+                nearbyApprox2: 'A posição deste lugar é aproximada, por isso as distâncias também.',
+                nearbyRouteTo: 'Caminho até {name}',
                 dishesTitle: 'Pratos de Angola',
                 dishesIntro: 'Os pratos que fazem a cozinha angolana, o que levam e onde os provar, com o preço na ementa de cada restaurante.',
                 dishesWhere: 'Onde provar',
@@ -3908,6 +4197,67 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                feedTitle: 'Moments',
+                feedSub: 'Places people have been to, in their own words.',
+                feedPostShort: 'Post',
+                feedPostTitle: 'Post a moment',
+                feedRecent: 'Recent',
+                feedNear: 'Near me',
+                feedSoon: 'Moments are almost ready: soon you can share where you have been, with photos and the place.',
+                feedEmpty: 'No moments yet. Be the first to share where you have been.',
+                feedError: 'Could not load. Check your connection.',
+                feedRetry: 'Try again',
+                feedOpen: 'Open {name}\'s moment',
+                feedPhotoN: 'Photo {n} of {total}',
+                feedComments: 'Comments',
+                feedCommentPh: 'Write a comment',
+                feedNoComments: 'No comments yet.',
+                feedLike: 'Like',
+                feedDislike: 'Dislike',
+                feedDelete: 'Delete',
+                feedDeleteConfirm: 'Delete this moment? This cannot be undone.',
+                feedDeleteCommentConfirm: 'Delete this comment?',
+                feedNeedSignIn: 'Sign in to post, comment or react.',
+                feedGone: 'This moment is no longer available.',
+                feedPlaceFree: 'Place given by the author',
+                feedHereTitle: 'Moments here',
+                feedTextPh: 'Tell us how it was: what you ate, what you saw, a tip for others.',
+                feedAddPhotos: 'Photos',
+                feedRemovePhoto: 'Remove photo',
+                feedPlace: 'Where was it?',
+                feedPickPlace: 'Choose a place on Tuende',
+                feedOtherPlace: 'Or type the place name',
+                feedChange: 'Change',
+                feedUseLocation: 'Add my location',
+                feedLocationSet: 'Location added (remove)',
+                feedLocationNote: 'The location is public. Only use it in public places, never at home.',
+                feedOutsideAngola: 'Your location does not seem to be in Angola.',
+                feedConsent: 'The photos are mine and anyone in them agrees to be posted.',
+                feedPublish: 'Post',
+                feedErrText: 'Write a few words about the moment.',
+                feedErrPlace: 'Choose a place or type its name.',
+                feedErrConsent: 'Confirm that you can post the photos.',
+                feedErrPhotos: 'Up to 6 photos per moment.',
+                addNav: 'Add',
+                plusTitle: 'What would you like to share?',
+                plusVisitedSub: 'Stamp a place in your passport',
+                plusReview: 'Review',
+                plusReviewSub: 'Help others choose',
+                plusPostSub: 'Photos and tips from where you have been',
+                plusPlaceSub: 'A place missing from Tuende? Tell us',
+                toReviewTitle: 'To review',
+                toReviewSub: 'Places you have been to or saved.',
+                pickTitle: 'Choose a place',
+                pickSearch: 'Search by name',
+                pickYours: 'Your places',
+                pickNear: 'Near you',
+                pickPopular: 'Suggestions',
+                pickNone: 'No place with that name.',
+                planShort: 'Plan',
+                unknownFactsContact: 'Contact, parking, accessibility and payment methods.',
+                nearbyNote2: 'Straight-line distances. The arrow opens the way there in Google Maps.',
+                nearbyApprox2: 'This place\'s position is approximate, so the distances are too.',
+                nearbyRouteTo: 'Route to {name}',
                 dishesTitle: 'Angolan dishes',
                 dishesIntro: 'The dishes at the heart of Angolan cooking, what goes into them and where to try them, with the price on each restaurant\'s menu.',
                 dishesWhere: 'Where to try it',
@@ -4687,6 +5037,67 @@
                 saveDataOff: 'Économie de données : désactivée',
                 saveDataNote: 'Pas de photos dans les listes ni de cartes automatiques, pour consommer moins de données mobiles.',
                 mapLoad: 'Afficher la carte',
+                feedTitle: 'Moments',
+                feedSub: 'Les lieux où les gens sont allés, racontés par eux.',
+                feedPostShort: 'Publier',
+                feedPostTitle: 'Publier un moment',
+                feedRecent: 'Récents',
+                feedNear: 'Près de moi',
+                feedSoon: 'Les Moments sont presque prêts : bientôt, vous pourrez raconter où vous êtes allé, avec photos et lieu.',
+                feedEmpty: 'Pas encore de moments. Soyez le premier à raconter où vous êtes allé.',
+                feedError: 'Chargement impossible. Vérifiez votre connexion.',
+                feedRetry: 'Réessayer',
+                feedOpen: 'Ouvrir le moment de {name}',
+                feedPhotoN: 'Photo {n} sur {total}',
+                feedComments: 'Commentaires',
+                feedCommentPh: 'Écrire un commentaire',
+                feedNoComments: 'Pas encore de commentaires.',
+                feedLike: 'J\'aime',
+                feedDislike: 'Je n\'aime pas',
+                feedDelete: 'Supprimer',
+                feedDeleteConfirm: 'Supprimer ce moment ? C\'est définitif.',
+                feedDeleteCommentConfirm: 'Supprimer ce commentaire ?',
+                feedNeedSignIn: 'Connectez-vous pour publier, commenter ou réagir.',
+                feedGone: 'Ce moment n\'est plus disponible.',
+                feedPlaceFree: 'Lieu indiqué par l\'auteur',
+                feedHereTitle: 'Moments ici',
+                feedTextPh: 'Racontez : ce que vous avez mangé, ce que vous avez vu, un conseil pour les autres.',
+                feedAddPhotos: 'Photos',
+                feedRemovePhoto: 'Retirer la photo',
+                feedPlace: 'Où était-ce ?',
+                feedPickPlace: 'Choisir un lieu sur Tuende',
+                feedOtherPlace: 'Ou écrivez le nom du lieu',
+                feedChange: 'Changer',
+                feedUseLocation: 'Ajouter ma position',
+                feedLocationSet: 'Position ajoutée (retirer)',
+                feedLocationNote: 'La position est publique. Utilisez-la seulement dans des lieux publics, jamais chez vous.',
+                feedOutsideAngola: 'Votre position ne semble pas être en Angola.',
+                feedConsent: 'Les photos sont à moi et les personnes visibles acceptent d\'être publiées.',
+                feedPublish: 'Publier',
+                feedErrText: 'Écrivez quelques mots sur ce moment.',
+                feedErrPlace: 'Choisissez un lieu ou écrivez son nom.',
+                feedErrConsent: 'Confirmez que vous pouvez publier les photos.',
+                feedErrPhotos: '6 photos maximum par moment.',
+                addNav: 'Ajouter',
+                plusTitle: 'Que voulez-vous partager ?',
+                plusVisitedSub: 'Tamponnez un lieu dans votre passeport',
+                plusReview: 'Donner un avis',
+                plusReviewSub: 'Aidez les autres à choisir',
+                plusPostSub: 'Photos et conseils des lieux visités',
+                plusPlaceSub: 'Un lieu manque sur Tuende ? Dites-le-nous',
+                toReviewTitle: 'À évaluer',
+                toReviewSub: 'Des lieux où vous êtes allé ou que vous avez enregistrés.',
+                pickTitle: 'Choisir un lieu',
+                pickSearch: 'Chercher par nom',
+                pickYours: 'Vos lieux',
+                pickNear: 'Près de vous',
+                pickPopular: 'Suggestions',
+                pickNone: 'Aucun lieu avec ce nom.',
+                planShort: 'Planifier',
+                unknownFactsContact: 'Contact, parking, accessibilité et moyens de paiement.',
+                nearbyNote2: 'Distances à vol d\'oiseau. La flèche ouvre l\'itinéraire dans Google Maps.',
+                nearbyApprox2: 'La position de ce lieu est approximative, les distances aussi.',
+                nearbyRouteTo: 'Itinéraire vers {name}',
                 dishesTitle: 'Plats angolais',
                 dishesIntro: 'Les plats qui font la cuisine angolaise, ce qu\'ils contiennent et où les goûter, avec le prix sur la carte de chaque restaurant.',
                 dishesWhere: 'Où le goûter',
@@ -5466,6 +5877,67 @@
                 saveDataOff: 'Ahorro de datos: desactivado',
                 saveDataNote: 'Sin fotos en las listas ni mapas automáticos, para gastar menos datos móviles.',
                 mapLoad: 'Mostrar mapa',
+                feedTitle: 'Momentos',
+                feedSub: 'Lugares donde la gente ha estado, contados por ella.',
+                feedPostShort: 'Publicar',
+                feedPostTitle: 'Publicar un momento',
+                feedRecent: 'Recientes',
+                feedNear: 'Cerca de mí',
+                feedSoon: 'Los Momentos están casi listos: pronto podrás contar dónde has estado, con fotos y el lugar.',
+                feedEmpty: 'Aún no hay momentos. Sé la primera persona en contar dónde has estado.',
+                feedError: 'No se pudo cargar. Revisa la conexión.',
+                feedRetry: 'Reintentar',
+                feedOpen: 'Abrir el momento de {name}',
+                feedPhotoN: 'Foto {n} de {total}',
+                feedComments: 'Comentarios',
+                feedCommentPh: 'Escribe un comentario',
+                feedNoComments: 'Aún no hay comentarios.',
+                feedLike: 'Me gusta',
+                feedDislike: 'No me gusta',
+                feedDelete: 'Eliminar',
+                feedDeleteConfirm: '¿Eliminar este momento? No se puede deshacer.',
+                feedDeleteCommentConfirm: '¿Eliminar este comentario?',
+                feedNeedSignIn: 'Inicia sesión para publicar, comentar o reaccionar.',
+                feedGone: 'Este momento ya no está disponible.',
+                feedPlaceFree: 'Lugar indicado por quien publicó',
+                feedHereTitle: 'Momentos aquí',
+                feedTextPh: 'Cuenta cómo fue: qué comiste, qué viste, un consejo para quien vaya.',
+                feedAddPhotos: 'Fotos',
+                feedRemovePhoto: 'Quitar la foto',
+                feedPlace: '¿Dónde fue?',
+                feedPickPlace: 'Elegir un lugar de Tuende',
+                feedOtherPlace: 'O escribe el nombre del lugar',
+                feedChange: 'Cambiar',
+                feedUseLocation: 'Añadir mi ubicación',
+                feedLocationSet: 'Ubicación añadida (quitar)',
+                feedLocationNote: 'La ubicación es pública. Úsala solo en lugares públicos, nunca en casa.',
+                feedOutsideAngola: 'Tu ubicación no parece estar en Angola.',
+                feedConsent: 'Las fotos son mías y quien aparece en ellas acepta ser publicado.',
+                feedPublish: 'Publicar',
+                feedErrText: 'Escribe unas palabras sobre el momento.',
+                feedErrPlace: 'Elige un lugar o escribe su nombre.',
+                feedErrConsent: 'Confirma que puedes publicar las fotos.',
+                feedErrPhotos: 'Como máximo 6 fotos por momento.',
+                addNav: 'Añadir',
+                plusTitle: '¿Qué quieres compartir?',
+                plusVisitedSub: 'Sella un lugar en tu pasaporte',
+                plusReview: 'Valorar',
+                plusReviewSub: 'Ayuda a otros a elegir',
+                plusPostSub: 'Fotos y consejos de donde has estado',
+                plusPlaceSub: '¿Falta un lugar en Tuende? Cuéntanos',
+                toReviewTitle: 'Por valorar',
+                toReviewSub: 'Lugares donde has estado o que guardaste.',
+                pickTitle: 'Elegir un lugar',
+                pickSearch: 'Buscar por nombre',
+                pickYours: 'Tus lugares',
+                pickNear: 'Cerca de ti',
+                pickPopular: 'Sugerencias',
+                pickNone: 'Ningún lugar con ese nombre.',
+                planShort: 'Planificar',
+                unknownFactsContact: 'Contacto, aparcamiento, accesibilidad y formas de pago.',
+                nearbyNote2: 'Distancias en línea recta. La flecha abre la ruta en Google Maps.',
+                nearbyApprox2: 'La posición de este lugar es aproximada, así que las distancias también.',
+                nearbyRouteTo: 'Ruta hasta {name}',
                 dishesTitle: 'Platos de Angola',
                 dishesIntro: 'Los platos que definen la cocina angoleña, qué llevan y dónde probarlos, con el precio en la carta de cada restaurante.',
                 dishesWhere: 'Dónde probarlo',
@@ -8438,7 +8910,10 @@
             shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
             health: '<path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z"/>',
             refresh: '<polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>',
-            send: '<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>'
+            send: '<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>',
+            image: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+            thumbUp: '<path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>',
+            thumbDown: '<path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/>'
         };
 
         // Keys keep the old 'angolive' prefix so saved places, settings and sign-ins carry over from before the rename.
@@ -9346,6 +9821,7 @@
             else if (params.get('page') === 'passaporte') { if (state.view !== 'passport') showPassport({ push: false }); }
             else if (params.get('page') === 'quiz') { if (state.view !== 'quiz') showQuiz({ push: false }); }
             else if (params.get('page') === 'pratos') { if (state.view !== 'dishes') showDishes({ push: false }); }
+            else if (params.get('page') === 'momentos') { if (state.view !== 'feed') showFeed({ push: false }); }
             else if (params.get('page') === 'plano') {
                 const shared = params.get('p') ? planFromParam(params.get('p')) : null;
                 showPlan({ push: false, id: location.hash.match(/^#plano-([\w-]+)$/)?.[1] || '', shared: params.get('p') ? shared || 'bad' : null });
@@ -9367,6 +9843,9 @@
             else if (state.openId) closeModal('venueModal', { updateURL: false });
             const eventLink = location.hash.match(/^#evento-([\w-]+)$/);
             if (eventLink && state.view === 'events') focusEvent(eventLink[1]);
+            const postLink = location.hash.match(/^#momento-([0-9a-f-]{36})$/);
+            if (postLink) { if (openPostId !== postLink[1]) openPost(postLink[1]); }
+            else if (openPostId) closeModal('postModal', { updateURL: false });
         }
 
         /* ---------- Cards and rows ---------- */
@@ -10002,7 +10481,7 @@
         }
 
         function renderTabbar() {
-            const active = state.view === 'events' || state.view === 'guide' ? state.view : state.view === 'results' && state.filters.saved ? 'saved' : state.view === 'home' ? 'home' : '';
+            const active = state.view === 'events' || state.view === 'feed' ? state.view : state.view === 'results' && state.filters.saved ? 'saved' : state.view === 'home' ? 'home' : '';
             document.querySelectorAll('#tabbar .tab').forEach((tab) => {
                 const on = tab.dataset.tab === active;
                 tab.classList.toggle('active', on);
@@ -10019,7 +10498,7 @@
             renderQuickFilters();
             renderSavedButton();
             renderTabbar();
-            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx', 'plan', 'passport', 'quiz', 'dishes'].includes(state.view);
+            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx', 'plan', 'passport', 'quiz', 'dishes', 'feed'].includes(state.view);
             $('homeView').hidden = state.view !== 'home';
             $('resultsView').hidden = state.view !== 'results';
             $('recommendView').hidden = state.view !== 'recommend';
@@ -10033,7 +10512,8 @@
             $('passportView').hidden = state.view !== 'passport';
             $('quizView').hidden = state.view !== 'quiz';
             $('dishesView').hidden = state.view !== 'dishes';
-            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle', passport: 'passportTitle', quiz: 'quizTitle', dishes: 'dishesTitle' }[state.view];
+            $('feedView').hidden = state.view !== 'feed';
+            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle', passport: 'passportTitle', quiz: 'quizTitle', dishes: 'dishesTitle', feed: 'feedTitle' }[state.view];
             document.title = viewTitle ? `${t(viewTitle)} | Tuende` : `Tuende - ${t('heroTitle')}`;
             if (state.view === 'home') renderHome();
             else if (state.view === 'results') renderResults();
@@ -10047,6 +10527,7 @@
             else if (state.view === 'passport') renderPassport();
             else if (state.view === 'quiz') renderQuiz();
             else if (state.view === 'dishes') renderDishes();
+            else if (state.view === 'feed') renderFeed();
         }
 
 
@@ -11220,6 +11701,19 @@
             return `<div class="fact"><dt>${label}</dt><dd>${text}${v.verified.stale ? `<br>${t('verifiedStale')}` : ''}${sources}</dd></div>`;
         }
 
+        // Where the facts come from, folded into one short line that opens on tap.
+        function verifiedFootHTML(v) {
+            if (!v.verified) return `<p class="facts-foot">${icon('info')}<span>${t('notVerified')}</span></p>`;
+            const date = formatDate(v.verified.date);
+            const sources = v.verified.sources.map((s) => `<a href="${escapeHTML(s.url)}" target="_blank" rel="noopener">${escapeHTML(s.label)}</a>`).join(', ');
+            return `
+                ${v.verified.stale ? `<p class="facts-foot warn">${icon('clock')}<span>${t('verifiedStale')}</span></p>` : ''}
+                <details class="facts-foot verified-foot">
+                    <summary>${icon('check')}<span>${t(v.exact ? 'verifiedLabelExact' : 'verifiedLabelApprox')} · ${escapeHTML(date)}</span></summary>
+                    <p>${v.exact ? t('verifiedExact', { date }) : t('verifiedApprox', { date })}${sources ? `<br>${t('sourcesLabel')}: ${sources}` : ''}</p>
+                </details>`;
+        }
+
         // "Nearby": the closest places (straight line, up to 25 km), each with the way there from this place in Google Maps.
         function nearbyHTML(v) {
             if (v.citywide || !Number.isFinite(v.lat)) return '';
@@ -11231,14 +11725,19 @@
             return `
                 <section>
                     <h3 class="section-title">${t('nearbyTitle')}</h3>
-                    <ul class="nearby-list">${near.map(({ x, km }) => `
-                        <li>
-                            <button class="link-btn" type="button" data-open="${x.id}">${escapeHTML(x.name)}</button>
-                            <span>${escapeHTML(catLabel(x.type))} · ${escapeHTML(formatKm(km))} km</span>
-                            <a class="text-link" href="${escapeHTML(route(x))}" target="_blank" rel="noopener">${icon('directions')}${t('nearbyRoute')}</a>
-                        </li>`).join('')}
-                    </ul>
-                    <p class="hint">${t(v.exact ? 'nearbyNote' : 'nearbyApprox')}</p>
+                    <div class="near-row">${near.map(({ x, km }) => `
+                        <div class="near-card">
+                            <button class="near-media" type="button" data-open="${x.id}" data-ph="${phGroup(x)}" aria-label="${t('viewPlace')}: ${escapeHTML(x.name)}">
+                                ${placeholderHTML(x)}
+                                ${thumbSrc(x) && !saveDataOn() ? `<img src="${escapeHTML(thumbSrc(x))}" alt=""${focusAttr(x.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}
+                                <span class="near-km">${escapeHTML(formatKm(km))} km</span>
+                            </button>
+                            <a class="near-go" href="${escapeHTML(route(x))}" target="_blank" rel="noopener" aria-label="${escapeHTML(t('nearbyRouteTo', { name: x.name }))}">${icon('directions')}</a>
+                            <button class="near-name" type="button" data-open="${x.id}">${escapeHTML(x.name)}</button>
+                            <span class="near-type">${escapeHTML(catLabel(x.type))}</span>
+                        </div>`).join('')}
+                    </div>
+                    <p class="hint">${t(v.exact ? 'nearbyNote2' : 'nearbyApprox2')}</p>
                 </section>`;
         }
 
@@ -11291,7 +11790,7 @@
                 ? `<p class="hint">${t('citywideMap')}</p>`
                 : v.exact
                 ? `${hasWebGL() ? `<div class="map-frame place-map" data-place-map="${v.id}"></div>` : `<iframe class="map-frame" src="${mapEmbedURL(v)}" title="${escapeHTML(v.name)}" loading="lazy"></iframe>`}
-                   <p class="coords">Lat ${v.lat.toFixed(4)} · Long ${v.lng.toFixed(4)}</p>`
+`
                 : `<p class="hint">${t('approxMap')}</p>`;
             return `
                 <section>
@@ -11301,12 +11800,12 @@
                         <div class="fact"><dt>${t('addressLabel')}</dt><dd>${escapeHTML(address)}</dd></div>
                         ${landmarkRowHTML(v)}
                         <div class="fact"><dt>${t('mapLabel')}</dt><dd>${map}${v.citywide ? '' : `<a class="text-link" href="${mapsURL(v, 'search')}" target="_blank" rel="noopener">${icon('pin')}${t('viewMap')}</a>`}</dd></div>
-                        <div class="fact"><dt>${t('priceLabel')}</dt><dd>${escapeHTML(priceText(v))}${fxText(v) ? `<br><span class="fx">${escapeHTML(fxText(v))}</span> <span class="price-note">(${escapeHTML(fxNote())})</span>` : ''}${v.price?.estimate ? `<br>${t('priceEstimate')}` : ''}${v.price?.note ? `<br><span class="price-note">${escapeHTML(v.price.note[lang] || v.price.note.pt)}</span>` : ''}</dd></div>
+                        <div class="fact"><dt>${t('priceLabel')}</dt><dd>${escapeHTML(priceText(v))}${fxText(v) ? `<br><span class="fx">${escapeHTML(fxText(v))}</span> <span class="price-note">(${escapeHTML(fxNote())})</span>` : ''}${v.price?.estimate ? `<br><span class="price-note">${t('priceEstimate')}</span>` : ''}${v.price?.note ? `<br><span class="price-note">${escapeHTML(v.price.note[lang] || v.price.note.pt)}</span>` : ''}</dd></div>
                         ${officialRowHTML(v)}
-                        <div class="fact"><dt>${t('contactLabel')}</dt><dd>${digits ? escapeHTML(v.phone) : t('toConfirm')}</dd></div>
-                        <div class="fact"><dt>${t('stillToConfirm')}</dt><dd>${t('unknownFacts')}</dd></div>
-                        ${verifiedRowHTML(v)}
+                        ${digits ? `<div class="fact"><dt>${t('contactLabel')}</dt><dd>${escapeHTML(v.phone)}</dd></div>` : ''}
                     </dl>
+                    <p class="facts-foot">${icon('info')}<span>${t('stillToConfirm')}: ${escapeHTML((digits ? t('unknownFacts') : t('unknownFactsContact')).replace(/^./, (c) => c.toLowerCase()))}</span></p>
+                    ${verifiedFootHTML(v)}
                 </section>
             `;
         }
@@ -11518,21 +12017,23 @@
                         ` : ''}
                         <button class="action-btn${isFav ? ' saved' : ''}" type="button" id="favBtn" aria-pressed="${isFav}">${favButtonHTML(v.id)}</button>
                         <button class="action-btn" type="button" id="shareBtn">${icon('share')}${t('share')}</button>
-                        <button class="action-btn" type="button" data-plan-add="place:${v.id}">${icon('calendar')}${t('planAddTitle')}</button>
+                        <button class="action-btn" type="button" data-plan-add="place:${v.id}" aria-label="${t('planAddTitle')}">${icon('calendar')}${t('planShort')}</button>
                         ${canStamp(v) ? `<button class="action-btn${visited.includes(v.id) ? ' saved' : ''}" type="button" id="visitBtn" aria-pressed="${visited.includes(v.id)}">${visitButtonHTML(v.id)}</button>` : ''}
                     </div>
                     ${canStamp(v) ? `<p class="stamp-note" id="stampNote" aria-live="polite" ${visited.includes(v.id) ? '' : 'hidden'}>${stampNoteHTML()}</p>` : ''}
-
-                    ${practicalHTML(v)}
-
-                    ${nearbyHTML(v)}
-
-                    ${placeEventsHTML(v)}
 
                     <section>
                         <h3 class="section-title">${t('about')}</h3>
                         <p class="section-content">${escapeHTML(descOf(v))}</p>
                     </section>
+
+                    ${practicalHTML(v)}
+
+                    ${nearbyHTML(v)}
+
+                    ${placePostsHTML()}
+
+                    ${placeEventsHTML(v)}
 
                     <section>
                         <h3 class="section-title">${t('media')}</h3>
@@ -11555,6 +12056,7 @@
             if ((v.photos || v.image) && !saveDataOn()) upgradeHero(v.photos ? fullSrc(v.photos[0]) : asset(v.image));
             loadSubmissions(id);
             loadReviews(id);
+            loadPlacePosts(id);
         }
 
         // The detailed fields only go out when the database has them.
@@ -11617,6 +12119,7 @@
                 updateStars();
                 msg.textContent = t('reviewPending');
                 msg.classList.add('ok');
+                myReviewed?.ids.add(state.openId);
                 // Posts go live straight away, so show the new comment and the updated stars.
                 loadReviews(state.openId);
                 if (rated) loadRatingStats();
@@ -11897,6 +12400,708 @@
             }
         }
 
+
+        /* ---------- Momentos: posts about places people have been to (supabase/2026-10-25-momentos.sql) ---------- */
+
+        // feedReady: null until checked; false while the database update has not run (the page says "soon"); true once it has.
+        let feedReady = null;
+        let feedCheck = null;
+        const feed = { posts: [], extra: new Map(), counts: {}, mine: new Set(), reactions: {}, sort: 'recent', loading: false, loaded: false, error: false };
+        let openPostId = null;
+        const MAX_POST_PHOTOS = 6;
+        const POST_COLS = 'id,author,author_avatar,venue_id,place_name,lat,lng,body,photos,created_at,status';
+        const postById = (id) => feed.posts.find((p) => p.id === id) || feed.extra.get(id);
+        const isPostPhoto = (url) => typeof url === 'string' && url.startsWith(photoBase()) && /^[0-9a-f-]{36}\/post-\d+-[a-z0-9]+\.jpg$/.test(url.slice(photoBase().length));
+        const postPhotos = (p) => (p.photos || []).filter(isPostPhoto);
+        const postVenue = (p) => (p.venue_id ? venues.find((v) => v.id === p.venue_id) : null);
+        const postPlaceName = (p) => postVenue(p)?.name || p.place_name || '';
+        const postPoint = (p) => {
+            const v = postVenue(p);
+            if (v && Number.isFinite(v.lat)) return v;
+            return Number.isFinite(p.lat) ? { lat: p.lat, lng: p.lng } : null;
+        };
+        const feedColumns = () => (innerWidth >= 1100 ? 4 : innerWidth >= 721 ? 3 : 2);
+        // Signed in, reads go out as the person, so the database hides what they blocked and shows their own posts.
+        const readHeaders = () => (signedIn() ? userHeaders().catch(() => sbHeaders()) : Promise.resolve(sbHeaders()));
+
+        function relDate(iso) {
+            const s = (Date.now() - new Date(iso).getTime()) / 1000;
+            const rtf = new Intl.RelativeTimeFormat(locale(), { numeric: 'auto' });
+            if (s < 3600) return rtf.format(-Math.max(1, Math.round(s / 60)), 'minute');
+            if (s < 86400) return rtf.format(-Math.round(s / 3600), 'hour');
+            if (s < 7 * 86400) return rtf.format(-Math.round(s / 86400), 'day');
+            return new Date(iso).toLocaleDateString(locale(), { day: 'numeric', month: 'short', year: new Date(iso).getFullYear() === new Date().getFullYear() ? undefined : 'numeric' });
+        }
+
+        function checkFeed() {
+            if (feedReady !== null) return Promise.resolve(feedReady);
+            if (!supabaseReady()) { feedReady = false; return Promise.resolve(false); }
+            feedCheck ||= sbRequest('/rest/v1/posts?select=id&limit=1', { headers: sbHeaders() })
+                .then(() => { feedReady = true; return true; })
+                .catch((err) => { if (err.status === 404) feedReady = false; return false; })
+                .finally(() => { feedCheck = null; });
+            return feedCheck;
+        }
+
+        async function loadFeed({ force = false } = {}) {
+            if (!supabaseReady() || feed.loading || (feed.loaded && !force)) return;
+            feed.loading = true;
+            feed.error = false;
+            try {
+                const rows = await (await sbRequest(`/rest/v1/posts?select=${POST_COLS}&order=created_at.desc&limit=60`, { headers: await readHeaders() })).json();
+                feedReady = true;
+                feed.posts = rows.filter((p) => p.status === 'approved');
+                feed.loaded = true;
+                await Promise.all([loadPostCounts(feed.posts.map((p) => p.id)), loadMyFeedState()]);
+            } catch (err) {
+                if (err.status === 404) feedReady = false;
+                else feed.error = true;
+            } finally {
+                feed.loading = false;
+                if (state.view === 'feed') renderFeed();
+            }
+        }
+
+        async function loadPostCounts(ids) {
+            if (!ids.length) return;
+            try {
+                const rows = await (await sbRequest('/rest/v1/rpc/post_counts', { method: 'POST', headers: sbHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ post_ids: ids }) })).json();
+                for (const r of rows) feed.counts[r.post_id] = { likes: r.likes, dislikes: r.dislikes, comments: r.comments };
+            } catch {}
+        }
+
+        // Which posts are mine (to offer "delete") and how I reacted, without the posts ever carrying account ids.
+        async function loadMyFeedState() {
+            feed.mine = new Set();
+            feed.reactions = {};
+            if (!signedIn() || feedReady !== true) return;
+            try {
+                const headers = await userHeaders();
+                const [mine, reactions] = await Promise.all([
+                    sbRequest(`/rest/v1/posts?select=id&user_id=eq.${session.user.id}&limit=300`, { headers }).then((r) => r.json()),
+                    sbRequest('/rest/v1/post_reactions?select=post_id,value&limit=1000', { headers }).then((r) => r.json())
+                ]);
+                feed.mine = new Set(mine.map((p) => p.id));
+                feed.reactions = Object.fromEntries(reactions.map((r) => [r.post_id, r.value]));
+            } catch {}
+        }
+
+        function showFeed({ push = true } = {}) {
+            state.view = 'feed';
+            if (push) history.pushState(null, '', `${location.pathname}?page=momentos`);
+            render();
+            window.scrollTo({ top: 0 });
+        }
+
+        function postCardHTML(p) {
+            const v = postVenue(p);
+            const place = postPlaceName(p);
+            const point = postPoint(p);
+            const km = point && state.userPos ? kmBetween(state.userPos, point) : null;
+            const photos = postPhotos(p);
+            const c = feed.counts[p.id] || {};
+            const pin = place ? `<span class="post-pin">${icon('pin')}<span>${escapeHTML(place)}</span>${km !== null ? `<span class="post-pin-km">· ${escapeHTML(formatKm(km))} km</span>` : ''}</span>` : '';
+            const media = photos.length && !saveDataOn()
+                ? `<span class="post-card-media"><img src="${escapeHTML(photos[0])}" alt="" loading="lazy">${pin}${photos.length > 1 ? `<span class="post-count">1/${photos.length}</span>` : ''}</span>
+                   <span class="post-card-text">${escapeHTML(p.body)}</span>`
+                : `<span class="post-card-media text-only" data-ph="${v ? phGroup(v) : 'food'}"><span class="post-quote">${escapeHTML(p.body.slice(0, 220))}</span>${pin}</span>`;
+            return `
+                <article class="post-card">
+                    <button type="button" class="post-card-open" data-post-open="${escapeHTML(p.id)}" aria-label="${escapeHTML(t('feedOpen', { name: p.author }))}">${media}</button>
+                    <div class="post-card-foot">
+                        ${avatarHTML(p.author_avatar, p.author, 'sm')}<span class="post-author">${escapeHTML(p.author)}</span>
+                        <span class="post-likes${feed.reactions[p.id] === 1 ? ' on' : ''}">${icon('thumbUp')}${c.likes || 0}</span>
+                    </div>
+                </article>`;
+        }
+
+        function renderFeed() {
+            const body = $('feedBody');
+            const chips = $('feedChips');
+            if (!supabaseReady() || feedReady === false) {
+                chips.innerHTML = '';
+                body.innerHTML = `<div class="feed-empty">${icon('image')}<p>${t('feedSoon')}</p></div>`;
+                return;
+            }
+            chips.innerHTML = [['recent', 'feedRecent', 'clock'], ['near', 'feedNear', 'locate']].map(([key, label, ic]) =>
+                `<button type="button" class="chip${feed.sort === key ? ' active' : ''}" data-feed-sort="${key}" aria-pressed="${feed.sort === key}">${icon(ic)}${t(label)}</button>`).join('');
+            if (!feed.loaded) {
+                if (feed.error) {
+                    body.innerHTML = `<div class="feed-empty"><p>${t('feedError')}</p><button class="submit-btn secondary" type="button" data-feed-retry>${t('feedRetry')}</button></div>`;
+                    return;
+                }
+                const n = feedColumns();
+                body.innerHTML = `<div class="feed-grid" style="--cols:${n}" aria-busy="true">${Array.from({ length: n }, () => `<div class="feed-col">${'<div class="post-skel"></div>'.repeat(2)}</div>`).join('')}</div>`;
+                loadFeed();
+                return;
+            }
+            let list = feed.posts.slice();
+            if (feed.sort === 'near' && state.userPos) {
+                list = list.map((p) => ({ p, km: postPoint(p) ? kmBetween(state.userPos, postPoint(p)) : Infinity })).sort((a, b) => a.km - b.km).map((o) => o.p);
+            }
+            if (!list.length) {
+                body.innerHTML = `<div class="feed-empty">${icon('image')}<p>${t('feedEmpty')}</p><button class="submit-btn" type="button" data-plus="post">${t('feedPostTitle')}</button></div>`;
+                return;
+            }
+            // Cards go left to right, row by row, like a magazine.
+            const n = feedColumns();
+            const cols = Array.from({ length: n }, () => []);
+            list.forEach((p, i) => cols[i % n].push(postCardHTML(p)));
+            body.innerHTML = `<div class="feed-grid" style="--cols:${n}">${cols.map((c) => `<div class="feed-col">${c.join('')}</div>`).join('')}</div>`;
+        }
+
+        // The place under the post: a Tuende place opens its window; a place written by hand opens the map.
+        function postPlaceHTML(p) {
+            const v = postVenue(p);
+            if (v) {
+                const stats = statsOf(v);
+                const km = state.userPos && Number.isFinite(v.lat) ? kmBetween(state.userPos, v) : null;
+                return `
+                    <button type="button" class="post-place" data-post-place="${v.id}">
+                        <span class="post-place-thumb" data-ph="${phGroup(v)}">${icon(CATEGORY[v.type].icon)}${thumbSrc(v) && !saveDataOn() ? `<img src="${escapeHTML(thumbSrc(v))}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}</span>
+                        <span class="post-place-main"><b>${escapeHTML(v.name)}</b><small>${escapeHTML([catLabel(v.type), placeLine(v), km !== null ? `${formatKm(km)} km` : ''].filter(Boolean).join(' · '))}</small></span>
+                        ${stats ? `<span class="post-place-rate">★ ${stats.avg.toFixed(1)}</span>` : ''}
+                        ${icon('next')}
+                    </button>`;
+            }
+            if (!p.place_name) return '';
+            const query = Number.isFinite(p.lat) ? `${p.lat},${p.lng}` : `${p.place_name}, Angola`;
+            return `
+                <a class="post-place" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}" target="_blank" rel="noopener">
+                    <span class="post-place-thumb">${icon('pin')}</span>
+                    <span class="post-place-main"><b>${escapeHTML(p.place_name)}</b><small>${t('feedPlaceFree')}</small></span>
+                    ${icon('external')}
+                </a>`;
+        }
+
+        function postHTML(p) {
+            const photos = postPhotos(p);
+            const c = feed.counts[p.id] || {};
+            const mine = feed.mine.has(p.id);
+            const r = feed.reactions[p.id] || 0;
+            return `
+                <button class="close-btn" type="button" data-close="postModal" aria-label="${t('close')}">×</button>
+                <header class="post-head">${avatarHTML(p.author_avatar, p.author)}<div><b>${escapeHTML(p.author)}</b><span>${escapeHTML(relDate(p.created_at))}</span></div></header>
+                ${photos.length ? `
+                    <div class="post-photos" id="postPhotos">${photos.map((url, i) => `<img src="${escapeHTML(url)}" alt="${escapeHTML(t('feedPhotoN', { n: i + 1, total: photos.length }))}"${i ? ' loading="lazy"' : ''}>`).join('')}</div>
+                    ${photos.length > 1 ? `<div class="post-dots" id="postDots" aria-hidden="true">${photos.map((_, i) => `<span${i ? '' : ' class="on"'}></span>`).join('')}</div>` : ''}` : ''}
+                <div class="post-body">
+                    <p class="post-text">${escapeHTML(p.body)}</p>
+                    ${postPlaceHTML(p)}
+                    <div class="post-bar">
+                        <button type="button" class="react-btn${r === 1 ? ' on' : ''}" data-react="1" aria-pressed="${r === 1}" aria-label="${t('feedLike')}">${icon('thumbUp')}<span>${c.likes || 0}</span></button>
+                        <button type="button" class="react-btn${r === -1 ? ' on' : ''}" data-react="-1" aria-pressed="${r === -1}" aria-label="${t('feedDislike')}">${icon('thumbDown')}<span>${c.dislikes || 0}</span></button>
+                        <button type="button" class="react-btn" data-post-comments aria-label="${t('feedComments')}">${icon('chat')}<span>${c.comments || 0}</span></button>
+                        <button type="button" class="react-btn" data-post-share aria-label="${t('share')}">${icon('share')}</button>
+                    </div>
+                    <section id="postComments" aria-labelledby="postCommentsTitle">
+                        <h3 class="section-title" id="postCommentsTitle">${t('feedComments')}</h3>
+                        <div id="commentList"><p class="hint">${t('loading')}</p></div>
+                        ${signedIn()
+                            ? `<form class="comment-form" id="commentForm" novalidate>${avatarHTML(myAvatar(), accountName(), 'sm')}<input class="field" id="commentText" maxlength="500" placeholder="${t('feedCommentPh')}" aria-label="${t('feedCommentPh')}" autocomplete="off" enterkeyhint="send"><button class="comment-send" type="submit" aria-label="${t('send')}">${icon('send')}</button></form>
+                               <div class="form-msg" id="commentMsg" role="status" aria-live="polite"></div>`
+                            : `<div class="signin-prompt"><p>${t('feedNeedSignIn')}</p><button class="submit-btn secondary" type="button" data-auth-open="signin">${t('signIn')}</button></div>`}
+                    </section>
+                    <div class="post-actions">${mine
+                        ? `<button type="button" class="report-btn" data-post-delete>${t('feedDelete')}</button>`
+                        : `<button type="button" class="report-btn" data-post-report>${t('report')}</button><button type="button" class="report-btn" data-post-block>${t('block')}</button>`}</div>
+                </div>`;
+        }
+
+        async function openPost(id) {
+            openPostId = id;
+            const panel = $('postPanel');
+            let p = postById(id);
+            if (!p) {
+                panel.innerHTML = `<button class="close-btn" type="button" data-close="postModal" aria-label="${t('close')}">×</button><div class="post-body"><p class="hint">${t('loading')}</p></div>`;
+                openModal('postModal');
+                try {
+                    const rows = await (await sbRequest(`/rest/v1/posts?select=${POST_COLS}&id=eq.${id}`, { headers: await readHeaders() })).json();
+                    p = rows.find((r) => r.status === 'approved');
+                    if (p) {
+                        feed.extra.set(id, p);
+                        await Promise.all([loadPostCounts([id]), feed.loaded ? null : loadMyFeedState()]);
+                    }
+                } catch {}
+                if (openPostId !== id) return;
+                if (!p) {
+                    panel.innerHTML = `<button class="close-btn" type="button" data-close="postModal" aria-label="${t('close')}">×</button><div class="post-body"><p>${t('feedGone')}</p></div>`;
+                    return;
+                }
+            }
+            const scroll = panel.scrollTop;
+            panel.innerHTML = postHTML(p);
+            if ($('postModal').classList.contains('open')) panel.scrollTop = scroll;
+            else openModal('postModal');
+            $('postModal').setAttribute('aria-label', `${t('feedTitle')}: ${p.author}`);
+            if (!location.hash.startsWith(`#momento-${id}`)) history.replaceState(null, '', `${location.pathname}${location.search}#momento-${id}`);
+            const strip = $('postPhotos');
+            if (strip && $('postDots')) {
+                strip.addEventListener('scroll', () => {
+                    const i = Math.round(strip.scrollLeft / strip.clientWidth);
+                    $('postDots')?.querySelectorAll('span').forEach((dot, k) => dot.classList.toggle('on', k === i));
+                }, { passive: true });
+            }
+            loadComments(id);
+        }
+
+        function commentHTML(c, mine, ownPost) {
+            return `
+                <div class="comment">
+                    ${avatarHTML(c.author_avatar, c.author, 'sm')}
+                    <div class="comment-main">
+                        <p><b>${escapeHTML(c.author)}</b> ${escapeHTML(c.comment)}</p>
+                        <div class="comment-meta">
+                            <span>${escapeHTML(relDate(c.created_at))}</span>
+                            ${mine || ownPost ? `<button type="button" class="report-btn" data-comment-delete="${escapeHTML(c.id)}">${t('feedDelete')}</button>` : ''}
+                            ${mine ? '' : `<button type="button" class="report-btn" data-comment-report="${escapeHTML(c.id)}">${t('report')}</button><button type="button" class="report-btn" data-comment-block="${escapeHTML(c.id)}">${t('block')}</button>`}
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        async function loadComments(postId) {
+            try {
+                const rows = await (await sbRequest(`/rest/v1/post_comments?select=id,author,author_avatar,comment,created_at,status&post_id=eq.${postId}&order=created_at.asc&limit=300`, { headers: await readHeaders() })).json();
+                let mine = new Set();
+                if (signedIn()) {
+                    try {
+                        mine = new Set((await (await sbRequest(`/rest/v1/post_comments?select=id&post_id=eq.${postId}&user_id=eq.${session.user.id}`, { headers: await userHeaders() })).json()).map((c) => c.id));
+                    } catch {}
+                }
+                const box = $('commentList');
+                if (openPostId !== postId || !box) return;
+                const list = rows.filter((c) => c.status === 'approved');
+                box.innerHTML = list.length ? list.map((c) => commentHTML(c, mine.has(c.id), feed.mine.has(postId))).join('') : `<p class="hint">${t('feedNoComments')}</p>`;
+            } catch {
+                const box = $('commentList');
+                if (box && openPostId === postId) box.innerHTML = `<p class="hint">${t('feedError')}</p>`;
+            }
+        }
+
+        function updatePostBar(id) {
+            if (openPostId !== id) return;
+            const c = feed.counts[id] || {};
+            const r = feed.reactions[id] || 0;
+            document.querySelectorAll('#postPanel [data-react]').forEach((b) => {
+                const value = Number(b.dataset.react);
+                b.classList.toggle('on', r === value);
+                b.setAttribute('aria-pressed', String(r === value));
+                b.querySelector('span').textContent = (value === 1 ? c.likes : c.dislikes) || 0;
+            });
+            const comments = document.querySelector('#postPanel [data-post-comments] span');
+            if (comments) comments.textContent = c.comments || 0;
+        }
+
+        function applyReaction(id, from, to) {
+            const c = { likes: 0, dislikes: 0, comments: 0, ...feed.counts[id] };
+            if (from === 1) c.likes -= 1;
+            if (from === -1) c.dislikes -= 1;
+            if (to === 1) c.likes += 1;
+            if (to === -1) c.dislikes += 1;
+            feed.counts[id] = c;
+            if (to) feed.reactions[id] = to;
+            else delete feed.reactions[id];
+            updatePostBar(id);
+        }
+
+        // Like or dislike; tapping the same one again takes it back. The count changes at once and is put back if the database says no.
+        async function reactPost(value) {
+            const id = openPostId;
+            if (!signedIn()) { openAuth('signin', { reason: t('feedNeedSignIn') }); return; }
+            const before = feed.reactions[id] || 0;
+            const next = before === value ? 0 : value;
+            applyReaction(id, before, next);
+            try {
+                if (next === 0) {
+                    await sbRequest(`/rest/v1/post_reactions?post_id=eq.${id}`, { method: 'DELETE', headers: await userHeaders() });
+                } else {
+                    await sbRequest('/rest/v1/post_reactions?on_conflict=post_id,user_id', {
+                        method: 'POST',
+                        headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal,resolution=merge-duplicates' }),
+                        body: JSON.stringify({ post_id: id, value: next })
+                    });
+                }
+            } catch (err) {
+                applyReaction(id, next, before);
+                needsSignIn(err);
+            }
+        }
+
+        async function submitComment(event) {
+            event.preventDefault();
+            const postId = openPostId;
+            const input = $('commentText');
+            const msg = $('commentMsg');
+            const button = event.target.querySelector('button[type="submit"]');
+            const text = input.value.trim();
+            msg.classList.remove('ok');
+            msg.textContent = '';
+            if (!text) { input.focus(); return; }
+            button.disabled = true;
+            try {
+                if (await hasBlockedWords(text)) { msg.textContent = t('errBlockedText'); return; }
+                await sbRequest('/rest/v1/post_comments', {
+                    method: 'POST',
+                    headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
+                    body: JSON.stringify({ post_id: postId, comment: text })
+                });
+                input.value = '';
+                feed.counts[postId] = { likes: 0, dislikes: 0, ...feed.counts[postId], comments: (feed.counts[postId]?.comments || 0) + 1 };
+                updatePostBar(postId);
+                loadComments(postId);
+            } catch (err) {
+                if (needsSignIn(err, msg)) return;
+                msg.textContent = blockedWordsText(err) || t('errSend');
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        async function reportPostItem(button, body) {
+            if (!signedIn()) { openAuth('signin', { reason: t('authNeedReport') }); return; }
+            if (!confirm(t('reportConfirm'))) return;
+            button.disabled = true;
+            try {
+                await sbRequest('/rest/v1/post_reports', { method: 'POST', headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }), body: JSON.stringify(body) });
+                button.textContent = t('reported');
+            } catch (err) {
+                if (err.status === 409) { button.textContent = t('alreadyReported'); return; }
+                button.disabled = false;
+                button.textContent = needsSignIn(err) ? t('signIn') : t('errSend');
+            }
+        }
+
+        async function blockPostAuthor(button, body) {
+            if (!signedIn()) { openAuth('signin', { reason: t('authNeedBlock') }); return; }
+            if (!confirm(t('blockConfirm'))) return;
+            button.disabled = true;
+            try {
+                const res = await sbRequest('/rest/v1/rpc/block_post_author', { method: 'POST', headers: await userHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify(body) });
+                if ((await res.json()) === 'self') { button.textContent = t('blockSelf'); return; }
+                if (body.post) closeModal('postModal');
+                else loadComments(openPostId);
+                feed.extra.clear();
+                loadFeed({ force: true });
+            } catch (err) {
+                button.disabled = false;
+                button.textContent = needsSignIn(err) ? t('signIn') : t('errSend');
+            }
+        }
+
+        async function deletePost(button) {
+            const id = openPostId;
+            const p = postById(id);
+            if (!p || !confirm(t('feedDeleteConfirm'))) return;
+            button.disabled = true;
+            try {
+                await sbRequest(`/rest/v1/posts?id=eq.${id}`, { method: 'DELETE', headers: await userHeaders() });
+                const paths = postPhotos(p).map((url) => url.slice(photoBase().length));
+                if (paths.length) {
+                    sbRequest('/storage/v1/object/submissions', { method: 'DELETE', headers: await userHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ prefixes: paths }) }).catch(() => {});
+                }
+                feed.posts = feed.posts.filter((x) => x.id !== id);
+                feed.extra.delete(id);
+                feed.mine.delete(id);
+                closeModal('postModal');
+            } catch (err) {
+                button.disabled = false;
+                button.textContent = needsSignIn(err) ? t('signIn') : t('errSend');
+            }
+        }
+
+        async function deleteComment(button) {
+            if (!confirm(t('feedDeleteCommentConfirm'))) return;
+            const postId = openPostId;
+            button.disabled = true;
+            try {
+                await sbRequest(`/rest/v1/post_comments?id=eq.${button.dataset.commentDelete}`, { method: 'DELETE', headers: await userHeaders() });
+                if (feed.counts[postId]?.comments) feed.counts[postId].comments -= 1;
+                updatePostBar(postId);
+                loadComments(postId);
+            } catch (err) {
+                button.disabled = false;
+                button.textContent = needsSignIn(err) ? t('signIn') : t('errSend');
+            }
+        }
+
+        function sharePost() {
+            const p = postById(openPostId);
+            if (!p) return;
+            const base = inNativeApp ? PUBLIC_URL : new URL('./', location.href).href;
+            shareLink(t('feedTitle'), `${p.author}: ${p.body.slice(0, 80)}`, `${base}?page=momentos#momento-${p.id}`);
+        }
+
+        // Moments at a place: a small row in the place window, only when there are some.
+        function placePostsHTML() {
+            if (!supabaseReady() || feedReady === false) return '';
+            return `<section id="placePosts" hidden><h3 class="section-title">${t('feedHereTitle')}</h3><div class="near-row" id="placePostsRow"></div></section>`;
+        }
+
+        async function loadPlacePosts(venueId) {
+            if (!supabaseReady() || feedReady === false) return;
+            try {
+                const rows = (await (await sbRequest(`/rest/v1/posts?select=${POST_COLS}&venue_id=eq.${venueId}&order=created_at.desc&limit=12`, { headers: await readHeaders() })).json()).filter((p) => p.status === 'approved');
+                feedReady = true;
+                rows.forEach((p) => { if (!postById(p.id)) feed.extra.set(p.id, p); });
+                const box = $('placePosts');
+                if (state.openId !== venueId || !box || !rows.length) return;
+                $('placePostsRow').innerHTML = rows.map((p) => {
+                    const photo = postPhotos(p)[0];
+                    return `
+                        <div class="near-card">
+                            <button class="near-media${photo ? '' : ' text-only'}" type="button" data-post-open="${escapeHTML(p.id)}" data-ph="${phGroup(venues.find((v) => v.id === venueId))}" aria-label="${escapeHTML(t('feedOpen', { name: p.author }))}">
+                                ${photo && !saveDataOn() ? `<img src="${escapeHTML(photo)}" alt="" loading="lazy">` : icon('chat')}
+                            </button>
+                            <button class="near-name" type="button" data-post-open="${escapeHTML(p.id)}">${escapeHTML(p.body.slice(0, 90))}</button>
+                            <span class="near-type">${escapeHTML(p.author)}</span>
+                        </div>`;
+                }).join('');
+                box.hidden = false;
+            } catch (err) {
+                if (err.status === 404) feedReady = false;
+            }
+        }
+
+        /* ---------- Writing a moment ---------- */
+
+        let compose = { venue: null, placeName: '', lat: null, lng: null, files: [], text: '', consent: false };
+
+        async function openCompose(venueId = null) {
+            if (!signedIn()) { openAuth('signin', { reason: t('feedNeedSignIn'), after: () => openCompose(venueId) }); return; }
+            compose.files.forEach((f) => URL.revokeObjectURL(f.url));
+            compose = { venue: venueId, placeName: '', lat: null, lng: null, files: [], text: '', consent: false };
+            $('composeBody').innerHTML = `<p class="hint">${t('loading')}</p>`;
+            openModal('composeModal');
+            await checkFeed();
+            if (feedReady !== true) { $('composeBody').innerHTML = `<p>${feedReady === false ? t('feedSoon') : t('feedError')}</p>`; return; }
+            renderCompose();
+        }
+
+        function composePhotosHTML() {
+            const items = compose.files.map((f, i) => `<div class="compose-thumb"><img src="${escapeHTML(f.url)}" alt=""><button type="button" class="compose-remove" data-compose-remove="${i}" aria-label="${t('feedRemovePhoto')}">×</button></div>`).join('');
+            const add = compose.files.length < MAX_POST_PHOTOS
+                ? `<label class="compose-add">${icon('camera')}<span>${compose.files.length ? `${compose.files.length}/${MAX_POST_PHOTOS}` : t('feedAddPhotos')}</span><input type="file" id="composeFiles" accept="image/*" multiple hidden></label>`
+                : '';
+            return items + add;
+        }
+
+        // Keep what was typed when part of the form is drawn again.
+        function saveComposeDraft() {
+            if (!$('composeText')) return;
+            compose.text = $('composeText').value;
+            compose.placeName = $('composePlaceName')?.value ?? compose.placeName;
+            compose.consent = $('composeConsent')?.checked || false;
+        }
+
+        function renderCompose() {
+            const v = compose.venue ? venues.find((x) => x.id === compose.venue) : null;
+            $('composeBody').innerHTML = `
+                <form class="compose-form" id="composeForm" novalidate>
+                    <div class="compose-photos" id="composePhotos">${composePhotosHTML()}</div>
+                    <textarea class="field compose-text" id="composeText" maxlength="2000" placeholder="${t('feedTextPh')}" aria-label="${t('feedTextPh')}">${escapeHTML(compose.text)}</textarea>
+                    <div class="compose-place">
+                        <span class="field-label">${t('feedPlace')}</span>
+                        ${v
+                            ? `<div class="compose-chosen">${icon('pin')}<span><b>${escapeHTML(v.name)}</b><small>${escapeHTML(catLabel(v.type))} · ${escapeHTML(placeLine(v))}</small></span><button type="button" class="link-btn" data-compose-place>${t('feedChange')}</button></div>`
+                            : `<button type="button" class="pick-btn" data-compose-place>${icon('search')}<span>${t('feedPickPlace')}</span></button>
+                               <input class="field" id="composePlaceName" maxlength="120" placeholder="${t('feedOtherPlace')}" aria-label="${t('feedOtherPlace')}" value="${escapeHTML(compose.placeName)}">
+                               <button type="button" class="link-btn" data-compose-locate>${icon('locate')}${compose.lat !== null ? t('feedLocationSet') : t('feedUseLocation')}</button>
+                               ${compose.lat !== null ? `<p class="hint">${t('feedLocationNote')}</p>` : ''}`}
+                    </div>
+                    <label class="consent" id="composeConsentWrap" ${compose.files.length ? '' : 'hidden'}><input type="checkbox" id="composeConsent" ${compose.consent ? 'checked' : ''}><span>${t('feedConsent')}</span></label>
+                    <div class="form-msg" id="composeMsg" role="status" aria-live="polite"></div>
+                    <button class="submit-btn" type="submit" id="composeSubmit">${t('feedPublish')}</button>
+                    <p class="hint">${t('postingAs', { name: escapeHTML(accountName()) })} ${t('moderationNote')}</p>
+                </form>`;
+        }
+
+        function refreshComposePhotos() {
+            $('composePhotos').innerHTML = composePhotosHTML();
+            $('composeConsentWrap').hidden = !compose.files.length;
+        }
+
+        function composeLocate(button) {
+            if (compose.lat !== null) { saveComposeDraft(); compose.lat = null; compose.lng = null; renderCompose(); return; }
+            const msg = $('composeMsg');
+            if (!navigator.geolocation) { msg.textContent = t('locError'); return; }
+            button.disabled = true;
+            navigator.geolocation.getCurrentPosition((pos) => {
+                const { latitude: lat, longitude: lng } = pos.coords;
+                saveComposeDraft();
+                if (lat < -18.5 || lat > -4 || lng < 11 || lng > 24.5) { renderCompose(); $('composeMsg').textContent = t('feedOutsideAngola'); return; }
+                compose.lat = Math.round(lat * 1e5) / 1e5;
+                compose.lng = Math.round(lng * 1e5) / 1e5;
+                renderCompose();
+            }, () => { button.disabled = false; msg.textContent = t('locError'); }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
+        }
+
+        async function submitCompose(event) {
+            event.preventDefault();
+            const msg = $('composeMsg');
+            const button = $('composeSubmit');
+            const text = $('composeText').value.trim();
+            const placeName = compose.venue ? '' : ($('composePlaceName')?.value.trim() || '');
+            msg.classList.remove('ok');
+            if (!text) { msg.textContent = t('feedErrText'); $('composeText').focus(); return; }
+            if (!compose.venue && placeName.length < 2) { msg.textContent = t('feedErrPlace'); $('composePlaceName')?.focus(); return; }
+            if (compose.files.length && !$('composeConsent').checked) { msg.textContent = t('feedErrConsent'); return; }
+            button.disabled = true;
+            button.textContent = t('sending');
+            msg.textContent = '';
+            const uploaded = [];
+            try {
+                if (await hasBlockedWords(`${text} ${placeName}`)) { msg.textContent = t('errBlockedText'); return; }
+                if (await hasBlockedWords(accountName())) { msg.textContent = t('errBlockedAccountName'); return; }
+                for (const f of compose.files) {
+                    const blob = await compressPhoto(f.file);
+                    // Same folder as the account's other photos, so they go when the account is deleted.
+                    const path = `${session.user.id}/post-${Date.now()}-${Math.random().toString(36).slice(2, 10) || 'x'}.jpg`;
+                    await sbRequest(`/storage/v1/object/submissions/${path}`, { method: 'POST', headers: await userHeaders({ 'Content-Type': 'image/jpeg', 'x-upsert': 'false' }), body: blob });
+                    uploaded.push(path);
+                }
+                const row = { body: text, photos: uploaded.map((path) => photoBase() + path), ...(compose.venue ? { venue_id: compose.venue } : { place_name: placeName, lat: compose.lat, lng: compose.lng }) };
+                const res = await sbRequest('/rest/v1/posts', { method: 'POST', headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=representation' }), body: JSON.stringify(row) });
+                const [post] = await res.json();
+                uploaded.length = 0;
+                compose.files.forEach((f) => URL.revokeObjectURL(f.url));
+                compose = { venue: null, placeName: '', lat: null, lng: null, files: [], text: '', consent: false };
+                feedReady = true;
+                feed.posts.unshift(post);
+                feed.mine.add(post.id);
+                feed.counts[post.id] = { likes: 0, dislikes: 0, comments: 0 };
+                closeModal('composeModal');
+                if (state.view !== 'feed') showFeed();
+                else renderFeed();
+                openPost(post.id);
+            } catch (err) {
+                if (uploaded.length) {
+                    userHeaders({ 'Content-Type': 'application/json' }).then((headers) => sbRequest('/storage/v1/object/submissions', { method: 'DELETE', headers, body: JSON.stringify({ prefixes: uploaded }) })).catch(() => {});
+                }
+                if (needsSignIn(err, msg)) return;
+                msg.textContent = blockedWordsText(err) || t('errSend');
+            } finally {
+                if ($('composeSubmit') === button) {
+                    button.disabled = false;
+                    button.textContent = t('feedPublish');
+                }
+            }
+        }
+
+        /* ---------- The "+" sheet: Já fui, review, post a moment, recommend a place ---------- */
+
+        let myReviewed = null;
+        async function loadMyReviewed() {
+            if (!signedIn() || myReviewed?.uid === session.user.id) return;
+            try {
+                const rows = await (await sbRequest(`/rest/v1/reviews?select=venue_id&user_id=eq.${session.user.id}`, { headers: await userHeaders() })).json();
+                myReviewed = { uid: session.user.id, ids: new Set(rows.map((r) => r.venue_id)) };
+                if ($('plusModal').classList.contains('open')) renderPlus();
+            } catch {}
+        }
+
+        // Places the visitor has been to or saved and has not reviewed yet (newest first).
+        function toReviewPlaces() {
+            const ids = [...new Set([...visited.slice().reverse(), ...favorites.slice().reverse()])];
+            return ids.map((id) => venues.find((v) => v.id === id)).filter((v) => v && !v.citywide && !myReviewed?.ids.has(v.id)).slice(0, 5);
+        }
+
+        const pickRowHTML = (v, extra = '') => `
+            <button type="button" class="pick-row" data-pick="${v.id}">
+                <span class="pick-thumb" data-ph="${phGroup(v)}">${icon(CATEGORY[v.type].icon)}${thumbSrc(v) && !saveDataOn() ? `<img src="${escapeHTML(thumbSrc(v))}" alt=""${focusAttr(v.photos?.[0])} crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}</span>
+                <span><b>${escapeHTML(v.name)}</b><small>${escapeHTML(catLabel(v.type))} · ${escapeHTML(placeLine(v))}</small></span>
+                ${extra}
+            </button>`;
+
+        function renderPlus() {
+            const tiles = [
+                ['visited', 'passport', 'beenHere', 'plusVisitedSub', 'green'],
+                ['review', 'star', 'plusReview', 'plusReviewSub', 'yellow'],
+                ['post', 'image', 'feedPostTitle', 'plusPostSub', 'red wide'],
+                ...(canRecommend() ? [['place', 'pin', 'recTitle', 'plusPlaceSub', 'light wide']] : [])
+            ];
+            const list = reviewsEnabled() ? toReviewPlaces() : [];
+            $('plusBody').innerHTML = `
+                <div class="plus-grid">${tiles.map(([key, ic, title, sub, cls]) => `
+                    <button type="button" class="plus-tile ${cls}" data-plus="${key}">${icon(ic)}<span><b>${t(title)}</b><small>${t(sub)}</small></span></button>`).join('')}
+                </div>
+                <div style="text-align:center"><button type="button" class="link-btn plus-event" data-plus="event">${icon('calendar')}${t('eventSuggest')}</button></div>
+                ${list.length ? `
+                    <h3 class="section-title plus-sub">${t('toReviewTitle')}</h3>
+                    <p class="hint">${t('toReviewSub')}</p>
+                    <div class="to-review">${list.map((v) => `<div class="to-review-row">${pickRowHTML(v).replace('data-pick=', 'data-to-review=')}<button type="button" class="action-btn" data-to-review="${v.id}">${t('plusReview')}</button></div>`).join('')}</div>` : ''}`;
+        }
+
+        function openPlus() {
+            renderPlus();
+            openModal('plusModal');
+            loadMyReviewed();
+        }
+
+        function runPlus(kind) {
+            closeModal('plusModal');
+            if (kind === 'post') openCompose();
+            else if (kind === 'visited' || kind === 'review') openPicker(kind);
+            else if (kind === 'place') {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                showRecommend();
+            } else if (kind === 'event') openEventSuggest();
+        }
+
+        function reviewPlace(id) {
+            openVenue(id);
+            setTimeout(() => $('reviewsSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 350);
+        }
+
+        /* Place picker */
+        let pickMode = 'post';
+        const pickPool = () => venues.filter((v) => !v.citywide && (pickMode !== 'visited' || canStamp(v)));
+
+        function openPicker(mode) {
+            pickMode = mode;
+            $('pickTitle').textContent = t(mode === 'visited' ? 'beenHere' : mode === 'review' ? 'plusReview' : 'pickTitle');
+            $('pickSearch').value = '';
+            renderPicker();
+            openModal('pickModal');
+        }
+
+        function renderPicker() {
+            const q = normalize($('pickSearch').value.trim());
+            const pool = pickPool();
+            const done = (v) => (pickMode === 'visited' && visited.includes(v.id) ? `<span class="pick-done" aria-label="${t('beenHereDone')}">${icon('check')}</span>` : '');
+            let html = '';
+            if (q) {
+                const found = pool.filter((v) => normalize(`${v.name} ${v.location}`).includes(q)).slice(0, 30);
+                html = found.length ? found.map((v) => pickRowHTML(v, done(v))).join('') : `<p class="hint">${t('pickNone')}</p>`;
+            } else {
+                const mine = [...new Set([...visited.slice().reverse(), ...favorites.slice().reverse()])].map((id) => pool.find((v) => v.id === id)).filter(Boolean).slice(0, 6);
+                const near = state.userPos ? pool.filter((v) => Number.isFinite(v.lat) && !mine.includes(v)).map((v) => ({ v, km: kmBetween(state.userPos, v) })).sort((a, b) => a.km - b.km).slice(0, 10).map((o) => o.v) : [];
+                const popular = near.length ? [] : pool.filter((v) => !mine.includes(v) && statsOf(v)).sort((a, b) => statsOf(b).count - statsOf(a).count).slice(0, 10);
+                const fill = near.length || popular.length ? [] : pool.filter((v) => !mine.includes(v) && thumbSrc(v)).slice(0, 10);
+                const group = (title, list) => (list.length ? `<p class="pick-head">${t(title)}</p>${list.map((v) => pickRowHTML(v, done(v))).join('')}` : '');
+                html = group('pickYours', mine) + group('pickNear', near) + group('pickPopular', popular.length ? popular : fill);
+            }
+            $('pickList').innerHTML = html;
+        }
+
+        function pickPlace(id) {
+            const mode = pickMode;
+            closeModal('pickModal');
+            if (mode === 'post') {
+                saveComposeDraft();
+                compose.venue = id;
+                renderCompose();
+            } else if (mode === 'visited') {
+                const v = venues.find((x) => x.id === id);
+                if (v && canStamp(v) && !visited.includes(id)) {
+                    visited = [...visited, id];
+                    saveVisited();
+                    pushVisit(id, true);
+                }
+                openVenue(id);
+            } else reviewPlace(id);
+        }
+
         /* ---------- Accounts (Supabase Auth: email and password) ---------- */
 
         let session = store.get('angoliveSession', null);
@@ -12021,11 +13226,7 @@
             btn.hidden = !accountsEnabled();
             $('accountLabel').textContent = signedIn() ? t('account') : t('signIn');
             btn.setAttribute('aria-label', signedIn() ? t('accountAria', { name: accountName() }) : t('signIn'));
-            $('tabAccount').hidden = !accountsEnabled();
-            $('tabAccountLabel').textContent = signedIn() ? t('tabAccount') : t('signIn');
-            const face = signedIn() ? avatarHTML(myAvatar(), accountName(), 'xs') : icon('user');
-            $('accountIcon').innerHTML = face;
-            $('tabAccountIcon').innerHTML = face;
+            $('accountIcon').innerHTML = signedIn() ? avatarHTML(myAvatar(), accountName(), 'xs') : icon('user');
         }
 
         function signInPromptHTML(reasonKey) {
@@ -12164,6 +13365,8 @@
             await syncVisits();
             render();
             if (state.openId) openVenue(state.openId, true);
+            if (feed.loaded) await loadMyFeedState();
+            if (openPostId) openPost(openPostId);
             if (next) next();
         }
 
@@ -12283,6 +13486,10 @@
 
         function signOutLocally() {
             saveSession(null);
+            feed.mine = new Set();
+            feed.reactions = {};
+            myReviewed = null;
+            if (openPostId) openPost(openPostId);
             render();
             if (state.openId) openVenue(state.openId, true);
         }
@@ -13184,6 +14391,11 @@
         function closeModal(id, { updateURL = true } = {}) {
             $(id).classList.remove('open');
             if (!document.querySelector('.modal.open')) document.body.classList.remove('no-scroll');
+            if (id === 'postModal') {
+                openPostId = null;
+                if (updateURL && location.hash.startsWith('#momento-')) history.replaceState(null, '', `${location.pathname}${location.search}${state.openId ? `#local-${state.openId}` : ''}`);
+                if (state.view === 'feed') renderFeed();
+            }
             if (id === 'venueModal') {
                 state.openId = null;
                 placeMapWatch?.disconnect();
@@ -14650,7 +15862,6 @@
 
         $('savedBtn').addEventListener('click', () => showResults({ saved: true }));
         $('accountBtn').addEventListener('click', () => openAuth());
-        $('tabAccount').addEventListener('click', () => openAuth());
         $('authContent').addEventListener('submit', submitAuth);
         $('authContent').addEventListener('change', (e) => {
             if (e.target.name === 'accountAvatar') saveAvatar(e.target.value);
@@ -14733,7 +15944,27 @@
             if (ics) { addEventToCalendar(EVENTS.find((e) => e.id === ics.dataset.eventIcs)); return; }
             const shareBtn = target.closest('[data-event-share]');
             if (shareBtn) { shareEvent(EVENTS.find((e) => e.id === shareBtn.dataset.eventShare)); return; }
+            const plusBtn = target.closest('[data-plus]');
+            if (plusBtn) { runPlus(plusBtn.dataset.plus); return; }
+            const postOpen = target.closest('[data-post-open]');
+            if (postOpen) { openPost(postOpen.dataset.postOpen); return; }
+            const feedSort = target.closest('[data-feed-sort]');
+            if (feedSort) {
+                feed.sort = feedSort.dataset.feedSort;
+                if (feed.sort === 'near' && !state.userPos) locate();
+                renderFeed();
+                return;
+            }
+            if (target.closest('[data-feed-retry]')) { feed.error = false; loadFeed(); renderFeed(); return; }
+            const toReview = target.closest('[data-to-review]');
+            if (toReview) { closeModal('plusModal'); reviewPlace(Number(toReview.dataset.toReview)); return; }
             const action = target.closest('[data-action]');
+            if (action?.dataset.action === 'plus') { openPlus(); return; }
+            if (action?.dataset.action === 'feed') {
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+                showFeed();
+                return;
+            }
             if (action?.dataset.action === 'home') { goHome(); return; }
             if (action?.dataset.action === 'passport' || action?.dataset.action === 'quiz' || action?.dataset.action === 'dishes') {
                 document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
@@ -14857,9 +16088,67 @@
             if (e.target.classList?.contains('card-row')) updateRowControls(e.target);
         }, { capture: true, passive: true });
 
-        window.addEventListener('resize', () => document.querySelectorAll('.card-row').forEach(updateRowControls));
+        window.addEventListener('resize', () => {
+            document.querySelectorAll('.card-row').forEach(updateRowControls);
+            if (state.view === 'feed' && feed.loaded && document.querySelector('.feed-grid')?.style.getPropertyValue('--cols') !== String(feedColumns())) renderFeed();
+        });
 
         $('brandLink').addEventListener('click', (e) => { e.preventDefault(); goHome(); });
+
+        $('postPanel').addEventListener('click', (e) => {
+            const react = e.target.closest('[data-react]');
+            if (react) { reactPost(Number(react.dataset.react)); return; }
+            if (e.target.closest('[data-post-comments]')) { $('postComments')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); $('commentText')?.focus({ preventScroll: true }); return; }
+            if (e.target.closest('[data-post-share]')) { sharePost(); return; }
+            const place = e.target.closest('[data-post-place]');
+            if (place) {
+                const id = Number(place.dataset.postPlace);
+                closeModal('postModal');
+                if (state.openId !== id) openVenue(id);
+                return;
+            }
+            const del = e.target.closest('[data-post-delete]');
+            if (del) { deletePost(del); return; }
+            const report = e.target.closest('[data-post-report]');
+            if (report) { reportPostItem(report, { post_id: openPostId }); return; }
+            const block = e.target.closest('[data-post-block]');
+            if (block) { blockPostAuthor(block, { post: openPostId }); return; }
+            const cDel = e.target.closest('[data-comment-delete]');
+            if (cDel) { deleteComment(cDel); return; }
+            const cReport = e.target.closest('[data-comment-report]');
+            if (cReport) { reportPostItem(cReport, { comment_id: cReport.dataset.commentReport }); return; }
+            const cBlock = e.target.closest('[data-comment-block]');
+            if (cBlock) blockPostAuthor(cBlock, { comment: cBlock.dataset.commentBlock });
+        });
+        $('postPanel').addEventListener('submit', (e) => { if (e.target.id === 'commentForm') submitComment(e); });
+
+        $('composeBody').addEventListener('submit', (e) => { if (e.target.id === 'composeForm') submitCompose(e); });
+        $('composeBody').addEventListener('click', (e) => {
+            if (e.target.closest('[data-compose-place]')) { saveComposeDraft(); openPicker('post'); return; }
+            const locateBtn = e.target.closest('[data-compose-locate]');
+            if (locateBtn) { composeLocate(locateBtn); return; }
+            const remove = e.target.closest('[data-compose-remove]');
+            if (remove) {
+                const [f] = compose.files.splice(Number(remove.dataset.composeRemove), 1);
+                if (f) URL.revokeObjectURL(f.url);
+                refreshComposePhotos();
+            }
+        });
+        $('composeBody').addEventListener('change', (e) => {
+            if (e.target.id !== 'composeFiles') return;
+            const files = [...e.target.files].filter((f) => f.type.startsWith('image/'));
+            const room = MAX_POST_PHOTOS - compose.files.length;
+            for (const file of files.slice(0, room)) compose.files.push({ file, url: URL.createObjectURL(file) });
+            $('composeMsg').textContent = files.length > room ? t('feedErrPhotos') : '';
+            refreshComposePhotos();
+        });
+
+        $('pickSearch').addEventListener('input', renderPicker);
+        $('pickList').addEventListener('click', (e) => {
+            const row = e.target.closest('[data-pick]');
+            if (row) pickPlace(Number(row.dataset.pick));
+        });
+
 
         $('venuePanel').addEventListener('click', (e) => {
             const star = e.target.closest('.star-btn');
