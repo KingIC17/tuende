@@ -5,6 +5,12 @@ const IMAGE_CACHE = 'tuende-images-v1';
 // Only tiles the person viewed are kept (no bulk download), up to MAX_TILES.
 const MAP_CACHE = 'tuende-map-v1';
 const MAX_TILES = 1200;
+// Provinces saved for use without internet (the person chose them): map tiles kept under their z/x/y, never trimmed.
+const OFFLINE_CACHE = 'tuende-offline-v1';
+const tileKey = (url) => {
+    const m = String(url).match(/tiles\.openfreemap\.org\/planet\/[^/]+\/(\d+)\/(\d+)\/(\d+)\.pbf/);
+    return m ? `https://tuende.offline/tile/${m[1]}/${m[2]}/${m[3]}.pbf` : null;
+};
 const SHELL = [
     './',
     './manifest.json',
@@ -22,7 +28,7 @@ self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys()
             .then((keys) => Promise.all(keys
-                .filter((key) => key !== SHELL_CACHE && key !== IMAGE_CACHE && key !== MAP_CACHE)
+                .filter((key) => key !== SHELL_CACHE && key !== IMAGE_CACHE && key !== MAP_CACHE && key !== OFFLINE_CACHE)
                 .map((key) => caches.delete(key))))
             .then(() => self.clients.claim())
     );
@@ -53,6 +59,12 @@ async function mapCacheFirst(request) {
     const cache = await caches.open(MAP_CACHE);
     const hit = await cache.match(request);
     if (hit) return hit;
+    // A saved province has this tile (perhaps from an older weekly tile set, which looks the same).
+    const key = tileKey(request.url);
+    if (key) {
+        const saved = await (await caches.open(OFFLINE_CACHE)).match(key);
+        if (saved) return saved;
+    }
     const response = await fetch(request);
     if (response.ok) {
         await cache.put(request, response.clone());
@@ -91,6 +103,60 @@ self.addEventListener('fetch', (event) => {
     } else if (url.hostname === 'unpkg.com' || url.hostname === 'tile.openstreetmap.org' || url.hostname === 'tiles.openfreemap.org') {
         event.respondWith(mapCacheFirst(request));
     }
+});
+
+// Saves a province: its map tiles (OFFLINE_CACHE) and the map library, tile list and fonts (MAP_CACHE),
+// six downloads at a time, telling the page how far it got.
+async function saveArea({ slug, tiles, extra }, client) {
+    const offline = await caches.open(OFFLINE_CACHE);
+    const map = await caches.open(MAP_CACHE);
+    const jobs = [...tiles.map((url) => ({ url, key: tileKey(url), cache: offline })), ...extra.map((url) => ({ url, key: url, cache: map }))]
+        .filter((job) => job.key);
+    const total = jobs.length;
+    let done = 0;
+    let failed = 0;
+    let bytes = 0;
+    const report = (final) => client?.postMessage({ type: 'area-progress', slug, done, total, failed, bytes, final });
+    const worker = async () => {
+        while (jobs.length) {
+            const job = jobs.shift();
+            try {
+                if (!(await job.cache.match(job.key))) {
+                    const response = await fetch(job.url, { mode: 'cors' });
+                    if (!response.ok) throw new Error(String(response.status));
+                    bytes += (await response.clone().blob()).size;
+                    await job.cache.put(job.key, response);
+                }
+            } catch {
+                failed++;
+            }
+            done++;
+            if (done % 8 === 0) report(false);
+        }
+    };
+    await Promise.all(Array.from({ length: 6 }, worker));
+    await offline.put(`https://tuende.offline/area/${slug}`, new Response(JSON.stringify({ tiles: tiles.map(tileKey), saved: Date.now() })));
+    report(true);
+}
+
+// Removes a saved province, keeping the tiles another saved province also uses.
+async function deleteArea(slug) {
+    const offline = await caches.open(OFFLINE_CACHE);
+    const areas = (await offline.keys()).filter((k) => k.url.startsWith('https://tuende.offline/area/'));
+    const keep = new Set();
+    let mine = [];
+    for (const req of areas) {
+        const data = await (await offline.match(req)).json().catch(() => ({ tiles: [] }));
+        if (req.url.endsWith(`/area/${slug}`)) mine = data.tiles || [];
+        else (data.tiles || []).forEach((k) => keep.add(k));
+    }
+    await Promise.all(mine.filter((k) => k && !keep.has(k)).map((k) => offline.delete(k)));
+    await offline.delete(`https://tuende.offline/area/${slug}`);
+}
+
+self.addEventListener('message', (event) => {
+    if (event.data?.type === 'save-area') event.waitUntil(saveArea(event.data, event.source));
+    else if (event.data?.type === 'delete-area') event.waitUntil(deleteArea(String(event.data.slug)));
 });
 
 // The page sends the list of venue photos so they are available offline before being viewed.

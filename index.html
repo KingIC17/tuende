@@ -1748,6 +1748,26 @@
         .post-card { position: relative; }
         .post-status { z-index: 1; }
 
+        /* ---------- "Ask Kamba" row (place window, saved places) ---------- */
+        .ask-kamba { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 56px; padding: 6px 14px 6px 6px; border: 1.5px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--text); font-size: 15px; font-weight: 700; text-align: left; }
+        .ask-kamba > span:nth-child(2) { flex: 1; }
+        .ask-kamba .kamba-face { width: 42px; height: 42px; }
+        .ask-kamba > .icon { width: 18px; height: 18px; color: var(--primary); }
+        @media (hover: hover) { .ask-kamba:hover { border-color: var(--primary); } }
+        .card-grid > .ask-kamba-wide { grid-column: 1 / -1; }
+        .offline-banner progress { display: block; width: 100%; height: 6px; margin-top: 8px; accent-color: var(--primary-fill); }
+        .plan-friends-start { margin: 14px 0 4px; border-radius: 14px; padding: 10px 14px; }
+        .plan-friends-start > .icon:first-child { width: 22px; height: 22px; color: var(--primary); }
+        .plan-friends { margin: 14px 0 4px; padding: 14px; border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); }
+        .plan-friends-head { display: flex; align-items: center; gap: 10px; }
+        .plan-friends-head > .icon { flex: none; width: 24px; height: 24px; color: var(--primary); }
+        .plan-friends-head small { display: block; font-size: 14px; color: var(--muted); }
+        .plan-friends .plan-actions { margin-top: 12px; }
+        .plan-friends .submit-btn { display: inline-flex; align-items: center; gap: 8px; }
+        .plan-friends .signin-prompt { margin-top: 12px; }
+        .plan-friends #planSyncState { margin-top: 8px; font-size: 13px; }
+        .plan-card b .icon { width: 16px; height: 16px; vertical-align: -2px; color: var(--primary); }
+
         /* ---------- Search suggestions while typing ---------- */
         .what-field { position: relative; scroll-margin-top: 12px; }
         .suggest { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 40; max-height: min(62vh, 470px); overflow-y: auto; overscroll-behavior: contain; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 14px 40px rgba(0, 0, 0, 0.16); }
@@ -3132,6 +3152,35 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                offlineTitle: 'Vai para {city} sem rede?',
+                offlineText: 'Guarde o mapa e as fotos para usar sem internet (cerca de {mb} MB; melhor com Wi-Fi).',
+                offlineSave: 'Guardar',
+                offlineSaving: 'A guardar {city} para usar sem internet: {pct}%',
+                offlineSaved: '{city} está guardada para usar sem internet ({date}).',
+                offlinePartial: 'Faltaram {n} partes (sem internet?). Toque em Guardar para continuar.',
+                offlineDelete: 'Apagar',
+                offlineDeleted: '{city} já não está guardada.',
+                offlineFailed: 'Não foi possível começar: verifique a internet e tente de novo.',
+                planFriends: 'Planear com amigos',
+                planFriendsSoon: 'Planear com amigos fica disponível em breve.',
+                planFriendsSignIn: 'Entre na sua conta para planear com amigos. Quem receber o link também precisa de conta para mudar o plano.',
+                planFriendsInvite: 'Convidar amigos',
+                planFriendsShareText: 'Ajude-me a planear «{name}» no Tuende',
+                planFriendsPeople: '{n} pessoas neste plano',
+                planFriendsOne: 'Só você neste plano, por agora',
+                planFriendsEditor: 'última mudança: {name}',
+                planFriendsReadOnly: 'Entre na sua conta para acrescentar lugares, eventos e notas a este plano.',
+                planSyncing: 'A guardar para todos…',
+                planSynced: 'Guardado para todos.',
+                planSyncError: 'Não foi possível guardar para os outros agora. Tentamos de novo quando houver internet.',
+                planUnshare: 'Deixar de partilhar',
+                planUnshareConfirm: 'Deixar de partilhar «{name}»? Os amigos deixam de o poder abrir; a sua cópia fica.',
+                planGoneShared: 'Quem criou este plano deixou de o partilhar. A sua cópia fica neste dispositivo.',
+                planUpdatedBy: '{name} mudou o plano.',
+                planUpdatedSomeone: 'O plano foi atualizado.',
+                askKambaPlace: 'Perguntar ao Kamba sobre este lugar',
+                askKambaSaved: 'Perguntar ao Kamba sobre os seus guardados',
+                planWaOpen: 'Abrir no Tuende',
                 menuOpen: 'Ver tudo',
                 menuItems: '{n} itens',
                 sgLabel: 'Sugestões',
@@ -4065,6 +4114,35 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                offlineTitle: 'Going to {city} without signal?',
+                offlineText: 'Save the map and photos to use offline (about {mb} MB; best on Wi-Fi).',
+                offlineSave: 'Save',
+                offlineSaving: 'Saving {city} for offline use: {pct}%',
+                offlineSaved: '{city} is saved for offline use ({date}).',
+                offlinePartial: '{n} parts did not download (no internet?). Tap Save to continue.',
+                offlineDelete: 'Delete',
+                offlineDeleted: '{city} is no longer saved.',
+                offlineFailed: 'Could not start: check your connection and try again.',
+                planFriends: 'Plan with friends',
+                planFriendsSoon: 'Planning with friends is coming soon.',
+                planFriendsSignIn: 'Sign in to plan with friends. People who get the link also need an account to change the plan.',
+                planFriendsInvite: 'Invite friends',
+                planFriendsShareText: 'Help me plan "{name}" on Tuende',
+                planFriendsPeople: '{n} people on this plan',
+                planFriendsOne: 'Just you on this plan for now',
+                planFriendsEditor: 'last change: {name}',
+                planFriendsReadOnly: 'Sign in to add places, events and notes to this plan.',
+                planSyncing: 'Saving for everyone…',
+                planSynced: 'Saved for everyone.',
+                planSyncError: 'Could not save for the others right now. We will try again when you are online.',
+                planUnshare: 'Stop sharing',
+                planUnshareConfirm: 'Stop sharing "{name}"? Your friends will no longer be able to open it; your copy stays.',
+                planGoneShared: 'The person who created this plan stopped sharing it. Your copy stays on this device.',
+                planUpdatedBy: '{name} updated the plan.',
+                planUpdatedSomeone: 'The plan was updated.',
+                askKambaPlace: 'Ask Kamba about this place',
+                askKambaSaved: 'Ask Kamba about your saved places',
+                planWaOpen: 'Open in Tuende',
                 menuOpen: 'See all',
                 menuItems: '{n} items',
                 sgLabel: 'Suggestions',
@@ -8178,6 +8256,7 @@
             else if (params.get('page') === 'pratos') { if (state.view !== 'dishes') showDishes({ push: false }); }
             else if (params.get('page') === 'momentos') { if (state.view !== 'feed') showFeed({ push: false }); }
             else if (params.get('page') === 'perfil') { if (state.view !== 'profile') showProfile({ push: false }); }
+            else if (params.get('page') === 'plano' && /^[0-9a-f]{32}$/.test(params.get('amigos') || '')) openFriendsPlan(params.get('amigos'));
             else if (params.get('page') === 'plano') {
                 const shared = params.get('p') ? planFromParam(params.get('p')) : null;
                 showPlan({ push: false, id: location.hash.match(/^#plano-([\w-]+)$/)?.[1] || '', shared: params.get('p') ? shared || 'bad' : null });
@@ -8831,7 +8910,13 @@
             if (list.length && state.userPos && (state.filters.quick === 'near' || state.filters.where === 'near')) {
                 $('resultsList').insertAdjacentHTML('afterbegin', `<div class="fx-banner">${icon('pin')}<span>${t('nearMapText')}</span><button class="link-btn" type="button" data-action="near-map">${t('nearMapOpen')}</button></div>`);
             }
+            if (list.length && state.filters.where && state.filters.where !== 'near' && offlineReady()) {
+                $('resultsList').insertAdjacentHTML('afterbegin', offlineBannerHTML(state.filters.where));
+            }
             // Saved places and plans sit together: the Guardados tab is how phones reach "My plans".
+            if (state.filters.saved && favorites.length) {
+                $('resultsList').insertAdjacentHTML('afterbegin', `<button class="ask-kamba ask-kamba-wide" type="button" data-ask-kamba="saved"><span class="kamba-face" aria-hidden="true">${KAMBA_AVATAR}</span><span>${t('askKambaSaved')}</span>${icon('next')}</button>`);
+            }
             if (state.filters.saved) {
                 const text = plans.length ? plans.slice(0, 2).map((p) => p.name).join(' · ') + (plans.length > 2 ? ' …' : '') : t('planCtaText');
                 $('resultsList').insertAdjacentHTML('afterbegin', `<div class="fx-banner plan-banner">${icon('calendar')}<span><b>${t('planTitle')}:</b> ${escapeHTML(text)}</span><button class="link-btn" type="button" data-action="plan">${plans.length ? t('seeAll') : t('planNew')}</button></div>`);
@@ -8929,7 +9014,7 @@
         let plans = (() => { const saved = store.get('tuendePlans', []); return Array.isArray(saved) ? saved : []; })();
         let sharedPlan = null;
         let planPending = null;
-        const savePlans = () => store.set('tuendePlans', plans);
+        const savePlans = () => { store.set('tuendePlans', plans); queuePlanSync(); };
         const findPlan = (id) => plans.find((p) => p.id === id);
         const newPlanId = () => `p${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
         const planDayDate = (plan, i) => (plan.start ? addDays(plan.start, i) : '');
@@ -9023,27 +9108,31 @@
             }
             const plan = state.planId && findPlan(state.planId);
             if (plan) {
+                // A shared plan can be read by anyone with the link; changing it needs an account.
+                const editable = !plan.shared || plan.shared.gone || signedIn();
                 body.innerHTML = `
                     <div class="plan-head">
                         <button class="link-btn" type="button" data-plan-list>${icon('back')}${t('planBack')}</button>
-                        <label>${t('planName')}<input class="field" id="planNameInput" type="text" maxlength="80" value="${escapeHTML(plan.name)}"></label>
-                        <label>${t('planStart')}<input class="field" id="planStartInput" type="date" value="${escapeHTML(plan.start)}"></label>
+                        <label>${t('planName')}<input class="field" id="planNameInput" type="text" maxlength="80" value="${escapeHTML(plan.name)}"${editable ? '' : ' disabled'}></label>
+                        <label>${t('planStart')}<input class="field" id="planStartInput" type="date" value="${escapeHTML(plan.start)}"${editable ? '' : ' disabled'}></label>
                         <div class="plan-actions">
                             <button class="action-btn" type="button" data-plan-share>${icon('share')}${t('share')}</button>
+                            <button class="action-btn" type="button" data-plan-wa>${icon('chat')}WhatsApp</button>
                             ${inNativeApp ? '' : `<button class="action-btn" type="button" data-plan-ics>${icon('calendar')}${t('eventCalendar')}</button>`}
                             <button class="action-btn" type="button" data-plan-delete>${t('planDelete')}</button>
                         </div>
                     </div>
-                    <p class="hint plan-hint">${t('planAddHint')}</p>
+                    ${plan.shared ? sharedPlanBannerHTML(plan) : supabaseReady() ? `<button class="ask-kamba plan-friends-start" type="button" data-plan-friends>${icon('users')}<span>${t('planFriends')}</span>${icon('next')}</button>` : ''}
+                    ${editable ? `<p class="hint plan-hint">${t('planAddHint')}</p>` : ''}
                     <p class="hint" id="planMsg" aria-live="polite"></p>
-                    ${plan.days.map((_, d) => planDayHTML(plan, d, true)).join('')}
-                    <button class="submit-btn secondary plan-addday" type="button" data-plan-addday>${icon('plus')}${t('planAddDay')}</button>
-                    ${planSuggestionsHTML()}`;
+                    ${plan.days.map((_, d) => planDayHTML(plan, d, editable)).join('')}
+                    ${editable ? `<button class="submit-btn secondary plan-addday" type="button" data-plan-addday>${icon('plus')}${t('planAddDay')}</button>
+                    ${planSuggestionsHTML()}` : ''}`;
                 return;
             }
             const list = plans.map((p) => `
                 <button class="plan-card" type="button" data-plan-open="${escapeHTML(p.id)}">
-                    <b>${escapeHTML(p.name)}</b>
+                    <b>${p.shared && !p.shared.gone ? `${icon('users')} ` : ''}${escapeHTML(p.name)}</b>
                     <span>${escapeHTML([planDaysText(p.days.length), t('planStops', { n: planStopsCount(p) }), p.start ? formatDate(p.start) : ''].filter(Boolean).join(' · '))}</span>
                 </button>`).join('');
             body.innerHTML = `
@@ -9068,6 +9157,8 @@
             if (push) history.pushState(null, '', `${location.pathname}?page=plano${state.planId ? `#plano-${state.planId}` : ''}`);
             render();
             window.scrollTo({ top: 0 });
+            const open = state.planId && findPlan(state.planId);
+            if (open?.shared && !open.shared.gone) pullSharedPlan(open);
         }
 
         function planToParam(plan) {
@@ -9167,7 +9258,7 @@
         }
 
         function planClick(event) {
-            const el = event.target.closest('[data-plan-add], [data-plan-open], [data-plan-list], [data-plan-kamba], [data-plan-move], [data-plan-remove], [data-plan-delday], [data-plan-addday], [data-plan-share], [data-plan-ics], [data-plan-delete], [data-plan-save-shared], [data-plan-event], [data-plan-pick-add]');
+            const el = event.target.closest('[data-plan-add], [data-plan-open], [data-plan-list], [data-plan-kamba], [data-plan-move], [data-plan-remove], [data-plan-delday], [data-plan-addday], [data-plan-share], [data-plan-ics], [data-plan-delete], [data-plan-save-shared], [data-plan-event], [data-plan-pick-add], [data-plan-wa], [data-plan-friends], [data-plan-invite], [data-plan-unshare]');
             if (!el) return;
             const plan = state.planId && findPlan(state.planId);
             const [d, i, dir] = (el.dataset.planMove || el.dataset.planRemove || el.dataset.planDelday || '').split(':').map(Number);
@@ -9202,6 +9293,18 @@
                     if (plan.days.length < 30) plan.days.push([]);
                 } else if (el.hasAttribute('data-plan-share')) {
                     sharePlan(plan);
+                    return;
+                } else if (el.hasAttribute('data-plan-wa')) {
+                    sharePlanWhatsApp(plan);
+                    return;
+                } else if (el.hasAttribute('data-plan-friends')) {
+                    startSharedPlan(plan);
+                    return;
+                } else if (el.hasAttribute('data-plan-invite')) {
+                    shareLink(plan.name, t('planFriendsShareText', { name: plan.name }), planLink(plan));
+                    return;
+                } else if (el.hasAttribute('data-plan-unshare')) {
+                    stopSharingPlan(plan);
                     return;
                 } else if (el.hasAttribute('data-plan-ics')) {
                     if (!plan.start) { $('planMsg').textContent = t('planCalendarNeedsDate'); $('planStartInput').focus(); return; }
@@ -10441,6 +10544,7 @@
                         ${canStamp(v) ? `<button class="action-btn${visited.includes(v.id) ? ' saved' : ''}" type="button" id="visitBtn" aria-pressed="${visited.includes(v.id)}">${visitButtonHTML(v.id)}</button>` : ''}
                     </div>
                     ${canStamp(v) ? `<p class="stamp-note" id="stampNote" aria-live="polite" ${visited.includes(v.id) ? '' : 'hidden'}>${stampNoteHTML()}</p>` : ''}
+                    <button class="ask-kamba" type="button" data-ask-kamba="${v.id}"><span class="kamba-face" aria-hidden="true">${KAMBA_AVATAR}</span><span>${t('askKambaPlace')}</span>${icon('next')}</button>
 
                     <section data-jump="about">
                         <h3 class="section-title">${t('about')}</h3>
@@ -12322,6 +12426,7 @@
             if (openPostId) openPost(openPostId);
             profile.loadedAt = 0;
             checkInbox(true);
+            queuePlanSync();
             if (next) next();
         }
 
@@ -13592,7 +13697,8 @@
                 saved: 'Guardaste {count}:', savedNone: 'Ainda não guardaste nenhum lugar. Toca no coração de um lugar para o guardar.',
                 recent: 'Os lugares que abriste há pouco:', recentNone: 'Ainda não abriste nenhum lugar neste dispositivo.',
                 profile: 'No teu perfil tens as notificações (comentários, gostos e quem te segue), os teus momentos, os lugares vistos e o passaporte.',
-                cinemas: 'As salas de cinema que conheço:', cinemaEvents: 'Filmes e sessões na agenda:'
+                cinemas: 'As salas de cinema que conheço:', cinemaEvents: 'Filmes e sessões na agenda:',
+                askPlace: 'O que queres saber sobre {name}?', askSaved: 'Tens {count} guardados. Posso ver quais estão abertos agora, montar um dia com eles ou mostrar os mais perto de ti.', chipHours: 'Horário de {name}', chipPrice: 'Quanto custa {name}?', chipRoute: 'Como chegar a {name}', chipSavedOpen: 'Quais dos meus guardados estão abertos?', chipSavedPlan: 'Um dia com os meus guardados', chipSavedNear: 'Os meus guardados perto de mim', savedOpen: 'Dos teus guardados, estão abertos agora ({count}):', savedOpenNone: 'Agora nenhum dos teus guardados com horário conhecido está aberto.', savedOpenUnknown: 'De {n} ainda não sabemos o horário: confirma antes de ir.', savedNear: 'Os teus guardados, do mais perto para o mais longe (em linha reta):', savedPlan: 'Um dia com os teus guardados em {city}, por uma ordem que poupa caminho:', savedPlanLeft: 'Ficaram {n} guardados de fora (noutra província ou para outro dia).', savedPlanName: 'Um dia em {city}'
             },
             en: {
                 chipsMore: ['What is funge?', 'Where to eat moamba?', 'Angolan food in Luanda', 'Pharmacy open now', 'Cinemas in Luanda', 'How do I post a moment?', 'My stamps', 'My saved places', 'Museums in Luanda', 'Nature in Namibe', 'Family-friendly in Luanda', 'Free things in Luanda', 'Nightlife in Luanda', 'When is the rainy season?', 'The 7 Wonders of Angola', 'Dishes and prices: O Almeida', 'Is Luanda safe?', 'Internet and SIM cards'],
@@ -13609,7 +13715,8 @@
                 saved: 'You saved {count}:', savedNone: 'You haven’t saved any places yet. Tap a place’s heart to save it.',
                 recent: 'Places you opened recently:', recentNone: 'You haven’t opened any places on this device yet.',
                 profile: 'Your profile has your notifications (comments, likes and followers), your moments, recently viewed places and your passport.',
-                cinemas: 'The cinemas I know:', cinemaEvents: 'Films and screenings on the agenda:'
+                cinemas: 'The cinemas I know:', cinemaEvents: 'Films and screenings on the agenda:',
+                askPlace: 'What would you like to know about {name}?', askSaved: 'You have {count} saved. I can check which are open now, plan a day with them or show the closest to you.', chipHours: 'Opening hours of {name}', chipPrice: 'How much is {name}?', chipRoute: 'How do I get to {name}?', chipSavedOpen: 'Which of my saved places are open?', chipSavedPlan: 'A day with my saved places', chipSavedNear: 'My saved places near me', savedOpen: 'Of your saved places, open now ({count}):', savedOpenNone: 'None of your saved places with known hours is open right now.', savedOpenUnknown: 'For {n} we do not know the hours yet: check before you go.', savedNear: 'Your saved places, nearest first (straight-line distance):', savedPlan: 'A day with your saved places in {city}, in an order that saves travel:', savedPlanLeft: '{n} saved places were left out (another province or another day).', savedPlanName: 'A day in {city}'
             }
         };
         // Kamba in French and Spanish comes with lang-fr.js / lang-es.js, now or when the language is picked.
@@ -13629,6 +13736,37 @@
         const KAMBA_MOMENTS = / (momentos|moments|publicar um momento|publico um momento|publicar (uma )?foto|partilhar (uma |as )?fotos?|post (a )?(moment|photo)|share (a )?photo|publier (un )?moment|partager (une )?photo|publicar (un )?momento|publico un momento|compartir (una )?foto) /;
         const KAMBA_PASSPORT = / (carimbo|carimbos|carimbar|carimbado|medalha|medalhas|ja fui|stamp|stamps|badge|badges|been here|tampon|tampons|deja visite|sello|sellos|ya fui|passaporte do tuende|tuende passport) /;
         const KAMBA_SAVED = / (guardados|guardadas|guardei|favoritos|favoritas|saved|favourites|favorites|enregistres|favoris) /;
+        const KAMBA_DAYPLAN = / (plano|planear|planeia|roteiro|itinerario|um dia|dia com|plan|plans|itinerary|a day|day with|journee|programme|un dia|dia con) /;
+
+        // A day out with saved places: the province with most of them, sights in an order that saves travel,
+        // a meal at lunch and at dinner, and a night out last.
+        function kambaSavedDay(list) {
+            const byCity = new Map();
+            list.forEach((v) => byCity.set(cityOf(v), [...(byCity.get(cityOf(v)) || []), v]));
+            const [city, pool] = [...byCity].sort((a, b) => b[1].length - a[1].length)[0];
+            const food = (v) => ['restaurant', 'bar'].includes(v.type);
+            const night = (v) => v.type === 'nightclub';
+            const onMap = (v) => Number.isFinite(v.lat) && !v.citywide;
+            const sightsLeft = pool.filter((v) => !food(v) && !night(v) && onMap(v));
+            const sights = [];
+            while (sightsLeft.length && sights.length < 5) {
+                const last = sights[sights.length - 1];
+                sightsLeft.sort((a, b) => (last ? kmBetween(last, a) - kmBetween(last, b) : 0));
+                sights.push(sightsLeft.shift());
+            }
+            sights.push(...pool.filter((v) => !food(v) && !night(v) && !onMap(v)).slice(0, 5 - sights.length));
+            const anchor = sights[1] || sights[0];
+            const foods = pool.filter(food).sort((a, b) => (anchor && onMap(a) && onMap(b) ? kmBetween(anchor, a) - kmBetween(anchor, b) : 0));
+            const slots = ['09:00', '10:30', '15:00', '16:30', '18:00'];
+            const items = [];
+            sights.slice(0, 2).forEach((v, i) => items.push({ kind: 'place', ref: v.id, time: slots[i] }));
+            if (foods[0]) items.push({ kind: 'place', ref: foods[0].id, time: '12:30' });
+            sights.slice(2, 5).forEach((v, i) => items.push({ kind: 'place', ref: v.id, time: slots[i + 2] }));
+            if (foods[1]) items.push({ kind: 'place', ref: foods[1].id, time: '19:30' });
+            const club = pool.find(night);
+            if (club) items.push({ kind: 'place', ref: club.id, time: '22:30' });
+            return { city, items, left: list.length - items.length };
+        }
         const KAMBA_RECENT = / (vistos recentemente|vi recentemente|ultimos lugares|lugares que vi|recently viewed|recent places|places i viewed|vus recemment|lieux vus|vistos recientemente) /;
         const KAMBA_PROFILE = / (perfil|notificacao|notificacoes|seguidores|seguir pessoas|profile|notification|notifications|followers|profil|abonnes|notificaciones) /;
         const KAMBA_OWNER = / (sou o dono|sou a dona|sou dono|sou dona|sou o gerente|sou a gerente|o meu restaurante|o meu hotel|o meu bar|o meu negocio|meu negocio|i own|i am the owner|im the owner|my restaurant|my hotel|my bar|my business|je suis le proprietaire|je suis proprietaire|mon restaurant|mon hotel|mon entreprise|soy el dueno|soy la duena|mi restaurante|mi hotel|mi negocio) /;
@@ -14366,13 +14504,40 @@
             }
             if (KAMBA_SAVED.test(q.full) && !q.category && !q.where.length) {
                 const list = venues.filter((v) => favorites.includes(v.id));
-                if (list.length) {
+                if (!list.length) {
+                    say('savedNone');
+                    return out;
+                }
+                if (q.flags.open) {
+                    const open = list.filter((v) => openStatus(v)?.open);
+                    const unknown = list.filter((v) => !openStatus(v)).length;
+                    say(open.length ? 'savedOpen' : 'savedOpenNone', { count: escapeHTML(String(open.length)) });
+                    places(open);
+                    if (unknown) say('savedOpenUnknown', { n: unknown });
+                } else if (q.flags.near || / (pres|proches|closest|nearest|mas cercanos) /.test(q.full)) {
+                    if (!state.userPos) {
+                        kambaState.pending = raw;
+                        say('nearAsk');
+                        out.buttons.push(kambaGoBtn('locate', kambaText('locateBtn')));
+                        return out;
+                    }
+                    say('savedNear');
+                    places(list.filter((v) => Number.isFinite(v.lat) && !v.citywide).sort((a, b) => distanceKm(a) - distanceKm(b)));
+                } else if (KAMBA_DAYPLAN.test(q.full)) {
+                    const day = kambaSavedDay(list);
+                    const nameOf = (id) => venues.find((v) => v.id === id).name;
+                    say('savedPlan', { city: escapeHTML(day.city) });
+                    out.parts.push(`<ul>${day.items.map((it) => `<li><b>${it.time}</b> ${escapeHTML(nameOf(it.ref))}</li>`).join('')}</ul>`);
+                    if (day.left) say('savedPlanLeft', { n: day.left });
+                    out.facts.push(...day.items.map((it) => `${it.time} ${nameOf(it.ref)}`));
+                    kambaState.lastTrip = { name: kambaText('savedPlanName', { city: day.city }), days: [day.items] };
+                    out.buttons.push(kambaGoBtn('plan-save', kambaText('planSave')));
+                } else {
                     say('saved', { count: escapeHTML(placesCount(list.length)) });
                     places(list);
-                    out.buttons.push(kambaGoBtn('saved', t('savedBtn')));
-                } else {
-                    say('savedNone');
                 }
+                out.buttons.push(kambaGoBtn('saved', t('savedBtn')));
+                out.chips.push(kambaText('chipSavedOpen'), kambaText('chipSavedPlan'), kambaText('chipSavedNear'));
                 return out;
             }
             if (KAMBA_PROFILE.test(q.full)) {
@@ -15287,6 +15452,394 @@
         });
         offerLanguage();
 
+        /* ---------- Ask Kamba about a place or about the saved places ---------- */
+
+        // The place window sits above Kamba, so it closes first; Kamba's answer has the place's card to go back.
+        function askKambaAbout(target) {
+            document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
+            openKamba();
+            if (target === 'saved') {
+                kambaShow({ cards: [], buttons: [], chips: [kambaText('chipSavedOpen'), kambaText('chipSavedPlan'), kambaText('chipSavedNear')] },
+                    `<p>${kambaHTML('askSaved', { count: escapeHTML(String(favorites.length)) })}</p>`);
+                return;
+            }
+            const v = venues.find((x) => x.id === Number(target));
+            if (!v) return;
+            const chips = [kambaText('chipHours', { name: v.name }), MENUS_AO[v.id] || menuData[v.id] ? kambaText('chipPrices', { name: v.name }) : kambaText('chipPrice', { name: v.name })];
+            if (Number.isFinite(v.lat) && !v.citywide) chips.push(kambaText('chipNear', { name: v.name }), kambaText('chipRoute', { name: v.name }));
+            kambaShow({ cards: [], buttons: [], chips }, `<p>${kambaHTML('askPlace', { name: `<b>${escapeHTML(v.name)}</b>` })}</p>`);
+        }
+
+        /* ---------- A plan as a WhatsApp message ---------- */
+
+        function planLink(plan) {
+            const base = inNativeApp ? PUBLIC_URL : `${location.origin}${location.pathname}`;
+            return plan.shared?.token ? `${base}?page=plano&amigos=${plan.shared.token}` : `${base}?page=plano&p=${planToParam(plan)}`;
+        }
+
+        // WhatsApp shows *text* in bold. Day by day, with times, then the link that opens the plan in Tuende.
+        function planWhatsAppText(plan) {
+            const lines = [`*${plan.name}*`, [planDaysText(plan.days.length), plan.start ? formatDate(plan.start) : ''].filter(Boolean).join(' · ')];
+            plan.days.forEach((day, d) => {
+                if (!day.length) return;
+                const date = planDayDate(plan, d);
+                lines.push('', `*${t('planDay', { n: d + 1 })}*${date ? ` · ${planDayText(date)}` : ''}`);
+                day.forEach((item) => {
+                    const v = item.kind === 'place' ? venues.find((x) => x.id === item.ref) : null;
+                    const parts = planItemParts(item);
+                    const where = v ? placeLine(v) : parts.where;
+                    lines.push(`${item.time || '•'} ${parts.text}${where ? ` (${where})` : ''}`);
+                });
+            });
+            lines.push('', `${t('planWaOpen')}: ${planLink(plan)}`);
+            return lines.join('\n');
+        }
+
+        function sharePlanWhatsApp(plan) {
+            window.open(`https://wa.me/?text=${encodeURIComponent(planWhatsAppText(plan))}`, '_blank', 'noopener');
+        }
+
+        /* ---------- Shared plans ("Planear com amigos") ---------- */
+
+        const planSync = { busy: new Set(), error: false, timer: 0, ready: null, renderLater: false };
+        const PLAN_KINDS = new Set(['place', 'event', 'note']);
+        const planSnapshot = (plan) => ({ name: plan.name, start: plan.start || '', days: cleanPlanDays(plan.days) });
+        const planDirty = (plan) => Boolean(plan.shared) && JSON.stringify(planSnapshot(plan)) !== JSON.stringify(plan.shared.base);
+
+        // Days from the server, kept to what the app knows: up to 30 days of up to 60 items.
+        function cleanPlanDays(days) {
+            const list = (Array.isArray(days) ? days : []).slice(0, 30).map((day) => (Array.isArray(day) ? day : []).slice(0, 60)
+                .filter((it) => it && PLAN_KINDS.has(it.kind))
+                .map((it) => ({ kind: it.kind, ref: it.kind === 'place' ? Number(it.ref) : String(it.ref ?? '').slice(0, 200), time: /^\d{2}:\d{2}$/.test(it.time || '') ? it.time : '' }))
+                .filter((it) => (it.kind === 'place' ? Number.isFinite(it.ref) : it.ref.length > 0)));
+            return list.length ? list : [[]];
+        }
+
+        // Two people changed the plan at once: start from the other person's version and redo ours on top of it
+        // (what we removed goes, what we added comes in, our new times win).
+        function mergePlanDays(base, local, remote) {
+            const key = (it) => `${it.kind}:${it.ref}`;
+            const counts = (list) => list.reduce((m, it) => m.set(key(it), (m.get(key(it)) || 0) + 1), new Map());
+            const days = local.length !== base.length ? local.length : remote.length;
+            const result = [];
+            for (let d = 0; d < days; d++) {
+                const b = base[d] || [];
+                const l = local[d] || [];
+                const bc = counts(b);
+                const lc = counts(l);
+                const removed = new Map([...bc].map(([k, n]) => [k, Math.max(0, n - (lc.get(k) || 0))]));
+                const out = (remote[d] || []).filter((it) => {
+                    const left = removed.get(key(it));
+                    if (left) { removed.set(key(it), left - 1); return false; }
+                    return true;
+                }).map((it) => ({ ...it }));
+                const seen = new Map();
+                for (const it of l) {
+                    const n = (seen.get(key(it)) || 0) + 1;
+                    seen.set(key(it), n);
+                    if (n > (bc.get(key(it)) || 0)) out.push({ ...it });
+                    else {
+                        const before = b.find((x) => key(x) === key(it));
+                        const mine = out.find((x) => key(x) === key(it));
+                        if (before && mine && before.time !== it.time) mine.time = it.time;
+                    }
+                }
+                result.push(sortPlanDay(out));
+            }
+            return result.length ? result : [[]];
+        }
+
+        function takeRemote(plan, row, { merge = false } = {}) {
+            const remote = { name: row.plan_name, start: row.plan_start || '', days: cleanPlanDays(row.plan_days) };
+            const base = plan.shared.base;
+            if (merge) {
+                plan.days = mergePlanDays(base.days, plan.days, remote.days);
+                if (plan.name === base.name) plan.name = remote.name;
+                if ((plan.start || '') === base.start) plan.start = remote.start;
+            } else {
+                plan.name = remote.name;
+                plan.start = remote.start;
+                plan.days = remote.days.map((day) => day.map((it) => ({ ...it })));
+            }
+            plan.shared.base = remote;
+            plan.shared.version = row.plan_version;
+            plan.shared.editor = row.plan_editor || '';
+            if (Number.isFinite(row.plan_members)) plan.shared.members = row.plan_members;
+        }
+
+        // Is the database ready for shared plans? (Before the owner runs the SQL file, the function does not exist.)
+        async function sharedPlansReady() {
+            if (planSync.ready !== null) return planSync.ready;
+            try {
+                await sbRequest('/rest/v1/rpc/get_shared_plan', { method: 'POST', headers: sbHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ p_token: '0'.repeat(32) }) });
+                planSync.ready = true;
+            } catch (err) {
+                if (err.status === 404) planSync.ready = false;
+            }
+            return planSync.ready;
+        }
+
+        function sharedPlanBannerHTML(plan) {
+            const s = plan.shared;
+            if (s.gone) return `<div class="plan-friends"><p class="hint">${t('planGoneShared')}</p></div>`;
+            const people = (s.members || 1) > 1 ? t('planFriendsPeople', { n: s.members }) : t('planFriendsOne');
+            return `<div class="plan-friends">
+                <div class="plan-friends-head">${icon('users')}<div><b>${t('planShared')}</b><small>${escapeHTML([people, s.editor ? t('planFriendsEditor', { name: s.editor }) : ''].filter(Boolean).join(' · '))}</small></div></div>
+                ${signedIn() ? '' : signInPromptHTML('planFriendsReadOnly')}
+                <div class="plan-actions">
+                    <button class="submit-btn" type="button" data-plan-invite>${icon('share')}${t('planFriendsInvite')}</button>
+                    ${s.owner ? `<button class="action-btn" type="button" data-plan-unshare>${t('planUnshare')}</button>` : ''}
+                </div>
+                <p class="hint" id="planSyncState" aria-live="polite">${signedIn() ? planSyncText(plan) : ''}</p>
+            </div>`;
+        }
+
+        const planSyncText = (plan) => (planSync.error ? t('planSyncError') : planSync.busy.has(plan.id) || planDirty(plan) ? t('planSyncing') : t('planSynced'));
+
+        function showPlanSyncState(plan) {
+            if (state.view === 'plan' && state.planId === plan.id && $('planSyncState') && signedIn()) $('planSyncState').textContent = planSyncText(plan);
+        }
+
+        // Redraw the open plan, but not under someone's fingers: wait until they leave the field they are typing in.
+        function refreshPlanView(plan) {
+            if (state.view !== 'plan' || state.planId !== plan.id) return;
+            if (document.activeElement?.closest?.('#planBody') && /^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName)) { planSync.renderLater = true; return; }
+            renderPlan();
+        }
+
+        async function startSharedPlan(plan) {
+            if ((await sharedPlansReady()) === false) { $('planMsg').textContent = t('planFriendsSoon'); return; }
+            if (!signedIn()) { openAuth('signin', { reason: t('planFriendsSignIn'), after: () => startSharedPlan(plan) }); return; }
+            try {
+                const token = await rpc('create_shared_plan', { p_name: plan.name, p_start: plan.start || null, p_days: plan.days });
+                if (!/^[0-9a-f]{32}$/.test(token)) throw new Error('token');
+                plan.shared = { token, version: 1, base: planSnapshot(plan), editor: '', members: 1, owner: true };
+                store.set('tuendePlans', plans);
+                renderPlan();
+                shareLink(plan.name, t('planFriendsShareText', { name: plan.name }), planLink(plan));
+            } catch (err) {
+                if ($('planMsg')) $('planMsg').textContent = /palavras|words/i.test(err.detail || '') ? t('errBlockedText') : t('planSyncError');
+            }
+        }
+
+        async function stopSharingPlan(plan) {
+            if (!confirm(t('planUnshareConfirm', { name: plan.name }))) return;
+            try {
+                await rpc('delete_shared_plan', { p_token: plan.shared.token });
+                delete plan.shared;
+                store.set('tuendePlans', plans);
+                renderPlan();
+            } catch {
+                if ($('planMsg')) $('planMsg').textContent = t('planSyncError');
+            }
+        }
+
+        // Someone opened a friends' link: keep a copy of the plan on this device, linked to the shared one.
+        async function openFriendsPlan(token) {
+            const local = plans.find((p) => p.shared?.token === token);
+            if (local) {
+                history.replaceState(null, '', `${location.pathname}?page=plano#plano-${local.id}`);
+                showPlan({ push: false, id: local.id });
+                return;
+            }
+            state.view = 'plan';
+            state.planId = '';
+            sharedPlan = null;
+            render();
+            $('planBody').innerHTML = `<p class="hint">${t('loading')}</p>`;
+            let row = null;
+            try { [row] = await rpc('get_shared_plan', { p_token: token }, signedIn()); } catch {}
+            if (!row) { showPlan({ push: false, shared: 'bad' }); return; }
+            const remote = { name: row.plan_name, start: row.plan_start || '', days: cleanPlanDays(row.plan_days) };
+            const plan = { id: newPlanId(), name: remote.name, start: remote.start, days: remote.days.map((day) => day.map((it) => ({ ...it }))),
+                shared: { token, version: row.plan_version, base: remote, editor: row.plan_editor || '', members: row.plan_members || 1, owner: Boolean(row.plan_is_owner) } };
+            plans.unshift(plan);
+            store.set('tuendePlans', plans);
+            history.replaceState(null, '', `${location.pathname}?page=plano#plano-${plan.id}`);
+            showPlan({ push: false, id: plan.id });
+        }
+
+        async function pullSharedPlan(plan) {
+            if (!plan.shared || plan.shared.gone || planSync.busy.has(plan.id)) return;
+            let row;
+            try { [row] = await rpc('get_shared_plan', { p_token: plan.shared.token }, signedIn()); } catch { return; }
+            if (!findPlan(plan.id) || !plan.shared) return;
+            if (!row) {
+                plan.shared.gone = true;
+                store.set('tuendePlans', plans);
+                refreshPlanView(plan);
+                return;
+            }
+            plan.shared.owner = Boolean(row.plan_is_owner);
+            plan.shared.members = row.plan_members || plan.shared.members;
+            if (row.plan_version > plan.shared.version) {
+                takeRemote(plan, row, { merge: planDirty(plan) });
+                store.set('tuendePlans', plans);
+                if (state.view === 'plan' && state.planId === plan.id) toast(row.plan_editor ? t('planUpdatedBy', { name: row.plan_editor }) : t('planUpdatedSomeone'));
+                refreshPlanView(plan);
+                queuePlanSync();
+            }
+        }
+
+        // Send our changes; if someone else saved first, merge with theirs and send again.
+        async function syncSharedPlan(plan) {
+            if (!plan.shared || plan.shared.gone || !signedIn() || planSync.busy.has(plan.id)) return;
+            planSync.busy.add(plan.id);
+            showPlanSyncState(plan);
+            let merged = false;
+            try {
+                for (let attempt = 0; attempt < 4 && planDirty(plan); attempt++) {
+                    const sent = planSnapshot(plan);
+                    const [row] = await rpc('save_shared_plan', { p_token: plan.shared.token, p_version: plan.shared.version, p_name: sent.name, p_start: sent.start || null, p_days: sent.days });
+                    if (!row) throw new Error('missing');
+                    if (row.saved) {
+                        plan.shared.base = { name: row.plan_name, start: row.plan_start || '', days: cleanPlanDays(row.plan_days) };
+                        plan.shared.version = row.plan_version;
+                        plan.shared.editor = row.plan_editor || '';
+                        plan.shared.members = row.plan_members || plan.shared.members;
+                    } else {
+                        takeRemote(plan, row, { merge: true });
+                        merged = true;
+                    }
+                }
+                planSync.error = false;
+            } catch (err) {
+                planSync.error = true;
+                if (err.status === 400 && /palavras|words/i.test(err.detail || '') && $('planMsg')) $('planMsg').textContent = t('errBlockedText');
+            } finally {
+                planSync.busy.delete(plan.id);
+                store.set('tuendePlans', plans);
+                if (merged) refreshPlanView(plan);
+                showPlanSyncState(plan);
+            }
+        }
+
+        function queuePlanSync() {
+            clearTimeout(planSync.timer);
+            planSync.timer = setTimeout(() => plans.filter((p) => p.shared && !p.shared.gone && planDirty(p)).forEach(syncSharedPlan), 700);
+        }
+
+        // While a shared plan is open, look for other people's changes every 20 seconds (and when the app comes back).
+        const pullOpenPlan = () => {
+            const plan = state.view === 'plan' && state.planId && findPlan(state.planId);
+            if (plan?.shared && !plan.shared.gone && document.visibilityState === 'visible') pullSharedPlan(plan);
+        };
+        setInterval(pullOpenPlan, 20000);
+        document.addEventListener('visibilitychange', pullOpenPlan);
+        window.addEventListener('online', () => { queuePlanSync(); pullOpenPlan(); });
+        document.addEventListener('focusout', () => {
+            if (!planSync.renderLater) return;
+            setTimeout(() => {
+                if (document.activeElement?.closest?.('#planBody')) return;
+                planSync.renderLater = false;
+                if (state.view === 'plan') renderPlan();
+            }, 50);
+        });
+
+        /* ---------- Save a province for use without internet ---------- */
+
+        let offlineAreas = (() => { const saved = store.get('tuendeOffline', {}); return saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {}; })();
+        const offlineJobs = {};
+        // Needs the website's service worker (the iPhone app already carries the guide inside it).
+        const offlineReady = () => !inNativeApp && 'caches' in window && Boolean(navigator.serviceWorker?.controller);
+        const tileX = (lng, z) => Math.floor(((lng + 180) / 360) * 2 ** z);
+        const tileY = (lat, z) => {
+            const r = (lat * Math.PI) / 180;
+            return Math.floor(((1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2) * 2 ** z);
+        };
+
+        // Angola at country zoom, the province's box at regional zoom, and about 7 km around each place up close.
+        function offlineTiles(city) {
+            const set = new Set();
+            const box = (b, zs) => zs.forEach((z) => {
+                for (let x = tileX(b.w, z); x <= tileX(b.e, z); x++) for (let y = tileY(b.n, z); y <= tileY(b.s, z); y++) set.add(`${z}/${x}/${y}`);
+            });
+            box({ n: -4.3, s: -18.1, w: 11.6, e: 24.1 }, [4, 5, 6, 7]);
+            const pts = venues.filter((v) => cityOf(v) === city && Number.isFinite(v.lat) && !v.citywide);
+            if (!pts.length) return [...set];
+            const lats = pts.map((v) => v.lat);
+            const lngs = pts.map((v) => v.lng);
+            box({ n: Math.max(...lats) + 0.1, s: Math.min(...lats) - 0.1, w: Math.min(...lngs) - 0.1, e: Math.max(...lngs) + 0.1 }, [8, 9]);
+            for (const v of pts) {
+                for (const z of [10, 11, 12, 13, 14]) {
+                    const x = tileX(v.lng, z);
+                    const y = tileY(v.lat, z);
+                    for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) set.add(`${z}/${x + dx}/${y + dy}`);
+                }
+            }
+            return [...set];
+        }
+
+        const offlinePhotos = (city) => venues.filter((v) => cityOf(v) === city)
+            .flatMap((v) => (v.photos || []).flatMap((p) => [asset(p.thumb), fullSrc(p)])).filter(Boolean);
+        // Rough size (measured on Bengo: 129 tiles and the map library, 2.9 MB): a tile about 25 KB, a photo about 90 KB.
+        const offlineMB = (city) => Math.max(1, Math.round((offlineTiles(city).length * 25 + offlinePhotos(city).length * 90) / 1024));
+
+        function offlineBannerHTML(city) {
+            const key = slug(city);
+            const job = offlineJobs[key];
+            const saved = offlineAreas[key];
+            if (job) {
+                return `<div class="fx-banner offline-banner" data-offline-city="${escapeHTML(city)}">${icon('download')}<span>${escapeHTML(t('offlineSaving', { city, pct: job.pct }))}<progress max="100" value="${job.pct}"></progress></span></div>`;
+            }
+            if (saved) {
+                return `<div class="fx-banner offline-banner" data-offline-city="${escapeHTML(city)}">${icon('check')}<span>${escapeHTML(t('offlineSaved', { city, date: formatDate(saved.date) }))}${saved.failed ? ` ${escapeHTML(t('offlinePartial', { n: saved.failed }))}` : ''}</span>
+                    ${saved.failed ? `<button class="link-btn" type="button" data-offline-save="${escapeHTML(city)}">${t('offlineSave')}</button>` : ''}<button class="link-btn" type="button" data-offline-delete="${escapeHTML(city)}">${t('offlineDelete')}</button></div>`;
+            }
+            return `<div class="fx-banner offline-banner" data-offline-city="${escapeHTML(city)}">${icon('download')}<span><b>${escapeHTML(t('offlineTitle', { city }))}</b> ${escapeHTML(t('offlineText', { mb: offlineMB(city) }))}</span><button class="link-btn" type="button" data-offline-save="${escapeHTML(city)}">${t('offlineSave')}</button></div>`;
+        }
+
+        function refreshOfflineBanner(city) {
+            document.querySelectorAll('[data-offline-city]').forEach((el) => { if (el.dataset.offlineCity === city) el.outerHTML = offlineBannerHTML(city); });
+        }
+
+        async function saveOffline(city) {
+            const key = slug(city);
+            if (offlineJobs[key] || !offlineReady()) return;
+            offlineJobs[key] = { pct: 0, city };
+            refreshOfflineBanner(city);
+            try {
+                const tileJSON = await fetch(MAP_TILES).then((r) => r.json());
+                const template = tileJSON.tiles[0];
+                const tiles = offlineTiles(city).map((k) => {
+                    const [z, x, y] = k.split('/');
+                    return template.replace('{z}', z).replace('{x}', x).replace('{y}', y);
+                });
+                const fonts = ['Noto Sans Regular', 'Noto Sans Bold', 'Noto Sans Italic'].map((f) => MAP_GLYPHS.replace('{fontstack}', encodeURIComponent(f)).replace('{range}', '0-255'));
+                const reg = await navigator.serviceWorker.ready;
+                reg.active.postMessage({ type: 'save-area', slug: key, tiles, extra: [MAP_TILES, MAPLIBRE.js.src, MAPLIBRE.css.href, ...fonts] });
+                reg.active.postMessage({ type: 'warm-images', urls: offlinePhotos(city) });
+            } catch {
+                delete offlineJobs[key];
+                refreshOfflineBanner(city);
+                setNotice(t('offlineFailed'));
+            }
+        }
+
+        async function deleteOffline(city) {
+            const key = slug(city);
+            try { (await navigator.serviceWorker.ready).active.postMessage({ type: 'delete-area', slug: key }); } catch {}
+            delete offlineAreas[key];
+            store.set('tuendeOffline', offlineAreas);
+            refreshOfflineBanner(city);
+            toast(t('offlineDeleted', { city }));
+        }
+
+        navigator.serviceWorker?.addEventListener('message', (e) => {
+            if (e.data?.type !== 'area-progress') return;
+            const { slug: key, done, total, failed, final } = e.data;
+            const city = offlineJobs[key]?.city || CITIES.find((c) => slug(c) === key);
+            if (!city) return;
+            if (final) {
+                delete offlineJobs[key];
+                offlineAreas[key] = { date: luandaToday(), failed };
+                store.set('tuendeOffline', offlineAreas);
+            } else {
+                offlineJobs[key] = { city, pct: Math.min(99, Math.round((done / Math.max(1, total)) * 100)) };
+            }
+            refreshOfflineBanner(city);
+        });
+
         /* ---------- Wiring ---------- */
 
         $('searchForm').addEventListener('submit', (e) => {
@@ -15365,6 +15918,12 @@
 
         document.addEventListener('click', (e) => {
             const target = e.target;
+            const offlineSave = target.closest('[data-offline-save]');
+            if (offlineSave) { saveOffline(offlineSave.dataset.offlineSave); return; }
+            const offlineDelete = target.closest('[data-offline-delete]');
+            if (offlineDelete) { deleteOffline(offlineDelete.dataset.offlineDelete); return; }
+            const askKamba = target.closest('[data-ask-kamba]');
+            if (askKamba) { askKambaAbout(askKamba.dataset.askKamba); return; }
             const fav = target.closest('[data-fav]');
             if (fav) { const id = Number(fav.dataset.fav); setFavorite(id, !favorites.includes(id)); return; }
             const open = target.closest('[data-open]');
