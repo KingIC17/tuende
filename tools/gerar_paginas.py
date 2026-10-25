@@ -117,6 +117,28 @@ def e(text):
     return html.escape(str(text), quote=True)
 
 
+_MENUS = None
+
+
+def menus():
+    """Dish prices from menus.ao for Tuende places (MENUS_AO in index.html, written by tools/ementas/ementas.py)."""
+    global _MENUS
+    if _MENUS is None:
+        source = (WEB / 'index.html').read_text(encoding='utf-8')
+        m = re.search(r'^        const MENUS_AO = (.*);$', source, re.M)
+        _MENUS = json.loads(m.group(1)) if m else {}
+    return _MENUS
+
+
+def menu_html(menu):
+    items = '\n'.join(f'            <li>{e(n)} · {kz(price)} Kz{f" ({e(note)})" if note else ""}</li>' for n, price, _sub, note in menu['items'])
+    return (f'\n\n        <h2>Pratos e preços</h2>\n'
+            f'        <p class="muted">A maioria dos pratos custa entre {kz(menu["min"])} e {kz(menu["max"])} Kz, segundo a ementa que o restaurante publica no menus.ao '
+            f'(consultada a {e(pt_date(menu["checked"]))}). Os preços podem mudar.</p>\n'
+            f'        <ul class="links">\n{items}\n        </ul>\n'
+            f'        <p class="muted"><a href="https://www.menus.ao/{e(menu["slug"])}/menu">Ver a ementa completa no menus.ao ({menu["total"]} pratos e bebidas)</a></p>')
+
+
 def kz(value):
     return f'{value:,}'.replace(',', ' ')
 
@@ -229,12 +251,17 @@ def page(v, others, desc_en, near=(), events=()):
     }
     if v.get('exact'):
         data['geo'] = {'@type': 'GeoCoordinates', 'latitude': v['lat'], 'longitude': v['lng']}
+    menu = menus().get(str(v['id']))
+    if menu:
+        data['hasMenu'] = f"https://www.menus.ao/{menu['slug']}/menu"
     sources = v.get('verified', {}).get('sources', [])
     checked = v.get('verified', {}).get('date', '')
     hours_note = v.get('hoursNote', {}).get('pt', '') if v.get('hours') else ''
     facts = [('Horário', ''.join(f'<span>{e(d)}</span><span>{e(h)}</span>' if d else f'<span>{e(h)}</span>' for d, h in hours_lines(v)))]
     facts.append(('Morada', e(v.get('address') or where)))
     price = price_text(v)
+    if menu and not v.get('price'):
+        price = f'Pratos de {kz(menu["min"])} a {kz(menu["max"])} Kz (ementa no menus.ao)'
     note = v.get('price', {}).get('note', {}).get('pt') if v.get('price') else ''
     facts.append(('Preço', e(price) + (f'<br>{e(note)}' if note else '')))
     facts_html = '\n'.join(
@@ -304,7 +331,7 @@ def page(v, others, desc_en, near=(), events=()):
         <dl>
 {facts_html}
         </dl>
-        <p class="sources">Verificado a {e(pt_date(checked))}. Fontes: {', '.join(f'<a href="{e(src["url"])}">{e(src["label"])}</a>' for src in sources) or 'por confirmar'}. Confirme sempre antes de ir.</p>
+        <p class="sources">Verificado a {e(pt_date(checked))}. Fontes: {', '.join(f'<a href="{e(src["url"])}">{e(src["label"])}</a>' for src in sources) or 'por confirmar'}. Confirme sempre antes de ir.</p>{menu_html(menu) if menu else ''}
 
         {f'<h2>Perto daqui</h2>{chr(10)}        <ul class="links">{chr(10)}{near_html}{chr(10)}        </ul>{chr(10)}        <p class="muted">Distâncias em linha reta{"" if v.get("exact") else "; a posição deste lugar é aproximada"}.</p>' if near else ''}{events_html}
 
