@@ -1396,6 +1396,30 @@
         :is(#passportView, #quizView, .map-off) .submit-btn .icon { width: 18px; height: 18px; flex: none; }
         :is(#passportView, #quizView) .cta-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
         .event-badge.soon { background: var(--accent); color: var(--accent-ink); }
+        .avg-subs, .avg-spend { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
+        .spend-pill { padding: 2px 9px; border-radius: 999px; background: var(--surface-2); font-size: 12px; font-weight: 700; }
+        .counts, .pop-rank { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 700; }
+        .counts .icon, .pop-rank .icon { width: 15px; height: 15px; }
+        .pop-rank { padding: 2px 9px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); }
+        .sub-scores { display: grid; gap: 6px; margin: 10px 0; }
+        .sub-score { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 14px; }
+        .mini-star { background: none; border: none; font-size: 22px; line-height: 1; padding: 2px; color: var(--accent); min-width: 32px; min-height: 32px; }
+        .spend-field { display: block; margin: 8px 0; }
+        .tag-pick { border: none; padding: 0; margin: 8px 0; display: flex; flex-wrap: wrap; gap: 6px; }
+        .tag-pick legend { margin-bottom: 6px; }
+        .tag-option { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 999px; font-size: 13px; cursor: pointer; }
+        .tag-option:has(input:checked) { border-color: var(--primary); background: var(--primary-soft); }
+        .review-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+        .tag-chip { padding: 3px 10px; border-radius: 999px; background: var(--surface-2); font-size: 13px; }
+        .review-rating b { font-size: 13px; margin-left: 6px; }
+        .review-subs { font-size: 13px; color: var(--muted); }
+        .kamba-level { padding: 1px 7px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-size: 11px; font-weight: 800; }
+        .helpful-btn.on { color: var(--primary); }
+        .review-sort { margin: 8px 0; }
+        .photo-feed { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; margin-top: 12px; }
+        .feed-photo { position: relative; padding: 0; border: none; border-radius: 12px; overflow: hidden; aspect-ratio: 1; background: var(--surface-2); }
+        .feed-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .feed-photo span { position: absolute; left: 0; right: 0; bottom: 0; padding: 18px 8px 6px; font-size: 12px; font-weight: 700; color: #fff; text-align: left; background: linear-gradient(transparent, rgba(0, 0, 0, 0.7)); }
         .zone-chips { margin-top: 10px; }
         .results-tools #priceSelect { width: auto; }
         .group-prices { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--free-bg); color: var(--free-ink); font-size: 14px; }
@@ -3050,6 +3074,32 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                scoreQuality: 'Qualidade',
+                scoreAmbience: 'Ambiente',
+                scoreService: 'Atendimento',
+                spendTypical: 'Gasto típico por pessoa: {kz} ({count})',
+                spendCard: '~{kz} por pessoa',
+                spendLabel: 'Quanto gastou por pessoa? (Kz, opcional)',
+                spendReview: 'Gastou ~{kz} por pessoa',
+                subScoresLabel: 'Notas por aspeto (opcional)',
+                tagsLabel: 'Como é? (até 5, opcional)',
+                tagsMax: 'Escolha no máximo 5.',
+                tagsSummary: 'O que as pessoas dizem',
+                helpful: 'Útil',
+                reviewsRecent: 'Mais recentes',
+                reviewsHelpful: 'Mais úteis',
+                kambaLevel: 'Kamba nível {n}',
+                verdict1: 'Mau',
+                verdict2: 'Fraco',
+                verdict3: 'Razoável',
+                verdict4: 'Muito bom',
+                verdict5: 'Excelente',
+                visitsText: '{n} já foram',
+                savesText: '{n} guardaram',
+                popRank: 'N.º {n} em {cat} · {where}',
+                sortPopular: 'Mais populares',
+                photosTitle: 'Fotos dos visitantes',
+                photosSub: 'As últimas fotos enviadas por quem lá esteve.',
                 zoneAll: 'Todas as zonas',
                 zoneLabel: 'Zona',
                 inZone: 'Zona: {zone}',
@@ -3777,6 +3827,32 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                scoreQuality: 'Quality',
+                scoreAmbience: 'Atmosphere',
+                scoreService: 'Service',
+                spendTypical: 'Typical spend per person: {kz} ({count})',
+                spendCard: '~{kz} per person',
+                spendLabel: 'How much did you spend per person? (Kz, optional)',
+                spendReview: 'Spent ~{kz} per person',
+                subScoresLabel: 'Scores by aspect (optional)',
+                tagsLabel: 'What is it like? (up to 5, optional)',
+                tagsMax: 'Choose 5 at most.',
+                tagsSummary: 'What people say',
+                helpful: 'Helpful',
+                reviewsRecent: 'Most recent',
+                reviewsHelpful: 'Most helpful',
+                kambaLevel: 'Kamba level {n}',
+                verdict1: 'Poor',
+                verdict2: 'Fair',
+                verdict3: 'OK',
+                verdict4: 'Very good',
+                verdict5: 'Excellent',
+                visitsText: '{n} have been',
+                savesText: '{n} saved it',
+                popRank: 'No. {n} for {cat} in {where}',
+                sortPopular: 'Most popular',
+                photosTitle: 'Visitors\' photos',
+                photosSub: 'The latest photos from people who have been there.',
                 zoneAll: 'All areas',
                 zoneLabel: 'Area',
                 inZone: 'Area: {zone}',
@@ -4504,6 +4580,32 @@
                 saveDataOff: 'Économie de données : désactivée',
                 saveDataNote: 'Pas de photos dans les listes ni de cartes automatiques, pour consommer moins de données mobiles.',
                 mapLoad: 'Afficher la carte',
+                scoreQuality: 'Qualité',
+                scoreAmbience: 'Ambiance',
+                scoreService: 'Service',
+                spendTypical: 'Dépense typique par personne : {kz} ({count})',
+                spendCard: '~{kz} par personne',
+                spendLabel: 'Combien avez-vous dépensé par personne ? (Kz, facultatif)',
+                spendReview: 'A dépensé ~{kz} par personne',
+                subScoresLabel: 'Notes par aspect (facultatif)',
+                tagsLabel: 'Comment est-ce ? (jusqu\'à 5, facultatif)',
+                tagsMax: 'Choisissez-en 5 au maximum.',
+                tagsSummary: 'Ce que les gens disent',
+                helpful: 'Utile',
+                reviewsRecent: 'Plus récents',
+                reviewsHelpful: 'Plus utiles',
+                kambaLevel: 'Kamba niveau {n}',
+                verdict1: 'Mauvais',
+                verdict2: 'Moyen',
+                verdict3: 'Correct',
+                verdict4: 'Très bien',
+                verdict5: 'Excellent',
+                visitsText: '{n} visites',
+                savesText: '{n} l\'ont enregistré',
+                popRank: 'N° {n} pour {cat} · {where}',
+                sortPopular: 'Les plus populaires',
+                photosTitle: 'Photos des visiteurs',
+                photosSub: 'Les dernières photos envoyées par ceux qui y sont allés.',
                 zoneAll: 'Tous les quartiers',
                 zoneLabel: 'Quartier',
                 inZone: 'Quartier : {zone}',
@@ -5231,6 +5333,32 @@
                 saveDataOff: 'Ahorro de datos: desactivado',
                 saveDataNote: 'Sin fotos en las listas ni mapas automáticos, para gastar menos datos móviles.',
                 mapLoad: 'Mostrar mapa',
+                scoreQuality: 'Calidad',
+                scoreAmbience: 'Ambiente',
+                scoreService: 'Atención',
+                spendTypical: 'Gasto típico por persona: {kz} ({count})',
+                spendCard: '~{kz} por persona',
+                spendLabel: '¿Cuánto gastó por persona? (Kz, opcional)',
+                spendReview: 'Gastó ~{kz} por persona',
+                subScoresLabel: 'Notas por aspecto (opcional)',
+                tagsLabel: '¿Cómo es? (hasta 5, opcional)',
+                tagsMax: 'Elija 5 como máximo.',
+                tagsSummary: 'Lo que dice la gente',
+                helpful: 'Útil',
+                reviewsRecent: 'Más recientes',
+                reviewsHelpful: 'Más útiles',
+                kambaLevel: 'Kamba nivel {n}',
+                verdict1: 'Malo',
+                verdict2: 'Flojo',
+                verdict3: 'Correcto',
+                verdict4: 'Muy bueno',
+                verdict5: 'Excelente',
+                visitsText: '{n} ya fueron',
+                savesText: '{n} lo guardaron',
+                popRank: 'N.º {n} en {cat} · {where}',
+                sortPopular: 'Más populares',
+                photosTitle: 'Fotos de los visitantes',
+                photosSub: 'Las últimas fotos enviadas por quienes estuvieron allí.',
                 zoneAll: 'Todas las zonas',
                 zoneLabel: 'Zona',
                 inZone: 'Zona: {zone}',
@@ -8732,9 +8860,12 @@
                     <span class="avg-icon" aria-hidden="true">${icon('star')}</span>
                     <span class="avg-text"><span class="avg-title">${t('noStarsTitle')}</span><span class="avg-count">${t('noStarsSub')}</span></span>`;
             }
+            const subs = [['scoreQuality', stats.taste], ['scoreAmbience', stats.ambience], ['scoreService', stats.service]].filter(([, n]) => n);
             return `
                 <span class="avg-number">${stats.avg.toFixed(1)}</span>
-                <span class="avg-text"><span class="stars" aria-hidden="true">${stars(stats.avg)}</span><span class="avg-count">${reviewCountText(stats.count)}</span></span>`;
+                <span class="avg-text"><span class="stars" aria-hidden="true">${stars(stats.avg)}</span><span class="avg-count">${reviewCountText(stats.count)}</span>
+                ${subs.length ? `<span class="avg-subs">${subs.map(([k, n]) => `${t(k)} ${Number(n).toFixed(1)}`).join(' · ')}</span>` : ''}
+                ${stats.spendCount ? `<span class="avg-spend">${escapeHTML(t('spendTypical', { kz: kzFull(stats.spend), count: reviewCountText(stats.spendCount) }))}</span>` : ''}</span>`;
         }
 
         // Stats arrive after the first render; update an already open place in place.
@@ -8749,16 +8880,94 @@
             if (note) note.hidden = !statsOf(v);
         }
 
+        // Detailed reviews, visits and counts need supabase/2026-10-25-avaliacoes-detalhadas.sql. Until it has run, the
+        // database answers 400 to the new columns and the app keeps the simple reviews.
+        let reviewsV2 = false;
+        let visitorPhotos = [];
+        async function loadVisitorPhotos() {
+            if (!supabaseReady() || saveDataOn()) return;
+            try {
+                const rows = await (await sbRequest('/rest/v1/submissions?select=id,venue_id,url,caption,created_at&kind=eq.photo&status=eq.approved&order=created_at.desc&limit=12', { headers: sbHeaders() })).json();
+                visitorPhotos = rows.filter((r) => r.url?.startsWith(`${SUPABASE_URL}/`));
+                if (visitorPhotos.length && state.view === 'home') renderHome();
+            } catch {}
+        }
+        let venueCounts = {};
+        const REVIEW_TAGS = {
+            vista: { pt: 'Boa vista', en: 'Great view', fr: 'Belle vue', es: 'Buena vista' },
+            familias: { pt: 'Bom para famílias', en: 'Good for families', fr: 'Bien pour les familles', es: 'Bueno para familias' },
+            reservar: { pt: 'Reservar antes', en: 'Book ahead', fr: 'Réserver avant', es: 'Reservar antes' },
+            musica: { pt: 'Música ao vivo', en: 'Live music', fr: 'Musique live', es: 'Música en vivo' },
+            esplanada: { pt: 'Esplanada', en: 'Outdoor seating', fr: 'Terrasse', es: 'Terraza' },
+            estacionamento: { pt: 'Estacionamento', en: 'Parking', fr: 'Parking', es: 'Aparcamiento' },
+            acessivel: { pt: 'Acessível em cadeira de rodas', en: 'Wheelchair accessible', fr: 'Accessible en fauteuil roulant', es: 'Accesible en silla de ruedas' },
+            wifi: { pt: 'Wi-Fi', en: 'Wi-Fi', fr: 'Wi-Fi', es: 'Wi-Fi' },
+            calmo: { pt: 'Calmo', en: 'Quiet', fr: 'Calme', es: 'Tranquilo' },
+            grupos: { pt: 'Bom para grupos', en: 'Good for groups', fr: 'Bien pour les groupes', es: 'Bueno para grupos' },
+            romantico: { pt: 'Romântico', en: 'Romantic', fr: 'Romantique', es: 'Romántico' },
+            rapido: { pt: 'Serviço rápido', en: 'Fast service', fr: 'Service rapide', es: 'Servicio rápido' },
+            bom_preco: { pt: 'Bom preço', en: 'Good value', fr: 'Bon rapport qualité-prix', es: 'Buen precio' },
+            caro: { pt: 'Caro', en: 'Pricey', fr: 'Cher', es: 'Caro' },
+            limpo: { pt: 'Limpo', en: 'Clean', fr: 'Propre', es: 'Limpio' },
+            simpatico: { pt: 'Pessoal simpático', en: 'Friendly staff', fr: 'Personnel sympathique', es: 'Personal amable' },
+            autentico: { pt: 'Autêntico', en: 'Authentic', fr: 'Authentique', es: 'Auténtico' },
+            fotos: { pt: 'Bom para fotos', en: 'Great for photos', fr: 'Idéal pour les photos', es: 'Ideal para fotos' },
+            espera: { pt: 'Espera longa', en: 'Long wait', fr: 'Longue attente', es: 'Espera larga' }
+        };
+        const tagLabel = (tag) => REVIEW_TAGS[tag]?.[lang] || REVIEW_TAGS[tag]?.pt || tag;
+        const kzFull = (n) => `${Math.round(n).toLocaleString(locale())} Kz`;
+
         async function loadRatingStats() {
             if (!reviewsEnabled()) return;
             try {
-                const res = await sbRequest('/rest/v1/review_stats?select=venue_id,avg_rating,review_count', { headers: sbHeaders() });
-                ratingStats = Object.fromEntries((await res.json()).map((r) => [r.venue_id, { avg: Number(r.avg_rating), count: r.review_count }]));
+                let rows;
+                try {
+                    rows = await (await sbRequest('/rest/v1/review_stats?select=venue_id,avg_rating,review_count,avg_taste,avg_ambience,avg_service,median_spend,spend_count', { headers: sbHeaders() })).json();
+                    reviewsV2 = true;
+                } catch (err) {
+                    if (err.status !== 400) throw err;
+                    rows = await (await sbRequest('/rest/v1/review_stats?select=venue_id,avg_rating,review_count', { headers: sbHeaders() })).json();
+                }
+                ratingStats = Object.fromEntries(rows.map((r) => [r.venue_id, {
+                    avg: Number(r.avg_rating), count: r.review_count,
+                    taste: r.avg_taste, ambience: r.avg_ambience, service: r.avg_service,
+                    spend: r.median_spend, spendCount: r.spend_count || 0
+                }]));
+                if (reviewsV2) loadVenueCounts();
                 render();
                 refreshOpenRating();
             } catch {
                 ratingStats = {};
             }
+        }
+
+        async function loadVenueCounts() {
+            try {
+                const rows = await (await sbRequest('/rest/v1/rpc/venue_counts', { method: 'POST', headers: sbHeaders({ 'Content-Type': 'application/json' }), body: '{}' })).json();
+                venueCounts = Object.fromEntries(rows.map((r) => [r.venue_id, { visits: r.visits || 0, saves: r.saves || 0 }]));
+                renderSortOptions();
+                if (state.view === 'results') renderResults();
+            } catch {
+                venueCounts = {};
+            }
+        }
+
+        const popularity = (v) => (venueCounts[v.id]?.visits || 0) + (venueCounts[v.id]?.saves || 0);
+
+        // "N.º 2 em Comida · Luanda": only for the top 3 of a category in a province, and only with enough people behind it.
+        function popRankText(v) {
+            const score = popularity(v);
+            if (score < 3) return '';
+            const rank = 1 + venues.filter((x) => x.type === v.type && cityOf(x) === cityOf(v) && popularity(x) > score).length;
+            return rank <= 3 ? t('popRank', { n: rank, cat: catLabel(v.type, true), where: cityOf(v) }) : '';
+        }
+
+        function countsHTML(v) {
+            const c = venueCounts[v.id];
+            if (!c || !(c.visits || c.saves)) return '';
+            const parts = [c.visits ? t('visitsText', { n: c.visits }) : '', c.saves ? t('savesText', { n: c.saves }) : ''].filter(Boolean);
+            const rank = popRankText(v);
+            return `<span class="counts">${icon('users')}${escapeHTML(parts.join(' · '))}</span>${rank ? `<span class="pop-rank">${icon('trophy')}${escapeHTML(rank)}</span>` : ''}`;
         }
 
         /* ---------- Filters and URL ---------- */
@@ -8832,6 +9041,7 @@
             const sorters = {
                 relevance: (a, b) => queryScore(b, q) - queryScore(a, q) || recRank(a) - recRank(b) || byRating(a, b) || a.name.localeCompare(b.name, 'pt'),
                 rating: (a, b) => byRating(a, b) || a.name.localeCompare(b.name, 'pt'),
+                popular: (a, b) => popularity(b) - popularity(a) || byRating(a, b) || a.name.localeCompare(b.name, 'pt'),
                 // With a search, places that are what was asked for (by name or category) come before other text matches.
                 price: (a, b) => (q && (queryScore(a, q) < 2) - (queryScore(b, q) < 2)) || priceValue(a) - priceValue(b) || a.name.localeCompare(b.name, 'pt'),
                 name: (a, b) => a.name.localeCompare(b.name, 'pt'),
@@ -8987,6 +9197,7 @@
                         <h3 class="card-name"><button type="button" data-open="${v.id}">${escapeHTML(v.name)}</button></h3>
                         <div class="card-facts">
                             ${stats ? `<span><span class="rating">★ ${stats.avg.toFixed(1)}</span> ${reviewCountText(stats.count)}</span>` : ''}
+                            ${stats?.spendCount >= 3 ? `<span class="spend-pill">${escapeHTML(t('spendCard', { kz: kzFull(stats.spend) }))}</span>` : ''}
                             <span class="price-pill${!v.price ? ' tbc' : v.price.free ? ' free' : ''}">${escapeHTML(priceText(v))}</span>
                             ${OFFICIAL_CLASS[v.id] ? `<span class="official-pill">${icon('star')}${t('officialStars', { n: OFFICIAL_CLASS[v.id].stars })}</span>` : ''}
                             ${options.fromLuanda ? `<span>${t('fromLuanda', { d: formatKm(kmBetween(LUANDA_CENTRE, v)) })}</span>` : dist ? `<span>${dist}</span>` : ''}
@@ -9103,6 +9314,12 @@
             parts.push(sectionHTML('secRecommended', t('recommendedTitle'), t('recommendedSub'), rowHTML(recommendedList(), { reason: true })));
             // Place ids grow as places are added, so the highest ids are the newest in the guide.
             parts.push(sectionHTML('secNew', t('newTitle'), t('newSub'), rowHTML([...venues].sort((a, b) => b.id - a.id).slice(0, 10))));
+            if (visitorPhotos.length) {
+                parts.push(sectionHTML('secPhotos', t('photosTitle'), t('photosSub'), `<div class="photo-feed">${visitorPhotos.map((ph) => {
+                    const v = venues.find((x) => x.id === ph.venue_id);
+                    return v ? `<button type="button" class="feed-photo" data-open="${v.id}"><img src="${escapeHTML(ph.url)}" alt="${escapeHTML(ph.caption || v.name)}" loading="lazy" crossorigin="anonymous" onerror="this.closest('button').remove()"><span>${escapeHTML(v.name)}</span></button>` : '';
+                }).join('')}</div>`));
+            }
 
             // Events already under way for a week or more go after the ones about to start, so the list changes from day to day.
             const today = luandaToday();
@@ -9216,6 +9433,7 @@
             const before = earnedBadges(visitedPlaces()).map((b) => b.id);
             visited = visited.includes(id) ? visited.filter((x) => x !== id) : [...visited, id];
             saveVisited();
+            pushVisit(id, visited.includes(id));
             const on = visited.includes(id);
             const btn = $('visitBtn');
             btn.classList.toggle('saved', on);
@@ -9224,6 +9442,26 @@
             const note = $('stampNote');
             note.hidden = !on;
             note.innerHTML = stampNoteHTML(on ? earnedBadges(visitedPlaces()).filter((b) => !before.includes(b.id)) : []);
+        }
+
+        // With an account (and the database update), stamps also live in the account and count for "N já foram".
+        async function pushVisit(id, on) {
+            if (!reviewsV2 || !signedIn()) return;
+            try {
+                if (on) await sbRequest('/rest/v1/visits', { method: 'POST', headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal,resolution=ignore-duplicates' }), body: JSON.stringify({ venue_id: id }) });
+                else await sbRequest(`/rest/v1/visits?venue_id=eq.${id}`, { method: 'DELETE', headers: await userHeaders() });
+            } catch {}
+        }
+
+        async function syncVisits() {
+            if (!reviewsV2 || !signedIn()) return;
+            try {
+                const remote = (await (await sbRequest('/rest/v1/visits?select=venue_id', { headers: await userHeaders() })).json()).map((r) => r.venue_id);
+                const missing = visited.filter((id) => !remote.includes(id));
+                visited = [...new Set([...visited, ...remote.filter((id) => venues.some((v) => v.id === id && canStamp(v)))])];
+                saveVisited();
+                for (const id of missing) await pushVisit(id, true);
+            } catch {}
         }
 
         function renderPassport() {
@@ -9579,8 +9817,8 @@
         }
 
         function renderSortOptions() {
-            const options = ['relevance', 'distance', ...(reviewsEnabled() ? ['rating'] : []), 'price', 'name'];
-            const labels = { relevance: 'sortRelevance', distance: 'sortDistance', rating: 'sortRating', price: 'sortPrice', name: 'sortName' };
+            const options = ['relevance', ...(Object.keys(venueCounts).length ? ['popular'] : []), 'distance', ...(reviewsEnabled() ? ['rating'] : []), 'price', 'name'];
+            const labels = { relevance: 'sortRelevance', popular: 'sortPopular', distance: 'sortDistance', rating: 'sortRating', price: 'sortPrice', name: 'sortName' };
             $('sortSelect').innerHTML = options.map((o) => `<option value="${o}">${t(labels[o])}</option>`).join('');
             $('sortSelect').value = options.includes(state.sort) ? state.sort : 'relevance';
         }
@@ -10918,18 +11156,29 @@
             return `<section><h3 class="section-title">${t('menu')}</h3><p class="hint" style="margin-top:6px;">${t('menuNote')}</p><div class="panel">${groups}</div></section>`;
         }
 
+        let reviewExtra = { helpful: {}, mine: new Set(), authors: {}, items: [], sort: 'recent', venue: null };
+        const kambaLevelOf = (c) => { const n = (c?.reviews || 0) + (c?.photos || 0); return n >= 25 ? 4 : n >= 10 ? 3 : n >= 3 ? 2 : n >= 1 ? 1 : 0; };
+
         function reviewItemHTML(r) {
+            const subs = [['scoreQuality', r.taste], ['scoreAmbience', r.ambience], ['scoreService', r.service]].filter(([, n]) => n);
+            const level = kambaLevelOf(reviewExtra.authors[r.id]);
+            const helpful = reviewExtra.helpful[r.id] || 0;
+            const mine = reviewExtra.mine.has(r.id);
             return `
                 <div class="review">
                     ${avatarHTML(r.author_avatar, r.author)}
                     <div class="review-main">
                         <div class="review-head">
-                            <span class="review-name">${escapeHTML(r.author)}</span>
+                            <span class="review-name">${escapeHTML(r.author)}${level ? ` <span class="kamba-level">${t('kambaLevel', { n: level })}</span>` : ''}</span>
                             <span class="review-date">${escapeHTML(new Date(r.created_at).toLocaleDateString(locale()))}</span>
                         </div>
-                        ${r.rating ? `<div class="stars" aria-label="${t('stars', { n: r.rating })}">${stars(r.rating)}</div>` : ''}
+                        ${r.rating ? `<div class="review-rating"><span class="stars" aria-label="${t('stars', { n: r.rating })}">${stars(r.rating)}</span> <b>${t(`verdict${r.rating}`)}</b></div>` : ''}
+                        ${subs.length ? `<div class="review-subs">${subs.map(([k, n]) => `${t(k)} ${n}`).join(' · ')}</div>` : ''}
+                        ${r.spend ? `<div class="review-subs">${escapeHTML(t('spendReview', { kz: kzFull(r.spend) }))}</div>` : ''}
                         ${r.comment ? `<div class="review-text">${escapeHTML(r.comment)}</div>` : ''}
+                        ${r.tags?.length ? `<div class="review-tags">${r.tags.map((tag) => `<span class="tag-chip">${escapeHTML(tagLabel(tag))}</span>`).join('')}</div>` : ''}
                         <div class="post-actions">
+                            ${reviewsV2 ? `<button type="button" class="report-btn helpful-btn${mine ? ' on' : ''}" data-helpful="${escapeHTML(r.id)}" aria-pressed="${mine}">${t('helpful')}${helpful ? ` (${helpful})` : ''}</button>` : ''}
                             <button type="button" class="report-btn" data-report-review="${escapeHTML(r.id)}">${t('report')}</button>
                             <button type="button" class="report-btn" data-block-review="${escapeHTML(r.id)}">${t('block')}</button>
                         </div>
@@ -10948,6 +11197,16 @@
                             <div class="star-input" id="starInput" role="group" aria-label="${t('yourReview')}">
                                 ${[1, 2, 3, 4, 5].map((n) => `<button type="button" class="star-btn" data-star="${n}" aria-label="${t('stars', { n })}" aria-pressed="false">☆</button>`).join('')}
                             </div>
+                            ${reviewsV2 ? `
+                            <div class="sub-scores">
+                                <span class="field-label">${t('subScoresLabel')}</span>
+                                ${[['taste', 'scoreQuality'], ['ambience', 'scoreAmbience'], ['service', 'scoreService']].map(([key, label]) => `
+                                    <div class="sub-score"><span>${t(label)}</span><span class="mini-stars" role="group" aria-label="${t(label)}">${[1, 2, 3, 4, 5].map((n) => `<button type="button" class="mini-star" data-sub-star="${key}:${n}" aria-label="${t(label)}: ${t('stars', { n })}" aria-pressed="false">☆</button>`).join('')}</span></div>`).join('')}
+                            </div>
+                            <label class="spend-field"><span class="field-label">${t('spendLabel')}</span><input class="field" id="reviewSpend" type="number" inputmode="numeric" min="0" max="5000000" step="500"></label>
+                            <fieldset class="tag-pick"><legend class="field-label">${t('tagsLabel')}</legend>
+                                ${Object.keys(REVIEW_TAGS).map((tag) => `<label class="tag-option"><input type="checkbox" name="reviewTag" value="${tag}"><span>${escapeHTML(tagLabel(tag))}</span></label>`).join('')}
+                            </fieldset>` : ''}
                             <textarea class="field" id="reviewText" maxlength="600" placeholder="${t('commentPlaceholder')}" aria-label="${t('commentPlaceholder')}"></textarea>
                             <div class="form-msg" id="reviewMsg" role="status" aria-live="polite"></div>
                             <button class="submit-btn" type="submit" id="reviewSubmit">${t('send')}</button>
@@ -10957,21 +11216,70 @@
                 <section id="reviewsSection">
                     <h3 class="section-title">${t('reviews')}</h3>
                     <div class="avg">${avgHTML(statsOf(v))}</div>
+                    <div id="reviewTags"></div>
+                    <div class="chips review-sort" id="reviewSort" hidden></div>
                     <div class="review-list" id="reviewList"><p class="hint">${t('loading')}</p></div>
                     ${form}
                 </section>
             `;
         }
 
+        function renderReviewList() {
+            const list = $('reviewList');
+            if (!list) return;
+            const items = [...reviewExtra.items];
+            if (reviewExtra.sort === 'helpful') items.sort((a, b) => (reviewExtra.helpful[b.id] || 0) - (reviewExtra.helpful[a.id] || 0) || b.created_at.localeCompare(a.created_at));
+            // With no comments the summary card already invites people to be the first.
+            list.innerHTML = items.map(reviewItemHTML).join('');
+            const sortBox = $('reviewSort');
+            if (sortBox) {
+                sortBox.hidden = !reviewsV2 || items.length < 2;
+                sortBox.innerHTML = [['recent', 'reviewsRecent'], ['helpful', 'reviewsHelpful']].map(([key, label]) =>
+                    `<button type="button" class="chip${reviewExtra.sort === key ? ' active' : ''}" data-review-sort="${key}" aria-pressed="${reviewExtra.sort === key}">${t(label)}</button>`).join('');
+            }
+        }
+
+        async function loadReviewExtras(venueId, items) {
+            const rpc = (name, body) => sbRequest(`/rest/v1/rpc/${name}`, { method: 'POST', headers: sbHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify(body) }).then((r) => r.json()).catch(() => []);
+            const [helpful, authors, tags, mine] = await Promise.all([
+                rpc('review_helpful_counts', { venue: venueId }),
+                items.length ? rpc('review_author_counts', { review_ids: items.map((r) => r.id).slice(0, 50) }) : [],
+                sbRequest(`/rest/v1/review_tag_counts?select=tag,n&venue_id=eq.${venueId}&order=n.desc&limit=8`, { headers: sbHeaders() }).then((r) => r.json()).catch(() => []),
+                signedIn() ? userHeaders().then((h) => sbRequest(`/rest/v1/review_votes?select=review_id&review_id=in.(${items.map((r) => r.id).join(',')})`, { headers: h })).then((r) => r.json()).catch(() => []) : []
+            ]);
+            if (state.openId !== venueId) return;
+            reviewExtra.helpful = Object.fromEntries(helpful.map((x) => [x.review_id, x.n]));
+            reviewExtra.authors = Object.fromEntries(authors.map((x) => [x.review_id, x]));
+            reviewExtra.mine = new Set(mine.map((x) => x.review_id));
+            const box = $('reviewTags');
+            if (box) box.innerHTML = tags.length ? `<p class="field-label">${t('tagsSummary')}</p><div class="review-tags">${tags.map((x) => `<span class="tag-chip">${escapeHTML(tagLabel(x.tag))} <b>${x.n}</b></span>`).join('')}</div>` : '';
+            renderReviewList();
+        }
+
+        async function toggleHelpful(btn) {
+            if (!signedIn()) { openAuth('signin'); return; }
+            const id = btn.dataset.helpful;
+            const on = reviewExtra.mine.has(id);
+            try {
+                if (on) await sbRequest(`/rest/v1/review_votes?review_id=eq.${id}`, { method: 'DELETE', headers: await userHeaders() });
+                else await sbRequest('/rest/v1/review_votes', { method: 'POST', headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }), body: JSON.stringify({ review_id: id }) });
+                if (on) reviewExtra.mine.delete(id); else reviewExtra.mine.add(id);
+                reviewExtra.helpful[id] = Math.max(0, (reviewExtra.helpful[id] || 0) + (on ? -1 : 1));
+                renderReviewList();
+            } catch {}
+        }
+
         async function loadReviews(venueId) {
             if (!reviewsEnabled()) return;
             try {
-                const res = await sbRequest(`/rest/v1/reviews?select=id,author,author_avatar,rating,comment,created_at&venue_id=eq.${venueId}&status=eq.approved&order=created_at.desc&limit=50`, { headers: sbHeaders() });
+                const cols = `id,author,author_avatar,rating,comment,created_at${reviewsV2 ? ',taste,ambience,service,spend,tags' : ''}`;
+                const res = await sbRequest(`/rest/v1/reviews?select=${cols}&venue_id=eq.${venueId}&status=eq.approved&order=created_at.desc&limit=50`, { headers: sbHeaders() });
                 const items = await res.json();
                 const list = $('reviewList');
                 if (state.openId !== venueId || !list) return;
-                // With no comments the summary card already invites people to be the first.
-                list.innerHTML = items.map(reviewItemHTML).join('');
+                reviewExtra = { helpful: {}, mine: new Set(), authors: {}, items, sort: reviewExtra.venue === venueId ? reviewExtra.sort : 'recent', venue: venueId };
+                renderReviewList();
+                if (reviewsV2) loadReviewExtras(venueId, items);
             } catch {
                 const list = $('reviewList');
                 if (list && state.openId === venueId) list.innerHTML = `<p class="hint">${t('reviewsError')}</p>`;
@@ -11007,6 +11315,7 @@
                             <span>${escapeHTML(priceText(v))}</span>
                             ${dist ? `<span>${dist}</span>` : ''}
                             ${statusHTML(v)}
+                            ${countsHTML(v)}
                         </div>
                         <p class="hint" id="ratingNote" ${stats ? '' : 'hidden'}>${t('aboutRatings')}</p>
                         ${PHOTO_SPOTS.some((p) => p.id === v.id) ? `<button class="link-btn wonder-link" type="button" data-wonder-open="${v.id}">${icon('camera')}${SEVEN_WONDERS.includes(v.id) ? t('wonderBadge') : t('wonderSpotBadge')}</button>` : ''}
@@ -11058,6 +11367,28 @@
             loadReviews(id);
         }
 
+        // The detailed fields only go out when the database has them.
+        function reviewExtras() {
+            if (!reviewsV2) return {};
+            const spend = Number($('reviewSpend')?.value);
+            const tags = [...document.querySelectorAll('#reviewForm input[name="reviewTag"]:checked')].map((x) => x.value).slice(0, 5);
+            return {
+                taste: state.sub?.taste || null, ambience: state.sub?.ambience || null, service: state.sub?.service || null,
+                spend: Number.isFinite(spend) && spend > 0 ? Math.round(spend) : null,
+                tags: tags.length ? tags : null
+            };
+        }
+
+        function updateSubStars() {
+            document.querySelectorAll('#reviewForm [data-sub-star]').forEach((btn) => {
+                const [key, n] = btn.dataset.subStar.split(':');
+                const on = Number(n) <= (state.sub?.[key] || 0);
+                btn.textContent = on ? '★' : '☆';
+                btn.classList.toggle('on', on);
+                btn.setAttribute('aria-pressed', String(Number(n) === state.sub?.[key]));
+            });
+        }
+
         function updateStars() {
             document.querySelectorAll('#starInput .star-btn').forEach((btn) => {
                 const on = Number(btn.dataset.star) <= state.rating;
@@ -11075,6 +11406,7 @@
             const button = $('reviewSubmit');
             msg.classList.remove('ok');
             if (!state.rating && !comment) { msg.textContent = t('errReviewEmpty'); $('reviewText').focus(); return; }
+            if (document.querySelectorAll('#reviewForm input[name="reviewTag"]:checked').length > 5) { msg.textContent = t('tagsMax'); return; }
 
             button.disabled = true;
             button.textContent = t('sending');
@@ -11083,8 +11415,12 @@
                 await sbRequest('/rest/v1/reviews', {
                     method: 'POST',
                     headers: await userHeaders({ 'Content-Type': 'application/json', Prefer: 'return=minimal' }),
-                    body: JSON.stringify({ venue_id: state.openId, rating: state.rating || null, comment: comment || null })
+                    body: JSON.stringify({ venue_id: state.openId, rating: state.rating || null, comment: comment || null, ...reviewExtras() })
                 });
+                state.sub = {};
+                if ($('reviewSpend')) $('reviewSpend').value = '';
+                document.querySelectorAll('#reviewForm input[name="reviewTag"]').forEach((x) => { x.checked = false; });
+                updateSubStars();
                 const rated = Boolean(state.rating);
                 $('reviewText').value = '';
                 state.rating = 0;
@@ -11635,6 +11971,7 @@
             afterAuth = null;
             closeModal('authModal');
             await syncFavorites();
+            await syncVisits();
             render();
             if (state.openId) openVenue(state.openId, true);
             if (next) next();
@@ -14351,6 +14688,17 @@
                 mountPlaceMap();
                 return;
             }
+            const subStar = e.target.closest('[data-sub-star]');
+            if (subStar) {
+                const [key, n] = subStar.dataset.subStar.split(':');
+                state.sub = { ...(state.sub || {}), [key]: state.sub?.[key] === Number(n) ? 0 : Number(n) };
+                updateSubStars();
+                return;
+            }
+            const helpfulBtn = e.target.closest('[data-helpful]');
+            if (helpfulBtn) { toggleHelpful(helpfulBtn); return; }
+            const reviewSortBtn = e.target.closest('[data-review-sort]');
+            if (reviewSortBtn) { reviewExtra.sort = reviewSortBtn.dataset.reviewSort; renderReviewList(); return; }
             if (e.target.closest('#favBtn')) toggleFavorite();
             else if (e.target.closest('#shareBtn')) shareVenue();
             else if (e.target.closest('#visitBtn')) toggleVisited();
@@ -14499,6 +14847,7 @@
         updateOnline();
         renderInstallLinks();
         loadRatingStats();
+        loadVisitorPhotos();
         loadFx().then((changed) => {
             if (state.view === 'fx') renderFx();
             else if (changed && $('fxTileRate')) $('fxTileRate').textContent = fxTileText();
