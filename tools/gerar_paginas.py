@@ -595,7 +595,8 @@ EVENT_PLACE = {}  # id do evento -> lugar (preenchido em main)
 
 WEEKDAYS = ['segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado', 'domingo']
 EVENT_TYPE = {'music': ('Música', 'Music'), 'dance': ('Dança', 'Dance'), 'theatre': ('Teatro', 'Theatre'), 'film': ('Cinema', 'Film'),
-              'fashion': ('Moda', 'Fashion'), 'fairs': ('Feiras e festas', 'Fairs and festivities'), 'sports': ('Desporto', 'Sport')}
+              'fashion': ('Moda', 'Fashion'), 'fairs': ('Feiras e festas', 'Fairs and festivities'), 'sports': ('Desporto', 'Sport'),
+              'trips': ('Passeios', 'Trips')}
 
 
 def event_dates(start, end=None):
@@ -666,7 +667,7 @@ def event_html(ev):
     links = []
     if ev.get('link'):
         links.append(f'<a href="{e(ev["link"])}">{"Comprar bilhetes" if ev.get("tickets") else "Página do evento"}</a>')
-    if ev.get('venue') and not ev.get('venueTbc'):
+    if ev.get('venue') and not ev.get('venueTbc') and not ev.get('noDirections'):
         from urllib.parse import quote
         links.append(f'<a href="https://www.google.com/maps/search/?api=1&amp;query={quote(ev.get("mapsQuery") or ev["venue"] + ", " + ev["city"] + ", Angola")}">Como chegar</a>')
     place = EVENT_PLACE.get(ev['id'])
@@ -675,6 +676,10 @@ def event_html(ev):
     links.append(f'<a href="../?page=events#evento-{e(ev["id"])}">Ver na app</a>')
     programme = ''.join(f'<li>{e(event_dates(p["date"], p.get("end")))}: {e(p["pt"])}</li>' for p in ev.get('programme', []))
     phones = f'<p class="meta">Informações: {e(", ".join(ev["phones"]))}</p>' if ev.get('phones') else ''
+    # Packages sold per group: the total and what each person pays (as in the app).
+    num = lambda n: f'{round(n):,}'.replace(',', ' ')
+    groups = '; '.join(f'{n} pessoa: {num(total)} Kz' if n == 1 else f'{n} pessoas: {num(total)} Kz ({num(total / n)} Kz por pessoa)'
+                       for n, total in ev.get('groups', []))
     return f'''            <li class="item text-only" id="{e(ev['id'])}" data-end="{e(ev.get('end') or ev['start'])}">
                 <div>
                     <p class="kicker" style="margin-top:0">{e(kind)} · {e(ev['city'])}</p>
@@ -682,6 +687,7 @@ def event_html(ev):
                     <p class="meta">{e(event_dates(ev['start'], ev.get('end')))}{f' · {e(when)}' if when else ''}</p>
                     <p class="meta">{e(event_venue(ev))} · {e(event_price(ev))}</p>
                     {f'<p class="meta">{e(note)}</p>' if note else ''}
+                    {f'<p class="meta">Em grupo fica mais barato: {e(groups)}.</p>' if groups else ''}
                     <p>{e(ev['desc']['pt'])}</p>
                     {f'<ul>{programme}</ul>' if programme else ''}
                     {phones}
