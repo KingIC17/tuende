@@ -1386,15 +1386,14 @@
         .quiz-feedback + .cta-buttons { margin-top: 12px; }
         .quiz-score { margin: 0; font-size: 44px; font-weight: 900; color: var(--primary); }
         .quiz-level { margin: 4px 0 14px; font-size: 17px; font-weight: 600; }
-        .rhythm-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
         .rhythm-card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px; border-radius: 16px; border: 1.5px solid var(--border); background: var(--surface); }
-        .rhythm-card h3 { margin: 0; font-size: 21px; }
+        .rhythm-card { margin-top: 16px; }
+        .rhythm-card h2 { margin: 0; font-size: 21px; }
         .rhythm-card p { margin: 0; font-size: 14px; }
         .rhythm-card .rhythm-note { padding: 8px 10px; border-radius: 10px; background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 13px; }
-        .rhythm-card .submit-btn { margin-top: auto; }
         .rhythm-sources { font-size: 12px !important; color: var(--muted); }
-        :is(#passportView, #quizView, .rhythm-card, .map-off) .submit-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-        :is(#passportView, #quizView, .rhythm-card, .map-off) .submit-btn .icon { width: 18px; height: 18px; flex: none; }
+        :is(#passportView, #quizView, .map-off) .submit-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        :is(#passportView, #quizView, .map-off) .submit-btn .icon { width: 18px; height: 18px; flex: none; }
         :is(#passportView, #quizView) .cta-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
         .event-badge.soon { background: var(--accent); color: var(--accent-ink); }
         .group-prices { margin-top: 10px; padding: 10px 12px; border-radius: 12px; background: var(--free-bg); color: var(--free-ink); font-size: 14px; }
@@ -1407,7 +1406,6 @@
         .trust-checks .icon { width: 16px; height: 16px; }
         #infoContent .link-btn .icon { width: 16px; height: 16px; vertical-align: -3px; margin-right: 4px; }
         .map-frame.map-off { display: flex; align-items: center; justify-content: center; background: var(--surface-2); }
-        @media (max-width: 860px) { .rhythm-grid { grid-template-columns: 1fr; } }
         @media (max-width: 560px) {
             .play-grid { grid-template-columns: 1fr; }
             .quiz-options { grid-template-columns: 1fr; }
@@ -1590,6 +1588,7 @@
                     <select class="field" id="eventsWhere"></select>
                 </label>
             </div>
+            <div id="eventsRhythmInfo"></div>
             <p class="events-count" id="eventsCount" aria-live="polite"></p>
             <div id="eventsList"></div>
             <p class="hint events-note" data-i18n="eventsNote">Os eventos saem da agenda depois do último dia. Datas, locais e preços podem mudar: confirme na página oficial ou na fonte.</p>
@@ -3036,14 +3035,10 @@
                 quizShareText: 'Acertei {n} de 10 no quiz «Quanto conhece Angola?» do Tuende. Consegues fazer melhor?',
                 quizAgain: 'Jogar outra vez',
                 quizExplore: 'Os lugares deste quiz',
-                rhythmsTitle: 'Ritmos de Angola',
-                rhythmsSub: 'Os estilos que nasceram aqui e onde os ouvir ao vivo.',
                 rhythmSembaText: 'Música e dança de Angola, popular desde os anos 1950 e antecessora direta da kizomba. O nome vem de masemba, a umbigada em kimbundu. É património cultural imaterial nacional desde 2023.',
                 rhythmSembaUnesco: 'A UNESCO analisa a candidatura do semba a Património Cultural Imaterial da Humanidade entre 30 de novembro e 5 de dezembro de 2026.',
                 rhythmKizombaText: 'Nasceu em Angola entre o fim dos anos 1970 e os anos 80, ao abrandar o semba e juntar-lhe o zouk das Antilhas. Kizomba quer dizer «festa» em kimbundu; Eduardo Paim é conhecido como o seu pai.',
                 rhythmKuduroText: 'Batida eletrónica rápida nascida em Luanda no fim dos anos 1980. Tony Amado diz que criou a dança inspirado em Van Damme no filme Kickboxer (1989). Hoje dança-se de Luanda a Lisboa.',
-                rhythmSee: 'Na agenda: {count}',
-                rhythmNone: 'Sem eventos na agenda por agora',
                 rhythmSources: 'Fontes',
                 eventsRhythm: 'Ritmo',
                 eventInDays: 'Faltam {n} dias',
@@ -3744,14 +3739,10 @@
                 quizShareText: 'I got {n} out of 10 in Tuende\'s "How well do you know Angola?" quiz. Can you beat it?',
                 quizAgain: 'Play again',
                 quizExplore: 'The places in this quiz',
-                rhythmsTitle: 'Rhythms of Angola',
-                rhythmsSub: 'The styles born here and where to hear them live.',
                 rhythmSembaText: 'Angolan music and dance, popular since the 1950s and the direct forerunner of kizomba. The name comes from masemba, the navel bump in Kimbundu. It has been national intangible cultural heritage since 2023.',
                 rhythmSembaUnesco: 'UNESCO examines the bid to list semba as Intangible Cultural Heritage of Humanity from 30 November to 5 December 2026.',
                 rhythmKizombaText: 'Born in Angola between the late 1970s and the 1980s, by slowing semba down and mixing in Antillean zouk. Kizomba means "party" in Kimbundu; Eduardo Paim is known as its father.',
                 rhythmKuduroText: 'Fast electronic beat born in Luanda in the late 1980s. Tony Amado says he created the dance inspired by Van Damme in the film Kickboxer (1989). Today it is danced from Luanda to Lisbon.',
-                rhythmSee: 'On the agenda: {count}',
-                rhythmNone: 'No events on the agenda for now',
                 rhythmSources: 'Sources',
                 eventsRhythm: 'Music style',
                 eventInDays: 'In {n} days',
@@ -4452,14 +4443,10 @@
                 quizShareText: 'J\'ai eu {n} sur 10 au quiz « Connaissez-vous bien l\'Angola ? » de Tuende. Tu fais mieux ?',
                 quizAgain: 'Rejouer',
                 quizExplore: 'Les lieux de ce quiz',
-                rhythmsTitle: 'Rythmes de l\'Angola',
-                rhythmsSub: 'Les styles nés ici et où les écouter en live.',
                 rhythmSembaText: 'Musique et danse d\'Angola, populaire depuis les années 1950 et ancêtre directe de la kizomba. Le nom vient de masemba, le « coup de nombril » en kimbundu. Patrimoine culturel immatériel national depuis 2023.',
                 rhythmSembaUnesco: 'L\'UNESCO examine la candidature du semba au patrimoine culturel immatériel de l\'humanité du 30 novembre au 5 décembre 2026.',
                 rhythmKizombaText: 'Née en Angola entre la fin des années 1970 et les années 80, en ralentissant le semba et en y mêlant le zouk antillais. Kizomba veut dire « fête » en kimbundu ; Eduardo Paim en est considéré comme le père.',
                 rhythmKuduroText: 'Rythme électronique rapide né à Luanda à la fin des années 1980. Tony Amado dit avoir créé la danse en s\'inspirant de Van Damme dans le film Kickboxer (1989). Aujourd\'hui, on le danse de Luanda à Lisbonne.',
-                rhythmSee: 'À l\'agenda : {count}',
-                rhythmNone: 'Pas d\'événement à l\'agenda pour l\'instant',
                 rhythmSources: 'Sources',
                 eventsRhythm: 'Style de musique',
                 eventInDays: 'Dans {n} jours',
@@ -5160,14 +5147,10 @@
                 quizShareText: 'Acerté {n} de 10 en el quiz «¿Cuánto conoce Angola?» de Tuende. ¿Puedes superarlo?',
                 quizAgain: 'Jugar otra vez',
                 quizExplore: 'Los lugares de este quiz',
-                rhythmsTitle: 'Ritmos de Angola',
-                rhythmsSub: 'Los estilos que nacieron aquí y dónde escucharlos en vivo.',
                 rhythmSembaText: 'Música y baile de Angola, popular desde los años 1950 y antecesora directa de la kizomba. El nombre viene de masemba, el golpe de ombligo en kimbundu. Es patrimonio cultural inmaterial nacional desde 2023.',
                 rhythmSembaUnesco: 'La UNESCO examina la candidatura del semba a Patrimonio Cultural Inmaterial de la Humanidad del 30 de noviembre al 5 de diciembre de 2026.',
                 rhythmKizombaText: 'Nació en Angola entre finales de los años 1970 y los 80, al ralentizar el semba y mezclarlo con el zouk de las Antillas. Kizomba significa «fiesta» en kimbundu; a Eduardo Paim se le conoce como su padre.',
                 rhythmKuduroText: 'Ritmo electrónico rápido nacido en Luanda a finales de los años 1980. Tony Amado dice que creó el baile inspirado en Van Damme en la película Kickboxer (1989). Hoy se baila de Luanda a Lisboa.',
-                rhythmSee: 'En la agenda: {count}',
-                rhythmNone: 'Sin eventos en la agenda por ahora',
                 rhythmSources: 'Fuentes',
                 eventsRhythm: 'Ritmo',
                 eventInDays: 'Faltan {n} días',
@@ -9023,7 +9006,7 @@
                         <div class="event-mini-grid">${nextEvents.map(eventMiniHTML).join('')}</div>
                     </section>`);
             }
-            parts.push(playHTML(), rhythmsHTML());
+            parts.push(playHTML());
             parts.push(`
                 <section class="home-cta guide-cta" aria-labelledby="guideCtaTitle">
                     <div><h2 id="guideCtaTitle">${t('guideCtaTitle')}</h2><p>${t('guideCtaText')}</p></div>
@@ -9355,21 +9338,17 @@
             { id: 'kuduro', text: 'rhythmKuduroText', sources: [['Wikipedia', 'https://en.wikipedia.org/wiki/Kuduro']] }
         ];
 
-        function rhythmsHTML() {
-            const upcoming = upcomingEvents();
-            const today = luandaToday();
-            const cards = RHYTHM_CARDS.map((r) => {
-                const n = upcoming.filter((e) => eventRhythms(e).includes(r.id)).length;
-                return `
-                    <article class="rhythm-card">
-                        <h3>${escapeHTML(RHYTHMS[r.id].name)}</h3>
-                        <p>${t(r.text)}</p>
-                        ${r.note && today <= r.noteUntil ? `<p class="rhythm-note">${t(r.note)}</p>` : ''}
-                        ${n ? `<button class="submit-btn secondary" type="button" data-rhythm="${r.id}">${icon('calendar')}${t('rhythmSee', { count: eventsCount(n) })}</button>` : `<p class="hint">${t('rhythmNone')}</p>`}
-                        <p class="rhythm-sources">${t('rhythmSources')}: ${r.sources.map(([name, url]) => `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(name)}</a>`).join(', ')}</p>
-                    </article>`;
-            }).join('');
-            return sectionHTML('secRhythms', t('rhythmsTitle'), t('rhythmsSub'), `<div class="rhythm-grid">${cards}</div>`);
+        // On the agenda, picking Semba, Kizomba or Kuduro shows where the style comes from, with sources.
+        function rhythmInfoHTML(id) {
+            const r = RHYTHM_CARDS.find((x) => x.id === id);
+            if (!r) return '';
+            return `
+                <article class="rhythm-card">
+                    <h2>${escapeHTML(RHYTHMS[r.id].name)}</h2>
+                    <p>${t(r.text)}</p>
+                    ${r.note && luandaToday() <= r.noteUntil ? `<p class="rhythm-note">${t(r.note)}</p>` : ''}
+                    <p class="rhythm-sources">${t('rhythmSources')}: ${r.sources.map(([name, url]) => `<a href="${escapeHTML(url)}" target="_blank" rel="noopener">${escapeHTML(name)}</a>`).join(', ')}</p>
+                </article>`;
         }
 
         /* ---------- Results ---------- */
@@ -12019,6 +11998,7 @@
                     return `<button type="button" class="chip${active ? ' active' : ''}" data-events-rhythm="${key}" aria-pressed="${active}">${escapeHTML(label)} <span class="chip-count">(${n})</span></button>`;
                 }).join('');
             const scoped = f.rhythm ? inRange.filter((e) => eventRhythms(e).includes(f.rhythm)) : inRange;
+            $('eventsRhythmInfo').innerHTML = rhythmInfoHTML(f.rhythm);
             const types = Object.keys(EVENT_TYPES).filter((type) => upcoming.some((e) => e.type === type));
             $('eventsType').innerHTML = [['', t('typeAll'), scoped.length], ...types.map((type) => [type, eventTypeLabel(type), scoped.filter((e) => e.type === type).length])]
                 .map(([key, label, n]) => {
@@ -14043,8 +14023,6 @@
             if (target.closest('[data-events-reset]')) { setEventFilters({ ...DEFAULT_EVENT_FILTERS }, '[data-events-when="all"]'); return; }
             const rhythmChip = target.closest('[data-events-rhythm]');
             if (rhythmChip) { setEventFilters({ rhythm: rhythmChip.dataset.eventsRhythm }, `[data-events-rhythm="${rhythmChip.dataset.eventsRhythm}"]`); return; }
-            const rhythmOpen = target.closest('[data-rhythm]');
-            if (rhythmOpen) { showEvents({ filters: { rhythm: rhythmOpen.dataset.rhythm } }); return; }
             const stampProvince = target.closest('[data-stamp-province]');
             if (stampProvince) { showResults({ where: stampProvince.dataset.stampProvince }); return; }
             if (target.closest('[data-passport-share]')) { sharePassport(); return; }
