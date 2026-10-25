@@ -70,6 +70,15 @@
               --dy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23FFCB00' stroke-opacity='0.22' stroke-width='1.5'/%3E%3C/svg%3E");
               --dr: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M14 4 24 14 14 24 4 14z' fill='none' stroke='%23CE1126' stroke-opacity='0.14' stroke-width='1.5'/%3E%3C/svg%3E"); }
     </style>
+    <style>
+        details.menu-drop { margin-top: 12px; border: 1.5px solid var(--line); border-radius: 14px; }
+        details.menu-drop > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; padding: 12px 14px; cursor: pointer; list-style: none; font-weight: 700; }
+        details.menu-drop > summary::-webkit-details-marker { display: none; }
+        details.menu-drop > summary::after { content: ""; flex: none; width: 9px; height: 9px; border-right: 2.5px solid var(--primary); border-bottom: 2.5px solid var(--primary); transform: rotate(45deg); margin: -4px 4px 0 0; transition: transform 0.2s ease; }
+        details.menu-drop[open] > summary::after { transform: rotate(-135deg); margin-top: 4px; }
+        details.menu-drop > summary small { display: block; color: var(--muted); font-size: 14px; font-weight: 400; }
+        details.menu-drop .menu-drop-body { padding: 0 14px 14px; border-top: 1px solid var(--line); }
+    </style>
 </head>
 <body>
     <div class="strip" aria-hidden="true"></div>
@@ -99,6 +108,9 @@
         <p class="muted">É o dono deste lugar? <a href="../#dono-235">Atualize os dados no Tuende</a>: telefone, horário, preços e fotos. É grátis e confirmamos consigo antes de publicar.</p>
 
         <h2>Pratos e preços</h2>
+        <details class="menu-drop">
+        <summary><span>Ver os 12 pratos e preços<small>A maioria entre 500 e 7 000 Kz</small></span></summary>
+        <div class="menu-drop-body">
         <p class="muted">A maioria dos pratos custa entre 500 e 7 000 Kz, segundo a ementa que o restaurante publica no menus.ao (consultada a 25 de outubro de 2026). Os preços podem mudar.</p>
         <ul class="links">
             <li>Mufete de Carapau · 5 000 Kz</li>
@@ -115,6 +127,8 @@
             <li>Franguité Completo · 10 000 Kz</li>
         </ul>
         <p class="muted"><a href="https://www.menus.ao/pontovip/menu">Ver a ementa completa no menus.ao (52 pratos e bebidas)</a></p>
+        </div>
+        </details>
 
         <h2>Perto daqui</h2>
         <ul class="links">
