@@ -814,6 +814,18 @@
         .footer-links { display: flex; flex-wrap: wrap; gap: 4px 18px; }
         .footer-link { background: none; border: none; padding: 0; min-height: 44px; display: inline-flex; align-items: center; color: var(--text); font-size: 15px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
         .footer-note { margin-top: 10px; font-size: 13px; color: var(--muted); }
+        .footer-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 32px; }
+        .footer-col { display: flex; flex-direction: column; align-items: flex-start; }
+        .footer-head { margin: 0 0 4px; font-size: 13px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+        .footer-col .footer-link { min-height: 38px; font-size: 15px; font-weight: 600; text-decoration: none; text-align: left; }
+        .footer-col .footer-link:hover { color: var(--primary); text-decoration: underline; }
+        .footer-bottom { display: flex; flex-wrap: wrap; gap: 0 20px; margin-top: 16px; padding-top: 10px; border-top: 1px solid var(--line); }
+        .footer-small { min-height: 40px; display: inline-flex; align-items: center; padding: 0; border: none; background: none; font-size: 13px; font-weight: 600; color: var(--muted); text-decoration: none; }
+        .footer-small:hover { color: var(--text); text-decoration: underline; }
+        @media (max-width: 640px) {
+            .footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .footer-col:last-child { grid-column: 1 / -1; }
+        }
 
         .info-panel { max-width: 560px; padding: 28px 22px 22px; }
         .info-title { font-size: 24px; font-weight: 800; color: var(--primary); margin-bottom: 10px; padding-right: 44px; }
@@ -1396,6 +1408,21 @@
         :is(#passportView, #quizView, .map-off) .submit-btn .icon { width: 18px; height: 18px; flex: none; }
         :is(#passportView, #quizView) .cta-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
         .event-badge.soon { background: var(--accent); color: var(--accent-ink); }
+        .all-cats { margin-top: 12px; }
+        .all-cats > summary { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; cursor: pointer; font-weight: 700; color: var(--primary); list-style: none; }
+        .all-cats > summary::-webkit-details-marker { display: none; }
+        .all-cats > summary::after { content: '+'; font-size: 18px; line-height: 1; }
+        .all-cats[open] > summary::after { content: '−'; }
+        .all-cats .section-map { margin-top: 10px; display: inline-flex; align-items: center; gap: 6px; }
+        .card-row.list-row .collection { min-height: 150px; }
+        .explore-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+        .explore-card { display: flex; align-items: center; gap: 12px; padding: 12px 14px; text-align: left; color: var(--text); background: var(--surface); border: 1.5px solid var(--border); border-radius: 14px; }
+        .explore-card:hover { border-color: var(--primary); }
+        .explore-card > .icon { width: 24px; height: 24px; flex: none; color: var(--primary); }
+        .explore-card b { display: block; font-size: 15px; line-height: 1.25; }
+        .explore-card small { display: block; margin-top: 2px; font-size: 13px; line-height: 1.3; color: var(--muted); }
+        @media (max-width: 860px) { .explore-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 420px) { .explore-card { padding: 10px; gap: 8px; } .explore-card small { display: none; } }
         .avg-subs, .avg-spend { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; }
         .spend-pill { padding: 2px 9px; border-radius: 999px; background: var(--surface-2); font-size: 12px; font-weight: 700; }
         .counts, .pop-rank { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 700; }
@@ -1692,27 +1719,38 @@
 
     <footer class="site-footer">
         <div class="container">
-            <nav class="footer-links" aria-label="Tuende">
-                <button type="button" class="footer-link" id="footerInstall" data-info="install" hidden data-i18n="installTitle">Descarregar a app</button>
-                <button type="button" class="footer-link" data-action="events" data-i18n="agenda">Agenda</button>
-                <button type="button" class="footer-link" data-action="guide" data-i18n="guideTitle">Guia prático</button>
-                <button type="button" class="footer-link" data-action="fx" data-i18n="fxTitle">Câmbio do dia</button>
-                <button type="button" class="footer-link" data-action="routes" data-i18n="routesTitle">Roteiros</button>
-                <button type="button" class="footer-link" data-action="plan" data-i18n="planTitle">Os meus planos</button>
-                <button type="button" class="footer-link" data-action="wonders" data-i18n="wondersTitle">Maravilhas de Angola</button>
-                <button type="button" class="footer-link" data-action="passport" data-i18n="passportTitle">O meu passaporte</button>
-                <button type="button" class="footer-link" data-action="quiz" data-i18n="quizTitle">Quanto conhece Angola?</button>
-                <button type="button" class="footer-link" id="footerSaveData" data-action="save-data" aria-pressed="false"></button>
-                <button type="button" class="footer-link" data-action="map" data-i18n="mapTitle">Mapa dos lugares</button>
-                <button type="button" class="footer-link" data-info="about" data-i18n="footerAbout">Sobre o Tuende</button>
-                <button type="button" class="footer-link" data-info="verify" data-i18n="footerVerify">Como verificamos os lugares</button>
-                <button type="button" class="footer-link" data-info="trust" data-i18n="trustTitle">Confiança e segurança</button>
-                <a class="footer-link" id="footerPlaces" href="lugares/" data-i18n="footerPlaces">Todos os lugares</a>
-                <a class="footer-link" id="footerTerms" href="termos.html" data-i18n="footerTerms">Termos de utilização</a>
-                <a class="footer-link" id="footerPrivacy" href="privacy.html" hidden data-i18n="footerPrivacy">Privacidade</a>
-                <a class="footer-link" id="footerContact" hidden data-i18n="footerContact">Contacto</a>
-                <button type="button" class="footer-link" id="footerRecommend" data-action="recommend" hidden data-i18n="footerRecommend">Recomendar um lugar</button>
-            </nav>
+            <div class="footer-cols">
+                <nav class="footer-col" aria-labelledby="footExplore">
+                    <h2 class="footer-head" id="footExplore" data-i18n="footerExplore">Explorar</h2>
+                    <button type="button" class="footer-link" data-action="events" data-i18n="agenda">Agenda</button>
+                    <button type="button" class="footer-link" data-action="map" data-i18n="mapTitle">Mapa dos lugares</button>
+                    <button type="button" class="footer-link" data-action="routes" data-i18n="routesTitle">Roteiros</button>
+                    <button type="button" class="footer-link" data-action="wonders" data-i18n="wondersTitle">Maravilhas de Angola</button>
+                    <a class="footer-link" id="footerPlaces" href="lugares/" data-i18n="footerPlaces">Todos os lugares</a>
+                </nav>
+                <nav class="footer-col" aria-labelledby="footPlan">
+                    <h2 class="footer-head" id="footPlan" data-i18n="footerPlan">Planear</h2>
+                    <button type="button" class="footer-link" data-action="guide" data-i18n="guideTitle">Guia prático</button>
+                    <button type="button" class="footer-link" data-action="fx" data-i18n="fxTitle">Câmbio do dia</button>
+                    <button type="button" class="footer-link" data-action="plan" data-i18n="planTitle">Os meus planos</button>
+                    <button type="button" class="footer-link" data-action="passport" data-i18n="passportTitle">O meu passaporte</button>
+                    <button type="button" class="footer-link" data-action="quiz" data-i18n="quizTitle">Quanto conhece Angola?</button>
+                </nav>
+                <nav class="footer-col" aria-labelledby="footAbout">
+                    <h2 class="footer-head" id="footAbout">Tuende</h2>
+                    <button type="button" class="footer-link" data-info="about" data-i18n="footerAbout">Sobre o Tuende</button>
+                    <button type="button" class="footer-link" data-info="verify" data-i18n="footerVerify">Como verificamos os lugares</button>
+                    <button type="button" class="footer-link" data-info="trust" data-i18n="trustTitle">Confiança e segurança</button>
+                    <button type="button" class="footer-link" id="footerRecommend" data-action="recommend" hidden data-i18n="footerRecommend">Recomendar um lugar</button>
+                    <a class="footer-link" id="footerContact" hidden data-i18n="footerContact">Contacto</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <a class="footer-small" id="footerTerms" href="termos.html" data-i18n="footerTerms">Termos de utilização</a>
+                <a class="footer-small" id="footerPrivacy" href="privacy.html" hidden data-i18n="footerPrivacy">Privacidade</a>
+                <button type="button" class="footer-small" id="footerInstall" data-info="install" hidden data-i18n="installTitle">Descarregar a app</button>
+                <button type="button" class="footer-small" id="footerSaveData" data-action="save-data" aria-pressed="false"></button>
+            </div>
             <p class="footer-note" data-i18n="footerNote">Fotos: Wikimedia Commons, com autor e licença em cada foto. Só mostramos fotos reais do próprio lugar.</p>
         </div>
     </footer>
@@ -3074,6 +3112,20 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                allCategories: 'Ver todas as categorias',
+                listsTitle: 'Listas e roteiros',
+                listsSub: 'Escolhas por tema e percursos de 1 a 3 dias.',
+                exploreTitle: 'Mais para explorar',
+                exGuide: 'Vistos, dinheiro, transportes e segurança',
+                exDishes: 'O que provar e onde, com preços',
+                exWonders: 'As 7 Maravilhas e sítios para fotos',
+                exMap: 'Todos os lugares num mapa',
+                exFx: 'Quanto vale o kwanza hoje',
+                exPlan: 'Monte a viagem dia a dia',
+                exPassport: 'Carimbos das 21 províncias',
+                exQuiz: '10 perguntas para se testar',
+                footerExplore: 'Explorar',
+                footerPlan: 'Planear',
                 scoreQuality: 'Qualidade',
                 scoreAmbience: 'Ambiente',
                 scoreService: 'Atendimento',
@@ -3827,6 +3879,20 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                allCategories: 'See all categories',
+                listsTitle: 'Lists and itineraries',
+                listsSub: 'Picks by theme and routes of 1 to 3 days.',
+                exploreTitle: 'More to explore',
+                exGuide: 'Visas, money, transport and safety',
+                exDishes: 'What to try and where, with prices',
+                exWonders: 'The 7 Wonders and photo spots',
+                exMap: 'Every place on one map',
+                exFx: 'What the kwanza is worth today',
+                exPlan: 'Build your trip day by day',
+                exPassport: 'Stamps from the 21 provinces',
+                exQuiz: '10 questions to test yourself',
+                footerExplore: 'Explore',
+                footerPlan: 'Plan',
                 scoreQuality: 'Quality',
                 scoreAmbience: 'Atmosphere',
                 scoreService: 'Service',
@@ -4580,6 +4646,20 @@
                 saveDataOff: 'Économie de données : désactivée',
                 saveDataNote: 'Pas de photos dans les listes ni de cartes automatiques, pour consommer moins de données mobiles.',
                 mapLoad: 'Afficher la carte',
+                allCategories: 'Voir toutes les catégories',
+                listsTitle: 'Listes et itinéraires',
+                listsSub: 'Sélections par thème et parcours de 1 à 3 jours.',
+                exploreTitle: 'Plus à explorer',
+                exGuide: 'Visas, argent, transports et sécurité',
+                exDishes: 'Quoi goûter et où, avec les prix',
+                exWonders: 'Les 7 Merveilles et lieux pour photos',
+                exMap: 'Tous les lieux sur une carte',
+                exFx: 'Ce que vaut le kwanza aujourd\'hui',
+                exPlan: 'Construisez votre voyage jour par jour',
+                exPassport: 'Les tampons des 21 provinces',
+                exQuiz: '10 questions pour vous tester',
+                footerExplore: 'Explorer',
+                footerPlan: 'Préparer',
                 scoreQuality: 'Qualité',
                 scoreAmbience: 'Ambiance',
                 scoreService: 'Service',
@@ -5333,6 +5413,20 @@
                 saveDataOff: 'Ahorro de datos: desactivado',
                 saveDataNote: 'Sin fotos en las listas ni mapas automáticos, para gastar menos datos móviles.',
                 mapLoad: 'Mostrar mapa',
+                allCategories: 'Ver todas las categorías',
+                listsTitle: 'Listas e itinerarios',
+                listsSub: 'Selecciones por tema y rutas de 1 a 3 días.',
+                exploreTitle: 'Más para explorar',
+                exGuide: 'Visados, dinero, transporte y seguridad',
+                exDishes: 'Qué probar y dónde, con precios',
+                exWonders: 'Las 7 Maravillas y lugares para fotos',
+                exMap: 'Todos los lugares en un mapa',
+                exFx: 'Cuánto vale el kwanza hoy',
+                exPlan: 'Arme su viaje día a día',
+                exPassport: 'Sellos de las 21 provincias',
+                exQuiz: '10 preguntas para ponerse a prueba',
+                footerExplore: 'Explorar',
+                footerPlan: 'Planificar',
                 scoreQuality: 'Calidad',
                 scoreAmbience: 'Ambiente',
                 scoreService: 'Atención',
@@ -9280,46 +9374,22 @@
                 ['agenda', 'agenda', 'calendar', 'data-action="events"']
             ];
             return `<nav class="feature-tiles" aria-label="${t('tilesTitle')}">${tiles.map(([cls, label, ic, attr]) =>
-                `<button class="ftile ${cls}" type="button" ${attr}>${icon(ic)}<span>${t(label)}</span></button>`).join('')}</nav>`;
+                `<button class="ftile ${cls}" type="button" ${attr}>${icon(ic)}<span>${t(label)}</span></button>`).join('')}</nav>
+                <details class="all-cats"><summary>${t('allCategories')}</summary>
+                    ${categoryTilesHTML(['beach', 'nature', 'culture', 'restaurant'])}
+                    <button class="link-btn section-map" type="button" data-action="map">${icon('pin')}${t('mapSeeOnMap')}</button>
+                </details>`;
         }
 
         const recommendedList = () => RECOMMENDED.map((id) => venues.find((v) => v.id === id)).filter(Boolean);
 
         /* ---------- Home ---------- */
 
-        // Entry points by kind of visitor; each opens something that already exists (guide, route, filter, collection).
-        function startHTML() {
-            const cards = [
-                ['passport', 'startFirst', 'data-action="guide"'],
-                ['calendar', 'startWeekend', 'data-route-open="luanda"'],
-                ['users', 'startKids', 'data-quick="family"'],
-                ['mountain', 'startAdventure', 'data-collection="nature"']
-            ];
-            return sectionHTML('secStart', t('startTitle'), '', `<div class="start-grid">${cards.map(([ic, key, attr]) =>
-                `<button class="start-card" type="button" ${attr}>${icon(ic)}<b>${t(key)}</b><span>${t(`${key}Desc`)}</span></button>`).join('')}</div>`);
-        }
-
+        // The home page stays short: the big tiles, then a few rows, then one compact grid for everything else.
         function renderHome() {
-            const parts = [featureTilesHTML(), startHTML(), `
-                <section class="home-cta" aria-labelledby="planCtaTitle">
-                    <div><h2 id="planCtaTitle">${t('planCtaTitle')}</h2><p>${t('planCtaText')}</p></div>
-                    <div class="cta-buttons">
-                        <button class="submit-btn" type="button" data-action="plan">${icon('calendar')}${t('planNew')}</button>
-                        <button class="submit-btn secondary" type="button" data-plan-kamba>${t('planAskKamba')}</button>
-                    </div>
-                </section>`];
+            const parts = [featureTilesHTML()];
             const savedList = venues.filter((v) => favorites.includes(v.id));
             if (savedList.length) parts.push(sectionHTML('secSaved', t('savedTitle'), '', rowHTML(savedList), { saved: true }));
-
-            parts.push(sectionHTML('secRecommended', t('recommendedTitle'), t('recommendedSub'), rowHTML(recommendedList(), { reason: true })));
-            // Place ids grow as places are added, so the highest ids are the newest in the guide.
-            parts.push(sectionHTML('secNew', t('newTitle'), t('newSub'), rowHTML([...venues].sort((a, b) => b.id - a.id).slice(0, 10))));
-            if (visitorPhotos.length) {
-                parts.push(sectionHTML('secPhotos', t('photosTitle'), t('photosSub'), `<div class="photo-feed">${visitorPhotos.map((ph) => {
-                    const v = venues.find((x) => x.id === ph.venue_id);
-                    return v ? `<button type="button" class="feed-photo" data-open="${v.id}"><img src="${escapeHTML(ph.url)}" alt="${escapeHTML(ph.caption || v.name)}" loading="lazy" crossorigin="anonymous" onerror="this.closest('button').remove()"><span>${escapeHTML(v.name)}</span></button>` : '';
-                }).join('')}</div>`));
-            }
 
             // Events already under way for a week or more go after the ones about to start, so the list changes from day to day.
             const today = luandaToday();
@@ -9336,20 +9406,16 @@
                         <div class="event-mini-grid">${nextEvents.map(eventMiniHTML).join('')}</div>
                     </section>`);
             }
-            parts.push(playHTML());
-            parts.push(`
-                <section class="home-cta guide-cta" aria-labelledby="guideCtaTitle">
-                    <div><h2 id="guideCtaTitle">${t('guideCtaTitle')}</h2><p>${t('guideCtaText')}</p></div>
-                    <button class="submit-btn" type="button" data-action="guide">${t('guideOpen')}</button>
-                </section>`);
-            parts.push(`
-                <section class="home-cta wonders-cta" aria-labelledby="wondersCtaTitle"${saveDataOn() ? '' : ` style="--cta-photo: url('${escapeHTML(asset(venues.find((v) => v.id === 26)?.photos?.[0]?.url || ''))}')"`}>
-                    <div><h2 id="wondersCtaTitle">${t('wondersCtaTitle')}</h2><p>${t('wondersCtaText')}</p></div>
-                    <button class="submit-btn" type="button" data-action="wonders">${icon('camera')}${t('wondersOpen')}</button>
-                </section>`);
-            parts.push(sectionHTML('secCategories', t('moreCategoriesTitle'), '', categoryTilesHTML(['beach', 'nature', 'culture', 'restaurant']))
-                .replace('<h2 id="secCategories">', `<button class="link-btn section-map" type="button" data-action="map">${icon('pin')}${t('mapSeeOnMap')}</button><h2 id="secCategories">`));
 
+            parts.push(sectionHTML('secRecommended', t('recommendedTitle'), t('recommendedSub'), rowHTML(recommendedList(), { reason: true })));
+            if (visitorPhotos.length) {
+                parts.push(sectionHTML('secPhotos', t('photosTitle'), t('photosSub'), `<div class="photo-feed">${visitorPhotos.map((ph) => {
+                    const v = venues.find((x) => x.id === ph.venue_id);
+                    return v ? `<button type="button" class="feed-photo" data-open="${v.id}"><img src="${escapeHTML(ph.url)}" alt="${escapeHTML(ph.caption || v.name)}" loading="lazy" crossorigin="anonymous" onerror="this.closest('button').remove()"><span>${escapeHTML(v.name)}</span></button>` : '';
+                }).join('')}</div>`));
+            }
+
+            // Lists and itineraries share one row that scrolls sideways.
             const collections = Object.entries(COLLECTIONS).map(([key, c]) => {
                 const count = venues.filter((v) => collectionMatch(key, v)).length;
                 const cover = venues.find((v) => v.id === c.cover);
@@ -9360,33 +9426,47 @@
                         <span class="collection-desc">${t(c.desc)} · ${placesCount(count)}</span>
                     </button>`;
             }).join('');
-            parts.push(sectionHTML('secCollections', t('collectionsTitle'), t('collectionsSub'), `<div class="collection-grid">${collections}</div>`));
-            parts.push(sectionHTML('secRoutes', t('routesTitle'), t('routesHomeSub'), routesHomeHTML()));
+            parts.push(sectionHTML('secCollections', t('listsTitle'), t('listsSub'), scrollRowHTML(routeCardsHTML() + collections)));
+
+            parts.push(exploreHTML());
 
             const dayTrips = venues
                 .filter((v) => v.exact && ['beach', 'nature', 'culture', 'museum', 'plaza'].includes(v.type) && kmBetween(LUANDA_CENTRE, v) >= 25 && kmBetween(LUANDA_CENTRE, v) <= 160)
                 .sort((a, b) => kmBetween(LUANDA_CENTRE, a) - kmBetween(LUANDA_CENTRE, b));
             if (dayTrips.length) parts.push(sectionHTML('secDayTrips', t('dayTripsTitle'), t('dayTripsSub'), rowHTML(dayTrips, { fromLuanda: true })));
-
-            if (canInstallSite()) {
-                parts.push(`
-                    <section class="home-cta" aria-labelledby="installCtaTitle">
-                        <div><h2 id="installCtaTitle">${t('installCtaTitle')}</h2><p>${t('installCtaText')}</p></div>
-                        <button class="submit-btn" type="button" data-info="install">${icon('download')}${t('installTitle')}</button>
-                    </section>`);
-            }
-            if (canRecommend()) {
-                parts.push(`
-                    <section class="home-cta" aria-labelledby="recCtaTitle">
-                        <div><h2 id="recCtaTitle">${t('recCtaTitle')}</h2><p>${t('recCtaText')}</p></div>
-                        <button class="submit-btn" type="button" data-action="recommend">${t('recTitle')}</button>
-                    </section>`);
-            }
+            // Place ids grow as places are added, so the highest ids are the newest in the guide.
+            parts.push(sectionHTML('secNew', t('newTitle'), t('newSub'), rowHTML([...venues].filter(canStamp).sort((a, b) => b.id - a.id).slice(0, 10))));
 
             $('homeView').innerHTML = parts.join('');
             document.querySelectorAll('#homeView .card-row').forEach(updateRowControls);
         }
 
+        // A sideways row with arrows, like the place rows, for any cards.
+        function scrollRowHTML(inner) {
+            return `
+                <div class="row-wrap">
+                    <button class="row-nav prev" type="button" data-scroll="-1" aria-label="${t('prevRow')}" disabled>${icon('back')}</button>
+                    <div class="card-row list-row">${inner}</div>
+                    <button class="row-nav next" type="button" data-scroll="1" aria-label="${t('nextRow')}">${icon('next')}</button>
+                </div>`;
+        }
+
+        // Guides, tools and games as small cards instead of one big banner each.
+        function exploreHTML() {
+            const vs = visitedPlaces();
+            const items = [
+                ['info', 'guideTitle', t('exGuide'), 'data-action="guide"'],
+                ...(typeof DISHES !== 'undefined' ? [['restaurant', 'dishesTitle', t('exDishes'), 'data-action="dishes"']] : []),
+                ['camera', 'wondersTitle', t('exWonders'), 'data-action="wonders"'],
+                ['pin', 'mapTitle', t('exMap'), 'data-action="map"'],
+                ['exchange', 'fxTitle', t('exFx'), 'data-action="fx"'],
+                ['calendar', 'planTitle', t('exPlan'), 'data-action="plan"'],
+                ['passport', 'passportTitle', vs.length ? t('passportCardProgress', { provinces: provinceTotal(vs) }) : t('exPassport'), 'data-action="passport"'],
+                ['star', 'quizTitle', t('exQuiz'), 'data-action="quiz"']
+            ];
+            return sectionHTML('secExplore', t('exploreTitle'), '', `<div class="explore-grid">${items.map(([ic, title, desc, attr]) =>
+                `<button class="explore-card" type="button" ${attr}>${icon(ic)}<span><b>${t(title)}</b><small>${escapeHTML(desc)}</small></span></button>`).join('')}</div>`);
+        }
 
         /* ---------- Passport: places the visitor has been to, stamped by province (this device only) ---------- */
 
@@ -9670,17 +9750,6 @@
         }
 
         /* ---------- Home: play (passport and quiz) and the rhythms of Angola ---------- */
-
-        function playHTML() {
-            const vs = visitedPlaces();
-            const best = store.get('tuendeQuizBest', null);
-            const cards = [
-                ['passport', 'passportTitle', vs.length ? t('passportCardProgress', { provinces: provinceTotal(vs) }) : t('passportCardDesc'), 'data-action="passport"'],
-                ['star', 'quizTitle', Number.isFinite(best) ? t('quizBest', { n: best }) : t('quizCardDesc'), 'data-action="quiz"']
-            ];
-            return sectionHTML('secPlay', t('playTitle'), '', `<div class="play-grid">${cards.map(([ic, key, desc, attr]) =>
-                `<button class="start-card play-card" type="button" ${attr}>${icon(ic)}<b>${t(key)}</b><span>${escapeHTML(desc)}</span></button>`).join('')}</div>`);
-        }
 
         const RHYTHM_CARDS = [
             { id: 'semba', text: 'rhythmSembaText', note: 'rhythmSembaUnesco', noteUntil: '2026-12-05',
@@ -10998,8 +11067,8 @@
             $('routesBody').innerHTML = `${jump}${cards}<p class="hint events-note">${t('routesNote')}</p>`;
         }
 
-        function routesHomeHTML() {
-            return `<div class="collection-grid">${ITINERARIES.map((r) => {
+        function routeCardsHTML() {
+            return ITINERARIES.map((r) => {
                 const cover = venues.find((v) => v.id === routeStops(r)[0]);
                 return `
                     <button class="collection" type="button" data-route-open="${r.id}">
@@ -11007,7 +11076,7 @@
                         <span class="collection-title">${escapeHTML(r.title[lang])}</span>
                         <span class="collection-desc">${escapeHTML(r.area)} · ${routeDays(r)} · ${placesCount(routeStops(r).length)}</span>
                     </button>`;
-            }).join('')}</div>`;
+            }).join('');
         }
 
         /* ---------- Place details ---------- */
