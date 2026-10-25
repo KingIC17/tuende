@@ -1397,6 +1397,11 @@
         :is(#passportView, #quizView, .rhythm-card, .map-off) .submit-btn .icon { width: 18px; height: 18px; flex: none; }
         :is(#passportView, #quizView) .cta-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
         .event-badge.soon { background: var(--accent); color: var(--accent-ink); }
+        .official-pill { display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font-size: 12px; font-weight: 800; }
+        .official-pill .icon { width: 12px; height: 12px; }
+        .trust-checks .text-link { display: inline-flex; align-items: center; gap: 6px; }
+        .trust-checks .icon { width: 16px; height: 16px; }
+        #infoContent .link-btn .icon { width: 16px; height: 16px; vertical-align: -3px; margin-right: 4px; }
         .map-frame.map-off { display: flex; align-items: center; justify-content: center; background: var(--surface-2); }
         @media (max-width: 860px) { .rhythm-grid { grid-template-columns: 1fr; } }
         @media (max-width: 560px) {
@@ -1670,6 +1675,7 @@
                 <button type="button" class="footer-link" data-action="map" data-i18n="mapTitle">Mapa dos lugares</button>
                 <button type="button" class="footer-link" data-info="about" data-i18n="footerAbout">Sobre o Tuende</button>
                 <button type="button" class="footer-link" data-info="verify" data-i18n="footerVerify">Como verificamos os lugares</button>
+                <button type="button" class="footer-link" data-info="trust" data-i18n="trustTitle">Confiança e segurança</button>
                 <a class="footer-link" id="footerPlaces" href="lugares/" data-i18n="footerPlaces">Todos os lugares</a>
                 <a class="footer-link" id="footerTerms" href="termos.html" data-i18n="footerTerms">Termos de utilização</a>
                 <a class="footer-link" id="footerPrivacy" href="privacy.html" hidden data-i18n="footerPrivacy">Privacidade</a>
@@ -3025,6 +3031,29 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                trustTitle: 'Confiança e segurança',
+                trustIntro: 'O Tuende é um guia gratuito: não vende nada e não pede dados de pagamento. Eis o que fazemos para merecer a sua confiança, e como o pode confirmar.',
+                trustDataTitle: 'Os seus dados',
+                trustData1: 'Não pedimos cartões bancários, passaporte nem BI.',
+                trustData2: 'Os planos, o passaporte e o quiz ficam só neste dispositivo. Para comentar ou enviar fotos é preciso uma conta com email.',
+                trustData3: 'As palavras-passe nunca ficam guardadas em texto: o nosso fornecedor de contas (Supabase) guarda só uma versão protegida por hash.',
+                trustPrivacy: 'Política de privacidade',
+                trustInfoTitle: 'Informação verificada',
+                trustInfo1: 'Cada lugar mostra as fontes e a data em que o verificámos; o que não conseguimos confirmar aparece como «por confirmar».',
+                trustInfo2: 'Só mostramos fotos reais do próprio lugar, com autor e licença.',
+                trustInfo3: 'Nos hotéis, mostramos a classificação oficial do Ministério do Turismo quando é publicada (programa Reclassifica Turismo).',
+                trustSiteTitle: 'Segurança do site',
+                trustSite1: 'Todas as ligações usam HTTPS: o domínio .app só funciona com ligação segura.',
+                trustSite2: 'Os scripts externos (os mapas) têm versão fixa e o navegador verifica-os antes de os correr.',
+                trustSite3: 'Pode verificar o Tuende a qualquer momento nestas ferramentas independentes:',
+                trustBadgesTitle: 'Selos e acreditações',
+                trustBadges: 'O Tuende não mostra selos nem acreditações que não tem. Quando obtivermos um, aparece aqui com a ligação para quem o atribuiu, para que o possa confirmar.',
+                trustReportTitle: 'Encontrou um problema?',
+                trustReport: 'Escreva para {email}: erros nos lugares, conteúdo abusivo ou falhas de segurança.',
+                officialClassLabel: 'Classificação oficial',
+                officialStars: '{n} estrelas (oficial)',
+                officialKept: '{n} estrelas, mantidas sem condições na reclassificação do Ministério do Turismo (Reclassifica Turismo, {date}).',
+                officialConditional: '{n} estrelas, mantidas com condições: o hotel tem um prazo para cumprir as recomendações do Ministério do Turismo (Reclassifica Turismo, {date}).',
                 emptySaved: 'Ainda não guardou nenhum lugar. Abra um lugar e toque em Guardar.',
                 emptyTry: 'Experimente uma categoria ou uma das sugestões abaixo.',
                 clearSearch: 'Limpar pesquisa',
@@ -3706,6 +3735,29 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                trustTitle: 'Trust and safety',
+                trustIntro: 'Tuende is a free guide: it sells nothing and never asks for payment details. Here is what we do to earn your trust, and how you can check it.',
+                trustDataTitle: 'Your data',
+                trustData1: 'We never ask for bank cards, passports or ID cards.',
+                trustData2: 'Plans, the passport and the quiz stay on this device only. To comment or send photos you need an account with an email address.',
+                trustData3: 'Passwords are never stored as text: our account provider (Supabase) keeps only a hashed version.',
+                trustPrivacy: 'Privacy policy',
+                trustInfoTitle: 'Checked information',
+                trustInfo1: 'Each place shows its sources and the date we checked it; anything we could not confirm is marked "to be confirmed".',
+                trustInfo2: 'We only show real photos of the place itself, with author and licence.',
+                trustInfo3: 'For hotels, we show the Ministry of Tourism\'s official rating when it is published (Reclassifica Turismo programme).',
+                trustSiteTitle: 'Site security',
+                trustSite1: 'Every connection uses HTTPS: the .app domain only works over a secure connection.',
+                trustSite2: 'External scripts (the maps) are pinned to a fixed version and your browser checks them before they run.',
+                trustSite3: 'You can check Tuende at any time with these independent tools:',
+                trustBadgesTitle: 'Seals and accreditation',
+                trustBadges: 'Tuende does not show seals or accreditations it does not hold. When we get one, it will appear here with a link to whoever granted it, so you can check.',
+                trustReportTitle: 'Found a problem?',
+                trustReport: 'Write to {email}: mistakes in places, abusive content or security issues.',
+                officialClassLabel: 'Official rating',
+                officialStars: '{n} stars (official)',
+                officialKept: '{n} stars, kept without conditions in the Ministry of Tourism\'s reclassification (Reclassifica Turismo, {date}).',
+                officialConditional: '{n} stars, kept on conditions: the hotel has a deadline to follow the Ministry of Tourism\'s recommendations (Reclassifica Turismo, {date}).',
                 emptySaved: 'You have not saved any places yet. Open a place and tap Save.',
                 emptyTry: 'Try a category or one of the suggestions below.',
                 clearSearch: 'Clear search',
@@ -4387,6 +4439,29 @@
                 saveDataOff: 'Économie de données : désactivée',
                 saveDataNote: 'Pas de photos dans les listes ni de cartes automatiques, pour consommer moins de données mobiles.',
                 mapLoad: 'Afficher la carte',
+                trustTitle: 'Confiance et sécurité',
+                trustIntro: 'Tuende est un guide gratuit : il ne vend rien et ne demande jamais de données de paiement. Voici ce que nous faisons pour mériter votre confiance, et comment le vérifier.',
+                trustDataTitle: 'Vos données',
+                trustData1: 'Nous ne demandons jamais de carte bancaire, de passeport ni de carte d\'identité.',
+                trustData2: 'Les plans, le passeport et le quiz restent sur cet appareil. Pour commenter ou envoyer des photos, il faut un compte avec une adresse e-mail.',
+                trustData3: 'Les mots de passe ne sont jamais stockés en clair : notre fournisseur de comptes (Supabase) n\'en garde qu\'une version hachée.',
+                trustPrivacy: 'Politique de confidentialité',
+                trustInfoTitle: 'Informations vérifiées',
+                trustInfo1: 'Chaque lieu indique ses sources et la date de vérification ; ce que nous n\'avons pas pu confirmer est marqué « à confirmer ».',
+                trustInfo2: 'Nous ne montrons que de vraies photos du lieu, avec auteur et licence.',
+                trustInfo3: 'Pour les hôtels, nous indiquons le classement officiel du ministère du Tourisme quand il est publié (programme Reclassifica Turismo).',
+                trustSiteTitle: 'Sécurité du site',
+                trustSite1: 'Toutes les connexions utilisent HTTPS : le domaine .app ne fonctionne qu\'en connexion sécurisée.',
+                trustSite2: 'Les scripts externes (les cartes) ont une version fixe et votre navigateur les vérifie avant de les exécuter.',
+                trustSite3: 'Vous pouvez vérifier Tuende à tout moment avec ces outils indépendants :',
+                trustBadgesTitle: 'Labels et accréditations',
+                trustBadges: 'Tuende n\'affiche aucun label ni accréditation qu\'il ne possède pas. Quand nous en obtiendrons un, il apparaîtra ici avec un lien vers l\'organisme qui l\'a attribué, pour que vous puissiez vérifier.',
+                trustReportTitle: 'Un problème ?',
+                trustReport: 'Écrivez à {email} : erreurs sur les lieux, contenu abusif ou failles de sécurité.',
+                officialClassLabel: 'Classement officiel',
+                officialStars: '{n} étoiles (officiel)',
+                officialKept: '{n} étoiles, maintenues sans conditions lors du reclassement du ministère du Tourisme (Reclassifica Turismo, {date}).',
+                officialConditional: '{n} étoiles, maintenues sous conditions : l\'hôtel a un délai pour appliquer les recommandations du ministère du Tourisme (Reclassifica Turismo, {date}).',
                 emptySaved: 'Vous n\'avez encore enregistré aucun lieu. Ouvrez un lieu et touchez Enregistrer.',
                 emptyTry: 'Essayez une catégorie ou l\'une des suggestions ci-dessous.',
                 clearSearch: 'Effacer la recherche',
@@ -5068,6 +5143,29 @@
                 saveDataOff: 'Ahorro de datos: desactivado',
                 saveDataNote: 'Sin fotos en las listas ni mapas automáticos, para gastar menos datos móviles.',
                 mapLoad: 'Mostrar mapa',
+                trustTitle: 'Confianza y seguridad',
+                trustIntro: 'Tuende es una guía gratuita: no vende nada y nunca pide datos de pago. Esto es lo que hacemos para merecer su confianza, y cómo puede comprobarlo.',
+                trustDataTitle: 'Sus datos',
+                trustData1: 'Nunca pedimos tarjetas bancarias, pasaporte ni documento de identidad.',
+                trustData2: 'Los planes, el pasaporte y el quiz se quedan solo en este dispositivo. Para comentar o enviar fotos hace falta una cuenta con correo electrónico.',
+                trustData3: 'Las contraseñas nunca se guardan como texto: nuestro proveedor de cuentas (Supabase) solo guarda una versión cifrada con hash.',
+                trustPrivacy: 'Política de privacidad',
+                trustInfoTitle: 'Información verificada',
+                trustInfo1: 'Cada lugar muestra sus fuentes y la fecha en que lo verificamos; lo que no pudimos confirmar aparece como «por confirmar».',
+                trustInfo2: 'Solo mostramos fotos reales del propio lugar, con autor y licencia.',
+                trustInfo3: 'En los hoteles, mostramos la clasificación oficial del Ministerio de Turismo cuando se publica (programa Reclassifica Turismo).',
+                trustSiteTitle: 'Seguridad del sitio',
+                trustSite1: 'Todas las conexiones usan HTTPS: el dominio .app solo funciona con conexión segura.',
+                trustSite2: 'Los scripts externos (los mapas) tienen una versión fija y el navegador los verifica antes de ejecutarlos.',
+                trustSite3: 'Puede comprobar Tuende en cualquier momento con estas herramientas independientes:',
+                trustBadgesTitle: 'Sellos y acreditaciones',
+                trustBadges: 'Tuende no muestra sellos ni acreditaciones que no tiene. Cuando obtengamos uno, aparecerá aquí con un enlace a quien lo otorgó, para que pueda comprobarlo.',
+                trustReportTitle: '¿Encontró un problema?',
+                trustReport: 'Escriba a {email}: errores en los lugares, contenido abusivo o fallos de seguridad.',
+                officialClassLabel: 'Clasificación oficial',
+                officialStars: '{n} estrellas (oficial)',
+                officialKept: '{n} estrellas, mantenidas sin condiciones en la reclasificación del Ministerio de Turismo (Reclassifica Turismo, {date}).',
+                officialConditional: '{n} estrellas, mantenidas con condiciones: el hotel tiene un plazo para cumplir las recomendaciones del Ministerio de Turismo (Reclassifica Turismo, {date}).',
                 emptySaved: 'Aún no ha guardado ningún lugar. Abra un lugar y toque Guardar.',
                 emptyTry: 'Pruebe una categoría o una de las sugerencias de abajo.',
                 clearSearch: 'Borrar la búsqueda',
@@ -5642,7 +5740,8 @@
             film: { icon: 'film', pt: 'Cinema', en: 'Film', fr: 'Cinéma', es: 'Cine' },
             fashion: { icon: 'bag', pt: 'Moda', en: 'Fashion', fr: 'Mode', es: 'Moda' },
             fairs: { icon: 'ticket', pt: 'Feiras e festas', en: 'Fairs and festivities', fr: 'Foires et fêtes', es: 'Ferias y fiestas' },
-            sports: { icon: 'trophy', pt: 'Desporto', en: 'Sport', fr: 'Sport', es: 'Deporte' }
+            sports: { icon: 'trophy', pt: 'Desporto', en: 'Sport', fr: 'Sport', es: 'Deporte' },
+            trips: { icon: 'compass', pt: 'Passeios', en: 'Trips', fr: 'Excursions', es: 'Excursiones' }
         };
 
         // Agenda: only events with a published source (checked = date we confirmed it). photo = a freely licensed photo of the
@@ -6540,6 +6639,190 @@
                 host: 'Pub Four Eventos',
                 source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/beers-festival-by-cuca/' },
                 checked: '2026-10-16'
+            },
+            {
+                id: 'caldo-do-poeira-dom-caetano-2026',
+                type: 'music',
+                title: { pt: 'Caldo do Poeira: homenagem a Dom Caetano', en: 'Caldo do Poeira: a tribute to Dom Caetano', fr: 'Caldo do Poeira : hommage à Dom Caetano', es: 'Caldo do Poeira: homenaje a Dom Caetano' },
+                city: 'Luanda',
+                venue: 'Espaço Prova de Arte, Parque Miramar',
+                mapsQuery: 'Rua Houari Boumediene 74, Luanda',
+                start: '2026-10-25',
+                when: { pt: 'Às 10h00', en: '10 am', fr: '10 h', es: '10:00' },
+                price: { from: 30000, note: { pt: 'Inclui bar aberto e caldo.', en: 'Includes open bar and caldo (soup).', fr: 'Bar ouvert et caldo (soupe) compris.', es: 'Incluye barra libre y caldo.' } },
+                tags: { pt: ['Música', 'Cultura'], en: ['Music', 'Culture'], fr: ['Musique', 'Culture'], es: ['Música', 'Cultura'] },
+                desc: { pt: 'Manhã de cultura e música no Espaço Prova de Arte, no Parque Miramar, em homenagem a Dom Caetano.', en: 'A morning of culture and music at Espaço Prova de Arte, in Parque Miramar, as a tribute to Dom Caetano.', fr: 'Une matinée de culture et de musique à l\'Espaço Prova de Arte, au Parque Miramar, en hommage à Dom Caetano.', es: 'Una mañana de cultura y música en el Espaço Prova de Arte, en el Parque Miramar, en homenaje a Dom Caetano.' },
+                link: 'https://ticket.ao/event/caldo-do-poeira-dom-caetano/',
+                tickets: true,
+                host: 'Prova D\'Art Miramar',
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/caldo-do-poeira-dom-caetano/' },
+                checked: '2026-10-25'
+            },
+            {
+                id: 'tour-namibe-chostours-2026',
+                type: 'trips',
+                title: { pt: 'Passeio ao Namibe: deserto e praias (Chostours)', en: 'Namibe trip: desert and beaches (Chostours)', fr: 'Excursion au Namibe : désert et plages (Chostours)', es: 'Excursión a Namibe: desierto y playas (Chostours)' },
+                city: 'Namibe',
+                venue: 'Deserto do Namibe e praias (voo desde Luanda)',
+                noDirections: true,
+                start: '2026-10-30',
+                when: { pt: 'Partida às 07h00; duração por confirmar com a organização', en: 'Departs 7 am; length to be confirmed with the organiser', fr: 'Départ à 7 h ; durée à confirmer auprès de l\'organisateur', es: 'Salida a las 7:00; duración por confirmar con la organización' },
+                price: { text: { pt: '1 050 882 Kz por pessoa; 1 500 880 Kz para duas pessoas', en: '1,050,882 Kz per person; 1,500,880 Kz for two', fr: '1 050 882 Kz par personne ; 1 500 880 Kz pour deux', es: '1 050 882 Kz por persona; 1 500 880 Kz para dos' }, note: { pt: 'Inclui voo de ida e volta, transferes, carros 4x4, alojamento com pequeno-almoço, entradas e seguro de viagem.', en: 'Includes return flight, transfers, 4x4 cars, accommodation with breakfast, entry fees and travel insurance.', fr: 'Vol aller-retour, transferts, 4x4, hébergement avec petit-déjeuner, entrées et assurance voyage compris.', es: 'Incluye vuelo de ida y vuelta, traslados, coches 4x4, alojamiento con desayuno, entradas y seguro de viaje.' } },
+                tags: { pt: ['Passeio', 'Deserto', 'Praia'], en: ['Trip', 'Desert', 'Beach'], fr: ['Excursion', 'Désert', 'Plage'], es: ['Excursión', 'Desierto', 'Playa'] },
+                desc: { pt: 'Pacote da Chostours com voo de Luanda ao Namibe e roteiro pela Praia do Soba, Baía das Pipas, piscinas naturais do Piambo, Lagoa do Arco, colinas do Curoca e welwitschias do Deserto do Namibe. Lugares limitados.', en: 'A Chostours package with a flight from Luanda to Namibe and a route through Praia do Soba, Baía das Pipas, the Piambo natural pools, Lagoa do Arco, the Curoca hills and the welwitschias of the Namib Desert. Limited places.', fr: 'Un forfait Chostours avec vol de Luanda au Namibe et un circuit par la Praia do Soba, la Baía das Pipas, les piscines naturelles de Piambo, la Lagoa do Arco, les collines du Curoca et les welwitschias du désert du Namib. Places limitées.', es: 'Un paquete de Chostours con vuelo de Luanda a Namibe y una ruta por la Praia do Soba, la Baía das Pipas, las piscinas naturales de Piambo, la Lagoa do Arco, las colinas del Curoca y las welwitschias del desierto del Namib. Plazas limitadas.' },
+                link: 'https://ticket.ao/event/tour-namibe-deserto-praias/',
+                tickets: true,
+                host: 'Chostours',
+                phones: ['925 522 217', '925 522 177'],
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/tour-namibe-deserto-praias/' },
+                checked: '2026-10-25'
+            },
+            {
+                id: 'cabo-ledo-rota-de-verao-2026',
+                type: 'trips',
+                title: { pt: 'Cabo Ledo: excursão de um dia (Chostours)', en: 'Cabo Ledo: day trip (Chostours)', fr: 'Cabo Ledo : excursion d\'une journée (Chostours)', es: 'Cabo Ledo: excursión de un día (Chostours)' },
+                city: 'Icolo e Bengo',
+                venue: 'Cabo Ledo (partida de Luanda)',
+                mapsQuery: 'Largo do Baleizão, Luanda',
+                start: '2026-11-11',
+                when: { pt: 'Partidas às 07h00 (Largo do Baleizão, junto ao Shopping Fortaleza), 07h30 (bombas dos Mirantes, Talatona) e 08h00 (Pumangol de Benfica); regresso às 17h30', en: 'Departures at 7 am (Largo do Baleizão, by Shopping Fortaleza), 7:30 am (Mirantes petrol station, Talatona) and 8 am (Pumangol, Benfica); back at 5:30 pm', fr: 'Départs à 7 h (Largo do Baleizão, près du Shopping Fortaleza), 7 h 30 (station des Mirantes, Talatona) et 8 h (Pumangol, Benfica) ; retour à 17 h 30', es: 'Salidas a las 7:00 (Largo do Baleizão, junto al Shopping Fortaleza), 7:30 (gasolinera de los Mirantes, Talatona) y 8:00 (Pumangol, Benfica); regreso a las 17:30' },
+                price: { text: { pt: '35 432 Kz por pessoa; 65 864 Kz para duas; 100 996 Kz para quatro', en: '35,432 Kz per person; 65,864 Kz for two; 100,996 Kz for four', fr: '35 432 Kz par personne ; 65 864 Kz pour deux ; 100 996 Kz pour quatre', es: '35 432 Kz por persona; 65 864 Kz para dos; 100 996 Kz para cuatro' }, note: { pt: 'Inclui transporte, lanche a bordo, visita guiada, entradas e seguro. O almoço paga-se à parte.', en: 'Includes transport, snacks on board, a guided visit, entry fees and insurance. Lunch is paid separately.', fr: 'Transport, collation à bord, visite guidée, entrées et assurance compris. Le déjeuner est à part.', es: 'Incluye transporte, refrigerio a bordo, visita guiada, entradas y seguro. El almuerzo se paga aparte.' } },
+                tags: { pt: ['Passeio', 'Praia', 'Miradouro'], en: ['Trip', 'Beach', 'Viewpoint'], fr: ['Excursion', 'Plage', 'Belvédère'], es: ['Excursión', 'Playa', 'Mirador'] },
+                desc: { pt: 'Excursão de um dia da Chostours a Cabo Ledo, na província de Icolo e Bengo, com paragens no Miradouro da Lua, nas grutas de Cabo Ledo e na Praia dos Surfistas.', en: 'A Chostours day trip to Cabo Ledo, in Icolo e Bengo province, stopping at Miradouro da Lua, the Cabo Ledo caves and Praia dos Surfistas.', fr: 'Une excursion d\'une journée de Chostours à Cabo Ledo, dans la province d\'Icolo e Bengo, avec arrêts au Miradouro da Lua, aux grottes de Cabo Ledo et à la Praia dos Surfistas.', es: 'Una excursión de un día de Chostours a Cabo Ledo, en la provincia de Icolo e Bengo, con paradas en el Miradouro da Lua, las cuevas de Cabo Ledo y la Praia dos Surfistas.' },
+                link: 'https://ticket.ao/event/cabo-ledo-rota-de-verao/',
+                tickets: true,
+                host: 'Chostours',
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/cabo-ledo-rota-de-verao/' },
+                checked: '2026-10-25'
+            },
+            {
+                id: 'ne-goncalves-semba-continua-2026',
+                type: 'music',
+                title: { pt: 'Né Gonçalves & Banda Sembamar: O Semba Continua', en: 'Né Gonçalves & Banda Sembamar: O Semba Continua', fr: 'Né Gonçalves & Banda Sembamar : O Semba Continua', es: 'Né Gonçalves & Banda Sembamar: O Semba Continua' },
+                city: 'Luanda',
+                venue: 'Casa das Artes, Talatona',
+                mapsQuery: 'Casa das Artes, Talatona, Luanda',
+                start: '2026-11-20',
+                end: '2026-11-21',
+                when: { pt: 'Às 20h30', en: '8:30 pm', fr: '20 h 30', es: '20:30' },
+                price: { from: 35000, note: { pt: 'Bilhete para uma das noites.', en: 'Ticket for one of the nights.', fr: 'Billet pour une des soirées.', es: 'Entrada para una de las noches.' } },
+                tags: { pt: ['Música', 'Semba'], en: ['Music', 'Semba'], fr: ['Musique', 'Semba'], es: ['Música', 'Semba'] },
+                desc: { pt: 'Né Gonçalves e a Banda Sembamar sobem ao palco da Casa das Artes, em Talatona, em duas noites de semba.', en: 'Né Gonçalves and Banda Sembamar take the stage at Casa das Artes, in Talatona, for two nights of semba.', fr: 'Né Gonçalves et la Banda Sembamar montent sur la scène de la Casa das Artes, à Talatona, pour deux soirées de semba.', es: 'Né Gonçalves y la Banda Sembamar suben al escenario de la Casa das Artes, en Talatona, en dos noches de semba.' },
+                link: 'https://ticket.ao/event/ne-goncalves-banda-sembamar-o-semba-continua/',
+                tickets: true,
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/ne-goncalves-banda-sembamar-o-semba-continua/' },
+                checked: '2026-10-25'
+            },
+            {
+                id: 'anabela-aya-palacio-de-ferro-2026',
+                type: 'music',
+                title: { pt: 'Concerto PF: Anabela Aya', en: 'Concerto PF: Anabela Aya', fr: 'Concerto PF : Anabela Aya', es: 'Concerto PF: Anabela Aya' },
+                city: 'Luanda',
+                venue: 'Palácio de Ferro',
+                mapsQuery: 'Palácio de Ferro, Luanda',
+                start: '2026-11-27',
+                when: { pt: 'Às 19h00', en: '7 pm', fr: '19 h', es: '19:00' },
+                price: { from: 10000 },
+                tags: { pt: ['Música', 'Jazz', 'Soul'], en: ['Music', 'Jazz', 'Soul'], fr: ['Musique', 'Jazz', 'Soul'], es: ['Música', 'Jazz', 'Soul'] },
+                desc: { pt: 'Concerto intimista de Anabela Aya no Palácio de Ferro, entre o jazz, a música tradicional angolana e a soul.', en: 'An intimate concert by Anabela Aya at Palácio de Ferro, mixing jazz, traditional Angolan music and soul.', fr: 'Un concert intimiste d\'Anabela Aya au Palácio de Ferro, entre jazz, musique traditionnelle angolaise et soul.', es: 'Un concierto íntimo de Anabela Aya en el Palácio de Ferro, entre el jazz, la música tradicional angoleña y el soul.' },
+                link: 'https://ticket.ao/event/concerto-pf-anabela-aya/',
+                tickets: true,
+                host: 'Palácio de Ferro',
+                phones: ['930 749 234'],
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/concerto-pf-anabela-aya/' },
+                checked: '2026-10-25'
+            },
+            {
+                id: 'anna-joyce-grande-show-zimbo-2026',
+                type: 'music',
+                title: { pt: 'Grande Show da Zimbo: Anna Joyce ao vivo', en: 'Grande Show da Zimbo: Anna Joyce live', fr: 'Grande Show da Zimbo : Anna Joyce en live', es: 'Grande Show da Zimbo: Anna Joyce en vivo' },
+                city: 'Luanda',
+                venue: 'Pátio da TV Zimbo, Talatona',
+                mapsQuery: 'TV Zimbo, Talatona, Luanda',
+                start: '2026-11-28',
+                when: { pt: 'Às 19h30', en: '7:30 pm', fr: '19 h 30', es: '19:30' },
+                price: { from: 50000, note: { pt: 'Inclui jantar e bar aberto.', en: 'Includes dinner and open bar.', fr: 'Dîner et bar ouvert compris.', es: 'Incluye cena y barra libre.' } },
+                tags: { pt: ['Música'], en: ['Music'], fr: ['Musique'], es: ['Música'] },
+                desc: { pt: 'Concerto de Anna Joyce no pátio da TV Zimbo, em Talatona, com jantar e bar aberto incluídos no bilhete.', en: 'Anna Joyce in concert in the TV Zimbo courtyard, in Talatona, with dinner and open bar included in the ticket.', fr: 'Anna Joyce en concert dans la cour de TV Zimbo, à Talatona, avec dîner et bar ouvert compris dans le billet.', es: 'Concierto de Anna Joyce en el patio de TV Zimbo, en Talatona, con cena y barra libre incluidas en la entrada.' },
+                link: 'https://ticket.ao/event/grande-show-da-zimbo-ao-vivo-anna-joyce/',
+                tickets: true,
+                host: 'Showlight',
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/grande-show-da-zimbo-ao-vivo-anna-joyce/' },
+                checked: '2026-10-25'
+            },
+            {
+                id: 'geracao-do-zouk-2026',
+                type: 'music',
+                title: { pt: 'Geração do Zouk', en: 'Geração do Zouk', fr: 'Geração do Zouk', es: 'Geração do Zouk' },
+                city: 'Luanda',
+                venue: 'Espaço Taaliana, Talatona (via C3)',
+                mapsQuery: 'Espaço Taaliana, Talatona, Luanda',
+                start: '2026-12-05',
+                when: { pt: 'Às 21h30', en: '9:30 pm', fr: '21 h 30', es: '21:30' },
+                price: { from: 15000, to: 35000, note: { pt: 'Normal 15 000 Kz, sem consumo; 35 000 Kz em pé à frente do palco, com bar aberto.', en: 'Standard 15,000 Kz, no drinks; 35,000 Kz standing in front of the stage, with open bar.', fr: 'Normal 15 000 Kz, sans consommation ; 35 000 Kz debout devant la scène, bar ouvert.', es: 'Normal 15 000 Kz, sin consumición; 35 000 Kz de pie frente al escenario, con barra libre.' } },
+                tags: { pt: ['Música', 'Zouk'], en: ['Music', 'Zouk'], fr: ['Musique', 'Zouk'], es: ['Música', 'Zouk'] },
+                desc: { pt: 'Noite de zouk com Eddy La Viny, Harry Diboula, Eduardo Paim e Guilou.', en: 'A zouk night with Eddy La Viny, Harry Diboula, Eduardo Paim and Guilou.', fr: 'Une soirée zouk avec Eddy La Viny, Harry Diboula, Eduardo Paim et Guilou.', es: 'Una noche de zouk con Eddy La Viny, Harry Diboula, Eduardo Paim y Guilou.' },
+                link: 'https://ticket.ao/event/geracao-do-zouk/',
+                tickets: true,
+                host: 'Nuno Monster',
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/geracao-do-zouk/' },
+                checked: '2026-10-25'
+            },
+            {
+                id: 'angel-fashion-2026',
+                type: 'fashion',
+                title: { pt: 'Angel Fashion 2026: O Grito da Ancestralidade', en: 'Angel Fashion 2026: O Grito da Ancestralidade', fr: 'Angel Fashion 2026 : O Grito da Ancestralidade', es: 'Angel Fashion 2026: O Grito da Ancestralidade' },
+                city: 'Luanda',
+                venue: 'Palácio de Ferro',
+                mapsQuery: 'Palácio de Ferro, Luanda',
+                start: '2026-11-28',
+                when: { pt: 'Às 18h30', en: '6:30 pm', fr: '18 h 30', es: '18:30' },
+                price: { from: 5000 },
+                tags: { pt: ['Moda', 'Desfile'], en: ['Fashion', 'Catwalk'], fr: ['Mode', 'Défilé'], es: ['Moda', 'Desfile'] },
+                desc: { pt: '9.ª edição do desfile Angel Fashion, da agência The Angel Models, com o tema «O Grito da Ancestralidade»: alta-costura, design e novos talentos da moda angolana.', en: 'The 9th Angel Fashion show, by the agency The Angel Models, on the theme "O Grito da Ancestralidade" (the cry of ancestry): couture, design and new talent in Angolan fashion.', fr: 'La 9e édition du défilé Angel Fashion, de l\'agence The Angel Models, sur le thème « O Grito da Ancestralidade » (le cri des ancêtres) : haute couture, design et nouveaux talents de la mode angolaise.', es: 'La 9.ª edición del desfile Angel Fashion, de la agencia The Angel Models, con el lema «O Grito da Ancestralidade» (el grito de los antepasados): alta costura, diseño y nuevos talentos de la moda angoleña.' },
+                link: 'https://ticket.ao/event/angel-fashion-2026-o-grito-da-ancestralidade-the-angel-models/',
+                tickets: true,
+                host: 'The Angel Models',
+                phones: ['941 102 020', '930 749 234'],
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/angel-fashion-2026-o-grito-da-ancestralidade-the-angel-models/' },
+                checked: '2026-10-25'
+            },
+            {
+                id: 'cine-pf-massoxi-2026',
+                type: 'film',
+                title: { pt: 'Cine PF: Massoxi, de Alberto Docas', en: 'Cine PF: Massoxi, by Alberto Docas', fr: 'Cine PF : Massoxi, d\'Alberto Docas', es: 'Cine PF: Massoxi, de Alberto Docas' },
+                city: 'Luanda',
+                venue: 'Palácio de Ferro',
+                mapsQuery: 'Palácio de Ferro, Luanda',
+                start: '2026-11-26',
+                when: { pt: 'Às 19h00', en: '7 pm', fr: '19 h', es: '19:00' },
+                price: { from: 2500, note: { pt: 'Inclui pipocas.', en: 'Includes popcorn.', fr: 'Pop-corn compris.', es: 'Incluye palomitas.' } },
+                tags: { pt: ['Cinema', 'Cinema angolano'], en: ['Film', 'Angolan cinema'], fr: ['Cinéma', 'Cinéma angolais'], es: ['Cine', 'Cine angoleño'] },
+                desc: { pt: 'Drama angolano de Alberto Docas sobre uma família muito pobre no município da Samba, em Luanda: um pai alcoólico, uma mãe zungueira e uma filha albina que tentam continuar de pé.', en: 'An Angolan drama by Alberto Docas about a very poor family in Samba, Luanda: an alcoholic father, a street-vendor mother (zungueira) and an albino daughter trying to keep going.', fr: 'Un drame angolais d\'Alberto Docas sur une famille très pauvre de Samba, à Luanda : un père alcoolique, une mère vendeuse ambulante (zungueira) et une fille albinos qui tentent de tenir debout.', es: 'Un drama angoleño de Alberto Docas sobre una familia muy pobre de Samba, en Luanda: un padre alcohólico, una madre vendedora ambulante (zungueira) y una hija albina que intentan seguir adelante.' },
+                link: 'https://ticket.ao/event/cine-pf-massoxi-alberto-docas/',
+                tickets: true,
+                host: 'Palácio de Ferro',
+                phones: ['930 749 234'],
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/cine-pf-massoxi-alberto-docas/' },
+                checked: '2026-10-25'
+            },
+            {
+                id: 'feira-das-startups-2026',
+                type: 'fairs',
+                title: { pt: 'Feira das Startups: 4.ª edição', en: 'Startups Fair: 4th edition', fr: 'Foire des startups : 4e édition', es: 'Feria de las Startups: 4.ª edición' },
+                city: 'Luanda',
+                venue: 'Pátio da Rádio Mais, Nova Vida',
+                mapsQuery: 'Rádio Mais, Nova Vida, Luanda',
+                start: '2026-11-06',
+                end: '2026-11-07',
+                when: { pt: 'A partir das 09h00', en: 'From 9 am', fr: 'À partir de 9 h', es: 'Desde las 9:00' },
+                price: { from: 1000, note: { pt: 'Entrada simples 1000 Kz; há bilhetes com agenda e pacotes para expositores.', en: 'Basic entry 1,000 Kz; there are tickets with a planner and packages for exhibitors.', fr: 'Entrée simple 1 000 Kz ; billets avec agenda et forfaits exposants disponibles.', es: 'Entrada simple 1000 Kz; hay entradas con agenda y paquetes para expositores.' } },
+                tags: { pt: ['Empreendedorismo', 'Tecnologia', 'Feira'], en: ['Entrepreneurship', 'Tech', 'Fair'], fr: ['Entrepreneuriat', 'Tech', 'Foire'], es: ['Emprendimiento', 'Tecnología', 'Feria'] },
+                desc: { pt: '4.ª edição da Feira das Startups, com palestras, exposição de startups e empresas, networking e oportunidades de investimento.', en: 'The 4th Startups Fair, with talks, an exhibition of startups and companies, networking and investment opportunities.', fr: 'La 4e Foire des startups, avec conférences, exposition de startups et d\'entreprises, networking et opportunités d\'investissement.', es: 'La 4.ª Feria de las Startups, con charlas, exposición de startups y empresas, networking y oportunidades de inversión.' },
+                link: 'https://ticket.ao/event/iv-edicao-feira-das-startups/',
+                tickets: true,
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/iv-edicao-feira-das-startups/' },
+                checked: '2026-10-25'
             },
             {
                 id: 'stand-up-irmao-nicolau',
@@ -7610,9 +7893,10 @@
                     { lead: { pt: 'Mastercard e outros cartões', en: 'Mastercard and other cards', fr: 'Mastercard et autres cartes', es: 'Mastercard y otras tarjetas' }, tbc: true, pt: 'Não encontrámos uma fonte oficial sobre levantamentos com estes cartões. Confirme com o seu banco.', en: 'We found no official source on withdrawals with these cards. Check with your bank.', fr: 'Nous n\'avons trouvé aucune source officielle sur les retraits avec ces cartes. Renseignez-vous auprès de votre banque.', es: 'No encontramos una fuente oficial sobre retiradas con estas tarjetas. Consúltelo con su banco.' },
                     { lead: { pt: 'Nas caixas', en: 'At cash machines', fr: 'Aux distributeurs', es: 'En los cajeros' }, pt: 'Tenha cuidado ao levantar dinheiro: há casos de pessoas seguidas e assaltadas depois de usar a caixa.', en: 'Take care when withdrawing cash: people have been followed and robbed after using a cash machine.', fr: 'Soyez prudent en retirant de l\'argent : des personnes ont été suivies et volées après être passées au distributeur.', es: 'Tenga cuidado al sacar dinero: ha habido personas seguidas y asaltadas después de usar un cajero.' },
                     { lead: { pt: 'Câmbio', en: 'Exchange', fr: 'Change', es: 'Cambio' }, pt: 'O Tuende mostra o câmbio do dia do Banco Nacional de Angola, com um conversor. Troque dinheiro em bancos ou em casas de câmbio e confirme antes o valor final.', en: 'Tuende shows the Banco Nacional de Angola rate of the day, with a converter. Change money at banks or exchange bureaus and check the final amount first.', fr: 'Tuende affiche le taux du jour de la Banco Nacional de Angola, avec un convertisseur. Changez de l\'argent dans les banques ou les bureaux de change et vérifiez d\'abord le montant final.', es: 'Tuende muestra el tipo de cambio del día del Banco Nacional de Angola, con un conversor. Cambie dinero en bancos o casas de cambio y confirme antes el importe final.', fx: true, category: 'services' },
-                    { lead: { pt: 'Entrar e sair com dinheiro', en: 'Bringing money in and out', fr: 'Entrer et sortir avec de l\'argent', es: 'Entrar y salir con dinero' }, pt: 'Quem entra com 10 mil dólares ou mais (somando kwanzas e moeda estrangeira) tem de declarar na alfândega e guardar o duplicado. À saída, quem não vive em Angola pode levar a moeda estrangeira com que entrou, mostrando esse duplicado (Aviso n.º 6/22 do BNA).', en: 'If you arrive with 10,000 US dollars or more (kwanzas and foreign currency added together), you must declare it at customs and keep the copy. When leaving, non-residents can take out the foreign currency they brought in by showing that copy (BNA Notice 6/22).', fr: 'Si vous arrivez avec 10 000 dollars américains ou plus (kwanzas et devises additionnés), vous devez les déclarer à la douane et garder la copie. À la sortie, les non-résidents peuvent emporter les devises apportées en présentant cette copie (Avis 6/22 de la BNA).', es: 'Si llega con 10 000 dólares estadounidenses o más (sumando kwanzas y divisas), debe declararlo en la aduana y guardar la copia. Al salir, los no residentes pueden llevarse las divisas que trajeron mostrando esa copia (Aviso 6/22 del BNA).' }
+                    { lead: { pt: 'Entrar e sair com dinheiro', en: 'Bringing money in and out', fr: 'Entrer et sortir avec de l\'argent', es: 'Entrar y salir con dinero' }, pt: 'Quem entra com 10 mil dólares ou mais (somando kwanzas e moeda estrangeira) tem de declarar na alfândega e guardar o duplicado. À saída, quem não vive em Angola pode levar a moeda estrangeira com que entrou, mostrando esse duplicado (Aviso n.º 6/22 do BNA).', en: 'If you arrive with 10,000 US dollars or more (kwanzas and foreign currency added together), you must declare it at customs and keep the copy. When leaving, non-residents can take out the foreign currency they brought in by showing that copy (BNA Notice 6/22).', fr: 'Si vous arrivez avec 10 000 dollars américains ou plus (kwanzas et devises additionnés), vous devez les déclarer à la douane et garder la copie. À la sortie, les non-résidents peuvent emporter les devises apportées en présentant cette copie (Avis 6/22 de la BNA).', es: 'Si llega con 10 000 dólares estadounidenses o más (sumando kwanzas y divisas), debe declararlo en la aduana y guardar la copia. Al salir, los no residentes pueden llevarse las divisas que trajeron mostrando esa copia (Aviso 6/22 del BNA).' },
+                    { lead: { pt: 'Pagar em prestações', en: 'Paying in instalments', fr: 'Payer en plusieurs fois', es: 'Pagar a plazos' }, pt: 'O Ministério do Turismo está a preparar, com o Standard Bank, o BAI e o Millennium Atlântico, pagamentos em prestações para estadias, viagens e pacotes turísticos. A primeira fase é em Luanda, Namibe, Benguela, Huíla e Malanje: os operadores começaram a aderir a 5 de agosto de 2026 e as condições para o público ainda não foram anunciadas.', en: 'The Ministry of Tourism is preparing, with Standard Bank, BAI and Millennium Atlântico, instalment payments for stays, trips and tour packages. The first phase covers Luanda, Namibe, Benguela, Huíla and Malanje: operators began signing up on 5 August 2026, and the terms for the public have not been announced yet.', fr: 'Le ministère du Tourisme prépare, avec Standard Bank, BAI et Millennium Atlântico, le paiement en plusieurs fois des séjours, voyages et forfaits touristiques. La première phase concerne Luanda, Namibe, Benguela, Huíla et Malanje : les opérateurs ont commencé à adhérer le 5 août 2026, et les conditions pour le public n\'ont pas encore été annoncées.', es: 'El Ministerio de Turismo prepara, con Standard Bank, BAI y Millennium Atlântico, pagos a plazos para estancias, viajes y paquetes turísticos. La primera fase abarca Luanda, Namibe, Benguela, Huíla y Malanje: los operadores empezaron a adherirse el 5 de agosto de 2026 y las condiciones para el público aún no se han anunciado.' }
                 ],
-                sources: [PT_ADVICE, UK_ADVICE, { label: 'Aviso n.º 6/22 do BNA (lex.ao)', url: 'https://lex.ao/docs/banco-nacional-de-angola/2022/aviso-n-o-6-22-de-03-de-marco/' }, { label: 'Ver Angola (março de 2022)', url: 'https://www.verangola.net/va/pt/032022/BancaSeguros/29826/BNA-vai-autorizar-residentes-cambiais-a-sair-do-pa%C3%ADs-com-moeda-nacional-ou-estrangeira-at%C3%A9-10-mil-d%C3%B3lares.htm' }]
+                sources: [PT_ADVICE, UK_ADVICE, { label: 'Ver Angola (agosto de 2026)', url: 'https://www.verangola.net/va/en/082026/Tourism/49739/The-Ministry-of-Tourism\'s-program-will-allow-citizens-to-pay-for-trips-stays-and-tourist-packages-in-installments.htm' }, { label: 'Aviso n.º 6/22 do BNA (lex.ao)', url: 'https://lex.ao/docs/banco-nacional-de-angola/2022/aviso-n-o-6-22-de-03-de-marco/' }, { label: 'Ver Angola (março de 2022)', url: 'https://www.verangola.net/va/pt/032022/BancaSeguros/29826/BNA-vai-autorizar-residentes-cambiais-a-sair-do-pa%C3%ADs-com-moeda-nacional-ou-estrangeira-at%C3%A9-10-mil-d%C3%B3lares.htm' }]
             },
             {
                 id: 'rede', icon: 'signal', title: { pt: 'Telemóvel e internet', en: 'Phone and internet', fr: 'Téléphone et internet', es: 'Teléfono e internet' },
@@ -8569,6 +8853,7 @@
                         <div class="card-facts">
                             ${stats ? `<span><span class="rating">★ ${stats.avg.toFixed(1)}</span> ${reviewCountText(stats.count)}</span>` : ''}
                             <span class="price-pill${!v.price ? ' tbc' : v.price.free ? ' free' : ''}">${escapeHTML(priceText(v))}</span>
+                            ${OFFICIAL_CLASS[v.id] ? `<span class="official-pill">${icon('star')}${t('officialStars', { n: OFFICIAL_CLASS[v.id].stars })}</span>` : ''}
                             ${options.fromLuanda ? `<span>${t('fromLuanda', { d: formatKm(kmBetween(LUANDA_CENTRE, v)) })}</span>` : dist ? `<span>${dist}</span>` : ''}
                             ${statusHTML(v)}
                             ${eventPillHTML(v)}
@@ -10385,6 +10670,21 @@
                 </section>`;
         }
 
+        // Official ratings from the Ministry of Tourism's reclassification (Reclassifica Turismo 2025-2027, Presidential Decree 188/25).
+        const RECLASS_SOURCE = { label: 'Forbes África Lusófona (17 de julho de 2026)', url: 'https://forbesafricalusofona.com/hotel-victoria-garden-sujeito-a-terceira-inspeccao-para-manter-classificacao-de-cinco-estrelas/' };
+        const OFFICIAL_CLASS = {
+            6: { stars: 5, kept: true, date: '2026-07-17', source: RECLASS_SOURCE },
+            186: { stars: 5, kept: false, date: '2026-07-17', source: RECLASS_SOURCE },
+            191: { stars: 5, kept: false, date: '2026-07-17', source: RECLASS_SOURCE }
+        };
+        const monthYear = (iso) => new Date(`${iso}T12:00:00Z`).toLocaleDateString(locale(), { month: 'long', year: 'numeric' });
+        function officialRowHTML(v) {
+            const o = OFFICIAL_CLASS[v.id];
+            if (!o) return '';
+            const text = t(o.kept ? 'officialKept' : 'officialConditional', { n: o.stars, date: monthYear(o.date) });
+            return `<div class="fact"><dt>${t('officialClassLabel')}</dt><dd>${escapeHTML(text)} <a class="text-link" href="${escapeHTML(o.source.url)}" target="_blank" rel="noopener">${escapeHTML(o.source.label)}</a></dd></div>`;
+        }
+
         function practicalHTML(v) {
             const digits = phoneDigits(v);
             const address = v.address || placeLine(v);
@@ -10402,6 +10702,7 @@
                         <div class="fact"><dt>${t('addressLabel')}</dt><dd>${escapeHTML(address)}</dd></div>
                         <div class="fact"><dt>${t('mapLabel')}</dt><dd>${map}${v.citywide ? '' : `<a class="text-link" href="${mapsURL(v, 'search')}" target="_blank" rel="noopener">${icon('pin')}${t('viewMap')}</a>`}</dd></div>
                         <div class="fact"><dt>${t('priceLabel')}</dt><dd>${escapeHTML(priceText(v))}${fxText(v) ? `<br><span class="fx">${escapeHTML(fxText(v))}</span> <span class="price-note">(${escapeHTML(fxNote())})</span>` : ''}${v.price?.estimate ? `<br>${t('priceEstimate')}` : ''}${v.price?.note ? `<br><span class="price-note">${escapeHTML(v.price.note[lang] || v.price.note.pt)}</span>` : ''}</dd></div>
+                        ${officialRowHTML(v)}
                         <div class="fact"><dt>${t('contactLabel')}</dt><dd>${digits ? escapeHTML(v.phone) : t('toConfirm')}</dd></div>
                         <div class="fact"><dt>${t('stillToConfirm')}</dt><dd>${t('unknownFacts')}</dd></div>
                         ${verifiedRowHTML(v)}
@@ -11417,6 +11718,32 @@
                 openModal('infoModal');
                 return;
             }
+            if (kind === 'trust') {
+                const checks = [
+                    ['Google Safe Browsing', 'https://transparencyreport.google.com/safe-browsing/search?url=tuende.app'],
+                    ['Qualys SSL Labs', 'https://www.ssllabs.com/ssltest/analyze.html?d=tuende.app'],
+                    ['Mozilla HTTP Observatory', 'https://developer.mozilla.org/en-US/observatory/analyze?host=tuende.app']
+                ];
+                $('infoContent').innerHTML = `
+                    <h2 class="info-title" id="infoTitle">${t('trustTitle')}</h2>
+                    <p>${t('trustIntro')}</p>
+                    <h3 class="about-sub">${t('trustDataTitle')}</h3>
+                    <ul class="info-list"><li>${t('trustData1')}</li><li>${t('trustData2')}</li><li>${t('trustData3')}</li></ul>
+                    ${CONTACT_EMAIL ? `<p><a class="text-link" href="${escapeHTML(asset('privacy.html'))}">${t('trustPrivacy')}</a></p>` : ''}
+                    <h3 class="about-sub">${t('trustInfoTitle')}</h3>
+                    <ul class="info-list"><li>${t('trustInfo1')}</li><li>${t('trustInfo2')}</li><li>${t('trustInfo3')}</li></ul>
+                    <p><button class="link-btn" type="button" data-info="verify">${t('footerVerify')}</button></p>
+                    <h3 class="about-sub">${t('trustSiteTitle')}</h3>
+                    <ul class="info-list"><li>${t('trustSite1')}</li><li>${t('trustSite2')}</li></ul>
+                    <p>${t('trustSite3')}</p>
+                    <ul class="info-list trust-checks">${checks.map(([name, url]) => `<li><a class="text-link" href="${url}" target="_blank" rel="noopener">${icon('shield')}${name}</a></li>`).join('')}</ul>
+                    <h3 class="about-sub">${t('trustBadgesTitle')}</h3>
+                    <p>${t('trustBadges')}</p>
+                    <h3 class="about-sub">${t('aboutNotTitle')}</h3><p>${t('aboutNot')}</p>
+                    ${CONTACT_EMAIL ? `<h3 class="about-sub">${t('trustReportTitle')}</h3><p>${t('trustReport', { email: `<a class="text-link" href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>` })}</p>` : ''}`;
+                openModal('infoModal');
+                return;
+            }
             const provinces = new Set(venues.map((v) => cityOf(v))).size;
             $('infoContent').innerHTML = kind === 'about'
                 ? `<h2 class="info-title" id="infoTitle">${t('aboutTitle')}</h2>
@@ -11424,6 +11751,7 @@
                    <h3 class="about-sub">${t('aboutTrustTitle')}</h3>
                    <ul class="info-list">${[1, 2, 3, 4, 5].map((n) => `<li>${t(`aboutTrust${n}`)}</li>`).join('')}</ul>
                    <h3 class="about-sub">${t('aboutNotTitle')}</h3><p>${t('aboutNot')}</p>
+                   <p><button class="link-btn" type="button" data-info="trust">${icon('shield')}${t('trustTitle')}</button></p>
                    <h3 class="about-sub">${t('aboutForTitle')}</h3><p>${t('aboutFor')}</p>
                    <h3 class="about-sub">${t('aboutNowTitle')}</h3>
                    <p>${t('aboutNow', { places: venues.length, provinces, events: EVENTS.filter((e) => eventEnd(e) >= luandaToday()).length, routes: TRAVEL_ROUTES.length })}</p>
@@ -11557,7 +11885,7 @@
             const link = e.link
                 ? `<a class="action-btn solid" href="${escapeHTML(e.link)}" target="_blank" rel="noopener">${icon(e.tickets ? 'ticket' : 'external')}${t(e.tickets ? 'eventTickets' : 'eventOfficial')}</a>`
                 : '';
-            const directions = e.venue && !e.venueTbc
+            const directions = e.venue && !e.venueTbc && !e.noDirections
                 ? `<a class="action-btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.mapsQuery || `${e.venue}, ${e.city}, Angola`)}" target="_blank" rel="noopener">${icon('directions')}${t('directions')}</a>`
                 : '';
             // The iPhone app saves through Calendar (addEventToCalendar), so the button needs the native bridge there.
