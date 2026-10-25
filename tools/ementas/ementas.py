@@ -37,6 +37,7 @@ BASE = 'https://www.menus.ao/'
 MESMO_LUGAR = {
     'lookal-mar': 4, 'lookal-beach-club': 5, 'otto-luanda': 196, 'clube-s': 209, 'bar-terrace-skyna': 221,
     'o-almeida': 232, 'bar-da-amizade': 233, 'tia-maria': 234, 'pontovip': 235,
+    'seven-restaurante': 237, 'solar-pinguim-restaurante-e-pastelaria-lda': 238,
 }
 
 DRINKS = re.compile(r'agua|cerveja|champagne|cocktail|cognac|espumante|gin|licor|refrigerante|rum|sangri|sumo|vermute|vinho|vodka|whisk|aguardente|alergeno|garrafeira|cafetaria|bebida|cha-|cafe-|cafes|shot|tequila|bourbon|drink|wine|beer|batido|smoothie|energetic|digestiv|aperitiv|tabaco|charuto|cigar|narguil|shisha|hookah|barbearia|unha|estetica', re.I)
@@ -115,6 +116,7 @@ def build(menus, names, checked):
     def label_parts(rest):
         n = names.get(rest['slug'], {'name': rest['label'].split('|')[0].strip(), 'city': ''})
         name = n['name'].title() if n['name'].isupper() else n['name']
+        name = re.sub(r',?\s+Lda\.?$', '', name).strip()
         city = n.get('city', '').strip()
         city = CITY_FIX.get(norm(city), city if city and not city.isupper() else city.title())
         return name, city
