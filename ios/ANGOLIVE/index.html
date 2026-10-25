@@ -15398,6 +15398,91 @@
         };
 
         // Words people use, in the four languages, without accents. A trailing * matches the start of a word.
+        // Kamba's newer lines and suggestions, added to KAMBA_TEXT for each language.
+        const KAMBA_EXTRA = {
+            pt: {
+                chipsMore: ['O que é funge?', 'Onde comer moamba?', 'Comida angolana em Luanda', 'Farmácia aberta agora', 'Cinemas em Luanda', 'Como publico um momento?', 'Os meus carimbos', 'Os meus lugares guardados', 'Museus em Luanda', 'Natureza no Namibe', 'Para famílias em Luanda', 'Grátis em Luanda', 'Vida noturna em Luanda', 'Quando é a época das chuvas?', 'As 7 Maravilhas de Angola', 'Pratos e preços: O Almeida', 'É seguro andar em Luanda?', 'Internet e cartão SIM'],
+                chipMore: 'Mais ideias', moreIdeas: ['Aqui vão mais ideias:', 'Mais umas sugestões, kamba:'],
+                chipNear: 'Perto de {name}', chipPrices: 'Pratos e preços: {name}', chipDish: 'O que é {dish}?', chipDishWhere: 'Onde comer {dish}?',
+                dishWhere: 'Onde provar, com o preço na ementa publicada no menus.ao:', dishNone: 'Ainda não encontrei este prato nas ementas publicadas.',
+                dishesList: 'Os pratos que fazem a cozinha angolana: {list}. Pergunta-me por qualquer um!', dishesPlaces: 'Restaurantes do Tuende com pratos angolanos na ementa:', openDishes: 'Ver Pratos de Angola',
+                menuSample: 'Alguns pratos da ementa (menus.ao, consultada a {date}):', openMenu: 'Ementa completa',
+                moments: 'Nos Momentos, quem esteve num lugar conta como foi, com fotos e o lugar por baixo. Toca no «+» em baixo e escolhe «Publicar um momento».',
+                momentsSoon: 'Os Momentos estão quase prontos: em breve vais poder contar onde estiveste, com fotos e o lugar.', openFeed: 'Abrir os Momentos', postMoment: 'Publicar um momento',
+                passport: 'Já carimbaste {places} em {provinces} de {total} províncias. Marca «Já fui» em cada lugar onde estiveres para ganhar carimbos e medalhas.',
+                passportNone: 'Ainda não tens carimbos. Marca «Já fui» nos lugares onde estiveres (ou toca no «+» e escolhe «Já fui») e ganha um carimbo por província.',
+                saved: 'Guardaste {count}:', savedNone: 'Ainda não guardaste nenhum lugar. Toca no coração de um lugar para o guardar.',
+                recent: 'Os lugares que abriste há pouco:', recentNone: 'Ainda não abriste nenhum lugar neste dispositivo.',
+                profile: 'No teu perfil tens as notificações (comentários, gostos e quem te segue), os teus momentos, os lugares vistos e o passaporte.',
+                cinemas: 'As salas de cinema que conheço:', cinemaEvents: 'Filmes e sessões na agenda:'
+            },
+            en: {
+                chipsMore: ['What is funge?', 'Where to eat moamba?', 'Angolan food in Luanda', 'Pharmacy open now', 'Cinemas in Luanda', 'How do I post a moment?', 'My stamps', 'My saved places', 'Museums in Luanda', 'Nature in Namibe', 'Family-friendly in Luanda', 'Free things in Luanda', 'Nightlife in Luanda', 'When is the rainy season?', 'The 7 Wonders of Angola', 'Dishes and prices: O Almeida', 'Is Luanda safe?', 'Internet and SIM cards'],
+                chipMore: 'More ideas', moreIdeas: ['Here are more ideas:', 'A few more suggestions, kamba:'],
+                chipNear: 'Near {name}', chipPrices: 'Dishes and prices: {name}', chipDish: 'What is {dish}?', chipDishWhere: 'Where to eat {dish}?',
+                dishWhere: 'Where to try it, with the price on the menu published on menus.ao:', dishNone: 'I haven’t found this dish on the published menus yet.',
+                dishesList: 'The dishes at the heart of Angolan cooking: {list}. Ask me about any of them!', dishesPlaces: 'Tuende restaurants with Angolan dishes on the menu:', openDishes: 'See Angolan dishes',
+                menuSample: 'Some dishes from the menu (menus.ao, checked on {date}):', openMenu: 'Full menu',
+                moments: 'In Moments, people who went to a place share how it was, with photos and the place underneath. Tap the "+" at the bottom and choose "Post a moment".',
+                momentsSoon: 'Moments are almost ready: soon you can share where you have been, with photos and the place.', openFeed: 'Open Moments', postMoment: 'Post a moment',
+                passport: 'You have stamped {places} in {provinces} of {total} provinces. Tap "Been here" on each place you visit to collect stamps and badges.',
+                passportNone: 'No stamps yet. Tap "Been here" on the places you visit (or tap "+" and choose "Been here") and get a stamp for each province.',
+                saved: 'You saved {count}:', savedNone: 'You haven’t saved any places yet. Tap a place’s heart to save it.',
+                recent: 'Places you opened recently:', recentNone: 'You haven’t opened any places on this device yet.',
+                profile: 'Your profile has your notifications (comments, likes and followers), your moments, recently viewed places and your passport.',
+                cinemas: 'The cinemas I know:', cinemaEvents: 'Films and screenings on the agenda:'
+            },
+            fr: {
+                chipsMore: ['C’est quoi le funge ?', 'Où manger de la moamba ?', 'Cuisine angolaise à Luanda', 'Pharmacie ouverte maintenant', 'Cinémas à Luanda', 'Comment publier un moment ?', 'Mes tampons', 'Mes lieux enregistrés', 'Musées à Luanda', 'Nature au Namibe', 'En famille à Luanda', 'Gratuit à Luanda', 'Vie nocturne à Luanda', 'Quand est la saison des pluies ?', 'Les 7 Merveilles de l’Angola', 'Plats et prix : O Almeida', 'Luanda est-elle sûre ?', 'Internet et carte SIM'],
+                chipMore: 'Plus d’idées', moreIdeas: ['Voici d’autres idées :', 'Encore quelques suggestions, kamba :'],
+                chipNear: 'Près de {name}', chipPrices: 'Plats et prix : {name}', chipDish: 'C’est quoi {dish} ?', chipDishWhere: 'Où manger {dish} ?',
+                dishWhere: 'Où le goûter, avec le prix de la carte publiée sur menus.ao :', dishNone: 'Je n’ai pas encore trouvé ce plat sur les cartes publiées.',
+                dishesList: 'Les plats de la cuisine angolaise : {list}. Demande-moi n’importe lequel !', dishesPlaces: 'Restaurants du Tuende avec des plats angolais à la carte :', openDishes: 'Voir les plats d’Angola',
+                menuSample: 'Quelques plats de la carte (menus.ao, consultée le {date}) :', openMenu: 'Carte complète',
+                moments: 'Dans les Moments, ceux qui sont allés quelque part racontent comment c’était, avec photos et le lieu en dessous. Touche le « + » en bas et choisis « Publier un moment ».',
+                momentsSoon: 'Les Moments sont presque prêts : bientôt tu pourras raconter où tu es allé, avec photos et lieu.', openFeed: 'Ouvrir les Moments', postMoment: 'Publier un moment',
+                passport: 'Tu as tamponné {places} dans {provinces} des {total} provinces. Touche « Déjà visité » sur chaque lieu visité pour gagner tampons et badges.',
+                passportNone: 'Pas encore de tampons. Touche « Déjà visité » sur les lieux où tu vas (ou touche « + » puis « Déjà visité ») et gagne un tampon par province.',
+                saved: 'Tu as enregistré {count} :', savedNone: 'Tu n’as encore enregistré aucun lieu. Touche le cœur d’un lieu pour l’enregistrer.',
+                recent: 'Les lieux que tu as ouverts récemment :', recentNone: 'Tu n’as encore ouvert aucun lieu sur cet appareil.',
+                profile: 'Ton profil réunit tes notifications (commentaires, j’aime et abonnés), tes moments, les lieux vus et ton passeport.',
+                cinemas: 'Les cinémas que je connais :', cinemaEvents: 'Films et séances à l’agenda :'
+            },
+            es: {
+                chipsMore: ['¿Qué es el funge?', '¿Dónde comer moamba?', 'Comida angoleña en Luanda', 'Farmacia abierta ahora', 'Cines en Luanda', '¿Cómo publico un momento?', 'Mis sellos', 'Mis lugares guardados', 'Museos en Luanda', 'Naturaleza en Namibe', 'Para familias en Luanda', 'Gratis en Luanda', 'Vida nocturna en Luanda', '¿Cuándo es la época de lluvias?', 'Las 7 Maravillas de Angola', 'Platos y precios: O Almeida', '¿Es seguro Luanda?', 'Internet y tarjeta SIM'],
+                chipMore: 'Más ideas', moreIdeas: ['Aquí tienes más ideas:', 'Unas cuantas sugerencias más, kamba:'],
+                chipNear: 'Cerca de {name}', chipPrices: 'Platos y precios: {name}', chipDish: '¿Qué es {dish}?', chipDishWhere: '¿Dónde comer {dish}?',
+                dishWhere: 'Dónde probarlo, con el precio de la carta publicada en menus.ao:', dishNone: 'Aún no he encontrado este plato en las cartas publicadas.',
+                dishesList: 'Los platos de la cocina angoleña: {list}. ¡Pregúntame por cualquiera!', dishesPlaces: 'Restaurantes de Tuende con platos angoleños en la carta:', openDishes: 'Ver Platos de Angola',
+                menuSample: 'Algunos platos de la carta (menus.ao, consultada el {date}):', openMenu: 'Carta completa',
+                moments: 'En Momentos, quien estuvo en un lugar cuenta cómo fue, con fotos y el lugar debajo. Toca el «+» abajo y elige «Publicar un momento».',
+                momentsSoon: 'Los Momentos están casi listos: pronto podrás contar dónde estuviste, con fotos y el lugar.', openFeed: 'Abrir Momentos', postMoment: 'Publicar un momento',
+                passport: 'Has sellado {places} en {provinces} de {total} provincias. Marca «Ya fui» en cada lugar que visites para ganar sellos y medallas.',
+                passportNone: 'Aún no tienes sellos. Marca «Ya fui» en los lugares que visites (o toca «+» y elige «Ya fui») y gana un sello por provincia.',
+                saved: 'Guardaste {count}:', savedNone: 'Aún no has guardado ningún lugar. Toca el corazón de un lugar para guardarlo.',
+                recent: 'Los lugares que abriste hace poco:', recentNone: 'Aún no has abierto ningún lugar en este dispositivo.',
+                profile: 'En tu perfil tienes las notificaciones (comentarios, me gusta y seguidores), tus momentos, los lugares vistos y el pasaporte.',
+                cinemas: 'Los cines que conozco:', cinemaEvents: 'Películas y sesiones en la agenda:'
+            }
+        };
+        for (const [code, extra] of Object.entries(KAMBA_EXTRA)) {
+            const { chipsMore, ...texts } = extra;
+            Object.assign(KAMBA_TEXT[code], texts);
+            KAMBA_TEXT[code].chipsStart = [...KAMBA_TEXT[code].chipsStart, ...chipsMore];
+        }
+        const KAMBA_DISH_WORDS = {
+            moamba: ['moamba', 'muamba'], funge: ['funge', 'funji', 'fungi'], calulu: ['calulu', 'kalulu'], mufete: ['mufete'], cabidela: ['cabidela'],
+            kizaca: ['kizaca', 'quizaca'], ginguba: ['ginguba', 'jinguba'], catatos: ['catato', 'catatos'], kissangua: ['kissangua', 'quissangua'], cocada: ['cocada'], mucua: ['mucua', 'mukua']
+        };
+        const KAMBA_ANGOLAN_FOOD = / (comida angolana|cozinha angolana|gastronomia angolana|culinaria angolana|comida tipica|pratos? (tipicos?|angolanos?|tradicionais?|nacionais?)|angolan (food|dishes|cuisine)|traditional (food|dishes)|local (food|dishes)|cuisine angolaise|plats? (angolais|typiques|traditionnels)|comida angolena|cocina angolena|platos? (angolenos|tipicos|tradicionales)) /;
+        const KAMBA_MENU_WORDS = / (ementa|menu|carta|pratos|dishes|plats|carte|platos) /;
+        const KAMBA_MORE_RE = / (mais ideias|mais sugestoes|more ideas|more suggestions|plus d idees|autres idees|mas ideas|mas sugerencias) /;
+        const KAMBA_MOMENTS = / (momentos|moments|publicar um momento|publico um momento|publicar (uma )?foto|partilhar (uma |as )?fotos?|post (a )?(moment|photo)|share (a )?photo|publier (un )?moment|partager (une )?photo|publicar (un )?momento|publico un momento|compartir (una )?foto) /;
+        const KAMBA_PASSPORT = / (carimbo|carimbos|carimbar|carimbado|medalha|medalhas|ja fui|stamp|stamps|badge|badges|been here|tampon|tampons|deja visite|sello|sellos|ya fui|passaporte do tuende|tuende passport) /;
+        const KAMBA_SAVED = / (guardados|guardadas|guardei|favoritos|favoritas|saved|favourites|favorites|enregistres|favoris) /;
+        const KAMBA_RECENT = / (vistos recentemente|vi recentemente|ultimos lugares|lugares que vi|recently viewed|recent places|places i viewed|vus recemment|lieux vus|vistos recientemente) /;
+        const KAMBA_PROFILE = / (perfil|notificacao|notificacoes|seguidores|seguir pessoas|profile|notification|notifications|followers|profil|abonnes|notificaciones) /;
+        const KAMBA_CINEMA = / (cinema|cinemas|cine|cines|filme|filmes|movie|movies|film|films|pelicula|peliculas) /;
         const KAMBA_GUIDE_WORDS = {
             emergencia: ['emergencia*', 'emergency', 'emergencies', 'urgence*', 'urgencia*', 'policia', 'police', 'ambulancia', 'ambulance', 'bombeiro*', 'pompier*', 'bombero*', 'socorro', '111', '112', '113'],
             vistos: ['visto', 'vistos', 'visa', 'visas', 'visado', 'visados', 'evisa', 'passaporte*', 'passport*', 'passeport*', 'pasaporte*', 'fronteira*', 'border', 'frontiere*', 'frontera*'],
@@ -15455,7 +15540,7 @@
             sport: 'ginasio gym piscina desporto treinar treino fitness',
             transport: 'aeroporto airport aeroport aeropuerto taxi autocarro comboio ferry barco yango',
             services: 'cambio trocar exchange',
-            health: 'hospital hospitais clinica clinicas urgencia urgencias emergencia hopital clinique urgence urgences emergency doente doentes medico medicos doctor doctors sick malade medecin enfermo enferma'
+            health: 'farmacia farmacias pharmacy pharmacies pharmacie pharmacies hospital hospitais clinica clinicas urgencia urgencias emergencia hopital clinique urgence urgences emergency doente doentes medico medicos doctor doctors sick malade medecin enfermo enferma'
         };
         const KAMBA_CAT_SKIP = new Set(['centro', 'centre', 'como', 'cmo', 'around', 'place']);
         const KAMBA_FILLER = new Set(('onde ou donde where qual quais quel quelle quels quelles cual cuales which what whats que quoi qu est ce '
@@ -15914,7 +15999,7 @@
             };
         }
 
-        const kambaStartChips = () => [...KAMBA_TEXT[lang].chipsStart].sort(() => Math.random() - 0.5).slice(0, 8);
+        const kambaStartChips = () => [...[...KAMBA_TEXT[lang].chipsStart].sort(() => Math.random() - 0.5).slice(0, 8), kambaText('chipMore')];
 
         // Words that only one of the four languages uses. Words shared by two (de, que, para, en, no, tu...) are left out.
         const KAMBA_LANG_WORDS = {
@@ -15938,7 +16023,9 @@
         }
 
         function kambaReply(raw) {
-            const asked = kambaLang(raw);
+            // Suggestions are answered in the app's language ("Mais ideias" must not read as French).
+            const own = [...KAMBA_TEXT[lang].chipsStart, KAMBA_TEXT[lang].chipMore].includes(raw.trim());
+            const asked = own ? lang : kambaLang(raw);
             if (asked === lang) return kambaReplyIn(raw);
             const ui = lang;
             lang = asked;
@@ -15949,7 +16036,21 @@
             }
         }
 
+        // Every answer ends with a few more things to ask (and "Mais ideias"), so the conversation can go on.
         function kambaReplyIn(raw) {
+            const out = kambaReplyBase(raw);
+            const key = (text) => ` ${kambaWords(text).join(' ')} `;
+            const more = kambaText('chipMore');
+            if (out.chips.filter((c) => c !== more).length < 3) {
+                const seen = new Set([key(raw), ...out.chips.map(key)]);
+                const pool = KAMBA_TEXT[lang].chipsStart.filter((c) => !seen.has(key(c))).sort(() => Math.random() - 0.5);
+                out.chips.push(...pool.slice(0, 3 - out.chips.filter((c) => c !== more).length));
+            }
+            out.chips = [...out.chips.filter((c) => c !== more), more];
+            return out;
+        }
+
+        function kambaReplyBase(raw) {
             const q = kambaRead(raw);
             const out = { parts: [], cards: [], buttons: [], chips: [], facts: [] };
             const say = (key, vars) => out.parts.push(`<p>${kambaHTML(key, vars)}</p>`);
@@ -16042,6 +16143,100 @@
                 return out;
             }
 
+            // "Mais ideias": another handful of suggestions.
+            if (KAMBA_MORE_RE.test(q.full)) {
+                say('moreIdeas');
+                out.chips.push(...kambaStartChips());
+                return out;
+            }
+
+            // Angolan dishes: what a dish is and where to eat it, with the menu price (Pratos de Angola, from menus.ao).
+            const dishHits = typeof DISHES === 'undefined' ? [] : DISHES.filter((d) => (KAMBA_DISH_WORDS[d.id] || []).some((w) => q.full.includes(` ${w} `)));
+            const dish = dishHits.find((d) => d.id === 'ginguba') || dishHits[0];
+            if (dish) {
+                const dishName = dish.name[lang] || dish.name.pt;
+                out.parts.push(`<p><b>${escapeHTML(dishName)}</b>: ${escapeHTML(dish.desc[lang] || dish.desc.pt)}</p>`);
+                out.facts.push(`${dish.name.pt}: ${dish.desc.pt}`);
+                const venueOf = (w) => (w.venue ? venues.find((v) => v.id === w.venue) : null);
+                const where = dish.where.filter((w) => !prov || (venueOf(w) ? cityOf(venueOf(w)) === prov : !w.city || normalize(w.city) === normalize(prov)));
+                if (where.length) {
+                    say('dishWhere');
+                    out.parts.push(`<ul>${where.slice(0, 5).map((w) => `<li>${escapeHTML(venueOf(w)?.name || w.label)}${w.city && !venueOf(w) ? ` (${escapeHTML(w.city)})` : ''}: ${escapeHTML(w.item)}, ${escapeHTML(kzFull(w.kz))}${w.note ? ` (${escapeHTML(w.note)})` : ''}</li>`).join('')}</ul>`);
+                    out.facts.push(...where.map((w) => `${dish.name.pt} em ${w.label}: ${w.item}, ${w.kz} Kz${w.note ? ` (${w.note})` : ''}`));
+                    places(where.map(venueOf).filter(Boolean));
+                } else {
+                    say('dishNone');
+                }
+                out.buttons.push(kambaGoBtn('dishes', kambaText('openDishes')));
+                const others = DISHES.filter((d) => d.id !== dish.id && d.count).sort(() => Math.random() - 0.5).slice(0, 2);
+                out.chips.push(...others.map((d) => kambaText('chipDish', { dish: kambaLower(d.name[lang] || d.name.pt) })));
+                return out;
+            }
+            if (typeof DISHES !== 'undefined' && KAMBA_ANGOLAN_FOOD.test(q.full)) {
+                say('dishesList', { list: escapeHTML(DISHES.map((d) => d.name[lang] || d.name.pt).join(', ')) });
+                const ids = [...new Set(DISHES.flatMap((d) => d.where.map((w) => w.venue)).filter(Boolean))];
+                const list = kambaRank(venues.filter((v) => ids.includes(v.id) && (!prov || cityOf(v) === prov)));
+                if (list.length) {
+                    say('dishesPlaces');
+                    places(list);
+                }
+                out.buttons.push(kambaGoBtn('dishes', kambaText('openDishes')));
+                out.chips.push(...DISHES.filter((d) => d.count).slice(0, 3).map((d) => kambaText('chipDishWhere', { dish: kambaLower(d.name[lang] || d.name.pt) })));
+                return out;
+            }
+
+            // The app's own features: Momentos, passport stamps, saved and recently viewed places, the profile.
+            if (KAMBA_MOMENTS.test(q.full)) {
+                say(feedReady === false ? 'momentsSoon' : 'moments');
+                out.buttons.push(kambaGoBtn('feed', kambaText('openFeed')));
+                if (feedReady !== false) out.buttons.push(kambaGoBtn('compose', kambaText('postMoment')));
+                return out;
+            }
+            if (KAMBA_PASSPORT.test(q.full)) {
+                const vs = visitedPlaces();
+                if (vs.length) say('passport', { places: escapeHTML(placesCount(vs.length)), provinces: provinceTotal(vs), total: PROVINCES.length });
+                else say('passportNone');
+                out.buttons.push(kambaGoBtn('passport', t('passportTitle')));
+                return out;
+            }
+            if (KAMBA_RECENT.test(q.full)) {
+                const list = recentViewed.map((id) => venues.find((v) => v.id === id)).filter(Boolean);
+                if (list.length) { say('recent'); places(list); } else say('recentNone');
+                out.buttons.push(kambaGoBtn('profile', t('profileTitle')));
+                return out;
+            }
+            if (KAMBA_SAVED.test(q.full) && !q.category && !q.where.length) {
+                const list = venues.filter((v) => favorites.includes(v.id));
+                if (list.length) {
+                    say('saved', { count: escapeHTML(placesCount(list.length)) });
+                    places(list);
+                    out.buttons.push(kambaGoBtn('saved', t('savedBtn')));
+                } else {
+                    say('savedNone');
+                }
+                return out;
+            }
+            if (KAMBA_PROFILE.test(q.full)) {
+                say('profile');
+                out.buttons.push(kambaGoBtn('profile', t('profileTitle')));
+                return out;
+            }
+
+            // Cinemas: the cinema halls, and any film on the agenda ("cinema this weekend" still goes to the agenda).
+            if (KAMBA_CINEMA.test(q.full) && !q.when && !kambaNamedPlace(q.full)) {
+                const cines = kambaRank(venues.filter((v) => /^cine[\s-]|^cinema/i.test(v.name) && (!prov || cityOf(v) === prov)));
+                const films = upcomingEvents({ where: prov }).filter((e) => e.type === 'film').slice(0, 3);
+                if (cines.length) { say('cinemas'); places(cines); }
+                if (films.length) {
+                    say('cinemaEvents');
+                    out.cards.push(...films.map(kambaEventCard));
+                    out.facts.push(...films.map(kambaEventFact));
+                }
+                if (cines.length || films.length) {
+                    out.buttons.push(kambaGoBtn('events:all', kambaText('openAgenda')));
+                    return out;
+                }
+            }
             if (KAMBA_STATS.test(q.full) && !q.where.length && !q.category) {
                 const byType = Object.entries(venues.reduce((acc, v) => ({ ...acc, [v.type]: (acc[v.type] || 0) + 1 }), {})).sort((a, b) => b[1] - a[1]);
                 say('stats', {
@@ -16120,7 +16315,8 @@
                 const nameHit = (v) => nameWords.length > 0 && nameWords.every((w) => inName(w, v));
                 const inProv = venues.filter((v) => !q.where.length || q.where.includes(cityOf(v)));
                 let named = inProv.filter(nameHit);
-                if (!named.length && q.where.length) named = venues.filter(nameHit);
+                // Only a full place name may leave the province that was asked about ("centro histórico de Luanda" stays in Luanda).
+                if (!named.length && q.where.length && exactFits) named = venues.filter(nameHit);
                 // "Lua" is the start of "Luanda" too: when whole words narrow it down, keep those.
                 const whole = named.filter((v) => nameWords.every((w) => alternatives(stem(w)).some((alt) => index().name.get(v.id).includes(alt))));
                 if (named.length > 3 && whole.length) named = whole;
@@ -16132,12 +16328,22 @@
                     const spot = PHOTO_SPOTS.find((s) => s.id === v.id);
                     say('placeOne', { name: `<b>${escapeHTML(v.name)}</b>`, where: escapeHTML(placeLine(v)), highlight: escapeHTML(highlightOf(v)) });
                     const hours = v.hours ? statusText(openStatus(v)) : v.hoursText?.[lang] ? kambaText('hours', { hours: v.hoursText[lang] }) : '';
-                    const lines = [hours, v.price ? kambaText('price', { price: priceText(v) }) : ''].filter(Boolean);
+                    const menu = MENUS_AO[v.id];
+                    const lines = [hours, v.price || menu ? kambaText('price', { price: priceText(v) }) : ''].filter(Boolean);
                     if (lines.length) out.parts.push(`<p>${lines.map(escapeHTML).join('<br>')}</p>`);
                     const asks = (k) => KAMBA_ASK[k].test(q.full);
+                    if (menu && (asks('price') || KAMBA_MENU_WORDS.test(q.full))) {
+                        say('menuSample', { date: escapeHTML(formatDate(menu.checked)) });
+                        out.parts.push(`<ul>${menu.items.slice(0, 5).map(([n, p, , note]) => `<li>${escapeHTML(n)}: ${escapeHTML(kzFull(p))}${note ? ` (${escapeHTML(note)})` : ''}</li>`).join('')}</ul>`);
+                        out.facts.push(...menu.items.map(([n, p, , note]) => `${v.name}: ${n}, ${p} Kz${note ? ` (${note})` : ''}`));
+                        out.buttons.push(`<a class="kamba-link" href="https://www.menus.ao/${escapeHTML(menu.slug)}/menu" target="_blank" rel="noopener">${icon('external')}${escapeHTML(kambaText('openMenu'))}</a>`);
+                    } else if (menu) {
+                        out.chips.push(kambaText('chipPrices', { name: v.name }));
+                    }
+                    if (Number.isFinite(v.lat) && !v.citywide) out.chips.push(kambaText('chipNear', { name: v.name }));
                     const details = [
                         !hours && asks('hours') ? kambaText('hoursTbc') : '',
-                        !v.price && asks('price') ? kambaText('priceTbc') : '',
+                        !v.price && !menu && asks('price') ? kambaText('priceTbc') : '',
                         asks('address') ? kambaText('address', { address: v.address || placeLine(v) }) : '',
                         asks('phone') ? (v.phone?.replace(/\D/g, '') ? kambaText('phone', { phone: v.phone }) : kambaText('phoneTbc')) : '',
                         q.flags.family ? kambaText(v.family ? 'familyYes' : 'familyNo') : '',
@@ -16170,7 +16376,8 @@
                 }
             }
 
-            const guideTopics = q.topics.slice(0, 2);
+            // "Farmácia aberta agora" wants the places open now, not the health advice.
+            const guideTopics = q.topics.filter((id) => !(id === 'saude' && q.category === 'health' && q.flags.open)).slice(0, 2);
             guideTopics.forEach((id, i) => {
                 const g = GUIDE.find((x) => x.id === id);
                 // Asking for a hospital or a doctor: the advice about clinics comes before malaria and water.
@@ -16472,6 +16679,12 @@
             }
             else if (kind === 'recommend') showRecommend();
             else if (kind === 'about') openInfo('about');
+            else if (kind === 'dishes') showDishes();
+            else if (kind === 'feed') showFeed();
+            else if (kind === 'compose') openCompose();
+            else if (kind === 'passport') showPassport();
+            else if (kind === 'saved') showResults({ saved: true });
+            else if (kind === 'profile') showProfile();
         }
 
         function kambaLocate() {
