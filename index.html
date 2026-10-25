@@ -1408,6 +1408,15 @@
         :is(#passportView, #quizView, .map-off) .submit-btn .icon { width: 18px; height: 18px; flex: none; }
         :is(#passportView, #quizView) .cta-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
         .event-badge.soon { background: var(--accent); color: var(--accent-ink); }
+        .dish-card { margin-top: 18px; padding: 16px 18px; border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); }
+        .dish-card h2 { margin: 0 0 6px; font-size: 21px; }
+        .dish-card > p { margin: 0; }
+        .dish-where { display: flex; align-items: center; gap: 6px; font-size: 16px; margin: 14px 0 6px; }
+        .dish-where .icon { width: 18px; height: 18px; color: var(--primary); }
+        .dish-list { list-style: none; margin: 0; padding: 0; }
+        .dish-list li { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }
+        .dish-list b { white-space: nowrap; }
+        .dish-item, .dish-city { font-size: 13px; color: var(--muted); }
         .all-cats { margin-top: 12px; }
         .all-cats > summary { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; cursor: pointer; font-weight: 700; color: var(--primary); list-style: none; }
         .all-cats > summary::-webkit-details-marker { display: none; }
@@ -1702,6 +1711,13 @@
             <div id="fxBody"></div>
         </section>
 
+        <section id="dishesView" class="guide-page" hidden aria-labelledby="dishesTitle">
+            <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
+            <h1 class="rec-title" id="dishesTitle" data-i18n="dishesTitle">Pratos de Angola</h1>
+            <p class="rec-intro" data-i18n="dishesIntro">Os pratos que fazem a cozinha angolana, o que levam e onde os provar, com o preço na ementa de cada restaurante.</p>
+            <div id="dishesBody"></div>
+        </section>
+
         <section id="passportView" class="guide-page" hidden aria-labelledby="passportTitle">
             <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
             <h1 class="rec-title" id="passportTitle" data-i18n="passportTitle">O meu passaporte</h1>
@@ -1726,6 +1742,7 @@
                     <button type="button" class="footer-link" data-action="map" data-i18n="mapTitle">Mapa dos lugares</button>
                     <button type="button" class="footer-link" data-action="routes" data-i18n="routesTitle">Roteiros</button>
                     <button type="button" class="footer-link" data-action="wonders" data-i18n="wondersTitle">Maravilhas de Angola</button>
+                    <button type="button" class="footer-link" data-action="dishes" data-i18n="dishesTitle">Pratos de Angola</button>
                     <a class="footer-link" id="footerPlaces" href="lugares/" data-i18n="footerPlaces">Todos os lugares</a>
                 </nav>
                 <nav class="footer-col" aria-labelledby="footPlan">
@@ -3112,6 +3129,18 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                dishesTitle: 'Pratos de Angola',
+                dishesIntro: 'Os pratos que fazem a cozinha angolana, o que levam e onde os provar, com o preço na ementa de cada restaurante.',
+                dishesWhere: 'Onde provar',
+                dishesNone: 'Ainda não o encontrámos nas ementas publicadas.',
+                dishesNote: 'Preços das ementas que os próprios restaurantes publicam no menus.ao, consultadas a {date}. Podem mudar: confirme no restaurante.',
+                dishesMore: 'e mais {n} restaurantes',
+                dishesBanner: 'Pratos de Angola: o que levam e onde os provar, com preços',
+                menuAoTitle: 'Pratos e preços',
+                menuAoNote: 'Segundo a ementa que o restaurante publica no menus.ao, consultada a {date}. Os preços podem mudar.',
+                menuAoRange: 'A maioria dos pratos custa entre {a} e {b}',
+                menuAoFull: 'Ver a ementa completa ({n} itens)',
+                dishNamesNote: '',
                 allCategories: 'Ver todas as categorias',
                 listsTitle: 'Listas e roteiros',
                 listsSub: 'Escolhas por tema e percursos de 1 a 3 dias.',
@@ -3879,6 +3908,18 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                dishesTitle: 'Angolan dishes',
+                dishesIntro: 'The dishes at the heart of Angolan cooking, what goes into them and where to try them, with the price on each restaurant\'s menu.',
+                dishesWhere: 'Where to try it',
+                dishesNone: 'Not found on the published menus yet.',
+                dishesNote: 'Prices from the menus the restaurants themselves publish on menus.ao, checked on {date}. They may change: check with the restaurant.',
+                dishesMore: 'and {n} more restaurants',
+                dishesBanner: 'Angolan dishes: what they are and where to try them, with prices',
+                menuAoTitle: 'Dishes and prices',
+                menuAoNote: 'From the menu the restaurant publishes on menus.ao, checked on {date}. Prices may change.',
+                menuAoRange: 'Most dishes cost between {a} and {b}',
+                menuAoFull: 'See the full menu ({n} items)',
+                dishNamesNote: 'Dish names as on the menu, in Portuguese.',
                 allCategories: 'See all categories',
                 listsTitle: 'Lists and itineraries',
                 listsSub: 'Picks by theme and routes of 1 to 3 days.',
@@ -4646,6 +4687,18 @@
                 saveDataOff: 'Économie de données : désactivée',
                 saveDataNote: 'Pas de photos dans les listes ni de cartes automatiques, pour consommer moins de données mobiles.',
                 mapLoad: 'Afficher la carte',
+                dishesTitle: 'Plats angolais',
+                dishesIntro: 'Les plats qui font la cuisine angolaise, ce qu\'ils contiennent et où les goûter, avec le prix sur la carte de chaque restaurant.',
+                dishesWhere: 'Où le goûter',
+                dishesNone: 'Pas encore trouvé sur les cartes publiées.',
+                dishesNote: 'Prix des cartes que les restaurants publient eux-mêmes sur menus.ao, consultées le {date}. Ils peuvent changer : vérifiez auprès du restaurant.',
+                dishesMore: 'et {n} autres restaurants',
+                dishesBanner: 'Plats angolais : ce qu\'ils sont et où les goûter, avec les prix',
+                menuAoTitle: 'Plats et prix',
+                menuAoNote: 'D\'après la carte que le restaurant publie sur menus.ao, consultée le {date}. Les prix peuvent changer.',
+                menuAoRange: 'La plupart des plats coûtent entre {a} et {b}',
+                menuAoFull: 'Voir la carte complète ({n} articles)',
+                dishNamesNote: 'Noms des plats tels qu\'ils figurent sur la carte, en portugais.',
                 allCategories: 'Voir toutes les catégories',
                 listsTitle: 'Listes et itinéraires',
                 listsSub: 'Sélections par thème et parcours de 1 à 3 jours.',
@@ -5413,6 +5466,18 @@
                 saveDataOff: 'Ahorro de datos: desactivado',
                 saveDataNote: 'Sin fotos en las listas ni mapas automáticos, para gastar menos datos móviles.',
                 mapLoad: 'Mostrar mapa',
+                dishesTitle: 'Platos de Angola',
+                dishesIntro: 'Los platos que definen la cocina angoleña, qué llevan y dónde probarlos, con el precio en la carta de cada restaurante.',
+                dishesWhere: 'Dónde probarlo',
+                dishesNone: 'Aún no lo encontramos en las cartas publicadas.',
+                dishesNote: 'Precios de las cartas que los propios restaurantes publican en menus.ao, consultadas el {date}. Pueden cambiar: confírmelo en el restaurante.',
+                dishesMore: 'y {n} restaurantes más',
+                dishesBanner: 'Platos de Angola: qué llevan y dónde probarlos, con precios',
+                menuAoTitle: 'Platos y precios',
+                menuAoNote: 'Según la carta que el restaurante publica en menus.ao, consultada el {date}. Los precios pueden cambiar.',
+                menuAoRange: 'La mayoría de los platos cuesta entre {a} y {b}',
+                menuAoFull: 'Ver la carta completa ({n} artículos)',
+                dishNamesNote: 'Nombres de los platos tal como aparecen en la carta, en portugués.',
                 allCategories: 'Ver todas las categorías',
                 listsTitle: 'Listas e itinerarios',
                 listsSub: 'Selecciones por tema y rutas de 1 a 3 días.',
@@ -6059,6 +6124,12 @@
         const LUANDA_CENTRE = { lat: -8.8383, lng: 13.2344 };
 
         const RECOMMENDED = [7, 26, 11, 16, 22, 19, 1, 28];
+
+        // Dish prices from the menus restaurants publish themselves on menus.ao (a Delta Cafés service), checked on the date given.
+        // Only places that are the same as a Tuende place get MENUS_AO; DISHES lists every restaurant there that serves each dish.
+        const MENUS_AO = {"209": {"slug": "clube-s", "label": "Clube S", "checked": "2026-10-25", "total": 12, "min": 2900, "max": 12600, "items": [["Bife à RBS", 10000, "Snacks", ""], ["Creme de Legumes", 2900, "Entradas Quentes", ""], ["Bife à Mário a Saber a peixe", 7000, "peixes", ""], ["Bacalhau à Clube S", 12200, "Mar", ""], ["Pica Pau (Lombo)", 5200, "Couvert", ""], ["Grelhada Mista (2 pax)", 12600, "Snacks", ""], ["Hamburguer Grelhado à Clube S", 4700, "Snacks", ""], ["Thai de Camarão com Ananas", 12200, "Snacks", ""], ["Tagliatelle de Cogumelos", 7000, "Snacks", ""]]}, "4": {"slug": "lookal-mar", "label": "Lookal Mar", "checked": "2026-10-25", "total": 131, "min": 7800, "max": 68000, "items": [["Bife com molho de Mostarda à Maneira Antiga", 27000, "carnes", ""], ["Menu 1", 16000, "entradas", ""], ["Caranguejo Do Alaska", 380000, "mariscos", "Preço Por KG"], ["Bitoque de Lagosta", 36000, "peixes", ""], ["Arroz de Línguas de Bacalhau", 62000, "Peixe", ""], ["Creme de Marisco", 6900, "sopas", ""], ["Bife do Lombo à Lookal Mar", 27000, "carnes", ""], ["Camarão à Guilho", 18000, "entradas", ""], ["Ameijoas à Bulhão Pato", 194120, "mariscos", "Preço Por KG"], ["Sardinhas", 41180, "peixes", ""], ["Sopa de Marisco", 78000, "sopas", ""], ["Bife Do Lombo à Portuguêsa", 27000, "carnes", ""]]}, "5": {"slug": "lookal-beach-club", "label": "Lookal Beach Club", "checked": "2026-10-25", "total": 195, "min": 7400, "max": 28000, "items": [["Kizaca Lookal Beach", 3500, "Acompanhamentos", ""], ["Carpaccio de Atum", 15800, "Entradas Sushi", ""], ["Atum", 9800, "Temaki", ""], ["Camarão (3 peças)", 12200, "Tempura", ""], ["Ebi Maki (6 peças)", 10200, "Sushi", ""], ["Atum Picante (4 peças)", 9800, "Uramaki", ""], ["Atum (2 peças)", 6800, "Neguiri", ""], ["Atum Picante (2 peças)", 8200, "Gunkan", ""], ["15 Peças", 24200, "Sashimi", ""], ["15 Peças Só Sushi", 22100, "Combinados", ""], ["Atum Frito (6 peças)", 10200, "Hot", ""], ["Arroz de Sushi", 2500, "Extras", ""]]}, "221": {"slug": "bar-terrace-skyna", "label": "Bar Terrace SKYNA", "checked": "2026-10-25", "total": 97, "min": 5500, "max": 11000, "items": [["Asinhas De Frango", 3500, "para picar", ""], ["Polvo à Lagareiro", 8200, "peixes e carnes", ""], ["Bife à Portuguesa", 12000, "Carne", ""], ["Filete De Peixe", 7500, "Peixe", ""], ["Four Seasons Large", 11000, "pizzas", ""], ["Salada Caesar", 7500, "saladas e entradas", ""], ["Hambúrguer de Frango SKYNA", 7500, "sandwiches", ""], ["Chicken Burger SKYNA", 7500, "sandwiches ing", ""], ["Creme De Tomate", 3300, "sopas e massas", ""], ["Sopa De Legumes", 3300, "soups e pastas", ""], ["Asinhas De Frango Panadas", 3500, "para picar", ""], ["Strogonoff de Novilho", 8500, "peixes e carnes", ""]]}, "196": {"slug": "otto-luanda", "label": "Otto - Luanda", "checked": "2026-10-25", "total": 77, "min": 14500, "max": 32500, "items": [["Calulu", 15000, "Peixe", ""], ["Mufete de peixe", 38000, "Peixe", "Preço por kg"], ["Moamba de galinha", 15000, "CARNE", ""], ["Pizza 8", 17500, "Pizze", ""], ["Bruschetta Italiana", 9500, "entradas antipasto", ""], ["Tagliere grande di Formaggi e Salumi tipici italiani", 38000, "Entradas", ""], ["Peito alto", 16000, "pratos nacionais", ""], ["Carne seca com muteta", 17000, "CARNE", ""], ["Risotto al lime com fetta di salmone allo champagne", 25500, "Risottos", ""], ["Linguine Nero con frutti de Mare", 65000, "O mar - Il Mare", ""], ["Gnocchi quattro formaggi", 23500, "A Terra - La Terra", ""], ["Risotto aí funghi com medaglioni di vitello al miele", 28500, "O Risoto - Il Riso", ""]]}};
+        const DISHES = [{"id": "moamba", "name": {"pt": "Moamba de galinha", "en": "Moamba de galinha (chicken moamba)", "fr": "Moamba de galinha (poulet à la moamba)", "es": "Moamba de galinha (pollo a la moamba)"}, "desc": {"pt": "Galinha cozinhada com pasta de dendém (óleo de palma), quiabo e alho, servida com funge ou arroz. É muitas vezes apontada, com o funge, como o prato nacional de Angola.", "en": "Chicken cooked with palm-nut paste, okra and garlic, served with funge or rice. Together with funge, it is often called Angola's national dish.", "fr": "Poulet cuit avec de la pâte de noix de palme, du gombo et de l'ail, servi avec du funge ou du riz. Avec le funge, on le présente souvent comme le plat national de l'Angola.", "es": "Pollo cocinado con pasta de nuez de palma, quimbombó y ajo, servido con funge o arroz. Junto con el funge, a menudo se considera el plato nacional de Angola."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "bar-da-amizade", "label": "Bar da Amizade", "city": "Luanda", "venue": null, "item": "Moamba de galinha rija", "kz": 2700, "note": ""}, {"slug": "solar-pinguim-restaurante-e-pastelaria-lda", "label": "Solar Pinguim Restaurante e Pastelaria, Lda.", "city": "Uíge", "venue": null, "item": "Muamba de Galinha ( por encomenda)", "kz": 5000, "note": ""}, {"slug": "otto-luanda", "label": "Otto - Luanda", "city": "Luanda", "venue": 196, "item": "Moamba de galinha", "kz": 15000, "note": ""}, {"slug": "seven-restaurante", "label": "Seven Restaurante", "city": "Luanda", "venue": null, "item": "Muamba de Galinha", "kz": 36900, "note": "Prato para 4 Pessoas - Encomendar 1 Dia de Antecedência"}], "count": 4}, {"id": "funge", "name": {"pt": "Funge", "en": "Funge", "fr": "Funge", "es": "Funge"}, "desc": {"pt": "Papa espessa de farinha de mandioca; no sul faz-se mais de milho e chama-se pirão. Acompanha peixe, carne, galinha ou feijão.", "en": "A thick porridge of cassava flour; in the south it is more often made of maize and called pirão. It goes with fish, meat, chicken or beans.", "fr": "Bouillie épaisse de farine de manioc ; dans le sud, on la fait plutôt au maïs et on l'appelle pirão. Elle accompagne poisson, viande, poulet ou haricots.", "es": "Gacha espesa de harina de mandioca; en el sur se hace más de maíz y se llama pirão. Acompaña pescado, carne, pollo o frijoles."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}, {"label": "Wikipédia (Culinária de Angola)", "url": "https://pt.wikipedia.org/wiki/Culin%C3%A1ria_de_Angola"}], "where": [{"slug": "resort-paraiso-do-25", "label": "Resort Paraíso do 25", "city": "Luanda", "venue": null, "item": "Funge Bombó | Milho", "kz": 1000, "note": ""}, {"slug": "tia-maria", "label": "TIA MARIA", "city": "Luanda", "venue": null, "item": "FUNGE", "kz": 2000, "note": ""}], "count": 2}, {"id": "calulu", "name": {"pt": "Calulu", "en": "Calulu", "fr": "Calulu", "es": "Calulu"}, "desc": {"pt": "Peixe seco (ou fresco) cozinhado com legumes como quiabo, batata-doce e folhas de gimboa, servido com arroz, funge, feijão de óleo de palma e farofa.", "en": "Dried (or fresh) fish cooked with vegetables such as okra, sweet potato and gimboa leaves, served with rice, funge, palm-oil beans and farofa.", "fr": "Poisson séché (ou frais) cuit avec des légumes comme le gombo, la patate douce et les feuilles de gimboa, servi avec riz, funge, haricots à l'huile de palme et farofa.", "es": "Pescado seco (o fresco) cocinado con verduras como quimbombó, boniato y hojas de gimboa, servido con arroz, funge, frijoles con aceite de palma y farofa."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "bar-da-amizade", "label": "Bar da Amizade", "city": "Luanda", "venue": null, "item": "Calulu de Carne Seca", "kz": 5000, "note": ""}, {"slug": "o-almeida", "label": "O Almeida", "city": "Luanda", "venue": null, "item": "CALULU de PEIXES SECO e FRESCO", "kz": 5500, "note": ""}, {"slug": "otto-luanda", "label": "Otto - Luanda", "city": "Luanda", "venue": 196, "item": "Calulu", "kz": 15000, "note": ""}, {"slug": "seven-restaurante", "label": "Seven Restaurante", "city": "Luanda", "venue": null, "item": "Calulu de Carne", "kz": 36900, "note": "Prato para 4 Pessoas - Encomendar 1 Dia de Antecedência"}], "count": 4}, {"id": "mufete", "name": {"pt": "Mufete", "en": "Mufete", "fr": "Mufete", "es": "Mufete"}, "desc": {"pt": "Peixe grelhado, muitas vezes cacusso (tilápia de rio), com molho de cebola, vinagre e especiarias, servido com feijão de óleo de palma e mandioca cozida, arroz, batata-doce ou farofa.", "en": "Grilled fish, often cacusso (river tilapia), with an onion, vinegar and spice sauce, served with palm-oil beans and boiled cassava, rice, sweet potato or farofa.", "fr": "Poisson grillé, souvent du cacusso (tilapia de rivière), avec une sauce à l'oignon, au vinaigre et aux épices, servi avec des haricots à l'huile de palme et du manioc bouilli, du riz, de la patate douce ou de la farofa.", "es": "Pescado a la parrilla, a menudo cacusso (tilapia de río), con salsa de cebolla, vinagre y especias, servido con frijoles con aceite de palma y mandioca cocida, arroz, boniato o farofa."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "o-almeida", "label": "O Almeida", "city": "Luanda", "venue": null, "item": "MUFETE de CHOPA na BRASA", "kz": 4800, "note": ""}, {"slug": "pontovip", "label": "PontoVIP", "city": "Luanda", "venue": null, "item": "1. Mufete de Carapau", "kz": 5000, "note": ""}, {"slug": "resort-paraiso-do-25", "label": "Resort Paraíso do 25", "city": "Luanda", "venue": null, "item": "Mufete de carapau", "kz": 5500, "note": ""}, {"slug": "restaurante-grelhadinho", "label": "Restaurante Grelhadinho", "city": "Luanda", "venue": null, "item": "Mufete", "kz": 7000, "note": ""}, {"slug": "seven-restaurante", "label": "Seven Restaurante", "city": "Luanda", "venue": null, "item": "Mufete", "kz": 36900, "note": "Prato para 4 Pessoas - Encomendar 1 Dia de Antecedência"}, {"slug": "otto-luanda", "label": "Otto - Luanda", "city": "Luanda", "venue": 196, "item": "Mufete de peixe", "kz": 38000, "note": "Preço por kg"}], "count": 6}, {"id": "cabidela", "name": {"pt": "Cabidela", "en": "Cabidela", "fr": "Cabidela", "es": "Cabidela"}, "desc": {"pt": "Galinha (ou outra carne) cozinhada no próprio sangue, com vinagre, tomate, cebola e alho, servida com arroz e funge.", "en": "Chicken (or other meat) cooked in its own blood with vinegar, tomato, onion and garlic, served with rice and funge.", "fr": "Poulet (ou autre viande) cuit dans son sang avec du vinaigre, de la tomate, de l'oignon et de l'ail, servi avec du riz et du funge.", "es": "Pollo (u otra carne) cocinado en su propia sangre con vinagre, tomate, cebolla y ajo, servido con arroz y funge."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "o-almeida", "label": "O Almeida", "city": "Luanda", "venue": null, "item": "CABIDELA de GALINHA", "kz": 6500, "note": ""}], "count": 1}, {"id": "kizaca", "name": {"pt": "Kizaca", "en": "Kizaca", "fr": "Kizaca", "es": "Kizaca"}, "desc": {"pt": "Folhas de mandioca cozidas, parecidas com espinafres, muitas vezes com ginguba (amendoim). Com peixe, serve-se com arroz e funge.", "en": "Cooked cassava leaves, similar to spinach, often with peanuts (ginguba). With fish, it is served with rice and funge.", "fr": "Feuilles de manioc cuites, proches des épinards, souvent avec de l'arachide (ginguba). Avec du poisson, on la sert avec du riz et du funge.", "es": "Hojas de mandioca cocidas, parecidas a las espinacas, a menudo con cacahuete (ginguba). Con pescado, se sirve con arroz y funge."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [{"slug": "lookal-beach-club", "label": "Lookal Beach Club", "city": "Luanda", "venue": 5, "item": "Kizaca Lookal Beach", "kz": 3500, "note": ""}], "count": 1}, {"id": "ginguba", "name": {"pt": "Moamba de ginguba", "en": "Moamba de ginguba (peanut moamba)", "fr": "Moamba de ginguba (moamba à l'arachide)", "es": "Moamba de ginguba (moamba de cacahuete)"}, "desc": {"pt": "A moamba feita com molho de ginguba (amendoim) em vez de pasta de dendém.", "en": "Moamba made with a peanut (ginguba) sauce instead of palm-nut paste.", "fr": "La moamba préparée avec une sauce à l'arachide (ginguba) au lieu de la pâte de noix de palme.", "es": "La moamba hecha con salsa de cacahuete (ginguba) en lugar de pasta de nuez de palma."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}, {"id": "catatos", "name": {"pt": "Catatos", "en": "Catatos", "fr": "Catatos", "es": "Catatos"}, "desc": {"pt": "Lagartas fritas com alho, servidas com arroz. Uma especialidade do Uíge.", "en": "Caterpillars fried with garlic, served with rice. A speciality of Uíge.", "fr": "Chenilles frites à l'ail, servies avec du riz. Une spécialité de l'Uíge.", "es": "Orugas fritas con ajo, servidas con arroz. Una especialidad de Uíge."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}, {"id": "kissangua", "name": {"pt": "Kissângua", "en": "Kissângua", "fr": "Kissângua", "es": "Kissângua"}, "desc": {"pt": "Bebida tradicional sem álcool do sul de Angola, feita de farinha de milho (ou de mandioca), água e açúcar.", "en": "A traditional non-alcoholic drink from southern Angola, made of maize (or cassava) flour, water and sugar.", "fr": "Boisson traditionnelle sans alcool du sud de l'Angola, à base de farine de maïs (ou de manioc), d'eau et de sucre.", "es": "Bebida tradicional sin alcohol del sur de Angola, hecha de harina de maíz (o de mandioca), agua y azúcar."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}, {"label": "Wikipédia (Culinária de Angola)", "url": "https://pt.wikipedia.org/wiki/Culin%C3%A1ria_de_Angola"}], "where": [], "count": 0}, {"id": "cocada", "name": {"pt": "Cocada amarela", "en": "Cocada amarela (yellow coconut pudding)", "fr": "Cocada amarela (flan jaune à la noix de coco)", "es": "Cocada amarela (dulce amarillo de coco)"}, "desc": {"pt": "Doce de coco ralado, açúcar, gemas de ovo e canela.", "en": "A pudding of grated coconut, sugar, egg yolks and cinnamon.", "fr": "Un dessert de noix de coco râpée, de sucre, de jaunes d'œuf et de cannelle.", "es": "Un dulce de coco rallado, azúcar, yemas de huevo y canela."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}, {"id": "mucua", "name": {"pt": "Múcua", "en": "Múcua (baobab fruit)", "fr": "Múcua (fruit du baobab)", "es": "Múcua (fruto del baobab)"}, "desc": {"pt": "O fruto seco do imbondeiro (embondeiro), muitas vezes feito em gelado.", "en": "The dried fruit of the baobab tree, often made into ice cream.", "fr": "Le fruit séché du baobab, souvent transformé en glace.", "es": "El fruto seco del baobab, a menudo convertido en helado."}, "sources": [{"label": "Wikipedia (Angolan cuisine)", "url": "https://en.wikipedia.org/wiki/Angolan_cuisine"}], "where": [], "count": 0}];
+        const DISHES_CHECKED = '2026-10-25';
 
         const COLLECTIONS = {
             beaches: { ids: [23, 25, 9, 30], cover: 25, title: 'colBeachesTitle', desc: 'colBeachesDesc' },
@@ -9221,6 +9292,33 @@
             window.scrollTo({ top: 0 });
         }
 
+        function showDishes({ push = true } = {}) {
+            state.view = 'dishes';
+            if (push) history.pushState(null, '', `${location.pathname}?page=pratos`);
+            render();
+            window.scrollTo({ top: 0 });
+        }
+
+        function renderDishes() {
+            $('dishesBody').innerHTML = DISHES.map((d) => {
+                const where = d.where.map((w) => {
+                    const v = w.venue ? venues.find((x) => x.id === w.venue) : null;
+                    const place = v
+                        ? `<button class="link-btn" type="button" data-open="${v.id}">${escapeHTML(v.name)}</button>`
+                        : `<a class="text-link" href="https://www.menus.ao/${escapeHTML(w.slug)}/menu" target="_blank" rel="noopener">${escapeHTML(w.label)}</a>`;
+                    return `<li><span>${place}${w.city ? ` <span class="dish-city">· ${escapeHTML(w.city)}</span>` : ''}<br><span class="dish-item">${escapeHTML(w.item)}${w.note ? ` (${escapeHTML(w.note)})` : ''}</span></span><b>${escapeHTML(kzFull(w.kz))}</b></li>`;
+                }).join('');
+                return `
+                    <article class="wonder-card dish-card" id="prato-${d.id}">
+                        <h2>${escapeHTML(d.name[lang] || d.name.pt)}</h2>
+                        <p>${escapeHTML(d.desc[lang] || d.desc.pt)}</p>
+                        <h3 class="dish-where">${icon('restaurant')}${t('dishesWhere')}</h3>
+                        ${where ? `<ul class="dish-list">${where}</ul>${d.count > d.where.length ? `<p class="hint">${t('dishesMore', { n: d.count - d.where.length })}</p>` : ''}` : `<p class="hint">${t('dishesNone')}</p>`}
+                        <p class="rhythm-sources">${t('rhythmSources')}: ${d.sources.map((src) => `<a href="${escapeHTML(src.url)}" target="_blank" rel="noopener">${escapeHTML(src.label)}</a>`).join(', ')}${d.where.length ? ', menus.ao' : ''}</p>
+                    </article>`;
+            }).join('') + `<p class="hint events-note">${t('dishesNote', { date: formatDate(DISHES_CHECKED) })} ${t('dishNamesNote')}</p>`;
+        }
+
         function showQuiz({ push = true } = {}) {
             state.view = 'quiz';
             if (push) history.pushState(null, '', `${location.pathname}?page=quiz`);
@@ -9247,6 +9345,7 @@
             else if (params.get('page') === 'cambio') { if (state.view !== 'fx') showFx({ push: false }); }
             else if (params.get('page') === 'passaporte') { if (state.view !== 'passport') showPassport({ push: false }); }
             else if (params.get('page') === 'quiz') { if (state.view !== 'quiz') showQuiz({ push: false }); }
+            else if (params.get('page') === 'pratos') { if (state.view !== 'dishes') showDishes({ push: false }); }
             else if (params.get('page') === 'plano') {
                 const shared = params.get('p') ? planFromParam(params.get('p')) : null;
                 showPlan({ push: false, id: location.hash.match(/^#plano-([\w-]+)$/)?.[1] || '', shared: params.get('p') ? shared || 'bad' : null });
@@ -9848,6 +9947,11 @@
             if (list.length) {
                 $('resultsList').className = 'card-grid';
                 $('resultsList').innerHTML = list.map((v) => cardHTML(v)).join('');
+                const f = state.filters;
+                const dishSearch = f.q && DISHES.some((d) => normalize(f.q).includes(normalize(d.name.pt.split(' ')[0])));
+                if (f.category === 'restaurant' || dishSearch) {
+                    $('resultsList').insertAdjacentHTML('afterbegin', `<div class="fx-banner dish-banner">${icon('restaurant')}<span>${t('dishesBanner')}</span><button class="link-btn" type="button" data-action="dishes">${t('dishesTitle')}</button></div>`);
+                }
                 if (list.every((v) => v.type === 'services')) {
                     $('resultsList').insertAdjacentHTML('afterbegin', `<div class="fx-banner">${icon('exchange')}<span><b>${t('fxTitle')}:</b> 1 USD = ${fxNumber(fx.rates.usd)} Kz · 1 EUR = ${fxNumber(fx.rates.eur)} Kz</span><button class="link-btn" type="button" data-action="fx">${t('fxOpen')}</button></div>`);
                 }
@@ -9915,7 +10019,7 @@
             renderQuickFilters();
             renderSavedButton();
             renderTabbar();
-            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx', 'plan', 'passport', 'quiz'].includes(state.view);
+            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx', 'plan', 'passport', 'quiz', 'dishes'].includes(state.view);
             $('homeView').hidden = state.view !== 'home';
             $('resultsView').hidden = state.view !== 'results';
             $('recommendView').hidden = state.view !== 'recommend';
@@ -9928,7 +10032,8 @@
             $('planView').hidden = state.view !== 'plan';
             $('passportView').hidden = state.view !== 'passport';
             $('quizView').hidden = state.view !== 'quiz';
-            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle', passport: 'passportTitle', quiz: 'quizTitle' }[state.view];
+            $('dishesView').hidden = state.view !== 'dishes';
+            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle', passport: 'passportTitle', quiz: 'quizTitle', dishes: 'dishesTitle' }[state.view];
             document.title = viewTitle ? `${t(viewTitle)} | Tuende` : `Tuende - ${t('heroTitle')}`;
             if (state.view === 'home') renderHome();
             else if (state.view === 'results') renderResults();
@@ -9941,6 +10046,7 @@
             else if (state.view === 'plan') renderPlan();
             else if (state.view === 'passport') renderPassport();
             else if (state.view === 'quiz') renderQuiz();
+            else if (state.view === 'dishes') renderDishes();
         }
 
 
@@ -11205,6 +11311,20 @@
             `;
         }
 
+        function menusAoHTML(v) {
+            const m = MENUS_AO[v.id];
+            if (!m) return '';
+            const rows = m.items.map(([name, price, sub, note]) => `
+                <div class="menu-item">
+                    <div><div class="menu-item-name">${escapeHTML(name)}</div>${sub || note ? `<div class="menu-item-desc">${escapeHTML([sub, note].filter(Boolean).join(' · '))}</div>` : ''}</div>
+                    <div class="menu-item-price">${escapeHTML(kzFull(price))}</div>
+                </div>`).join('');
+            return `<section><h3 class="section-title">${t('menuAoTitle')}${m.label && normalize(m.label).replace(/[^a-z0-9]/g, '') !== normalize(v.name).replace(/[^a-z0-9]/g, '') ? ` <span class="dish-city">· ${escapeHTML(m.label)}</span>` : ''}</h3>
+                <p class="hint" style="margin-top:6px;">${t('menuAoRange', { a: kzFull(m.min), b: kzFull(m.max) })}. ${t('menuAoNote', { date: formatDate(m.checked) })} ${t('dishNamesNote')}</p>
+                <div class="panel">${rows}</div>
+                <p><a class="text-link" href="https://www.menus.ao/${escapeHTML(m.slug)}/menu" target="_blank" rel="noopener">${icon('external')}${t('menuAoFull', { n: m.total })}</a></p></section>`;
+        }
+
         function menuHTML(v) {
             const menu = menuData[v.id];
             if (!menu) return '';
@@ -11422,6 +11542,7 @@
 
                     ${visitorHTML(v)}
                     ${menuHTML(v)}
+                    ${menusAoHTML(v)}
                     ${reviewsHTML(v)}
                 </div>
             `;
@@ -14614,9 +14735,10 @@
             if (shareBtn) { shareEvent(EVENTS.find((e) => e.id === shareBtn.dataset.eventShare)); return; }
             const action = target.closest('[data-action]');
             if (action?.dataset.action === 'home') { goHome(); return; }
-            if (action?.dataset.action === 'passport' || action?.dataset.action === 'quiz') {
+            if (action?.dataset.action === 'passport' || action?.dataset.action === 'quiz' || action?.dataset.action === 'dishes') {
                 document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
                 if (action.dataset.action === 'passport') showPassport();
+                else if (action.dataset.action === 'dishes') showDishes();
                 else showQuiz();
                 return;
             }
