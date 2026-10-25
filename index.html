@@ -732,6 +732,23 @@
 
         .panel { background: var(--surface-2); border-radius: 14px; padding: 14px; margin-top: 10px; }
 
+        /* Menus and price lists: one row that opens to the whole list. */
+        .menu-drop { border: 1.5px solid var(--border); border-radius: 16px; background: var(--surface); overflow: hidden; }
+        .menu-drop > summary { display: flex; align-items: center; gap: 12px; min-height: 68px; padding: 12px 14px; cursor: pointer; list-style: none; }
+        .menu-drop > summary::-webkit-details-marker { display: none; }
+        @media (hover: hover) { .menu-drop > summary:hover { background: var(--surface-2); } }
+        .menu-drop-ico { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 12px; background: var(--primary-soft); color: var(--primary); }
+        .menu-drop-ico .icon { width: 22px; height: 22px; }
+        .menu-drop-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+        .menu-drop-text b { font-size: 17px; font-weight: 800; line-height: 1.25; }
+        .menu-drop-text small { font-size: 14px; color: var(--muted); }
+        .menu-drop-more { flex: none; display: inline-flex; align-items: center; gap: 2px; color: var(--primary); font-size: 14px; font-weight: 700; }
+        .menu-drop-more .icon { width: 20px; height: 20px; transform: rotate(90deg); transition: transform 0.2s ease; }
+        .menu-drop[open] .menu-drop-more .icon { transform: rotate(-90deg); }
+        .menu-drop[open] .menu-drop-open, .menu-drop:not([open]) .menu-drop-close { display: none; }
+        .menu-drop-body { padding: 2px 14px 14px; border-top: 1px solid var(--line); }
+        .menu-drop-body .panel { margin-top: 10px; }
+        @media (prefers-reduced-motion: no-preference) { .menu-drop[open] .menu-drop-body { animation: fade-in 0.22s ease; } }
         .menu-group + .menu-group { margin-top: 16px; }
         .menu-group-title { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
         .menu-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--surface); border-left: 4px solid var(--accent); border-radius: 10px; padding: 10px 12px; }
@@ -3115,6 +3132,8 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                menuOpen: 'Ver tudo',
+                menuItems: '{n} itens',
                 sgLabel: 'Sugestões',
                 sgPlaces: 'Lugares',
                 sgExplore: 'Explorar',
@@ -4046,6 +4065,8 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                menuOpen: 'See all',
+                menuItems: '{n} items',
                 sgLabel: 'Suggestions',
                 sgPlaces: 'Places',
                 sgExplore: 'Explore',
@@ -10181,6 +10202,17 @@
             `;
         }
 
+        function menuDropHTML(title, meta, body) {
+            return `<section><details class="menu-drop">
+                <summary>
+                    <span class="menu-drop-ico">${icon('restaurant')}</span>
+                    <span class="menu-drop-text"><b>${title}</b><small>${meta}</small></span>
+                    <span class="menu-drop-more"><span class="menu-drop-open">${t('menuOpen')}</span><span class="menu-drop-close">${t('close')}</span>${icon('next')}</span>
+                </summary>
+                <div class="menu-drop-body">${body}</div>
+            </details></section>`;
+        }
+
         function menusAoHTML(v) {
             const m = MENUS_AO[v.id];
             if (!m) return '';
@@ -10189,10 +10221,12 @@
                     <div><div class="menu-item-name">${escapeHTML(name)}</div>${sub || note ? `<div class="menu-item-desc">${escapeHTML([sub, note].filter(Boolean).join(' · '))}</div>` : ''}</div>
                     <div class="menu-item-price">${escapeHTML(kzFull(price))}</div>
                 </div>`).join('');
-            return `<section><h3 class="section-title">${t('menuAoTitle')}${m.label && ![[v.name, m.label], [m.label, v.name]].some(([a, b]) => normalize(a).replace(/[^a-z0-9]/g, '').includes(normalize(b).replace(/[^a-z0-9]/g, ''))) ? ` <span class="dish-city">· ${escapeHTML(m.label)}</span>` : ''}</h3>
-                <p class="hint" style="margin-top:6px;">${t('menuAoRange', { a: kzFull(m.min), b: kzFull(m.max) })}. ${t('menuAoNote', { date: formatDate(m.checked) })} ${t('dishNamesNote')}</p>
+            const other = m.label && ![[v.name, m.label], [m.label, v.name]].some(([a, b]) => normalize(a).replace(/[^a-z0-9]/g, '').includes(normalize(b).replace(/[^a-z0-9]/g, '')));
+            return menuDropHTML(`${t('menuAoTitle')}${other ? ` <span class="dish-city">· ${escapeHTML(m.label)}</span>` : ''}`,
+                escapeHTML(`${t('menuItems', { n: m.items.length })} · ${kzAmount(m.min, m.max)}`), `
+                <p class="hint" style="margin-top:10px;">${t('menuAoRange', { a: kzFull(m.min), b: kzFull(m.max) })}. ${t('menuAoNote', { date: formatDate(m.checked) })} ${t('dishNamesNote')}</p>
                 <div class="panel">${rows}</div>
-                <p><a class="text-link" href="https://www.menus.ao/${escapeHTML(m.slug)}/menu" target="_blank" rel="noopener">${icon('external')}${t('menuAoFull', { n: m.total })}</a></p></section>`;
+                <p style="margin-top:10px;"><a class="text-link" href="https://www.menus.ao/${escapeHTML(m.slug)}/menu" target="_blank" rel="noopener">${icon('external')}${t('menuAoFull', { n: m.total })}</a></p>`);
         }
 
         function menuHTML(v) {
@@ -10212,7 +10246,11 @@
                     `).join('')}
                 </div>
             `).join('');
-            return `<section><h3 class="section-title">${t('menu')}</h3><p class="hint" style="margin-top:6px;">${t('menuNote')}</p><div class="panel">${groups}</div></section>`;
+            const items = Object.values(menu).flat();
+            const prices = items.map((item) => Number(String(item.price).replace(/\D/g, ''))).filter((n) => n > 0);
+            const range = prices.length ? ` · ${kzAmount(Math.min(...prices), Math.max(...prices))}` : '';
+            return menuDropHTML(t('menu'), escapeHTML(`${t('menuItems', { n: items.length })}${range}`),
+                `<p class="hint" style="margin-top:10px;">${t('menuNote')}</p><div class="panel">${groups}</div>`);
         }
 
         let reviewExtra = { helpful: {}, mine: new Set(), authors: {}, items: [], sort: 'recent', venue: null };
@@ -14918,6 +14956,8 @@
             const panel = $('venuePanel');
             const section = panel.querySelector(`[data-jump="${key}"]`);
             if (!section) return;
+            const drop = section.querySelector('details.menu-drop');
+            if (drop) drop.open = true;
             const top = section.offsetTop - $('sheetBar').firstElementChild.offsetHeight - 10;
             panel.scrollTo({ top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
         }
