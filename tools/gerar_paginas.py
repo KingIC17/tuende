@@ -331,7 +331,8 @@ def page(v, others, desc_en, near=(), events=()):
         <dl>
 {facts_html}
         </dl>
-        <p class="sources">Verificado a {e(pt_date(checked))}. Fontes: {', '.join(f'<a href="{e(src["url"])}">{e(src["label"])}</a>' for src in sources) or 'por confirmar'}. Confirme sempre antes de ir.</p>{menu_html(menu) if menu else ''}
+        <p class="sources">Verificado a {e(pt_date(checked))}. Fontes: {', '.join(f'<a href="{e(src["url"])}">{e(src["label"])}</a>' for src in sources) or 'por confirmar'}. Confirme sempre antes de ir.</p>
+        <p class="muted">É o dono deste lugar? <a href="../#dono-{v['id']}">Atualize os dados no Tuende</a>: telefone, horário, preços e fotos. É grátis e confirmamos consigo antes de publicar.</p>{menu_html(menu) if menu else ''}
 
         {f'<h2>Perto daqui</h2>{chr(10)}        <ul class="links">{chr(10)}{near_html}{chr(10)}        </ul>{chr(10)}        <p class="muted">Distâncias em linha reta{"" if v.get("exact") else "; a posição deste lugar é aproximada"}.</p>' if near else ''}{events_html}
 
