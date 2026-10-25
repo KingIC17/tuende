@@ -16,6 +16,11 @@
 --      e os números de seguidores são públicos (quem segue quem, não).
 --   9. Perfil e caixa de entrada: as minhas contagens (momentos, gostos recebidos, seguidores, avaliações, quantas
 --      pessoas as minhas avaliações ajudaram) e as notificações (comentários, gostos por momento, seguidores novos).
+--  10. Duas listas só para o dono (Table Editor; a app não lhes tem acesso):
+--      «moderacao»: tudo o que foi denunciado (momentos, comentários, avaliações, fotos e vídeos), o mais recente primeiro.
+--          Para esconder: abrir a tabela do tipo indicado (posts, post_comments, reviews ou submissions) e pôr status = 'hidden'.
+--      «atualizacoes_de_donos»: o que os donos enviaram em «É o dono deste lugar?» (telefone, horário, preços, website,
+--          fotos na pasta privada recommendations). Confirmar pelo contacto antes de mudar o lugar na app.
 --
 -- Para tirar algo do ar: Table Editor > posts (ou post_comments) > status = 'hidden'.
 
@@ -466,6 +471,30 @@ create or replace function public.my_notifications()
 $$;
 revoke execute on function public.my_notifications() from public, anon;
 grant execute on function public.my_notifications() to authenticated;
+
+-- 10. Listas para o dono
+create or replace view public.moderacao with (security_invoker = true) as
+    select 'momento (posts)'::text as tipo, p.id::text as id, p.author as autor, left(p.body, 200) as texto, p.report_count as denuncias, p.status as estado, p.created_at as criado
+      from public.posts p where p.report_count > 0
+    union all
+    select 'comentário (post_comments)', c.id::text, c.author, left(c.comment, 200), c.report_count, c.status, c.created_at
+      from public.post_comments c where c.report_count > 0
+    union all
+    select 'avaliação (reviews)', r.id::text, r.author, left(coalesce(r.comment, ''), 200), r.report_count, r.status, r.created_at
+      from public.reviews r where r.report_count > 0
+    union all
+    select 'foto ou vídeo (submissions)', s.id::text, s.author, coalesce(s.caption, s.url), s.report_count, s.status, s.created_at
+      from public.submissions s where s.report_count > 0
+    order by criado desc;
+revoke all on public.moderacao from anon, authenticated;
+
+create or replace view public.atualizacoes_de_donos with (security_invoker = true) as
+    select id, created_at as recebido, name as lugar, other_link ->> 'url' as no_tuende, contact as contacto, phone as telefone,
+           email, website, reason as dados, photos as fotos, status as estado
+      from public.recommendations
+     where relationship = 'owner' and reason like 'ATUALIZAÇÃO do lugar #%'
+     order by created_at desc;
+revoke all on public.atualizacoes_de_donos from anon, authenticated;
 
 -- As funções de gatilho não se chamam pela API (como em 2026-10-20-endurecer-funcoes.sql).
 revoke execute on function public.check_post_photos() from public, anon, authenticated;
