@@ -148,6 +148,7 @@ window.TUENDE_LANGS.es = {
                 saveDataOff: 'Ahorro de datos: desactivado',
                 saveDataNote: 'Sin fotos en las listas ni mapas automáticos, para gastar menos datos móviles.',
                 mapLoad: 'Mostrar mapa',
+                menuMoreTitle: 'Otros platos y bebidas (precios orientativos)',
                 offlineTitle: '¿Va a {city} sin cobertura?',
                 offlineText: 'Guarde el mapa y las fotos para usarlos sin internet (unos {mb} MB; mejor con wifi).',
                 offlineSave: 'Guardar',

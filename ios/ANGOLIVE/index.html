@@ -750,6 +750,7 @@
         .menu-drop-body .panel { margin-top: 10px; }
         @media (prefers-reduced-motion: no-preference) { .menu-drop[open] .menu-drop-body { animation: fade-in 0.22s ease; } }
         .menu-group + .menu-group { margin-top: 16px; }
+        .menu-more-title { margin-top: 18px; font-size: 15px; font-weight: 800; }
         .menu-group-title { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
         .menu-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; background: var(--surface); border-left: 4px solid var(--accent); border-radius: 10px; padding: 10px 12px; }
         .menu-item + .menu-item { margin-top: 6px; }
@@ -2322,9 +2323,73 @@
     </div>
 
     <script>
-        // Menus typed into the app need a source (the owner, a photo of the menu or a published menu). The sample menus from
-        // the first version (Café del Mar, O Madeirense, Lookal Beach Club, Batuk) had none and were removed on 26 October 2026.
-        const menuData = {};
+        const menuData = {
+            1: { // Café Del Mar
+                appetizers: [
+                    {name: "Camarones Grelhados", desc: "Camarões frescos grelhados", price: "15.000 Kz"},
+                    {name: "Ostras Frescas", desc: "6 ostras do dia", price: "12.000 Kz"},
+                    {name: "Peixe Fumado", desc: "Peixe defumado caseiro", price: "10.000 Kz"}
+                ],
+                main: [
+                    {name: "Branzino Grelhado", desc: "Peixe inteiro com legumes", price: "28.000 Kz"},
+                    {name: "Lagosta Thermidor", desc: "Especialidade da casa", price: "35.000 Kz"},
+                    {name: "Filé com Molho Béarnaise", desc: "Corte premium de carne", price: "32.000 Kz"},
+                    {name: "Arroz de Frutos do Mar", desc: "Marisco variado", price: "26.000 Kz"}
+                ],
+                drinks: [
+                    {name: "Vinho Tinto (Copo)", desc: "Vinho português", price: "5.000 Kz"},
+                    {name: "Cerveja Sagres", desc: "Cerveja gelada", price: "2.500 Kz"},
+                    {name: "Coquetel da Casa", desc: "Bebida especial", price: "7.000 Kz"}
+                ]
+            },
+            3: { // O Madeirense
+                main: [
+                    {name: "Espetada de Vitela", desc: "Especialidade da casa", price: "22.000 Kz"},
+                    {name: "Bife Maturado", desc: "180g grelhado", price: "20.000 Kz"},
+                    {name: "Espetada Mista", desc: "Carne e peixe", price: "24.000 Kz"},
+                    {name: "Costela Grelhada", desc: "Meia porção", price: "18.000 Kz"}
+                ],
+                sides: [
+                    {name: "Batata à Beiroa", desc: "Batata doce assada", price: "3.000 Kz"},
+                    {name: "Milho Grelhado", desc: "Milho fresco", price: "2.500 Kz"},
+                    {name: "Salada Mista", desc: "Fruta e legumes", price: "4.000 Kz"}
+                ],
+                drinks: [
+                    {name: "Cerveja Preta", desc: "Cerveja escura", price: "3.000 Kz"},
+                    {name: "Vinho Tinto Reserva", desc: "Copo", price: "6.000 Kz"}
+                ]
+            },
+            5: { // Lookal Beach Club
+                drinks: [
+                    {name: "Mojito", desc: "Bebida refrescante", price: "8.000 Kz"},
+                    {name: "Pina Colada", desc: "Bebida tropical", price: "9.000 Kz"},
+                    {name: "Cerveja Gelada", desc: "Sagres ou Super Bock", price: "3.000 Kz"},
+                    {name: "Água de Coco", desc: "Água natural", price: "2.000 Kz"}
+                ],
+                food: [
+                    {name: "Peixe Grelhado", desc: "Peixe do dia", price: "18.000 Kz"},
+                    {name: "Camarones na Manteiga", desc: "Camarão fresco", price: "16.000 Kz"},
+                    {name: "Arroz de Marisco", desc: "Misto variado", price: "20.000 Kz"},
+                    {name: "Pasta Frutos do Mar", desc: "Talharim premium", price: "15.000 Kz"}
+                ]
+            },
+            10: { // Batuk Restaurante
+                appetizers: [
+                    {name: "Camarones Crispy", desc: "Camarão empanado", price: "14.000 Kz"},
+                    {name: "Polvo à Lagareiro", desc: "Polvo grelhado", price: "13.000 Kz"}
+                ],
+                main: [
+                    {name: "Peixe Grelhado", desc: "Peixe inteiro do dia", price: "24.000 Kz"},
+                    {name: "Lagosta Grelhada", desc: "1kg com manteiga", price: "40.000 Kz"},
+                    {name: "Arroz de Marisco", desc: "Receita tradicional", price: "22.000 Kz"},
+                    {name: "Filé de Peixe Branco", desc: "Com molho cremoso", price: "20.000 Kz"}
+                ],
+                drinks: [
+                    {name: "Vinho Branco Fresco", desc: "Português", price: "5.000 Kz"},
+                    {name: "Cerveja", desc: "Gelada", price: "3.000 Kz"}
+                ]
+            }
+        };
 
         const venues = [
             {"id": 1, "type": "restaurant", "name": "Café del Mar", "location": "Luanda - Ilha de Luanda", "lat": -8.764696, "lng": 13.258174, "exact": true, "description": "Restaurante de praia na Ilha de Luanda, aberto desde 2000 e renovado em 2016. Cozinha variada, de tapas a marisco, com vista para o pôr do sol.", "phone": "", "highlight": {"pt": "Restaurante de praia na Ilha, com vista para o pôr do sol.", "en": "Beachfront restaurant on the Ilha with sunset views.", "fr": "Restaurant en bord de plage sur l'Ilha, avec vue sur le coucher du soleil.", "es": "Restaurante frente a la playa en la Ilha, con vistas a la puesta de sol."}, "address": "Av. Murtala Mohamed, Ilha do Cabo, Luanda", "verified": {"date": "2026-10-05", "sources": [{"label": "Ver Angola", "url": "https://www.verangola.net/va/pt/032017/sugestoes/7707/Caf%C3%A9-del-Mar.htm"}, {"label": "OpenStreetMap", "url": "https://www.openstreetmap.org/node/2024632578"}]}, "price": {"from": 50000, "per": "person", "estimate": true, "to": 80000}},
@@ -2810,11 +2875,134 @@
 
         const DESC_ES = TUENDE_LANG.es?.desc || {};
 
-        const MENU_DESC_EN = {};
+        const MENU_DESC_EN = {
+            "Camarões frescos grelhados": "Fresh grilled prawns",
+            "6 ostras do dia": "6 oysters of the day",
+            "Peixe defumado caseiro": "Home-smoked fish",
+            "Peixe inteiro com legumes": "Whole fish with vegetables",
+            "Especialidade da casa": "House speciality",
+            "Corte premium de carne": "Premium cut of beef",
+            "Marisco variado": "Mixed seafood",
+            "Vinho português": "Portuguese wine",
+            "Cerveja gelada": "Ice-cold beer",
+            "Bebida especial": "Special drink",
+            "Copo": "Glass",
+            "Mix de frutas": "Fruit mix",
+            "Dose": "Single measure",
+            "Garrafa": "Bottle",
+            "Queijos portugueses": "Portuguese cheeses",
+            "Com temperos especiais": "With special seasoning",
+            "Pequena porção": "Small portion",
+            "180g grelhado": "180 g, grilled",
+            "Carne e peixe": "Meat and fish",
+            "Meia porção": "Half portion",
+            "Batata doce assada": "Roasted sweet potato",
+            "Milho fresco": "Fresh corn",
+            "Fruta e legumes": "Fruit and vegetables",
+            "Cerveja escura": "Dark beer",
+            "Bebida refrescante": "Refreshing drink",
+            "Bebida tropical": "Tropical drink",
+            "Sagres ou Super Bock": "Sagres or Super Bock",
+            "Água natural": "Natural",
+            "Peixe do dia": "Catch of the day",
+            "Camarão fresco": "Fresh prawns",
+            "Misto variado": "Mixed selection",
+            "Talharim premium": "Premium tagliatelle",
+            "Camarão empanado": "Breaded prawns",
+            "Polvo grelhado": "Grilled octopus",
+            "Peixe inteiro do dia": "Whole catch of the day",
+            "1kg com manteiga": "1 kg with butter",
+            "Receita tradicional": "Traditional recipe",
+            "Com molho cremoso": "With a creamy sauce",
+            "Português": "Portuguese",
+            "Gelada": "Ice-cold"
+        };
 
-        const MENU_DESC_FR = {};
+        const MENU_DESC_FR = {
+            "Camarões frescos grelhados": "Crevettes fraîches grillées",
+            "6 ostras do dia": "6 huîtres du jour",
+            "Peixe defumado caseiro": "Poisson fumé maison",
+            "Peixe inteiro com legumes": "Poisson entier aux légumes",
+            "Especialidade da casa": "Spécialité de la maison",
+            "Corte premium de carne": "Pièce de bœuf premium",
+            "Marisco variado": "Fruits de mer variés",
+            "Vinho português": "Vin portugais",
+            "Cerveja gelada": "Bière bien fraîche",
+            "Bebida especial": "Boisson spéciale",
+            "Copo": "Verre",
+            "Mix de frutas": "Mélange de fruits",
+            "Dose": "Dose simple",
+            "Garrafa": "Bouteille",
+            "Queijos portugueses": "Fromages portugais",
+            "Com temperos especiais": "Avec des assaisonnements spéciaux",
+            "Pequena porção": "Petite portion",
+            "180g grelhado": "180 g, grillé",
+            "Carne e peixe": "Viande et poisson",
+            "Meia porção": "Demi-portion",
+            "Batata doce assada": "Patate douce rôtie",
+            "Milho fresco": "Maïs frais",
+            "Fruta e legumes": "Fruits et légumes",
+            "Cerveja escura": "Bière brune",
+            "Bebida refrescante": "Boisson rafraîchissante",
+            "Bebida tropical": "Boisson tropicale",
+            "Sagres ou Super Bock": "Sagres ou Super Bock",
+            "Água natural": "Plate",
+            "Peixe do dia": "Poisson du jour",
+            "Camarão fresco": "Crevettes fraîches",
+            "Misto variado": "Assortiment",
+            "Talharim premium": "Tagliatelles premium",
+            "Camarão empanado": "Crevettes panées",
+            "Polvo grelhado": "Poulpe grillé",
+            "Peixe inteiro do dia": "Poisson entier du jour",
+            "1kg com manteiga": "1 kg au beurre",
+            "Receita tradicional": "Recette traditionnelle",
+            "Com molho cremoso": "Avec une sauce crémeuse",
+            "Português": "Portugais",
+            "Gelada": "Bien fraîche"
+        };
 
-        const MENU_DESC_ES = {};
+        const MENU_DESC_ES = {
+            "Camarões frescos grelhados": "Gambas frescas a la parrilla",
+            "6 ostras do dia": "6 ostras del día",
+            "Peixe defumado caseiro": "Pescado ahumado casero",
+            "Peixe inteiro com legumes": "Pescado entero con verduras",
+            "Especialidade da casa": "Especialidad de la casa",
+            "Corte premium de carne": "Corte de carne premium",
+            "Marisco variado": "Marisco variado",
+            "Vinho português": "Vino portugués",
+            "Cerveja gelada": "Cerveza bien fría",
+            "Bebida especial": "Bebida especial",
+            "Copo": "Copa",
+            "Mix de frutas": "Mezcla de frutas",
+            "Dose": "Medida",
+            "Garrafa": "Botella",
+            "Queijos portugueses": "Quesos portugueses",
+            "Com temperos especiais": "Con aliño especial",
+            "Pequena porção": "Ración pequeña",
+            "180g grelhado": "180 g, a la parrilla",
+            "Carne e peixe": "Carne y pescado",
+            "Meia porção": "Media ración",
+            "Batata doce assada": "Boniato asado",
+            "Milho fresco": "Maíz fresco",
+            "Fruta e legumes": "Fruta y verdura",
+            "Cerveja escura": "Cerveza negra",
+            "Bebida refrescante": "Bebida refrescante",
+            "Bebida tropical": "Bebida tropical",
+            "Sagres ou Super Bock": "Sagres o Super Bock",
+            "Água natural": "Natural",
+            "Peixe do dia": "Pescado del día",
+            "Camarão fresco": "Gambas frescas",
+            "Misto variado": "Surtido variado",
+            "Talharim premium": "Tallarines premium",
+            "Camarão empanado": "Gambas rebozadas",
+            "Polvo grelhado": "Pulpo a la parrilla",
+            "Peixe inteiro do dia": "Pescado entero del día",
+            "1kg com manteiga": "1 kg con mantequilla",
+            "Receita tradicional": "Receta tradicional",
+            "Com molho cremoso": "Con salsa cremosa",
+            "Português": "Portugués",
+            "Gelada": "Bien fría"
+        };
 
         // The Portuguese texts, the icons and the Kamba button label are also written into the HTML above by
         // tools/preencher_textos.py, so the first paint is already final (no layout shift). Re-run it after changing them.
@@ -2965,6 +3153,7 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                menuMoreTitle: 'Outros pratos e bebidas (preços indicativos)',
                 offlineTitle: 'Vai para {city} sem rede?',
                 offlineText: 'Guarde o mapa e as fotos para usar sem internet (cerca de {mb} MB; melhor com Wi-Fi).',
                 offlineSave: 'Guardar',
@@ -3927,6 +4116,7 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                menuMoreTitle: 'Other dishes and drinks (indicative prices)',
                 offlineTitle: 'Going to {city} without signal?',
                 offlineText: 'Save the map and photos to use offline (about {mb} MB; best on Wi-Fi).',
                 offlineSave: 'Save',
@@ -10129,44 +10319,42 @@
             </details></section>`;
         }
 
-        function menusAoHTML(v) {
+        // One "Menu e preços" row per place: the menu the restaurant publishes on menus.ao first (with its date),
+        // then the dishes typed into the app, whose prices are indicative.
+        function placeMenuHTML(v) {
             const m = MENUS_AO[v.id];
-            if (!m) return '';
-            const rows = m.items.map(([name, price, sub, note]) => `
-                <div class="menu-item">
-                    <div><div class="menu-item-name">${escapeHTML(name)}</div>${sub || note ? `<div class="menu-item-desc">${escapeHTML([sub, note].filter(Boolean).join(' · '))}</div>` : ''}</div>
-                    <div class="menu-item-price">${escapeHTML(kzFull(price))}</div>
-                </div>`).join('');
-            const other = m.label && ![[v.name, m.label], [m.label, v.name]].some(([a, b]) => normalize(a).replace(/[^a-z0-9]/g, '').includes(normalize(b).replace(/[^a-z0-9]/g, '')));
-            return menuDropHTML(`${t('menuAoTitle')}${other ? ` <span class="dish-city">· ${escapeHTML(m.label)}</span>` : ''}`,
-                escapeHTML(`${t('menuItems', { n: m.items.length })} · ${kzAmount(m.min, m.max)}`), `
-                <p class="hint" style="margin-top:10px;">${t('menuAoRange', { a: kzFull(m.min), b: kzFull(m.max) })}. ${t('menuAoNote', { date: formatDate(m.checked) })} ${t('dishNamesNote')}</p>
-                <div class="panel">${rows}</div>
-                <p style="margin-top:10px;"><a class="text-link" href="https://www.menus.ao/${escapeHTML(m.slug)}/menu" target="_blank" rel="noopener">${icon('external')}${t('menuAoFull', { n: m.total })}</a></p>`);
-        }
-
-        function menuHTML(v) {
             const menu = menuData[v.id];
-            if (!menu) return '';
-            const groups = MENU_SECTIONS.filter(([key]) => menu[key]).map(([key, ...names]) => `
-                <div class="menu-group">
-                    <div class="menu-group-title">${names[LANGS.indexOf(lang)]}</div>
-                    ${menu[key].map((item) => `
-                        <div class="menu-item">
-                            <div>
-                                <div class="menu-item-name">${escapeHTML(item.name)}</div>
-                                <div class="menu-item-desc">${escapeHTML(lang === 'pt' ? item.desc : MENU_DESC[lang][item.desc] || MENU_DESC_EN[item.desc] || item.desc)}</div>
-                            </div>
-                            <div class="menu-item-price">${escapeHTML(item.price)}</div>
-                        </div>
-                    `).join('')}
-                </div>
-            `).join('');
-            const items = Object.values(menu).flat();
-            const prices = items.map((item) => Number(String(item.price).replace(/\D/g, ''))).filter((n) => n > 0);
+            if (!m && !menu) return '';
+            const row = (name, desc, price) => `
+                <div class="menu-item">
+                    <div><div class="menu-item-name">${escapeHTML(name)}</div>${desc ? `<div class="menu-item-desc">${escapeHTML(desc)}</div>` : ''}</div>
+                    <div class="menu-item-price">${escapeHTML(price)}</div>
+                </div>`;
+            const parts = [];
+            const prices = [];
+            let count = 0;
+            if (m) {
+                count += m.items.length;
+                prices.push(m.min, m.max);
+                const other = m.label && ![[v.name, m.label], [m.label, v.name]].some(([a, b]) => normalize(a).replace(/[^a-z0-9]/g, '').includes(normalize(b).replace(/[^a-z0-9]/g, '')));
+                parts.push(`
+                    <p class="hint" style="margin-top:10px;">${other ? `<b>${escapeHTML(m.label)}</b> · ` : ''}${t('menuAoRange', { a: kzFull(m.min), b: kzFull(m.max) })}. ${t('menuAoNote', { date: formatDate(m.checked) })} ${t('dishNamesNote')}</p>
+                    <div class="panel">${m.items.map(([name, price, sub, note]) => row(name, [sub, note].filter(Boolean).join(' · '), kzFull(price))).join('')}</div>
+                    <p style="margin-top:10px;"><a class="text-link" href="https://www.menus.ao/${escapeHTML(m.slug)}/menu" target="_blank" rel="noopener">${icon('external')}${t('menuAoFull', { n: m.total })}</a></p>`);
+            }
+            if (menu) {
+                const items = Object.values(menu).flat();
+                count += items.length;
+                prices.push(...items.map((item) => Number(String(item.price).replace(/\D/g, ''))).filter((n) => n > 0));
+                const groups = MENU_SECTIONS.filter(([key]) => menu[key]).map(([key, ...names]) => `
+                    <div class="menu-group">
+                        <div class="menu-group-title">${names[LANGS.indexOf(lang)]}</div>
+                        ${menu[key].map((item) => row(item.name, lang === 'pt' ? item.desc : MENU_DESC[lang][item.desc] || MENU_DESC_EN[item.desc] || item.desc, item.price)).join('')}
+                    </div>`).join('');
+                parts.push(`${m ? `<p class="menu-more-title">${t('menuMoreTitle')}</p>` : `<p class="hint" style="margin-top:10px;">${t('menuNote')}</p>`}<div class="panel">${groups}</div>`);
+            }
             const range = prices.length ? ` · ${kzAmount(Math.min(...prices), Math.max(...prices))}` : '';
-            return menuDropHTML(t('menu'), escapeHTML(`${t('menuItems', { n: items.length })}${range}`),
-                `<p class="hint" style="margin-top:10px;">${t('menuNote')}</p><div class="panel">${groups}</div>`);
+            return menuDropHTML(t('menu'), escapeHTML(`${t('menuItems', { n: count })}${range}`), parts.join(''));
         }
 
         let reviewExtra = { helpful: {}, mine: new Set(), authors: {}, items: [], sort: 'recent', venue: null };
@@ -10366,8 +10554,7 @@
 
                     ${practicalHTML(v)}
 
-                    ${jumpTag(menuHTML(v), 'menu')}
-                    ${jumpTag(menusAoHTML(v), 'menu')}
+                    ${jumpTag(placeMenuHTML(v), 'menu')}
 
                     ${jumpTag(nearbyHTML(v), 'near')}
 
