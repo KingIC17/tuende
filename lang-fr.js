@@ -148,6 +148,7 @@ window.TUENDE_LANGS.fr = {
                 saveDataOff: 'Économie de données : désactivée',
                 saveDataNote: 'Pas de photos dans les listes ni de cartes automatiques, pour consommer moins de données mobiles.',
                 mapLoad: 'Afficher la carte',
+                menuMoreTitle: 'Autres plats et boissons (prix indicatifs)',
                 offlineTitle: 'Vous allez à {city} sans réseau ?',
                 offlineText: 'Enregistrez la carte et les photos pour les utiliser hors ligne (environ {mb} Mo ; de préférence en Wi-Fi).',
                 offlineSave: 'Enregistrer',
