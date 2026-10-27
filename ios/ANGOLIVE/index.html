@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <!-- Only these sources can load scripts, styles, images and data; everything else is blocked by the browser.
          Add a source here before using a new outside service (and keep file: for the iPhone app). -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file: 'unsafe-inline' https://unpkg.com https://static.cloudflareinsights.com; style-src 'self' file: 'unsafe-inline' https://unpkg.com; img-src 'self' file: data: blob: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co https://tile.openstreetmap.org https://unpkg.com; media-src 'self' file: blob: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co; font-src 'self' file: https://tuende.app; connect-src 'self' file: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co wss://dbwymcfmputeaggeeqfo.supabase.co https://www.bna.ao https://cloudflareinsights.com https://tiles.openfreemap.org; frame-src https://www.openstreetmap.org; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; script-src 'self' file: 'unsafe-inline' https://unpkg.com https://static.cloudflareinsights.com https://*.posthog.com; style-src 'self' file: 'unsafe-inline' https://unpkg.com; img-src 'self' file: data: blob: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co https://tile.openstreetmap.org https://unpkg.com; media-src 'self' file: blob: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co; font-src 'self' file: https://tuende.app; connect-src 'self' file: https://tuende.app https://dbwymcfmputeaggeeqfo.supabase.co wss://dbwymcfmputeaggeeqfo.supabase.co https://www.bna.ao https://cloudflareinsights.com https://tiles.openfreemap.org https://*.posthog.com; frame-src https://www.openstreetmap.org; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <script>
         // French and Spanish texts are in lang-fr.js / lang-es.js; load the one this visitor uses before the app starts.
@@ -7683,6 +7683,10 @@
         const PUBLIC_URL = 'https://tuende.app/';
         // Cloudflare Web Analytics (no cookies, no individual tracking). The token is public; only visits on the live site are counted.
         const ANALYTICS_TOKEN = 'bfad71e37fa648dea81087839c77618f';
+        // PostHog usage statistics (searches, places opened, taps on Directions, errors). The project token is public; it runs only on
+        // the live site, stores nothing on the device and records no sessions (see startUsageStats). Empty = off.
+        const POSTHOG_TOKEN = 'phc_xUBw2bmbR5fDQfEhfSsc5LbWFsoWZFxgnxBEkgQbsqs7';
+        const POSTHOG_HOST = 'https://us.i.posthog.com';
         // Public contact address. While empty, the contact link, the privacy link and the e-mail fallback stay hidden.
         const CONTACT_EMAIL = 'contacto@tuende.app';
         // Store pages of the phone apps: leave empty until each app is published; the install guide shows them when set.
@@ -7970,6 +7974,24 @@
         };
 
         const STOPWORDS = new Set(['a', 'o', 'as', 'os', 'e', 'em', 'no', 'na', 'nos', 'nas', 'de', 'da', 'do', 'das', 'dos', 'para', 'com', 'um', 'uma', 'the', 'of', 'in', 'and', 'to', 'at', 'le', 'la', 'les', 'des', 'du', 'et', 'un', 'une', 'el', 'los', 'las', 'del', 'al', 'y', 'por']);
+
+        // Usage statistics: does nothing unless PostHog was started (live site only).
+        function track(event, props = {}) {
+            try { window.posthog?.capture?.(event, props); } catch (e) { /* statistics must never break the app */ }
+        }
+        let lastSearchKey = '';
+        function trackSearch(results) {
+            const f = state.filters;
+            const props = {
+                query: f.q ? normalize(f.q).trim().slice(0, 60) : null,
+                category: f.category || null, where: f.where || null, quick: f.quick || null, collection: f.collection || null,
+                zone: f.area || null, price: f.price || null, saved: Boolean(f.saved), results
+            };
+            const key = JSON.stringify(props);
+            if (key === lastSearchKey) return;
+            lastSearchKey = key;
+            track(results ? 'search' : 'search_no_results', props);
+        }
 
         function normalize(text) {
             return String(text).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
@@ -9206,6 +9228,7 @@
         function renderResults() {
             renderResultsRefiners();
             const list = filteredVenues();
+            trackSearch(list.length);
             $('resultsTitle').textContent = resultsTitle();
             $('resultsSub').textContent = resultsSub();
             $('resultsCount').textContent = placesCount(list.length);
@@ -10812,6 +10835,7 @@
         function openVenue(id, keepScroll = false) {
             const v = venues.find((x) => x.id === id);
             if (!v) return;
+            if (!keepScroll || state.openId !== id) track('place_opened', { place_id: v.id, place: v.name, category: v.type, province: v.location.split(' - ')[0], view: state.view });
             const panel = $('venuePanel');
             const scroll = panel.scrollTop;
             state.openId = id;
@@ -10984,6 +11008,7 @@
             if (on === favorites.includes(id) || !venues.some((v) => v.id === id)) return;
             favorites = on ? [...favorites, id] : favorites.filter((f) => f !== id);
             store.set('favorites', favorites);
+            if (!quiet) track(on ? 'place_saved' : 'place_unsaved', { place_id: id });
             pushFavorite(id, on);
             renderSavedButton();
             document.querySelectorAll(`[data-fav="${id}"]`).forEach((b) => {
@@ -15392,11 +15417,12 @@
             if (kambaState.busy) return;
             const value = $('kambaInput').value;
             $('kambaInput').value = '';
+            if (value.trim()) track('kamba_question', { source: 'typed', length: value.trim().length });
             kambaSend(value);
         });
         $('kambaLog').addEventListener('click', (e) => {
             const ask = e.target.closest('[data-kamba-ask]');
-            if (ask) { kambaSend(ask.dataset.kambaAsk); return; }
+            if (ask) { track('kamba_question', { source: 'chip', chip: ask.dataset.kambaAsk.slice(0, 80) }); kambaSend(ask.dataset.kambaAsk); return; }
             const go = e.target.closest('[data-kamba-go]');
             if (go) { kambaGo(go.dataset.kambaGo); return; }
             // The agenda opens behind the chat; on a phone the chat covers the page, so step aside.
@@ -16800,6 +16826,84 @@
             beacon.src = 'https://static.cloudflareinsights.com/beacon.min.js';
             beacon.dataset.cfBeacon = JSON.stringify({ token: ANALYTICS_TOKEN, spa: true });
             document.body.appendChild(beacon);
+        }
+        if (POSTHOG_TOKEN && location.hostname === new URL(PUBLIC_URL).hostname) startUsageStats();
+
+        // PostHog (live site only): how the app is used, to see what people look for and what does not work.
+        // Privacy: nothing is stored on the device, no session recordings, no element text, nobody is identified, and
+        // login tokens, shared-plan links and private plans are removed from every address before it is sent.
+        function startUsageStats() {
+            const SAFE_HASH = /^#(local|guia|roteiro|maravilha|plano|momento|prato|evento)-[\w-]+$/;
+            const DROP_PARAMS = ['p', 'amigos', 'access_token', 'refresh_token', 'token', 'code', 'error', 'error_code', 'error_description', 'type'];
+            const cleanUrl = (value) => {
+                try {
+                    const url = new URL(value);
+                    DROP_PARAMS.forEach((key) => url.searchParams.delete(key));
+                    if (!SAFE_HASH.test(url.hash)) url.hash = '';
+                    return url.toString();
+                } catch (e) { return value; }
+            };
+            const cleanReferrer = (value) => {
+                if (!value || value === '$direct') return value;
+                try { return new URL(value).origin; } catch (e) { return '$direct'; }
+            };
+            const clean = (props) => {
+                if (!props) return;
+                ['$current_url', '$initial_current_url', '$session_entry_url', '$prev_pageview_url'].forEach((k) => { if (props[k]) props[k] = cleanUrl(props[k]); });
+                ['$referrer', '$initial_referrer', '$session_entry_referrer'].forEach((k) => { if (props[k]) props[k] = cleanReferrer(props[k]); });
+                ['$referring_domain', '$initial_referring_domain'].forEach((k) => { if (props[k] && !/^[\w.-]+$/.test(props[k])) props[k] = '$direct'; });
+            };
+            !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],Object.defineProperty(u,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e}}),Object.defineProperty(u.people,"toString",{configurable:!0,enumerable:!0,writable:!0,value:function(){return u.toString(1)+".people (stub)"}}),o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagResult isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+            window.posthog.init(POSTHOG_TOKEN, {
+                api_host: POSTHOG_HOST,
+                defaults: '2026-08-30',
+                persistence: 'memory',
+                person_profiles: 'identified_only',
+                autocapture: false,
+                mask_all_text: true,
+                mask_all_element_attributes: true,
+                capture_dead_clicks: false,
+                capture_heatmaps: true,
+                capture_exceptions: true,
+                capture_performance: { web_vitals: true, network_timing: false },
+                disable_session_recording: true,
+                before_send: (event) => {
+                    if (!event) return event;
+                    clean(event.properties);
+                    clean(event.$set);
+                    clean(event.$set_once);
+                    return event;
+                }
+            });
+            window.posthog.register({ app_language: lang, text_size: textSize });
+            // Taps that leave the app or start an action: calls, WhatsApp, directions, tickets, menus, calendar, language, text size.
+            document.addEventListener('click', (e) => {
+                const target = e.target instanceof Element ? e.target : null;
+                if (!target) return;
+                const placeId = state.openId && target.closest('#venueModal') ? state.openId : null;
+                const eventId = target.closest('.event-card')?.id.replace(/^evento-/, '') || null;
+                const link = target.closest('a[href]');
+                if (link) {
+                    const href = link.getAttribute('href');
+                    if (href.startsWith('tel:')) track('call_clicked', { place_id: placeId, event_id: eventId });
+                    else if (/^https:\/\/(wa\.me|api\.whatsapp\.com)\//.test(href)) track('whatsapp_clicked', { place_id: placeId, event_id: eventId });
+                    else if (/^https?:/.test(href)) {
+                        let host = '';
+                        try { host = new URL(href).hostname.replace(/^www\./, ''); } catch (err) { /* ignore */ }
+                        if (host && host !== location.hostname) {
+                            const kind = /google\.[a-z.]+$/.test(host) && /\/maps/.test(href) ? 'directions' : link.matches('.action-btn.solid') ? 'tickets_or_official' : 'link';
+                            track('outbound_click', { host, kind, place_id: placeId, event_id: eventId });
+                        }
+                    }
+                    return;
+                }
+                const ics = target.closest('[data-event-ics]');
+                if (ics) { track('event_calendar_added', { event_id: ics.dataset.eventIcs }); return; }
+                const language = target.closest('[data-lang]');
+                if (language) { track('language_changed', { to: language.dataset.lang }); window.posthog.register({ app_language: language.dataset.lang }); return; }
+                const size = target.closest('[data-text-size], [data-action="text-size"]');
+                if (size) setTimeout(() => { track('text_size_changed', { size: textSize }); window.posthog.register({ text_size: textSize }); }, 0);
+            }, true);
         }
 
         if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
