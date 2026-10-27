@@ -9,6 +9,7 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <script>
         // French and Spanish texts are in lang-fr.js / lang-es.js; load the one this visitor uses before the app starts.
+        try { var tuendeText = JSON.parse(localStorage.getItem('tuendeTextSize')); if (tuendeText === 1 || tuendeText === 2) document.documentElement.dataset.text = tuendeText; } catch (e) {}
         try { var tuendeLang = JSON.parse(localStorage.getItem('angoliveLang')); if (tuendeLang === 'fr' || tuendeLang === 'es') document.write('<script src="lang-' + tuendeLang + '.js"><\/script>'); } catch (e) {}
     </script>
     <title>Tuende - Descubra onde ir em Angola</title>
@@ -1081,6 +1082,7 @@
         .events-filters .field { max-width: 320px; margin-top: 6px; }
         .events-filters .chips { margin: 8px 0 0; max-width: none; flex-wrap: wrap; overflow: visible; }
         .chip-count { font-weight: 600; opacity: 0.85; }
+        .chip.active .chip-count { opacity: 1; }
         .events-count { margin-top: 18px; font-size: 15px; font-weight: 700; color: var(--muted); }
         .event-month { margin-top: 18px; }
         .event-month h2 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
@@ -1836,7 +1838,44 @@
             .sheet-grab { display: block; position: absolute; top: 8px; left: 50%; z-index: 3; width: 40px; height: 5px; margin-left: -20px; border-radius: 3px; background: rgba(255, 255, 255, 0.9); box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1); pointer-events: none; }
         }
         .modal-panel.snap { transition: transform 0.24s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+        /* ---------- Polish: agenda filters, active tab, open now, photo fade-in, price digits ---------- */
+        @media (max-width: 720px) {
+            .events-filters { grid-template-columns: minmax(0, 1fr); gap: 12px; padding: 12px 0 14px 14px; }
+            .events-filters .field-label { font-size: 13px; letter-spacing: 0.02em; text-transform: uppercase; color: var(--muted); }
+            .events-filters .chips { flex-wrap: nowrap; overflow-x: auto; margin-top: 6px; padding-right: 14px; scroll-padding-inline: 14px; }
+            .events-filters .chip { flex: none; }
+            #eventsWhereWrap { padding-right: 14px; }
+        }
+        .tab:not(.tab-plus) > span:first-child { display: inline-flex; align-items: center; justify-content: center; width: 58px; height: 30px; border-radius: 999px; }
+        .tab.active:not(.tab-plus) > span:first-child { background: var(--primary-soft); }
+        .status-open::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: currentColor; vertical-align: 1px; }
+        @media (prefers-reduced-motion: no-preference) {
+            .tab:not(.tab-plus) > span:first-child { transition: background-color 0.2s ease; }
+            .status-open::before { animation: open-pulse 2.4s ease-out infinite; }
+            :is(.card-media, .near-media, .collection, .post-card-media, .feed-photo) img { opacity: 0; transition: opacity 0.35s ease; animation: img-safety 0s 3s forwards; }
+            :is(.card-media, .near-media, .collection, .post-card-media, .feed-photo) img.in { opacity: 1; animation: none; }
+            img.now { transition: none; }
+        }
+        @keyframes open-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 45%, transparent); } 70%, 100% { box-shadow: 0 0 0 6px transparent; } }
+        @keyframes img-safety { to { opacity: 1; } }
+        .menu-item-price, .price-pill, .fx-rate, .event-date, .date-block { font-variant-numeric: tabular-nums; }
         ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.18s; }
+
+        /* ---------- Bigger text (language menu and footer): the content is zoomed; bars and maps stay as they are ---------- */
+        html[data-text="1"] { --tz: 1.12; }
+        html[data-text="2"] { --tz: 1.25; }
+        html[data-text] :is(.hero, main, .site-footer, .modal-panel > :not(.sheet-grab), .kamba-log, .kamba-form, .kamba-note) { zoom: var(--tz); }
+        html[data-text] :is(.maplibregl-map, .leaflet-container) { zoom: calc(1 / var(--tz)); }
+        /* The home's category tiles keep their size (icon + one word), so long words such as "Restaurantes" still fit. */
+        html[data-text="1"] .ftile { font-size: 11.6px; }
+        html[data-text="2"] .ftile { font-size: 10.4px; }
+        .menu-sep { height: 1px; margin: 4px 6px; background: var(--line); }
+        .text-size { display: grid; gap: 6px; padding: 6px 8px 4px; }
+        .text-size > span { font-size: 13px; font-weight: 700; color: var(--muted); }
+        .text-size-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+        .lang-menu .text-size-btns button { justify-content: center; min-height: 44px; padding: 0; border: 1.5px solid var(--border); font-weight: 800; }
+        .lang-menu .text-size-btns button[aria-pressed="true"] { border-color: var(--primary); background: var(--primary-soft); color: var(--primary); }
 
         /* Phones: search results as compact rows (photo left, details right), about four places per screen. */
         @media (max-width: 640px) {
@@ -2192,6 +2231,7 @@
                 <a class="footer-small" id="footerPrivacy" href="privacy.html" hidden data-i18n="footerPrivacy">Privacidade</a>
                 <button type="button" class="footer-small" id="footerInstall" data-info="install" hidden data-i18n="installTitle">Descarregar a app</button>
                 <button type="button" class="footer-small" id="footerSaveData" data-action="save-data" aria-pressed="false"></button>
+                <button type="button" class="footer-small" id="footerTextSize" data-action="text-size"></button>
             </div>
             <p class="footer-note" data-i18n="footerNote">Fotos: Wikimedia Commons, com autor e licença em cada foto. Só mostramos fotos reais do próprio lugar.</p>
         </div>
@@ -3153,6 +3193,10 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                textSize: 'Tamanho do texto',
+                textNormal: 'Normal',
+                textLarge: 'Grande',
+                textLarger: 'Muito grande',
                 menuMoreTitle: 'Outros pratos e bebidas (preços indicativos)',
                 offlineTitle: 'Vai para {city} sem rede?',
                 offlineText: 'Guarde o mapa e as fotos para usar sem internet (cerca de {mb} MB; melhor com Wi-Fi).',
@@ -4116,6 +4160,10 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                textSize: 'Text size',
+                textNormal: 'Normal',
+                textLarge: 'Large',
+                textLarger: 'Extra large',
                 menuMoreTitle: 'Other dishes and drinks (indicative prices)',
                 offlineTitle: 'Going to {city} without signal?',
                 offlineText: 'Save the map and photos to use offline (about {mb} MB; best on Wi-Fi).',
@@ -6037,6 +6085,30 @@
                 checked: '2026-10-25'
             },
             {
+                id: 'street-kings-cup-2026',
+                type: 'sports',
+                title: { pt: 'Street Kings Cup Angola', en: 'Street Kings Cup Angola', fr: 'Street Kings Cup Angola', es: 'Street Kings Cup Angola' },
+                city: 'Luanda',
+                venue: 'Estádio Mário Santiago',
+                mapsQuery: 'Estádio Mário Santiago, Luanda',
+                start: '2026-11-11',
+                time: '10:00',
+                when: { pt: 'A partir das 10h00, no Dia da Independência', en: 'From 10 am, on Independence Day', fr: 'À partir de 10 h, le jour de l\'Indépendance', es: 'Desde las 10:00, el Día de la Independencia' },
+                price: { from: 6000, note: { pt: 'A Ver Angola anuncia entrada gratuita; a Ticket.ao vende bilhetes Street Kings a 6.000 Kz e VIP a 35.000 Kz. Confirme antes de ir.', en: 'Ver Angola says entry is free; Ticket.ao sells Street Kings tickets at 6,000 Kz and VIP at 35,000 Kz. Check before you go.', fr: 'Ver Angola annonce une entrée gratuite ; Ticket.ao vend des billets Street Kings à 6 000 Kz et VIP à 35 000 Kz. Vérifiez avant d\'y aller.', es: 'Ver Angola anuncia entrada gratuita; Ticket.ao vende entradas Street Kings a 6.000 Kz y VIP a 35.000 Kz. Confírmelo antes de ir.' } },
+                tags: { pt: ['FutebolDeRua', 'Desporto'], en: ['StreetFootball', 'Sport'], fr: ['FootDeRue', 'Sport'], es: ['FútbolCallejero', 'Deporte'] },
+                desc: {
+                    pt: 'Um dia de futebol de rua, com equipas conhecidas como a Pelotada e o Lixeira FC, batalhas de habilidade, a disputa do título de «Rei da Rua» e um jogo entre antigos internacionais e influenciadores.',
+                    en: 'A day of street football with well-known teams such as Pelotada and Lixeira FC, skill battles, the contest for the title of "King of the Street" and a match between former internationals and influencers.',
+                    fr: 'Une journée de football de rue avec des équipes connues comme Pelotada et Lixeira FC, des battles d\'habileté, la course au titre de « Roi de la rue » et un match entre anciens internationaux et influenceurs.',
+                    es: 'Un día de fútbol callejero con equipos conocidos como Pelotada y Lixeira FC, batallas de habilidad, la disputa del título de «Rey de la Calle» y un partido entre exinternacionales e influencers.'
+                },
+                link: 'https://ticket.ao/event/street-kings-cup-angola-2026/',
+                tickets: true,
+                host: 'Street Kings Cup',
+                source: { name: 'Ver Angola', url: 'https://www.verangola.net/va/pt/102026/eventos/50516/Street-Kings-Cup-Desporto.htm' },
+                checked: '2026-10-27'
+            },
+            {
                 id: 'indie-live-concert-yaki-bandeira',
                 type: 'music',
                 title: { pt: 'Indie Live Concert: Yaki Bandeira e Banda', en: 'Indie Live Concert: Yaki Bandeira and band', fr: 'Indie Live Concert : Yaki Bandeira et son groupe', es: 'Indie Live Concert: Yaki Bandeira y banda' },
@@ -6330,6 +6402,54 @@
                 tickets: true,
                 source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/this-is-house-music-26/' },
                 checked: '2026-10-14'
+            },
+            {
+                id: 'angola-muscle-cup-2026',
+                type: 'sports',
+                title: { pt: 'Angola Muscle Cup', en: 'Angola Muscle Cup', fr: 'Angola Muscle Cup', es: 'Angola Muscle Cup' },
+                city: 'Luanda',
+                venue: 'Cine Tivoli',
+                mapsQuery: 'Cine Tivoli, Luanda',
+                start: '2026-11-21',
+                time: '10:00',
+                when: { pt: 'A partir das 10h00', en: 'From 10 am', fr: 'À partir de 10 h', es: 'Desde las 10:00' },
+                price: { from: 5500, note: { pt: 'Normal 5.500 Kz, VIP 11.000 Kz.', en: 'Standard 5,500 Kz, VIP 11,000 Kz.', fr: 'Normal 5 500 Kz, VIP 11 000 Kz.', es: 'Normal 5.500 Kz, VIP 11.000 Kz.' } },
+                tags: { pt: ['Culturismo', 'Fitness'], en: ['Bodybuilding', 'Fitness'], fr: ['Culturisme', 'Fitness'], es: ['Culturismo', 'Fitness'] },
+                desc: {
+                    pt: 'A 2.ª edição da competição nacional de culturismo e fitness da IFBB Angola, com 12 milhões de kwanzas em prémios.',
+                    en: 'The 2nd edition of IFBB Angola\'s national bodybuilding and fitness competition, with 12 million kwanzas in prizes.',
+                    fr: 'La 2e édition de la compétition nationale de culturisme et de fitness de l\'IFBB Angola, avec 12 millions de kwanzas de prix.',
+                    es: 'La 2.ª edición de la competición nacional de culturismo y fitness de la IFBB Angola, con 12 millones de kwanzas en premios.'
+                },
+                link: 'https://ticket.ao/event/angola-muscle-cup/',
+                tickets: true,
+                host: 'IFBB Angola',
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/angola-muscle-cup/' },
+                checked: '2026-10-27'
+            },
+            {
+                id: 'brunch-da-sanzala-2026',
+                type: 'fairs',
+                title: { pt: 'Brunch da Sanzala', en: 'Brunch da Sanzala', fr: 'Brunch da Sanzala', es: 'Brunch da Sanzala' },
+                city: 'Luanda',
+                venue: 'Belo Horizonte Eventos, Belas',
+                mapsQuery: 'Belo Horizonte Eventos, Belas, Luanda',
+                start: '2026-11-22',
+                time: '14:00',
+                when: { pt: 'Às 14h00', en: '2 pm', fr: '14 h', es: '14:00' },
+                price: { from: 60000, note: { pt: 'Por pessoa 60.000 Kz (VIP 100.000 Kz); casal 100.000 Kz (VIP 180.000 Kz). A página não diz o que está incluído.', en: 'Per person 60,000 Kz (VIP 100,000 Kz); couple 100,000 Kz (VIP 180,000 Kz). The page does not say what is included.', fr: 'Par personne 60 000 Kz (VIP 100 000 Kz) ; couple 100 000 Kz (VIP 180 000 Kz). La page ne précise pas ce qui est inclus.', es: 'Por persona 60.000 Kz (VIP 100.000 Kz); pareja 100.000 Kz (VIP 180.000 Kz). La página no dice qué incluye.' } },
+                tags: { pt: ['Brunch', 'Gastronomia'], en: ['Brunch', 'Food'], fr: ['Brunch', 'Gastronomie'], es: ['Brunch', 'Gastronomía'] },
+                desc: {
+                    pt: 'Um brunch de domingo à tarde em Belas, organizado pela Urus Eventos. A Ticket.ao lista-o como concerto, mas não diz que música há nem o que inclui: confirme com o organizador.',
+                    en: 'A Sunday afternoon brunch in Belas, organised by Urus Eventos. Ticket.ao lists it as a concert but does not say what music there is or what is included: check with the organiser.',
+                    fr: 'Un brunch du dimanche après-midi à Belas, organisé par Urus Eventos. Ticket.ao le classe en concert, sans préciser la musique ni ce qui est inclus : renseignez-vous auprès de l\'organisateur.',
+                    es: 'Un brunch de domingo por la tarde en Belas, organizado por Urus Eventos. Ticket.ao lo incluye en conciertos, pero no dice qué música hay ni qué incluye: consúltelo con el organizador.'
+                },
+                link: 'https://ticket.ao/event/brunch-da-sanzala/',
+                tickets: true,
+                host: 'Urus Eventos',
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/brunch-da-sanzala/' },
+                checked: '2026-10-27'
             },
             {
                 id: 'cine-pf-massoxi-2026',
@@ -12995,6 +13115,10 @@
                         <div class="event-list">${items.map(eventCardHTML).join('')}</div>
                     </section>`;
             }).join('');
+            document.querySelectorAll('#eventsView .events-filters .chips').forEach((row) => {
+                const on = row.querySelector('.chip.active');
+                if (on && on.offsetLeft + on.offsetWidth > row.clientWidth) row.scrollLeft = on.offsetLeft - 14;
+            });
         }
 
         const rhythmCache = new Map();
@@ -13425,6 +13549,19 @@
             $('heroPhotoCredit').innerHTML = `${escapeHTML(v.name)} · ${creditHTML(photo)}`;
         }
 
+        // Text size: 0 normal, 1 large, 2 extra large (kept in this browser; set before the first paint in the <head>).
+        const TEXT_SIZES = ['textNormal', 'textLarge', 'textLarger'];
+        let textSize = [0, 1, 2].includes(store.get('tuendeTextSize', 0)) ? store.get('tuendeTextSize', 0) : 0;
+        function setTextSize(n) {
+            textSize = n;
+            store.set('tuendeTextSize', n);
+            if (n) document.documentElement.dataset.text = n;
+            else delete document.documentElement.dataset.text;
+            document.querySelectorAll('[data-text-size]').forEach((b) => b.setAttribute('aria-pressed', String(Number(b.dataset.textSize) === n)));
+            renderFooter();
+            document.querySelectorAll('.card-row').forEach(updateRowControls);
+        }
+
         function renderFooter() {
             $('footerPrivacy').hidden = !CONTACT_EMAIL;
             $('footerPrivacy').href = asset('privacy.html');
@@ -13438,6 +13575,7 @@
             saver.textContent = t(saveDataOn() ? 'saveDataOn' : 'saveDataOff');
             saver.title = t('saveDataNote');
             saver.setAttribute('aria-pressed', saveDataOn());
+            $('footerTextSize').textContent = `${t('textSize')}: ${t(TEXT_SIZES[textSize])}`;
         }
 
         /* ---------- Modals ---------- */
@@ -13516,7 +13654,8 @@
             document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => { el.placeholder = t(el.dataset.i18nPlaceholder); });
             document.querySelectorAll('[data-i18n-aria]').forEach((el) => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
             $('langLabel').textContent = lang.toUpperCase();
-            $('langMenu').innerHTML = LANGS.map((l) => `<button type="button" lang="${l}" data-lang="${l}" aria-pressed="${l === lang}"${l === lang ? ' class="active"' : ''}><b>${l.toUpperCase()}</b>${LANG_NAMES[l]}</button>`).join('');
+            $('langMenu').innerHTML = LANGS.map((l) => `<button type="button" lang="${l}" data-lang="${l}" aria-pressed="${l === lang}"${l === lang ? ' class="active"' : ''}><b>${l.toUpperCase()}</b>${LANG_NAMES[l]}</button>`).join('')
+                + `<div class="menu-sep" role="separator"></div><div class="text-size" role="group" aria-labelledby="textSizeLabel"><span id="textSizeLabel">${t('textSize')}</span><div class="text-size-btns">${TEXT_SIZES.map((key, n) => `<button type="button" data-text-size="${n}" aria-pressed="${n === textSize}" aria-label="${t(key)}"><span style="font-size:${[14, 17, 20][n]}px" aria-hidden="true">A</span></button>`).join('')}</div></div>`;
             $('langBtn').setAttribute('aria-label', t('langAria'));
             $('venueModal').setAttribute('aria-label', t('detailsAria'));
             renderWhereOptions();
@@ -15102,12 +15241,16 @@
             const bar = $('sheetBar');
             const title = $('venueTitle');
             if (!bar || !title || !title.offsetHeight) return;
-            bar.classList.toggle('show', panel.scrollTop > title.offsetTop + title.offsetHeight - 30);
+            // Positions on screen (getBoundingClientRect), so this also works with bigger text (zoomed content).
+            const top = panel.getBoundingClientRect().top;
+            bar.classList.toggle('show', title.getBoundingClientRect().bottom - top < 30);
             const nav = $('sheetJumps');
             if (nav.hidden) return;
-            const offset = bar.firstElementChild.offsetHeight + 30;
+            const offset = bar.firstElementChild.getBoundingClientRect().height + 30;
             let current = '';
-            panel.querySelectorAll('[data-jump]').forEach((s) => { if (s.offsetTop - offset <= panel.scrollTop) current = s.dataset.jump; });
+            panel.querySelectorAll('[data-jump]').forEach((s) => { if (s.getBoundingClientRect().top - top <= offset) current = s.dataset.jump; });
+            // At the very bottom the last section cannot reach the top: mark it anyway.
+            if (panel.scrollTop > 0 && panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 2) current = [...panel.querySelectorAll('[data-jump]')].pop()?.dataset.jump || current;
             nav.querySelectorAll('button').forEach((b) => {
                 const on = b.dataset.jumpTo === current;
                 if (on !== (b.getAttribute('aria-current') === 'true')) {
@@ -15123,7 +15266,7 @@
             if (!section) return;
             const drop = section.querySelector('details.menu-drop');
             if (drop) drop.open = true;
-            const top = section.offsetTop - $('sheetBar').firstElementChild.offsetHeight - 10;
+            const top = panel.scrollTop + section.getBoundingClientRect().top - panel.getBoundingClientRect().top - $('sheetBar').firstElementChild.getBoundingClientRect().height - 10;
             panel.scrollTo({ top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
         }
 
@@ -15840,6 +15983,19 @@
             refreshOfflineBanner(city);
         });
 
+        document.addEventListener('load', (e) => { if (e.target.tagName === 'IMG') e.target.classList.add('in'); }, true);
+        // Photos already in the browser's memory (a list drawn again) show at once instead of fading in again.
+        new MutationObserver((changes) => {
+            for (const change of changes) {
+                for (const node of change.addedNodes) {
+                    if (node.nodeType !== 1) continue;
+                    for (const img of node.tagName === 'IMG' ? [node] : node.querySelectorAll('img')) {
+                        if (img.complete && img.naturalWidth) img.classList.add('in', 'now');
+                    }
+                }
+            }
+        }).observe(document.body, { childList: true, subtree: true });
+
         /* ---------- Wiring ---------- */
 
         $('searchForm').addEventListener('submit', (e) => {
@@ -16043,6 +16199,7 @@
                 return;
             }
             if (action?.dataset.action === 'save-data') { toggleSaveData(); return; }
+            if (action?.dataset.action === 'text-size') { setTextSize((textSize + 1) % TEXT_SIZES.length); return; }
             if (action?.dataset.action === 'events') {
                 document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id));
                 showEvents();
@@ -16374,6 +16531,8 @@
 
         $('langBtn').addEventListener('click', () => toggleLangMenu());
         $('langMenu').addEventListener('click', async (e) => {
+            const size = e.target.closest('[data-text-size]');
+            if (size) { setTextSize(Number(size.dataset.textSize)); return; }
             const choice = e.target.closest('[data-lang]');
             if (!choice) return;
             toggleLangMenu(false);
