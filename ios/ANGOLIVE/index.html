@@ -16815,6 +16815,7 @@
             if (state.view === 'fx') renderFx();
             else if (changed && $('fxTileRate')) $('fxTileRate').textContent = fxTileText();
         });
+        if (POSTHOG_TOKEN && location.hostname === new URL(PUBLIC_URL).hostname) startUsageStats();
         consumeAuthRedirect().then(() => {
             if (signedIn()) accessToken().then(syncFavorites);
         });
@@ -16827,7 +16828,6 @@
             beacon.dataset.cfBeacon = JSON.stringify({ token: ANALYTICS_TOKEN, spa: true });
             document.body.appendChild(beacon);
         }
-        if (POSTHOG_TOKEN && location.hostname === new URL(PUBLIC_URL).hostname) startUsageStats();
 
         // PostHog (live site only): how the app is used, to see what people look for and what does not work.
         // Privacy: nothing is stored on the device, no session recordings, no element text, nobody is identified, and
@@ -16876,6 +16876,16 @@
                 }
             });
             window.posthog.register({ app_language: lang, text_size: textSize });
+            let lastAddress = location.pathname + location.search;
+            const viewChanged = () => {
+                const address = location.pathname + location.search;
+                if (address === lastAddress) return;
+                lastAddress = address;
+                window.posthog.capture('$pageview');
+            };
+            const pushState = history.pushState;
+            history.pushState = function (...args) { const out = pushState.apply(this, args); viewChanged(); return out; };
+            window.addEventListener('popstate', viewChanged);
             // Taps that leave the app or start an action: calls, WhatsApp, directions, tickets, menus, calendar, language, text size.
             document.addEventListener('click', (e) => {
                 const target = e.target instanceof Element ? e.target : null;
