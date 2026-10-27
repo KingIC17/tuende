@@ -627,7 +627,7 @@ def event_places(events, venues, aliases):
                 keys.append((k, v))
     out = {}
     for ev in events:
-        if not ev.get('venue') or ev.get('venueTbc'):
+        if not ev.get('venue') or ev.get('venueTbc') or ev.get('noPlace'):
             continue
         key = ' ' + ' '.join(words(ev['venue'])) + ' '
         hits = [(key.index(k), -len(k), i, v) for i, (k, v) in enumerate(keys) if k in key]
