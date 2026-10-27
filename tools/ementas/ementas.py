@@ -43,10 +43,15 @@ MESMO_LUGAR = {
 DRINKS = re.compile(r'agua|cerveja|champagne|cocktail|cognac|espumante|gin|licor|refrigerante|rum|sangri|sumo|vermute|vinho|vodka|whisk|aguardente|alergeno|garrafeira|cafetaria|bebida|cha-|cafe-|cafes|shot|tequila|bourbon|drink|wine|beer|batido|smoothie|energetic|digestiv|aperitiv|tabaco|charuto|cigar|narguil|shisha|hookah|barbearia|unha|estetica', re.I)
 
 
-def get(url):
-    time.sleep(0.5)
-    r = subprocess.run(['curl', '-sL', '--max-time', '30', '-A', 'Mozilla/5.0 (Tuende; contacto@tuende.app)', url], capture_output=True)
-    return r.stdout.decode('utf-8', 'replace')
+def get(url, tries=3):
+    # O menus.ao às vezes responde vazio durante uns minutos: tenta outra vez (5 s, depois 20 s) antes de desistir.
+    for attempt in range(tries):
+        time.sleep(0.5 if attempt == 0 else (5, 20)[min(attempt - 1, 1)])
+        r = subprocess.run(['curl', '-sL', '--max-time', '30', '-A', 'Mozilla/5.0 (Tuende; contacto@tuende.app)', url], capture_output=True)
+        page = r.stdout.decode('utf-8', 'replace')
+        if r.returncode == 0 and '</html>' in page.lower():
+            return page
+    return page
 
 
 def text(s):
@@ -54,7 +59,19 @@ def text(s):
 
 
 def crawl():
-    listing = get(BASE + 'restaurantes')
+    # A lista inteira: se vier curta (site em baixo), espera 2 minutos e tenta de novo, até 3 vezes.
+    for attempt in range(3):
+        names, entries = read_list(get(BASE + 'restaurantes'))
+        if len(entries) >= 50:
+            break
+        print(f'A lista do menus.ao veio com {len(entries)} restaurantes; nova tentativa daqui a 2 minutos.', flush=True)
+        time.sleep(120)
+    if len(entries) < 50:
+        sys.exit(f'A lista do menus.ao só tem {len(entries)} restaurantes: o site pode ter mudado ou estar em baixo. Nada foi alterado.')
+    return read_menus(names, entries)
+
+
+def read_list(listing):
     names, entries = {}, []
     for m in re.finditer(r'href="https://www\.menus\.ao/([a-z0-9-]+)"[^>]*>(.*?)</a>', listing, re.S):
         slug, inner = m.group(1), m.group(2)
@@ -67,8 +84,10 @@ def crawl():
         else:
             names[slug] = {'name': text(inner), 'address': '', 'city': ''}
         entries.append((slug, text(inner)))
-    if len(entries) < 50:
-        sys.exit(f'A lista do menus.ao só tem {len(entries)} restaurantes: o site pode ter mudado. Nada foi alterado.')
+    return names, entries
+
+
+def read_menus(names, entries):
     result = []
     for slug, label in entries:
         menu = get(f'{BASE}{slug}/menu')
@@ -178,9 +197,6 @@ def build(menus, names, checked):
 
 
 def write(menus_ao, dishes, checked, dry=False):
-    lines = (f"        const MENUS_AO = {json.dumps({str(k): v for k, v in menus_ao.items()}, ensure_ascii=False)};\n"
-             f"        const DISHES = {json.dumps(dishes, ensure_ascii=False)};\n"
-             f"        const DISHES_CHECKED = '{checked}';\n")
     for app in APPS:
         src = app.read_text(encoding='utf-8')
         old = re.search(r"        const MENUS_AO = .*\n        const DISHES = .*\n        const DISHES_CHECKED = '[\d-]+';\n", src)
@@ -191,6 +207,13 @@ def write(menus_ao, dishes, checked, dry=False):
             b = before.get(str(vid))
             if b and (abs(m['min'] - b['min']) > 0.5 * b['min'] or abs(m['max'] - b['max']) > 0.5 * b['max']):
                 print(f'AVISO: lugar {vid} ({m["label"]}) passou de {b["min"]}-{b["max"]} para {m["min"]}-{m["max"]} Kz. Confirme a ementa.')
+        for vid, b in before.items():
+            if int(vid) not in menus_ao and int(vid) in MESMO_LUGAR.values():
+                print(f'AVISO: lugar {vid} ({b["label"]}) não trouxe pratos desta vez; fica a ementa de {b["checked"]}.')
+                menus_ao[int(vid)] = b
+        lines = (f"        const MENUS_AO = {json.dumps({str(k): v for k, v in menus_ao.items()}, ensure_ascii=False)};\n"
+                 f"        const DISHES = {json.dumps(dishes, ensure_ascii=False)};\n"
+                 f"        const DISHES_CHECKED = '{checked}';\n")
         if dry:
             for vid, m in menus_ao.items():
                 b = before.get(str(vid))
