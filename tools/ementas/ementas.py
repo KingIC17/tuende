@@ -38,6 +38,19 @@ MESMO_LUGAR = {
     'lookal-mar': 4, 'lookal-beach-club': 5, 'otto-luanda': 196, 'clube-s': 209, 'bar-terrace-skyna': 221,
     'o-almeida': 232, 'bar-da-amizade': 233, 'tia-maria': 234, 'pontovip': 235,
     'seven-restaurante': 237, 'solar-pinguim-restaurante-e-pastelaria-lda': 238,
+    'twenty-seven': 239,
+    'mamma-mia': 240,
+    'pampa-grill': 241,
+    'restaurante-tomato': 242,
+    'bico-do-sapato': 243,
+    '16-a-esquina': 244,
+    'cozy-cafe': 245,
+    'a-carne-de-villa': 246,
+    'restaurante-ipanema-mar': 247,
+    'delicias-de-paris': 248,
+    'the-test-grill': 249,
+    'pizza-do-escangalho': 250,
+    'rodizio-de-mirantes': 251,
 }
 
 DRINKS = re.compile(r'agua|cerveja|champagne|cocktail|cognac|espumante|gin|licor|refrigerante|rum|sangri|sumo|vermute|vinho|vodka|whisk|aguardente|alergeno|garrafeira|cafetaria|bebida|cha-|cafe-|cafes|shot|tequila|bourbon|drink|wine|beer|batido|smoothie|energetic|digestiv|aperitiv|tabaco|charuto|cigar|narguil|shisha|hookah|barbearia|unha|estetica', re.I)
