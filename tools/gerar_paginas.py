@@ -414,6 +414,11 @@ TOPICS = [
     {'slug': 'restaurantes-bares-e-discotecas-em-luanda', 'title': 'Restaurantes, bares e discotecas em Luanda', 'en': 'Restaurants, bars and clubs in Luanda', 'group': 'type',
      'pick': lambda v: province(v) == 'Luanda' and v['type'] in ('restaurant', 'bar', 'nightclub'),
      'what': 'restaurantes, bares e discotecas em Luanda', 'what_en': 'restaurants, bars and clubs in Luanda'},
+    {'slug': 'restaurantes-em-luanda', 'title': 'Restaurantes em Luanda', 'en': 'Restaurants in Luanda', 'group': 'zone',
+     'seo_title': 'Restaurantes em Luanda: onde comer, por bairro e com preços',
+     'pick': lambda v: province(v) == 'Luanda' and v['type'] == 'restaurant',
+     'what': 'restaurantes em Luanda, por bairro, com os preços dos pratos quando o restaurante publica a ementa',
+     'what_en': 'restaurants in Luanda, by neighbourhood, with dish prices where the restaurant publishes its menu'},
     {'slug': 'centros-comerciais-em-luanda', 'title': 'Centros comerciais em Luanda', 'en': 'Shopping centres in Luanda', 'group': 'type',
      'pick': lambda v: province(v) == 'Luanda' and v['type'] == 'shopping',
      'what': 'centros comerciais (shoppings) em Luanda', 'what_en': 'shopping centres in Luanda'},
@@ -485,10 +490,14 @@ def item_html(v):
 def topic_page(topic, items):
     url = f'{SITE}lugares/{topic["slug"]}.html'
     n = len(items)
-    title = f'{topic["title"]} | Tuende'
+    title = f'{topic.get("seo_title") or topic["title"]} | Tuende'
     description = f'{n} {topic["what"]}, com horário, preço em Kwanza (quando conhecido) e como chegar. Cada lugar indica as fontes e a data de verificação.'
     if topic['group'] == 'type':
         groups = [(PLURAL[t], [v for v in items if v['type'] == t]) for t in TYPE_ORDER]
+    elif topic['group'] == 'zone':
+        zone = lambda v: v['location'].split(' - ', 1)[1] if ' - ' in v['location'] else v['location']
+        zones = sorted({zone(v) for v in items}, key=lambda z: (-sum(1 for v in items if zone(v) == z), z))
+        groups = [(z, [v for v in items if zone(v) == z]) for z in zones]
     else:
         provinces = sorted({province(v) for v in items}, key=lambda p: (p != 'Luanda', -sum(1 for v in items if province(v) == p), p))
         groups = [(p, [v for v in items if province(v) == p]) for p in provinces]
@@ -769,7 +778,7 @@ def agenda_page(events, today):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda de eventos em Luanda e Angola | Tuende</title>
+    <title>Eventos em Luanda e Angola: agenda de hoje e da semana | Tuende</title>
     <meta name="description" content="{e(description)}">
     <link rel="canonical" href="{url}">
     <meta property="og:type" content="website">
