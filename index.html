@@ -489,10 +489,11 @@
         }
 
         .collection img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-        .collection::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.05) 20%, rgba(0,0,0,0.75) 100%); }
-        .collection > span { position: relative; z-index: 1; }
+        /* Darker from the middle down, so white titles stay readable on bright photos (sky, sand, sea): at least 3:1 even over a white pixel. */
+        .collection::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.8) 100%); }
+        .collection > span { position: relative; z-index: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.45); }
         .collection-title { font-size: 19px; font-weight: 800; line-height: 1.2; }
-        .collection-desc { font-size: 14px; opacity: 0.95; margin-top: 4px; }
+        .collection-desc { font-size: 14px; margin-top: 4px; }
 
         /* Place cards */
         .card { position: relative; display: flex; flex-direction: column; }
@@ -545,7 +546,7 @@
         .price-pill.free { background: var(--free-bg); color: var(--free-ink); }
         .price-pill.tbc { background: var(--tbc-bg); color: var(--tbc-ink); }
         .fx { font-weight: 700; color: var(--text); }
-        .card-name button { background: none; border: none; padding: 0; text-align: left; font-weight: inherit; }
+        .card-name button { background: none; border: none; padding: 1px 0; margin: -1px 0; text-align: left; font-weight: inherit; }
         .card-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 14px; color: var(--muted); }
         .card-facts strong { color: var(--text); }
         .card-highlight { font-size: 15px; }
@@ -1943,7 +1944,7 @@
             </nav>
             <div class="topbar-actions">
                 <div class="lang-wrap">
-                    <button class="top-btn" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="langMenu"><span data-icon="globe"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><span id="langLabel">PT</span></button>
+                    <button class="top-btn" id="langBtn" type="button" aria-expanded="false" aria-controls="langMenu"><span data-icon="globe"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span><span id="langLabel">PT</span></button>
                     <div class="lang-menu" id="langMenu" hidden></div>
                 </div>
                 <button class="top-btn" id="installTopBtn" type="button" data-info="install" data-i18n-aria="installTitle" hidden aria-label="Descarregar a app"><span data-icon="download"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><span class="desktop-only" data-i18n="installTitle">Descarregar a app</span></button>
@@ -6089,6 +6090,25 @@
                 checked: '2026-10-25'
             },
             {
+                id: 'pia-2026',
+                photo: {"url": "photos/agostinhonetomausoleu-960.jpg", "thumb": "photos/agostinhonetomausoleu-330.jpg", "author": "Erik Cleves Kristensen", "license": "CC BY 2.0", "page": "https://commons.wikimedia.org/wiki/File:Agostinhonetomausoleu.jpg", "caption": {"pt": "Memorial Dr. António Agostinho Neto", "en": "Dr. António Agostinho Neto Memorial", "fr": "Mémorial Dr António Agostinho Neto", "es": "Memorial Dr. António Agostinho Neto"}},
+                type: 'fairs',
+                title: { pt: 'PIA 2026: Praça Internacional de Angola', en: 'PIA 2026: Angola International Square', fr: 'PIA 2026 : Place internationale de l\'Angola', es: 'PIA 2026: Plaza Internacional de Angola' },
+                city: 'Luanda',
+                venue: 'Praça da República, Memorial Dr. António Agostinho Neto (Nova Marginal)',
+                start: '2026-11-06',
+                end: '2026-11-07',
+                time: '10:00',
+                when: { pt: 'A partir das 10h00', en: 'From 10 am', fr: 'À partir de 10 h', es: 'Desde las 10:00' },
+                price: { from: 5000, note: { pt: 'Entrada 5000 Kz; VIP 10.000 Kz; pacote para empresas 80.000 Kz.', en: 'Entry 5,000 Kz; VIP 10,000 Kz; business package 80,000 Kz.', fr: 'Entrée 5 000 Kz ; VIP 10 000 Kz ; forfait entreprises 80 000 Kz.', es: 'Entrada 5000 Kz; VIP 10.000 Kz; paquete para empresas 80.000 Kz.' } },
+                tags: { pt: ['Feira', 'Negócios', 'Emprego'], en: ['Fair', 'Business', 'Jobs'], fr: ['Foire', 'Affaires', 'Emploi'], es: ['Feria', 'Negocios', 'Empleo'] },
+                desc: { pt: 'Feira de negócios e emprego na Nova Marginal, junto ao Memorial Dr. António Agostinho Neto, com expositores, empresas e oportunidades de trabalho. O programa detalhado é publicado pela organização (MM Entertainment).', en: 'A business and jobs fair on the Nova Marginal, by the Dr. António Agostinho Neto Memorial, with exhibitors, companies and job opportunities. The organiser (MM Entertainment) publishes the detailed programme.', fr: 'Une foire des affaires et de l\'emploi sur la Nova Marginal, près du Mémorial Dr António Agostinho Neto, avec exposants, entreprises et offres d\'emploi. L\'organisateur (MM Entertainment) publie le programme détaillé.', es: 'Una feria de negocios y empleo en la Nova Marginal, junto al Memorial Dr. António Agostinho Neto, con expositores, empresas y oportunidades de trabajo. La organización (MM Entertainment) publica el programa detallado.' },
+                link: 'https://ticket.ao/event/praca-internacional-de-angola-pia/',
+                tickets: true,
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/praca-internacional-de-angola-pia/' },
+                checked: '2026-10-28'
+            },
+            {
                 id: 'kizombayas-2026',
                 type: 'dance',
                 title: { pt: 'KizoMbayas', en: 'KizoMbayas', fr: 'KizoMbayas', es: 'KizoMbayas' },
@@ -7137,6 +7157,25 @@
                 checked: '2026-10-06'
             },
             {
+                id: 'afropulse-baia-2027',
+                photo: {"url": "photos/bay-of-luanda-960.jpg", "thumb": "photos/bay-of-luanda-330.jpg", "author": "Paulo César Santos", "license": "CC0", "page": "https://commons.wikimedia.org/wiki/File:Bay_of_Luanda.jpg", "caption": {"pt": "Baía de Luanda", "en": "Luanda Bay", "fr": "Baie de Luanda", "es": "Bahía de Luanda"}},
+                type: 'music',
+                title: { pt: 'Afropulse Baía 2027', en: 'Afropulse Baía 2027', fr: 'Afropulse Baía 2027', es: 'Afropulse Baía 2027' },
+                city: 'Luanda',
+                venue: 'Marginal da Baía de Luanda',
+                mapsQuery: 'Marginal de Luanda, Luanda',
+                start: '2027-02-04',
+                end: '2027-02-06',
+                when: { pt: 'Três dias; horários por confirmar', en: 'Three days; times to be confirmed', fr: 'Trois jours ; horaires à confirmer', es: 'Tres días; horarios por confirmar' },
+                price: { from: 15000, note: { pt: 'Pré-venda por dia: 15.000 Kz; frente ao palco 25.000 Kz.', en: 'Pre-sale per day: 15,000 Kz; front of stage 25,000 Kz.', fr: 'Prévente par jour : 15 000 Kz ; devant la scène 25 000 Kz.', es: 'Preventa por día: 15.000 Kz; frente al escenario 25.000 Kz.' } },
+                tags: { pt: ['Festival', 'Música', 'Ao ar livre'], en: ['Festival', 'Music', 'Outdoors'], fr: ['Festival', 'Musique', 'En plein air'], es: ['Festival', 'Música', 'Al aire libre'] },
+                desc: { pt: 'Festival de música de três dias na Baía de Luanda, organizado pela AfroPulse Productions. O cartaz completo está por confirmar; os bilhetes de cada dia vendem-se em separado.', en: 'A three-day music festival on Luanda Bay, organised by AfroPulse Productions. The full line-up is still to be confirmed; tickets are sold separately for each day.', fr: 'Un festival de musique de trois jours sur la baie de Luanda, organisé par AfroPulse Productions. La programmation complète reste à confirmer ; les billets se vendent séparément pour chaque jour.', es: 'Un festival de música de tres días en la Bahía de Luanda, organizado por AfroPulse Productions. El cartel completo está por confirmar; las entradas de cada día se venden por separado.' },
+                link: 'https://afropulse.live/',
+                tickets: true,
+                source: { name: 'Ticket.ao', url: 'https://ticket.ao/event/afropulse-baia-2027-4-fev/' },
+                checked: '2026-10-28'
+            },
+            {
                 id: 'festas-do-mar-namibe-2027',
                 type: 'fairs',
                 confirmed: false,
@@ -7815,7 +7854,8 @@
         const locale = () => ({ pt: 'pt-PT', en: 'en-GB', fr: 'fr-FR', es: 'es-ES' }[lang]);
         const cityOf = (v) => v.location.split(' - ')[0];
         const areaOf = (v) => v.location.split(' - ')[1] || '';
-        const placeLine = (v) => (areaOf(v) && areaOf(v) !== cityOf(v) ? `${areaOf(v)}, ${cityOf(v)}` : cityOf(v));
+        // "Ilha de Luanda" already says Luanda, so it is not repeated ("Ilha de Luanda, Luanda").
+        const placeLine = (v) => (areaOf(v) && areaOf(v) !== cityOf(v) ? (areaOf(v).includes(cityOf(v)) ? areaOf(v) : `${areaOf(v)}, ${cityOf(v)}`) : cityOf(v));
         const catLabel = (type, plural) => CATEGORY[type][lang][plural ? 0 : 1];
         const DESC = { en: DESC_EN, fr: DESC_FR, es: DESC_ES };
         const descOf = (v) => (lang === 'pt' ? v.description : DESC[lang][v.id] || DESC_EN[v.id] || v.description);
