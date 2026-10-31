@@ -2,3 +2,4 @@
 "CFBundleDisplayName" = "Tuende";
 "NSLocationWhenInUseUsageDescription" = "Tuende utilise votre position uniquement sur votre téléphone, pour afficher les lieux les plus proches de vous.";
 "NSCalendarsUsageDescription" = "Tuende utilise votre calendrier uniquement pour enregistrer les événements de l'agenda que vous choisissez.";
+"NSMicrophoneUsageDescription" = "Tuende utilise le micro uniquement pour enregistrer les messages vocaux que vous envoyez dans Discussions.";
