@@ -1916,6 +1916,19 @@
         .call-btn.end .icon { background: #c8241a; transform: rotate(135deg); }
         .call-btn:focus-visible { outline: none; }
         .call-btn:focus-visible .icon { outline: 3px solid #fff; outline-offset: 3px; }
+        /* Group calls: one tile per person (up to 4), names at the bottom. */
+        .call-grid { position: absolute; inset: 0; display: grid; grid-template-columns: minmax(0, 1fr); grid-auto-rows: minmax(0, 1fr); gap: 6px; padding: calc(112px + env(safe-area-inset-top)) 6px calc(132px + env(safe-area-inset-bottom)); }
+        .call-grid.n3, .call-grid.n4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .call-tile { position: relative; display: grid; place-items: center; min-height: 0; overflow: hidden; border-radius: 16px; background: #26262a; }
+        .call-tile video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .call-tile.me video { transform: scaleX(-1); }
+        .call-tile > span { position: absolute; left: 10px; bottom: 8px; max-width: calc(100% - 20px); overflow: hidden; padding: 2px 10px; border-radius: 999px; background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+        .call-screen.grid .call-info.over .avatar { display: none; }
+        .chat-call-bar { display: flex; align-items: center; gap: 10px; width: 100%; margin-top: 8px; padding: 8px 10px; border-radius: 12px; background: color-mix(in srgb, #1f8f4d 14%, var(--surface)); border: 1px solid color-mix(in srgb, #1f8f4d 40%, transparent); }
+        .chat-call-bar > .icon { flex: none; color: #1f8f4d; }
+        .chat-call-bar > span { display: grid; flex: 1; min-width: 0; line-height: 1.25; }
+        .chat-call-bar small { color: var(--muted); }
+        .chat-call-bar .submit-btn { width: auto; min-height: 40px; padding: 0 16px; background: #1f8f4d; }
         .chat-choices { display: grid; gap: 4px; max-height: 58vh; margin-top: 8px; overflow: auto; }
         .chat-choices .pick-row[hidden], .person-row[hidden] { display: none; }
         .chat-search { margin-top: 10px; }
@@ -3550,6 +3563,20 @@
                 chatCallVoice: 'Chamada de voz',
                 chatCallVideo: 'Videochamada',
                 chatCallMissed: 'Não atendida',
+                chatCallNoAnswer: 'Ninguém atendeu.',
+                chatCallEnded: 'A chamada já terminou.',
+                chatCallFull: 'Esta chamada já tem 4 pessoas.',
+                chatCallActive: 'Já há uma chamada nesta conversa.',
+                chatCallMissedToast: 'Chamada não atendida de {name}.',
+                chatCallIncomingGroupVoice: '{name} está a ligar ao grupo',
+                chatCallIncomingGroupVideo: '{name} começou uma videochamada no grupo',
+                chatCallGroupVoice: 'Chamada de grupo',
+                chatCallGroupVideo: 'Videochamada de grupo',
+                chatCallPeople: '{n} pessoas',
+                chatCallOnePerson: '1 pessoa',
+                chatCallOngoing: 'Chamada em curso',
+                chatCallJoin: 'Entrar',
+                chatCallYou: 'Você',
                 chatCallIncomingVoice: 'Chamada de voz a chegar…',
                 chatCallIncomingVideo: 'Videochamada a chegar…',
                 chatCallRinging: 'A chamar…',
@@ -4769,6 +4796,20 @@
                 chatCallVoice: 'Voice call',
                 chatCallVideo: 'Video call',
                 chatCallMissed: 'Not answered',
+                chatCallNoAnswer: 'No one answered.',
+                chatCallEnded: 'The call has already ended.',
+                chatCallFull: 'This call already has 4 people.',
+                chatCallActive: 'There is already a call in this chat.',
+                chatCallMissedToast: 'Missed call from {name}.',
+                chatCallIncomingGroupVoice: '{name} is calling the group',
+                chatCallIncomingGroupVideo: '{name} started a group video call',
+                chatCallGroupVoice: 'Group call',
+                chatCallGroupVideo: 'Group video call',
+                chatCallPeople: '{n} people',
+                chatCallOnePerson: '1 person',
+                chatCallOngoing: 'Call in progress',
+                chatCallJoin: 'Join',
+                chatCallYou: 'You',
                 chatCallIncomingVoice: 'Incoming voice call…',
                 chatCallIncomingVideo: 'Incoming video call…',
                 chatCallRinging: 'Ringing…',
@@ -8866,6 +8907,7 @@
             else if (params.get('page') === 'conversas') {
                 const conv = UUID_RE.test(params.get('c') || '') ? params.get('c') : null;
                 if (state.view !== 'chats' || chat.open !== conv) showChats({ push: false, conv });
+                if (UUID_RE.test(params.get('call') || '')) resumeCallFromLink(params.get('call'));
             }
             else if (params.get('page') === 'plano' && /^[0-9a-f]{32}$/.test(params.get('amigos') || '')) openFriendsPlan(params.get('amigos'));
             else if (UUID_RE.test(params.get('pessoa') || '')) { if (!$('authorModal').classList.contains('open')) openPerson(params.get('pessoa')); }
@@ -12641,9 +12683,12 @@
             me: null, tab: 'chats', reads: [], myStatus: 'active', otherPending: false, replyTo: null, typing: new Map() };
         const REACTIONS = [['heart', 'heart', 'reactHeart'], ['up', 'thumbUp', 'reactUp'], ['haha', 'smile', 'reactHaha'], ['check', 'check', 'reactCheck'], ['star', 'star', 'reactStar']];
         const UNAME_RE = /^[a-z0-9][a-z0-9._]{1,18}[a-z0-9]$/;
-        // Calls: sound and video go straight between the two phones (WebRTC); STUN only helps them find each other.
+        // Calls: sound and video go straight between the phones (WebRTC); STUN helps them find each other, TURN relays when needed.
         const ICE_SERVERS = [{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }];
-        const call = { id: null, conv: null, video: false, role: '', state: 'idle', pc: null, local: null, remote: null, started: 0, tick: 0, ringTimer: 0, lostTimer: 0, peer: null, iceQueue: [], muted: false, camOff: false };
+        // Up to 4 people in a call; peers holds one connection per other person (by public person id).
+        const CALL_MAX = 4;
+        const call = { id: null, conv: null, video: false, group: false, title: '', sub: '', avatar: null, role: '', state: 'idle', inCall: false, me: '',
+            local: null, peers: new Map(), early: new Map(), started: 0, tick: 0, ringTimer: 0, aliveTimer: 0, muted: false, camOff: false };
         const canCall = () => typeof RTCPeerConnection !== 'undefined' && Boolean(navigator.mediaDevices?.getUserMedia);
         const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
         const CHAT_VIDEO_MAX = 25 * 1024 * 1024;
@@ -12658,6 +12703,8 @@
         const pushSupported = () => !inNativeApp && signedIn() && 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && location.protocol.startsWith('http');
         const chatErrorText = (err) => {
             const d = String(err?.detail || '');
+            if (d.includes('call_full')) return t('chatCallFull');
+            if (d.includes('call_active')) return t('chatCallActive');
             if (d.includes('too_fast')) return t('chatTooFast');
             if (d.includes('blocked_words')) return t('errBlockedText');
             if (d.includes('blocked')) return t('chatBlockedMsg');
@@ -12755,7 +12802,7 @@
             if (kind === 'photo') return `${t('chatPhotoMsg')}${body ? `: ${body}` : ''}`;
             if (kind === 'video') return `${t('chatVideoMsg')}${body ? `: ${body}` : ''}`;
             if (kind === 'audio') return `${t('chatVoiceMsg')}${d.dur ? ` (${voiceTime(d.dur)})` : ''}`;
-            if (kind === 'call') return `${t(d.video ? 'chatCallVideo' : 'chatCallVoice')}${d.dur ? ` (${voiceTime(d.dur)})` : ` · ${t('chatCallMissed')}`}`;
+            if (kind === 'call') return `${t(callKindKey(d))}${d.dur ? ` (${voiceTime(d.dur)})` : ` · ${t('chatCallMissed')}`}`;
             if (kind === 'location') return t('chatLocationMsg');
             if (kind === 'place') return venues.find((v) => v.id === d.id)?.name || t('chatPlace');
             if (kind === 'event') { const e = EVENTS.find((x) => x.id === d.id); return e ? eventTitle(e) : t('chatEvent'); }
@@ -12832,7 +12879,12 @@
             renderChatBadges();
             if (state.view !== 'chats' || chat.open) return;
             if (chat.ready === false) { renderChats(); return; }
-            if (pushSupported() && chat.push === undefined) chat.push = Notification.permission === 'granted' && Boolean(await pushSubscription());
+            if (pushSupported() && chat.push === undefined) {
+                const sub = Notification.permission === 'granted' ? await pushSubscription() : null;
+                chat.push = Boolean(sub);
+                // Devices that turned notifications on before calls: send their keys once.
+                if (sub && !store.get('tuendePushKeys', false)) rpc('save_push', { sub_endpoint: sub.endpoint, sub_lang: lang, ...pushKeys(sub) }).then(() => store.set('tuendePushKeys', true)).catch(() => {});
+            }
             if (state.view !== 'chats' || chat.open) return;
             body.innerHTML = chatListHTML();
             stopChatTimer();
@@ -12960,7 +13012,7 @@
                 const src = m.localUrl || chat.media.get(d.path) || '';
                 inner = `<p class="chat-voice-label">${icon('mic')}${t('chatVoiceMsg')}${d.dur ? ` · ${voiceTime(d.dur)}` : ''}</p><audio class="chat-audio" controls preload="metadata" ${src ? `src="${escapeHTML(src)}"` : ''} data-chat-media="${escapeHTML(d.path || '')}" aria-label="${t('chatVoiceMsg')}"></audio>`;
             } else if (m.kind === 'call') {
-                inner = `<p class="chat-call">${icon(d.video ? 'video' : 'phone')}<span><b>${t(d.video ? 'chatCallVideo' : 'chatCallVoice')}</b><small>${d.dur ? escapeHTML(voiceTime(d.dur)) : t('chatCallMissed')}</small></span></p>`;
+                inner = `<p class="chat-call">${icon(d.video ? 'video' : 'phone')}<span><b>${t(callKindKey(d, chat.info?.kind === 'group'))}</b><small>${d.dur ? escapeHTML(`${voiceTime(d.dur)}${d.n > 2 ? ` · ${peopleText(d.n)}` : ''}`) : t('chatCallMissed')}</small></span></p>`;
             } else if (m.kind === 'poll') inner = pollHTML(m);
             else if (m.kind === 'game') inner = gameHTML(m);
             else inner = chatCardHTML(m.kind, d);
@@ -13021,9 +13073,10 @@
                     <button type="button" class="chat-icon-btn" data-chat-list aria-label="${t('chatBack')}">${icon('back')}</button>
                     ${pic}
                     <button type="button" class="chat-head-title" data-chat-info><b id="chatsTitle">${escapeHTML(info.title || t('chatDeletedPerson'))}</b><small>${group ? t('chatMembersN', { n: (info.members || []).length }) : other?.username ? `@${escapeHTML(other.username)}` : t('chatInfoHint')}</small></button>
-                    ${!group && chat.myStatus === 'active' && !chat.otherPending && canCall() ? `<button type="button" class="chat-icon-btn" data-call-start="voice" aria-label="${t('chatCallVoice')}">${icon('phone')}</button><button type="button" class="chat-icon-btn" data-call-start="video" aria-label="${t('chatCallVideo')}">${icon('video')}</button>` : ''}
+                    ${chat.myStatus === 'active' && (group || !chat.otherPending) && (info.members || []).some((x) => !x.me) && canCall() ? `<button type="button" class="chat-icon-btn" data-call-start="voice" aria-label="${t('chatCallVoice')}">${icon('phone')}</button><button type="button" class="chat-icon-btn" data-call-start="video" aria-label="${t('chatCallVideo')}">${icon('video')}</button>` : ''}
                     <button type="button" class="chat-icon-btn" data-chat-search aria-label="${t('chatSearchMsgs')}">${icon('search')}</button>
                     <div id="chatPinnedBox">${pinnedBarHTML()}</div>
+                    <div id="chatCallBar"></div>
                 </div>
                 <div class="chat-msgs" id="chatMsgs" role="log" aria-labelledby="chatsTitle">
                     ${chat.myStatus === 'request' && !group ? '<div class="chat-req-card" id="chatReqCard"></div>' : ''}
@@ -13432,9 +13485,12 @@
             } catch {}
         }
 
-        /* --- Voice and video calls ---
-           The database only rings (ring_call, call_signal: private channel inbox:<id>); offer, answer and network
-           candidates go over the chat's private channel (conv:<id>); sound and image go straight between the phones. */
+        /* --- Voice and video calls: one to one, or up to 4 people in a group ---
+           The database rings and knows who is in the call (ring_call, join_call, call_alive, leave_call; private channel
+           inbox:<id>, and an encrypted notification when the app is closed). When the last person leaves, the database
+           writes the call record in the chat. Offers, answers and network candidates go over the chat's private channel
+           (conv:<id>), addressed person to person: every two people in the call have their own connection.
+           Sound and image go straight between the phones, or through Cloudflare's relay (TURN) when a network blocks that. */
 
         // How call messages travel (replaced in tests).
         const callNet = {
@@ -13442,6 +13498,33 @@
             send: (payload) => liveSend({ topic: live.convTopic, event: 'broadcast', payload: { type: 'broadcast', event: 'call', payload }, ref: String(++live.ref), join_ref: live.convRef }),
         };
         const callMedia = (video) => navigator.mediaDevices.getUserMedia({ audio: true, video: video ? { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } } : false });
+        const callKindKey = (d, group = false) => (group || d.n > 2 ? (d.video ? 'chatCallGroupVideo' : 'chatCallGroupVoice') : (d.video ? 'chatCallVideo' : 'chatCallVoice'));
+        const myPid = () => chat.me?.person || (chat.info?.members || []).find((x) => x.me)?.person || '';
+
+        // Relay servers: short-lived credentials from the turn-credentials function; STUN only until it is set up.
+        const turn = { servers: null, until: 0, pending: null };
+        function iceServers() {
+            if (turn.servers && Date.now() < turn.until) return Promise.resolve(turn.servers);
+            if (!turn.pending) {
+                turn.pending = (async () => {
+                    let servers = ICE_SERVERS;
+                    let keep = 10 * 60 * 1000;
+                    try {
+                        const token = await accessToken();
+                        const res = await fetch(`${SUPABASE_URL}/functions/v1/turn-credentials`, { headers: { Authorization: `Bearer ${token}`, apikey: SUPABASE_KEY } });
+                        const data = res.ok ? await res.json() : null;
+                        if (data?.ready && Array.isArray(data.iceServers) && data.iceServers.length) {
+                            // Browsers block port 53 (Cloudflare's note), so those addresses are left out.
+                            servers = data.iceServers.map((s) => ({ ...s, urls: [].concat(s.urls).filter((u) => !/:53(\?|$)/.test(u)) })).filter((s) => s.urls.length);
+                            keep = 6 * 3600 * 1000;
+                        }
+                    } catch {}
+                    Object.assign(turn, { servers, until: Date.now() + keep, pending: null });
+                    return servers;
+                })();
+            }
+            return turn.pending;
+        }
 
         async function waitCallNet(conv) {
             for (let i = 0; i < 60; i++) {
@@ -13452,43 +13535,89 @@
             return callNet.ready(conv);
         }
 
+        function resetCall() {
+            Object.assign(call, { id: null, conv: null, video: false, group: false, title: '', sub: '', avatar: null, role: '', state: 'idle', inCall: false,
+                local: null, peers: new Map(), early: new Map(), started: 0, muted: false, camOff: false });
+        }
+
+        // The person who taps the phone or camera in a chat. In a group with a call going on, this joins it.
         async function startCall(video) {
             if (call.state !== 'idle') return;
             const conv = chat.open;
-            const other = (chat.info?.members || []).find((x) => !x.me);
-            if (!conv || !other) return;
+            const info = chat.info;
+            if (!conv || !info) return;
+            const group = info.kind === 'group';
+            const others = (info.members || []).filter((x) => !x.me);
+            if (!others.length) return;
+            await loadChatMe();
+            if (group) {
+                const on = await rpc('conv_call', { conv }).catch(() => null);
+                if (on?.open) { joinOngoingCall(on); return; }
+            }
             if (!(await waitCallNet(conv))) { toast(t('chatCallUnavailable')); return; }
             let stream;
             try { stream = await callMedia(video); } catch { toast(t(video ? 'chatCamDenied' : 'chatMicDenied')); return; }
-            Object.assign(call, { id: null, conv, video, role: 'caller', state: 'ringing', local: stream, remote: null, peer: { name: other.name, avatar: other.avatar }, iceQueue: [], muted: false, camOff: false, started: 0 });
+            resetCall();
+            Object.assign(call, { conv, video, group, title: group ? info.title || '' : others[0].name || '', avatar: group ? null : others[0].avatar, role: 'caller', state: 'ringing', me: myPid(), local: stream });
             showCallScreen();
+            iceServers();
             try {
                 call.id = await rpc('ring_call', { conv, video });
             } catch (err) {
                 endCall();
+                if (String(err?.detail || err?.message || '').includes('call_active')) {
+                    const on = await rpc('conv_call', { conv }).catch(() => null);
+                    if (on?.open) { joinOngoingCall(on); return; }
+                }
                 toast(chatErrorText(err));
                 return;
             }
+            call.inCall = true;
+            startAlive();
+            const id = call.id;
             call.ringTimer = setTimeout(() => {
-                if (call.state !== 'ringing') return;
-                rpc('call_signal', { conv, call: call.id, what: 'cancel' }).catch(() => {});
-                endCall({ log: true });
+                if (call.id !== id || call.state !== 'ringing' || call.peers.size) return;
+                toast(t('chatCallNoAnswer'));
+                leaveCall();
             }, 45000);
         }
 
-        // From the account's private channel: someone rings, gave up, declined or is busy.
+        // A group call already going on: the call screen opens straight away and joins it.
+        function joinOngoingCall(s) {
+            if (call.state !== 'idle' || !s?.id) return;
+            resetCall();
+            Object.assign(call, { id: s.id, conv: s.conv, video: Boolean(s.video), group: Boolean(s.group), title: s.group ? s.g || '' : s.from || '',
+                sub: s.group ? s.from || '' : '', avatar: s.group ? null : s.av, role: 'callee', state: 'incoming' });
+            acceptCall();
+        }
+
+        function incomingCall(o) {
+            resetCall();
+            Object.assign(call, o, { role: 'callee', state: 'incoming' });
+            showCallScreen();
+            const id = call.id;
+            call.ringTimer = setTimeout(() => { if (call.id === id && call.state === 'incoming') endCall(); }, 45000);
+        }
+
+        // From the account's private channel: someone rings, gave up, declined or is busy; a group call changed or ended.
         function onCallInbox(p) {
             if (p.what === 'ring') {
-                if (call.state !== 'idle') { rpc('call_signal', { conv: p.c, call: p.id, what: 'busy' }).catch(() => {}); return; }
-                Object.assign(call, { id: p.id, conv: p.c, video: Boolean(p.video), role: 'callee', state: 'incoming', local: null, remote: null, peer: { name: p.from || '', avatar: p.av }, iceQueue: [], muted: false, camOff: false, started: 0 });
-                showCallScreen();
-                call.ringTimer = setTimeout(() => { if (call.state === 'incoming') endCall(); }, 45000);
+                if (call.state !== 'idle') {
+                    if (call.id !== p.id && !p.g) rpc('call_signal', { conv: p.c, call: p.id, what: 'busy' }).catch(() => {});
+                    return;
+                }
+                incomingCall({ id: p.id, conv: p.c, video: Boolean(p.video), group: Boolean(p.g), title: p.g || p.from || '', sub: p.g ? p.from || '' : '', avatar: p.g ? null : p.av });
+                return;
+            }
+            if (p.what === 'update' || p.what === 'ended') {
+                if (chat.open === p.c) refreshCallBar();
+                if (p.what === 'ended' && call.id === p.id && call.state === 'incoming') endCall();
                 return;
             }
             if (!call.id || p.id !== call.id) return;
             if (p.what === 'cancel' && call.state === 'incoming') endCall();
-            else if (p.what === 'decline' && call.role === 'caller') { toast(t('chatCallDeclined')); endCall({ log: true }); }
-            else if (p.what === 'busy' && call.role === 'caller') { toast(t('chatCallBusy')); endCall({ log: true }); }
+            else if (p.what === 'decline' && call.role === 'caller' && !call.group && !call.peers.size) { toast(t('chatCallDeclined')); leaveCall(); }
+            else if (p.what === 'busy' && call.role === 'caller' && !call.group && !call.peers.size) { toast(t('chatCallBusy')); leaveCall(); }
         }
 
         async function acceptCall() {
@@ -13497,101 +13626,200 @@
             clearTimeout(call.ringTimer);
             call.state = 'connecting';
             showCallScreen();
-            try { call.local = await callMedia(video); } catch { toast(t(video ? 'chatCamDenied' : 'chatMicDenied')); declineCall(); return; }
+            let stream;
+            try { stream = await callMedia(video); } catch { toast(t(video ? 'chatCamDenied' : 'chatMicDenied')); declineCall(); return; }
+            if (call.id !== id) { stream.getTracks().forEach((track) => track.stop()); return; }
+            call.local = stream;
+            await loadChatMe();
             if (state.view !== 'chats' || chat.open !== conv) showChats({ conv });
             if (!(await waitCallNet(conv)) || call.id !== id) { if (call.id === id) { toast(t('chatCallUnavailable')); declineCall(); } return; }
-            attachCallMedia();
-            callNet.send({ t: 'accept', id });
+            let r;
+            try { r = await rpc('join_call', { call_id: id }); } catch (err) { if (call.id === id) { toast(chatErrorText(err)); endCall(); } return; }
+            if (call.id !== id) return;
+            if (r?.ended) { toast(t('chatCallEnded')); endCall(); return; }
+            call.me = myPid();
+            call.inCall = true;
+            startAlive();
+            showCallScreen();
+            await iceServers();
+            if (call.id !== id) return;
+            callNet.send({ t: 'join', id, from: call.me, n: accountName(), a: myAvatar() });
+            // No one in the call answers within 20 seconds (they all left): it is over.
+            call.ringTimer = setTimeout(() => { if (call.id === id && !call.peers.size) { toast(t('chatCallEnded')); leaveCall(); } }, 20000);
         }
 
         function declineCall() {
-            if (call.conv && call.id) rpc('call_signal', { conv: call.conv, call: call.id, what: 'decline' }).catch(() => {});
-            endCall();
+            if (call.conv && call.id && !call.group && !call.inCall) rpc('call_signal', { conv: call.conv, call: call.id, what: 'decline' }).catch(() => {});
+            if (call.inCall) leaveCall(); else endCall();
         }
 
-        function makePeer() {
-            const pc = new RTCPeerConnection({ iceServers: ICE_SERVERS });
-            call.pc = pc;
+        // One connection to one other person in the call. Network candidates that came early wait in call.early.
+        async function makePeer(pid, from = {}) {
+            const servers = await iceServers();
+            const old = call.peers.get(pid);
+            if (old) { clearTimeout(old.lostTimer); try { old.pc.close(); } catch {} }
+            const pc = new RTCPeerConnection({ iceServers: servers });
+            const peer = { pc, stream: null, name: String(from.n || old?.name || '').slice(0, 60), avatar: typeof from.a === 'string' ? from.a : old?.avatar || null, iceQueue: call.early.get(pid) || [], lostTimer: 0 };
+            call.early.delete(pid);
+            call.peers.set(pid, peer);
             call.local?.getTracks().forEach((track) => pc.addTrack(track, call.local));
-            pc.onicecandidate = (e) => { if (e.candidate) callNet.send({ t: 'ice', id: call.id, c: e.candidate.toJSON() }); };
-            pc.ontrack = (e) => { call.remote = e.streams[0] || new MediaStream([e.track]); attachCallMedia(); };
+            pc.onicecandidate = (e) => { if (e.candidate && call.peers.get(pid) === peer) callNet.send({ t: 'ice', id: call.id, from: call.me, to: pid, c: e.candidate.toJSON() }); };
+            pc.ontrack = (e) => { peer.stream = e.streams[0] || new MediaStream([e.track]); attachCallMedia(); };
             pc.onconnectionstatechange = () => {
-                if (call.pc !== pc) return;
-                clearTimeout(call.lostTimer);
-                if (pc.connectionState === 'connected' && call.state !== 'active') {
-                    call.state = 'active';
-                    call.started = Date.now();
-                    call.tick = setInterval(updateCallTime, 1000);
+                if (call.peers.get(pid) !== peer) return;
+                clearTimeout(peer.lostTimer);
+                if (pc.connectionState === 'connected') {
+                    clearTimeout(call.ringTimer);
+                    if (call.state !== 'active') {
+                        call.state = 'active';
+                        call.started = Date.now();
+                        clearInterval(call.tick);
+                        call.tick = setInterval(updateCallTime, 1000);
+                    }
                     showCallScreen();
                 } else if (pc.connectionState === 'failed') {
-                    toast(t('chatCallFailed'));
-                    hangUp();
+                    dropPeer(pid, true);
                 } else if (pc.connectionState === 'disconnected') {
-                    call.lostTimer = setTimeout(() => { if (call.pc === pc && pc.connectionState !== 'connected') hangUp(); }, 10000);
+                    peer.lostTimer = setTimeout(() => { if (call.peers.get(pid) === peer && pc.connectionState !== 'connected') dropPeer(pid, true); }, 10000);
                 }
             };
-            return pc;
+            return peer;
         }
 
-        async function flushIce() {
-            for (const c of call.iceQueue.splice(0)) await call.pc.addIceCandidate(c).catch(() => {});
+        // Someone left (or their connection failed). Alone again in a call that had started: it is over for me too.
+        function dropPeer(pid, failed = false) {
+            const peer = call.peers.get(pid);
+            if (!peer) return;
+            clearTimeout(peer.lostTimer);
+            try { peer.pc.close(); } catch {}
+            call.peers.delete(pid);
+            if (failed && call.state !== 'active') toast(t('chatCallFailed'));
+            if (!call.peers.size && call.state !== 'ringing') { leaveCall(); return; }
+            showCallScreen();
         }
 
-        // From the chat's channel: accept, offer, answer, network candidates and hang up.
+        async function flushIce(peer) {
+            for (const c of peer.iceQueue.splice(0)) await peer.pc.addIceCandidate(c).catch(() => {});
+        }
+
+        // From the chat's channel: join, offer, answer, network candidates and leave, each from one person (and to one person).
         async function onCallSignal(p) {
-            if (!p || !call.id || p.id !== call.id) return;
+            if (!p || !call.id || p.id !== call.id || !UUID_RE.test(p.from || '') || p.from === call.me) return;
+            if (p.to && p.to !== call.me) return;
+            const from = p.from;
             try {
-                if (p.t === 'accept' && call.role === 'caller' && call.state === 'ringing') {
-                    clearTimeout(call.ringTimer);
-                    call.state = 'connecting';
+                if (p.t === 'join') {
+                    if (!call.inCall || call.peers.size >= CALL_MAX - 1) return;
+                    if (call.state === 'ringing') { clearTimeout(call.ringTimer); call.state = 'connecting'; }
+                    const peer = await makePeer(from, p);
                     showCallScreen();
-                    const pc = makePeer();
-                    const offer = await pc.createOffer();
-                    await pc.setLocalDescription(offer);
-                    callNet.send({ t: 'offer', id: call.id, sdp: { type: offer.type, sdp: offer.sdp } });
-                } else if (p.t === 'offer' && call.role === 'callee' && !call.pc) {
-                    const pc = makePeer();
-                    await pc.setRemoteDescription(p.sdp);
-                    await flushIce();
-                    const answer = await pc.createAnswer();
-                    await pc.setLocalDescription(answer);
-                    callNet.send({ t: 'answer', id: call.id, sdp: { type: answer.type, sdp: answer.sdp } });
-                } else if (p.t === 'answer' && call.role === 'caller' && call.pc && !call.pc.remoteDescription) {
-                    await call.pc.setRemoteDescription(p.sdp);
-                    await flushIce();
-                } else if (p.t === 'ice' && p.c) {
-                    if (call.pc?.remoteDescription) await call.pc.addIceCandidate(p.c).catch(() => {});
-                    else call.iceQueue.push(p.c);
-                } else if (p.t === 'end') {
-                    endCall({ log: call.role === 'caller' });
+                    const offer = await peer.pc.createOffer();
+                    await peer.pc.setLocalDescription(offer);
+                    callNet.send({ t: 'offer', id: call.id, from: call.me, to: from, n: accountName(), a: myAvatar(), sdp: { type: offer.type, sdp: offer.sdp } });
+                } else if (p.t === 'offer' && p.to === call.me && call.inCall) {
+                    const mine = call.peers.get(from);
+                    // Both sides offered at the same moment: the smaller person id keeps its offer.
+                    if (mine && mine.pc.signalingState === 'have-local-offer' && call.me < from) return;
+                    const peer = await makePeer(from, p);
+                    await peer.pc.setRemoteDescription(p.sdp);
+                    await flushIce(peer);
+                    const answer = await peer.pc.createAnswer();
+                    await peer.pc.setLocalDescription(answer);
+                    callNet.send({ t: 'answer', id: call.id, from: call.me, to: from, sdp: { type: answer.type, sdp: answer.sdp } });
+                    showCallScreen();
+                } else if (p.t === 'answer' && p.to === call.me) {
+                    const peer = call.peers.get(from);
+                    if (peer && peer.pc.signalingState === 'have-local-offer') {
+                        await peer.pc.setRemoteDescription(p.sdp);
+                        await flushIce(peer);
+                    }
+                } else if (p.t === 'ice' && p.c && p.to === call.me) {
+                    const peer = call.peers.get(from);
+                    if (!peer) { const list = call.early.get(from) || []; list.push(p.c); call.early.set(from, list.slice(-50)); }
+                    else if (peer.pc.remoteDescription) await peer.pc.addIceCandidate(p.c).catch(() => {});
+                    else peer.iceQueue.push(p.c);
+                } else if (p.t === 'leave') {
+                    dropPeer(from);
                 }
             } catch {
                 toast(t('chatCallFailed'));
-                hangUp();
+                dropPeer(from);
             }
+        }
+
+        function startAlive() {
+            clearInterval(call.aliveTimer);
+            const id = call.id;
+            call.aliveTimer = setInterval(() => { if (call.id === id) rpc('call_alive', { call_id: id }).catch(() => {}); }, 30000);
+        }
+
+        // Leaving: the others drop my connection, and the database writes the record when the last person leaves.
+        function leaveCall() {
+            if (call.state === 'idle') return;
+            if (call.inCall && call.id) {
+                callNet.send({ t: 'leave', id: call.id, from: call.me });
+                rpc('leave_call', { call_id: call.id }).catch(() => {});
+            }
+            endCall();
         }
 
         function hangUp() {
             if (call.state === 'idle') return;
             if (call.state === 'incoming') { declineCall(); return; }
-            if (call.state === 'ringing') rpc('call_signal', { conv: call.conv, call: call.id, what: 'cancel' }).catch(() => {});
-            else callNet.send({ t: 'end', id: call.id });
-            endCall({ log: call.role === 'caller' });
+            leaveCall();
         }
 
-        // Ends the call here; the one who called leaves a record in the chat (type and duration, 0 = not answered).
-        function endCall({ log = false } = {}) {
+        // Ends the call on this phone only.
+        function endCall() {
             clearTimeout(call.ringTimer);
-            clearTimeout(call.lostTimer);
             clearInterval(call.tick);
-            const dur = call.started ? Math.round((Date.now() - call.started) / 1000) : 0;
-            const { conv, video, id } = call;
-            try { call.pc?.close(); } catch {}
+            clearInterval(call.aliveTimer);
+            call.peers.forEach((peer) => { clearTimeout(peer.lostTimer); try { peer.pc.close(); } catch {} });
             call.local?.getTracks().forEach((track) => track.stop());
-            Object.assign(call, { id: null, conv: null, role: '', state: 'idle', pc: null, local: null, remote: null, started: 0, iceQueue: [], peer: null });
+            const conv = call.conv;
+            resetCall();
             hideCallScreen();
-            if (log && conv && id) sendChat('call', '', { video, dur }, { conv });
+            if (conv && chat.open === conv) refreshCallBar();
         }
+
+        // The tab or app closes during a call: tell the others and the database right away.
+        window.addEventListener('pagehide', () => {
+            if (!call.inCall || !call.id) return;
+            try { callNet.send({ t: 'leave', id: call.id, from: call.me }); } catch {}
+            try {
+                fetch(`${SUPABASE_URL}/rest/v1/rpc/leave_call`, { method: 'POST', keepalive: true,
+                    headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY, Authorization: `Bearer ${live.token}` }, body: JSON.stringify({ call_id: call.id }) });
+            } catch {}
+        });
+
+        // Opened from a call notification (?page=conversas&c=<chat>&call=<id>): ring here if the call is still on.
+        async function resumeCallFromLink(id) {
+            try { const u = new URL(location.href); u.searchParams.delete('call'); history.replaceState(null, '', `${u.pathname}${u.search}${u.hash}`); } catch {}
+            if (call.state !== 'idle' || !signedIn() || !UUID_RE.test(id || '')) return;
+            const s = await rpc('call_state', { call_id: id }).catch(() => null);
+            if (!s || call.state !== 'idle' || s.here) return;
+            if (s.ringing || (s.group && s.open)) {
+                incomingCall({ id: s.id, conv: s.conv, video: Boolean(s.video), group: Boolean(s.group), title: s.group ? s.g || '' : s.from || '', sub: s.group ? s.from || '' : '', avatar: s.group ? null : s.av });
+            } else {
+                toast(t(s.open ? 'chatCallEnded' : 'chatCallMissedToast', { name: s.from || '' }));
+            }
+        }
+
+        // In a group: "Call going on · 3 people · Join".
+        async function refreshCallBar() {
+            const conv = chat.open;
+            if (!$('chatCallBar')) return;
+            if (chat.info?.kind !== 'group' || !signedIn()) { $('chatCallBar').innerHTML = ''; return; }
+            const s = await rpc('conv_call', { conv }).catch(() => null);
+            const bar = $('chatCallBar');
+            if (chat.open !== conv || !bar) return;
+            chat.callBar = s?.open ? s : null;
+            const mine = call.id && s?.id === call.id;
+            bar.innerHTML = s?.open && !mine && canCall()
+                ? `<div class="chat-call-bar">${icon(s.video ? 'video' : 'phone')}<span><b>${t('chatCallOngoing')}</b><small>${escapeHTML(peopleText(s.n))}</small></span><button type="button" class="submit-btn" data-call-join>${t('chatCallJoin')}</button></div>`
+                : '';
+        }
+        const peopleText = (n) => (Number(n) === 1 ? t('chatCallOnePerson') : t('chatCallPeople', { n }));
 
         function callScreenEl() {
             let el = $('callScreen');
@@ -13611,22 +13839,32 @@
         function showCallScreen() {
             const el = callScreenEl();
             const st = call.state;
-            const status = st === 'incoming' ? t(call.video ? 'chatCallIncomingVideo' : 'chatCallIncomingVoice')
-                : st === 'ringing' ? t('chatCallRinging') : st === 'connecting' ? t('chatCallConnecting') : voiceTime((Date.now() - call.started) / 1000);
-            const videoOn = call.video && st !== 'incoming';
+            const peers = [...call.peers.entries()];
+            const active = st === 'active';
+            const grid = call.group && active;
+            const oneVideo = !call.group && call.video && active;
+            const status = st === 'incoming'
+                ? (call.group ? t(call.video ? 'chatCallIncomingGroupVideo' : 'chatCallIncomingGroupVoice', { name: call.sub || '' }) : t(call.video ? 'chatCallIncomingVideo' : 'chatCallIncomingVoice'))
+                : st === 'ringing' ? t('chatCallRinging') : st === 'connecting' ? t('chatCallConnecting')
+                : `${voiceTime((Date.now() - call.started) / 1000)}${call.group ? ` · ${peopleText(peers.length + 1)}` : ''}`;
+            const pic = call.group ? `<span class="avatar avatar-initial lg chat-group-pic" aria-hidden="true">${icon('users')}</span>` : avatarHTML(call.avatar, call.title, 'lg');
+            el.classList.toggle('grid', grid);
             el.innerHTML = `
-                <video class="call-remote" id="callRemote" autoplay playsinline${call.video && st === 'active' ? '' : ' hidden'}></video>
-                <video class="call-local" id="callLocal" autoplay playsinline muted${videoOn && !call.camOff ? '' : ' hidden'}></video>
-                <div class="call-info${call.video && st === 'active' ? ' over' : ''}">${avatarHTML(call.peer?.avatar, call.peer?.name, 'lg')}<h2 id="callName">${escapeHTML(call.peer?.name || '')}</h2><p id="callStatus" aria-live="polite">${escapeHTML(status)}</p></div>
+                ${oneVideo ? `<video class="call-remote" data-peer="${escapeHTML(peers[0]?.[0] || '')}" autoplay playsinline></video>` : ''}
+                ${grid ? `<div class="call-grid n${Math.min(peers.length + 1, CALL_MAX)}">${peers.map(([pid, peer]) => `
+                    <div class="call-tile">${call.video ? `<video data-peer="${escapeHTML(pid)}" autoplay playsinline></video>` : avatarHTML(peer.avatar, peer.name, 'lg')}<span>${escapeHTML(peer.name || '')}</span></div>`).join('')}
+                    <div class="call-tile me">${call.video && !call.camOff ? '<video class="call-self" autoplay playsinline muted></video>' : avatarHTML(myAvatar(), accountName(), 'lg')}<span>${t('chatCallYou')}</span></div>
+                </div>` : `<video class="call-local" autoplay playsinline muted${call.video && st !== 'incoming' && !call.camOff ? '' : ' hidden'}></video>`}
+                <div class="call-info${oneVideo || grid ? ' over' : ''}">${pic}<h2 id="callName">${escapeHTML(call.title || '')}</h2><p id="callStatus" aria-live="polite">${escapeHTML(status)}</p></div>
                 <div class="call-actions">
                     ${st === 'incoming'
                         ? `<button type="button" class="call-btn end" data-call-decline>${icon('phone')}<span>${t('chatCallDecline')}</span></button>
-                           <button type="button" class="call-btn ok" data-call-accept>${icon(call.video ? 'video' : 'phone')}<span>${t('chatCallAccept')}</span></button>`
+                           <button type="button" class="call-btn ok" data-call-accept>${icon(call.video ? 'video' : 'phone')}<span>${t(call.group ? 'chatCallJoin' : 'chatCallAccept')}</span></button>`
                         : `<button type="button" class="call-btn" data-call-mute aria-pressed="${call.muted}">${icon(call.muted ? 'micOff' : 'mic')}<span>${t(call.muted ? 'chatCallUnmute' : 'chatCallMute')}</span></button>
                            ${call.video ? `<button type="button" class="call-btn" data-call-cam aria-pressed="${call.camOff}">${icon(call.camOff ? 'videoOff' : 'video')}<span>${t(call.camOff ? 'chatCallCamOn' : 'chatCallCamOff')}</span></button>` : ''}
                            <button type="button" class="call-btn end" data-call-end>${icon('phone')}<span>${t('chatCallEnd')}</span></button>`}
                 </div>
-                <audio id="callAudio" autoplay></audio>`;
+                ${call.video ? '' : peers.map(([pid]) => `<audio data-peer-audio="${escapeHTML(pid)}" autoplay></audio>`).join('')}`;
             el.hidden = false;
             document.body.classList.add('no-scroll');
             attachCallMedia();
@@ -13634,20 +13872,25 @@
         }
 
         function attachCallMedia() {
-            const local = $('callLocal');
-            if (local && call.local && local.srcObject !== call.local) local.srcObject = call.local;
-            const remote = call.video ? $('callRemote') : $('callAudio');
-            if (remote && call.remote && remote.srcObject !== call.remote) { remote.srcObject = call.remote; remote.play?.().catch(() => {}); }
+            const el = $('callScreen');
+            if (!el) return;
+            el.querySelectorAll('.call-local, .call-self').forEach((v) => { if (call.local && v.srcObject !== call.local) v.srcObject = call.local; });
+            call.peers.forEach((peer, pid) => {
+                if (!peer.stream || !UUID_RE.test(pid)) return;
+                el.querySelectorAll(`[data-peer="${pid}"], [data-peer-audio="${pid}"]`).forEach((m) => {
+                    if (m.srcObject !== peer.stream) { m.srcObject = peer.stream; m.play?.().catch(() => {}); }
+                });
+            });
         }
 
         function updateCallTime() {
             const el = $('callStatus');
-            if (el && call.started) el.textContent = voiceTime((Date.now() - call.started) / 1000);
+            if (el && call.started) el.textContent = `${voiceTime((Date.now() - call.started) / 1000)}${call.group ? ` · ${peopleText(call.peers.size + 1)}` : ''}`;
         }
 
         function hideCallScreen() {
             const el = $('callScreen');
-            if (el) { el.hidden = true; el.innerHTML = ''; }
+            if (el) { el.hidden = true; el.innerHTML = ''; el.classList.remove('grid'); }
             if (!document.querySelector('.modal.open')) document.body.classList.remove('no-scroll');
         }
 
@@ -13746,6 +13989,7 @@
             scheduleChatPoll();
             liveJoinConv(conv);
             loadRequestCard();
+            refreshCallBar();
         }
 
         function markChatRead() {
@@ -14082,6 +14326,11 @@
             try { await (await caches.open('tuende-prefs-v1')).put('/__prefs', new Response(JSON.stringify({ lang }), { headers: { 'Content-Type': 'application/json' } })); } catch {}
         }
 
+        const pushKeys = (sub) => {
+            const keys = sub?.toJSON?.().keys || {};
+            return { sub_p256dh: keys.p256dh || null, sub_auth: keys.auth || null };
+        };
+
         async function togglePush(button) {
             if (!pushSupported()) return;
             button.disabled = true;
@@ -14097,7 +14346,7 @@
                     if (permission !== 'granted') { toast(t('pushDenied')); return; }
                     const reg = await navigator.serviceWorker.ready;
                     const sub = current || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: vapidBytes(VAPID_PUBLIC) });
-                    await rpc('save_push', { sub_endpoint: sub.endpoint, sub_lang: lang });
+                    await rpc('save_push', { sub_endpoint: sub.endpoint, sub_lang: lang, ...pushKeys(sub) });
                     await savePushPrefs();
                     chat.push = true;
                     toast(t('pushOnToast'));
@@ -14120,7 +14369,14 @@
 
         navigator.serviceWorker?.addEventListener('message', (e) => {
             if (e.data?.type === 'chat-push') liveChange({ c: chat.open || 'list', k: 'new' });
-            else if (e.data?.type === 'open-chats' && signedIn()) showChats();
+            else if (e.data?.type === 'open-chats' && signedIn()) {
+                let u = null;
+                try { u = e.data.url ? new URL(e.data.url, location.href) : null; } catch {}
+                const conv = u?.searchParams.get('c');
+                showChats({ conv: UUID_RE.test(conv || '') ? conv : null });
+                const id = u?.searchParams.get('call');
+                if (UUID_RE.test(id || '')) resumeCallFromLink(id);
+            }
         });
 
         function sendMyLocation() {
@@ -14676,6 +14932,7 @@
             if ((el = hit('[data-chat-pin]'))) { pinMessage(el.dataset.chatPin); return; }
             if (hit('[data-chat-unpin]')) { unpinMessage(); return; }
             if ((el = hit('[data-call-start]'))) { startCall(el.dataset.callStart === 'video'); return; }
+            if (hit('[data-call-join]')) { joinOngoingCall(chat.callBar); return; }
             if (hit('[data-call-accept]')) { acceptCall(); return; }
             if (hit('[data-call-decline]')) { declineCall(); return; }
             if (hit('[data-call-end]')) { hangUp(); return; }
@@ -19465,7 +19722,7 @@
             $('langBtn').focus();
             // Account emails (new password, new email) come in the language last chosen here.
             if (signedIn()) accessToken().then((token) => token && authRequest('/user', { data: { lang } }, { method: 'PUT', token })).catch(() => {});
-            if (chat.push) { savePushPrefs(); pushSubscription().then((sub) => sub && rpc('save_push', { sub_endpoint: sub.endpoint, sub_lang: lang })).catch(() => {}); }
+            if (chat.push) { savePushPrefs(); pushSubscription().then((sub) => sub && rpc('save_push', { sub_endpoint: sub.endpoint, sub_lang: lang, ...pushKeys(sub) })).catch(() => {}); }
         });
         document.addEventListener('click', (e) => {
             if (!$('langMenu').hidden && !e.target.closest('.lang-wrap')) toggleLangMenu(false);

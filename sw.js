@@ -184,19 +184,55 @@ const PUSH_TEXT = {
     es: 'Tiene mensajes nuevos en Conversaciones.'
 };
 
+// Calls: the notification is encrypted for this phone only (the push service cannot read it) and says who is calling.
+const CALL_TEXT = {
+    voice: { pt: 'Chamada de voz no Tuende. Toque para atender.', en: 'Voice call on Tuende. Tap to answer.', fr: 'Appel vocal sur Tuende. Touchez pour répondre.', es: 'Llamada de voz en Tuende. Toque para contestar.' },
+    video: { pt: 'Videochamada no Tuende. Toque para atender.', en: 'Video call on Tuende. Tap to answer.', fr: 'Appel vidéo sur Tuende. Touchez pour répondre.', es: 'Videollamada en Tuende. Toque para contestar.' },
+    group: { pt: '{name} está a ligar ao grupo. Toque para entrar.', en: '{name} is calling the group. Tap to join.', fr: '{name} appelle le groupe. Touchez pour rejoindre.', es: '{name} está llamando al grupo. Toque para unirse.' },
+    missed: { pt: 'Chamada não atendida', en: 'Missed call', fr: 'Appel manqué', es: 'Llamada perdida' },
+    missedGroup: { pt: 'Chamada de grupo de {name}, não atendida', en: 'Missed group call from {name}', fr: 'Appel de groupe manqué de {name}', es: 'Llamada de grupo perdida de {name}' }
+};
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+
 self.addEventListener('push', (event) => {
     event.waitUntil((async () => {
+        let data = null;
+        try { data = event.data ? event.data.json() : null; } catch { data = null; }
         const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
         const visible = windows.find((c) => c.visibilityState === 'visible');
-        // The app is open on screen: it updates the chat itself, no notification needed.
-        if (visible) { visible.postMessage({ type: 'chat-push' }); return; }
         let lang = 'pt';
         try {
             const saved = await (await caches.open(PREFS_CACHE)).match('/__prefs');
             if (saved) lang = (await saved.json()).lang || 'pt';
         } catch {}
+        const pick = (texts) => texts[lang] || texts.pt;
+        const name = (v) => String(v || '').slice(0, 60);
+        if (data && (data.t === 'call' || data.t === 'call-end') && UUID.test(data.id || '') && UUID.test(data.c || '')) {
+            const tag = `call-${data.id}`;
+            const url = `./?page=conversas&c=${data.c}${data.t === 'call' ? `&call=${data.id}` : ''}`;
+            // The app is open on screen: it rings by itself.
+            if (visible && data.t === 'call') return;
+            if (data.t === 'call') {
+                await self.registration.showNotification(name(data.g || data.from) || 'Tuende', {
+                    body: data.g ? pick(CALL_TEXT.group).replace('{name}', name(data.from)) : pick(CALL_TEXT[data.v ? 'video' : 'voice']),
+                    icon: 'icon-192.png', tag, renotify: true, requireInteraction: true, vibrate: [500, 250, 500, 250, 500, 250, 500],
+                    data: { url }
+                });
+                return;
+            }
+            // Nobody answered: the ringing notification becomes "missed call".
+            const ringing = await self.registration.getNotifications({ tag });
+            ringing.forEach((n) => n.close());
+            await self.registration.showNotification(name(data.g || data.from) || 'Tuende', {
+                body: data.g ? pick(CALL_TEXT.missedGroup).replace('{name}', name(data.from)) : pick(CALL_TEXT.missed),
+                icon: 'icon-192.png', tag, renotify: false, silent: true, data: { url }
+            });
+            return;
+        }
+        // The app is open on screen: it updates the chat itself, no notification needed.
+        if (visible) { visible.postMessage({ type: 'chat-push' }); return; }
         await self.registration.showNotification('Tuende', {
-            body: PUSH_TEXT[lang] || PUSH_TEXT.pt,
+            body: pick(PUSH_TEXT),
             icon: 'icon-192.png',
             tag: 'tuende-chat',
             renotify: true,
@@ -213,7 +249,7 @@ self.addEventListener('notificationclick', (event) => {
         const open = windows.find((c) => c.url.startsWith(self.registration.scope));
         if (open) {
             await open.focus();
-            open.postMessage({ type: 'open-chats' });
+            open.postMessage({ type: 'open-chats', url });
             return;
         }
         await self.clients.openWindow(url);
