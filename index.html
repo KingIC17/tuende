@@ -12375,6 +12375,8 @@
                 chat.unread = chat.list.reduce((n, c) => n + (c.unread || 0), 0);
             } catch (err) {
                 if (err.status === 404) chat.ready = false;
+                // The sign-in expired while loading: show the sign-in prompt, not an error.
+                else if (!signedIn()) { if (state.view === 'chats') renderChats(); return; }
                 else if (!chat.list) { body.innerHTML = `<h1 class="rec-title" id="chatsTitle">${t('chatTitle')}</h1><p class="hint">${t('chatError')}</p>`; return; }
             }
             renderChatBadges();
