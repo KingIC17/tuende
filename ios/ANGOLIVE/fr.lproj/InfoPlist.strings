@@ -1,0 +1,4 @@
+/* Permission texts shown by iOS. */
+"CFBundleDisplayName" = "Tuende";
+"NSLocationWhenInUseUsageDescription" = "Tuende utilise votre position uniquement sur votre téléphone, pour afficher les lieux les plus proches de vous.";
+"NSCalendarsUsageDescription" = "Tuende utilise votre calendrier uniquement pour enregistrer les événements de l'agenda que vous choisissez.";
