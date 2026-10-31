@@ -1801,6 +1801,21 @@
         .chat-composer textarea { flex: 1; min-height: 44px; max-height: 140px; padding: 11px 14px; resize: none; border: 1.5px solid var(--border); border-radius: 22px; background: var(--surface); color: var(--text); font: inherit; font-size: 16px; line-height: 1.3; }
         .chat-send { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: 999px; background: var(--primary-fill); color: #fff; cursor: pointer; }
         .chat-send .icon { width: 20px; height: 20px; }
+        /* Voice notes: the microphone shows while the box is empty (like the send button once there is text). */
+        .chat-composer.can-rec:not(.has-text) .chat-send, .chat-composer.has-text .chat-mic { display: none; }
+        .chat-rec { position: sticky; bottom: 0; z-index: 6; display: flex; align-items: center; gap: 8px; margin: 0 -4px; padding: 8px 4px calc(8px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--bg); }
+        .chat-rec[hidden] { display: none; }
+        .chat-rec-time { flex: 1; display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-variant-numeric: tabular-nums; }
+        .chat-rec-time small { color: var(--muted); font-weight: 600; }
+        .chat-rec-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--primary); animation: chat-rec-blink 1s steps(2, start) infinite; }
+        @keyframes chat-rec-blink { to { visibility: hidden; } }
+        @media (prefers-reduced-motion: reduce) { .chat-rec-dot { animation: none; } }
+        .chat-bubble.kind-audio { width: min(300px, calc(100vw - 104px)); }
+        .chat-audio { display: block; width: 100%; height: 40px; }
+        .chat-voice-label { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; color: var(--muted); font-size: 13px; font-weight: 600; }
+        .chat-voice-label .icon { width: 15px; height: 15px; }
+        .chat-push { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; }
+        .chat-push[aria-pressed="true"] { color: var(--ok); }
         .chat-choices { display: grid; gap: 4px; max-height: 58vh; margin-top: 8px; overflow: auto; }
         .chat-choices .pick-row[hidden], .person-row[hidden] { display: none; }
         .chat-search { margin-top: 10px; }
@@ -3406,6 +3421,20 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                chatVoiceMsg: 'Mensagem de voz',
+                chatRecord: 'Gravar mensagem de voz',
+                chatRecording: 'A gravar',
+                chatRecCancel: 'Cancelar a gravação',
+                chatMicDenied: 'Sem acesso ao microfone. Autorize o microfone para o Tuende nas definições.',
+                chatDeleteMsg: 'Apagar mensagem',
+                chatDeleteMsgConfirm: 'Apagar esta mensagem para todos na conversa?',
+                chatMsgDeleted: 'Mensagem apagada.',
+                pushTurnOn: 'Avisar-me de mensagens novas',
+                pushIsOn: 'Avisos de mensagens ligados',
+                pushOnToast: 'Pronto: vai receber um aviso quando chegarem mensagens novas.',
+                pushOffToast: 'Avisos de mensagens desligados.',
+                pushDenied: 'O navegador não deixou mostrar avisos. Pode autorizar nas definições do site.',
+                pushError: 'Não foi possível ligar os avisos. Tente de novo.',
                 peopleFriends: 'Amigos',
                 peopleFollowsYou: 'Segue-o',
                 peopleFollowBack: 'Seguir de volta',
@@ -4502,6 +4531,20 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                chatVoiceMsg: 'Voice message',
+                chatRecord: 'Record a voice message',
+                chatRecording: 'Recording',
+                chatRecCancel: 'Cancel the recording',
+                chatMicDenied: 'No access to the microphone. Allow the microphone for Tuende in your settings.',
+                chatDeleteMsg: 'Delete message',
+                chatDeleteMsgConfirm: 'Delete this message for everyone in the chat?',
+                chatMsgDeleted: 'Message deleted.',
+                pushTurnOn: 'Notify me of new messages',
+                pushIsOn: 'Message notifications on',
+                pushOnToast: 'Done: you will get a notification when new messages arrive.',
+                pushOffToast: 'Message notifications off.',
+                pushDenied: 'Your browser blocked notifications. You can allow them in the site settings.',
+                pushError: 'Could not turn on notifications. Please try again.',
                 peopleFriends: 'Friends',
                 peopleFollowsYou: 'Follows you',
                 peopleFollowBack: 'Follow back',
@@ -7549,7 +7592,10 @@
             send: '<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>',
             image: '<rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
             thumbUp: '<path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>',
-            thumbDown: '<path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/>'
+            thumbDown: '<path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/>',
+            mic: '<path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>',
+            trash: '<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+            bell: '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>'
         };
 
         // Keys keep the old 'angolive' prefix so saved places, settings and sign-ins carry over from before the rename.
@@ -9229,7 +9275,7 @@
             $('feedView').hidden = state.view !== 'feed';
             $('profileView').hidden = state.view !== 'profile';
             $('chatsView').hidden = state.view !== 'chats';
-            if (state.view !== 'chats') { stopChatTimer(); document.body.classList.remove('chat-open'); }
+            if (state.view !== 'chats') { stopChatTimer(); stopRecording(true); document.body.classList.remove('chat-open'); }
             const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle', passport: 'passportTitle', quiz: 'quizTitle', dishes: 'dishesTitle', feed: 'feedTitle', profile: 'profileTitle', chats: 'chatTitle' }[state.view];
             document.title = viewTitle ? `${t(viewTitle)} | Tuende` : `Tuende - ${t('heroTitle')}`;
             if (state.view === 'home') renderHome();
@@ -12186,6 +12232,15 @@
         const chat = { ready: null, unread: 0, list: null, open: null, loadedFor: null, info: null, msgs: [], states: {}, more: false, media: new Map(), timer: 0, badgeTimer: 0, pending: 0 };
         const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
         const CHAT_VIDEO_MAX = 25 * 1024 * 1024;
+        // Voice notes: up to 2 minutes; rec holds the recording in progress.
+        const CHAT_REC_MAX = 120;
+        const rec = { recorder: null, stream: null, chunks: [], start: 0, tick: 0, conv: null, cancel: false };
+        const canRecord = () => Boolean(navigator.mediaDevices?.getUserMedia && window.MediaRecorder);
+        const voiceTime = (sec) => `${Math.floor(sec / 60)}:${String(Math.floor(sec % 60)).padStart(2, '0')}`;
+        // Live updates (Supabase Realtime) and notifications (Web Push; only the public key is in the app).
+        const live = { ws: null, topic: '', token: '', ref: 0, joined: false, beat: 0, retry: 0, again: 0, pending: new Set(), flush: 0 };
+        const VAPID_PUBLIC = 'BHGbzbFitGayTv0k-MJKpA_IlLw2uWs9_Bb3Df904T9ce1cR1FI8jPVjtOg4Mwj0LQkgYo_fBM7x7-Umv_H6Vhc';
+        const pushSupported = () => !inNativeApp && signedIn() && 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && location.protocol.startsWith('http');
         const chatErrorText = (err) => {
             const d = String(err?.detail || '');
             if (d.includes('too_fast')) return t('chatTooFast');
@@ -12219,7 +12274,7 @@
         function startChatBadge() {
             clearInterval(chat.badgeTimer);
             if (!signedIn()) return;
-            checkChats();
+            checkChats().then(() => { if (chat.ready) liveConnect(); });
             chat.badgeTimer = setInterval(() => { if (!document.hidden && state.view !== 'chats') checkChats(); }, 60000);
         }
 
@@ -12236,6 +12291,7 @@
         function renderChats() {
             const body = $('chatsBody');
             stopChatTimer();
+            if (rec.recorder && rec.conv !== chat.open) stopRecording(true);
             document.body.classList.toggle('chat-open', Boolean(chat.open));
             if (!signedIn()) {
                 body.innerHTML = `<h1 class="rec-title" id="chatsTitle">${t('chatTitle')}</h1><div class="signin-prompt"><p>${t('chatSignIn')}</p><button class="submit-btn" type="button" data-auth-open="signin">${t('signIn')}</button></div>`;
@@ -12265,6 +12321,7 @@
             if (kind === 'text') return body || '';
             if (kind === 'photo') return `${t('chatPhotoMsg')}${body ? `: ${body}` : ''}`;
             if (kind === 'video') return `${t('chatVideoMsg')}${body ? `: ${body}` : ''}`;
+            if (kind === 'audio') return `${t('chatVoiceMsg')}${d.dur ? ` (${voiceTime(d.dur)})` : ''}`;
             if (kind === 'location') return t('chatLocationMsg');
             if (kind === 'place') return venues.find((v) => v.id === d.id)?.name || t('chatPlace');
             if (kind === 'event') { const e = EVENTS.find((x) => x.id === d.id); return e ? eventTitle(e) : t('chatEvent'); }
@@ -12305,6 +12362,7 @@
                 </div>
                 ${list.length ? `<div class="chat-list">${list.map(chatRowHTML).join('')}</div>`
                     : `<div class="feed-empty">${icon('chat')}<p>${t('chatEmpty')}</p><button class="submit-btn secondary" type="button" data-people="followers">${t('chatFindFriends')}</button></div>`}
+                ${pushSupported() ? `<button type="button" class="link-btn chat-push" data-chat-push aria-pressed="${Boolean(chat.push)}">${icon('bell')}${t(chat.push ? 'pushIsOn' : 'pushTurnOn')}</button>` : ''}
                 <p class="hint chat-safety">${icon('shield')}${t('chatSafety')}</p>`;
         }
 
@@ -12322,15 +12380,25 @@
             renderChatBadges();
             if (state.view !== 'chats' || chat.open) return;
             if (chat.ready === false) { renderChats(); return; }
+            if (pushSupported() && chat.push === undefined) chat.push = Notification.permission === 'granted' && Boolean(await pushSubscription());
+            if (state.view !== 'chats' || chat.open) return;
             body.innerHTML = chatListHTML();
             stopChatTimer();
-            chat.timer = setTimeout(() => { if (state.view === 'chats' && !chat.open && !document.hidden) renderChatList(); }, 20000);
+            chat.timer = setTimeout(() => { if (state.view === 'chats' && !chat.open && !document.hidden) renderChatList(); }, live.joined ? 60000 : 20000);
         }
 
         /* --- One conversation --- */
 
+        // Returns true when a message left the conversation (deleted by its sender or hidden after reports).
         function applyChatStates(rows) {
-            (rows || []).forEach((r) => { chat.states[r.message_id] = r; });
+            let removed = false;
+            (rows || []).forEach((r) => {
+                if (r.gone) {
+                    delete chat.states[r.message_id];
+                    if (chat.msgs.some((m) => m.id === r.message_id)) { chat.msgs = chat.msgs.filter((m) => m.id !== r.message_id); removed = true; }
+                } else chat.states[r.message_id] = r;
+            });
+            return removed;
         }
 
         function dayLabel(iso) {
@@ -12430,13 +12498,16 @@
                     ? `<a class="chat-media" ${src ? `href="${escapeHTML(src)}"` : ''} target="_blank" rel="noopener" data-chat-link="${escapeHTML(d.path || '')}"><img ${src ? `src="${escapeHTML(src)}"` : ''} data-chat-media="${escapeHTML(d.path || '')}" alt="${t('chatPhotoMsg')}" style="${ratio}" loading="lazy"></a>`
                     : `<video class="chat-media" controls playsinline preload="metadata" ${src ? `src="${escapeHTML(src)}"` : ''} data-chat-media="${escapeHTML(d.path || '')}" style="${ratio}"></video>`;
                 if (m.body) inner += `<p class="chat-text">${escapeHTML(m.body)}</p>`;
+            } else if (m.kind === 'audio') {
+                const src = m.localUrl || chat.media.get(d.path) || '';
+                inner = `<p class="chat-voice-label">${icon('mic')}${t('chatVoiceMsg')}${d.dur ? ` · ${voiceTime(d.dur)}` : ''}</p><audio class="chat-audio" controls preload="metadata" ${src ? `src="${escapeHTML(src)}"` : ''} data-chat-media="${escapeHTML(d.path || '')}" aria-label="${t('chatVoiceMsg')}"></audio>`;
             } else if (m.kind === 'poll') inner = pollHTML(m);
             else if (m.kind === 'game') inner = gameHTML(m);
             else inner = chatCardHTML(m.kind, d);
             const group = chat.info?.kind === 'group';
             const who = !m.mine && group && !sameSender ? `<span class="chat-who">${escapeHTML(m.sender_name || t('chatDeletedPerson'))}</span>` : '';
             const time = new Date(m.created_at).toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' });
-            const more = !m.mine && !m.pending ? `<button type="button" class="chat-more" data-chat-more="${escapeHTML(m.id)}" aria-label="${t('chatMore')}">···</button>` : '';
+            const more = !m.pending ? `<button type="button" class="chat-more" data-chat-more="${escapeHTML(m.id)}" aria-label="${t('chatMore')}">···</button>` : '';
             return `${day}<div class="chat-msg${m.mine ? ' mine' : ''}${sameSender ? ' cont' : ''}${m.pending ? ' pending' : ''}" data-msg="${escapeHTML(m.id)}">
                 ${!m.mine && group ? (sameSender ? '<span class="chat-av-gap"></span>' : avatarHTML(m.sender_avatar, m.sender_name, 'sm')) : ''}
                 <div class="chat-bubble kind-${m.kind}">${who}${inner}<span class="chat-time">${m.pending ? t('chatUploading') : escapeHTML(time)}</span></div>${more}
@@ -12451,7 +12522,7 @@
             const other = group ? null : (info.members || []).find((x) => !x.me);
             const pic = group ? `<span class="avatar avatar-initial chat-group-pic" aria-hidden="true">${icon('users')}</span>` : avatarHTML(other?.avatar, info.title);
             return `
-                <div class="chat-head">
+                <div class="chat-head" data-conv="${escapeHTML(chat.open || '')}" data-lang="${lang}">
                     <button type="button" class="chat-icon-btn" data-chat-list aria-label="${t('chatBack')}">${icon('back')}</button>
                     ${pic}
                     <button type="button" class="chat-head-title" data-chat-info><b id="chatsTitle">${escapeHTML(info.title || t('chatDeletedPerson'))}</b><small>${group ? t('chatMembersN', { n: (info.members || []).length }) : t('chatInfoHint')}</small></button>
@@ -12464,12 +12535,18 @@
                     ${[['camera', 'chatPhoto', 'photo'], ['locate', 'chatLocation', 'location'], ['pin', 'chatPlace', 'place'], ['calendar', 'chatEvent', 'event'], ['image', 'chatMoment', 'moment'], ['signal', 'chatPoll', 'poll'], ['star', 'chatGame', 'game']]
                         .map(([ic, label, kind]) => `<button type="button" data-chat-attach-kind="${kind}">${icon(ic)}<span>${t(label)}</span></button>`).join('')}
                 </div>
-                <form class="chat-composer" id="chatForm" novalidate>
+                <form class="chat-composer${canRecord() ? ' can-rec' : ''}" id="chatForm" novalidate>
                     <button type="button" class="chat-icon-btn" data-chat-attach aria-expanded="false" aria-controls="chatAttach" aria-label="${t('chatAttach')}">${icon('plus')}</button>
                     <textarea id="chatInput" rows="1" maxlength="2000" placeholder="${t('chatPlaceholder')}" aria-label="${t('chatPlaceholder')}" enterkeyhint="send"></textarea>
+                    ${canRecord() ? `<button type="button" class="chat-icon-btn chat-mic" data-chat-record aria-label="${t('chatRecord')}">${icon('mic')}</button>` : ''}
                     <button type="submit" class="chat-send" aria-label="${t('chatSend')}">${icon('send')}</button>
                     <input type="file" id="chatFile" accept="image/*,video/*" hidden>
-                </form>`;
+                </form>
+                <div class="chat-rec" id="chatRec" hidden>
+                    <button type="button" class="chat-icon-btn" data-chat-rec-cancel aria-label="${t('chatRecCancel')}">${icon('trash')}</button>
+                    <span class="chat-rec-time"><span class="chat-rec-dot" aria-hidden="true"></span><span id="chatRecTime">0:00</span><small>${t('chatRecording')}</small></span>
+                    <button type="button" class="chat-send" data-chat-rec-send aria-label="${t('chatSend')}">${icon('send')}</button>
+                </div>`;
         }
 
         function scrollChatToEnd(smooth = false) {
@@ -12490,7 +12567,7 @@
         }
 
         async function signChatMedia() {
-            const need = [...new Set(chat.msgs.filter((m) => (m.kind === 'photo' || m.kind === 'video') && m.data?.path && !chat.media.has(m.data.path) && !m.localUrl).map((m) => m.data.path))];
+            const need = [...new Set(chat.msgs.filter((m) => (m.kind === 'photo' || m.kind === 'video' || m.kind === 'audio') && m.data?.path && !chat.media.has(m.data.path) && !m.localUrl).map((m) => m.data.path))];
             if (need.length) {
                 try {
                     const res = await sbRequest('/storage/v1/object/sign/chat', { method: 'POST', headers: await userHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ expiresIn: 7200, paths: need }) });
@@ -12535,6 +12612,15 @@
                     return;
                 }
             }
+            // Still loading (another redraw started it): that call draws the conversation when the messages arrive.
+            if (!chat.info) return;
+            // Already on screen: refresh the messages only, so a half-typed message or a recording is not lost.
+            const head = body.querySelector('.chat-head');
+            if (head && head.dataset.conv === conv && head.dataset.lang === lang && $('chatForm')) {
+                redrawMessages();
+                scheduleChatPoll();
+                return;
+            }
             body.innerHTML = conversationHTML();
             signChatMedia();
             scrollChatToEnd();
@@ -12552,31 +12638,38 @@
             }).catch(() => {});
         }
 
+        // With live updates the database tells the app about changes; the timer is only a backup.
         function scheduleChatPoll() {
             stopChatTimer();
-            chat.timer = setTimeout(pollChat, 4000);
+            chat.timer = setTimeout(pollChat, live.joined ? 20000 : 4000);
         }
 
         async function pollChat() {
             const conv = chat.open;
             if (!conv || state.view !== 'chats' || chat.loadedFor !== conv) return;
             if (document.hidden) { scheduleChatPoll(); return; }
+            if (chat.polling) { chat.pollAgain = true; return; }
+            chat.polling = true;
+            stopChatTimer();
             const last = [...chat.msgs].reverse().find((m) => !m.pending);
             try {
                 const [rows, states] = await Promise.all([rpc('conversation_messages', { conv, newer_than: last?.created_at || null, lim: 100 }), rpc('chat_states', { conv })]);
                 if (chat.open !== conv) return;
                 const fresh = rows.filter((r) => !chat.msgs.some((m) => m.id === r.id));
                 const before = JSON.stringify(chat.states);
-                applyChatStates(states);
-                if (fresh.length || JSON.stringify(chat.states) !== before) {
+                const removed = applyChatStates(states);
+                if (fresh.length || removed || JSON.stringify(chat.states) !== before) {
                     chat.msgs.push(...fresh);
                     chat.msgs.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
                     redrawMessages();
                     if (fresh.some((m) => !m.mine)) markChatRead();
                     if (fresh.some((m) => m.kind === 'system')) refreshChatInfo();
                 }
-            } catch {}
-            scheduleChatPoll();
+            } catch {} finally {
+                chat.polling = false;
+            }
+            if (chat.pollAgain) { chat.pollAgain = false; pollChat(); return; }
+            if (chat.open === conv) scheduleChatPoll();
         }
 
         async function refreshChatInfo() {
@@ -12634,8 +12727,9 @@
             if (!text) return;
             input.value = '';
             autoSizeChatInput();
+            form.classList.remove('has-text');
             const ok = await sendChat('text', text);
-            if (!ok) { input.value = text; autoSizeChatInput(); }
+            if (!ok) { input.value = text; autoSizeChatInput(); form.classList.add('has-text'); }
         }
 
         function autoSizeChatInput() {
@@ -12681,6 +12775,220 @@
                 toast(err?.status === 413 ? t('chatTooBig') : t('chatSendError'));
             }
         }
+
+        /* --- Voice notes (recorded in the app, up to 2 minutes) --- */
+
+
+        // MP4 with AAC plays everywhere, including older iPhones; then MP4 or WebM with Opus where AAC recording is missing.
+        function recType() {
+            for (const type of ['audio/mp4;codecs=mp4a.40.2', 'audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus']) {
+                if (MediaRecorder.isTypeSupported?.(type)) return type;
+            }
+            return '';
+        }
+
+        function showRecBar(on) {
+            const form = $('chatForm');
+            const bar = $('chatRec');
+            if (form) form.hidden = on;
+            if (bar) bar.hidden = !on;
+            if (on) { $('chatAttach') && ($('chatAttach').hidden = true); $('chatRecTime').textContent = '0:00'; bar?.querySelector('[data-chat-rec-send]')?.focus(); }
+            else document.querySelector('[data-chat-record]')?.focus({ preventScroll: true });
+        }
+
+        async function startRecording() {
+            if (rec.recorder || !chat.open || !canRecord()) return;
+            let stream;
+            try { stream = await navigator.mediaDevices.getUserMedia({ audio: true }); } catch { toast(t('chatMicDenied')); return; }
+            if (!chat.open) { stream.getTracks().forEach((track) => track.stop()); return; }
+            const type = recType();
+            let recorder;
+            try { recorder = new MediaRecorder(stream, type ? { mimeType: type, audioBitsPerSecond: 32000 } : undefined); } catch { recorder = new MediaRecorder(stream); }
+            Object.assign(rec, { recorder, stream, chunks: [], start: Date.now(), conv: chat.open, cancel: false });
+            recorder.ondataavailable = (e) => { if (e.data?.size) rec.chunks.push(e.data); };
+            recorder.onstop = finishRecording;
+            recorder.start(1000);
+            showRecBar(true);
+            rec.tick = setInterval(() => {
+                const sec = (Date.now() - rec.start) / 1000;
+                const el = $('chatRecTime');
+                if (el) el.textContent = voiceTime(sec);
+                if (sec >= CHAT_REC_MAX) stopRecording(false);
+            }, 250);
+        }
+
+        function stopRecording(cancel) {
+            if (!rec.recorder) return;
+            rec.cancel = cancel;
+            try { rec.recorder.stop(); } catch { finishRecording(); }
+        }
+
+        async function finishRecording() {
+            clearInterval(rec.tick);
+            const { recorder, chunks, start, conv, cancel } = rec;
+            rec.stream?.getTracks().forEach((track) => track.stop());
+            Object.assign(rec, { recorder: null, stream: null, chunks: [] });
+            showRecBar(false);
+            const dur = Math.min(CHAT_REC_MAX, Math.round((Date.now() - start) / 1000));
+            if (cancel || !chunks.length || dur < 1 || !conv) return;
+            const base = (recorder?.mimeType || chunks[0].type || 'audio/webm').split(';')[0];
+            const type = ['audio/mp4', 'audio/webm', 'audio/ogg', 'audio/mpeg', 'audio/aac'].includes(base) ? base : 'audio/webm';
+            await sendChatAudio(new Blob(chunks, { type }), type, dur, conv);
+        }
+
+        async function sendChatAudio(blob, type, dur, conv) {
+            const ext = { 'audio/mp4': 'm4a', 'audio/ogg': 'ogg', 'audio/mpeg': 'mp3', 'audio/aac': 'aac' }[type] || 'webm';
+            const path = `${conv}/${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+            const local = URL.createObjectURL(blob);
+            const here = conv === chat.open;
+            const temp = here ? { id: `tmp-${++chat.pending}`, mine: true, kind: 'audio', body: '', data: { path, dur }, created_at: new Date().toISOString(), pending: true, localUrl: local } : null;
+            if (temp) { chat.msgs.push(temp); redrawMessages({ keepBottom: false }); scrollChatToEnd(true); }
+            try {
+                await sbRequest(`/storage/v1/object/chat/${path}`, { method: 'POST', headers: await userHeaders({ 'Content-Type': type, 'x-upsert': 'false' }), body: blob });
+                if (temp) chat.msgs = chat.msgs.filter((m) => m !== temp);
+                await sendChat('audio', '', { path, dur }, { conv, local });
+            } catch {
+                if (temp) { chat.msgs = chat.msgs.filter((m) => m !== temp); redrawMessages(); }
+                toast(t('chatSendError'));
+            }
+        }
+
+        /* --- Live updates (Supabase Realtime) ---
+           The database sends a small signal to the private channel "inbox:<account id>" when one of your chats changes;
+           the app then fetches what changed. If the connection drops, polling (every 4 s in an open chat) takes over. */
+
+
+        function liveSend(msg) {
+            try { if (live.ws?.readyState === 1) live.ws.send(JSON.stringify(msg)); } catch {}
+        }
+
+        async function liveConnect() {
+            const uid = session?.user?.id;
+            if (!uid || !signedIn() || !supabaseReady() || chat.ready === false || typeof WebSocket === 'undefined') return;
+            const topic = `realtime:inbox:${uid}`;
+            if (live.ws && live.ws.readyState <= 1 && live.topic === topic) return;
+            liveClose();
+            const token = await accessToken().catch(() => null);
+            if (!token || live.ws) return;
+            let ws;
+            try { ws = new WebSocket(`${SUPABASE_URL.replace(/^http/, 'ws')}/realtime/v1/websocket?apikey=${encodeURIComponent(SUPABASE_KEY)}&vsn=1.0.0`); } catch { return; }
+            Object.assign(live, { ws, topic, token, joined: false });
+            ws.onopen = () => {
+                liveSend({ topic, event: 'phx_join', payload: { config: { broadcast: { self: false, ack: false }, presence: { key: '' }, postgres_changes: [], private: true }, access_token: token }, ref: String(++live.ref), join_ref: '1' });
+                live.beat = setInterval(liveBeat, 25000);
+            };
+            ws.onmessage = (e) => {
+                let m;
+                try { m = JSON.parse(e.data); } catch { return; }
+                if (m.topic !== topic) return;
+                if (m.event === 'phx_reply' && !live.joined) {
+                    if (m.payload?.status === 'ok') { live.joined = true; live.retry = 0; }
+                    else ws.close();
+                } else if (m.event === 'broadcast') {
+                    liveChange(m.payload?.payload || {});
+                } else if (m.event === 'phx_close' || m.event === 'phx_error' || (m.event === 'system' && m.payload?.status === 'error')) {
+                    ws.close();
+                }
+            };
+            ws.onclose = () => {
+                clearInterval(live.beat);
+                if (live.ws !== ws) return;
+                live.ws = null;
+                live.joined = false;
+                if (!signedIn() || chat.ready === false) return;
+                clearTimeout(live.again);
+                live.again = setTimeout(liveConnect, Math.min(60000, 2000 * 2 ** live.retry++));
+            };
+        }
+
+        // Keeps the connection open and hands the server a fresh sign-in token when the old one is about to expire.
+        async function liveBeat() {
+            liveSend({ topic: 'phoenix', event: 'heartbeat', payload: {}, ref: String(++live.ref) });
+            const token = await accessToken().catch(() => null);
+            if (token && token !== live.token) {
+                live.token = token;
+                liveSend({ topic: live.topic, event: 'access_token', payload: { access_token: token }, ref: String(++live.ref) });
+            }
+        }
+
+        function liveClose() {
+            clearTimeout(live.again);
+            clearInterval(live.beat);
+            const ws = live.ws;
+            Object.assign(live, { ws: null, joined: false, retry: 0, topic: '' });
+            try { ws?.close(); } catch {}
+        }
+
+        // A chat changed: update the open conversation, the list and the badge (signals arriving together are handled once).
+        function liveChange(p) {
+            if (p?.c) live.pending.add(`${p.c}|${p.k || ''}`);
+            clearTimeout(live.flush);
+            live.flush = setTimeout(() => {
+                const items = [...live.pending].map((x) => x.split('|'));
+                live.pending.clear();
+                if (state.view === 'chats' && chat.open && items.some(([c]) => c === chat.open)) pollChat();
+                else if (state.view === 'chats' && !chat.open) renderChatList();
+                if (items.some(([, k]) => k === 'new' || k === 'gone')) checkChats();
+            }, 200);
+        }
+
+        /* --- Notifications for new messages (Web Push). The notification carries no message text. --- */
+
+
+        async function pushSubscription() {
+            try { return await (await navigator.serviceWorker.ready).pushManager.getSubscription(); } catch { return null; }
+        }
+
+        function vapidBytes(text) {
+            const raw = atob((text + '='.repeat((4 - (text.length % 4)) % 4)).replace(/-/g, '+').replace(/_/g, '/'));
+            return Uint8Array.from(raw, (c) => c.charCodeAt(0));
+        }
+
+        // The worker shows the notification in the language chosen in the app.
+        async function savePushPrefs() {
+            try { await (await caches.open('tuende-prefs-v1')).put('/__prefs', new Response(JSON.stringify({ lang }), { headers: { 'Content-Type': 'application/json' } })); } catch {}
+        }
+
+        async function togglePush(button) {
+            if (!pushSupported()) return;
+            button.disabled = true;
+            try {
+                const current = await pushSubscription();
+                if (chat.push && current) {
+                    await rpc('delete_push', { sub_endpoint: current.endpoint }).catch(() => {});
+                    await current.unsubscribe().catch(() => {});
+                    chat.push = false;
+                    toast(t('pushOffToast'));
+                } else {
+                    const permission = await Notification.requestPermission();
+                    if (permission !== 'granted') { toast(t('pushDenied')); return; }
+                    const reg = await navigator.serviceWorker.ready;
+                    const sub = current || await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: vapidBytes(VAPID_PUBLIC) });
+                    await rpc('save_push', { sub_endpoint: sub.endpoint, sub_lang: lang });
+                    await savePushPrefs();
+                    chat.push = true;
+                    toast(t('pushOnToast'));
+                }
+            } catch (err) {
+                toast(err?.status === 404 ? t('chatSoon') : t('pushError'));
+            } finally {
+                button.disabled = false;
+                if (state.view === 'chats' && !chat.open) $('chatsBody').innerHTML = chatListHTML();
+            }
+        }
+
+        // Signing out: this device stops receiving the account's notifications.
+        async function pushForget(token) {
+            const sub = await pushSubscription();
+            if (!sub) return;
+            if (token) sbRequest('/rest/v1/rpc/delete_push', { method: 'POST', headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ sub_endpoint: sub.endpoint }) }).catch(() => {});
+            sub.unsubscribe().catch(() => {});
+        }
+
+        navigator.serviceWorker?.addEventListener('message', (e) => {
+            if (e.data?.type === 'chat-push') liveChange({ c: chat.open || 'list', k: 'new' });
+            else if (e.data?.type === 'open-chats' && signedIn()) showChats();
+        });
 
         function sendMyLocation() {
             if (!navigator.geolocation) { toast(t('locError')); return; }
@@ -12934,7 +13242,28 @@
         }
 
         function openMessageMenu(msgId) {
-            openChatSheet(t('chatMore'), `<div class="chat-choices"><button type="button" class="pick-row" data-chat-report="${escapeHTML(msgId)}"><span class="pick-thumb">${icon('shield')}</span><span><b>${t('chatReport')}</b></span></button></div>`);
+            const m = chat.msgs.find((x) => x.id === msgId);
+            const row = m?.mine
+                ? `<button type="button" class="pick-row" data-chat-delete-msg="${escapeHTML(msgId)}"><span class="pick-thumb">${icon('trash')}</span><span><b>${t('chatDeleteMsg')}</b></span></button>`
+                : `<button type="button" class="pick-row" data-chat-report="${escapeHTML(msgId)}"><span class="pick-thumb">${icon('shield')}</span><span><b>${t('chatReport')}</b></span></button>`;
+            openChatSheet(t('chatMore'), `<div class="chat-choices">${row}</div>`);
+        }
+
+        // Deletes your own message for everyone; its photo, video or voice file is removed from storage too.
+        async function deleteChatMessage(msgId) {
+            if (!confirm(t('chatDeleteMsgConfirm'))) return;
+            try {
+                const path = await rpc('delete_message', { msg: msgId });
+                if (typeof path === 'string' && path) {
+                    sbRequest('/storage/v1/object/chat', { method: 'DELETE', headers: await userHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ prefixes: [path] }) }).catch(() => {});
+                    chat.media.delete(path);
+                }
+                chat.msgs = chat.msgs.filter((m) => m.id !== msgId);
+                delete chat.states[msgId];
+                closeModal('chatSheet');
+                redrawMessages({ keepBottom: false });
+                toast(t('chatMsgDeleted'));
+            } catch { toast(t('chatSendError')); }
         }
 
         async function reportChatMessage(msgId) {
@@ -13160,6 +13489,11 @@
             if ((el = hit('[data-chat-next]'))) { openChatGame(el.dataset.chatNext); return; }
             if ((el = hit('[data-chat-more]'))) { openMessageMenu(el.dataset.chatMore); return; }
             if ((el = hit('[data-chat-report]'))) { reportChatMessage(el.dataset.chatReport); return; }
+            if ((el = hit('[data-chat-delete-msg]'))) { deleteChatMessage(el.dataset.chatDeleteMsg); return; }
+            if (hit('[data-chat-record]')) { startRecording(); return; }
+            if (hit('[data-chat-rec-cancel]')) { stopRecording(true); return; }
+            if (hit('[data-chat-rec-send]')) { stopRecording(false); return; }
+            if ((el = hit('[data-chat-push]'))) { togglePush(el); return; }
             if ((el = hit('[data-chat-person]'))) { openPersonChat(el.dataset.chatPerson); return; }
             if ((el = hit('[data-chat-share-to]'))) { shareIntoConversation(el.dataset.chatShareTo); return; }
             if (hit('[data-share-tuende]')) { const p = shareChoice.pending; if (p) shareToChat(p.kind, p.data); return; }
@@ -13193,7 +13527,7 @@
         });
 
         document.addEventListener('input', (e) => {
-            if (e.target.id === 'chatInput') autoSizeChatInput();
+            if (e.target.id === 'chatInput') { autoSizeChatInput(); e.target.closest('.chat-composer')?.classList.toggle('has-text', Boolean(e.target.value.trim())); }
             if (e.target.matches('[data-chat-filter]')) {
                 const q = normalize(e.target.value.trim());
                 e.target.parentElement.querySelectorAll('[data-search]').forEach((row) => {
@@ -13217,6 +13551,7 @@
 
         document.addEventListener('visibilitychange', () => {
             if (document.hidden) return;
+            if (signedIn() && chat.ready) liveConnect();
             if (state.view === 'chats' && chat.open) { markChatRead(); pollChat(); }
             else if (state.view === 'chats') renderChatList();
             else checkChats();
@@ -13855,7 +14190,9 @@
             profile = { stats: null, inbox: [], mine: [], loadedAt: 0, tab: '' };
             $('inboxDot').hidden = true;
             clearInterval(chat.badgeTimer);
-            Object.assign(chat, { list: null, open: null, loadedFor: null, info: null, msgs: [], states: {}, unread: 0 });
+            liveClose();
+            stopRecording(true);
+            Object.assign(chat, { list: null, open: null, loadedFor: null, info: null, msgs: [], states: {}, unread: 0, push: undefined });
             chat.media.clear();
             if (state.view === 'chats') state.view = 'home';
             if (state.view === 'profile' || (feed.mode === 'following' && state.view === 'feed')) { feed.mode = 'recent'; feed.loaded = false; }
@@ -13866,6 +14203,7 @@
 
         function signOut() {
             const token = session?.access_token;
+            pushForget(token);
             signOutLocally();
             closeModal('authModal');
             if (token) authRequest('/logout', null, { token }).catch(() => {});
@@ -17822,6 +18160,7 @@
             $('langBtn').focus();
             // Account emails (new password, new email) come in the language last chosen here.
             if (signedIn()) accessToken().then((token) => token && authRequest('/user', { data: { lang } }, { method: 'PUT', token })).catch(() => {});
+            if (chat.push) { savePushPrefs(); pushSubscription().then((sub) => sub && rpc('save_push', { sub_endpoint: sub.endpoint, sub_lang: lang })).catch(() => {}); }
         });
         document.addEventListener('click', (e) => {
             if (!$('langMenu').hidden && !e.target.closest('.lang-wrap')) toggleLangMenu(false);

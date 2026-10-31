@@ -20,6 +20,7 @@ struct AngoliveApp: App {
 /// "location" (the phone's position, so iOS asks once, in the app's own words, instead of a second web prompt
 /// that shows the file path), "theme" (the light/dark choice made in the app, so the status bar matches)
 /// and "ready" (the first screen is drawn: the page fades in instead of showing half-built).
+/// The microphone (voice messages) is granted to the page after iOS asks once with the app's text.
 struct WebAppView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator { Coordinator() }
 
@@ -138,6 +139,18 @@ struct WebAppView: UIViewRepresentable {
                 UIApplication.shared.open(url)
             }
             return nil
+        }
+
+        // Voice messages in Conversas: iOS asks for the microphone once, in the app's own words
+        // (NSMicrophoneUsageDescription), instead of a second web prompt that would show the file path.
+        func webView(
+            _ webView: WKWebView,
+            requestMediaCapturePermissionFor origin: WKSecurityOrigin,
+            initiatedByFrame frame: WKFrameInfo,
+            type: WKMediaCaptureType,
+            decisionHandler: @escaping (WKPermissionDecision) -> Void
+        ) {
+            decisionHandler(type == .microphone ? .grant : .deny)
         }
 
         // MARK: Messages from the page
