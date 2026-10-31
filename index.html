@@ -1584,7 +1584,7 @@
         .pick-head { margin: 14px 0 4px; font-size: 13px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
         .pick-row { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 60px; padding: 6px 4px; border: none; border-radius: 12px; background: none; color: var(--text); text-align: left; }
         .pick-row:hover { background: var(--surface-2); }
-        .pick-row > span:not(.pick-thumb):not(.pick-done) { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+        .pick-row > span:not(.pick-thumb):not(.pick-done):not(.avatar) { display: flex; flex-direction: column; min-width: 0; flex: 1; }
         .pick-row b { font-size: 15px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .pick-row small { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .pick-thumb { position: relative; flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 12px; overflow: hidden; background: var(--surface-2); color: var(--primary); }
@@ -1706,9 +1706,152 @@
         .profile-name { font-size: 26px; font-weight: 800; line-height: 1.2; }
         .profile-head .link-btn { min-height: 36px; padding: 0; }
         .profile-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(58px, 1fr)); gap: 6px; margin-top: 18px; }
-        .profile-stat { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 12px 2px; border-radius: 14px; background: var(--surface-2); text-align: center; min-width: 0; }
+        .profile-stat { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 12px 2px; border-radius: 14px; background: var(--surface-2); text-align: center; min-width: 0; border: 1.5px solid transparent; color: var(--text); font: inherit; cursor: pointer; }
+        .profile-stat:hover { border-color: var(--border); }
+        /* Conversas (chats) and people lists */
+        .feed-chats { position: relative; }
+        .count-pill[hidden] { display: none !important; }
+        .profile-chats { position: relative; margin-top: 12px; gap: 8px; }
+        .profile-chats .count-pill, .feed-chats .count-pill { margin-left: 2px; }
+        #tabbar .tab.has-dot { position: relative; }
+        #tabbar .tab.has-dot::after { content: ''; position: absolute; top: 6px; right: calc(50% - 20px); width: 9px; height: 9px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 2px var(--surface); }
+        body.chat-open #tabbar, body.chat-open .site-footer, body.chat-open .kamba-btn, body.chat-open .kamba-teaser { display: none !important; }
+        body.chat-open main { padding-bottom: 0; }
+        body.chat-open { padding-bottom: 0 !important; }
+        body.chat-open main ~ .samakaka-strip { display: none; }
+        .chats-page { padding-bottom: 8px; }
+        .chat-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+        .chat-top .submit-btn { display: inline-flex; align-items: center; gap: 6px; }
+        .chat-list { display: grid; margin-top: 12px; border-top: 1px solid var(--line); }
+        .chat-row { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; width: 100%; min-height: 64px; padding: 10px 4px; border: 0; border-bottom: 1px solid var(--line); background: none; color: var(--text); text-align: left; cursor: pointer; }
+        .chat-row:hover { background: var(--surface-2); }
+        .chat-row-main { display: grid; gap: 2px; min-width: 0; }
+        .chat-row-main b, .chat-row-main small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .chat-row-main b { font-size: 16px; }
+        .chat-row-main small { font-size: 14px; color: var(--muted); }
+        .chat-row.unread .chat-row-main small { color: var(--text); font-weight: 700; }
+        .chat-row-side { display: grid; justify-items: end; gap: 4px; }
+        .chat-row-side small { font-size: 12px; color: var(--muted); }
+        .chat-group-pic .icon { width: 20px; height: 20px; }
+        .chat-safety { display: flex; align-items: center; gap: 6px; margin-top: 16px; font-size: 13px; }
+        .chat-safety .icon { flex: none; width: 16px; height: 16px; }
+        .chat-head { position: sticky; top: 0; z-index: 6; display: flex; align-items: center; gap: 8px; margin: 0 -4px; padding: 8px 4px; background: var(--bg); border-bottom: 1px solid var(--line); }
+        .chat-icon-btn { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: 999px; background: none; color: var(--text); cursor: pointer; }
+        .chat-icon-btn:hover { background: var(--surface-2); }
+        .chat-icon-btn .icon { width: 22px; height: 22px; }
+        .chat-head-title { display: grid; flex: 1; min-width: 0; padding: 4px 0; border: 0; background: none; color: var(--text); text-align: left; cursor: pointer; }
+        .chat-head-title b { font-size: 17px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .chat-head-title small { font-size: 13px; color: var(--muted); }
+        .chat-msgs { display: grid; align-content: end; min-height: calc(100vh - 220px); padding: 8px 0; }
+        .chat-older { justify-self: center; margin: 4px 0 8px; }
+        #chatMsgList { display: grid; gap: 3px; }
+        .chat-day { margin: 12px 0 6px; text-align: center; }
+        .chat-day span { display: inline-block; padding: 4px 12px; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: 12px; font-weight: 700; }
+        .chat-system { margin: 6px 12px; text-align: center; font-size: 13px; color: var(--muted); }
+        .chat-msg { display: flex; align-items: flex-end; gap: 6px; }
+        .chat-msg:not(.cont) { margin-top: 8px; }
+        .chat-msg.mine { flex-direction: row-reverse; }
+        .chat-msg .avatar { width: 30px; height: 30px; font-size: 13px; }
+        .chat-av-gap { flex: none; width: 30px; }
+        .chat-bubble { position: relative; max-width: min(80%, 460px); padding: 8px 10px 20px; border: 1px solid var(--line); border-radius: 18px 18px 18px 6px; background: var(--surface); color: var(--text); }
+        .chat-msg.mine .chat-bubble { border-color: transparent; border-radius: 18px 18px 6px 18px; background: var(--primary-soft); }
+        .chat-msg.pending .chat-bubble { opacity: 0.7; }
+        /* Cards, polls, games and media: a set width that always fits next to the avatar and the options button. */
+        .chat-bubble:is(.kind-poll, .kind-game, .kind-place, .kind-event, .kind-moment, .kind-location) { width: min(300px, calc(100vw - 104px)); }
+        .chat-bubble:is(.kind-photo, .kind-video) { width: min(280px, calc(100vw - 104px)); }
+        .chat-text { margin: 0; font-size: 15.5px; line-height: 1.42; white-space: pre-wrap; overflow-wrap: anywhere; }
+        .chat-who { display: block; margin-bottom: 2px; font-size: 12.5px; font-weight: 800; color: var(--primary); }
+        .chat-time { position: absolute; right: 10px; bottom: 4px; font-size: 11px; color: var(--muted); }
+        .chat-more { flex: none; align-self: center; width: 36px; height: 36px; border: 0; border-radius: 999px; background: none; color: var(--muted); font-weight: 800; letter-spacing: 1px; cursor: pointer; opacity: 0.6; }
+        .chat-more:hover, .chat-more:focus-visible { opacity: 1; background: var(--surface-2); }
+        .chat-media { display: block; width: 100%; max-height: 380px; border-radius: 12px; background: var(--surface-2); overflow: hidden; object-fit: cover; }
+        .chat-media img { display: block; width: 100%; height: 100%; max-height: 380px; object-fit: cover; }
+        .kind-photo .chat-text, .kind-video .chat-text { margin-top: 6px; }
+        .chat-card { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 10px; align-items: center; width: 100%; padding: 6px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--text); text-align: left; cursor: pointer; }
+        .chat-location { cursor: default; }
+        .chat-card-thumb { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 10px; overflow: hidden; background: var(--surface-2); color: var(--primary); }
+        .chat-card-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .chat-card-main { display: grid; gap: 1px; min-width: 0; }
+        .chat-card-main b { font-size: 15px; line-height: 1.25; }
+        .chat-card-main small { font-size: 12.5px; color: var(--muted); }
+        .chat-card-main .link-btn { justify-self: start; min-height: 32px; padding: 0; font-size: 14px; }
+        .chat-card-gone { margin: 0; font-size: 14px; color: var(--muted); }
+        .chat-poll, .chat-game { display: grid; gap: 6px; width: 100%; min-width: 0; }
+        .chat-poll-q { display: flex; align-items: flex-start; gap: 6px; margin: 0; font-size: 15px; }
+        .chat-poll-q .icon { flex: none; width: 18px; height: 18px; margin-top: 2px; color: var(--primary); }
+        .chat-poll-opt { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 44px; padding: 8px 10px; overflow: hidden; border: 1.5px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); font: inherit; font-weight: 600; text-align: left; cursor: pointer; }
+        .chat-poll-opt.on { border-color: var(--primary); }
+        .chat-poll-bar { position: absolute; top: 0; bottom: 0; left: 0; background: var(--primary-soft); transition: width 0.3s; }
+        .chat-poll-label, .chat-poll-n { position: relative; display: inline-flex; align-items: center; gap: 4px; }
+        .chat-poll-label .icon { width: 16px; height: 16px; color: var(--primary); }
+        .chat-poll-place { justify-self: start; min-height: 32px; padding: 0 2px; font-size: 13px; }
+        .chat-poll small, .chat-game > small { font-size: 12.5px; color: var(--muted); }
+        .chat-scores { display: grid; gap: 4px; margin: 4px 0; padding: 0; list-style: none; font-size: 14px; }
+        .chat-scores li { display: flex; align-items: baseline; gap: 6px; }
+        .chat-scores li span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .chat-scores li.me b { color: var(--primary); }
+        .chat-scores li.empty { color: var(--muted); }
+        .chat-scores small { color: var(--muted); }
+        .chat-game .submit-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+        .chat-attach { position: sticky; bottom: calc(68px + env(safe-area-inset-bottom)); z-index: 6; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 6px; padding: 10px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); }
+        .chat-attach[hidden] { display: none; }
+        .chat-attach button { display: grid; justify-items: center; gap: 4px; min-height: 64px; padding: 8px 4px; border: 0; border-radius: 12px; background: var(--surface-2); color: var(--text); font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; }
+        .chat-attach .icon { width: 22px; height: 22px; color: var(--primary); }
+        .chat-composer { position: sticky; bottom: 0; z-index: 6; display: flex; align-items: flex-end; gap: 6px; margin: 0 -4px; padding: 8px 4px calc(8px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--bg); }
+        .chat-composer textarea { flex: 1; min-height: 44px; max-height: 140px; padding: 11px 14px; resize: none; border: 1.5px solid var(--border); border-radius: 22px; background: var(--surface); color: var(--text); font: inherit; font-size: 16px; line-height: 1.3; }
+        .chat-send { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 0; border-radius: 999px; background: var(--primary-fill); color: #fff; cursor: pointer; }
+        .chat-send .icon { width: 20px; height: 20px; }
+        .chat-choices { display: grid; gap: 4px; max-height: 58vh; margin-top: 8px; overflow: auto; }
+        .chat-choices .pick-row[hidden], .person-row[hidden] { display: none; }
+        .chat-search { margin-top: 10px; }
+        .chat-pick-person { cursor: pointer; }
+        .chat-pick-person input { flex: none; width: 20px; height: 20px; accent-color: var(--primary); }
+        .chat-group-name { display: grid; gap: 6px; margin-top: 12px; font-weight: 700; }
+        .chat-group-name[hidden] { display: none; }
+        #chatNewForm .form-msg, #chatAddForm .form-msg { margin: 10px 0; }
+        .chat-poll-form { display: grid; gap: 12px; margin-top: 8px; }
+        .chat-poll-form label { display: grid; gap: 6px; font-weight: 700; }
+        .chat-poll-options { display: grid; gap: 8px; }
+        .chat-poll-tools { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+        .chat-poll-tools .link-btn { display: inline-flex; align-items: center; gap: 6px; }
+        .chat-game-photo { display: block; width: 100%; max-height: 240px; margin-top: 8px; border-radius: 12px; object-fit: cover; }
+        .chat-game-q { margin: 12px 0; font-size: 18px; font-weight: 800; line-height: 1.3; }
+        .chat-game-opts { display: grid; gap: 8px; }
+        .chat-game-opt { min-height: 48px; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 12px; background: var(--surface); color: var(--text); font: inherit; font-weight: 700; text-align: left; cursor: pointer; }
+        .chat-game-opt.right { border-color: var(--free-ink); background: var(--free-bg); color: var(--free-ink); }
+        .chat-game-opt.wrong { border-color: var(--primary); background: var(--primary-soft); }
+        .chat-game-feedback { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: 12px; }
+        .chat-game-feedback:empty { display: none; }
+        .chat-game-done { display: flex; align-items: center; gap: 8px; margin: 12px 0; font-size: 18px; }
+        .chat-game-done .icon { width: 26px; height: 26px; color: var(--primary); }
+        .chat-rename { display: flex; gap: 8px; margin: 10px 0 14px; }
+        .chat-rename .field { flex: 1; min-width: 0; }
+        .chat-info-actions { margin-top: 14px; flex-wrap: wrap; }
+        .chat-info-actions .submit-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1 1 auto; white-space: nowrap; }
+        .submit-btn.secondary.danger { color: var(--primary); }
+        .person-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+        .person-open { display: flex; flex: 1; align-items: center; gap: 10px; min-width: 0; min-height: 52px; padding: 4px 0; border: 0; background: none; color: var(--text); text-align: left; cursor: pointer; }
+        .person-open span { display: grid; min-width: 0; }
+        .person-open b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .person-open small { font-size: 13px; color: var(--muted); }
+        .person-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0 12px; }
+        .person-actions .submit-btn { display: inline-flex; align-items: center; gap: 6px; }
+        .province-done { border-bottom: 1px solid var(--line); }
+        .province-done summary { display: flex; align-items: center; gap: 8px; min-height: 48px; cursor: pointer; }
+        .province-done summary .icon { width: 18px; height: 18px; color: var(--free-ink); }
+        .province-done summary small { margin-left: auto; color: var(--muted); }
+        .province-rest { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
+        .province-rest span { padding: 4px 10px; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: 13px; }
+
         .profile-stat b { font-size: 19px; font-weight: 800; }
-        .profile-stat span { max-width: 100%; font-size: 11.5px; color: var(--muted); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .profile-stat span { max-width: 100%; font-size: 11px; line-height: 1.2; color: var(--muted); font-weight: 600; hyphens: auto; overflow-wrap: break-word; }
+        @media (max-width: 400px) {
+            .profile-stats { gap: 4px; }
+            .profile-stat { padding: 12px 0; }
+            .profile-stat span { font-size: 10.5px; letter-spacing: -0.01em; }
+        }
+        .profile-chats, #chatSheetPanel .submit-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        #chatSheetPanel .link-btn:has(> .icon) { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; }
         .profile-helped { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 10px 14px; border-radius: 12px; background: var(--free-bg); color: var(--free-ink); font-weight: 700; font-size: 14.5px; }
         .profile-helped .icon { width: 18px; height: 18px; }
         .profile-guest { margin-top: 14px; }
@@ -2201,6 +2344,10 @@
             <div id="profileBody"></div>
         </section>
 
+        <section id="chatsView" class="guide-page chats-page" hidden aria-labelledby="chatsTitle">
+            <div id="chatsBody"></div>
+        </section>
+
         <section id="feedView" class="guide-page" hidden aria-labelledby="feedTitle">
             <button class="back-btn" type="button" data-action="home"><span data-icon="back"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg></span><span data-i18n="backHome">Voltar ao início</span></button>
             <div class="feed-head">
@@ -2208,6 +2355,7 @@
                     <h1 class="rec-title" id="feedTitle" data-i18n="feedTitle">Momentos</h1>
                     <p class="rec-intro" data-i18n="feedSub">Lugares onde as pessoas estiveram, contados por elas.</p>
                 </div>
+                <button class="submit-btn secondary feed-chats" type="button" data-chats-open hidden><span data-icon="chat"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span><span data-i18n="chatTitle">Conversas</span><span class="count-pill" hidden></span></button>
                 <button class="submit-btn feed-new" type="button" data-plus="post"><span data-icon="plus"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span data-i18n="feedPostShort">Publicar</span></button>
             </div>
             <div class="chips" id="feedChips"></div>
@@ -2318,6 +2466,10 @@
             <h2 class="info-title" id="composeTitle" data-i18n="feedPostTitle">Publicar um momento</h2>
             <div id="composeBody"></div>
         </div>
+    </div>
+
+    <div class="modal" id="chatSheet" role="dialog" aria-modal="true" aria-labelledby="chatSheetTitle">
+        <div class="modal-panel info-panel" id="chatSheetPanel"></div>
     </div>
 
     <div class="modal" id="pickModal" role="dialog" aria-modal="true" aria-labelledby="pickTitle">
@@ -3254,6 +3406,123 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                peopleFriends: 'Amigos',
+                peopleFollowsYou: 'Segue-o',
+                peopleFollowBack: 'Seguir de volta',
+                peopleMessage: 'Mensagem',
+                peopleSoon: 'As listas de seguidores chegam em breve.',
+                peopleEmptyFollowers: 'Ainda ninguém o segue. Publique momentos para as pessoas o encontrarem.',
+                peopleEmptyFollowing: 'Ainda não segue ninguém. Em Momentos, abra o perfil de quem publica e toque em «Seguir».',
+                personCounts: '{n} momentos · {f} seguidores · {g} a seguir',
+                personFriendsHint: 'Sigam-se um ao outro para poderem conversar.',
+                personBlock: 'Bloquear',
+                personBlockConfirm: 'Bloquear {name}? Deixam de se seguir e de ver as mensagens e os momentos um do outro.',
+                personBlocked: 'Pessoa bloqueada.',
+                visitedPlacesTitle: 'Lugares onde já foi',
+                visitedProvincesTitle: 'Províncias visitadas',
+                visitedProvinceLine: '{k} de {n} lugares',
+                visitedEmpty: 'Ainda não marcou nenhum lugar. Abra um lugar e toque em «Já fui».',
+                provincesNotYet: 'Ainda por visitar',
+                openPassport: 'Abrir o passaporte',
+                chatTitle: 'Conversas',
+                chatNew: 'Nova conversa',
+                chatEmpty: 'Ainda não tem conversas. Pode conversar com amigos: pessoas que se seguem uma à outra no Tuende.',
+                chatFindFriends: 'Ver quem me segue',
+                chatSignIn: 'Entre na sua conta para conversar com amigos.',
+                chatSoon: 'As conversas chegam em breve.',
+                chatError: 'Não foi possível carregar. Tente outra vez.',
+                chatSendError: 'Não foi possível enviar. Tente outra vez.',
+                chatTooFast: 'Está a enviar mensagens depressa demais. Espere um pouco.',
+                chatBlockedMsg: 'Não pode enviar mensagens a esta pessoa.',
+                chatFriendsOnly: 'Só pode conversar com amigos (pessoas que se seguem uma à outra).',
+                chatGone: 'Esta conversa já não existe ou saiu dela.',
+                chatBack: 'Voltar às conversas',
+                chatPlaceholder: 'Mensagem',
+                chatSend: 'Enviar',
+                chatAttach: 'Partilhar na conversa',
+                chatPhoto: 'Foto ou vídeo',
+                chatLocation: 'Onde estou',
+                chatPlace: 'Lugar',
+                chatEvent: 'Evento',
+                chatMoment: 'Momento',
+                chatPoll: 'Votação',
+                chatGame: 'Jogo',
+                chatMembersN: '{n} pessoas',
+                chatInfoHint: 'Toque para ver detalhes',
+                chatOlder: 'Mensagens anteriores',
+                chatToday: 'Hoje',
+                chatYesterday: 'Ontem',
+                chatYou: 'Você',
+                chatPhotoMsg: 'Foto',
+                chatVideoMsg: 'Vídeo',
+                chatLocationMsg: 'Localização',
+                chatNear: 'Perto de {name}',
+                chatOpenMap: 'Abrir no mapa',
+                chatSeeMoment: 'Ver momento',
+                chatPollMsg: 'Votação: {q}',
+                chatGameMsg: 'Jogo: {name}',
+                chatVotes: '{n} votos',
+                chatVoteOne: '1 voto',
+                chatPollQuestion: 'Pergunta',
+                chatPollQuestionPh: 'Onde vamos primeiro?',
+                chatPollOption: 'Opção {n}',
+                chatPollAddOption: 'Mais uma opção',
+                chatPollSaved: 'Usar os meus lugares guardados',
+                chatPollNeed: 'Escreva a pergunta e pelo menos duas opções.',
+                chatPollSend: 'Enviar votação',
+                chatGameQuizDesc: '5 perguntas sobre lugares, províncias e maravilhas de Angola.',
+                chatGameProvince: 'Em que província fica?',
+                chatGameProvinceDesc: '5 lugares do Tuende: adivinhe a província de cada um.',
+                chatGameIntro: 'Quem acerta mais? Cada pessoa joga ao seu ritmo.',
+                chatGamePlay: 'Jogar',
+                chatGameContinue: 'Continuar',
+                chatGameSee: 'Ver resultado',
+                chatGameScore: '{r} de {n} certas',
+                chatGameNobody: 'Ainda ninguém jogou.',
+                chatGameNext: 'Seguinte',
+                chatGameDone: 'Terminou! {r} de {n} certas.',
+                chatGameQ: 'Pergunta {i} de {n}',
+                chatRight: 'Certo!',
+                chatWrong: 'Era: {a}',
+                chatSystemCreated: '{name} criou o grupo «{title}»',
+                chatSystemAdded: '{name} adicionou {names}',
+                chatSystemLeft: '{name} saiu do grupo',
+                chatSystemRenamed: '{name} mudou o nome para «{title}»',
+                chatNewHint: 'Escolha um amigo para conversar, ou vários para criar um grupo.',
+                chatNoFriends: 'Ainda não tem amigos no Tuende. Amigos são pessoas que se seguem uma à outra: siga de volta quem o segue para poderem conversar.',
+                chatGroupName: 'Nome do grupo',
+                chatGroupNamePh: 'Saída de sábado',
+                chatStart: 'Conversar',
+                chatCreateGroup: 'Criar grupo',
+                chatNeedGroupName: 'Escreva o nome do grupo.',
+                chatSelected: '{n} escolhidos',
+                chatInfoTitle: 'Detalhes',
+                chatRename: 'Mudar o nome',
+                chatAddPeople: 'Adicionar pessoas',
+                chatLeave: 'Sair do grupo',
+                chatLeaveConfirm: 'Sair do grupo «{title}»?',
+                chatDelete: 'Apagar conversa',
+                chatDeleteConfirm: 'Apagar esta conversa da sua lista? Se a outra pessoa escrever, volta a aparecer.',
+                chatAdmin: 'Administra o grupo',
+                chatReport: 'Denunciar mensagem',
+                chatReportConfirm: 'Denunciar esta mensagem? Deixa de a ver e a equipa do Tuende vai analisá-la.',
+                chatReported: 'Obrigado. A mensagem foi denunciada.',
+                chatMore: 'Mais opções',
+                chatShareTitle: 'Enviar numa conversa',
+                chatShareHow: 'Partilhar',
+                chatShareTuende: 'Numa conversa do Tuende',
+                chatShareOther: 'Noutra app (WhatsApp e outras)',
+                chatShared: 'Enviado.',
+                chatOpen: 'Abrir',
+                chatTooBig: 'O vídeo é grande demais (máximo 25 MB).',
+                chatUploading: 'A enviar…',
+                chatPickEvent: 'Escolher evento',
+                chatPickMoment: 'Escolher momento',
+                chatPickPlace: 'Escolher lugar',
+                chatNoMoments: 'Ainda não há momentos para partilhar.',
+                chatSearch: 'Procurar',
+                chatDeletedPerson: 'Conta apagada',
+                chatSafety: 'Mensagens só entre amigos. Pode denunciar mensagens e bloquear pessoas.',
                 newsTitle: 'Agenda no seu email',
                 exNews: 'Um email por semana com o que há',
                 newsIntro: 'Todas as semanas, os eventos da agenda e os lugares novos do Tuende, num só email. Pode sair quando quiser.',
@@ -3888,7 +4157,7 @@
                 authSaveName: 'Guardar nome',
                 authNameSaved: 'Nome atualizado.',
                 authDeleteTitle: 'Apagar conta',
-                authDeleteText: 'Apaga a conta e tudo o que enviou (avaliações, comentários, fotos, vídeos e correções), bem como os lugares guardados na conta. Não pode ser desfeito.',
+                authDeleteText: 'Apaga a conta e tudo o que enviou (avaliações, comentários, fotos, vídeos, mensagens e correções), bem como os lugares guardados na conta. Não pode ser desfeito.',
                 authDeleteBtn: 'Apagar a minha conta',
                 authDeleteConfirm: 'Tem a certeza? A conta e tudo o que enviou serão apagados para sempre.',
                 authDeleted: 'A sua conta foi apagada.',
@@ -4233,6 +4502,123 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                peopleFriends: 'Friends',
+                peopleFollowsYou: 'Follows you',
+                peopleFollowBack: 'Follow back',
+                peopleMessage: 'Message',
+                peopleSoon: 'Follower lists are coming soon.',
+                peopleEmptyFollowers: 'Nobody follows you yet. Post moments so people can find you.',
+                peopleEmptyFollowing: 'You don’t follow anyone yet. In Moments, open the profile of someone who posts and tap “Follow”.',
+                personCounts: '{n} moments · {f} followers · {g} following',
+                personFriendsHint: 'Follow each other to be able to chat.',
+                personBlock: 'Block',
+                personBlockConfirm: 'Block {name}? You will stop following each other and seeing each other’s messages and moments.',
+                personBlocked: 'Person blocked.',
+                visitedPlacesTitle: 'Places you’ve been',
+                visitedProvincesTitle: 'Provinces visited',
+                visitedProvinceLine: '{k} of {n} places',
+                visitedEmpty: 'You haven’t marked any place yet. Open a place and tap “Been there”.',
+                provincesNotYet: 'Not visited yet',
+                openPassport: 'Open the passport',
+                chatTitle: 'Chats',
+                chatNew: 'New chat',
+                chatEmpty: 'No chats yet. You can chat with friends: people who follow each other on Tuende.',
+                chatFindFriends: 'See who follows me',
+                chatSignIn: 'Sign in to chat with friends.',
+                chatSoon: 'Chats are coming soon.',
+                chatError: 'Could not load. Please try again.',
+                chatSendError: 'Could not send. Please try again.',
+                chatTooFast: 'You’re sending messages too fast. Wait a moment.',
+                chatBlockedMsg: 'You can’t send messages to this person.',
+                chatFriendsOnly: 'You can only chat with friends (people who follow each other).',
+                chatGone: 'This chat no longer exists or you left it.',
+                chatBack: 'Back to chats',
+                chatPlaceholder: 'Message',
+                chatSend: 'Send',
+                chatAttach: 'Share in the chat',
+                chatPhoto: 'Photo or video',
+                chatLocation: 'My location',
+                chatPlace: 'Place',
+                chatEvent: 'Event',
+                chatMoment: 'Moment',
+                chatPoll: 'Poll',
+                chatGame: 'Game',
+                chatMembersN: '{n} people',
+                chatInfoHint: 'Tap for details',
+                chatOlder: 'Earlier messages',
+                chatToday: 'Today',
+                chatYesterday: 'Yesterday',
+                chatYou: 'You',
+                chatPhotoMsg: 'Photo',
+                chatVideoMsg: 'Video',
+                chatLocationMsg: 'Location',
+                chatNear: 'Near {name}',
+                chatOpenMap: 'Open in maps',
+                chatSeeMoment: 'See moment',
+                chatPollMsg: 'Poll: {q}',
+                chatGameMsg: 'Game: {name}',
+                chatVotes: '{n} votes',
+                chatVoteOne: '1 vote',
+                chatPollQuestion: 'Question',
+                chatPollQuestionPh: 'Where shall we go first?',
+                chatPollOption: 'Option {n}',
+                chatPollAddOption: 'Add an option',
+                chatPollSaved: 'Use my saved places',
+                chatPollNeed: 'Write the question and at least two options.',
+                chatPollSend: 'Send poll',
+                chatGameQuizDesc: '5 questions about places, provinces and wonders of Angola.',
+                chatGameProvince: 'Which province is it in?',
+                chatGameProvinceDesc: '5 places on Tuende: guess each one’s province.',
+                chatGameIntro: 'Who gets the most right? Everyone plays at their own pace.',
+                chatGamePlay: 'Play',
+                chatGameContinue: 'Continue',
+                chatGameSee: 'See results',
+                chatGameScore: '{r} of {n} right',
+                chatGameNobody: 'Nobody has played yet.',
+                chatGameNext: 'Next',
+                chatGameDone: 'Done! {r} of {n} right.',
+                chatGameQ: 'Question {i} of {n}',
+                chatRight: 'Right!',
+                chatWrong: 'It was: {a}',
+                chatSystemCreated: '{name} created the group “{title}”',
+                chatSystemAdded: '{name} added {names}',
+                chatSystemLeft: '{name} left the group',
+                chatSystemRenamed: '{name} renamed the group “{title}”',
+                chatNewHint: 'Choose a friend to chat with, or several to create a group.',
+                chatNoFriends: 'You have no friends on Tuende yet. Friends are people who follow each other: follow back the people who follow you so you can chat.',
+                chatGroupName: 'Group name',
+                chatGroupNamePh: 'Saturday outing',
+                chatStart: 'Chat',
+                chatCreateGroup: 'Create group',
+                chatNeedGroupName: 'Write the group name.',
+                chatSelected: '{n} selected',
+                chatInfoTitle: 'Details',
+                chatRename: 'Rename',
+                chatAddPeople: 'Add people',
+                chatLeave: 'Leave group',
+                chatLeaveConfirm: 'Leave the group “{title}”?',
+                chatDelete: 'Delete chat',
+                chatDeleteConfirm: 'Delete this chat from your list? If the other person writes, it comes back.',
+                chatAdmin: 'Group admin',
+                chatReport: 'Report message',
+                chatReportConfirm: 'Report this message? You’ll stop seeing it and the Tuende team will review it.',
+                chatReported: 'Thank you. The message was reported.',
+                chatMore: 'More options',
+                chatShareTitle: 'Send in a chat',
+                chatShareHow: 'Share',
+                chatShareTuende: 'In a Tuende chat',
+                chatShareOther: 'In another app (WhatsApp and others)',
+                chatShared: 'Sent.',
+                chatOpen: 'Open',
+                chatTooBig: 'The video is too big (25 MB max).',
+                chatUploading: 'Sending…',
+                chatPickEvent: 'Choose an event',
+                chatPickMoment: 'Choose a moment',
+                chatPickPlace: 'Choose a place',
+                chatNoMoments: 'No moments to share yet.',
+                chatSearch: 'Search',
+                chatDeletedPerson: 'Deleted account',
+                chatSafety: 'Messages only between friends. You can report messages and block people.',
                 newsTitle: 'The agenda by email',
                 exNews: 'One email a week with what\'s on',
                 newsIntro: 'Every week, the events in the agenda and Tuende\'s new places, in one email. You can leave whenever you like.',
@@ -4867,7 +5253,7 @@
                 authSaveName: 'Save name',
                 authNameSaved: 'Name updated.',
                 authDeleteTitle: 'Delete account',
-                authDeleteText: 'Deletes the account and everything you sent (reviews, comments, photos, videos and corrections), as well as the places saved to it. This cannot be undone.',
+                authDeleteText: 'Deletes the account and everything you sent (reviews, comments, photos, videos, messages and corrections), as well as the places saved to it. This cannot be undone.',
                 authDeleteBtn: 'Delete my account',
                 authDeleteConfirm: 'Are you sure? The account and everything you sent will be deleted for good.',
                 authDeleted: 'Your account has been deleted.',
@@ -8103,6 +8489,10 @@
             else if (params.get('page') === 'pratos') { if (state.view !== 'dishes') showDishes({ push: false }); }
             else if (params.get('page') === 'momentos') { if (state.view !== 'feed') showFeed({ push: false }); }
             else if (params.get('page') === 'perfil') { if (state.view !== 'profile') showProfile({ push: false }); }
+            else if (params.get('page') === 'conversas') {
+                const conv = UUID_RE.test(params.get('c') || '') ? params.get('c') : null;
+                if (state.view !== 'chats' || chat.open !== conv) showChats({ push: false, conv });
+            }
             else if (params.get('page') === 'plano' && /^[0-9a-f]{32}$/.test(params.get('amigos') || '')) openFriendsPlan(params.get('amigos'));
             else if (params.get('page') === 'plano') {
                 const shared = params.get('p') ? planFromParam(params.get('p')) : null;
@@ -8820,7 +9210,7 @@
             renderQuickFilters();
             renderSavedButton();
             renderTabbar();
-            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx', 'plan', 'passport', 'quiz', 'dishes', 'feed', 'profile'].includes(state.view);
+            $('hero').hidden = ['recommend', 'events', 'guide', 'routes', 'map', 'wonders', 'fx', 'plan', 'passport', 'quiz', 'dishes', 'feed', 'profile', 'chats'].includes(state.view);
             renderCityPill();
             kambaMakeRoom();
             $('homeView').hidden = state.view !== 'home';
@@ -8838,7 +9228,9 @@
             $('dishesView').hidden = state.view !== 'dishes';
             $('feedView').hidden = state.view !== 'feed';
             $('profileView').hidden = state.view !== 'profile';
-            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle', passport: 'passportTitle', quiz: 'quizTitle', dishes: 'dishesTitle', feed: 'feedTitle', profile: 'profileTitle' }[state.view];
+            $('chatsView').hidden = state.view !== 'chats';
+            if (state.view !== 'chats') { stopChatTimer(); document.body.classList.remove('chat-open'); }
+            const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle', passport: 'passportTitle', quiz: 'quizTitle', dishes: 'dishesTitle', feed: 'feedTitle', profile: 'profileTitle', chats: 'chatTitle' }[state.view];
             document.title = viewTitle ? `${t(viewTitle)} | Tuende` : `Tuende - ${t('heroTitle')}`;
             if (state.view === 'home') renderHome();
             else if (state.view === 'results') renderResults();
@@ -8854,6 +9246,8 @@
             else if (state.view === 'dishes') renderDishes();
             else if (state.view === 'feed') renderFeed();
             else if (state.view === 'profile') renderProfile();
+            else if (state.view === 'chats') renderChats();
+            renderChatBadges();
         }
 
 
@@ -10564,7 +10958,7 @@
             const v = venues.find((x) => x.id === state.openId);
             const base = inNativeApp ? PUBLIC_URL : new URL('./', location.href).href;
             const url = `${base}lugares/${placeSlug(v.name)}.html`;
-            shareLink(v.name, t('shareText', { name: v.name, location: v.location }), url);
+            shareChoice('place', { id: v.id }, () => shareLink(v.name, t('shareText', { name: v.name, location: v.location }), url));
         }
 
         /* ---------- Visitor photos and videos (Supabase) ---------- */
@@ -11280,7 +11674,7 @@
             const p = postById(openPostId);
             if (!p) return;
             const base = inNativeApp ? PUBLIC_URL : new URL('./', location.href).href;
-            shareLink(t('feedTitle'), `${p.author}: ${p.body.slice(0, 80)}`, `${base}?page=momentos#momento-${p.id}`);
+            shareChoice('moment', { post: p.id }, () => shareLink(t('feedTitle'), `${p.author}: ${p.body.slice(0, 80)}`, `${base}?page=momentos#momento-${p.id}`));
         }
 
         // Moments at a place: a small row in the place window, only when there are some.
@@ -11521,6 +11915,10 @@
         async function openAuthor(postId) {
             // The author's window sits under the post window, so close the post first.
             if ($('postModal').classList.contains('open')) closeModal('postModal');
+            try {
+                const pid = await rpc('person_of_post', { post: postId }, signedIn());
+                if (pid) { openPerson(pid); return; }
+            } catch {}
             const panel = $('authorPanel');
             panel.innerHTML = `<button class="close-btn" type="button" data-close="authorModal" aria-label="${t('close')}">×</button><p class="hint">${t('loading')}</p>`;
             openModal('authorModal');
@@ -11730,8 +12128,8 @@
             const seen = Number(store.get(inboxSeenKey(), 0)) || 0;
             const unread = profile.inbox.filter((n) => Date.parse(n.created_at) > seen).length;
             const stats = [
-                [vs.length, 'profilePlaces'], [`${provinceTotal(vs)}/${PROVINCES.length}`, 'passportProvinces'],
-                ...(s ? [[s.n_posts, 'feedTitle'], [s.n_followers, 'profileFollowers'], [s.n_following, 'profileFollowingN']] : [])
+                [vs.length, 'profilePlaces', 'places'], [`${provinceTotal(vs)}/${PROVINCES.length}`, 'passportProvinces', 'provinces'],
+                ...(s ? [[s.n_posts, 'feedTitle', 'posts'], [s.n_followers, 'profileFollowers', 'followers'], [s.n_following, 'profileFollowingN', 'following']] : [])
             ];
             let pane = '';
             if (profile.tab === 'inbox') {
@@ -11765,7 +12163,8 @@
                     </div>
                 </div>
                 ${me ? '' : `<div class="signin-prompt profile-guest"><p>${t('profileGuestNote')}</p><button class="submit-btn" type="button" data-auth-open="signin">${t('signIn')}</button></div>`}
-                <div class="profile-stats">${stats.map(([n, label]) => `<div class="profile-stat"><b>${escapeHTML(String(n))}</b><span>${t(label)}</span></div>`).join('')}</div>
+                <div class="profile-stats">${stats.map(([n, label, key]) => `<button type="button" class="profile-stat" data-profile-stat="${key}"><b>${escapeHTML(String(n))}</b><span>${t(label)}</span></button>`).join('')}</div>
+                ${social ? `<button class="submit-btn secondary profile-chats" type="button" data-chats-open ${chat.ready === false ? 'hidden' : ''}>${icon('chat')}<span>${t('chatTitle')}</span><span class="count-pill"${chat.unread ? '' : ' hidden'}>${chat.unread}</span></button>` : ''}
                 ${s?.n_helpful ? `<p class="profile-helped">${icon('heart')}${t(s.n_helpful === 1 ? 'profileHelpedOne' : 'profileHelped', { n: s.n_helpful })}</p>` : ''}
                 <div class="chips profile-tabs" role="tablist">${tabs.map(([key, label]) => `<button type="button" class="chip${profile.tab === key ? ' active' : ''}" role="tab" aria-selected="${profile.tab === key}" data-profile-tab="${key}">${t(label)}${key === 'inbox' && unread ? ` (${unread})` : ''}</button>`).join('')}</div>
                 <div class="profile-pane" role="tabpanel">${pane}</div>`;
@@ -11776,6 +12175,1052 @@
             }
         }
 
+
+
+        /* ---------- People (followers, following, friends) and Conversas (chats) ---------- */
+        // Needs supabase/2026-10-31-conversas.sql. Everything goes through database functions; people are known by a random
+        // public id (never the account id). Chats only between friends (people who follow each other). Photos and videos go
+        // to the private "chat" bucket in a folder named after the conversation and are shown through signed links.
+        // Messages are fetched by polling (every 4 s in an open chat, 20 s on the list, 60 s for the unread badge).
+
+        const chat = { ready: null, unread: 0, list: null, open: null, loadedFor: null, info: null, msgs: [], states: {}, more: false, media: new Map(), timer: 0, badgeTimer: 0, pending: 0 };
+        const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+        const CHAT_VIDEO_MAX = 25 * 1024 * 1024;
+        const chatErrorText = (err) => {
+            const d = String(err?.detail || '');
+            if (d.includes('too_fast')) return t('chatTooFast');
+            if (d.includes('blocked_words')) return t('errBlockedText');
+            if (d.includes('blocked')) return t('chatBlockedMsg');
+            if (d.includes('not_friends')) return t('chatFriendsOnly');
+            return t('chatSendError');
+        };
+
+        async function checkChats() {
+            if (!signedIn() || !supabaseReady()) { chat.unread = 0; renderChatBadges(); return; }
+            try {
+                chat.unread = Number(await rpc('chat_unread_total')) || 0;
+                chat.ready = true;
+            } catch (err) {
+                if (err.status === 404) chat.ready = false;
+            }
+            renderChatBadges();
+        }
+
+        function renderChatBadges() {
+            const show = signedIn() && supabaseReady() && chat.ready !== false;
+            document.querySelectorAll('[data-chats-open]').forEach((b) => {
+                if (b.closest('#feedView, #profileView')) b.hidden = !show;
+                const pill = b.querySelector('.count-pill');
+                if (pill) { pill.textContent = chat.unread; pill.hidden = !chat.unread; }
+            });
+            document.querySelector('#tabbar .tab[data-tab="feed"]')?.classList.toggle('has-dot', show && chat.unread > 0);
+        }
+
+        function startChatBadge() {
+            clearInterval(chat.badgeTimer);
+            if (!signedIn()) return;
+            checkChats();
+            chat.badgeTimer = setInterval(() => { if (!document.hidden && state.view !== 'chats') checkChats(); }, 60000);
+        }
+
+        function showChats({ push = true, conv = null } = {}) {
+            state.view = 'chats';
+            chat.open = conv && UUID_RE.test(conv) ? conv : null;
+            if (push) history.pushState(null, '', `${location.pathname}?page=conversas${chat.open ? `&c=${chat.open}` : ''}`);
+            render();
+            if (!chat.open) window.scrollTo({ top: 0 });
+        }
+
+        function stopChatTimer() { clearTimeout(chat.timer); chat.timer = 0; }
+
+        function renderChats() {
+            const body = $('chatsBody');
+            stopChatTimer();
+            document.body.classList.toggle('chat-open', Boolean(chat.open));
+            if (!signedIn()) {
+                body.innerHTML = `<h1 class="rec-title" id="chatsTitle">${t('chatTitle')}</h1><div class="signin-prompt"><p>${t('chatSignIn')}</p><button class="submit-btn" type="button" data-auth-open="signin">${t('signIn')}</button></div>`;
+                return;
+            }
+            if (chat.ready === false) {
+                body.innerHTML = `<h1 class="rec-title" id="chatsTitle">${t('chatTitle')}</h1><p class="hint">${t('chatSoon')}</p>`;
+                return;
+            }
+            if (chat.open) renderConversation(); else renderChatList();
+        }
+
+        /* --- The list of chats --- */
+
+        function chatTime(iso) {
+            const d = new Date(iso);
+            const today = new Date();
+            const day = (x) => x.toDateString();
+            if (day(d) === day(today)) return d.toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' });
+            const y = new Date(today); y.setDate(today.getDate() - 1);
+            if (day(d) === day(y)) return t('chatYesterday');
+            return d.toLocaleDateString(locale(), { day: 'numeric', month: 'short' });
+        }
+
+        function chatSummary(kind, body, data) {
+            const d = data || {};
+            if (kind === 'text') return body || '';
+            if (kind === 'photo') return `${t('chatPhotoMsg')}${body ? `: ${body}` : ''}`;
+            if (kind === 'video') return `${t('chatVideoMsg')}${body ? `: ${body}` : ''}`;
+            if (kind === 'location') return t('chatLocationMsg');
+            if (kind === 'place') return venues.find((v) => v.id === d.id)?.name || t('chatPlace');
+            if (kind === 'event') { const e = EVENTS.find((x) => x.id === d.id); return e ? eventTitle(e) : t('chatEvent'); }
+            if (kind === 'moment') return t('chatMoment');
+            if (kind === 'poll') return t('chatPollMsg', { q: d.question || '' });
+            if (kind === 'game') return t('chatGameMsg', { name: t(d.game === 'province' ? 'chatGameProvince' : 'quizTitle') });
+            return '';
+        }
+
+        function systemText(m) {
+            const d = m.data || {};
+            const name = m.mine ? t('chatYou') : (m.sender_name || t('chatDeletedPerson'));
+            if (d.event === 'created') return t('chatSystemCreated', { name, title: d.title || '' });
+            if (d.event === 'added') return t('chatSystemAdded', { name, names: (d.names || []).join(', ') });
+            if (d.event === 'left') return t('chatSystemLeft', { name });
+            if (d.event === 'renamed') return t('chatSystemRenamed', { name, title: d.title || '' });
+            return '';
+        }
+
+        function chatRowHTML(c) {
+            const preview = c.last_kind === 'system'
+                ? systemText({ data: c.last_data, mine: c.last_mine, sender_name: c.last_sender })
+                : `${c.last_kind ? (c.last_mine ? `${t('chatYou')}: ` : c.kind === 'group' && c.last_sender ? `${c.last_sender}: ` : '') : ''}${chatSummary(c.last_kind, c.last_body, c.last_data)}`;
+            const pic = c.kind === 'group' ? `<span class="avatar avatar-initial chat-group-pic" aria-hidden="true">${icon('users')}</span>` : avatarHTML(c.avatar, c.title);
+            return `<button type="button" class="chat-row${c.unread ? ' unread' : ''}" data-chat-open="${escapeHTML(c.id)}">
+                ${pic}
+                <span class="chat-row-main"><b>${escapeHTML(c.title || t('chatDeletedPerson'))}</b><small>${escapeHTML(preview)}</small></span>
+                <span class="chat-row-side"><small>${escapeHTML(chatTime(c.last_at))}</small>${c.unread ? `<span class="count-pill">${c.unread}</span>` : ''}</span>
+            </button>`;
+        }
+
+        function chatListHTML() {
+            const list = chat.list || [];
+            return `
+                <div class="chat-top">
+                    <h1 class="rec-title" id="chatsTitle">${t('chatTitle')}</h1>
+                    <button class="submit-btn" type="button" data-chat-new>${icon('plus')}<span>${t('chatNew')}</span></button>
+                </div>
+                ${list.length ? `<div class="chat-list">${list.map(chatRowHTML).join('')}</div>`
+                    : `<div class="feed-empty">${icon('chat')}<p>${t('chatEmpty')}</p><button class="submit-btn secondary" type="button" data-people="followers">${t('chatFindFriends')}</button></div>`}
+                <p class="hint chat-safety">${icon('shield')}${t('chatSafety')}</p>`;
+        }
+
+        async function renderChatList() {
+            const body = $('chatsBody');
+            body.innerHTML = chat.list ? chatListHTML() : `<h1 class="rec-title" id="chatsTitle">${t('chatTitle')}</h1><p class="hint">${t('loading')}</p>`;
+            try {
+                chat.list = await rpc('my_conversations');
+                chat.ready = true;
+                chat.unread = chat.list.reduce((n, c) => n + (c.unread || 0), 0);
+            } catch (err) {
+                if (err.status === 404) chat.ready = false;
+                else if (!chat.list) { body.innerHTML = `<h1 class="rec-title" id="chatsTitle">${t('chatTitle')}</h1><p class="hint">${t('chatError')}</p>`; return; }
+            }
+            renderChatBadges();
+            if (state.view !== 'chats' || chat.open) return;
+            if (chat.ready === false) { renderChats(); return; }
+            body.innerHTML = chatListHTML();
+            stopChatTimer();
+            chat.timer = setTimeout(() => { if (state.view === 'chats' && !chat.open && !document.hidden) renderChatList(); }, 20000);
+        }
+
+        /* --- One conversation --- */
+
+        function applyChatStates(rows) {
+            (rows || []).forEach((r) => { chat.states[r.message_id] = r; });
+        }
+
+        function dayLabel(iso) {
+            const d = new Date(iso);
+            const today = new Date();
+            if (d.toDateString() === today.toDateString()) return t('chatToday');
+            const y = new Date(today); y.setDate(today.getDate() - 1);
+            if (d.toDateString() === y.toDateString()) return t('chatYesterday');
+            return d.toLocaleDateString(locale(), { weekday: 'long', day: 'numeric', month: 'long' });
+        }
+
+        function chatCardHTML(kind, d) {
+            if (kind === 'place') {
+                const v = venues.find((x) => x.id === d.id);
+                if (!v) return `<p class="chat-card-gone">${t('chatPlace')}</p>`;
+                const src = thumbSrc(v);
+                return `<button type="button" class="chat-card" data-open="${v.id}">
+                    <span class="chat-card-thumb" data-ph="${phGroup(v)}">${icon(CATEGORY[v.type].icon)}${src ? `<img src="${escapeHTML(src)}" alt="" crossorigin="anonymous" loading="lazy" onerror="this.remove()">` : ''}</span>
+                    <span class="chat-card-main"><small>${escapeHTML(catLabel(v.type))}</small><b>${escapeHTML(v.name)}</b><small>${escapeHTML(placeLine(v))}</small></span>
+                </button>`;
+            }
+            if (kind === 'event') {
+                const e = EVENTS.find((x) => x.id === d.id);
+                if (!e) return `<p class="chat-card-gone">${t('eventsGone')}</p>`;
+                return `<button type="button" class="chat-card" data-event-open="${escapeHTML(e.id)}">
+                    <span class="chat-card-thumb">${icon(EVENT_TYPES[e.type]?.icon || 'calendar')}</span>
+                    <span class="chat-card-main"><small>${escapeHTML(eventDateText(e))}</small><b>${escapeHTML(eventTitle(e))}</b><small>${escapeHTML(eventVenueText(e))}</small></span>
+                </button>`;
+            }
+            if (kind === 'moment') {
+                const p = postById(d.post);
+                const photo = p?.photos?.[0];
+                return `<button type="button" class="chat-card" data-post-open="${escapeHTML(d.post)}">
+                    <span class="chat-card-thumb">${icon('image')}${photo ? `<img src="${escapeHTML(photo)}" alt="" loading="lazy" onerror="this.remove()">` : ''}</span>
+                    <span class="chat-card-main"><small>${t('chatMoment')}</small><b>${escapeHTML(p ? (p.body || '').slice(0, 80) || p.author : t('chatSeeMoment'))}</b>${p ? `<small>${escapeHTML(p.author)}</small>` : ''}</span>
+                </button>`;
+            }
+            if (kind === 'location') {
+                const q = `${d.lat},${d.lng}`;
+                return `<div class="chat-card chat-location">
+                    <span class="chat-card-thumb">${icon('pin')}</span>
+                    <span class="chat-card-main"><small>${t('chatLocationMsg')}</small><b>${escapeHTML(d.label ? t('chatNear', { name: d.label }) : `${Number(d.lat).toFixed(4)}, ${Number(d.lng).toFixed(4)}`)}</b>
+                    <a class="link-btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}" target="_blank" rel="noopener">${t('chatOpenMap')}</a></span>
+                </div>`;
+            }
+            return '';
+        }
+
+        function pollHTML(m) {
+            const d = m.data || {};
+            const s = chat.states[m.id] || {};
+            const votes = s.votes || {};
+            const total = Object.values(votes).reduce((a, b) => a + Number(b || 0), 0);
+            return `<div class="chat-poll">
+                <p class="chat-poll-q">${icon('signal')}<b>${escapeHTML(d.question || '')}</b></p>
+                ${(d.options || []).map((o, i) => {
+                    const n = Number(votes[i] || 0);
+                    const pct = total ? Math.round((n / total) * 100) : 0;
+                    const mine = s.my_vote === i;
+                    const v = o.place ? venues.find((x) => x.id === o.place) : null;
+                    return `<button type="button" class="chat-poll-opt${mine ? ' on' : ''}" data-chat-vote="${escapeHTML(m.id)}" data-option="${i}" aria-pressed="${mine}">
+                        <span class="chat-poll-bar" style="width:${pct}%"></span>
+                        <span class="chat-poll-label">${mine ? icon('check') : ''}${escapeHTML(o.label || '')}</span>
+                        <span class="chat-poll-n">${n}</span>
+                    </button>${v ? `<button type="button" class="link-btn chat-poll-place" data-open="${v.id}">${t('viewPlace')}</button>` : ''}`;
+                }).join('')}
+                <small>${t(total === 1 ? 'chatVoteOne' : 'chatVotes', { n: total })}</small>
+            </div>`;
+        }
+
+        function gameHTML(m) {
+            const d = m.data || {};
+            const s = chat.states[m.id] || {};
+            const scores = s.scores || [];
+            const total = (d.questions || []).length;
+            const mineDone = (s.my_answers || []).length;
+            return `<div class="chat-game">
+                <p class="chat-poll-q">${icon('star')}<b>${t(d.game === 'province' ? 'chatGameProvince' : 'quizTitle')}</b></p>
+                <small>${t('chatGameIntro')}</small>
+                <ol class="chat-scores">${scores.length ? scores.map((x) => `<li class="${x.me ? 'me' : ''}"><span>${escapeHTML(x.me ? t('chatYou') : x.name)}</span><b>${t('chatGameScore', { r: x.right, n: total })}</b>${x.done < total ? `<small>${x.done}/${total}</small>` : ''}</li>`).join('') : `<li class="empty">${t('chatGameNobody')}</li>`}</ol>
+                <button type="button" class="submit-btn" data-chat-play="${escapeHTML(m.id)}">${icon('play')}${t(mineDone ? (mineDone >= total ? 'chatGameSee' : 'chatGameContinue') : 'chatGamePlay')}</button>
+            </div>`;
+        }
+
+        function messageHTML(m, prev) {
+            const sameSender = prev && prev.kind !== 'system' && prev.sender === m.sender && Date.parse(m.created_at) - Date.parse(prev.created_at) < 5 * 60000;
+            const showDay = !prev || new Date(prev.created_at).toDateString() !== new Date(m.created_at).toDateString();
+            const day = showDay ? `<p class="chat-day"><span>${escapeHTML(dayLabel(m.created_at))}</span></p>` : '';
+            if (m.kind === 'system') return `${day}<p class="chat-system">${escapeHTML(systemText(m))}</p>`;
+            const d = m.data || {};
+            let inner = '';
+            if (m.kind === 'text') inner = `<p class="chat-text">${escapeHTML(m.body || '')}</p>`;
+            else if (m.kind === 'photo' || m.kind === 'video') {
+                const src = m.localUrl || chat.media.get(d.path) || '';
+                const ratio = d.w && d.h ? `aspect-ratio:${d.w}/${d.h}` : 'aspect-ratio:4/3';
+                inner = m.kind === 'photo'
+                    ? `<a class="chat-media" ${src ? `href="${escapeHTML(src)}"` : ''} target="_blank" rel="noopener" data-chat-link="${escapeHTML(d.path || '')}"><img ${src ? `src="${escapeHTML(src)}"` : ''} data-chat-media="${escapeHTML(d.path || '')}" alt="${t('chatPhotoMsg')}" style="${ratio}" loading="lazy"></a>`
+                    : `<video class="chat-media" controls playsinline preload="metadata" ${src ? `src="${escapeHTML(src)}"` : ''} data-chat-media="${escapeHTML(d.path || '')}" style="${ratio}"></video>`;
+                if (m.body) inner += `<p class="chat-text">${escapeHTML(m.body)}</p>`;
+            } else if (m.kind === 'poll') inner = pollHTML(m);
+            else if (m.kind === 'game') inner = gameHTML(m);
+            else inner = chatCardHTML(m.kind, d);
+            const group = chat.info?.kind === 'group';
+            const who = !m.mine && group && !sameSender ? `<span class="chat-who">${escapeHTML(m.sender_name || t('chatDeletedPerson'))}</span>` : '';
+            const time = new Date(m.created_at).toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' });
+            const more = !m.mine && !m.pending ? `<button type="button" class="chat-more" data-chat-more="${escapeHTML(m.id)}" aria-label="${t('chatMore')}">···</button>` : '';
+            return `${day}<div class="chat-msg${m.mine ? ' mine' : ''}${sameSender ? ' cont' : ''}${m.pending ? ' pending' : ''}" data-msg="${escapeHTML(m.id)}">
+                ${!m.mine && group ? (sameSender ? '<span class="chat-av-gap"></span>' : avatarHTML(m.sender_avatar, m.sender_name, 'sm')) : ''}
+                <div class="chat-bubble kind-${m.kind}">${who}${inner}<span class="chat-time">${m.pending ? t('chatUploading') : escapeHTML(time)}</span></div>${more}
+            </div>`;
+        }
+
+        const messagesHTML = () => chat.msgs.map((m, i) => messageHTML(m, chat.msgs[i - 1])).join('');
+
+        function conversationHTML() {
+            const info = chat.info;
+            const group = info.kind === 'group';
+            const other = group ? null : (info.members || []).find((x) => !x.me);
+            const pic = group ? `<span class="avatar avatar-initial chat-group-pic" aria-hidden="true">${icon('users')}</span>` : avatarHTML(other?.avatar, info.title);
+            return `
+                <div class="chat-head">
+                    <button type="button" class="chat-icon-btn" data-chat-list aria-label="${t('chatBack')}">${icon('back')}</button>
+                    ${pic}
+                    <button type="button" class="chat-head-title" data-chat-info><b id="chatsTitle">${escapeHTML(info.title || t('chatDeletedPerson'))}</b><small>${group ? t('chatMembersN', { n: (info.members || []).length }) : t('chatInfoHint')}</small></button>
+                </div>
+                <div class="chat-msgs" id="chatMsgs" role="log" aria-labelledby="chatsTitle">
+                    ${chat.more ? `<button type="button" class="link-btn chat-older" data-chat-older>${t('chatOlder')}</button>` : ''}
+                    <div id="chatMsgList">${messagesHTML()}</div>
+                </div>
+                <div class="chat-attach" id="chatAttach" hidden>
+                    ${[['camera', 'chatPhoto', 'photo'], ['locate', 'chatLocation', 'location'], ['pin', 'chatPlace', 'place'], ['calendar', 'chatEvent', 'event'], ['image', 'chatMoment', 'moment'], ['signal', 'chatPoll', 'poll'], ['star', 'chatGame', 'game']]
+                        .map(([ic, label, kind]) => `<button type="button" data-chat-attach-kind="${kind}">${icon(ic)}<span>${t(label)}</span></button>`).join('')}
+                </div>
+                <form class="chat-composer" id="chatForm" novalidate>
+                    <button type="button" class="chat-icon-btn" data-chat-attach aria-expanded="false" aria-controls="chatAttach" aria-label="${t('chatAttach')}">${icon('plus')}</button>
+                    <textarea id="chatInput" rows="1" maxlength="2000" placeholder="${t('chatPlaceholder')}" aria-label="${t('chatPlaceholder')}" enterkeyhint="send"></textarea>
+                    <button type="submit" class="chat-send" aria-label="${t('chatSend')}">${icon('send')}</button>
+                    <input type="file" id="chatFile" accept="image/*,video/*" hidden>
+                </form>`;
+        }
+
+        function scrollChatToEnd(smooth = false) {
+            const list = $('chatMsgList');
+            if (!list) return;
+            requestAnimationFrame(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: smooth ? 'smooth' : 'auto' }));
+        }
+
+        const nearBottom = () => window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 160;
+
+        function redrawMessages({ keepBottom = true } = {}) {
+            const list = $('chatMsgList');
+            if (!list) return;
+            const stick = keepBottom && nearBottom();
+            list.innerHTML = messagesHTML();
+            signChatMedia();
+            if (stick) scrollChatToEnd();
+        }
+
+        async function signChatMedia() {
+            const need = [...new Set(chat.msgs.filter((m) => (m.kind === 'photo' || m.kind === 'video') && m.data?.path && !chat.media.has(m.data.path) && !m.localUrl).map((m) => m.data.path))];
+            if (need.length) {
+                try {
+                    const res = await sbRequest('/storage/v1/object/sign/chat', { method: 'POST', headers: await userHeaders({ 'Content-Type': 'application/json' }), body: JSON.stringify({ expiresIn: 7200, paths: need }) });
+                    (await res.json()).forEach((x) => { if (x.signedURL) chat.media.set(x.path, `${SUPABASE_URL}/storage/v1${x.signedURL}`); });
+                } catch {}
+            }
+            document.querySelectorAll('[data-chat-media]').forEach((el) => {
+                const url = chat.media.get(el.dataset.chatMedia);
+                if (url && el.getAttribute('src') !== url) el.setAttribute('src', url);
+            });
+            document.querySelectorAll('[data-chat-link]').forEach((el) => {
+                const url = chat.media.get(el.dataset.chatLink);
+                if (url) el.setAttribute('href', url);
+            });
+        }
+
+        async function renderConversation() {
+            const conv = chat.open;
+            const body = $('chatsBody');
+            if (chat.loadedFor !== conv) {
+                chat.loadedFor = conv;
+                chat.info = null;
+                chat.msgs = [];
+                chat.states = {};
+                body.innerHTML = `<p class="hint">${t('loading')}</p>`;
+                try {
+                    const [info, msgs, states] = await Promise.all([rpc('conversation_info', { conv }), rpc('conversation_messages', { conv, lim: 60 }), rpc('chat_states', { conv })]);
+                    if (chat.open !== conv || state.view !== 'chats') return;
+                    if (!info.length) {
+                        chat.loadedFor = null;
+                        body.innerHTML = `<button type="button" class="back-btn" data-chat-list>${icon('back')}${t('chatBack')}</button><p>${t('chatGone')}</p>`;
+                        return;
+                    }
+                    chat.info = info[0];
+                    chat.msgs = msgs;
+                    chat.more = msgs.length >= 60;
+                    applyChatStates(states);
+                } catch (err) {
+                    chat.loadedFor = null;
+                    if (err.status === 404) { chat.ready = false; renderChats(); return; }
+                    body.innerHTML = `<button type="button" class="back-btn" data-chat-list>${icon('back')}${t('chatBack')}</button><p>${t('chatError')}</p>`;
+                    return;
+                }
+            }
+            body.innerHTML = conversationHTML();
+            signChatMedia();
+            scrollChatToEnd();
+            markChatRead();
+            scheduleChatPoll();
+        }
+
+        function markChatRead() {
+            const conv = chat.open;
+            if (!conv || document.hidden) return;
+            rpc('mark_conversation_read', { conv }).then(() => {
+                const row = chat.list?.find((c) => c.id === conv);
+                if (row) row.unread = 0;
+                checkChats();
+            }).catch(() => {});
+        }
+
+        function scheduleChatPoll() {
+            stopChatTimer();
+            chat.timer = setTimeout(pollChat, 4000);
+        }
+
+        async function pollChat() {
+            const conv = chat.open;
+            if (!conv || state.view !== 'chats' || chat.loadedFor !== conv) return;
+            if (document.hidden) { scheduleChatPoll(); return; }
+            const last = [...chat.msgs].reverse().find((m) => !m.pending);
+            try {
+                const [rows, states] = await Promise.all([rpc('conversation_messages', { conv, newer_than: last?.created_at || null, lim: 100 }), rpc('chat_states', { conv })]);
+                if (chat.open !== conv) return;
+                const fresh = rows.filter((r) => !chat.msgs.some((m) => m.id === r.id));
+                const before = JSON.stringify(chat.states);
+                applyChatStates(states);
+                if (fresh.length || JSON.stringify(chat.states) !== before) {
+                    chat.msgs.push(...fresh);
+                    chat.msgs.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
+                    redrawMessages();
+                    if (fresh.some((m) => !m.mine)) markChatRead();
+                    if (fresh.some((m) => m.kind === 'system')) refreshChatInfo();
+                }
+            } catch {}
+            scheduleChatPoll();
+        }
+
+        async function refreshChatInfo() {
+            try {
+                const [info] = await rpc('conversation_info', { conv: chat.open });
+                if (info) chat.info = info;
+                const title = document.querySelector('.chat-head-title');
+                if (title && info) title.innerHTML = `<b id="chatsTitle">${escapeHTML(info.title || '')}</b><small>${info.kind === 'group' ? t('chatMembersN', { n: info.members.length }) : t('chatInfoHint')}</small>`;
+            } catch {}
+        }
+
+        async function loadOlderMessages(button) {
+            const conv = chat.open;
+            const first = chat.msgs.find((m) => !m.pending);
+            if (!first) return;
+            button.disabled = true;
+            try {
+                const rows = await rpc('conversation_messages', { conv, older_than: first.created_at, lim: 60 });
+                if (chat.open !== conv) return;
+                const height = document.documentElement.scrollHeight;
+                chat.msgs = [...rows.filter((r) => !chat.msgs.some((m) => m.id === r.id)), ...chat.msgs];
+                chat.more = rows.length >= 60;
+                $('chatMsgList').innerHTML = messagesHTML();
+                if (!chat.more) button.remove();
+                window.scrollBy(0, document.documentElement.scrollHeight - height);
+                signChatMedia();
+            } catch {} finally { button.disabled = false; }
+        }
+
+        // Sends a message; it shows at once (marked as sending) and gets its real id and time from the database.
+        async function sendChat(kind, body = '', data = {}, { conv = chat.open, local = null } = {}) {
+            if (!conv) return false;
+            const temp = conv === chat.open ? { id: `tmp-${++chat.pending}`, mine: true, kind, body, data, created_at: new Date().toISOString(), pending: true, localUrl: local } : null;
+            if (temp) { chat.msgs.push(temp); redrawMessages({ keepBottom: false }); scrollChatToEnd(true); }
+            try {
+                const [row] = await rpc('send_message', { conv, kind, body: body || null, data });
+                if (temp) {
+                    Object.assign(temp, { id: row.id, created_at: row.created_at, pending: false });
+                    if (temp.localUrl && data.path) chat.media.set(data.path, temp.localUrl);
+                    redrawMessages();
+                }
+                track('chat_message', { kind });
+                return true;
+            } catch (err) {
+                if (temp) { chat.msgs = chat.msgs.filter((m) => m !== temp); redrawMessages(); }
+                toast(chatErrorText(err));
+                needsSignIn(err);
+                return false;
+            }
+        }
+
+        async function sendChatText(form) {
+            const input = $('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+            input.value = '';
+            autoSizeChatInput();
+            const ok = await sendChat('text', text);
+            if (!ok) { input.value = text; autoSizeChatInput(); }
+        }
+
+        function autoSizeChatInput() {
+            const input = $('chatInput');
+            if (!input) return;
+            input.style.height = 'auto';
+            input.style.height = `${Math.min(input.scrollHeight, 140)}px`;
+        }
+
+        async function sendChatFile(file) {
+            const conv = chat.open;
+            if (!file || !conv) return;
+            const video = file.type.startsWith('video/');
+            if (video && file.size > CHAT_VIDEO_MAX) { toast(t('chatTooBig')); return; }
+            if (!video && !file.type.startsWith('image/')) return;
+            try {
+                let blob = file;
+                let w = 0;
+                let h = 0;
+                let ext = 'jpg';
+                let type = 'image/jpeg';
+                if (video) {
+                    type = ['video/mp4', 'video/quicktime', 'video/webm'].includes(file.type) ? file.type : 'video/mp4';
+                    ext = { 'video/quicktime': 'mov', 'video/webm': 'webm' }[type] || 'mp4';
+                } else {
+                    blob = await compressPhoto(file);
+                    const bitmap = await createImageBitmap(blob);
+                    w = bitmap.width; h = bitmap.height;
+                    bitmap.close?.();
+                }
+                const path = `${conv}/${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+                const local = URL.createObjectURL(blob);
+                const temp = { id: `tmp-${++chat.pending}`, mine: true, kind: video ? 'video' : 'photo', body: '', data: { path, w, h }, created_at: new Date().toISOString(), pending: true, localUrl: local };
+                chat.msgs.push(temp);
+                redrawMessages({ keepBottom: false });
+                scrollChatToEnd(true);
+                await sbRequest(`/storage/v1/object/chat/${path}`, { method: 'POST', headers: await userHeaders({ 'Content-Type': type, 'x-upsert': 'false' }), body: blob });
+                chat.msgs = chat.msgs.filter((m) => m !== temp);
+                await sendChat(video ? 'video' : 'photo', '', { path, w, h }, { local });
+            } catch (err) {
+                chat.msgs = chat.msgs.filter((m) => !(m.pending && m.localUrl));
+                redrawMessages();
+                toast(err?.status === 413 ? t('chatTooBig') : t('chatSendError'));
+            }
+        }
+
+        function sendMyLocation() {
+            if (!navigator.geolocation) { toast(t('locError')); return; }
+            toast(t('locating'));
+            navigator.geolocation.getCurrentPosition((pos) => {
+                const here = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                const near = venues.filter((v) => v.exact && Number.isFinite(v.lat)).map((v) => ({ v, km: kmBetween(here, v) })).sort((a, b) => a.km - b.km)[0];
+                hideToast();
+                sendChat('location', '', { lat: Number(here.lat.toFixed(5)), lng: Number(here.lng.toFixed(5)), label: near && near.km < 3 ? near.v.name : '' });
+            }, () => toast(t('locError')), { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 });
+        }
+
+        /* --- The chat sheet (one modal for menus, choosers and forms) --- */
+
+        function openChatSheet(title, html) {
+            $('chatSheetPanel').innerHTML = `<button class="close-btn" type="button" data-close="chatSheet" aria-label="${t('close')}">×</button><h2 class="info-title" id="chatSheetTitle">${escapeHTML(title)}</h2>${html}`;
+            openModal('chatSheet');
+        }
+
+        function chooserHTML(rows, { search = true, empty = '' } = {}) {
+            return `${search && rows.length > 6 ? `<input class="field chat-search" type="search" placeholder="${t('chatSearch')}" aria-label="${t('chatSearch')}" data-chat-filter>` : ''}
+                <div class="chat-choices">${rows.length ? rows.join('') : `<p class="hint">${empty}</p>`}</div>`;
+        }
+
+        function chooseEvent() {
+            const list = upcomingEvents().slice(0, 80);
+            openChatSheet(t('chatPickEvent'), chooserHTML(list.map((e) => `<button type="button" class="pick-row" data-chat-send-event="${escapeHTML(e.id)}" data-search="${escapeHTML(normalize(`${eventTitle(e)} ${e.city} ${e.venue || ''}`))}">
+                <span class="pick-thumb">${icon(EVENT_TYPES[e.type]?.icon || 'calendar')}</span><span><b>${escapeHTML(eventTitle(e))}</b><small>${escapeHTML(`${eventDateText(e)} · ${e.city}`)}</small></span></button>`), { empty: t('eventsNone') }));
+        }
+
+        async function chooseMoment() {
+            openChatSheet(t('chatPickMoment'), `<p class="hint">${t('loading')}</p>`);
+            if (!profile.mine?.length) await loadProfile?.();
+            const seen = new Set();
+            const posts = [...(profile.mine || []), ...(feed.posts || [])].filter((p) => p && p.status !== 'hidden' && !seen.has(p.id) && seen.add(p.id)).slice(0, 40);
+            $('chatSheetPanel').querySelector('.hint')?.remove();
+            $('chatSheetPanel').insertAdjacentHTML('beforeend', chooserHTML(posts.map((p) => `<button type="button" class="pick-row" data-chat-send-moment="${escapeHTML(p.id)}" data-search="${escapeHTML(normalize(`${p.body || ''} ${p.author || ''}`))}">
+                <span class="pick-thumb">${icon('image')}${p.photos?.[0] ? `<img src="${escapeHTML(p.photos[0])}" alt="" loading="lazy" onerror="this.remove()">` : ''}</span><span><b>${escapeHTML((p.body || '').slice(0, 70) || t('chatMoment'))}</b><small>${escapeHTML(p.author || '')}</small></span></button>`), { empty: t('chatNoMoments') }));
+        }
+
+        function openPollForm(options = ['', '']) {
+            const rows = options.map((o, i) => `<input class="field" data-poll-option maxlength="80" placeholder="${escapeHTML(t('chatPollOption', { n: i + 1 }))}" value="${escapeHTML(typeof o === 'string' ? o : o.label)}"${typeof o === 'object' && o.place ? ` data-place="${o.place}"` : ''}>`).join('');
+            openChatSheet(t('chatPoll'), `
+                <form class="chat-poll-form" id="chatPollForm" novalidate>
+                    <label>${t('chatPollQuestion')}<input class="field" id="chatPollQ" maxlength="140" placeholder="${escapeHTML(t('chatPollQuestionPh'))}"></label>
+                    <div class="chat-poll-options" id="chatPollOptions">${rows}</div>
+                    <div class="chat-poll-tools">
+                        <button type="button" class="link-btn" data-poll-add>${icon('plus')}${t('chatPollAddOption')}</button>
+                        ${favorites.length ? `<button type="button" class="link-btn" data-poll-saved>${icon('heart')}${t('chatPollSaved')}</button>` : ''}
+                    </div>
+                    <p class="form-msg" id="chatPollMsg" role="status"></p>
+                    <button class="submit-btn" type="submit" style="width:100%">${t('chatPollSend')}</button>
+                </form>`);
+            $('chatPollQ').focus();
+        }
+
+        async function submitPoll(form) {
+            const question = $('chatPollQ').value.trim();
+            const options = [...form.querySelectorAll('[data-poll-option]')].map((el) => ({ label: el.value.trim(), ...(el.dataset.place ? { place: Number(el.dataset.place) } : {}) })).filter((o) => o.label).slice(0, 6);
+            if (!question || options.length < 2) { $('chatPollMsg').textContent = t('chatPollNeed'); return; }
+            closeModal('chatSheet');
+            await sendChat('poll', '', { question, options });
+        }
+
+        function openGameChoice() {
+            openChatSheet(t('chatGame'), `<div class="chat-choices">
+                <button type="button" class="pick-row" data-chat-send-game="quiz"><span class="pick-thumb">${icon('star')}</span><span><b>${t('quizTitle')}</b><small>${t('chatGameQuizDesc')}</small></span></button>
+                <button type="button" class="pick-row" data-chat-send-game="province"><span class="pick-thumb">${icon('pin')}</span><span><b>${t('chatGameProvince')}</b><small>${t('chatGameProvinceDesc')}</small></span></button>
+            </div>`);
+        }
+
+        // Five questions made from the places on Tuende (the same kinds as «Quanto conhece Angola?»).
+        function chatGameQuestions(kind) {
+            const out = [];
+            for (let tries = 0; out.length < 5 && tries < 6; tries++) {
+                quizQuestions().filter((q) => q.v && (kind === 'province' ? q.kind === 'province' : q.kind !== 'fx'))
+                    .forEach((q) => { if (out.length < 5 && !out.some((x) => x.place === q.v.id)) out.push({ t: q.kind, place: q.v.id, options: q.options, answer: q.options.indexOf(q.answer) }); });
+            }
+            return out;
+        }
+
+        function gamePrompt(q) {
+            const v = venues.find((x) => x.id === q.place);
+            if (q.t === 'province') return t('quizWhereIs', { name: v?.name || '' });
+            if (q.t === 'wonder') return t('quizWhichWonder');
+            return t('quizWhichPlace');
+        }
+
+        async function openChatGame(msgId, step = null) {
+            const m = chat.msgs.find((x) => x.id === msgId);
+            if (!m) return;
+            const qs = m.data.questions || [];
+            const s = chat.states[msgId] || {};
+            const answered = new Map((s.my_answers || []).map((a) => [a.q, a]));
+            const i = step ?? qs.findIndex((_, k) => !answered.has(k));
+            if (i < 0 || i >= qs.length) {
+                const right = [...answered.values()].filter((a) => a.ok).length;
+                openChatSheet(t(m.data.game === 'province' ? 'chatGameProvince' : 'quizTitle'), `<p class="chat-game-done">${icon('trophy')}<b>${t('chatGameDone', { r: right, n: qs.length })}</b></p>
+                    <ol class="chat-scores">${(s.scores || []).map((x) => `<li class="${x.me ? 'me' : ''}"><span>${escapeHTML(x.me ? t('chatYou') : x.name)}</span><b>${t('chatGameScore', { r: x.right, n: qs.length })}</b></li>`).join('')}</ol>
+                    <button class="submit-btn" type="button" data-close="chatSheet" style="width:100%">${t('close')}</button>`);
+                return;
+            }
+            const q = qs[i];
+            const v = venues.find((x) => x.id === q.place);
+            const photo = q.t !== 'province' && v?.photos?.[0] ? `<img class="chat-game-photo" src="${escapeHTML(fullSrc(v.photos[0]))}" alt="" crossorigin="anonymous">` : '';
+            openChatSheet(t('chatGameQ', { i: i + 1, n: qs.length }), `${photo}<p class="chat-game-q">${escapeHTML(gamePrompt(q))}</p>
+                <div class="chat-game-opts">${q.options.map((o, k) => `<button type="button" class="chat-game-opt" data-chat-answer="${escapeHTML(msgId)}" data-q="${i}" data-a="${k}">${escapeHTML(o)}</button>`).join('')}</div>
+                <p class="chat-game-feedback" id="chatGameFeedback" role="status"></p>`);
+        }
+
+        async function answerChatGame(button) {
+            const msgId = button.dataset.chatAnswer;
+            const q = Number(button.dataset.q);
+            const a = Number(button.dataset.a);
+            const m = chat.msgs.find((x) => x.id === msgId);
+            const right = m?.data.questions[q].answer;
+            document.querySelectorAll('.chat-game-opt').forEach((b) => { b.disabled = true; if (Number(b.dataset.a) === right) b.classList.add('right'); });
+            try {
+                const ok = await rpc('answer_game', { msg: msgId, q, choice: a });
+                if (!ok) button.classList.add('wrong');
+                $('chatGameFeedback').innerHTML = `${ok ? `<b>${t('chatRight')}</b>` : escapeHTML(t('chatWrong', { a: m.data.questions[q].options[right] }))}
+                    <button class="submit-btn" type="button" data-chat-next="${escapeHTML(msgId)}">${t('chatGameNext')}</button>`;
+                applyChatStates(await rpc('chat_states', { conv: chat.open }));
+                redrawMessages({ keepBottom: false });
+            } catch {
+                $('chatGameFeedback').textContent = t('chatSendError');
+            }
+        }
+
+        /* --- New chat, chat details, report --- */
+
+        async function openNewChat() {
+            openChatSheet(t('chatNew'), `<p class="hint">${t('loading')}</p>`);
+            let friends = [];
+            try { friends = await rpc('my_people', { list: 'friends' }); } catch (err) { if (err.status === 404) { $('chatSheetPanel').querySelector('.hint').textContent = t('chatSoon'); return; } }
+            if (!friends.length) {
+                $('chatSheetPanel').querySelector('.hint').outerHTML = `<p class="hint">${t('chatNoFriends')}</p><div class="banner-actions"><button class="submit-btn" type="button" data-people="followers">${t('profileFollowers')}</button><button class="submit-btn secondary" type="button" data-people="following">${t('profileFollowingN')}</button></div>`;
+                return;
+            }
+            $('chatSheetPanel').querySelector('.hint').outerHTML = `<p class="hint">${t('chatNewHint')}</p>
+                <form id="chatNewForm" novalidate>
+                    ${chooserHTML(friends.map((f) => `<label class="pick-row chat-pick-person" data-search="${escapeHTML(normalize(f.name || ''))}"><input type="checkbox" value="${escapeHTML(f.person)}">${avatarHTML(f.avatar, f.name)}<span><b>${escapeHTML(f.name || '')}</b></span></label>`))}
+                    <label class="chat-group-name" id="chatGroupNameWrap" hidden>${t('chatGroupName')}<input class="field" id="chatGroupName" maxlength="60" placeholder="${escapeHTML(t('chatGroupNamePh'))}"></label>
+                    <p class="form-msg" id="chatNewMsg" role="status"></p>
+                    <button class="submit-btn" type="submit" id="chatNewSubmit" style="width:100%" disabled>${t('chatStart')}</button>
+                </form>`;
+        }
+
+        function updateNewChatForm() {
+            const n = document.querySelectorAll('#chatNewForm input[type=checkbox]:checked').length;
+            $('chatGroupNameWrap').hidden = n < 2;
+            $('chatNewSubmit').disabled = n === 0;
+            $('chatNewSubmit').textContent = n >= 2 ? `${t('chatCreateGroup')} (${t('chatSelected', { n })})` : t('chatStart');
+        }
+
+        async function submitNewChat(form) {
+            const people = [...form.querySelectorAll('input[type=checkbox]:checked')].map((c) => c.value);
+            const msg = $('chatNewMsg');
+            const button = $('chatNewSubmit');
+            if (!people.length) return;
+            let title = '';
+            if (people.length > 1) {
+                title = $('chatGroupName').value.trim();
+                if (!title) { msg.textContent = t('chatNeedGroupName'); $('chatGroupName').focus(); return; }
+            }
+            button.disabled = true;
+            try {
+                const conv = people.length === 1 ? await rpc('open_direct', { p: people[0] }) : await rpc('create_group', { title, people });
+                closeModal('chatSheet');
+                chat.list = null;
+                showChats({ conv });
+            } catch (err) {
+                msg.textContent = chatErrorText(err);
+                button.disabled = false;
+            }
+        }
+
+        async function openPersonChat(pid) {
+            try {
+                const conv = await rpc('open_direct', { p: pid });
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id, { updateURL: false }));
+                showChats({ conv });
+            } catch (err) {
+                toast(chatErrorText(err));
+                needsSignIn(err);
+            }
+        }
+
+        function openChatInfo() {
+            const info = chat.info;
+            if (!info) return;
+            const group = info.kind === 'group';
+            const other = group ? null : (info.members || []).find((x) => !x.me);
+            const members = (info.members || []).map((x) => `<button type="button" class="pick-row" ${x.me ? 'disabled' : `data-person-open="${escapeHTML(x.person)}"`}>${avatarHTML(x.avatar, x.name)}<span><b>${escapeHTML(x.me ? t('chatYou') : x.name || '')}</b>${x.admin && group ? `<small>${t('chatAdmin')}</small>` : ''}</span></button>`).join('');
+            openChatSheet(group ? info.title : t('chatInfoTitle'), `
+                ${group ? `<form class="chat-rename" id="chatRenameForm" novalidate><input class="field" id="chatRenameInput" maxlength="60" value="${escapeHTML(info.title || '')}" aria-label="${t('chatGroupName')}"><button class="submit-btn secondary" type="submit">${t('chatRename')}</button></form>` : ''}
+                <h3 class="section-title">${t('chatMembersN', { n: (info.members || []).length })}</h3>
+                <div class="chat-choices">${members}</div>
+                <div class="banner-actions chat-info-actions">
+                    ${group && info.i_admin ? `<button class="submit-btn" type="button" data-chat-add>${icon('plus')}${t('chatAddPeople')}</button>` : ''}
+                    ${group ? `<button class="submit-btn secondary" type="button" data-chat-leave>${t('chatLeave')}</button>` : `<button class="submit-btn secondary" type="button" data-chat-leave>${t('chatDelete')}</button>`}
+                    ${other ? `<button class="submit-btn secondary danger" type="button" data-person-block="${escapeHTML(other.person)}" data-name="${escapeHTML(other.name || '')}">${t('personBlock')}</button>` : ''}
+                </div>
+                <p class="hint chat-safety">${icon('shield')}${t('chatSafety')}</p>`);
+        }
+
+        async function openAddPeople() {
+            openChatSheet(t('chatAddPeople'), `<p class="hint">${t('loading')}</p>`);
+            const inGroup = new Set((chat.info?.members || []).map((x) => x.person));
+            let friends = [];
+            try { friends = (await rpc('my_people', { list: 'friends' })).filter((f) => !inGroup.has(f.person)); } catch {}
+            $('chatSheetPanel').querySelector('.hint').outerHTML = friends.length ? `<form id="chatAddForm" novalidate>${chooserHTML(friends.map((f) => `<label class="pick-row chat-pick-person" data-search="${escapeHTML(normalize(f.name || ''))}"><input type="checkbox" value="${escapeHTML(f.person)}">${avatarHTML(f.avatar, f.name)}<span><b>${escapeHTML(f.name || '')}</b></span></label>`))}
+                <p class="form-msg" id="chatAddMsg" role="status"></p><button class="submit-btn" type="submit" style="width:100%">${t('chatAddPeople')}</button></form>` : `<p class="hint">${t('chatNoFriends')}</p>`;
+        }
+
+        async function submitAddPeople(form) {
+            const people = [...form.querySelectorAll('input[type=checkbox]:checked')].map((c) => c.value);
+            if (!people.length) return;
+            try {
+                await rpc('add_to_group', { conv: chat.open, people });
+                closeModal('chatSheet');
+                await refreshChatInfo();
+                pollChat();
+            } catch (err) {
+                $('chatAddMsg').textContent = chatErrorText(err);
+            }
+        }
+
+        async function leaveChat() {
+            const info = chat.info;
+            if (!info) return;
+            if (!confirm(info.kind === 'group' ? t('chatLeaveConfirm', { title: info.title }) : t('chatDeleteConfirm'))) return;
+            try {
+                await rpc('leave_conversation', { conv: chat.open });
+                closeModal('chatSheet');
+                chat.list = null;
+                chat.loadedFor = null;
+                showChats();
+            } catch { toast(t('chatSendError')); }
+        }
+
+        async function renameChat(form) {
+            const title = $('chatRenameInput').value.trim();
+            if (!title || title === chat.info?.title) return;
+            try {
+                await rpc('rename_group', { conv: chat.open, title });
+                closeModal('chatSheet');
+                await refreshChatInfo();
+                pollChat();
+            } catch (err) { toast(chatErrorText(err)); }
+        }
+
+        function openMessageMenu(msgId) {
+            openChatSheet(t('chatMore'), `<div class="chat-choices"><button type="button" class="pick-row" data-chat-report="${escapeHTML(msgId)}"><span class="pick-thumb">${icon('shield')}</span><span><b>${t('chatReport')}</b></span></button></div>`);
+        }
+
+        async function reportChatMessage(msgId) {
+            if (!confirm(t('chatReportConfirm'))) return;
+            try {
+                await rpc('report_chat_message', { msg: msgId, reason: null });
+                chat.msgs = chat.msgs.filter((m) => m.id !== msgId);
+                closeModal('chatSheet');
+                redrawMessages({ keepBottom: false });
+                toast(t('chatReported'));
+            } catch { toast(t('chatSendError')); }
+        }
+
+        async function blockPerson(pid, name) {
+            if (!confirm(t('personBlockConfirm', { name: name || '' }))) return;
+            try {
+                await rpc('block_person', { p: pid });
+                document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id, { updateURL: false }));
+                toast(t('personBlocked'));
+                chat.list = null;
+                chat.loadedFor = null;
+                profile.loadedAt = 0;
+                if (state.view === 'chats') showChats();
+            } catch { toast(t('chatSendError')); }
+        }
+
+        /* --- Sharing a place, an event or a moment into a chat --- */
+
+        async function shareToChat(kind, data) {
+            if (!signedIn()) { openAuth('signin', { reason: t('chatSignIn') }); return; }
+            openChatSheet(t('chatShareTitle'), `<p class="hint">${t('loading')}</p>`);
+            try {
+                chat.list = await rpc('my_conversations');
+                chat.ready = true;
+            } catch (err) {
+                if (err.status === 404) chat.ready = false;
+                $('chatSheetPanel').querySelector('.hint').textContent = chat.ready === false ? t('chatSoon') : t('chatError');
+                return;
+            }
+            const rows = chat.list.map((c) => `<button type="button" class="pick-row" data-chat-share-to="${escapeHTML(c.id)}" data-search="${escapeHTML(normalize(c.title || ''))}">
+                ${c.kind === 'group' ? `<span class="avatar avatar-initial chat-group-pic" aria-hidden="true">${icon('users')}</span>` : avatarHTML(c.avatar, c.title)}<span><b>${escapeHTML(c.title || '')}</b></span></button>`);
+            $('chatSheetPanel').querySelector('.hint').outerHTML = `${chooserHTML(rows, { empty: t('chatEmpty') })}<button class="link-btn" type="button" data-chat-new>${icon('plus')}${t('chatNew')}</button>`;
+            $('chatSheetPanel').dataset.shareKind = kind;
+            $('chatSheetPanel').dataset.shareData = JSON.stringify(data);
+        }
+
+        async function shareIntoConversation(conv) {
+            const panel = $('chatSheetPanel');
+            const kind = panel.dataset.shareKind;
+            const data = JSON.parse(panel.dataset.shareData || '{}');
+            closeModal('chatSheet');
+            if (await sendChat(kind, '', data, { conv })) toast(t('chatShared'), { label: t('chatOpen'), run: () => showChats({ conv }) });
+        }
+
+        // "Partilhar" asks where: a Tuende chat or other apps (WhatsApp, etc.).
+        function shareChoice(kind, data, other) {
+            if (!signedIn() || !supabaseReady() || chat.ready === false) { other(); return; }
+            openChatSheet(t('chatShareHow'), `<div class="chat-choices">
+                <button type="button" class="pick-row" data-share-tuende><span class="pick-thumb">${icon('chat')}</span><span><b>${t('chatShareTuende')}</b></span></button>
+                <button type="button" class="pick-row" data-share-other><span class="pick-thumb">${icon('share')}</span><span><b>${t('chatShareOther')}</b></span></button>
+            </div>`);
+            shareChoice.pending = { kind, data, other };
+        }
+
+        /* --- People: lists, a person's page, following --- */
+
+        async function openPeople(list) {
+            if (!signedIn()) { openAuth('signin', { reason: t('feedNeedSignIn') }); return; }
+            const title = t(list === 'followers' ? 'profileFollowers' : list === 'following' ? 'profileFollowingN' : 'peopleFriends');
+            openChatSheet(title, `<p class="hint">${t('loading')}</p>`);
+            let rows;
+            try { rows = await rpc('my_people', { list }); } catch (err) {
+                $('chatSheetPanel').querySelector('.hint').textContent = err.status === 404 ? t('peopleSoon') : t('chatError');
+                return;
+            }
+            const empty = t(list === 'followers' ? 'peopleEmptyFollowers' : 'peopleEmptyFollowing');
+            $('chatSheetPanel').querySelector('.hint').outerHTML = chooserHTML(rows.map(personRowHTML), { empty });
+        }
+
+        function personRowHTML(x) {
+            const friends = x.i_follow && x.follows_me;
+            return `<div class="person-row" data-person-row="${escapeHTML(x.person)}">
+                <button type="button" class="person-open" data-person-open="${escapeHTML(x.person)}" data-search="${escapeHTML(normalize(x.name || ''))}">${avatarHTML(x.avatar, x.name)}<span><b>${escapeHTML(x.name || '')}</b>${x.follows_me ? `<small>${t(friends ? 'peopleFriends' : 'peopleFollowsYou')}</small>` : ''}</span></button>
+                ${friends && chat.ready !== false ? `<button type="button" class="follow-btn" data-chat-person="${escapeHTML(x.person)}">${t('peopleMessage')}</button>` : ''}
+                <button type="button" class="follow-btn${x.i_follow ? ' on' : ''}" data-follow-person="${escapeHTML(x.person)}" aria-pressed="${x.i_follow}">${t(x.i_follow ? 'feedFollowingBtn' : x.follows_me ? 'peopleFollowBack' : 'feedFollow')}</button>
+            </div>`;
+        }
+
+        async function toggleFollowPerson(button) {
+            if (!signedIn()) { openAuth('signin', { reason: t('feedNeedSignIn') }); return; }
+            const pid = button.dataset.followPerson;
+            const next = button.getAttribute('aria-pressed') !== 'true';
+            button.disabled = true;
+            try {
+                const answer = await rpc('follow_person', { p: pid, follow: next });
+                if (answer === 'following' || answer === 'not_following') {
+                    const on = answer === 'following';
+                    document.querySelectorAll(`[data-follow-person="${CSS.escape(pid)}"]`).forEach((b) => {
+                        b.classList.toggle('on', on);
+                        b.setAttribute('aria-pressed', String(on));
+                        b.textContent = t(on ? 'feedFollowingBtn' : 'feedFollow');
+                    });
+                    profile.loadedAt = 0;
+                    if (feed.mode === 'following') feed.loaded = false;
+                    if (document.querySelector(`.person-head[data-person="${CSS.escape(pid)}"]`)) openPerson(pid);
+                }
+            } catch (err) { needsSignIn(err); } finally { button.disabled = false; }
+        }
+
+        // A person's page (from a list, a chat or a moment): name, counts, follow, message and their moments.
+        async function openPerson(pid) {
+            if ($('postModal').classList.contains('open')) closeModal('postModal');
+            if ($('chatSheet').classList.contains('open')) closeModal('chatSheet');
+            const panel = $('authorPanel');
+            const close = `<button class="close-btn" type="button" data-close="authorModal" aria-label="${t('close')}">×</button>`;
+            if (!$('authorModal').classList.contains('open')) { panel.innerHTML = `${close}<p class="hint">${t('loading')}</p>`; openModal('authorModal'); }
+            try {
+                const [[info], rows] = await Promise.all([rpc('person_profile', { p: pid }, signedIn()), rpc('person_posts', { p: pid }, signedIn())]);
+                if (!info) { panel.innerHTML = `${close}<p>${t('feedGone')}</p>`; return; }
+                rows.forEach((p) => { if (!postById(p.id)) feed.extra.set(p.id, p); });
+                await loadPostCounts(rows.map((p) => p.id).filter((id) => !feed.counts[id]));
+                const n = innerWidth >= 721 ? 3 : 2;
+                const cols = Array.from({ length: n }, () => []);
+                rows.forEach((p, i) => cols[i % n].push(postCardHTML(p)));
+                const friends = info.i_follow && info.follows_me;
+                const actions = info.is_me ? '' : `
+                    <div class="person-actions">
+                        <button type="button" class="follow-btn${info.i_follow ? ' on' : ''}" data-follow-person="${escapeHTML(pid)}" aria-pressed="${info.i_follow}">${t(info.i_follow ? 'feedFollowingBtn' : info.follows_me ? 'peopleFollowBack' : 'feedFollow')}</button>
+                        ${friends && chat.ready !== false ? `<button type="button" class="submit-btn" data-chat-person="${escapeHTML(pid)}">${icon('chat')}${t('peopleMessage')}</button>` : ''}
+                        ${signedIn() ? `<button type="button" class="link-btn" data-person-block="${escapeHTML(pid)}" data-name="${escapeHTML(info.name || '')}">${t('personBlock')}</button>` : ''}
+                    </div>
+                    ${signedIn() && !friends ? `<p class="hint">${t('personFriendsHint')}</p>` : ''}`;
+                panel.innerHTML = `${close}
+                    <div class="author-head person-head" data-person="${escapeHTML(pid)}">
+                        ${avatarHTML(info.avatar, info.name, 'lg')}
+                        <div><h2 id="authorName">${escapeHTML(info.name || '')}</h2><p>${t('personCounts', { n: info.posts, f: info.followers, g: info.following })}${info.follows_me && !info.is_me ? ` · ${t(friends ? 'peopleFriends' : 'peopleFollowsYou')}` : ''}</p></div>
+                    </div>
+                    ${actions}
+                    <div class="feed-grid" style="--cols:${n}">${cols.map((c) => `<div class="feed-col">${c.join('')}</div>`).join('')}</div>`;
+            } catch {
+                panel.innerHTML = `${close}<p>${t('feedError')}</p>`;
+            }
+        }
+
+        /* --- Profile numbers: places, provinces, moments, followers, following --- */
+
+        function openVisitedPlaces() {
+            const vs = visitedPlaces().slice().reverse();
+            openChatSheet(t('visitedPlacesTitle'), `${vs.length ? placeListHTML(vs) : `<p class="hint">${t('visitedEmpty')}</p>`}
+                <button class="submit-btn secondary" type="button" data-action="passport" style="margin-top:12px">${icon('passport')}${t('openPassport')}</button>`);
+        }
+
+        function openVisitedProvinces() {
+            const vs = visitedPlaces();
+            const done = PROVINCES.filter((p) => vs.some((v) => cityOf(v) === p));
+            const rest = PROVINCES.filter((p) => !done.includes(p));
+            openChatSheet(t('visitedProvincesTitle'), `
+                ${done.length ? done.map((p) => `<details class="province-done"><summary>${icon('check')}<b>${escapeHTML(p)}</b><small>${t('visitedProvinceLine', { k: vs.filter((v) => cityOf(v) === p).length, n: venues.filter((v) => cityOf(v) === p && canStamp(v)).length })}</small></summary>${placeListHTML(vs.filter((v) => cityOf(v) === p))}</details>`).join('') : `<p class="hint">${t('visitedEmpty')}</p>`}
+                ${rest.length ? `<h3 class="section-title">${t('provincesNotYet')}</h3><p class="province-rest">${rest.map((p) => `<span>${escapeHTML(p)}</span>`).join('')}</p>` : ''}
+                <button class="submit-btn secondary" type="button" data-action="passport" style="margin-top:12px">${icon('passport')}${t('openPassport')}</button>`);
+        }
+
+        function openProfileStat(key) {
+            if (key === 'places') openVisitedPlaces();
+            else if (key === 'provinces') openVisitedProvinces();
+            else if (key === 'posts') {
+                profile.tab = 'posts';
+                renderProfile();
+                document.querySelector('.profile-tabs')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else if (key === 'followers' || key === 'following') openPeople(key);
+        }
+
+        /* --- Clicks, typing and the composer --- */
+
+        document.addEventListener('click', (e) => {
+            const target = e.target;
+            const hit = (sel) => target.closest(sel);
+            let el;
+            if ((el = hit('[data-chats-open]'))) { e.preventDefault(); if (!signedIn()) { openAuth('signin', { reason: t('chatSignIn') }); return; } document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id, { updateURL: false })); showChats(); return; }
+            if ((el = hit('[data-chat-open]'))) { showChats({ conv: el.dataset.chatOpen }); return; }
+            if (hit('[data-chat-list]')) { if (history.state === null && document.referrer === '') showChats(); else history.back(); return; }
+            if (hit('[data-chat-new]')) { openNewChat(); return; }
+            if (hit('[data-chat-info]')) { openChatInfo(); return; }
+            if (hit('[data-chat-add]')) { openAddPeople(); return; }
+            if (hit('[data-chat-leave]')) { leaveChat(); return; }
+            if ((el = hit('[data-chat-older]'))) { loadOlderMessages(el); return; }
+            if ((el = hit('[data-chat-attach]'))) {
+                const box = $('chatAttach');
+                box.hidden = !box.hidden;
+                el.setAttribute('aria-expanded', String(!box.hidden));
+                return;
+            }
+            if ((el = hit('[data-chat-attach-kind]'))) {
+                $('chatAttach').hidden = true;
+                const kind = el.dataset.chatAttachKind;
+                if (kind === 'photo') $('chatFile').click();
+                else if (kind === 'location') sendMyLocation();
+                else if (kind === 'place') openPicker('chat');
+                else if (kind === 'event') chooseEvent();
+                else if (kind === 'moment') chooseMoment();
+                else if (kind === 'poll') openPollForm();
+                else if (kind === 'game') openGameChoice();
+                return;
+            }
+            if ((el = hit('[data-chat-send-event]'))) { closeModal('chatSheet'); sendChat('event', '', { id: el.dataset.chatSendEvent }); return; }
+            if ((el = hit('[data-chat-send-moment]'))) { closeModal('chatSheet'); sendChat('moment', '', { post: el.dataset.chatSendMoment }); return; }
+            if ((el = hit('[data-chat-send-game]'))) {
+                const questions = chatGameQuestions(el.dataset.chatSendGame);
+                closeModal('chatSheet');
+                if (questions.length) sendChat('game', '', { game: el.dataset.chatSendGame, questions });
+                return;
+            }
+            if ((el = hit('[data-chat-vote]'))) {
+                const id = el.dataset.chatVote;
+                el.disabled = true;
+                rpc('vote_poll', { msg: id, choice: Number(el.dataset.option) })
+                    .then(() => rpc('chat_states', { conv: chat.open })).then((rows) => { applyChatStates(rows); redrawMessages({ keepBottom: false }); })
+                    .catch(() => toast(t('chatSendError')));
+                return;
+            }
+            if ((el = hit('[data-chat-play]'))) { openChatGame(el.dataset.chatPlay); return; }
+            if ((el = hit('[data-chat-answer]'))) { answerChatGame(el); return; }
+            if ((el = hit('[data-chat-next]'))) { openChatGame(el.dataset.chatNext); return; }
+            if ((el = hit('[data-chat-more]'))) { openMessageMenu(el.dataset.chatMore); return; }
+            if ((el = hit('[data-chat-report]'))) { reportChatMessage(el.dataset.chatReport); return; }
+            if ((el = hit('[data-chat-person]'))) { openPersonChat(el.dataset.chatPerson); return; }
+            if ((el = hit('[data-chat-share-to]'))) { shareIntoConversation(el.dataset.chatShareTo); return; }
+            if (hit('[data-share-tuende]')) { const p = shareChoice.pending; if (p) shareToChat(p.kind, p.data); return; }
+            if (hit('[data-share-other]')) { const p = shareChoice.pending; closeModal('chatSheet'); p?.other(); return; }
+            if ((el = hit('[data-people]'))) { openPeople(el.dataset.people); return; }
+            if ((el = hit('[data-person-open]'))) { openPerson(el.dataset.personOpen); return; }
+            if ((el = hit('[data-follow-person]'))) { toggleFollowPerson(el); return; }
+            if ((el = hit('[data-person-block]'))) { blockPerson(el.dataset.personBlock, el.dataset.name); return; }
+            if ((el = hit('[data-profile-stat]'))) { openProfileStat(el.dataset.profileStat); return; }
+            if ((el = hit('[data-poll-add]'))) {
+                const box = $('chatPollOptions');
+                const n = box.querySelectorAll('[data-poll-option]').length;
+                if (n < 6) box.insertAdjacentHTML('beforeend', `<input class="field" data-poll-option maxlength="80" placeholder="${escapeHTML(t('chatPollOption', { n: n + 1 }))}">`);
+                box.lastElementChild?.focus();
+                return;
+            }
+            if (hit('[data-poll-saved]')) {
+                const q = $('chatPollQ').value;
+                openPollForm(favorites.slice(-6).reverse().map((id) => venues.find((v) => v.id === id)).filter(Boolean).map((v) => ({ label: v.name, place: v.id })));
+                $('chatPollQ').value = q || t('chatPollQuestionPh');
+            }
+        });
+
+        document.addEventListener('submit', (e) => {
+            const form = e.target;
+            if (form.id === 'chatForm') { e.preventDefault(); sendChatText(form); }
+            else if (form.id === 'chatPollForm') { e.preventDefault(); submitPoll(form); }
+            else if (form.id === 'chatNewForm') { e.preventDefault(); submitNewChat(form); }
+            else if (form.id === 'chatAddForm') { e.preventDefault(); submitAddPeople(form); }
+            else if (form.id === 'chatRenameForm') { e.preventDefault(); renameChat(form); }
+        });
+
+        document.addEventListener('input', (e) => {
+            if (e.target.id === 'chatInput') autoSizeChatInput();
+            if (e.target.matches('[data-chat-filter]')) {
+                const q = normalize(e.target.value.trim());
+                e.target.parentElement.querySelectorAll('[data-search]').forEach((row) => {
+                    (row.closest('.person-row') || row).hidden = Boolean(q) && !row.dataset.search.includes(q);
+                });
+            }
+        });
+
+        document.addEventListener('change', (e) => {
+            if (e.target.id === 'chatFile') { const f = e.target.files?.[0]; e.target.value = ''; sendChatFile(f); }
+            if (e.target.closest('#chatNewForm') && e.target.type === 'checkbox') updateNewChatForm();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            // Enter sends on computers; on phones the keyboard's return key adds a new line.
+            if (e.target.id === 'chatInput' && e.key === 'Enter' && !e.shiftKey && !e.isComposing && matchMedia('(pointer: fine)').matches) {
+                e.preventDefault();
+                $('chatForm').requestSubmit();
+            }
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) return;
+            if (state.view === 'chats' && chat.open) { markChatRead(); pollChat(); }
+            else if (state.view === 'chats') renderChatList();
+            else checkChats();
+        });
 
         /* ---------- «É o dono deste lugar?»: owners send the right details (saved with the recommendations, relationship owner) ---------- */
 
@@ -11958,7 +13403,7 @@
 
         function openPicker(mode) {
             pickMode = mode;
-            $('pickTitle').textContent = t(mode === 'visited' ? 'beenHere' : mode === 'review' ? 'plusReview' : mode === 'city' ? 'cityTitle' : mode === 'claim' ? 'claimTitle' : 'pickTitle');
+            $('pickTitle').textContent = t(mode === 'visited' ? 'beenHere' : mode === 'review' ? 'plusReview' : mode === 'city' ? 'cityTitle' : mode === 'claim' ? 'claimTitle' : mode === 'chat' ? 'chatPickPlace' : 'pickTitle');
             $('pickSearch').value = '';
             renderPicker();
             openModal('pickModal');
@@ -11996,6 +13441,7 @@
         function pickPlace(id) {
             const mode = pickMode;
             closeModal('pickModal');
+            if (mode === 'chat') { sendChat('place', '', { id }); return; }
             if (mode === 'post') {
                 saveComposeDraft();
                 compose.venue = id;
@@ -12281,6 +13727,7 @@
             if (openPostId) openPost(openPostId);
             profile.loadedAt = 0;
             checkInbox(true);
+            startChatBadge();
             queuePlanSync();
             if (next) next();
         }
@@ -12313,7 +13760,7 @@
                     await afterSignIn();
                 } else if (authView === 'signup') {
                     const avatar = document.querySelector('input[name="signupAvatar"]:checked')?.value;
-                    const data = await authRequest(`/signup?redirect_to=${encodeURIComponent(authRedirect())}`, { email, password, data: { display_name: name, ...(AVATARS[avatar] ? { avatar } : {}) } });
+                    const data = await authRequest(`/signup?redirect_to=${encodeURIComponent(authRedirect())}`, { email, password, data: { display_name: name, lang, ...(AVATARS[avatar] ? { avatar } : {}) } });
                     if (data.access_token) {
                         saveSession(data);
                         await afterSignIn();
@@ -12407,6 +13854,10 @@
             myReviewed = null;
             profile = { stats: null, inbox: [], mine: [], loadedAt: 0, tab: '' };
             $('inboxDot').hidden = true;
+            clearInterval(chat.badgeTimer);
+            Object.assign(chat, { list: null, open: null, loadedFor: null, info: null, msgs: [], states: {}, unread: 0 });
+            chat.media.clear();
+            if (state.view === 'chats') state.view = 'home';
             if (state.view === 'profile' || (feed.mode === 'following' && state.view === 'feed')) { feed.mode = 'recent'; feed.loaded = false; }
             if (openPostId) openPost(openPostId);
             render();
@@ -12459,6 +13910,10 @@
                 const files = await sbRequest('/storage/v1/object/list/submissions', { method: 'POST', headers, body: JSON.stringify({ prefix: folder, limit: 1000 }) }).then((res) => res.json());
                 const paths = files.filter((f) => f.name).map((f) => folder + f.name);
                 if (paths.length) await sbRequest('/storage/v1/object/submissions', { method: 'DELETE', headers, body: JSON.stringify({ prefixes: paths }) });
+                // Photos and videos sent in conversations go too; the messages themselves are deleted with the account.
+                let chatPaths = [];
+                try { chatPaths = (await rpc('my_chat_files', {}) || []).map((x) => (typeof x === 'string' ? x : Object.values(x || {})[0])).filter(Boolean); } catch (err) { if (err.status !== 404) throw err; }
+                for (let i = 0; i < chatPaths.length; i += 500) await sbRequest('/storage/v1/object/chat', { method: 'DELETE', headers, body: JSON.stringify({ prefixes: chatPaths.slice(i, i + 500) }) });
                 await sbRequest('/rest/v1/rpc/delete_my_account', { method: 'POST', headers, body: '{}' });
                 favorites = [];
                 store.set('favorites', favorites);
@@ -12973,7 +14428,7 @@
         function shareEvent(e) {
             const base = inNativeApp ? PUBLIC_URL : `${location.origin}${location.pathname}`;
             const url = `${base}?page=events#evento-${e.id}`;
-            shareLink(eventTitle(e), `${eventTitle(e)} · ${eventDateText(e)} · ${e.city}`, url);
+            shareChoice('event', { id: e.id }, () => shareLink(eventTitle(e), `${eventTitle(e)} · ${eventDateText(e)} · ${e.city}`, url));
         }
 
         /* ---------- Suggest an event ---------- */
@@ -16365,6 +17820,8 @@
             $('langOffer').hidden = true;
             applyLanguage();
             $('langBtn').focus();
+            // Account emails (new password, new email) come in the language last chosen here.
+            if (signedIn()) accessToken().then((token) => token && authRequest('/user', { data: { lang } }, { method: 'PUT', token })).catch(() => {});
         });
         document.addEventListener('click', (e) => {
             if (!$('langMenu').hidden && !e.target.closest('.lang-wrap')) toggleLangMenu(false);
@@ -16419,6 +17876,7 @@
         });
         applyURL();
         confirmNewsletter();
+        startChatBadge();
 
         if (ANALYTICS_TOKEN && location.hostname === new URL(PUBLIC_URL).hostname) {
             const beacon = document.createElement('script');
