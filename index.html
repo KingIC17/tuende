@@ -175,6 +175,17 @@
         .top-nav button { min-height: 44px; padding: 0 2px; background: none; border: none; font-size: 15px; font-weight: 600; color: var(--text); }
         .top-nav button:hover { color: var(--primary); }
         .topbar-actions { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+        /* Tablets and computers: one header row from 1200px (two below), not two to four. Install, theme, add and account
+           become icon buttons (they keep their aria-label); "Recomendar um lugar" stays in the "+" menu and the footer. */
+        @media (min-width: 721px) {
+            #themeLabel, #accountLabel, #installTopBtn .desktop-only, #plusTopBtn [data-i18n="addNav"], #navRecommend { display: none !important; }
+            .topbar-inner { column-gap: 16px; }
+            .top-nav { gap: 0 14px; }
+            .top-nav button { white-space: nowrap; }
+        }
+        @media (min-width: 721px) and (max-width: 1199px) {
+            .top-nav { order: 3; flex: 1 0 100%; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+        }
 
         .top-btn {
             display: inline-flex;
@@ -1867,6 +1878,8 @@
         /* ---------- Bigger text (language menu and footer): the content is zoomed; bars and maps stay as they are ---------- */
         html[data-text="1"] { --tz: 1.12; }
         html[data-text="2"] { --tz: 1.25; }
+        /* At the largest text size the agenda's buttons ("Calendário", "Adicionar ao plano") go one per row instead of overflowing. */
+        html[data-text="2"] .event-actions { grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr)); }
         html[data-text] :is(.hero, main, .site-footer, .modal-panel > :not(.sheet-grab), .kamba-log, .kamba-form, .kamba-note) { zoom: var(--tz); }
         html[data-text] :is(.maplibregl-map, .leaflet-container) { zoom: calc(1 / var(--tz)); }
         /* The home's category tiles keep their size (icon + one word), so long words such as "Restaurantes" still fit. */
@@ -1950,7 +1963,7 @@
                 </div>
                 <button class="top-btn" id="installTopBtn" type="button" data-info="install" data-i18n-aria="installTitle" hidden aria-label="Descarregar a app"><span data-icon="download"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span><span class="desktop-only" data-i18n="installTitle">Descarregar a app</span></button>
                 <button class="top-btn" id="themeBtn" type="button"><span id="themeIcon"></span><span id="themeLabel"></span></button>
-                <button class="top-btn desktop-only" id="plusTopBtn" type="button" data-action="plus"><span data-icon="plus"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span data-i18n="addNav">Adicionar</span></button>
+                <button class="top-btn desktop-only" id="plusTopBtn" type="button" data-action="plus" data-i18n-aria="addNav" aria-label="Adicionar"><span data-icon="plus"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span><span data-i18n="addNav">Adicionar</span></button>
                 <button class="top-btn" id="accountBtn" type="button" hidden><span id="accountIcon"></span><span id="accountLabel"></span><span class="badge-dot" id="inboxDot" hidden></span></button>
                 <button class="top-btn solid desktop-only" id="savedBtn" type="button"><span data-icon="heart"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><span data-i18n="savedBtn">Guardados</span><span class="count-pill" id="savedCount" hidden>0</span></button>
             </div>
@@ -3550,7 +3563,7 @@
                 freeNote: 'Lugares sem custo de entrada.',
                 openNote: 'Só mostramos lugares com horário confirmado.',
                 locating: 'A obter a sua localização. É usada só no seu telemóvel e não é guardada.',
-                locError: 'Não foi possível obter a sua localização. Verifique se a localização está ligada e autorizada para este site.',
+                locError: 'Não foi possível obter a sua localização. Verifique se a localização está ligada e autorizada para o Tuende.',
                 viewPlace: 'Ver lugar',
                 directions: 'Como chegar',
                 call: 'Ligar',
@@ -4529,7 +4542,7 @@
                 freeNote: 'Places with no entry fee.',
                 openNote: 'Only places with confirmed opening hours are shown.',
                 locating: 'Getting your location. It is only used on your phone and is not stored.',
-                locError: 'Could not get your location. Check that location is turned on and allowed for this site.',
+                locError: 'Could not get your location. Check that location is turned on and allowed for Tuende.',
                 viewPlace: 'View place',
                 directions: 'Directions',
                 call: 'Call',
@@ -13406,6 +13419,8 @@
             $('themeIcon').innerHTML = icon(dark ? 'sun' : 'moon');
             $('themeLabel').textContent = dark ? t('light') : t('dark');
             $('themeBtn').setAttribute('aria-label', dark ? t('lightAria') : t('darkAria'));
+            // In the iPhone app the status bar follows the theme chosen here ("auto" = follow the phone).
+            nativeBridge('theme')?.postMessage({ theme: document.documentElement.dataset.theme || 'auto' });
             if (state.view === 'map' && placesMap) renderMap();
             for (const [map, styleFor] of miniMaps) {
                 map.getContainer().classList.toggle('map-dark', dark);
@@ -15328,7 +15343,7 @@
             lastScrollY = y;
         }, { passive: true });
 
-        // The Kamba button steps aside while a section link ("Ver todos", "Ver agenda") is under it.
+        // The Kamba button steps aside while a section link ("Ver todos", "Ver agenda") or a form field is under it.
         // offsetLeft/offsetTop ignore the slide-away transform, so this measures where the button normally sits.
         let kambaRoomFrame = 0;
         function kambaMakeRoom() {
@@ -15338,7 +15353,7 @@
                 const btn = $('kambaBtn');
                 if (!btn?.offsetWidth) return;
                 const z = { l: btn.offsetLeft - 8, t: btn.offsetTop - 8, r: btn.offsetLeft + btn.offsetWidth + 8, b: btn.offsetTop + btn.offsetHeight + 8 };
-                const hit = [...document.querySelectorAll('.section-head a, .section-head button')].some((el) => {
+                const hit = [...document.querySelectorAll('.section-head a, .section-head button, main select, main input:not([type=hidden]), main textarea')].some((el) => {
                     const r = el.getBoundingClientRect();
                     return r.width > 0 && r.right > z.l && r.left < z.r && r.bottom > z.t && r.top < z.b;
                 });

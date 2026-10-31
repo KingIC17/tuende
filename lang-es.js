@@ -457,7 +457,7 @@ window.TUENDE_LANGS.es = {
                 freeNote: 'Lugares sin precio de entrada.',
                 openNote: 'Solo se muestran los lugares con horario confirmado.',
                 locating: 'Obteniendo su ubicación. Solo se usa en su teléfono y no se guarda.',
-                locError: 'No se pudo obtener su ubicación. Compruebe que la ubicación está activada y permitida para este sitio.',
+                locError: 'No se pudo obtener su ubicación. Compruebe que la ubicación está activada y permitida para Tuende.',
                 viewPlace: 'Ver lugar',
                 directions: 'Cómo llegar',
                 call: 'Llamar',

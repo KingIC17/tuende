@@ -457,7 +457,7 @@ window.TUENDE_LANGS.fr = {
                 freeNote: 'Lieux sans droit d\'entrée.',
                 openNote: 'Seuls les lieux aux horaires confirmés sont affichés.',
                 locating: 'Recherche de votre position. Elle n\'est utilisée que sur votre téléphone et n\'est pas enregistrée.',
-                locError: 'Impossible d\'obtenir votre position. Vérifiez que la localisation est activée et autorisée pour ce site.',
+                locError: 'Impossible d\'obtenir votre position. Vérifiez que la localisation est activée et autorisée pour Tuende.',
                 viewPlace: 'Voir le lieu',
                 directions: 'Itinéraire',
                 call: 'Appeler',
