@@ -1,12 +1,105 @@
-<div style="font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;max-width:520px;margin:0 auto;padding:24px 16px;color:#161618;background:#ffffff">
-  <p style="font-size:24px;font-weight:800;color:#CE1126;margin:0 0 20px">Tuende</p>
-  <p style="font-size:16px;line-height:1.5;margin:0 0 8px">Ol&#225;! Obrigado por criar uma conta no Tuende.</p>
-  <p style="font-size:16px;line-height:1.5;margin:0">Toque no bot&#227;o para confirmar o seu email e ativar a conta.</p>
-  <p style="margin:24px 0"><a href="{{ .ConfirmationURL }}" style="background:#CE1126;color:#ffffff;text-decoration:none;font-size:16px;font-weight:700;padding:12px 22px;border-radius:8px;display:inline-block">Confirmar email</a></p>
-  <p style="font-size:14px;line-height:1.5;color:#55555D;margin:0">Se n&#227;o criou esta conta, pode ignorar este email.</p>
-  <hr style="border:none;border-top:1px solid #DADADF;margin:28px 0">
-  <p style="font-size:16px;line-height:1.5;margin:0 0 8px">Hello! Thank you for creating a Tuende account.</p>
-  <p style="font-size:16px;line-height:1.5;margin:0">Tap the button to confirm your email and activate your account.</p>
-  <p style="margin:24px 0"><a href="{{ .ConfirmationURL }}" style="background:#CE1126;color:#ffffff;text-decoration:none;font-size:16px;font-weight:700;padding:12px 22px;border-radius:8px;display:inline-block">Confirm email</a></p>
-  <p style="font-size:14px;line-height:1.5;color:#55555D;margin:0">If you did not create this account, you can ignore this email.</p>
-</div>
+{{ $l := "pt" }}{{ with .Data.lang }}{{ $l = . }}{{ end }}{{ if eq $l "en" }}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F6F4F1" style="background-color:#F6F4F1;">
+<tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+<tr><td bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:16px 16px 0 0;padding:18px 24px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="padding-right:12px;"><img src="https://tuende.app/icon-192.png" width="44" height="44" alt="" style="display:block;border:0;border-radius:11px;"></td>
+<td style="font-family:Arial,Helvetica,sans-serif;font-size:28px;line-height:30px;font-weight:bold;color:#CE1126;">Tuende</td>
+</tr></table>
+</td></tr>
+<tr><td height="4" bgcolor="#CE1126" style="background-color:#CE1126;font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td height="4" bgcolor="#FFCB00" style="background-color:#FFCB00;font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:0 0 16px 16px;padding:24px 24px 28px;">
+<p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:28px;font-weight:bold;color:#161618;">Confirm your email</p>
+<p style="margin:14px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;color:#161618;">{{ with .Data.display_name }}Hello, {{ . }}!{{ else }}Hello!{{ end }}</p>
+<p style="margin:8px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;color:#161618;">Thank you for creating a Tuende account, the guide to finding where to go in Angola. Tap the button to confirm your email and activate your account.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:24px;"><tr>
+<td bgcolor="#CE1126" style="background-color:#CE1126;border-radius:12px;">
+<a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 24px;font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:20px;font-weight:bold;color:#FFFFFF;text-decoration:none;">Confirm email</a>
+</td></tr></table>
+<p style="margin:22px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#5C5C66;">If the button does not work, copy this address into your browser:<br><a href="{{ .ConfirmationURL }}" style="color:#CE1126;word-break:break-all;">{{ .ConfirmationURL }}</a></p>
+<p style="margin:18px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:21px;color:#5C5C66;">If you did not create this account, ignore this email: without confirmation the account stays inactive.</p>
+</td></tr>
+<tr><td align="center" style="padding:16px 8px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#5C5C66;">
+<b style="color:#CE1126;">Tuende</b> · Find where to go in Angola · <a href="https://tuende.app" style="color:#5C5C66;">tuende.app</a><br>You received this email because this address was used on tuende.app.
+</td></tr>
+</table>
+</td></tr></table>{{ else if eq $l "fr" }}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F6F4F1" style="background-color:#F6F4F1;">
+<tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+<tr><td bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:16px 16px 0 0;padding:18px 24px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="padding-right:12px;"><img src="https://tuende.app/icon-192.png" width="44" height="44" alt="" style="display:block;border:0;border-radius:11px;"></td>
+<td style="font-family:Arial,Helvetica,sans-serif;font-size:28px;line-height:30px;font-weight:bold;color:#CE1126;">Tuende</td>
+</tr></table>
+</td></tr>
+<tr><td height="4" bgcolor="#CE1126" style="background-color:#CE1126;font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td height="4" bgcolor="#FFCB00" style="background-color:#FFCB00;font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:0 0 16px 16px;padding:24px 24px 28px;">
+<p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:28px;font-weight:bold;color:#161618;">Confirmez votre e-mail</p>
+<p style="margin:14px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;color:#161618;">{{ with .Data.display_name }}Bonjour {{ . }} !{{ else }}Bonjour !{{ end }}</p>
+<p style="margin:8px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;color:#161618;">Merci d’avoir créé un compte Tuende, le guide pour trouver où aller en Angola. Touchez le bouton pour confirmer votre e-mail et activer votre compte.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:24px;"><tr>
+<td bgcolor="#CE1126" style="background-color:#CE1126;border-radius:12px;">
+<a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 24px;font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:20px;font-weight:bold;color:#FFFFFF;text-decoration:none;">Confirmer l’e-mail</a>
+</td></tr></table>
+<p style="margin:22px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#5C5C66;">Si le bouton ne fonctionne pas, copiez cette adresse dans votre navigateur :<br><a href="{{ .ConfirmationURL }}" style="color:#CE1126;word-break:break-all;">{{ .ConfirmationURL }}</a></p>
+<p style="margin:18px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:21px;color:#5C5C66;">Si vous n’avez pas créé ce compte, ignorez cet e-mail : sans confirmation, le compte reste inactif.</p>
+</td></tr>
+<tr><td align="center" style="padding:16px 8px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#5C5C66;">
+<b style="color:#CE1126;">Tuende</b> · Trouvez où aller en Angola · <a href="https://tuende.app" style="color:#5C5C66;">tuende.app</a><br>Vous recevez cet e-mail parce que cette adresse a été utilisée sur tuende.app.
+</td></tr>
+</table>
+</td></tr></table>{{ else if eq $l "es" }}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F6F4F1" style="background-color:#F6F4F1;">
+<tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+<tr><td bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:16px 16px 0 0;padding:18px 24px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="padding-right:12px;"><img src="https://tuende.app/icon-192.png" width="44" height="44" alt="" style="display:block;border:0;border-radius:11px;"></td>
+<td style="font-family:Arial,Helvetica,sans-serif;font-size:28px;line-height:30px;font-weight:bold;color:#CE1126;">Tuende</td>
+</tr></table>
+</td></tr>
+<tr><td height="4" bgcolor="#CE1126" style="background-color:#CE1126;font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td height="4" bgcolor="#FFCB00" style="background-color:#FFCB00;font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:0 0 16px 16px;padding:24px 24px 28px;">
+<p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:28px;font-weight:bold;color:#161618;">Confirme su email</p>
+<p style="margin:14px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;color:#161618;">{{ with .Data.display_name }}¡Hola, {{ . }}!{{ else }}¡Hola!{{ end }}</p>
+<p style="margin:8px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;color:#161618;">Gracias por crear una cuenta en Tuende, la guía para descubrir adónde ir en Angola. Toque el botón para confirmar su email y activar la cuenta.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:24px;"><tr>
+<td bgcolor="#CE1126" style="background-color:#CE1126;border-radius:12px;">
+<a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 24px;font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:20px;font-weight:bold;color:#FFFFFF;text-decoration:none;">Confirmar email</a>
+</td></tr></table>
+<p style="margin:22px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#5C5C66;">Si el botón no funciona, copie esta dirección en su navegador:<br><a href="{{ .ConfirmationURL }}" style="color:#CE1126;word-break:break-all;">{{ .ConfirmationURL }}</a></p>
+<p style="margin:18px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:21px;color:#5C5C66;">Si no creó esta cuenta, ignore este email: sin confirmación la cuenta no se activa.</p>
+</td></tr>
+<tr><td align="center" style="padding:16px 8px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#5C5C66;">
+<b style="color:#CE1126;">Tuende</b> · Descubra adónde ir en Angola · <a href="https://tuende.app" style="color:#5C5C66;">tuende.app</a><br>Recibe este email porque esta dirección se usó en tuende.app.
+</td></tr>
+</table>
+</td></tr></table>{{ else }}<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#F6F4F1" style="background-color:#F6F4F1;">
+<tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
+<tr><td bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:16px 16px 0 0;padding:18px 24px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
+<td style="padding-right:12px;"><img src="https://tuende.app/icon-192.png" width="44" height="44" alt="" style="display:block;border:0;border-radius:11px;"></td>
+<td style="font-family:Arial,Helvetica,sans-serif;font-size:28px;line-height:30px;font-weight:bold;color:#CE1126;">Tuende</td>
+</tr></table>
+</td></tr>
+<tr><td height="4" bgcolor="#CE1126" style="background-color:#CE1126;font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td height="4" bgcolor="#FFCB00" style="background-color:#FFCB00;font-size:0;line-height:0;">&nbsp;</td></tr>
+<tr><td bgcolor="#FFFFFF" style="background-color:#FFFFFF;border-radius:0 0 16px 16px;padding:24px 24px 28px;">
+<p style="margin:0 0 6px;font-family:Arial,Helvetica,sans-serif;font-size:22px;line-height:28px;font-weight:bold;color:#161618;">Confirme o seu email</p>
+<p style="margin:14px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;color:#161618;">{{ with .Data.display_name }}Olá, {{ . }}!{{ else }}Olá!{{ end }}</p>
+<p style="margin:8px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:24px;color:#161618;">Obrigado por criar uma conta no Tuende, o guia para descobrir onde ir em Angola. Toque no botão para confirmar o seu email e ativar a conta.</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:24px;"><tr>
+<td bgcolor="#CE1126" style="background-color:#CE1126;border-radius:12px;">
+<a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 24px;font-family:Arial,Helvetica,sans-serif;font-size:17px;line-height:20px;font-weight:bold;color:#FFFFFF;text-decoration:none;">Confirmar email</a>
+</td></tr></table>
+<p style="margin:22px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#5C5C66;">Se o botão não funcionar, copie este endereço para o navegador:<br><a href="{{ .ConfirmationURL }}" style="color:#CE1126;word-break:break-all;">{{ .ConfirmationURL }}</a></p>
+<p style="margin:18px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:21px;color:#5C5C66;">Se não criou esta conta, ignore este email: sem confirmação a conta não fica ativa.</p>
+</td></tr>
+<tr><td align="center" style="padding:16px 8px 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:19px;color:#5C5C66;">
+<b style="color:#CE1126;">Tuende</b> · Descubra onde ir em Angola · <a href="https://tuende.app" style="color:#5C5C66;">tuende.app</a><br>Recebeu este email porque este endereço foi usado em tuende.app.
+</td></tr>
+</table>
+</td></tr></table>{{ end }}

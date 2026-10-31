@@ -1,0 +1,1 @@
+{{ $l := "pt" }}{{ with .Data.lang }}{{ $l = . }}{{ end }}{{ if eq $l "en" }}Confirm your Tuende account{{ else if eq $l "fr" }}Confirmez votre compte Tuende{{ else if eq $l "es" }}Confirme su cuenta de Tuende{{ else }}Confirme a sua conta no Tuende{{ end }}

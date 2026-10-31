@@ -1,45 +1,43 @@
 # Emails de conta com o nome Tuende (Resend + Supabase)
 
-Hoje os emails de "Confirme a sua conta" e "Nova palavra-passe" saem do serviço incluído no Supabase: remetente genérico,
-texto em inglês e um limite muito baixo por hora. Com um serviço próprio passam a sair de `nao-responder@tuende.app`, com
-o nome "Tuende" e os modelos desta pasta (português e inglês).
+Hoje os emails de "Confirme a sua conta", "Nova palavra-passe" e "Mudar o email" saem do serviço incluído no Supabase:
+remetente "Supabase Auth", texto em inglês, sem nada do Tuende, e um limite muito baixo por hora. Quem os recebe pode
+achar que não têm nada a ver com o Tuende. O Supabase só deixa mudar o texto destes emails depois de ligar um serviço de
+envio próprio (SMTP). Com o Resend, passam a sair de "Tuende <nao-responder@mail.tuende.app>", com o logótipo, o nome e as
+cores do Tuende, na língua de cada pessoa (português, inglês, francês ou espanhol).
 
-## Porquê o Resend
+## O que já está feito
 
-- Grátis até 100 emails por dia e 3000 por mês, sem cartão (limites publicados pelo Resend em outubro de 2026).
-- Tem um guia oficial para o Supabase (https://resend.com/docs/send-with-supabase-smtp): só um utilizador e uma chave.
-- Os registos de DNS do Resend ficam no subdomínio `send.tuende.app` e numa chave DKIM, por isso não mexem no email
-  `contacto@tuende.app` (ImprovMX) nem no site.
+- Conta no Resend e domínio `mail.tuende.app` verificado (região Irlanda, `eu-west-1`), com os registos de DNS na Cloudflare.
+- Os modelos desta pasta: `confirm-signup.html`, `reset-password.html`, `change-email.html` e os assuntos em
+  `*.subject.txt`. São gerados por `tools/emails_conta.py`; `pre-visualizacao/` mostra cada email em cada língua.
+- A app guarda a língua de cada pessoa na conta (`lang`), para o email sair na língua certa.
 
-Alternativa: Brevo (cerca de 300 emails por dia grátis, `smtp-relay.brevo.com`, porta 587). Também serve, mas a
-configuração tem mais passos e, sem DKIM, o remetente pode aparecer como `@brevosend.com`.
+## O que falta (passos do dono)
 
-## Passos
-
-Quem faz o quê: os passos 1, 3 e 4 são do dono (criar conta e colar a chave secreta). O passo 2 (DNS) posso fazê-lo eu na
-Cloudflare, com autorização.
-
-1. **Criar a conta** em https://resend.com com o email privado do projeto.
-2. **Domínio:** em Resend > Domains > Add domain, escrever `tuende.app` (região: Irlanda, `eu-west-1`, a mais perto de Angola).
-   O Resend mostra 3 ou 4 registos (um TXT `resend._domainkey`, um MX e um TXT em `send`). Acrescentá-los na Cloudflare
-   (zona tuende.app > DNS > Records), todos em "DNS only" (nuvem cinzenta). Depois, no Resend, carregar em "Verify".
-3. **Chave:** em Resend > API Keys > Create, nome "Supabase Tuende", permissão "Sending access", domínio `tuende.app`.
-   A chave só aparece uma vez: copie-a diretamente para o passo 4 e não a envie por chat nem por email.
-4. **Supabase** (https://supabase.com/dashboard > projeto Tuende > Authentication > Emails > SMTP Settings):
+1. **Chave:** em https://resend.com > API Keys > Create API Key, nome "Supabase Tuende", permissão "Sending access",
+   domínio `mail.tuende.app`. A chave só aparece uma vez: copie-a diretamente para o passo 2 e não a envie por chat nem
+   por email.
+2. **Supabase** (https://supabase.com/dashboard > projeto Tuende > Authentication > Emails > SMTP Settings):
    - Enable custom SMTP: ligado
-   - Sender email: `nao-responder@tuende.app`
+   - Sender email: `nao-responder@mail.tuende.app`
    - Sender name: `Tuende`
    - Host: `smtp.resend.com`
    - Port: `465`
    - Username: `resend`
-   - Password: a chave do passo 3
+   - Password: a chave do passo 1
    - Guardar.
-5. **Modelos:** em Authentication > Emails > Templates:
-   - "Confirm signup": assunto `Confirme a sua conta no Tuende`, corpo = conteúdo de `confirm-signup.html`.
-   - "Reset password": assunto `Nova palavra-passe no Tuende`, corpo = conteúdo de `reset-password.html`.
-6. **Limite por hora:** em Authentication > Rate Limits, subir "Rate limit for sending emails" para 30 por hora
-   (fica abaixo dos 100 por dia do Resend grátis).
-7. **Testar:** criar uma conta nova no Tuende com outro email e pedir uma nova palavra-passe. Os dois emails devem
-   chegar de "Tuende <nao-responder@tuende.app>". Se der erro 500, esperar que o domínio fique "Verified" no Resend.
+3. **Modelos** (Authentication > Emails > Templates). Para cada um, colar o assunto do ficheiro `.subject.txt` e o corpo
+   do ficheiro `.html` (todo o conteúdo):
+   - "Confirm signup": `confirm-signup.subject.txt` e `confirm-signup.html`
+   - "Reset password": `reset-password.subject.txt` e `reset-password.html`
+   - "Change email address": `change-email.subject.txt` e `change-email.html`
 
-Se um dia passar dos 100 emails por dia, o envio pára até ao dia seguinte (o plano grátis não cobra nada a mais); aí vale a pena ver os planos pagos do Resend.
+   Depois do passo 2, também posso colar os modelos eu, com autorização.
+4. **Limite por hora:** em Authentication > Rate Limits, subir "Rate limit for sending emails" para 30 por hora
+   (fica abaixo dos 100 por dia do Resend grátis).
+5. **Testar:** criar uma conta nova no Tuende com outro email e pedir uma nova palavra-passe. Os emails devem chegar de
+   "Tuende", com o logótipo e o nome Tuende no topo.
+
+Se um dia passar dos 100 emails por dia, o envio pára até ao dia seguinte (o plano grátis não cobra nada a mais); aí vale
+a pena ver os planos pagos do Resend.
