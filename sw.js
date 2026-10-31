@@ -7,6 +7,8 @@ const MAP_CACHE = 'tuende-map-v1';
 const MAX_TILES = 1200;
 // Provinces saved for use without internet (the person chose them): map tiles kept under their z/x/y, never trimmed.
 const OFFLINE_CACHE = 'tuende-offline-v1';
+// Small settings the page saves for the worker (the language of the message notifications).
+const PREFS_CACHE = 'tuende-prefs-v1';
 const tileKey = (url) => {
     const m = String(url).match(/tiles\.openfreemap\.org\/planet\/[^/]+\/(\d+)\/(\d+)\/(\d+)\.pbf/);
     return m ? `https://tuende.offline/tile/${m[1]}/${m[2]}/${m[3]}.pbf` : null;
@@ -28,7 +30,7 @@ self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys()
             .then((keys) => Promise.all(keys
-                .filter((key) => key !== SHELL_CACHE && key !== IMAGE_CACHE && key !== MAP_CACHE && key !== OFFLINE_CACHE)
+                .filter((key) => key !== SHELL_CACHE && key !== IMAGE_CACHE && key !== MAP_CACHE && key !== OFFLINE_CACHE && key !== PREFS_CACHE)
                 .map((key) => caches.delete(key))))
             .then(() => self.clients.claim())
     );
@@ -171,4 +173,49 @@ self.addEventListener('message', (event) => {
             } catch {}
         }))
     ));
+});
+
+// Notifications for new chat messages. The push carries no content (nothing the person wrote passes through the
+// push services): the worker only says there are new messages, in the language the page saved.
+const PUSH_TEXT = {
+    pt: 'Tem mensagens novas nas Conversas.',
+    en: 'You have new messages in Chats.',
+    fr: 'Vous avez de nouveaux messages dans Discussions.',
+    es: 'Tiene mensajes nuevos en Conversaciones.'
+};
+
+self.addEventListener('push', (event) => {
+    event.waitUntil((async () => {
+        const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+        const visible = windows.find((c) => c.visibilityState === 'visible');
+        // The app is open on screen: it updates the chat itself, no notification needed.
+        if (visible) { visible.postMessage({ type: 'chat-push' }); return; }
+        let lang = 'pt';
+        try {
+            const saved = await (await caches.open(PREFS_CACHE)).match('/__prefs');
+            if (saved) lang = (await saved.json()).lang || 'pt';
+        } catch {}
+        await self.registration.showNotification('Tuende', {
+            body: PUSH_TEXT[lang] || PUSH_TEXT.pt,
+            icon: 'icon-192.png',
+            tag: 'tuende-chat',
+            renotify: true,
+            data: { url: './?page=conversas' }
+        });
+    })());
+});
+
+self.addEventListener('notificationclick', (event) => {
+    event.notification.close();
+    const url = new URL(event.notification.data?.url || './?page=conversas', self.registration.scope).href;
+    event.waitUntil((async () => {
+        const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+        const open = windows.find((c) => c.url.startsWith(self.registration.scope));
+        if (open) {
+            await open.focus();
+            open.postMessage({ type: 'open-chats' });
+            return;
+        }
+        await self.clients.openWindow(url);
+    })());
 });
