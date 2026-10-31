@@ -1816,6 +1816,56 @@
         .chat-voice-label .icon { width: 15px; height: 15px; }
         .chat-push { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; }
         .chat-push[aria-pressed="true"] { color: var(--ok); }
+        /* Usernames, requests, replies, reactions, "Seen" and typing. */
+        .uname-card { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 4px 0 14px; padding: 14px 16px; border-radius: 16px; background: var(--surface-2); }
+        .uname-card p { flex: 1 1 220px; margin: 0; }
+        .uname-field { display: flex; align-items: center; gap: 6px; }
+        .uname-field span { font-weight: 800; color: var(--muted); }
+        .uname-field input { flex: 1; }
+        .profile-uname { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 2px 0 0; color: var(--muted); font-weight: 600; }
+        .profile-uname .link-btn { display: inline-flex; align-items: center; gap: 6px; }
+        .chat-tabs { margin: 14px 0 6px; }
+        .chat-tabs .chip .count-pill { margin-left: 6px; }
+        .chat-row small.chat-row-user { color: var(--muted); font-weight: 600; }
+        .chat-quote { display: grid; gap: 1px; width: 100%; margin: 0 0 6px; padding: 6px 10px; border: 0; border-left: 3px solid var(--primary); border-radius: 8px; background: var(--surface-2); color: var(--text); font: inherit; text-align: left; cursor: pointer; }
+        .chat-quote b { font-size: 12px; color: var(--primary); }
+        .chat-quote span { font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .chat-msg.mine .chat-quote { background: color-mix(in srgb, var(--surface) 70%, transparent); }
+        .chat-bubble.has-reacts { margin-bottom: 14px; }
+        .chat-reacts { position: absolute; bottom: -16px; left: 10px; display: inline-flex; align-items: center; gap: 3px; min-height: 26px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--primary); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+        .chat-reacts .icon { width: 15px; height: 15px; }
+        .chat-react-row { display: flex; justify-content: space-between; gap: 6px; margin: 4px 0 12px; }
+        .chat-react-row button { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; flex: 1; min-height: 56px; padding: 6px 2px; border: 1.5px solid var(--border); border-radius: 14px; background: var(--surface); color: var(--text); font: inherit; font-size: 11px; font-weight: 600; cursor: pointer; }
+        .chat-react-row button[aria-pressed="true"] { border-color: var(--primary); background: var(--primary-soft); color: var(--primary); }
+        .chat-react-row .icon { width: 22px; height: 22px; }
+        .chat-reactors { margin: 0 0 12px; padding: 0; list-style: none; font-size: 14px; }
+        .chat-reactors li { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
+        .chat-reactors .icon { width: 16px; height: 16px; color: var(--primary); }
+        .chat-seen { margin: -2px 6px 6px; text-align: right; font-size: 12px; color: var(--muted); }
+        .chat-typing { margin: 2px 4px 6px; font-size: 13px; font-style: italic; color: var(--muted); }
+        .chat-typing[hidden] { display: none; }
+        .chat-replybar { position: sticky; bottom: calc(61px + env(safe-area-inset-bottom)); z-index: 6; display: flex; align-items: center; gap: 8px; margin: 0 -4px; padding: 8px 8px 8px 12px; border-top: 1px solid var(--line); border-left: 3px solid var(--primary); background: var(--surface-2); }
+        .chat-replybar[hidden] { display: none; }
+        .chat-replybar span { display: grid; flex: 1; min-width: 0; }
+        .chat-replybar b { font-size: 13px; color: var(--primary); }
+        .chat-replybar small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); }
+        .chat-request, .chat-pending { position: sticky; bottom: 0; z-index: 6; margin: 0 -4px; padding: 12px 8px calc(12px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); background: var(--bg); }
+        .chat-request p, .chat-pending p { margin: 0 0 10px; font-size: 14px; color: var(--muted); }
+        .chat-pending p { margin: 0; }
+        .chat-request .banner-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+        .chat-request .submit-btn { flex: 1 1 auto; }
+        .chat-note { margin: 0 4px 6px; font-size: 13px; color: var(--muted); }
+        .chat-msg.flash .chat-bubble { animation: chat-flash 1.6s ease-out; }
+        @keyframes chat-flash { 0%, 40% { box-shadow: 0 0 0 3px var(--primary); } 100% { box-shadow: 0 0 0 0 transparent; } }
+        @media (prefers-reduced-motion: reduce) { .chat-msg.flash .chat-bubble { animation: none; outline: 3px solid var(--primary); } }
+        .chat-search-row mark { background: var(--primary-soft); color: inherit; border-radius: 3px; }
+        .share-card { display: grid; justify-items: center; gap: 10px; text-align: center; }
+        .share-qr { width: 220px; height: 220px; padding: 10px; border-radius: 16px; background: #fff; image-rendering: pixelated; }
+        .share-card .banner-actions { justify-content: center; }
+        .privacy-form fieldset { margin: 0 0 14px; padding: 0; border: 0; }
+        .privacy-form legend { margin-bottom: 6px; font-weight: 700; }
+        .privacy-form label { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; }
+        .privacy-form input[type=radio], .privacy-form input[type=checkbox] { flex: none; width: 20px; height: 20px; margin-top: 1px; accent-color: var(--primary); }
         .chat-choices { display: grid; gap: 4px; max-height: 58vh; margin-top: 8px; overflow: auto; }
         .chat-choices .pick-row[hidden], .person-row[hidden] { display: none; }
         .chat-search { margin-top: 10px; }
@@ -1843,7 +1893,8 @@
         .chat-rename .field { flex: 1; min-width: 0; }
         .chat-info-actions { margin-top: 14px; flex-wrap: wrap; }
         .chat-info-actions .submit-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex: 1 1 auto; white-space: nowrap; }
-        .submit-btn.secondary.danger { color: var(--primary); }
+        .submit-btn.secondary.danger { width: auto; background: var(--surface-2); color: var(--primary); }
+        .submit-btn.secondary.danger:hover { background: var(--primary-soft); }
         .person-row { display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--line); }
         .person-open { display: flex; flex: 1; align-items: center; gap: 10px; min-width: 0; min-height: 52px; padding: 4px 0; border: 0; background: none; color: var(--text); text-align: left; cursor: pointer; }
         .person-open span { display: grid; min-width: 0; }
@@ -3421,6 +3472,72 @@
                 saveDataOff: 'Poupar dados: desligado',
                 saveDataNote: 'Sem fotos nas listas nem mapas automáticos, para gastar menos dados móveis.',
                 mapLoad: 'Mostrar mapa',
+                unameTitle: 'Nome de utilizador',
+                unamePick: 'Escolha um nome de utilizador',
+                unameWhy: 'Com ele, os amigos encontram-no e enviam-lhe mensagens.',
+                unameRules: '3 a 20 caracteres: letras minúsculas, números, ponto e _. Pode corrigir nas primeiras 24 horas; depois, mudar uma vez a cada 30 dias.',
+                unameSave: 'Guardar',
+                unameSaved: 'Nome de utilizador guardado.',
+                unameTaken: 'Esse nome já está a ser usado. Escolha outro.',
+                unameBad: 'Use 3 a 20 caracteres: letras minúsculas, números, ponto e _, sem começar ou acabar com ponto.',
+                unameReserved: 'Esse nome está reservado. Escolha outro.',
+                unameSoon: 'Só pode voltar a mudar o nome de utilizador a {date}.',
+                unameNone: 'Escolher nome de utilizador',
+                unameChange: 'Mudar',
+                shareProfile: 'Partilhar perfil',
+                shareProfileText: 'Siga-me no Tuende: {name}',
+                shareProfileQr: 'Mostre este código a quem está consigo: a câmara do telemóvel abre o seu perfil.',
+                profileCopyLink: 'Copiar link',
+                profileLinkCopied: 'Link copiado.',
+                qrError: 'Não foi possível mostrar o código. Use o link.',
+                findPerson: 'Procurar por nome de utilizador',
+                findPersonPh: '@nome',
+                findNone: 'Ninguém com esse nome de utilizador.',
+                findHint: 'Escreva o nome de utilizador completo.',
+                findBtn: 'Procurar',
+                peopleYouFollow: 'Pessoas que segue',
+                chatNoFollowing: 'Ainda não segue ninguém. Procure pelo nome de utilizador, ou abra o perfil de quem partilhou um momento.',
+                chatTabRequests: 'Pedidos',
+                chatRequestsEmpty: 'Não tem pedidos de mensagem.',
+                chatRequestsHint: 'Mensagens de pessoas que não segue. Só sabem que leu depois de aceitar.',
+                chatRequestBar: '{name} quer enviar-lhe mensagens. Só sabe que leu se aceitar.',
+                chatGroupRequestBar: 'Foi adicionado a este grupo por alguém que não segue.',
+                chatAccept: 'Aceitar',
+                chatDecline: 'Apagar',
+                chatDeclineConfirm: 'Apagar este pedido? A pessoa não é avisada.',
+                chatAccepted: 'Pedido aceite.',
+                chatPendingFirst: 'Primeira mensagem: só texto. {name} recebe-a como pedido.',
+                chatPendingSent: 'Pedido enviado. Pode escrever mais quando {name} aceitar.',
+                chatDmClosed: 'Esta pessoa só recebe mensagens de quem segue.',
+                chatTooManyRequests: 'Chegou ao limite de pedidos de hoje. Tente amanhã.',
+                chatPrivacy: 'Privacidade das conversas',
+                chatFindMe: 'Quem me pode encontrar pelo nome de utilizador',
+                chatFindAll: 'Toda a gente',
+                chatFindLink: 'Só quem tem o link do meu perfil',
+                chatWhoMsg: 'Quem me pode enviar mensagens',
+                chatMsgAll: 'Toda a gente (quem não sigo chega a Pedidos)',
+                chatMsgFollowing: 'Só quem eu sigo',
+                chatReadReceipts: 'Mostrar «Visto» (se desligar, também não vê quando os outros leram)',
+                chatPrivacySaved: 'Guardado.',
+                chatSeen: 'Visto',
+                chatSeenBy: 'Visto por {names}',
+                chatTypingName: '{name} está a escrever…',
+                chatTypingMany: 'Várias pessoas estão a escrever…',
+                chatReply: 'Responder',
+                chatReplyingTo: 'A responder a {name}',
+                chatReplyCancel: 'Cancelar resposta',
+                chatQuoteGone: 'Mensagem apagada',
+                chatReactions: 'Reações',
+                reactHeart: 'Adoro',
+                reactUp: 'Gosto',
+                reactHaha: 'Engraçado',
+                reactCheck: 'Combinado',
+                reactStar: 'Boa!',
+                chatSearchMsgs: 'Procurar na conversa',
+                chatSearchPh: 'Palavra ou frase',
+                chatSearchNone: 'Nada encontrado.',
+                chatSearchShort: 'Escreva pelo menos 2 letras.',
+                chatJumpFail: 'Não foi possível mostrar essa mensagem.',
                 chatVoiceMsg: 'Mensagem de voz',
                 chatRecord: 'Gravar mensagem de voz',
                 chatRecording: 'A gravar',
@@ -3517,7 +3634,7 @@
                 chatSystemAdded: '{name} adicionou {names}',
                 chatSystemLeft: '{name} saiu do grupo',
                 chatSystemRenamed: '{name} mudou o nome para «{title}»',
-                chatNewHint: 'Escolha um amigo para conversar, ou vários para criar um grupo.',
+                chatNewHint: 'Escolha alguém para conversar, ou várias pessoas para criar um grupo.',
                 chatNoFriends: 'Ainda não tem amigos no Tuende. Amigos são pessoas que se seguem uma à outra: siga de volta quem o segue para poderem conversar.',
                 chatGroupName: 'Nome do grupo',
                 chatGroupNamePh: 'Saída de sábado',
@@ -3551,7 +3668,7 @@
                 chatNoMoments: 'Ainda não há momentos para partilhar.',
                 chatSearch: 'Procurar',
                 chatDeletedPerson: 'Conta apagada',
-                chatSafety: 'Mensagens só entre amigos. Pode denunciar mensagens e bloquear pessoas.',
+                chatSafety: 'Quem não segue chega a Pedidos e decide se aceita. Pode denunciar mensagens e bloquear pessoas.',
                 newsTitle: 'Agenda no seu email',
                 exNews: 'Um email por semana com o que há',
                 newsIntro: 'Todas as semanas, os eventos da agenda e os lugares novos do Tuende, num só email. Pode sair quando quiser.',
@@ -4531,6 +4648,72 @@
                 saveDataOff: 'Data saver: off',
                 saveDataNote: 'No photos in lists and no automatic maps, to use less mobile data.',
                 mapLoad: 'Show map',
+                unameTitle: 'Username',
+                unamePick: 'Choose a username',
+                unameWhy: 'Friends use it to find you and message you.',
+                unameRules: '3 to 20 characters: lowercase letters, numbers, dot and _. You can fix it during the first 24 hours; after that, change it once every 30 days.',
+                unameSave: 'Save',
+                unameSaved: 'Username saved.',
+                unameTaken: 'That username is taken. Choose another.',
+                unameBad: 'Use 3 to 20 characters: lowercase letters, numbers, dot and _, not starting or ending with a dot.',
+                unameReserved: 'That name is reserved. Choose another.',
+                unameSoon: 'You can change your username again on {date}.',
+                unameNone: 'Choose a username',
+                unameChange: 'Change',
+                shareProfile: 'Share profile',
+                shareProfileText: 'Follow me on Tuende: {name}',
+                shareProfileQr: 'Show this code to someone with you: their phone camera opens your profile.',
+                profileCopyLink: 'Copy link',
+                profileLinkCopied: 'Link copied.',
+                qrError: 'Could not show the code. Use the link.',
+                findPerson: 'Search by username',
+                findPersonPh: '@name',
+                findNone: 'No one with that username.',
+                findHint: 'Type the full username.',
+                findBtn: 'Search',
+                peopleYouFollow: 'People you follow',
+                chatNoFollowing: 'You do not follow anyone yet. Search by username, or open the profile of someone who shared a moment.',
+                chatTabRequests: 'Requests',
+                chatRequestsEmpty: 'No message requests.',
+                chatRequestsHint: 'Messages from people you do not follow. They only know you read them once you accept.',
+                chatRequestBar: '{name} wants to message you. They only know you read it if you accept.',
+                chatGroupRequestBar: 'You were added to this group by someone you do not follow.',
+                chatAccept: 'Accept',
+                chatDecline: 'Delete',
+                chatDeclineConfirm: 'Delete this request? The person is not told.',
+                chatAccepted: 'Request accepted.',
+                chatPendingFirst: 'First message: text only. {name} gets it as a request.',
+                chatPendingSent: 'Request sent. You can write more once {name} accepts.',
+                chatDmClosed: 'This person only gets messages from people they follow.',
+                chatTooManyRequests: 'You reached today\'s request limit. Try tomorrow.',
+                chatPrivacy: 'Chat privacy',
+                chatFindMe: 'Who can find me by username',
+                chatFindAll: 'Everyone',
+                chatFindLink: 'Only people with my profile link',
+                chatWhoMsg: 'Who can message me',
+                chatMsgAll: 'Everyone (people I do not follow go to Requests)',
+                chatMsgFollowing: 'Only people I follow',
+                chatReadReceipts: 'Show "Seen" (if off, you also will not see when others have read)',
+                chatPrivacySaved: 'Saved.',
+                chatSeen: 'Seen',
+                chatSeenBy: 'Seen by {names}',
+                chatTypingName: '{name} is typing…',
+                chatTypingMany: 'Several people are typing…',
+                chatReply: 'Reply',
+                chatReplyingTo: 'Replying to {name}',
+                chatReplyCancel: 'Cancel reply',
+                chatQuoteGone: 'Message deleted',
+                chatReactions: 'Reactions',
+                reactHeart: 'Love',
+                reactUp: 'Like',
+                reactHaha: 'Funny',
+                reactCheck: 'Agreed',
+                reactStar: 'Great!',
+                chatSearchMsgs: 'Search in chat',
+                chatSearchPh: 'Word or phrase',
+                chatSearchNone: 'Nothing found.',
+                chatSearchShort: 'Type at least 2 letters.',
+                chatJumpFail: 'Could not show that message.',
                 chatVoiceMsg: 'Voice message',
                 chatRecord: 'Record a voice message',
                 chatRecording: 'Recording',
@@ -4627,7 +4810,7 @@
                 chatSystemAdded: '{name} added {names}',
                 chatSystemLeft: '{name} left the group',
                 chatSystemRenamed: '{name} renamed the group “{title}”',
-                chatNewHint: 'Choose a friend to chat with, or several to create a group.',
+                chatNewHint: 'Choose someone to chat with, or several people to create a group.',
                 chatNoFriends: 'You have no friends on Tuende yet. Friends are people who follow each other: follow back the people who follow you so you can chat.',
                 chatGroupName: 'Group name',
                 chatGroupNamePh: 'Saturday outing',
@@ -4661,7 +4844,7 @@
                 chatNoMoments: 'No moments to share yet.',
                 chatSearch: 'Search',
                 chatDeletedPerson: 'Deleted account',
-                chatSafety: 'Messages only between friends. You can report messages and block people.',
+                chatSafety: 'People you do not follow arrive in Requests and you decide whether to accept. You can report messages and block people.',
                 newsTitle: 'The agenda by email',
                 exNews: 'One email a week with what\'s on',
                 newsIntro: 'Every week, the events in the agenda and Tuende\'s new places, in one email. You can leave whenever you like.',
@@ -7595,7 +7778,10 @@
             thumbDown: '<path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/>',
             mic: '<path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>',
             trash: '<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
-            bell: '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>'
+            bell: '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
+            smile: '<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>',
+            reply: '<polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/>',
+            qr: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/>'
         };
 
         // Keys keep the old 'angolive' prefix so saved places, settings and sign-ins carry over from before the rename.
@@ -8540,6 +8726,7 @@
                 if (state.view !== 'chats' || chat.open !== conv) showChats({ push: false, conv });
             }
             else if (params.get('page') === 'plano' && /^[0-9a-f]{32}$/.test(params.get('amigos') || '')) openFriendsPlan(params.get('amigos'));
+            else if (UUID_RE.test(params.get('pessoa') || '')) { if (!$('authorModal').classList.contains('open')) openPerson(params.get('pessoa')); }
             else if (params.get('page') === 'plano') {
                 const shared = params.get('p') ? planFromParam(params.get('p')) : null;
                 showPlan({ push: false, id: location.hash.match(/^#plano-([\w-]+)$/)?.[1] || '', shared: params.get('p') ? shared || 'bad' : null });
@@ -9275,7 +9462,7 @@
             $('feedView').hidden = state.view !== 'feed';
             $('profileView').hidden = state.view !== 'profile';
             $('chatsView').hidden = state.view !== 'chats';
-            if (state.view !== 'chats') { stopChatTimer(); stopRecording(true); document.body.classList.remove('chat-open'); }
+            if (state.view !== 'chats') { stopChatTimer(); stopRecording(true); if (live.convTopic) liveLeaveConv(); document.body.classList.remove('chat-open'); }
             const viewTitle = { events: 'eventsTitle', guide: 'guideTitle', routes: 'routesTitle', map: 'mapTitle', wonders: 'wondersTitle', recommend: 'recTitle', fx: 'fxTitle', plan: 'planTitle', passport: 'passportTitle', quiz: 'quizTitle', dishes: 'dishesTitle', feed: 'feedTitle', profile: 'profileTitle', chats: 'chatTitle' }[state.view];
             document.title = viewTitle ? `${t(viewTitle)} | Tuende` : `Tuende - ${t('heroTitle')}`;
             if (state.view === 'home') renderHome();
@@ -12163,6 +12350,10 @@
             const me = signedIn();
             const social = me && feedReady !== false;
             if (social) loadProfile();
+            if (social && !chat.me && chat.ready !== false && !renderProfile.askedMe) {
+                renderProfile.askedMe = true;
+                loadChatMe().then(() => { renderProfile.askedMe = false; if (chat.me && state.view === 'profile') renderProfile(); });
+            }
             const s = profile.stats;
             const tabs = [
                 ...(social && feed.v2 ? [['inbox', 'profileTabInbox']] : []),
@@ -12205,6 +12396,7 @@
                     ${me ? avatarHTML(myAvatar(), accountName(), 'lg') : `<span class="avatar avatar-initial lg" aria-hidden="true">${icon('user')}</span>`}
                     <div>
                         <h1 class="profile-name" id="profileTitle">${escapeHTML(me ? accountName() : t('profileGuest'))}</h1>
+                        ${social && chat.ready !== false ? `<p class="profile-uname">${chat.me?.username ? `@${escapeHTML(chat.me.username)}<button class="link-btn" type="button" data-share-profile>${icon('qr')}${t('shareProfile')}</button>` : `<button class="link-btn" type="button" data-uname-edit>${t('unameNone')}</button>`}</p>` : ''}
                         ${me ? `<button class="link-btn" type="button" data-auth-open="account">${t('profileSettings')}</button>` : ''}
                     </div>
                 </div>
@@ -12229,7 +12421,12 @@
         // to the private "chat" bucket in a folder named after the conversation and are shown through signed links.
         // Messages are fetched by polling (every 4 s in an open chat, 20 s on the list, 60 s for the unread badge).
 
-        const chat = { ready: null, unread: 0, list: null, open: null, loadedFor: null, info: null, msgs: [], states: {}, more: false, media: new Map(), timer: 0, badgeTimer: 0, pending: 0 };
+        // me: my username and privacy choices; reads: who read up to when; myStatus 'request' = a request I have not accepted;
+        // otherPending: in a chat with one person, they have not accepted mine yet; typing: person -> { name, until }.
+        const chat = { ready: null, unread: 0, requests: 0, list: null, open: null, loadedFor: null, info: null, msgs: [], states: {}, more: false, media: new Map(), timer: 0, badgeTimer: 0, pending: 0,
+            me: null, tab: 'chats', reads: [], myStatus: 'active', otherPending: false, replyTo: null, typing: new Map() };
+        const REACTIONS = [['heart', 'heart', 'reactHeart'], ['up', 'thumbUp', 'reactUp'], ['haha', 'smile', 'reactHaha'], ['check', 'check', 'reactCheck'], ['star', 'star', 'reactStar']];
+        const UNAME_RE = /^[a-z0-9][a-z0-9._]{1,18}[a-z0-9]$/;
         const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
         const CHAT_VIDEO_MAX = 25 * 1024 * 1024;
         // Voice notes: up to 2 minutes; rec holds the recording in progress.
@@ -12247,28 +12444,45 @@
             if (d.includes('blocked_words')) return t('errBlockedText');
             if (d.includes('blocked')) return t('chatBlockedMsg');
             if (d.includes('not_friends')) return t('chatFriendsOnly');
+            if (d.includes('dm_closed')) return t('chatDmClosed');
+            if (d.includes('too_many_requests')) return t('chatTooManyRequests');
+            if (d.includes('request_wait') || d.includes('request_text_only')) return t('chatPendingSent', { name: chatOtherName() });
             return t('chatSendError');
         };
 
         async function checkChats() {
-            if (!signedIn() || !supabaseReady()) { chat.unread = 0; renderChatBadges(); return; }
+            if (!signedIn() || !supabaseReady()) { chat.unread = 0; chat.requests = 0; renderChatBadges(); return; }
             try {
-                chat.unread = Number(await rpc('chat_unread_total')) || 0;
+                const [b] = await rpc('chat_badges');
+                chat.unread = Number(b?.unread) || 0;
+                chat.requests = Number(b?.requests) || 0;
                 chat.ready = true;
             } catch (err) {
-                if (err.status === 404) chat.ready = false;
+                // Before the requests update: the old counter.
+                try { chat.unread = Number(await rpc('chat_unread_total')) || 0; chat.ready = true; } catch (e2) { if (e2.status === 404) chat.ready = false; }
             }
             renderChatBadges();
         }
+
+        // My username and privacy choices (loaded once per session, again after a change).
+        async function loadChatMe(force = false) {
+            if (!signedIn()) return null;
+            if (chat.me && !force) return chat.me;
+            try { [chat.me] = await rpc('my_chat_profile'); } catch {}
+            return chat.me || null;
+        }
+
+        const chatOtherName = () => (chat.info?.members || []).find((x) => !x.me)?.name || '';
 
         function renderChatBadges() {
             const show = signedIn() && supabaseReady() && chat.ready !== false;
             document.querySelectorAll('[data-chats-open]').forEach((b) => {
                 if (b.closest('#feedView, #profileView')) b.hidden = !show;
                 const pill = b.querySelector('.count-pill');
-                if (pill) { pill.textContent = chat.unread; pill.hidden = !chat.unread; }
+                const n = chat.unread + chat.requests;
+                if (pill) { pill.textContent = n; pill.hidden = !n; }
             });
-            document.querySelector('#tabbar .tab[data-tab="feed"]')?.classList.toggle('has-dot', show && chat.unread > 0);
+            document.querySelector('#tabbar .tab[data-tab="feed"]')?.classList.toggle('has-dot', show && chat.unread + chat.requests > 0);
         }
 
         function startChatBadge() {
@@ -12292,6 +12506,7 @@
             const body = $('chatsBody');
             stopChatTimer();
             if (rec.recorder && rec.conv !== chat.open) stopRecording(true);
+            if (live.convTopic && live.convTopic !== `realtime:conv:${chat.open}`) liveLeaveConv();
             document.body.classList.toggle('chat-open', Boolean(chat.open));
             if (!signedIn()) {
                 body.innerHTML = `<h1 class="rec-title" id="chatsTitle">${t('chatTitle')}</h1><div class="signin-prompt"><p>${t('chatSignIn')}</p><button class="submit-btn" type="button" data-auth-open="signin">${t('signIn')}</button></div>`;
@@ -12348,20 +12563,34 @@
             const pic = c.kind === 'group' ? `<span class="avatar avatar-initial chat-group-pic" aria-hidden="true">${icon('users')}</span>` : avatarHTML(c.avatar, c.title);
             return `<button type="button" class="chat-row${c.unread ? ' unread' : ''}" data-chat-open="${escapeHTML(c.id)}">
                 ${pic}
-                <span class="chat-row-main"><b>${escapeHTML(c.title || t('chatDeletedPerson'))}</b><small>${escapeHTML(preview)}</small></span>
+                <span class="chat-row-main"><b>${escapeHTML(c.title || t('chatDeletedPerson'))}</b>${c.status === 'request' && c.username ? `<small class="chat-row-user">@${escapeHTML(c.username)}</small>` : ''}<small>${escapeHTML(preview)}</small></span>
                 <span class="chat-row-side"><small>${escapeHTML(chatTime(c.last_at))}</small>${c.unread ? `<span class="count-pill">${c.unread}</span>` : ''}</span>
             </button>`;
         }
 
         function chatListHTML() {
-            const list = chat.list || [];
+            const all = chat.list || [];
+            const requests = all.filter((c) => c.status === 'request');
+            const list = chat.tab === 'requests' ? requests : all.filter((c) => c.status !== 'request');
+            if (!requests.length && chat.tab === 'requests') chat.tab = 'chats';
+            const tabs = requests.length || chat.tab === 'requests'
+                ? `<div class="chips chat-tabs" role="tablist">
+                    <button type="button" class="chip${chat.tab === 'chats' ? ' active' : ''}" role="tab" aria-selected="${chat.tab === 'chats'}" data-chat-tab="chats">${t('chatTitle')}</button>
+                    <button type="button" class="chip${chat.tab === 'requests' ? ' active' : ''}" role="tab" aria-selected="${chat.tab === 'requests'}" data-chat-tab="requests">${t('chatTabRequests')}<span class="count-pill">${requests.length}</span></button>
+                </div>` : '';
+            const unameCard = chat.me && !chat.me.username
+                ? `<div class="uname-card"><p><b>${t('unamePick')}</b><br>${t('unameWhy')}</p><button class="submit-btn" type="button" data-uname-edit>${t('unameNone')}</button></div>` : '';
             return `
                 <div class="chat-top">
                     <h1 class="rec-title" id="chatsTitle">${t('chatTitle')}</h1>
                     <button class="submit-btn" type="button" data-chat-new>${icon('plus')}<span>${t('chatNew')}</span></button>
                 </div>
+                ${unameCard}${tabs}
+                ${chat.tab === 'requests' ? `<p class="hint">${t('chatRequestsHint')}</p>` : ''}
                 ${list.length ? `<div class="chat-list">${list.map(chatRowHTML).join('')}</div>`
-                    : `<div class="feed-empty">${icon('chat')}<p>${t('chatEmpty')}</p><button class="submit-btn secondary" type="button" data-people="followers">${t('chatFindFriends')}</button></div>`}
+                    : chat.tab === 'requests' ? `<p class="hint">${t('chatRequestsEmpty')}</p>`
+                    : `<div class="feed-empty">${icon('chat')}<p>${t('chatEmpty')}</p><button class="submit-btn secondary" type="button" data-chat-new>${t('findPerson')}</button></div>`}
+                <button type="button" class="link-btn chat-push" data-chat-privacy>${icon('shield')}${t('chatPrivacy')}</button>
                 ${pushSupported() ? `<button type="button" class="link-btn chat-push" data-chat-push aria-pressed="${Boolean(chat.push)}">${icon('bell')}${t(chat.push ? 'pushIsOn' : 'pushTurnOn')}</button>` : ''}
                 <p class="hint chat-safety">${icon('shield')}${t('chatSafety')}</p>`;
         }
@@ -12370,9 +12599,10 @@
             const body = $('chatsBody');
             body.innerHTML = chat.list ? chatListHTML() : `<h1 class="rec-title" id="chatsTitle">${t('chatTitle')}</h1><p class="hint">${t('loading')}</p>`;
             try {
-                chat.list = await rpc('my_conversations');
+                [chat.list] = await Promise.all([rpc('my_conversations'), loadChatMe()]);
                 chat.ready = true;
-                chat.unread = chat.list.reduce((n, c) => n + (c.unread || 0), 0);
+                chat.unread = chat.list.filter((c) => c.status !== 'request').reduce((n, c) => n + (c.unread || 0), 0);
+                chat.requests = chat.list.filter((c) => c.status === 'request').length;
             } catch (err) {
                 if (err.status === 404) chat.ready = false;
                 // The sign-in expired while loading: show the sign-in prompt, not an error.
@@ -12395,6 +12625,12 @@
         function applyChatStates(rows) {
             let removed = false;
             (rows || []).forEach((r) => {
+                if (!r.message_id) {
+                    chat.reads = r.reads || [];
+                    chat.otherPending = Boolean(r.pending);
+                    chat.myStatus = r.my_status || 'active';
+                    return;
+                }
                 if (r.gone) {
                     delete chat.states[r.message_id];
                     if (chat.msgs.some((m) => m.id === r.message_id)) { chat.msgs = chat.msgs.filter((m) => m.id !== r.message_id); removed = true; }
@@ -12510,13 +12746,48 @@
             const who = !m.mine && group && !sameSender ? `<span class="chat-who">${escapeHTML(m.sender_name || t('chatDeletedPerson'))}</span>` : '';
             const time = new Date(m.created_at).toLocaleTimeString(locale(), { hour: '2-digit', minute: '2-digit' });
             const more = !m.pending ? `<button type="button" class="chat-more" data-chat-more="${escapeHTML(m.id)}" aria-label="${t('chatMore')}">···</button>` : '';
+            const reacts = reactsHTML(m);
             return `${day}<div class="chat-msg${m.mine ? ' mine' : ''}${sameSender ? ' cont' : ''}${m.pending ? ' pending' : ''}" data-msg="${escapeHTML(m.id)}">
                 ${!m.mine && group ? (sameSender ? '<span class="chat-av-gap"></span>' : avatarHTML(m.sender_avatar, m.sender_name, 'sm')) : ''}
-                <div class="chat-bubble kind-${m.kind}">${who}${inner}<span class="chat-time">${m.pending ? t('chatUploading') : escapeHTML(time)}</span></div>${more}
+                <div class="chat-bubble kind-${m.kind}${reacts ? ' has-reacts' : ''}" data-bubble="${escapeHTML(m.id)}">${who}${quoteHTML(m)}${inner}<span class="chat-time">${m.pending ? t('chatUploading') : escapeHTML(time)}</span>${reacts}</div>${more}
             </div>`;
         }
 
-        const messagesHTML = () => chat.msgs.map((m, i) => messageHTML(m, chat.msgs[i - 1])).join('');
+        // The quoted message a reply points to (tap to go to it).
+        function quoteHTML(m) {
+            if (!m.reply_to) return '';
+            const name = m.reply_mine ? t('chatYou') : (m.reply_name || t('chatDeletedPerson'));
+            const text = m.reply_kind === 'gone' ? t('chatQuoteGone')
+                : m.reply_kind === 'text' ? (m.reply_body || '')
+                : m.reply_kind === 'poll' ? t('chatPollMsg', { q: m.reply_body || '' })
+                : `${chatSummary(m.reply_kind, null, {})}${m.reply_body ? `: ${m.reply_body}` : ''}`;
+            return `<button type="button" class="chat-quote" data-chat-jump="${escapeHTML(m.reply_to)}"><b>${escapeHTML(name)}</b><span>${escapeHTML(text)}</span></button>`;
+        }
+
+        function reactsHTML(m) {
+            const r = chat.states[m.id]?.reactions;
+            if (!r || m.pending) return '';
+            const list = REACTIONS.filter(([key]) => r[key]);
+            if (!list.length) return '';
+            const total = list.reduce((n, [key]) => n + Number(r[key]), 0);
+            return `<button type="button" class="chat-reacts" data-chat-more="${escapeHTML(m.id)}" aria-label="${t('chatReactions')}: ${total}">${list.map(([, ic]) => icon(ic)).join('')}${total > 1 ? `<span>${total}</span>` : ''}</button>`;
+        }
+
+        // "Seen" under my last message, from the read marks of the people who accepted the chat.
+        function seenHTML(m) {
+            const sent = Date.parse(m.created_at);
+            const who = (chat.reads || []).filter((r) => r.at && Date.parse(r.at) >= sent);
+            if (!who.length) return '';
+            if (chat.info?.kind !== 'group') return `<p class="chat-seen">${t('chatSeen')}</p>`;
+            const names = who.map((r) => r.name || '');
+            const text = names.length > 3 ? `${names.slice(0, 3).join(', ')} +${names.length - 3}` : names.join(', ');
+            return `<p class="chat-seen">${escapeHTML(t('chatSeenBy', { names: text }))}</p>`;
+        }
+
+        const messagesHTML = () => {
+            const lastMine = [...chat.msgs].reverse().find((m) => m.kind !== 'system' && !m.pending);
+            return chat.msgs.map((m, i) => messageHTML(m, chat.msgs[i - 1]) + (lastMine && m === lastMine && m.mine ? seenHTML(m) : '')).join('');
+        };
 
         function conversationHTML() {
             const info = chat.info;
@@ -12524,23 +12795,53 @@
             const other = group ? null : (info.members || []).find((x) => !x.me);
             const pic = group ? `<span class="avatar avatar-initial chat-group-pic" aria-hidden="true">${icon('users')}</span>` : avatarHTML(other?.avatar, info.title);
             return `
-                <div class="chat-head" data-conv="${escapeHTML(chat.open || '')}" data-lang="${lang}">
+                <div class="chat-head" data-conv="${escapeHTML(chat.open || '')}" data-lang="${lang}" data-mode="${chatMode()}">
                     <button type="button" class="chat-icon-btn" data-chat-list aria-label="${t('chatBack')}">${icon('back')}</button>
                     ${pic}
-                    <button type="button" class="chat-head-title" data-chat-info><b id="chatsTitle">${escapeHTML(info.title || t('chatDeletedPerson'))}</b><small>${group ? t('chatMembersN', { n: (info.members || []).length }) : t('chatInfoHint')}</small></button>
+                    <button type="button" class="chat-head-title" data-chat-info><b id="chatsTitle">${escapeHTML(info.title || t('chatDeletedPerson'))}</b><small>${group ? t('chatMembersN', { n: (info.members || []).length }) : other?.username ? `@${escapeHTML(other.username)}` : t('chatInfoHint')}</small></button>
+                    <button type="button" class="chat-icon-btn" data-chat-search aria-label="${t('chatSearchMsgs')}">${icon('search')}</button>
                 </div>
                 <div class="chat-msgs" id="chatMsgs" role="log" aria-labelledby="chatsTitle">
                     ${chat.more ? `<button type="button" class="link-btn chat-older" data-chat-older>${t('chatOlder')}</button>` : ''}
                     <div id="chatMsgList">${messagesHTML()}</div>
                 </div>
+                ${composerHTML()}`;
+        }
+
+        // What the bottom of a chat shows: a request to accept, "waiting for them to accept", or the composer.
+        const chatMineSent = () => chat.msgs.some((m) => m.mine && m.kind !== 'system');
+        const chatMode = () => `${chat.myStatus}|${chat.info?.kind === 'direct' && chat.otherPending ? (chatMineSent() ? 'sent' : 'first') : 'open'}`;
+
+        function composerHTML() {
+            const info = chat.info || {};
+            const group = info.kind === 'group';
+            const other = chatOtherName();
+            const typing = `<p class="chat-typing" id="chatTyping" hidden></p>`;
+            if (chat.myStatus === 'request') {
+                return `${typing}<div class="chat-request">
+                    <p>${group ? t('chatGroupRequestBar') : escapeHTML(t('chatRequestBar', { name: other }))}</p>
+                    <div class="banner-actions">
+                        <button class="submit-btn" type="button" data-chat-accept>${t('chatAccept')}</button>
+                        <button class="submit-btn secondary" type="button" data-chat-decline>${t('chatDecline')}</button>
+                        ${!group ? `<button class="submit-btn secondary danger" type="button" data-person-block="${escapeHTML((info.members || []).find((x) => !x.me)?.person || '')}" data-name="${escapeHTML(other)}">${t('personBlock')}</button>` : ''}
+                    </div>
+                </div>`;
+            }
+            const mode = chatMode().split('|')[1];
+            if (mode === 'sent') return `${typing}<div class="chat-pending"><p>${escapeHTML(t('chatPendingSent', { name: other }))}</p></div>`;
+            const textOnly = mode === 'first';
+            const rec = canRecord() && !textOnly;
+            return `${typing}
+                ${textOnly ? `<p class="chat-note">${escapeHTML(t('chatPendingFirst', { name: other }))}</p>` : ''}
                 <div class="chat-attach" id="chatAttach" hidden>
                     ${[['camera', 'chatPhoto', 'photo'], ['locate', 'chatLocation', 'location'], ['pin', 'chatPlace', 'place'], ['calendar', 'chatEvent', 'event'], ['image', 'chatMoment', 'moment'], ['signal', 'chatPoll', 'poll'], ['star', 'chatGame', 'game']]
                         .map(([ic, label, kind]) => `<button type="button" data-chat-attach-kind="${kind}">${icon(ic)}<span>${t(label)}</span></button>`).join('')}
                 </div>
-                <form class="chat-composer${canRecord() ? ' can-rec' : ''}" id="chatForm" novalidate>
-                    <button type="button" class="chat-icon-btn" data-chat-attach aria-expanded="false" aria-controls="chatAttach" aria-label="${t('chatAttach')}">${icon('plus')}</button>
+                <div class="chat-replybar" id="chatReplyBar"${chat.replyTo ? '' : ' hidden'}>${replyBarInner()}</div>
+                <form class="chat-composer${rec ? ' can-rec' : ''}" id="chatForm" novalidate>
+                    ${textOnly ? '' : `<button type="button" class="chat-icon-btn" data-chat-attach aria-expanded="false" aria-controls="chatAttach" aria-label="${t('chatAttach')}">${icon('plus')}</button>`}
                     <textarea id="chatInput" rows="1" maxlength="2000" placeholder="${t('chatPlaceholder')}" aria-label="${t('chatPlaceholder')}" enterkeyhint="send"></textarea>
-                    ${canRecord() ? `<button type="button" class="chat-icon-btn chat-mic" data-chat-record aria-label="${t('chatRecord')}">${icon('mic')}</button>` : ''}
+                    ${rec ? `<button type="button" class="chat-icon-btn chat-mic" data-chat-record aria-label="${t('chatRecord')}">${icon('mic')}</button>` : ''}
                     <button type="submit" class="chat-send" aria-label="${t('chatSend')}">${icon('send')}</button>
                     <input type="file" id="chatFile" accept="image/*,video/*" hidden>
                 </form>
@@ -12549,6 +12850,302 @@
                     <span class="chat-rec-time"><span class="chat-rec-dot" aria-hidden="true"></span><span id="chatRecTime">0:00</span><small>${t('chatRecording')}</small></span>
                     <button type="button" class="chat-send" data-chat-rec-send aria-label="${t('chatSend')}">${icon('send')}</button>
                 </div>`;
+        }
+
+        /* --- Replies --- */
+
+        function replySnippet(m) {
+            if (m.kind === 'text') return m.body || '';
+            if (m.kind === 'poll') return t('chatPollMsg', { q: m.data?.question || '' });
+            return chatSummary(m.kind, m.body, m.data);
+        }
+
+        function replyBarInner() {
+            const r = chat.replyTo;
+            if (!r) return '';
+            return `<span><b>${escapeHTML(t('chatReplyingTo', { name: r.mine ? t('chatYou') : r.name }))}</b><small>${escapeHTML(r.text)}</small></span>
+                <button type="button" class="chat-icon-btn" data-chat-reply-cancel aria-label="${t('chatReplyCancel')}">×</button>`;
+        }
+
+        function setReply(msgId) {
+            const m = chat.msgs.find((x) => x.id === msgId);
+            if (!m) return;
+            chat.replyTo = { id: m.id, mine: m.mine, name: m.sender_name || '', text: replySnippet(m), kind: m.kind };
+            const bar = $('chatReplyBar');
+            if (bar) { bar.innerHTML = replyBarInner(); bar.hidden = false; }
+            closeModal('chatSheet');
+            $('chatInput')?.focus();
+        }
+
+        function clearReply() {
+            chat.replyTo = null;
+            const bar = $('chatReplyBar');
+            if (bar) { bar.hidden = true; bar.innerHTML = ''; }
+        }
+
+        // Goes to a message (loading older messages if needed) and highlights it for a moment.
+        async function jumpToMessage(id) {
+            let tries = 0;
+            while (!chat.msgs.some((m) => m.id === id) && chat.more && tries < 12) {
+                const btn = document.querySelector('[data-chat-older]');
+                if (!btn) break;
+                await loadOlderMessages(btn);
+                tries++;
+            }
+            const el = document.querySelector(`.chat-msg[data-msg="${CSS.escape(id)}"]`);
+            if (!el) { toast(t('chatJumpFail')); return; }
+            el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+            el.classList.remove('flash');
+            void el.offsetWidth;
+            el.classList.add('flash');
+            setTimeout(() => el.classList.remove('flash'), 1700);
+        }
+
+        /* --- Reactions (Tuende's own icons; one per person and message) --- */
+
+        async function reactMessage(msgId, reaction) {
+            if (chat.myStatus !== 'active') return;
+            const s0 = chat.states[msgId] || { message_id: msgId };
+            const prev = s0.my_reaction || null;
+            const next = prev === reaction ? null : reaction;
+            const counts = { ...(s0.reactions || {}) };
+            if (prev) counts[prev] = Math.max(0, Number(counts[prev] || 0) - 1);
+            if (next) counts[next] = Number(counts[next] || 0) + 1;
+            Object.keys(counts).forEach((k) => { if (!counts[k]) delete counts[k]; });
+            chat.states[msgId] = { ...s0, my_reaction: next, reactions: Object.keys(counts).length ? counts : null };
+            closeModal('chatSheet');
+            redrawMessages({ keepBottom: false });
+            try {
+                await rpc('react_message', { msg: msgId, reaction: next });
+                applyChatStates(await rpc('chat_states', { conv: chat.open }));
+                redrawMessages({ keepBottom: false });
+            } catch { toast(t('chatSendError')); }
+        }
+
+        /* --- Requests --- */
+
+        async function acceptRequest() {
+            try {
+                await rpc('accept_request', { conv: chat.open });
+                chat.myStatus = 'active';
+                chat.list = null;
+                toast(t('chatAccepted'));
+                renderConversation();
+                markChatRead();
+                checkChats();
+            } catch { toast(t('chatSendError')); }
+        }
+
+        async function declineRequest() {
+            if (!confirm(t('chatDeclineConfirm'))) return;
+            try {
+                await rpc('leave_conversation', { conv: chat.open });
+                chat.list = null;
+                chat.loadedFor = null;
+                chat.tab = 'requests';
+                showChats();
+                checkChats();
+            } catch { toast(t('chatSendError')); }
+        }
+
+        /* --- Search inside a chat --- */
+
+        function openChatSearch() {
+            openChatSheet(t('chatSearchMsgs'), `<input class="field" id="chatSearchQ" type="search" placeholder="${escapeHTML(t('chatSearchPh'))}" aria-label="${escapeHTML(t('chatSearchMsgs'))}" autocomplete="off">
+                <div id="chatSearchResults" class="chat-choices" aria-live="polite"></div>`);
+            setTimeout(() => $('chatSearchQ')?.focus(), 50);
+        }
+
+        function markMatch(text, q) {
+            const hay = normalize(text);
+            const at = hay.indexOf(normalize(q));
+            if (at < 0 || !q) return escapeHTML(text);
+            return `${escapeHTML(text.slice(0, at))}<mark>${escapeHTML(text.slice(at, at + q.length))}</mark>${escapeHTML(text.slice(at + q.length))}`;
+        }
+
+        async function runChatSearch(q) {
+            const box = $('chatSearchResults');
+            if (!box) return;
+            q = q.trim();
+            if (q.length < 2) { box.innerHTML = q ? `<p class="hint">${t('chatSearchShort')}</p>` : ''; return; }
+            const conv = chat.open;
+            try {
+                const rows = await rpc('search_conversation', { conv, q });
+                if ($('chatSearchQ')?.value.trim() !== q) return;
+                box.innerHTML = rows.length ? rows.map((r) => `<button type="button" class="pick-row chat-search-row" data-chat-jump="${escapeHTML(r.id)}"><span><b>${escapeHTML(r.mine ? t('chatYou') : r.sender_name || '')} · ${escapeHTML(dayLabel(r.created_at))}</b><small>${markMatch(r.snippet || '', q)}</small></span></button>`).join('')
+                    : `<p class="hint">${t('chatSearchNone')}</p>`;
+            } catch { box.innerHTML = `<p class="hint">${t('chatError')}</p>`; }
+        }
+
+        /* --- Username, profile link and QR code, chat privacy --- */
+
+        function unameError(err) {
+            const d = String(err?.detail || '');
+            if (d.includes('username_taken')) return t('unameTaken');
+            if (d.includes('reserved_username')) return t('unameReserved');
+            if (d.includes('blocked_words')) return t('errBlockedText');
+            if (d.includes('username_too_soon')) return t('unameSoon', { date: chat.me?.next_change ? new Date(chat.me.next_change).toLocaleDateString(locale(), { day: 'numeric', month: 'long' }) : '' });
+            if (d.includes('bad_username')) return t('unameBad');
+            return t('chatSendError');
+        }
+
+        async function openUsernameSheet() {
+            if (!signedIn()) { openAuth('signin', { reason: t('chatSignIn') }); return; }
+            openChatSheet(t('unameTitle'), `<p class="hint">${t('loading')}</p>`);
+            const me = await loadChatMe(true);
+            let value = me?.username || '';
+            if (!value) { try { value = (await rpc('suggest_username')) || ''; } catch {} }
+            const soon = me?.next_change && Date.parse(me.next_change) > Date.now();
+            $('chatSheetPanel').querySelector('.hint').outerHTML = `<form id="unameForm" novalidate>
+                <p class="hint">${t('unameWhy')}</p>
+                <label class="uname-field"><span aria-hidden="true">@</span><input class="field" id="unameInput" maxlength="20" autocomplete="off" autocapitalize="none" spellcheck="false" value="${escapeHTML(value)}" aria-label="${t('unameTitle')}"></label>
+                <p class="hint">${soon ? escapeHTML(t('unameSoon', { date: new Date(me.next_change).toLocaleDateString(locale(), { day: 'numeric', month: 'long' }) })) : t('unameRules')}</p>
+                <p class="form-msg" id="unameMsg" role="status"></p>
+                <button class="submit-btn" type="submit" style="width:100%">${t('unameSave')}</button>
+            </form>`;
+            $('unameInput')?.focus();
+        }
+
+        async function saveUsername(form) {
+            const input = $('unameInput');
+            const msg = $('unameMsg');
+            const value = input.value.trim().toLowerCase().replace(/^@/, '');
+            if (!UNAME_RE.test(value) || value.includes('..')) { msg.textContent = t('unameBad'); input.focus(); return; }
+            const button = form.querySelector('[type=submit]');
+            button.disabled = true;
+            try {
+                const saved = await rpc('set_username', { uname: value });
+                chat.me = { ...(chat.me || {}), username: saved };
+                loadChatMe(true);
+                closeModal('chatSheet');
+                toast(t('unameSaved'));
+                if (state.view === 'chats' && !chat.open) $('chatsBody').innerHTML = chatListHTML();
+                if (state.view === 'profile') renderProfile();
+            } catch (err) {
+                msg.textContent = unameError(err);
+            } finally { button.disabled = false; }
+        }
+
+        const profileLink = () => `${inNativeApp ? PUBLIC_URL : new URL('./', location.href).href}?pessoa=${chat.me?.person || ''}`;
+
+        let qrLoading = null;
+        function loadQRLibrary() {
+            if (window.qrcode) return Promise.resolve();
+            qrLoading ||= new Promise((resolve, reject) => {
+                const tag = document.createElement('script');
+                tag.src = 'https://unpkg.com/qrcode-generator@1.4.4/qrcode.js';
+                tag.onload = resolve;
+                tag.onerror = () => { qrLoading = null; reject(); };
+                document.head.appendChild(tag);
+            });
+            return qrLoading;
+        }
+
+        async function openShareProfile() {
+            if (!signedIn()) { openAuth('signin', { reason: t('chatSignIn') }); return; }
+            const me = await loadChatMe();
+            if (!me?.username) { openUsernameSheet(); return; }
+            const url = profileLink();
+            openChatSheet(t('shareProfile'), `<div class="share-card">
+                ${avatarHTML(myAvatar(), accountName(), 'lg')}
+                <p><b>${escapeHTML(accountName())}</b><br>@${escapeHTML(me.username)}</p>
+                <div id="shareQrWrap" class="share-card"><div id="shareQr" class="share-qr" aria-hidden="true"></div><p class="hint">${t('shareProfileQr')}</p></div>
+                <div class="banner-actions">
+                    <button class="submit-btn" type="button" data-share-profile-send>${icon('share')}${t('shareProfile')}</button>
+                    <button class="submit-btn secondary" type="button" data-copy-link="${escapeHTML(url)}">${t('profileCopyLink')}</button>
+                </div>
+            </div>`);
+            try {
+                await loadQRLibrary();
+                const qr = window.qrcode(0, 'M');
+                qr.addData(url);
+                qr.make();
+                const box = $('shareQr');
+                if (box) box.outerHTML = `<img class="share-qr" src="${qr.createDataURL(6, 2)}" alt="${escapeHTML(t('shareProfileQr'))}">`;
+            } catch {
+                const box = $('shareQrWrap');
+                if (box) box.outerHTML = `<p class="hint">${t('qrError')}</p>`;
+            }
+        }
+
+        async function openChatPrivacy() {
+            if (!signedIn()) { openAuth('signin', { reason: t('chatSignIn') }); return; }
+            openChatSheet(t('chatPrivacy'), `<p class="hint">${t('loading')}</p>`);
+            const me = await loadChatMe(true);
+            if (!me) { $('chatSheetPanel').querySelector('.hint').textContent = t('chatError'); return; }
+            const radio = (name, value, label, on) => `<label><input type="radio" name="${name}" value="${value}"${on ? ' checked' : ''}><span>${label}</span></label>`;
+            $('chatSheetPanel').querySelector('.hint').outerHTML = `<form id="chatPrivacyForm" class="privacy-form" novalidate>
+                <fieldset><legend>${t('unameTitle')}</legend>
+                    <p class="profile-uname">${me.username ? `@${escapeHTML(me.username)}` : ''}<button type="button" class="link-btn" data-uname-edit>${me.username ? t('unameChange') : t('unameNone')}</button></p></fieldset>
+                <fieldset><legend>${t('chatFindMe')}</legend>${radio('findMe', 'all', t('chatFindAll'), me.discoverable)}${radio('findMe', 'link', t('chatFindLink'), !me.discoverable)}</fieldset>
+                <fieldset><legend>${t('chatWhoMsg')}</legend>${radio('dm', 'everyone', t('chatMsgAll'), me.dm_policy !== 'following')}${radio('dm', 'following', t('chatMsgFollowing'), me.dm_policy === 'following')}</fieldset>
+                <fieldset><legend>${t('chatSeen')}</legend><label><input type="checkbox" name="receipts"${me.read_receipts ? ' checked' : ''}><span>${t('chatReadReceipts')}</span></label></fieldset>
+                <p class="form-msg" id="chatPrivacyMsg" role="status"></p>
+                <button class="submit-btn" type="submit" style="width:100%">${t('unameSave')}</button>
+            </form>`;
+        }
+
+        async function saveChatPrivacy(form) {
+            const button = form.querySelector('[type=submit]');
+            button.disabled = true;
+            try {
+                await rpc('set_chat_privacy', { find_me: form.findMe.value === 'all', messages: form.dm.value, receipts: form.receipts.checked });
+                await loadChatMe(true);
+                closeModal('chatSheet');
+                toast(t('chatPrivacySaved'));
+                if (state.view === 'chats' && chat.open) pollChat();
+            } catch { $('chatPrivacyMsg').textContent = t('chatSendError'); } finally { button.disabled = false; }
+        }
+
+        /* --- "Typing...": a private live channel per chat (conv:<id>); nothing is stored --- */
+
+        function liveJoinConv(conv) {
+            if (!live.joined || !conv || chat.myStatus !== 'active') { if (!conv) liveLeaveConv(); return; }
+            const topic = `realtime:conv:${conv}`;
+            if (live.convTopic === topic) return;
+            liveLeaveConv();
+            live.convTopic = topic;
+            live.convRef = String(++live.ref);
+            live.convJoined = false;
+            liveSend({ topic, event: 'phx_join', payload: { config: { broadcast: { self: false, ack: false }, presence: { key: '' }, postgres_changes: [], private: true }, access_token: live.token }, ref: live.convRef, join_ref: live.convRef });
+        }
+
+        function liveLeaveConv() {
+            if (live.convTopic) liveSend({ topic: live.convTopic, event: 'phx_leave', payload: {}, ref: String(++live.ref), join_ref: live.convRef });
+            Object.assign(live, { convTopic: '', convRef: '', convJoined: false });
+            chat.typing.clear();
+            showTyping();
+        }
+
+        function sendTyping() {
+            if (!live.convJoined || Date.now() - (live.typedAt || 0) < 2500) return;
+            const me = (chat.info?.members || []).find((x) => x.me);
+            if (!me) return;
+            live.typedAt = Date.now();
+            liveSend({ topic: live.convTopic, event: 'broadcast', payload: { type: 'broadcast', event: 'typing', payload: { p: me.person, n: me.name || '' } }, ref: String(++live.ref), join_ref: live.convRef });
+        }
+
+        function onConvMessage(m) {
+            if (m.event === 'phx_reply' && m.ref === live.convRef) { live.convJoined = m.payload?.status === 'ok'; return; }
+            if (m.event !== 'broadcast' || m.payload?.event !== 'typing') return;
+            const p = m.payload.payload || {};
+            const member = (chat.info?.members || []).find((x) => x.person === p.p && !x.me);
+            if (!member) return;
+            chat.typing.set(member.person, { name: member.name || p.n || '', until: Date.now() + 4500 });
+            showTyping();
+        }
+
+        function showTyping() {
+            const el = $('chatTyping');
+            const now = Date.now();
+            chat.typing.forEach((v, k) => { if (v.until < now) chat.typing.delete(k); });
+            const names = [...chat.typing.values()].map((v) => v.name);
+            if (el) {
+                el.hidden = !names.length;
+                el.textContent = names.length > 1 ? t('chatTypingMany') : names.length ? t('chatTypingName', { name: names[0] }) : '';
+            }
+            clearTimeout(showTyping.timer);
+            if (names.length) showTyping.timer = setTimeout(showTyping, 1000);
         }
 
         function scrollChatToEnd(smooth = false) {
@@ -12594,6 +13191,8 @@
                 chat.info = null;
                 chat.msgs = [];
                 chat.states = {};
+                Object.assign(chat, { reads: [], myStatus: 'active', otherPending: false, replyTo: null });
+                chat.typing.clear();
                 body.innerHTML = `<p class="hint">${t('loading')}</p>`;
                 try {
                     const [info, msgs, states] = await Promise.all([rpc('conversation_info', { conv }), rpc('conversation_messages', { conv, lim: 60 }), rpc('chat_states', { conv })]);
@@ -12618,16 +13217,19 @@
             if (!chat.info) return;
             // Already on screen: refresh the messages only, so a half-typed message or a recording is not lost.
             const head = body.querySelector('.chat-head');
-            if (head && head.dataset.conv === conv && head.dataset.lang === lang && $('chatForm')) {
+            if (head && head.dataset.conv === conv && head.dataset.lang === lang && head.dataset.mode === chatMode() && ($('chatForm') || chat.myStatus !== 'active' || chat.otherPending)) {
                 redrawMessages();
                 scheduleChatPoll();
                 return;
             }
+            const typed = $('chatInput')?.value || '';
             body.innerHTML = conversationHTML();
+            if (typed && $('chatInput')) { $('chatInput').value = typed; $('chatForm')?.classList.add('has-text'); }
             signChatMedia();
             scrollChatToEnd();
             markChatRead();
             scheduleChatPoll();
+            liveJoinConv(conv);
         }
 
         function markChatRead() {
@@ -12658,15 +13260,18 @@
                 const [rows, states] = await Promise.all([rpc('conversation_messages', { conv, newer_than: last?.created_at || null, lim: 100 }), rpc('chat_states', { conv })]);
                 if (chat.open !== conv) return;
                 const fresh = rows.filter((r) => !chat.msgs.some((m) => m.id === r.id));
-                const before = JSON.stringify(chat.states);
+                const before = JSON.stringify([chat.states, chat.reads]);
                 const removed = applyChatStates(states);
-                if (fresh.length || removed || JSON.stringify(chat.states) !== before) {
+                fresh.forEach((m) => { if (m.sender) chat.typing.delete(m.sender); });
+                if (fresh.length) showTyping();
+                if (fresh.length || removed || JSON.stringify([chat.states, chat.reads]) !== before) {
                     chat.msgs.push(...fresh);
                     chat.msgs.sort((a, b) => Date.parse(a.created_at) - Date.parse(b.created_at));
                     redrawMessages();
                     if (fresh.some((m) => !m.mine)) markChatRead();
                     if (fresh.some((m) => m.kind === 'system')) refreshChatInfo();
                 }
+                if (document.querySelector('.chat-head')?.dataset.mode !== chatMode()) renderConversation();
             } catch {} finally {
                 chat.polling = false;
             }
@@ -12704,16 +13309,20 @@
         // Sends a message; it shows at once (marked as sending) and gets its real id and time from the database.
         async function sendChat(kind, body = '', data = {}, { conv = chat.open, local = null } = {}) {
             if (!conv) return false;
-            const temp = conv === chat.open ? { id: `tmp-${++chat.pending}`, mine: true, kind, body, data, created_at: new Date().toISOString(), pending: true, localUrl: local } : null;
+            const reply = conv === chat.open ? chat.replyTo : null;
+            if (reply) clearReply();
+            const quote = reply ? { reply_to: reply.id, reply_kind: reply.kind, reply_body: reply.kind === 'text' ? reply.text : null, reply_name: reply.name, reply_mine: reply.mine } : {};
+            const temp = conv === chat.open ? { id: `tmp-${++chat.pending}`, mine: true, kind, body, data, created_at: new Date().toISOString(), pending: true, localUrl: local, ...quote } : null;
             if (temp) { chat.msgs.push(temp); redrawMessages({ keepBottom: false }); scrollChatToEnd(true); }
             try {
-                const [row] = await rpc('send_message', { conv, kind, body: body || null, data });
+                const [row] = await rpc('send_message', { conv, kind, body: body || null, data, ...(reply ? { reply: reply.id } : {}) });
                 if (temp) {
                     Object.assign(temp, { id: row.id, created_at: row.created_at, pending: false });
                     if (temp.localUrl && data.path) chat.media.set(data.path, temp.localUrl);
                     redrawMessages();
                 }
                 track('chat_message', { kind });
+                if (conv === chat.open && chat.otherPending) renderConversation();
                 return true;
             } catch (err) {
                 if (temp) { chat.msgs = chat.msgs.filter((m) => m !== temp); redrawMessages(); }
@@ -12882,9 +13491,10 @@
             ws.onmessage = (e) => {
                 let m;
                 try { m = JSON.parse(e.data); } catch { return; }
+                if (live.convTopic && m.topic === live.convTopic) { onConvMessage(m); return; }
                 if (m.topic !== topic) return;
                 if (m.event === 'phx_reply' && !live.joined) {
-                    if (m.payload?.status === 'ok') { live.joined = true; live.retry = 0; }
+                    if (m.payload?.status === 'ok') { live.joined = true; live.retry = 0; if (state.view === 'chats' && chat.open && chat.loadedFor === chat.open) liveJoinConv(chat.open); }
                     else ws.close();
                 } else if (m.event === 'broadcast') {
                     liveChange(m.payload?.payload || {});
@@ -12897,6 +13507,7 @@
                 if (live.ws !== ws) return;
                 live.ws = null;
                 live.joined = false;
+                Object.assign(live, { convTopic: '', convRef: '', convJoined: false });
                 if (!signedIn() || chat.ready === false) return;
                 clearTimeout(live.again);
                 live.again = setTimeout(liveConnect, Math.min(60000, 2000 * 2 ** live.retry++));
@@ -12917,7 +13528,7 @@
             clearTimeout(live.again);
             clearInterval(live.beat);
             const ws = live.ws;
-            Object.assign(live, { ws: null, joined: false, retry: 0, topic: '' });
+            Object.assign(live, { ws: null, joined: false, retry: 0, topic: '', convTopic: '', convRef: '', convJoined: false });
             try { ws?.close(); } catch {}
         }
 
@@ -13122,17 +13733,35 @@
 
         /* --- New chat, chat details, report --- */
 
+        const findFormHTML = () => `<form id="chatFindForm" class="chat-rename" novalidate role="search">
+                <input class="field" id="chatFindInput" maxlength="21" placeholder="${escapeHTML(t('findPersonPh'))}" aria-label="${escapeHTML(t('findPerson'))}" autocomplete="off" autocapitalize="none" spellcheck="false">
+                <button class="submit-btn secondary" type="submit">${t('findBtn')}</button>
+            </form>
+            <div id="chatFindResult" aria-live="polite"></div>`;
+
+        async function findPerson(form) {
+            const box = $('chatFindResult');
+            const q = $('chatFindInput').value.trim().toLowerCase().replace(/^@/, '');
+            if (q.length < 3) { box.innerHTML = `<p class="hint">${t('findHint')}</p>`; return; }
+            box.innerHTML = `<p class="hint">${t('loading')}</p>`;
+            try {
+                const rows = await rpc('find_person', { uname: q });
+                box.innerHTML = rows.length ? `<div class="chat-choices">${rows.map((x) => personRowHTML(x, { message: true })).join('')}</div>` : `<p class="hint">${t('findNone')}</p>`;
+            } catch { box.innerHTML = `<p class="hint">${t('chatError')}</p>`; }
+        }
+
         async function openNewChat() {
-            openChatSheet(t('chatNew'), `<p class="hint">${t('loading')}</p>`);
+            if (!signedIn()) { openAuth('signin', { reason: t('chatSignIn') }); return; }
+            openChatSheet(t('chatNew'), `<h3 class="section-title">${t('findPerson')}</h3>${findFormHTML()}<p class="hint" id="chatNewLoading">${t('loading')}</p>`);
             let friends = [];
-            try { friends = await rpc('my_people', { list: 'friends' }); } catch (err) { if (err.status === 404) { $('chatSheetPanel').querySelector('.hint').textContent = t('chatSoon'); return; } }
+            try { friends = await rpc('my_people', { list: 'following' }); } catch (err) { if (err.status === 404) { $('chatNewLoading').textContent = t('chatSoon'); return; } }
             if (!friends.length) {
-                $('chatSheetPanel').querySelector('.hint').outerHTML = `<p class="hint">${t('chatNoFriends')}</p><div class="banner-actions"><button class="submit-btn" type="button" data-people="followers">${t('profileFollowers')}</button><button class="submit-btn secondary" type="button" data-people="following">${t('profileFollowingN')}</button></div>`;
+                $('chatNewLoading').outerHTML = `<p class="hint">${t('chatNoFollowing')}</p>`;
                 return;
             }
-            $('chatSheetPanel').querySelector('.hint').outerHTML = `<p class="hint">${t('chatNewHint')}</p>
+            $('chatNewLoading').outerHTML = `<h3 class="section-title">${t('peopleYouFollow')}</h3><p class="hint">${t('chatNewHint')}</p>
                 <form id="chatNewForm" novalidate>
-                    ${chooserHTML(friends.map((f) => `<label class="pick-row chat-pick-person" data-search="${escapeHTML(normalize(f.name || ''))}"><input type="checkbox" value="${escapeHTML(f.person)}">${avatarHTML(f.avatar, f.name)}<span><b>${escapeHTML(f.name || '')}</b></span></label>`))}
+                    ${chooserHTML(friends.map((f) => `<label class="pick-row chat-pick-person" data-search="${escapeHTML(normalize(`${f.name || ''} ${f.username || ''}`))}"><input type="checkbox" value="${escapeHTML(f.person)}">${avatarHTML(f.avatar, f.name)}<span><b>${escapeHTML(f.name || '')}</b>${f.username ? `<small>@${escapeHTML(f.username)}</small>` : ''}</span></label>`))}
                     <label class="chat-group-name" id="chatGroupNameWrap" hidden>${t('chatGroupName')}<input class="field" id="chatGroupName" maxlength="60" placeholder="${escapeHTML(t('chatGroupNamePh'))}"></label>
                     <p class="form-msg" id="chatNewMsg" role="status"></p>
                     <button class="submit-btn" type="submit" id="chatNewSubmit" style="width:100%" disabled>${t('chatStart')}</button>
@@ -13169,6 +13798,7 @@
         }
 
         async function openPersonChat(pid) {
+            if (!signedIn()) { openAuth('signin', { reason: t('chatSignIn') }); return; }
             try {
                 const conv = await rpc('open_direct', { p: pid });
                 document.querySelectorAll('.modal.open').forEach((m) => closeModal(m.id, { updateURL: false }));
@@ -13184,7 +13814,7 @@
             if (!info) return;
             const group = info.kind === 'group';
             const other = group ? null : (info.members || []).find((x) => !x.me);
-            const members = (info.members || []).map((x) => `<button type="button" class="pick-row" ${x.me ? 'disabled' : `data-person-open="${escapeHTML(x.person)}"`}>${avatarHTML(x.avatar, x.name)}<span><b>${escapeHTML(x.me ? t('chatYou') : x.name || '')}</b>${x.admin && group ? `<small>${t('chatAdmin')}</small>` : ''}</span></button>`).join('');
+            const members = (info.members || []).map((x) => `<button type="button" class="pick-row" ${x.me ? 'disabled' : `data-person-open="${escapeHTML(x.person)}"`}>${avatarHTML(x.avatar, x.name)}<span><b>${escapeHTML(x.me ? t('chatYou') : x.name || '')}</b>${x.username ? `<small>@${escapeHTML(x.username)}</small>` : ''}${x.admin && group ? `<small>${t('chatAdmin')}</small>` : ''}</span></button>`).join('');
             openChatSheet(group ? info.title : t('chatInfoTitle'), `
                 ${group ? `<form class="chat-rename" id="chatRenameForm" novalidate><input class="field" id="chatRenameInput" maxlength="60" value="${escapeHTML(info.title || '')}" aria-label="${t('chatGroupName')}"><button class="submit-btn secondary" type="submit">${t('chatRename')}</button></form>` : ''}
                 <h3 class="section-title">${t('chatMembersN', { n: (info.members || []).length })}</h3>
@@ -13201,9 +13831,9 @@
             openChatSheet(t('chatAddPeople'), `<p class="hint">${t('loading')}</p>`);
             const inGroup = new Set((chat.info?.members || []).map((x) => x.person));
             let friends = [];
-            try { friends = (await rpc('my_people', { list: 'friends' })).filter((f) => !inGroup.has(f.person)); } catch {}
-            $('chatSheetPanel').querySelector('.hint').outerHTML = friends.length ? `<form id="chatAddForm" novalidate>${chooserHTML(friends.map((f) => `<label class="pick-row chat-pick-person" data-search="${escapeHTML(normalize(f.name || ''))}"><input type="checkbox" value="${escapeHTML(f.person)}">${avatarHTML(f.avatar, f.name)}<span><b>${escapeHTML(f.name || '')}</b></span></label>`))}
-                <p class="form-msg" id="chatAddMsg" role="status"></p><button class="submit-btn" type="submit" style="width:100%">${t('chatAddPeople')}</button></form>` : `<p class="hint">${t('chatNoFriends')}</p>`;
+            try { friends = (await rpc('my_people', { list: 'following' })).filter((f) => !inGroup.has(f.person)); } catch {}
+            $('chatSheetPanel').querySelector('.hint').outerHTML = friends.length ? `<form id="chatAddForm" novalidate>${chooserHTML(friends.map((f) => `<label class="pick-row chat-pick-person" data-search="${escapeHTML(normalize(`${f.name || ''} ${f.username || ''}`))}"><input type="checkbox" value="${escapeHTML(f.person)}">${avatarHTML(f.avatar, f.name)}<span><b>${escapeHTML(f.name || '')}</b>${f.username ? `<small>@${escapeHTML(f.username)}</small>` : ''}</span></label>`))}
+                <p class="form-msg" id="chatAddMsg" role="status"></p><button class="submit-btn" type="submit" style="width:100%">${t('chatAddPeople')}</button></form>` : `<p class="hint">${t('chatNoFollowing')}</p>`;
         }
 
         async function submitAddPeople(form) {
@@ -13245,10 +13875,21 @@
 
         function openMessageMenu(msgId) {
             const m = chat.msgs.find((x) => x.id === msgId);
-            const row = m?.mine
-                ? `<button type="button" class="pick-row" data-chat-delete-msg="${escapeHTML(msgId)}"><span class="pick-thumb">${icon('trash')}</span><span><b>${t('chatDeleteMsg')}</b></span></button>`
-                : `<button type="button" class="pick-row" data-chat-report="${escapeHTML(msgId)}"><span class="pick-thumb">${icon('shield')}</span><span><b>${t('chatReport')}</b></span></button>`;
-            openChatSheet(t('chatMore'), `<div class="chat-choices">${row}</div>`);
+            if (!m) return;
+            const st = chat.states[msgId] || {};
+            const active = chat.myStatus === 'active';
+            const reactRow = active ? `<div class="chat-react-row" role="group" aria-label="${t('chatReactions')}">${REACTIONS.map(([key, ic, label]) => `<button type="button" data-chat-react="${escapeHTML(msgId)}" data-r="${key}" aria-pressed="${st.my_reaction === key}">${icon(ic)}<span>${t(label)}</span></button>`).join('')}</div>` : '';
+            const who = (st.reactors || []).map((r) => {
+                const def = REACTIONS.find(([key]) => key === r.r);
+                return def ? `<li>${icon(def[1])}<span>${escapeHTML(r.me ? t('chatYou') : r.name || '')}</span></li>` : '';
+            }).join('');
+            const rows = [
+                active && !chat.otherPending ? `<button type="button" class="pick-row" data-chat-reply="${escapeHTML(msgId)}"><span class="pick-thumb">${icon('reply')}</span><span><b>${t('chatReply')}</b></span></button>` : '',
+                m.mine
+                    ? `<button type="button" class="pick-row" data-chat-delete-msg="${escapeHTML(msgId)}"><span class="pick-thumb">${icon('trash')}</span><span><b>${t('chatDeleteMsg')}</b></span></button>`
+                    : `<button type="button" class="pick-row" data-chat-report="${escapeHTML(msgId)}"><span class="pick-thumb">${icon('shield')}</span><span><b>${t('chatReport')}</b></span></button>`
+            ].join('');
+            openChatSheet(t('chatMore'), `${reactRow}${who ? `<h3 class="section-title">${t('chatReactions')}</h3><ul class="chat-reactors">${who}</ul>` : ''}<div class="chat-choices">${rows}</div>`);
         }
 
         // Deletes your own message for everyone; its photo, video or voice file is removed from storage too.
@@ -13345,11 +13986,11 @@
             $('chatSheetPanel').querySelector('.hint').outerHTML = chooserHTML(rows.map(personRowHTML), { empty });
         }
 
-        function personRowHTML(x) {
+        function personRowHTML(x, { message = false } = {}) {
             const friends = x.i_follow && x.follows_me;
             return `<div class="person-row" data-person-row="${escapeHTML(x.person)}">
-                <button type="button" class="person-open" data-person-open="${escapeHTML(x.person)}" data-search="${escapeHTML(normalize(x.name || ''))}">${avatarHTML(x.avatar, x.name)}<span><b>${escapeHTML(x.name || '')}</b>${x.follows_me ? `<small>${t(friends ? 'peopleFriends' : 'peopleFollowsYou')}</small>` : ''}</span></button>
-                ${friends && chat.ready !== false ? `<button type="button" class="follow-btn" data-chat-person="${escapeHTML(x.person)}">${t('peopleMessage')}</button>` : ''}
+                <button type="button" class="person-open" data-person-open="${escapeHTML(x.person)}" data-search="${escapeHTML(normalize(`${x.name || ''} ${x.username || ''}`))}">${avatarHTML(x.avatar, x.name)}<span><b>${escapeHTML(x.name || '')}</b>${x.username ? `<small>@${escapeHTML(x.username)}</small>` : ''}${x.follows_me ? `<small>${t(friends ? 'peopleFriends' : 'peopleFollowsYou')}</small>` : ''}</span></button>
+                ${(message || x.follows_me) && chat.ready !== false ? `<button type="button" class="follow-btn" data-chat-person="${escapeHTML(x.person)}">${t('peopleMessage')}</button>` : ''}
                 <button type="button" class="follow-btn${x.i_follow ? ' on' : ''}" data-follow-person="${escapeHTML(x.person)}" aria-pressed="${x.i_follow}">${t(x.i_follow ? 'feedFollowingBtn' : x.follows_me ? 'peopleFollowBack' : 'feedFollow')}</button>
             </div>`;
         }
@@ -13391,17 +14032,18 @@
                 const cols = Array.from({ length: n }, () => []);
                 rows.forEach((p, i) => cols[i % n].push(postCardHTML(p)));
                 const friends = info.i_follow && info.follows_me;
-                const actions = info.is_me ? '' : `
+                const canMessage = chat.ready !== false && (!signedIn() || info.can_message !== false);
+                const actions = info.is_me ? `<div class="person-actions"><button type="button" class="submit-btn secondary" data-share-profile>${icon('qr')}${t('shareProfile')}</button></div>` : `
                     <div class="person-actions">
                         <button type="button" class="follow-btn${info.i_follow ? ' on' : ''}" data-follow-person="${escapeHTML(pid)}" aria-pressed="${info.i_follow}">${t(info.i_follow ? 'feedFollowingBtn' : info.follows_me ? 'peopleFollowBack' : 'feedFollow')}</button>
-                        ${friends && chat.ready !== false ? `<button type="button" class="submit-btn" data-chat-person="${escapeHTML(pid)}">${icon('chat')}${t('peopleMessage')}</button>` : ''}
+                        ${canMessage ? `<button type="button" class="submit-btn" data-chat-person="${escapeHTML(pid)}">${icon('chat')}${t('peopleMessage')}</button>` : ''}
                         ${signedIn() ? `<button type="button" class="link-btn" data-person-block="${escapeHTML(pid)}" data-name="${escapeHTML(info.name || '')}">${t('personBlock')}</button>` : ''}
                     </div>
-                    ${signedIn() && !friends ? `<p class="hint">${t('personFriendsHint')}</p>` : ''}`;
+                    ${signedIn() && info.can_message === false ? `<p class="hint">${t('chatDmClosed')}</p>` : ''}`;
                 panel.innerHTML = `${close}
                     <div class="author-head person-head" data-person="${escapeHTML(pid)}">
                         ${avatarHTML(info.avatar, info.name, 'lg')}
-                        <div><h2 id="authorName">${escapeHTML(info.name || '')}</h2><p>${t('personCounts', { n: info.posts, f: info.followers, g: info.following })}${info.follows_me && !info.is_me ? ` · ${t(friends ? 'peopleFriends' : 'peopleFollowsYou')}` : ''}</p></div>
+                        <div><h2 id="authorName">${escapeHTML(info.name || '')}</h2>${info.username ? `<p class="profile-uname">@${escapeHTML(info.username)}</p>` : ''}<p>${t('personCounts', { n: info.posts, f: info.followers, g: info.following })}${info.follows_me && !info.is_me ? ` · ${t(friends ? 'peopleFriends' : 'peopleFollowsYou')}` : ''}</p></div>
                     </div>
                     ${actions}
                     <div class="feed-grid" style="--cols:${n}">${cols.map((c) => `<div class="feed-col">${c.join('')}</div>`).join('')}</div>`;
@@ -13496,6 +14138,19 @@
             if (hit('[data-chat-rec-cancel]')) { stopRecording(true); return; }
             if (hit('[data-chat-rec-send]')) { stopRecording(false); return; }
             if ((el = hit('[data-chat-push]'))) { togglePush(el); return; }
+            if ((el = hit('[data-chat-tab]'))) { chat.tab = el.dataset.chatTab; $('chatsBody').innerHTML = chatListHTML(); return; }
+            if (hit('[data-uname-edit]')) { openUsernameSheet(); return; }
+            if (hit('[data-chat-privacy]')) { openChatPrivacy(); return; }
+            if (hit('[data-share-profile]')) { openShareProfile(); return; }
+            if (hit('[data-share-profile-send]')) { shareLink(t('shareProfile'), t('shareProfileText', { name: `@${chat.me?.username || ''}` }), profileLink()); return; }
+            if ((el = hit('[data-copy-link]'))) { navigator.clipboard?.writeText(el.dataset.copyLink).then(() => toast(t('profileLinkCopied'))).catch(() => {}); return; }
+            if (hit('[data-chat-search]')) { openChatSearch(); return; }
+            if ((el = hit('[data-chat-jump]'))) { if (el.closest('#chatSheet')) closeModal('chatSheet'); jumpToMessage(el.dataset.chatJump); return; }
+            if ((el = hit('[data-chat-reply]'))) { setReply(el.dataset.chatReply); return; }
+            if (hit('[data-chat-reply-cancel]')) { clearReply(); $('chatInput')?.focus(); return; }
+            if ((el = hit('[data-chat-react]'))) { reactMessage(el.dataset.chatReact, el.dataset.r); return; }
+            if (hit('[data-chat-accept]')) { acceptRequest(); return; }
+            if (hit('[data-chat-decline]')) { declineRequest(); return; }
             if ((el = hit('[data-chat-person]'))) { openPersonChat(el.dataset.chatPerson); return; }
             if ((el = hit('[data-chat-share-to]'))) { shareIntoConversation(el.dataset.chatShareTo); return; }
             if (hit('[data-share-tuende]')) { const p = shareChoice.pending; if (p) shareToChat(p.kind, p.data); return; }
@@ -13526,16 +14181,32 @@
             else if (form.id === 'chatNewForm') { e.preventDefault(); submitNewChat(form); }
             else if (form.id === 'chatAddForm') { e.preventDefault(); submitAddPeople(form); }
             else if (form.id === 'chatRenameForm') { e.preventDefault(); renameChat(form); }
+            else if (form.id === 'unameForm') { e.preventDefault(); saveUsername(form); }
+            else if (form.id === 'chatPrivacyForm') { e.preventDefault(); saveChatPrivacy(form); }
+            else if (form.id === 'chatFindForm') { e.preventDefault(); findPerson(form); }
         });
 
         document.addEventListener('input', (e) => {
-            if (e.target.id === 'chatInput') { autoSizeChatInput(); e.target.closest('.chat-composer')?.classList.toggle('has-text', Boolean(e.target.value.trim())); }
+            if (e.target.id === 'chatInput') { autoSizeChatInput(); e.target.closest('.chat-composer')?.classList.toggle('has-text', Boolean(e.target.value.trim())); if (e.target.value.trim()) sendTyping(); }
+            if (e.target.id === 'unameInput') { const v = e.target.value.toLowerCase().replace(/[^a-z0-9._@]/g, ''); if (v !== e.target.value) e.target.value = v; }
+            if (e.target.id === 'chatSearchQ') { clearTimeout(runChatSearch.timer); const q = e.target.value; runChatSearch.timer = setTimeout(() => runChatSearch(q), 300); }
             if (e.target.matches('[data-chat-filter]')) {
                 const q = normalize(e.target.value.trim());
                 e.target.parentElement.querySelectorAll('[data-search]').forEach((row) => {
                     (row.closest('.person-row') || row).hidden = Boolean(q) && !row.dataset.search.includes(q);
                 });
             }
+        });
+
+        let lastTap = { id: '', at: 0 };
+        document.addEventListener('pointerup', (e) => {
+            const bubble = e.target.closest?.('#chatMsgList .chat-bubble[data-bubble]');
+            if (!bubble || e.pointerType === 'mouse' || e.target.closest('button, a, audio, video, input, textarea') || chat.myStatus !== 'active') return;
+            const id = bubble.dataset.bubble;
+            if (id.startsWith('tmp-')) return;
+            const now = Date.now();
+            if (lastTap.id === id && now - lastTap.at < 350) { lastTap = { id: '', at: 0 }; reactMessage(id, 'heart'); }
+            else lastTap = { id, at: now };
         });
 
         document.addEventListener('change', (e) => {
@@ -14194,7 +14865,8 @@
             clearInterval(chat.badgeTimer);
             liveClose();
             stopRecording(true);
-            Object.assign(chat, { list: null, open: null, loadedFor: null, info: null, msgs: [], states: {}, unread: 0, push: undefined });
+            Object.assign(chat, { list: null, open: null, loadedFor: null, info: null, msgs: [], states: {}, unread: 0, requests: 0, push: undefined, me: null, tab: 'chats', reads: [], myStatus: 'active', otherPending: false, replyTo: null });
+            chat.typing.clear();
             chat.media.clear();
             if (state.view === 'chats') state.view = 'home';
             if (state.view === 'profile' || (feed.mode === 'following' && state.view === 'feed')) { feed.mode = 'recent'; feed.loaded = false; }
@@ -15187,6 +15859,11 @@
             $(id).classList.remove('open');
             if (!document.querySelector('.modal.open')) document.body.classList.remove('no-scroll');
             if (id === 'composeModal') saveDraft();
+            if (id === 'authorModal' && updateURL && new URLSearchParams(location.search).has('pessoa')) {
+                const params = new URLSearchParams(location.search);
+                params.delete('pessoa');
+                history.replaceState(null, '', `${location.pathname}${params.toString() ? `?${params}` : ''}${location.hash}`);
+            }
             if (id === 'postModal') {
                 openPostId = null;
                 if (updateURL && location.hash.startsWith('#momento-')) history.replaceState(null, '', `${location.pathname}${location.search}${state.openId ? `#local-${state.openId}` : ''}`);
