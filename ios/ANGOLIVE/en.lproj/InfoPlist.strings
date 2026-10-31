@@ -2,4 +2,5 @@
 "CFBundleDisplayName" = "Tuende";
 "NSLocationWhenInUseUsageDescription" = "Tuende uses your location only on your phone, to show the places nearest to you.";
 "NSCalendarsUsageDescription" = "Tuende uses your calendar only to save the agenda events you choose.";
-"NSMicrophoneUsageDescription" = "Tuende uses the microphone only to record the voice messages you send in Chats.";
+"NSMicrophoneUsageDescription" = "Tuende uses the microphone only for voice messages and calls in Chats.";
+"NSCameraUsageDescription" = "Tuende uses the camera only for the video calls you make or answer in Chats.";
