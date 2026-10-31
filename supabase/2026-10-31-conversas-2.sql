@@ -330,13 +330,21 @@ declare
     what text;
     u uuid;
     queued integer := 0;
+    is_message boolean := tg_table_name = 'chat_messages';
+    new_message boolean := false;
 begin
-    if tg_table_name = 'chat_messages' then
+    -- (Cada campo só é lido na tabela que o tem: o plpgsql não para a meio de um "and".)
+    if is_message then
         conv := new.conversation_id;
         what := case when tg_op = 'INSERT' then 'new' else 'gone' end;
+        if tg_op = 'INSERT' then
+            new_message := new.kind <> 'system';
+        end if;
+    elsif tg_op = 'DELETE' then
+        select m.conversation_id into conv from public.chat_messages m where m.id = old.message_id;
+        what := 'state';
     else
-        select m.conversation_id into conv from public.chat_messages m
-         where m.id = (case when tg_op = 'DELETE' then old.message_id else new.message_id end);
+        select m.conversation_id into conv from public.chat_messages m where m.id = new.message_id;
         what := 'state';
     end if;
     if conv is null then
@@ -349,11 +357,11 @@ begin
             null;
         end;
     end loop;
-    if tg_table_name = 'chat_messages' and tg_op = 'INSERT' and new.kind <> 'system' then
+    if new_message then
         with picked as (
             update public.push_subscriptions s set last_push_at = now()
               from public.conversation_members cm
-             where cm.conversation_id = conv and cm.user_id = s.user_id
+             where cm.conversation_id = conv and cm.user_id = s.user_id and cm.status = 'active'
                and s.user_id is distinct from new.sender_id
                and cm.last_read_at < now() - interval '30 seconds'
                and (s.last_push_at is null or s.last_push_at < now() - interval '2 minutes')
