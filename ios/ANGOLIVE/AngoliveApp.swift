@@ -20,13 +20,15 @@ struct AngoliveApp: App {
 /// "location" (the phone's position, so iOS asks once, in the app's own words, instead of a second web prompt
 /// that shows the file path), "theme" (the light/dark choice made in the app, so the status bar matches)
 /// and "ready" (the first screen is drawn: the page fades in instead of showing half-built).
-/// The microphone (voice messages) is granted to the page after iOS asks once with the app's text.
+/// The microphone and camera (voice messages, calls) are granted to the page after iOS asks once with the app's text.
 struct WebAppView: UIViewRepresentable {
     func makeCoordinator() -> Coordinator { Coordinator() }
 
     func makeUIView(context: Context) -> WKWebView {
         let configuration = WKWebViewConfiguration()
         configuration.allowsInlineMediaPlayback = true
+        // Calls: the other person's voice and image play as soon as the call connects.
+        configuration.mediaTypesRequiringUserActionForPlayback = []
         let controller = configuration.userContentController
         for name in ["share", "calendar", "location", "theme", "ready"] {
             controller.add(context.coordinator, name: name)
@@ -141,8 +143,8 @@ struct WebAppView: UIViewRepresentable {
             return nil
         }
 
-        // Voice messages in Conversas: iOS asks for the microphone once, in the app's own words
-        // (NSMicrophoneUsageDescription), instead of a second web prompt that would show the file path.
+        // Voice messages and calls in Conversas: iOS asks for the microphone and camera once, in the app's own words
+        // (NSMicrophoneUsageDescription, NSCameraUsageDescription), instead of a web prompt that would show the file path.
         func webView(
             _ webView: WKWebView,
             requestMediaCapturePermissionFor origin: WKSecurityOrigin,
@@ -150,7 +152,7 @@ struct WebAppView: UIViewRepresentable {
             type: WKMediaCaptureType,
             decisionHandler: @escaping (WKPermissionDecision) -> Void
         ) {
-            decisionHandler(type == .microphone ? .grant : .deny)
+            decisionHandler(.grant)
         }
 
         // MARK: Messages from the page
